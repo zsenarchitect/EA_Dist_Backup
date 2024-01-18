@@ -1,0 +1,19 @@
+# background:
+#   panel: 'cbecc7'
+#   title: 'cbecc7'
+#   slideout: 'cbecc7'
+
+# this entire panel is commented out from the overall yaml tab layout for the basic user
+layout:
+  - create 3D view of workset
+  - QAQC_AI
+  - Family RePath
+  - Project Starter
+  - List_Legend and Schedule
+  - ">>>"
+  - create_worksets
+  - excel_sheet_creator
+  - CollectTextures
+  - family_tree
+  - inspect_local_graphic_override
+  - export_color_scheme
