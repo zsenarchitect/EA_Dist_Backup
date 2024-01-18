@@ -1,0 +1,4 @@
+Use below symbol in your sheet schedule to mark the Issue Date parameter.
+
+■
+●
