@@ -1,1 +1,0 @@
-"""base class for setting up display conduit"""
