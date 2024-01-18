@@ -286,8 +286,11 @@ def update_sync_time_record():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
-        return
+    try:# temp during transition
+        if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
+            return
+    except:
+        pass
     if not EnneadTab.ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
 
