@@ -1,12 +1,15 @@
-from pyrevit import forms, script, DB, revit
-from pyrevit import EXEC_PARAMS
+import os
 from datetime import date
+
+from Autodesk.Revit import DB
+
+from pyrevit import forms, script
+from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
 from pyrevit.coreutils import ribbon
 import EA_UTILITY
 import ENNEAD_LOG
 import EnneadTab
-
 
 
 def log_time_sheet(doc):
@@ -83,7 +86,10 @@ def pop_up_window(doc):
                                 subject="Help!!!!!!",
                                 body="I need new pair of glass becasue I cannot see very well.\n\nThere are imported CAD in the file, I have been warned for {} days but I cannot see the message well. Do you know some good optometrists?\n\nBest,\n{}".format(day_delta,
                                                                                                                                                                                                                                                                  EnneadTab.USER.get_user_name()))
-
+    else:
+        remove_ignorance(doc,
+                        warning_cate="WARNING_IGNORANCE_IMPORT_CAD_RECORD")
+        
 
 
 @EnneadTab.ERROR_HANDLE.try_pass
@@ -341,6 +347,8 @@ def check_if_keynote_file_pointing_to_library(doc):
     #                 print ref.InSessionPath
     #                 break
 
+
+
 def warn_ignorance(doc, warning_cate):
     ignore_list = ["gayatri.desai",
                    "achi",
@@ -366,7 +374,14 @@ def warn_ignorance(doc, warning_cate):
     EnneadTab.DATA_FILE.save_dict_to_json_in_shared_dump_folder(record, record_file)
     
     day_delta = (time.time() - record["0"].get("timestamp"))/86400 # there is 86400 secons in one day
-    return day_delta
+    return int(day_delta)
+
+def remove_ignorance(doc, warning_cate):
+    record_file = "{}_{}.json".format(warning_cate,
+                                      doc.Title)
+    file = EnneadTab.FOLDER.get_shared_dump_folder_file(record_file)
+    if os.path.exists(file):
+        os.remove(file)
 
 
 def check_group_usage(doc):

@@ -9,6 +9,8 @@ doc = args.ActiveDocument
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
+    # ethan say he has learned his lesson. OK, diabling...
+    return
 
     if doc.IsFamilyDocument:
         return

@@ -24,7 +24,7 @@ def update_pyrevit_extension_json():
         "description": "Ennead collection of tools for Revit.",
         "author": "Sen Zhang",
         "author_profile": "https://ei.ennead.com/page/964/enneadtab-ecosystem",
-        "url": "https://github.com/zsenarchitect/EnneadTab.git",
+        "url": "https://github.com/zsenarchitect/EA_Dist.git",
         "website": "https://ei.ennead.com/page/964/enneadtab-ecosystem",
         "image": "",
         "dependencies": []

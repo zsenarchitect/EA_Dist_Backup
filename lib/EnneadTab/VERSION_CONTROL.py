@@ -153,6 +153,8 @@ def _publish_Revit_source_code(publish_stable_version, publish_beta_version):
 
 
     #allow copy to distribution folder
+    if not os.path.exists(ENVIRONMENT.DISTIBUTION_FOLDER):
+        return
     time_start = time.time()
     print ("Publishing dist version...")
     dist_dst = ENVIRONMENT.DISTIBUTION_FOLDER

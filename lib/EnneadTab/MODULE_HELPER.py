@@ -23,7 +23,7 @@ def run_func_in_module(module_path, func_name, *args):
         
     module_name = FOLDER.get_file_name_from_path(module_path).replace(".py", "")
     ref_module = imp.load_source(module_name, module_path)
-    func = getattr(ref_module, func_name, None)
+    func = getattr(ref_module, func_name, None) or getattr(ref_module, module_name, None)
     if func is None:
         NOTIFICATION.messenger(main_text="Oooops, cannot find the the source code.\nContact SZ and let him know. Thx!")
     else:

@@ -65,7 +65,7 @@ if is_developer:
         pass
 
 
-DISTIBUTION_FOLDER = "{}\\EnneadTab".format(GITHUB_FOLDER)
+DISTIBUTION_FOLDER = "{}\\EA_Dist".format(GITHUB_FOLDER)
 
 WORKING_FOLDER_FOR_REVIT = "{}\\EnneadTab-for-Revit".format(GITHUB_FOLDER)
 WORKING_FOLDER_FOR_RHINO = "{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)
