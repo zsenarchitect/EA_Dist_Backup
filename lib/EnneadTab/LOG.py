@@ -122,20 +122,18 @@ def update_time_sheet_rhino(doc_name):
     update_time_sheet_by_software(doc_name, "rhino")
 
 def update_time_sheet_by_software(doc_name, software):
-    if IS_UNIVERSAL_STORAGE_PREFERED:
-        data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(TIMESHEET_HELPER_FILE.replace(".json", "_{}.json".format(USER_CONSTANTS.USER_NAME)), create_if_not_exist=True)
-    else:
-        data = DATA_FILE.read_json_as_dict_in_dump_folder(TIMESHEET_HELPER_FILE, create_if_not_exist=True)
-    revit_data = data.get(software, {})
+    
+    data = get_time_sheet_data()
+    software_data = data.get(software, {})
     today = time.strftime("%Y-%m-%d")
-    today_data = revit_data.get(today, {})
+    today_data = software_data.get(today, {})
     current_doc_data = today_data.get(doc_name, {})
     if "starting_time" not in current_doc_data:
         current_doc_data["starting_time"] = time.time()
     current_doc_data.update({"end_time": time.time()})
     today_data[doc_name] = current_doc_data
-    revit_data[today] = today_data
-    data[software] = revit_data
+    software_data[today] = today_data
+    data[software] = software_data
     if IS_UNIVERSAL_STORAGE_PREFERED:
         DATA_FILE.save_dict_to_json_in_shared_dump_folder(data, TIMESHEET_HELPER_FILE.replace(".json", "_{}.json".format(USER_CONSTANTS.USER_NAME)))
     else:
@@ -159,10 +157,10 @@ def print_time_sheet_detail():
     
     
     output = ""
+    data = get_time_sheet_data()
     for software in ["revit", "rhino"]:
         output +="\n\n"
         output +=  ("\n# Printing time sheet for {}".format(software.capitalize()))
-        data = DATA_FILE.read_json_as_dict_in_dump_folder(TIMESHEET_HELPER_FILE, create_if_not_exist=True)
         log_data = data.get(software, {})
         for date, doc_data in sorted( log_data.items()):
             output += ("\n## Date: {}".format(date))
@@ -197,12 +195,19 @@ def print_time_sheet_detail():
         import rhinoscriptsyntax as rs
         rs.TextOut(output)
 
+def get_time_sheet_data():
+    if IS_UNIVERSAL_STORAGE_PREFERED:
+        data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(TIMESHEET_HELPER_FILE.replace(".json", "_{}.json".format(USER_CONSTANTS.USER_NAME)), create_if_not_exist=True)
+    else:
+        data = DATA_FILE.read_json_as_dict_in_dump_folder(TIMESHEET_HELPER_FILE, create_if_not_exist=True)
+    return data
+
 
 def print_revit_log_as_table():
     # i am not doing this table for rhino becasue rhino file name are hard to identify which project it is.
 
     
-    data = DATA_FILE.read_json_as_dict_in_dump_folder(TIMESHEET_HELPER_FILE, create_if_not_exist=True)
+    data = get_time_sheet_data()
     log_data = data.get("revit", {})
     # data = [
     # ['row1', 'data', 'data', 80 ],
