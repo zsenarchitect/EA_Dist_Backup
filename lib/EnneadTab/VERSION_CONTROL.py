@@ -12,6 +12,7 @@ import ENVIRONMENT_CONSTANTS
 import NOTIFICATION
 import SOUNDS
 import ENVIRONMENT
+import GIT
 
 def publish_ENNEAD_module():
     #working_root = ENVIRONMENT.get_EnneadTab_WORKING_root()
@@ -170,6 +171,8 @@ def _publish_Revit_source_code(publish_stable_version, publish_beta_version):
     used_time = time.time() - time_start
     used_time = TIME.get_readable_time(used_time)
     NOTIFICATION.duck_pop(main_text = "dist version created in {}".format(used_time))
+
+    GIT.push_changes_to_main(dist_dst)
 
 
 

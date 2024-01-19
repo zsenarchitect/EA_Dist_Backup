@@ -54,6 +54,30 @@ def run_updater(show_progress=False):
 def unit_test():
     assert run_updater(show_progress=True)
 
+
+
+def push_changes_to_main(repository_path):
+    import git
+    try:
+        repo = git.Repo(repository_path)
+        origin = repo.remotes.origin
+        branch_name = "main" 
+
+        # Fetch the latest changes from the remote repository
+        origin.fetch()
+
+        # Ensure the branch is up to date with the remote main branch
+        repo.git.pull(origin, branch_name)
+
+        # Push the changes to the remote main branch
+        repo.git.push(origin, branch_name)
+
+        return True
+
+    except git.exc.GitCommandError as e:
+        print (e)
+        return False
+
 ####################################
 def is_current_version_outdated():
     # depend on environment, check the current fetch date of revit repo, if older than the most recent available one, update git
