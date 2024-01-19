@@ -3,9 +3,11 @@
 
 
 import os
-
-
+import subprocess
 import time
+import datetime
+
+
 import sys
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_dir)
@@ -14,7 +16,6 @@ import ENVIRONMENT
 import NOTIFICATION
 import DATA_FILE
 import FOLDER
-import USER
 
 # from GIT_UPDATER import GIT_HOLDING_KEY #>>> if use from import, will cause ironpython to load py3 style module which is fail
 GIT_HOLDING_KEY = "EnneadTab_git_working_is_busy"
@@ -57,26 +58,22 @@ def unit_test():
 
 
 def push_changes_to_main(repository_path):
-    import git
-    try:
-        repo = git.Repo(repository_path)
-        origin = repo.remotes.origin
-        branch_name = "main" 
 
-        # Fetch the latest changes from the remote repository
-        origin.fetch()
+    # Change to the Git repository directory
+    os.chdir(repository_path)
 
-        # Ensure the branch is up to date with the remote main branch
-        repo.git.pull(origin, branch_name)
+    # Stage all changes
+    subprocess.call(["git", "add", "."])
 
-        # Push the changes to the remote main branch
-        repo.git.push(origin, branch_name)
+    # Commit with today's date
+    commit_message = "Auto push changes committed on {}".format(datetime.datetime.now().strftime('%Y-%m-%d'))
+    subprocess.call(["git", "commit", "-m", commit_message])
 
-        return True
+    # Push to the main branch
+    subprocess.call(["git", "push", "origin", "main"])
 
-    except git.exc.GitCommandError as e:
-        print (e)
-        return False
+
+
 
 ####################################
 def is_current_version_outdated():
@@ -87,3 +84,4 @@ def is_current_version_outdated():
 if __name__ == '__main__':
     
     run_updater()
+    
