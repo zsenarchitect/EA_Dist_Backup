@@ -160,7 +160,11 @@ def _publish_Revit_source_code(publish_stable_version, publish_beta_version):
     print ("Publishing dist version...")
     dist_dst = ENVIRONMENT.DISTIBUTION_FOLDER
     for folder_or_file in os.listdir(dist_dst):
-        if folder_or_file.endswith(".tab") or folder_or_file in ["hooks", "lib", "bin"] or folder_or_file.endswith(".py") or folder_or_file.endswith(".xaml") or folder_or_file.endswith(".yaml"):
+        if folder_or_file.endswith(".tab") \
+            or folder_or_file in ["hooks", "lib", "bin"] \
+            or folder_or_file.endswith(".py") \
+            or folder_or_file.endswith(".xaml") \
+            or folder_or_file.endswith(".yaml"):
             try:
                 shutil.rmtree(os.path.join(dist_dst, folder_or_file))
             except:

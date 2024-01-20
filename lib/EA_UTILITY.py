@@ -1720,6 +1720,7 @@ def set_active_doc_as_new_family():
 
     # filepath = r"C:\Users\szhang\github\ea-pyRevit\ENNEAD.extension\lib\SAFETY DOC.rfa"
     #print filepath
+    print ("show this msg to Sen Zhang. Thank you!")
 
     open_and_active_project(filepath)
 

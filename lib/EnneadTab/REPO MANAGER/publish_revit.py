@@ -29,7 +29,7 @@ def main():
         pass
         print (traceback.format_exc())
 
-    print ("TO-DO: add try git push for dist repo")
+    
         
 
     

@@ -55,6 +55,12 @@ def run_updater(show_progress=False):
 def unit_test():
     assert run_updater(show_progress=True)
 
+############################################################################################
+def get_nth_commit_number():
+    # Count the number of commits made today
+    result = subprocess.Popen(["git", "log", "--since=midnight", "--oneline"], stdout=subprocess.PIPE)
+    commits = result.stdout.readlines()
+    return len(commits) + 1
 
 
 def push_changes_to_main(repository_path):
@@ -65,8 +71,11 @@ def push_changes_to_main(repository_path):
     # Stage all changes
     subprocess.call(["git", "add", "."])
 
+    commit_number = get_nth_commit_number()
+
     # Commit with today's date
-    commit_message = "Auto push changes committed on {}".format(datetime.datetime.now().strftime('%Y-%m-%d'))
+    current_date = datetime.datetime.now().strftime('%Y-%m-%d')
+    commit_message = "Auto push changes committed on {}...{}".format(current_date, commit_number)
     subprocess.call(["git", "commit", "-m", commit_message])
 
     # Push to the main branch
