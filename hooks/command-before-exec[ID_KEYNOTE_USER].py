@@ -19,7 +19,7 @@ def main():
         
         return
     EnneadTab.NOTIFICATION.duck_pop(main_text = "EnneaDuck dislikes [UserKeynote], that tag will not link to other database! Quack!\nOnly use [UserKeynote] when you have ABSOLUTELY no choice.")
-    
+    print("this duck is enforced and will not be turned off by setting.")
     args.Cancel = False
 
                                         

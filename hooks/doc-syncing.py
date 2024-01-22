@@ -13,18 +13,9 @@ def check_sync_queue():
     return True is sync can go
     return False is sync have been stopped
     """
-    """
-    if not EA_UTILITY.string_contain_keywords(doc.Title, ["2135_BiliBili SH HQ"]):
-        return
-    """
-    """
-    if not EA_UTILITY.is_SZ(additional_tester_ID = ["Sha.Li2P4YA", "chsu@ennead.com","soonjae.kwonNHRAL", "pnorcrossPYDAS","Lan.ChenPKS25"]):
-        return
-    """
-    # possible address 1
+
     log_file = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Sync_Queue\Sync Queue_{}.queue". format(doc.Title)
-    # possible address 2
-    #log_file = r"I:\2135\0_BIM\10_BIM Management\10_BIM Resources\Sync_Queue\Sync Queue_{}.txt". format(doc.Title)
+  
     try:
         with open(log_file, "r"):
             pass
@@ -114,18 +105,6 @@ def check_sync_queue():
     return False
 
 
-def prepare_text_to_speech_audio():
-
-    if not EA_UTILITY.is_SZ():
-        return
-    import traceback
-    title = doc.Title
-    mytext = "Revit has finished syncing file " + title
-    try:
-        EA_UTILITY.text_to_speech_generate(title, mytext)
-    except Exception as e:
-        EA_UTILITY.print_note(e)
-        EA_UTILITY.print_note(traceback.format_exc())
 
 
 
@@ -145,19 +124,14 @@ def fill_drafter_info():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    try:# temp during transition
-        if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
-            return
-    except:
-        pass
+    if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
+        return
+
     if not EnneadTab.ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
     
-    # can remove try cathc later, this is only during the initial deployment
-    try:
-        EnneadTab.LOG.update_time_sheet_revit(doc.Title)
-    except:
-        pass
+    EnneadTab.LOG.update_time_sheet_revit(doc.Title)
+
 
     can_sync = check_sync_queue()
     if can_sync:
@@ -166,7 +140,7 @@ def main():
     # do this after checking ques so the primary EXE_PARAM is same as before
     fill_drafter_info()
 
-    prepare_text_to_speech_audio()
+
     
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", False)

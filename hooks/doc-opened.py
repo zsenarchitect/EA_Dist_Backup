@@ -13,11 +13,8 @@ import EnneadTab
 
 
 def log_time_sheet(doc):
-    # can remove try cathc later, this is only during the initial deployment
-    try:
-        EnneadTab.LOG.update_time_sheet_revit(doc.Title)
-    except:
-        pass
+    EnneadTab.LOG.update_time_sheet_revit(doc.Title)
+
 
 
 def pop_up_window(doc):
@@ -146,10 +143,7 @@ def basic_info(doc):
     if "1643.old" in file_info.CentralPath:
         EnneadTab.NITIFICATION.duck_pop(main_text="STOP! DO NOT WORK IN OLD FOLDER")
 
-    """
-    if doc.IsWorkshared != True and doc.IsFamilyDocument != True:
-        output.print_md("\n#Workshare Mode not enabled.")
-    """
+
 
     print ("# This window will close itself in {} seconds.\nYou can continue working on the project.\n\n\n".format(killtime))
 
@@ -219,36 +213,13 @@ def append_sync_time_record(doc):
     
     func_name = "run_exe"
     EnneadTab.MODULE_HELPER.run_revit_script(script_subfolder, func_name)
-     
-    return
-    import imp
-    full_file_path = r'C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\update_last_sync_datafile_script.py'
-    if not EnneadTab.USER.is_SZ():
-        full_file_path = EnneadTab.FOLDER.remap_filepath_to_folder(full_file_path)
-    ref_module = imp.load_source("update_last_sync_datafile_script", full_file_path)
-
-    try:
-        ref_module.update_last_sync_data_file(doc)
-        ref_module.run_exe()
-    except:
-        pass
 
 def check_if_file_opened(doc):
     script_subfolder = "Ennead.tab\\Utility.panel\\exe_1.stack\\LAST_SYNC_MONITOR.pushbutton\\update_last_sync_datafile_script.py"
     func_name = "is_doc_opened"
     EnneadTab.MODULE_HELPER.run_revit_script(script_subfolder, func_name, doc)
     
-    return
 
-    import imp
-    full_file_path = r'C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\update_last_sync_datafile_script.py'
-    if not EnneadTab.USER.is_SZ():
-        full_file_path = EnneadTab.FOLDER.remap_filepath_to_folder(full_file_path)
-    ref_module = imp.load_source("update_last_sync_datafile_script", full_file_path)
-    try:
-        ref_module.is_doc_opened(doc)
-    except:
-        pass
 
 def hide_user_tab():
     setting_file = EnneadTab.FOLDER.get_EA_dump_folder_file('revit_ui_setting.json')
@@ -410,10 +381,7 @@ def main():
     # this varaible is set to True only after    use sync and close all is run ealier. So if user open new docs, we shoudl resume default False,
     envvars.set_pyrevit_env_var("IS_AFTER_SYNC_WARNING_DISABLED", False)
 
-    try:
-        hide_user_tab()
-    except Exception as e:
-        EA_UTILITY.print_note(e)
+    hide_user_tab()
 
 
 

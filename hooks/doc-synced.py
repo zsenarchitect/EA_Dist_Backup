@@ -25,10 +25,6 @@ def warn_non_enclosed_room():
 
 
 
-def is_level_grid_change_in_doc():
-    # need to comfirm by user if after sync, the collection of grids or levels changed. Need to use long term ID, stable ID
-    pass
-
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_2151():
@@ -226,23 +222,17 @@ def update_sync_queue():
         EA_UTILITY.print_traceback()
         return
 
-    try:
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)
 
-        EnneadTab.EMAIL.email(receiver_email_list="{}@ennead.com".format(next_user),
-                                subject="Your Turn To Sync!",
-                                body="Hi there, it is your turn to sync!",
-                                body_image_link_list=["L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\lib\\EnneadTab\\images\\you sync first.jpg"])
-    except Exception as e:
-        print (e)
+    EnneadTab.EMAIL.email(receiver_email_list="{}@ennead.com".format(next_user),
+                            subject="Your Turn To Sync!",
+                            body="Hi there, it is your turn to sync!",
+                            body_image_link_list=["L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\lib\\EnneadTab\\images\\you sync first.jpg"])
+
+    EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)
 
 
 
 def play_success_sound():
-    """
-    if not EA_UTILITY.is_SZ():
-        return
-    """
 
     file = 'sound effect_mario join.wav'
     file = 'sound effect_mario 1up.wav'
@@ -254,27 +244,14 @@ def play_success_sound():
 def play_text_to_speech_audio():
 
 
-    import traceback
-    try:
-        
-        EnneadTab.SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
+    EnneadTab.SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
       
-    except Exception as e:
-        EA_UTILITY.print_note(e)
-        EA_UTILITY.print_note(traceback.format_exc())
+
 
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_sync_time_record():
-    # import imp
-    # full_file_path = r'C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\update_last_sync_datafile_script.py'
-    # if not  EnneadTab.USER.is_SZ():
-    #     full_file_path =  EnneadTab.FOLDER.remap_filepath_to_folder(full_file_path)
-    # ref_module = imp.load_source("update_last_sync_datafile_script", full_file_path)
 
-    # ref_module.update_last_sync_data_file(doc)
-    # ref_module.run_exe()
-    
     
     script_subfolder = "Ennead.tab\\Utility.panel\\exe_1.stack\\LAST_SYNC_MONITOR.pushbutton\\update_last_sync_datafile_script.py"
     func_name = "update_last_sync_data_file"
@@ -286,11 +263,9 @@ def update_sync_time_record():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    try:# temp during transition
-        if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
-            return
-    except:
-        pass
+    if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
+        return
+
     if not EnneadTab.ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
 
