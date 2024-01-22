@@ -123,6 +123,9 @@ class WarningHistory:
         
     
     def record_warning(self):
+        # in event where doc is not valid, there is no data to record to
+        if not self.data:
+            return
         
         today = time.strftime("%Y-%m-%d")
         today_data = self.data.get(today, {})
