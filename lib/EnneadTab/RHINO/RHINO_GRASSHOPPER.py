@@ -6,14 +6,15 @@ sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
     import Rhino
+    import Grasshopper
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
 
 def set_doc_to_rhinodoc():
     sc.doc = Rhino.RhinoDoc.ActiveDoc
 
-def set_doc_to_ghdoc(ghdoc):
-    sc.doc = ghdoc
+def set_doc_to_ghdoc():
+    sc.doc = Grasshopper.Instances.ActiveCanvas.Document
 
 
 class AccessRhinoDoc():
@@ -25,12 +26,12 @@ class AccessRhinoDoc():
     >>>     wall.DoSomething()
 
     """
-    def __init__(self, ghdoc):
-        self.ghdoc = ghdoc
+    def __init__(self):
+        pass
 
     def __enter__(self):
         set_doc_to_rhinodoc()
         return self
 
     def __exit__(self, exception, exception_value, traceback):
-        set_doc_to_ghdoc(self.ghdoc)
+        set_doc_to_ghdoc()

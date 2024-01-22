@@ -20,7 +20,11 @@ need to figure out what format to use for those command, maybe there are mutiple
 
 """
 
+class Command:
+    RevitReload = "Reload Revit"
+    RhinoRegister = "Register Rhino" 
 
+    
 class CommandListener:
     pass
 
@@ -28,4 +32,10 @@ class CommandListener:
 
 
 class CommandSender:
+    """send to one user name
+    or send to all known user name
+
+
+    example:
+    self.command(Command.RevitReload)"""
     pass
