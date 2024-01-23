@@ -178,7 +178,7 @@ def create_and_move_exe(source_script, target_folder, exe_name=None):
     try:
         subprocess.run(["pyinstaller", "--onefile", source_script], check=True)
     except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"Failed to create executable: {e}")
+        raise RuntimeError("Failed to create executable: {}".format(e))
 
     # Define the executable's name and paths
     script_name = os.path.splitext(os.path.basename(source_script))[0]
@@ -193,7 +193,7 @@ def create_and_move_exe(source_script, target_folder, exe_name=None):
     target_exe_path = os.path.join(target_folder, exe_name + '.exe')
     shutil.move(exe_path, target_exe_path)
 
-    print(f"Executable created and moved to {target_exe_path}")
+    print("Executable created and moved to {}".format(target_exe_path))
 
 
 

@@ -9,17 +9,21 @@ this class need to do following:
 2023-12-16:
 this might be hard to make the button iteract back to the main software
 """
-import os
-import io
-import webbrowser
 
-import DATA_FILE
-import FOLDER 
-import ENVIRONMENT_CONSTANTS
-import ENVIRONMENT
-import NOTIFICATION
-import TIME 
-import EXE 
+try:
+    import os
+    import io
+    import webbrowser
+
+    import DATA_FILE
+    import FOLDER 
+    import ENVIRONMENT_CONSTANTS
+    import ENVIRONMENT
+    import NOTIFICATION
+    import TIME 
+    import EXE 
+except ImportError as e:
+    print (e)
 # STYLE_MAP = {"main_body":"p",
 #              "title":"h1",
 #              "sub_title":"h2",

@@ -59,7 +59,12 @@ def is_Rhino_environment():
     except:
         return False
 
-
+def is_Grasshopper_environment():
+    try:
+        import Grasshopper
+        return True
+    except:
+        return False
 
 def is_Revit_environment():
     """Check if current environment is Revit.

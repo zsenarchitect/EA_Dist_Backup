@@ -4,7 +4,7 @@ import sys
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
-if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
+if ENVIRONMENT_CONSTANTS.is_Grasshopper_environment():
     import Rhino
     import Grasshopper
     import rhinoscriptsyntax as rs
