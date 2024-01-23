@@ -356,15 +356,24 @@ def remove_ignorance(doc, warning_cate):
 
 
 def check_group_usage(doc):
+    max_count = 10
+    count = 0 
     all_group_types = DB.FilteredElementCollector(doc).OfClass(DB.GroupType).ToElements()
     for group_type in all_group_types:
+
+        # cap max 10 ducks/msg
+        if count >= max_count:
+            return
+        
         if group_type.Groups.Size == 0:
+            count += 1
             EnneadTab.NOTIFICATION.messenger(main_text = "Group type <{}> is defined but has no instances used in the project.\nConsider purging?".format(group_type.LookupParameter("Type Name").AsString())) 
             print ("\nFound group definition but not placed in project. GroupName: {}".format(group_type.LookupParameter("Type Name").AsString()))
             continue
         
         sample_group = list(group_type.Groups)[0]
         if len(list(sample_group.GetMemberIds ())) == 1:
+            count += 1
             EnneadTab.NOTIFICATION.messenger(main_text = "Group type <{}> has only 1 element inside the group.\nThis is not the best use of the group.".format(group_type.LookupParameter("Type Name").AsString())) 
             output = script.get_output()
             print ("\nFound group with only 1 elements.")
