@@ -162,23 +162,13 @@ def warn_bad_sized_meeting_rm():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_sync_queue():
-    """
-    if not EA_UTILITY.string_contain_keywords(doc.Title, ["2135_BiliBili SH HQ"]):
-        return
-    """
-    """
-    if not EA_UTILITY.is_SZ(additional_tester_ID = ["Sha.Li2P4YA", "chsu@ennead.com","soonjae.kwonNHRAL", "pnorcrossPYDAS","Lan.ChenPKS25"]):
-        return
-    """
-
-
 
     # dont need to do anything if pre-sycn chech was cancelled,
     if envvars.get_pyrevit_env_var("IS_SYNC_CANCELLED"):
         return
 
     log_file = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Sync_Queue\Sync Queue_{}.queue". format(doc.Title)
-    #log_file = r"I:\2135\0_BIM\10_BIM Management\10_BIM Resources\Sync_Queue\Sync Queue_{}.txt". format(doc.Title)
+  
 
     try:
         with open(log_file, "r"):
@@ -263,6 +253,12 @@ def update_sync_time_record():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
+
+    try:
+        doc.Title
+    except:
+        return
+    
     if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
         return
 

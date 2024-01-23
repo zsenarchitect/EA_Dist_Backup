@@ -4,6 +4,7 @@ import DATA_FILE
 import USER
 import ENVIRONMENT_CONSTANTS
 import TIME
+import NOTIFICATION
 
 
 def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab Auto Email Error Log"):
@@ -49,6 +50,10 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
     developer_emails = ["szhang@ennead.com"]
     if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         developer_emails = USER.get_revit_developer_emails()
+        if "h" in app_uptime and 50 < int(app_uptime.split("h")[0]):
+            email_to_self(subject="I am tired...",
+                          body="Hello,\nI have been running for {}.\nLet me rest and clear cache!\n\nDid you know that restarting your Revit regularly can improve performance?\nBest regard,\nYour poor Revit.". format(app_uptime))
+            
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
         developer_emails = USER.get_rhino_developer_emails()
 
