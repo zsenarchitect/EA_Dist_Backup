@@ -27,4 +27,4 @@ try:
                     click_result=func)
     
 except:
-    print traceback.format_exc()
+    print (traceback.format_exc())

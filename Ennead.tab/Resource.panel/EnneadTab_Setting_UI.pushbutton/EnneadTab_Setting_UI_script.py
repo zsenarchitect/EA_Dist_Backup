@@ -48,14 +48,14 @@ def change_extension_folder(is_force_tester, include_game):
     from pyrevit.loader.sessionmgr import execute_command
     """Reads the user extension folders and updates the list"""
     current_external_folders = user_config.get_thirdparty_ext_root_dirs(include_default=False)
-    print current_external_folders
+    print (current_external_folders)
     #﻿ ['C:\\Users\\szhang\\github\\EnneadTab-for-Revit']
 
 
     beta_version_extension_folder = filter(lambda x: "Published_Beta_Version"  in x, current_external_folders)
     stable_version_extension_folder = filter(lambda x: x not in beta_version_extension_folder, current_external_folders)
-    print beta_version_extension_folder
-    print stable_version_extension_folder
+    print (beta_version_extension_folder)
+    print (stable_version_extension_folder)
 
 
 
@@ -118,11 +118,11 @@ class SimpleEventHandler(IExternalEventHandler):
                 #print "try to do event handler func"
                 self.OUT = self.do_this(*self.kwargs)
             except Exception as e:
-                print "failed + " + str(e)
-                print traceback.format_exc()
+                print ("failed + " + str(e))
+                print (traceback.format_exc())
         except InvalidOperationException:
             # If you don't catch this exeption Revit may crash.
-            print "InvalidOperationException catched"
+            print ("InvalidOperationException catched")
 
     def GetName(self):
         return "simple function executed by an IExternalEventHandler in a Form"
@@ -317,7 +317,7 @@ class main_setting_UI(forms.WPFWindow):
 
 
     def handleclick(self, sender, args):
-        print "surface clicked"
+        print ("surface clicked")
 
     def close_click(self, sender, args):
         self.Close()

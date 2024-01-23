@@ -209,4 +209,4 @@ if __name__ == "__main__":
         ENNEAD_LOG.use_enneadtab(coin_change = 60, tool_used = "Create/Update fire rating graphic.", show_toast = True)
 
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())

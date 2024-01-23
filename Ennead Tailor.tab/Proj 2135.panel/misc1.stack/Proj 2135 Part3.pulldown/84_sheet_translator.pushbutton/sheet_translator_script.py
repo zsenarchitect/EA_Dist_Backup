@@ -42,7 +42,7 @@ def rename_sheet():
                 uiview.ZoomToFit()
         uidoc.RefreshActiveView()
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())
 
 # Create a subclass of IExternalEventHandler
 class rename_sheet_SimpleEventHandler(IExternalEventHandler):
@@ -61,11 +61,11 @@ class rename_sheet_SimpleEventHandler(IExternalEventHandler):
             try:
                 self.do_this()
             except:
-                print "failed"
-                print traceback.format_exc()
+                print ("failed")
+                print (traceback.format_exc())
         except InvalidOperationException:
             # If you don't catch this exeption Revit may crash.
-            print "InvalidOperationException catched"
+            print ("InvalidOperationException catched")
 
     def GetName(self):
         return "simple function executed by an IExternalEventHandler in a Form"

@@ -254,11 +254,11 @@ class fire_rating_SimpleEventHandler(IExternalEventHandler):
                 #print "try to do event handler func"
                 self.OUT = self.do_this(*self.kwargs)
             except:
-                print "failed"
-                print traceback.format_exc()
+                print ("failed")
+                print (traceback.format_exc())
         except InvalidOperationException:
             # If you don't catch this exeption Revit may crash.
-            print "InvalidOperationException catched"
+            print ("InvalidOperationException catched")
 
     def GetName(self):
         return "simple function executed by an IExternalEventHandler in a Form"
@@ -486,4 +486,4 @@ if __name__ == "__main__":
         modeless_form = fire_rating_ModelessForm()
         ENNEAD_LOG.use_enneadtab(coin_change = 220, tool_used = __title__.replace("\n", " "), show_toast = True)
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())

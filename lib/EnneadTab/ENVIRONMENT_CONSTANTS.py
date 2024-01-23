@@ -106,8 +106,13 @@ def unit_test():
         if not x.startswith("_") and not callable(content):
             print(x, " = ", content)
 
-            is_ok = os.path.exists(content) or os.path.isdir(content)
-            assert is_ok
+            if not isinstance(content, list):
+                content = [content]
+
+            for item in content:
+                if "\\" in item:
+                    is_ok = os.path.exists(item) or os.path.isdir(item)
+                    assert is_ok
 
 
 ###############

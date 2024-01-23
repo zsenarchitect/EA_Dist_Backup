@@ -145,10 +145,10 @@ class conversation_SimpleEventHandler(IExternalEventHandler):
                 self.OUT = self.do_this(self.kwargs)
             except:
                 self.OUT =  traceback.format_exc()
-                print "failed"
+                print ("failed")
         except InvalidOperationException:
             # If you don't catch this exeption Revit may crash.
-            print "InvalidOperationException catched"
+            print ("InvalidOperationException catched")
 
     def GetName(self):
         return "simple function executed by an IExternalEventHandler in a Form"
@@ -391,7 +391,7 @@ def main():
     try:
         modeless_form = chatGPT_modelessForm()
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())
 
 if __name__ == "__main__":
     main()

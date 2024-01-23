@@ -129,4 +129,4 @@ if __name__ == "__main__":
         modeless_form = mini_bank_ModelessForm()
         ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())

@@ -1521,7 +1521,7 @@ def ennead_printer():
         EA_UTILITY.show_toast(title = "Send the output window to Sen Zhang", message = "Oops..Something is wrong.")
         output.print_md( "##Print send the below screenshot to Sen Zhang##")
         print "\n\n\n\n"
-        print traceback.format_exc()
+        print (traceback.format_exc())
         if 'window' in vars():
             window.Close()
 

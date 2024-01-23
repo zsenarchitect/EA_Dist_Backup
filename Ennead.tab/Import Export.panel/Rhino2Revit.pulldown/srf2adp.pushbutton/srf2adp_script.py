@@ -66,7 +66,7 @@ class Solution:
             try:
                 self.add_adp_family(pt_list)
             except:
-                print traceback.format_exc()
+                print (traceback.format_exc())
 
 
 

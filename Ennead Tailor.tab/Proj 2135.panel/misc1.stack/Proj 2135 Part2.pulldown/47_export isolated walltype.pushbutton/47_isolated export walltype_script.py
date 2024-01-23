@@ -400,7 +400,7 @@ class MyOption(forms.TemplateListItem):
                 if family.IsInPlace:
                     return "[Roof In-Place]:[{}]{}".format(self.item.FamilyName, self.item.LookupParameter("Type Name").AsString())
             except Exception as e:
-                print traceback.format_exc()
+                print (traceback.format_exc())
                 return "[Roof]:{}".format( self.item.LookupParameter("Type Name").AsString())
 
         if "Column" in self.item.Category.Name:

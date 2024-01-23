@@ -245,7 +245,7 @@ class family_browser_ModelessForm(WPFWindow):
             self.textblock_export_status.Text = note
         except:
             #self.update_preview_grid()
-            print traceback.format_exc()
+            print (traceback.format_exc())
             self.preview_image.Visibility = System.Windows.Visibility.Visible
             self.set_image_source(self.preview_image, "DEFAULT PREVIEW_CANNOT FIND PREVIEW IMAGE.png")
             self.textblock_export_status.Text = ""

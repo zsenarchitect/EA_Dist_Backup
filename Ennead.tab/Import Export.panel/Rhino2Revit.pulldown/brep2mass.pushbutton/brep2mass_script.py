@@ -56,7 +56,7 @@ class Solution:
             try:
                 self.cap_by_pts(pt_list)
             except:
-                print traceback.format_exc()
+                print (traceback.format_exc())
 
 
 
