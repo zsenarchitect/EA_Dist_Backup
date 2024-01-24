@@ -233,10 +233,12 @@ def play_success_sound():
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def play_text_to_speech_audio():
 
-    doc = EXEC_PARAMS.event_args.Document
-    EnneadTab.SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
-      
+    try:
+        doc.Title
+    except:
+        return
 
+    EnneadTab.SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
 
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
