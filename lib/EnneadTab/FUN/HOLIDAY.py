@@ -68,14 +68,16 @@ def greeting_xmas():
 def greeting_chinese_new_year():
 
     
-    d0 = datetime.datetime(2023, 2,1)
-    today = datetime.datetime.now()
-    d1 = datetime.datetime(2023,2,25)
-
-    if not(d0 < today < d1):
+    if not is_valid_date((2024,1,26),(2024,2,15)):
         return
     image = "YEAR OF BUNNY.png"
-    image = "YEAR OF DRAGON.png"
+    files = os.listdir(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+    random.shuffle(files)
+    for file in files:
+        if file.endswith(".png") and "YEAR OF DRAGON" in file:
+            image = file
+            break
+
 
     image_file = "{}\{}".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT,
                                 image)
