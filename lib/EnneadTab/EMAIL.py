@@ -23,9 +23,12 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
             
             app_uptime = TIME.get_revit_uptime()
             try:
-                doc_name = app.ActiveUIDocument.Document.Title or REVIT.REVIT_APPLICATION.get_doc().Title
+                doc_name = app.ActiveUIDocument.Document.Title
             except:
-                doc_name = "N/A"
+                try:
+                    doc_name = REVIT.REVIT_APPLICATION.get_doc().Title
+                except:
+                    doc_name = "N/A"
                 
             additional_note = "Version Build: {}\nVersion Number: {}\nVersion Name: {}\nDoc name:{}\n\nRevit UpTime: {}".format(app.VersionBuild,
                                                                                                                                 app.VersionNumber,
@@ -53,7 +56,7 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
     if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         developer_emails = USER.get_revit_developer_emails()
         if "h" in app_uptime and 50 < int(app_uptime.split("h")[0]):
-            email_to_self(subject="I am tired...",
+            email_to_self(subject="I am tired...Revit running non-stop for {}".format(app_uptime),
                           body="Hello,\nI have been running for {}.\nLet me rest and clear cache!\n\nDid you know that restarting your Revit regularly can improve performance?\nBest regard,\nYour poor Revit.". format(app_uptime))
             
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
