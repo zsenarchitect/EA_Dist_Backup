@@ -7,8 +7,8 @@ def quack ():
     #print (root_folder)
     import EXE
 
-    exe = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\desktop_pet_V2.2\desktop_pet_V2.2.exe - Shortcut"
-    exe = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\EnneaDuck_1.0\desktop_pet_V2.2.exe - Shortcut"
+
+    exe = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\EnneaDuck_1.0\desktop_pet_V2.2.exe"
     EXE.open_file_in_default_application(exe)
 
 """
