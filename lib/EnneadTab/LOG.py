@@ -224,29 +224,46 @@ def print_revit_log_as_table():
     output = script.get_output()
     output.insert_divider()
     output.print_md("# This is a alternative display of the Revit Timesheet")
-    table_data = []
-    valiad_dates = set()
-    proj_dict = dict()
-    for date, doc_data in sorted( log_data.items()):
-        valiad_dates.add(date)
-        for doc_name, doc_info in doc_data.items():
-            temp = proj_dict.get(doc_name, {})
-            starting_time = doc_info.get("starting_time", None)
-            end_time = doc_info.get("end_time", None)
-            if starting_time and end_time:
-                duration = end_time - starting_time
-                temp[date] = duration
-                proj_dict[doc_name] = temp
 
-    for proj_name, proj_info in sorted(proj_dict.items()):
-        total_duration = sum(proj_info.values())
-        table_data.append([proj_name] + [TIME.get_readable_time(proj_info.get(date, 0)) if proj_info.get(date, 0) != 0 else "N/A" for date in sorted(valiad_dates)] + [TIME.get_readable_time(total_duration)])
+    def print_table(dates):
+        table_data = []
+        valiad_dates = set()
+        proj_dict = dict()
+        for date in dates:
+            doc_data = log_data.get(date, {})
+            valiad_dates.add(date)
+            for doc_name, doc_info in doc_data.items():
+                temp = proj_dict.get(doc_name, {})
+                starting_time = doc_info.get("starting_time", None)
+                end_time = doc_info.get("end_time", None)
+                if starting_time and end_time:
+                    duration = end_time - starting_time
+                    temp[date] = duration
+                    proj_dict[doc_name] = temp
 
-    output.print_table(table_data=table_data,
-                        title="Revit Timesheet",
-                        columns=["Proj. Name"] + sorted(valiad_dates) + ["Total Hour"]
-                        )
+        for proj_name, proj_info in sorted(proj_dict.items()):
+            total_duration = sum(proj_info.values())
+            table_data.append([proj_name] + [TIME.get_readable_time(proj_info.get(date, 0)) if proj_info.get(date, 0) != 0 else "N/A" for date in sorted(valiad_dates)] + [TIME.get_readable_time(total_duration)])
 
+        output.print_table(table_data=table_data,
+                            title="Revit Timesheet",
+                            columns=["Proj. Name"] + sorted(valiad_dates) + ["Total Hour"]
+                            )
+
+
+    all_dates = sorted( log_data.keys())
+
+    seg_max = 10
+    for i in range(0, len(all_dates), seg_max):
+        if i+seg_max < len(all_dates):
+            dates = all_dates[i:i+seg_max]
+        else:
+            dates = all_dates[i:]
+
+        print_table(dates)
+
+
+    
 def unit_test():
     update_time_sheet_revit("test_project_revit_1")
     update_time_sheet_revit("test_project_revit_2")

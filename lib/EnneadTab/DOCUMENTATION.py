@@ -32,7 +32,9 @@ def show_scott_tip():
     else:
         output = OUTPUT.Output()
     tip = random.choice(SCOTT_TIPS)
-    output.print_md ("#Scott's Tip of the day:\n{}".format(tip.split("/")[-1]))
+    import webbrowser
+    webbrowser.open(tip)
+    output.print_md ("#Scott's Tip of the day:\n{}".format(tip))
 
     embed_html = """<!DOCTYPE html>
 <html>
@@ -48,9 +50,8 @@ def show_scott_tip():
     <p>Enjoy!</p>
 </body>
 </html>""".format(tip)
-    output.print_html(embed_html)
+    # output.print_html(embed_html)
     OUTPUT.display_output_on_browser()
-    os.startfile(tip)
     
 
 def get_files_with_keyword(keyword, folder):

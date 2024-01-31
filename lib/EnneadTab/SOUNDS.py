@@ -1,7 +1,9 @@
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
 import time
+import threading
 import ENVIRONMENT
 import ENVIRONMENT_CONSTANTS
 
@@ -67,12 +69,59 @@ def unit_test():
     # play_sound("sound effect_mario powerup.wav")
     play_meme_sound()
     
+class Player:
+    """
+    the music file start to play, and a FlagListener will start running, when 
+    detecting a stop flag snet by any program, it stops.
+
+    Can be usewd to play 'elevator music' continously but not infiniately during long process
+    such as doc syncing dyc opening
+
+    I think this Listerner will use threading to keep it running without blocking main program
+
+    player = Player(file)
+    player.start()
+    # do other stuff
+    player.stop()
+
+    
+    """
+
+    def play(self):
+        while not self.stop_flag.is_set():
+            print("Playing elevator music...")
+            play_sound(self.file)
+
+            
+    def start(self, file):
+        self.file = file
+
+
+        # Create a flag to control the music playback
+        self.stop_flag = threading.Event()
+
+        # Create a thread to play music
+        self.music_thread = threading.Thread(target=self.play)
+
+        # Start the music thread
+        self.music_thread.start()
+
+    def stop(self):
+
+        # Set the stop flag to terminate the music thread
+        self.stop_flag.set()
+
+        # Wait for the music thread to finish
+        self.music_thread.join()
+
+        print("Music stopped.")
+        pass
 
 #############
 if __name__ == "__main__":
     print(__file__ + "   -----OK!")
     # unit_test() 
     file = 'sound effect_xmas_hohoho.wav'
-    file = 'sound effect_xmas_hohoho.mp3'
+    # file = 'sound effect_xmas_hohoho.mp3'
     play_sound(file)
     
