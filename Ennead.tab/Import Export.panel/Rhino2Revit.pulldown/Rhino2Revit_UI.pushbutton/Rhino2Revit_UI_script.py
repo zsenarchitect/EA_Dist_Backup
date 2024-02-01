@@ -114,7 +114,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
                     new_subc = doc.Settings.Categories.NewSubcategory(
                         parent_category, item.display_name_naked)
                 except Exception as e:
-                    # print e
+                    # print (e)
                     pass
                 finally:
                     item.selected_OST_name = item.display_name_naked

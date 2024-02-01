@@ -129,7 +129,7 @@ def get_dwg_file_path(dwg):
         try:
             file_ref = dwg.GetExternalFileReference ()
         except Exception as e:
-            print e
+            print (e)
             print 
             continue
 

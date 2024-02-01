@@ -78,7 +78,7 @@ def update_last_sync_data_file(doc):
         if doc.IsModified:
             punish_long_gap_time(data)
     except Exception as e:
-        print e
+        print (e)
 
     for key, value in data.items():
         if time.time() - value  > 60*60*10:#record older than 10 hour should be removed
@@ -161,14 +161,14 @@ def run_exe():
         return
     except Exception as e:
         pass
-        #print e
+        #print (e)
 
     try:
         EnneadTab.EXE.open_file_in_default_application(exe_location.replace(" - Shortcut", ""))
         return
     except Exception as e:
         pass
-        #print e
+        #print (e)
 ################## main code below #####################
 if __name__== "__main__":
     output = script.get_output()

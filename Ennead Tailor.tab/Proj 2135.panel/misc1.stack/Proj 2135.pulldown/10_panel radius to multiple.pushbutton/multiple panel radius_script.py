@@ -20,7 +20,7 @@ def find_similar_panels(type_id):
             if "has no attribute" in str(e):
                 return False
             else:
-                print e
+                print (e)
                 print x.Id
                 return False
 

@@ -91,12 +91,12 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
 
             else:
                 if "no views/sheets selected" in e:
-                    print e
+                    print (e)
                     print "000000000"
                     has_non_print_sheet = True
                 else:
 
-                    print e
+                    print (e)
 
     time_end = time.time()
     additional_msg = "exporting DWG takes {}s".format( time_end - time_start)

@@ -1215,7 +1215,7 @@ def copy_file_to_folder(original_path, target_folder):
     try:
         shutil.copyfile(original_path, new_path)
     except Exception as e:
-        print e
+        print (e)
 
 """"""
 def read_file_safely(original_path, file_name = None):
@@ -1689,7 +1689,7 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
                 continue
         except Exception as e:
             print "Info:"
-            print e
+            print (e)
             print_note(str(doc))
             continue
 
@@ -1699,7 +1699,7 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
             doc.Close(False)
             doc.Dispose()
         except Exception as e:
-            print e
+            print (e)
             try:
                 print "skip closing [{}]".format(title)
             except:
@@ -1775,7 +1775,7 @@ def close_docs_by_name(names = [], close_all = False):
             try:
                 safe_close(doc)
             except Exception as e:
-                print e
+                print (e)
                 print "skip closing [{}]".format(doc.Title)
 
 """"""

@@ -93,7 +93,7 @@ def process_file(file, camera, ref_view_name):
             export_image_from_view(view, new_doc)
             t.RollBack()
     except Exception as e:
-        print e
+        print (e)
     finally:
         new_doc.Close(False)
 

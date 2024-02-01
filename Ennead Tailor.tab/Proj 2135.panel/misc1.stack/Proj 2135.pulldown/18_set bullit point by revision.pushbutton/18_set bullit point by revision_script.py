@@ -74,7 +74,7 @@ def set_revision_on_sheet(sheet):
                 #print "append {} to to-do list".format(para_name)
                 new_revision_list.append(get_revision_by_para(para_name))
         except Exception as e:
-            #print e
+            #print (e)
             #this para is not here, dont worry about it.
             pass
     #print new_revision_list

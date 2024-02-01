@@ -33,7 +33,7 @@ def is_there_cancel_button(cancel_button_icon_file):
         return True
 
     except Exception as e:
-        #print e.message
+        #print (e.message)
         return False
 
 

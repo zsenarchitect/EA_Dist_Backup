@@ -29,7 +29,7 @@ def set_rm_department(room, department):
     except Exception as e:
         print "*"*10
         print "skipping room {} ".format(output.linkify(room.Id))
-        print e
+        print (e)
         print "*"*10
 
 def try_to_fix_rm(department):

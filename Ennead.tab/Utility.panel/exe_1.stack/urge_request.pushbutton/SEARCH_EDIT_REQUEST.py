@@ -33,7 +33,7 @@ def is_there_edit_request(request_icon_file):
         return True
 
     except Exception as e:
-        #print e.message
+        #print (e.message)
         return False
 
 

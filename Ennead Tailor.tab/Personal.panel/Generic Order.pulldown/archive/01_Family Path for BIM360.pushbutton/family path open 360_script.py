@@ -30,7 +30,7 @@ def reload_family(family):
         """
         _main_doc.LoadFamily(file, load_option, clr.StrongBox[DB.Family](family))
     except Exception as e:
-        print e
+        print (e)
         print "Skip family <{}> reload".format(family.Name)
 
 class FamilyOption(DB.IFamilyLoadOptions) :

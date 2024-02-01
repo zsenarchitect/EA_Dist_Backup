@@ -99,7 +99,7 @@ if __name__ == "__main__":
                 try:
                     revit.doc.Delete(temp_group.Id)
                 except Exception as e:
-                    print e
+                    print (e)
                     bad_group.append(name)
         """
         revit.uidoc.ActiveView = original_view

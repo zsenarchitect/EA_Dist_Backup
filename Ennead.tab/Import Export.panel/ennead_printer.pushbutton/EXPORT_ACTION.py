@@ -1,7 +1,7 @@
 import time
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB #pylint: disable=undefined-variable
 from pyrevit import script
 
 # import ennead_printer_script as ENNEAD_PRINTER_SCRIPT
@@ -40,7 +40,7 @@ def get_print_setting(doc, is_color_by_sheet, is_color = True, is_A1_paper = Tru
     #print all_print_settings[0].Name
     if len(all_print_settings) > 0:
         return all_print_settings[0]
-    print "!!!Cannot find print setting that has 'COLOR/GRAYSCALE' or 'A1/A0' in it. Use default"
+    print ("!!!Cannot find print setting that has 'COLOR/GRAYSCALE' or 'A1/A0' in it. Use default")
     return DB.FilteredElementCollector(doc).OfClass(DB.PrintSetting).FirstElement()
 
 
@@ -80,7 +80,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False):
 
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             return False
             break
         attempt += 1
@@ -88,16 +88,16 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False):
         try:
 
             doc.ExportImage(opts)
-            print "Image export succesfully"
+            print ("Image export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in str(e):
                 file_name = file_name + "_same name"
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name))
 
             else:
-                print e.message
+                print (e.message)
     EA_UTILITY.cleanup_name_in_folder(output_folder, file_name, ".jpg")
     return file_name + ".jpg"
 
@@ -141,7 +141,7 @@ def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_exp
 
             view_file_name = "{}{}_{}_{}_[View On Sheet]".format(prefix, view_or_sheet.SheetNumber, detail_num, title)
 
-            print "Exporting view on sheet: {}.dwg".format(view_file_name)
+            print ("Exporting view on sheet: {}.dwg".format(view_file_name))
             dwg_file = export_dwg(view, view_file_name, output_folder, dwg_setting_name, is_export_view_on_sheet)
             files_exported.extend(dwg_file)
 
@@ -152,7 +152,7 @@ def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_exp
     attempt = 0
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             #global failed_export
             #failed_export.append(file_name)
             break
@@ -165,10 +165,10 @@ def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_exp
             if  "The files already exist!" in e:
                 file_name = file_name + "_same name"
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name))
 
             else:
-                print e
+                print (e)
     EA_UTILITY.cleanup_folder(folder = output_folder, extension = ".pcp")
     files_exported.append(file_name + ".dwg")
     return files_exported
@@ -196,7 +196,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
     def pdf_method_1():
         #  ----- method 1 -----
-        print "$$$ Trying method 1"
+        print ("$$$ Trying method 1")
         t = DB.Transaction(doc, "temp")
         t.Start()
 
@@ -215,7 +215,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
             sheet_use_color = view_or_sheet.LookupParameter("Print_In_Color").AsInteger()
         else:
             sheet_use_color = 0
-            print "Cannot find 'Print_In_Color' in sheet para...Use NO color as default."
+            print ("Cannot find 'Print_In_Color' in sheet para...Use NO color as default.")
         print_manager.PrintSetup.CurrentPrintSetting = get_print_setting(doc,
                                                                         is_color_by_sheet,
                                                                         is_color = sheet_use_color,
@@ -223,7 +223,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
         # print_manager.Apply()
         #t.Commit()
         #"""
-        print "Print Setting Name = [{}]".format(print_manager.PrintSetup.CurrentPrintSetting.Name)
+        print ("Print Setting Name = [{}]".format(print_manager.PrintSetup.CurrentPrintSetting.Name))
         print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
         print_manager.PrintRange = DB.PrintRange.Select
         view_set = DB.ViewSet()
@@ -231,7 +231,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
         try:
             print_manager.ViewSheetSetting.InSession.Views = view_set
         except:
-            print "InSession ViewSheetSet failed, trying with CurrentViewSheetSet..."
+            print ("InSession ViewSheetSet failed, trying with CurrentViewSheetSet...")
             print_manager.ViewSheetSetting.CurrentViewSheetSet.Views = view_set
         # print_manager.Apply()
         # t.Commit()
@@ -245,26 +245,26 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
                 try:
                     print_manager.SubmitPrint(view_or_sheet)
                 except:
-                    print "2nd method"
+                    print ("2nd method")
                     print_manager.SubmitPrint()
-                print "PDF export succesfully"
+                print ("PDF export succesfully")
                 break
             except Exception as e:
                 if  "The files already exist!" in e:
                     raw_name = file_name + "_same name"
                     new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                    output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                    print ("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
                 elif "no views/sheets selected" in e:
-                    print e
-                    print "..."
-                    print print_manager.PrintToFileName
-                    print "problem sheet = {}".format(view_or_sheet.Name)
+                    print (e)
+                    print ("...")
+                    print (print_manager.PrintToFileName)
+                    print ("problem sheet = {}".format(view_or_sheet.Name))
                     has_non_print_sheet = True
                 else:
-                    print e
-                    print print_manager.PrintToFileName
-                    print "problem sheet = {}".format(view_or_sheet.Name)
+                    print (e)
+                    print (print_manager.PrintToFileName)
+                    print ("problem sheet = {}".format(view_or_sheet.Name))
                 break
 
         t.RollBack()
@@ -274,7 +274,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
         #cleanup_pdf_name()
         EA_UTILITY.cleanup_name_in_folder(output_folder, file_name, ".pdf")
 
-        print "$$$ end method 1"
+        print ("$$$ end method 1")
 
     def pdf_method_2():
         #  ----- method 2 -----
@@ -349,7 +349,7 @@ def combine_final_pdf(output_folder, files_exported_for_this_issue, combined_pdf
 
         if file in files_exported_for_this_issue:
             file_path = os.path.join(output_folder, file)
-            print "--combining PDF: {}".format(file_path)
+            print ("--combining PDF: {}".format(file_path))
             list_of_filepaths.append(file_path)
 
     combined_pdf_file_path = "{}\{}.pdf".format(output_folder, combined_pdf_name)

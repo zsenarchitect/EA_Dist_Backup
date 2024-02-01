@@ -151,7 +151,7 @@ def close_docs_by_name(names = [], close_all = False):
             try:
                 safe_close(doc)
             except Exception as e:
-                print e
+                print (e)
                 print "skip closing [{}]".format(doc.Title)
 
 
@@ -326,7 +326,7 @@ def export_image_from_sheet(sheet, doc):
                 output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
             else:
-                print e
+                print (e)
     time_end = time.time()
     cleanup_jpg_name()
     print_time("sheet to Jpg", time_end, time_start)
@@ -393,12 +393,12 @@ def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
 
             else:
                 if "no views/sheets selected" in e:
-                    print e
+                    print (e)
                     print "000000000"
                     has_non_print_sheet = True
                 else:
 
-                    print e
+                    print (e)
 
     time_end = time.time()
     print_time("exporting DWG", time_end, time_start)
@@ -454,11 +454,11 @@ def export_DWG_from_sheet(sheet, doc):
 
             else:
                 if "no views/sheets selected" in e:
-                    print e
+                    print (e)
                     print "000000000"
                     has_non_print_sheet = True
                 else:
-                    print e
+                    print (e)
     time_end = time.time()
     print_time("sheet to DWG", time_end, time_start)
     add_to_log(file_name + ".dwg", time_end - time_start)
@@ -537,13 +537,13 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
                 output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
             elif "no views/sheets selected" in e:
-                print e
+                print (e)
                 print "..."
                 print print_manager.PrintToFileName
                 print "problem sheet = {}".format(sheet.Name)
                 has_non_print_sheet = True
             else:
-                print e
+                print (e)
                 print print_manager.PrintToFileName
                 print "problem sheet = {}".format(sheet.Name)
             break
@@ -653,7 +653,7 @@ def is_sheet_in_current_issue_para(sheet):
             return True
     except Exception as e:
         print "part A has issue."
-        print e
+        print (e)
         print sheet
         print sheet.SheetNumber
         print sheet.Name
@@ -678,7 +678,7 @@ def is_sheet_in_current_issue_para(sheet):
 
     except Exception as e:
         print "!!! Stop and see below:"
-        print e
+        print (e)
         print sheet
         print sheet.SheetNumber
         print sheet.Name
@@ -698,7 +698,7 @@ def is_sheet_in_current_issue_para(sheet):
         else:
             return False
     except Exception as e:
-        print e
+        print (e)
         return False
 
 

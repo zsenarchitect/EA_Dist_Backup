@@ -25,10 +25,9 @@ from ENVIRONMENT_CONSTANTS import CORE_MODULE_FOLDER_FOR_PUBLISHED_RHINO
 
 from ENVIRONMENT_CONSTANTS import DEPENDENCY_FOLDER
 
-from ENVIRONMENT_CONSTANTS import is_Revit_environment, is_Rhino_environment, is_terminal_environment
 
+import ENVIRONMENT_CONSTANTS
 
-from USER_CONSTANTS import is_enneadtab_developer
 import USER_CONSTANTS
 
 import USER
@@ -40,14 +39,11 @@ import UNIT_TEST
 IS_DEV_ENVIRONMENT = False
 IS_L_DRIVE_ACCESSIBLE = os.path.exists(HOSTER_FOLDER)
 
-try:
-    is_developer = is_enneadtab_developer() or USER.is_rhino_developer() or USER.is_revit_developer()
-except Exception as e:
-    print (traceback.format_exc())
-    is_developer = False
 
 
-if is_developer:
+
+
+if USER_CONSTANTS.is_enneadtab_developer():
     IS_DEV_ENVIRONMENT = True
     # rhino and revit dev check will be deprecated upon implementation of is_enneadtab_developer() when that is bug free.
     
@@ -103,9 +99,9 @@ def get_EnneadTab_module_root():
     Returns:
         str: The root folder path for EnneadTab.
     """
-    if is_Rhino_environment():
+    if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
         return r"{}\Source Codes\lib\EnneadTab".format(get_EnneadTab_For_Rhino_root())
-    if is_Revit_environment():
+    if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         return r"{}\ENNEAD.extension\lib\EnneadTab".format(get_EnneadTab_For_Revit_root())
 
 
@@ -159,7 +155,7 @@ def is_exclusive_Rhino_environment():
     Returns:
         bool: True if current environment is Rhino and not Grasshopper.
     """
-    if is_Rhino_environment() and not is_Grasshopper_environment():
+    if ENVIRONMENT_CONSTANTS.is_Rhino_environment() and not ENVIRONMENT_CONSTANTS.is_Grasshopper_environment():
         return True
     return False
 
@@ -170,13 +166,13 @@ def primary_app_name():
     Returns:
         str: The primary app name.
     """
-    if is_Grasshopper_environment():
+    if ENVIRONMENT_CONSTANTS.is_Grasshopper_environment():
         return "Grasshopper"
 
-    if is_Rhino_environment():
+    if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
         return "Rhino"
 
-    if is_Revit_environment():
+    if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         return "Revit"
 
     return "EnneadTab"
@@ -228,9 +224,9 @@ if is_exclusive_Rhino_environment():
 def unit_test():
     
     print("Is currently in developer environemnt? {}".format(UNIT_TEST.print_boolean_in_color(IS_DEV_ENVIRONMENT)))
-    print ("Current environment is Revit? {}".format(UNIT_TEST.print_boolean_in_color(is_Revit_environment())))
-    print ("Current environment is Rhino? {}".format(UNIT_TEST.print_boolean_in_color(is_Rhino_environment())))
-    print ("Current environment is terminal? {}".format(UNIT_TEST.print_boolean_in_color(is_terminal_environment())))
+    print ("Current environment is Revit? {}".format(UNIT_TEST.print_boolean_in_color(ENVIRONMENT_CONSTANTS.is_Revit_environment())))
+    print ("Current environment is Rhino? {}".format(UNIT_TEST.print_boolean_in_color(ENVIRONMENT_CONSTANTS.is_Rhino_environment())))
+    print ("Current environment is terminal? {}".format(UNIT_TEST.print_boolean_in_color(ENVIRONMENT_CONSTANTS.is_terminal_environment())))
     print ("\n")
     print ("current github folder = {}".format (GITHUB_FOLDER))
     print ("L drive is accessible? {}".format(UNIT_TEST.print_boolean_in_color(IS_L_DRIVE_ACCESSIBLE)))

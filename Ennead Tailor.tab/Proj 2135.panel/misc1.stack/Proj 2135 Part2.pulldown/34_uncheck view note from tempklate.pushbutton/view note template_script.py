@@ -56,7 +56,7 @@ for para_id in all_para_ids:
     try:
         print doc.GetElement(para_id).Name
     except Exception as e:
-        print e
+        print (e)
         continue
     if doc.GetElement(para_id).Name == "View Note":
         print "find"

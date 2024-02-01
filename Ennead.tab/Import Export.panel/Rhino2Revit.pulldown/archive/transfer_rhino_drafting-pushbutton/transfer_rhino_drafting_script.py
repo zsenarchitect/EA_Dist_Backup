@@ -81,7 +81,7 @@ def process_data(doc, data, DICT_ost_mapping):
         try:
             detail_crv.LineStyle = OST_style
         except Exception as e:
-            print e
+            print (e)
             print layer, type, geo_data
             print DICT_ost_mapping.items()
 

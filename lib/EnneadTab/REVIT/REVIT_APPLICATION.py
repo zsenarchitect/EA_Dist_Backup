@@ -17,19 +17,14 @@ def get_application():
     return app
 
 
-def OLD_app():
-    """Return Application provided to the running command."""
-    if self.uiapp:
-        return self.uiapp.Application
-    elif isinstance(__revit__, ApplicationServices.Application):  #pylint: disable=undefined-variable
-        return __revit__  #pylint: disable=undefined-variable
-
-
 def get_uiappplication():
     """Return UIApplication provided to the running command."""
     if isinstance(__revit__, UI.UIApplication):  #pylint: disable=undefined-variable
         return __revit__  #pylint: disable=undefined-variable
 
+    from Autodesk.Revit import ApplicationServices
+    if isinstance(__revit__, ApplicationServices.Application):  #pylint: disable=undefined-variable
+        return UI.UIApplication(__revit__)  #pylint: disable=undefined-variable
     return __revit__
 
 

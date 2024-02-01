@@ -28,7 +28,7 @@ def fake_delete_subC(subC):
 
     except Exception as e:
         pass
-        # print e
+        # print (e)
     finally:
         t.Commit()
         # t.RollBack()

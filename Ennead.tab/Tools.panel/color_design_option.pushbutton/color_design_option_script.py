@@ -75,7 +75,7 @@ class Solution:
             try:
                 map(lambda x: view.SetElementOverrides (x.Id, setting), elements)
             except Exception as e:
-                print e
+                print (e)
         t.Commit()
 
 

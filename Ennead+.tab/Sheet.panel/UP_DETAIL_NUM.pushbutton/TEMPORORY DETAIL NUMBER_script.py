@@ -27,7 +27,7 @@ def change_detail_num(sel_sheets):
             try:
                 view.Parameter[detail_num_para_id].Set(detail_num)
             except:
-                print "Skip {}".format(view.Name)
+                print ("Skip {}".format(view.Name))
 
 ################# main code below #############
 if __name__== "__main__":

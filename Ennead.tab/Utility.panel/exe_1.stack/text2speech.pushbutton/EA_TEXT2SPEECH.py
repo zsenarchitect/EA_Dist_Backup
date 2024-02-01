@@ -23,7 +23,7 @@ def try_catch_error(func):
             out = func(*args, **kwargs)
             return out
         except Exception as e:
-            print e
+            print (e)
     return wrapper
 
 class TTS:

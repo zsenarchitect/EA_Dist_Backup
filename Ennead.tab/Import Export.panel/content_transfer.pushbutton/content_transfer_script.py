@@ -56,7 +56,7 @@ def copy_elements(element_ids, src_doc, dest_doc, is_strict):
                                                     dest_doc, None, cp_options)
             success.append(new_item_id)
         except Exception as e:
-            #print e
+            #print (e)
             failed.append(id)
 
     return success, failed # in list.    if success, return new id, if failed, return original id

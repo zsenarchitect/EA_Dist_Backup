@@ -28,7 +28,7 @@ def bind_para(doc, definition):
         DB.SharedParameterElement.Create(doc, definition)
     except Exception as e:
         print "doc = " + doc.Title
-        print e
+        print (e)
         return
 
 

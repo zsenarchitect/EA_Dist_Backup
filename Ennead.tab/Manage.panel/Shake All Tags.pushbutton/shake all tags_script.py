@@ -65,7 +65,7 @@ def shake_tags(view):
                 tag.Location.Move(DB.XYZ(0.1,0.1,0.1))
                 tag.LeaderEnd += revit.doc.GetElement(view.ViewId).UpDirection
             except Exception as e:
-                print e
+                print (e)
             revit.doc.Regenerate()
         with revit.Transaction("#2"):
             try:
@@ -74,7 +74,7 @@ def shake_tags(view):
                 tag.LeaderEnd -= revit.doc.GetElement(view.ViewId).UpDirection
                 tag.TagHeadPosition.Add(DB.XYZ.Zero)
             except Exception as e:
-                print e
+                print (e)
 
             if tag.TagText != old_text:
                 print "Tag content refreshed as {}".format(tag.TagText)

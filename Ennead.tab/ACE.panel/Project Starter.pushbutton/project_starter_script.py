@@ -287,7 +287,7 @@ class project_starter_ModelessForm(WPFWindow):
     @EnneadTab.ERROR_HANDLE.try_catch_error
     def level_data_add_Click(self, sender, e):
         # print sender
-        # print e
+        # print (e)
         self.level_data_class.add_level(int(self.tbox_level_gap.Text))
         # print self.data_grid.all_levels
         self.update_data_grid()
@@ -295,7 +295,7 @@ class project_starter_ModelessForm(WPFWindow):
     @EnneadTab.ERROR_HANDLE.try_catch_error
     def level_data_remove_Click(self, sender, e):
         # print sender
-        # print e
+        # print (e)
         self.level_data_class.remove_level()
         # print self.data_grid.all_levels
         self.update_data_grid()  

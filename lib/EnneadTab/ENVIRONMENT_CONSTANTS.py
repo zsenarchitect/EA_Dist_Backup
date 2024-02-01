@@ -45,7 +45,7 @@ CORE_MODULE_FOLDER_FOR_PUBLISHED_RHINO = "{}\\Source Codes\\lib\\EnneadTab".form
 
 DEPENDENCY_FOLDER = "{}\\03_Rhino\\12_EnneadTab for Rhino\\Dependency Modules".format(HOSTER_FOLDER)
 
-LIMITED_REVIT_PROJECTS = ["some gov project name"]
+LIMITED_REVIT_PROJECTS = ["some gov project name that want to limit enenadtab access"]
 
 def is_Rhino_environment():
     """Check if current environment is Rhino.

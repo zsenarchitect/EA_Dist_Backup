@@ -231,7 +231,7 @@ class ListSelectionDialog(REF_CLASS):
         # close window after double click action. Otherwise, run with error
 
         #print sender
-        #print e
+        #print (e)
         #print self.lb.SelectedItems
         #print dir(self.lb)
         #print len(list(self.lb.SelectedItems))

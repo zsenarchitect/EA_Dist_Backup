@@ -193,7 +193,7 @@ class EA_search_UI(forms.WPFWindow):
                         try:
                             print "{} = {}".format(x, getattr(command, x))
                         except Exception as e:
-                            print e
+                            print (e)
                 #print cmd.extension
         """
 
@@ -218,7 +218,7 @@ class EA_search_UI(forms.WPFWindow):
                     try:
                         print "\n{} = {}".format(x, getattr(command, x))
                     except Exception as e:
-                        print e
+                        print (e)
         """
 
         if self.checkbox_native.IsChecked:

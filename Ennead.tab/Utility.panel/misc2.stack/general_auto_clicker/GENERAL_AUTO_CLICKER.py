@@ -55,7 +55,7 @@ def is_there_icon(icon_path):
         return True
 
     except Exception as e:
-        #print e.message
+        #print (e.message)
         return False
 
 

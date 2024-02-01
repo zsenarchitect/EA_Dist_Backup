@@ -105,7 +105,7 @@ def inspect_family(family, enable_print = True):
         family_doc = doc.EditFamily(family)
     except Exception as e:
         if enable_print:
-            print e
+            print (e)
         return None
     parent_category = family_doc.OwnerFamily.FamilyCategory
 

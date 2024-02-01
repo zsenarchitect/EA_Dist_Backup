@@ -3,7 +3,11 @@
 
 
 
-__doc__ = "A floating window that give you quick access to all kinds of renamer function."
+__doc__ = """A floating window that give you quick access to all kinds of renamer function.
+    - Add/Remove a prefix for selected views.
+    - Change Views/SHeets to upper case.
+    - Format view names based on detail number and sheet number.
+    - Rename family on spot without going thru the project broswer."""
 __title__ = "Super\nRenamer"
 __tip__ = True
 
@@ -158,7 +162,7 @@ def rename_views(sheets, is_default_format, attempt = 0):
                 #print new_view_name
                 failed_sheets.add(sheet)
 
-                print "Will try to visit <{}> again to avoid using same name.".format(view.Name)
+                print ("Will try to visit <{}> again to avoid using same name.".format(view.Name))
                 view.Parameter[name_para_id].Set(new_view_name + "_Pending")
                 #print view
                 continue
@@ -167,12 +171,12 @@ def rename_views(sheets, is_default_format, attempt = 0):
                     view.Parameter[title_para_id].Set(original_name)
                 view.Parameter[name_para_id].Set(new_view_name)
             except:
-                print "Skip {}".format(view.Name)
+                print ("Skip {}".format(view.Name))
 
 
     if len(list(failed_sheets)) > 0:
         attempt += 1
-        print ("\n\nAttemp = {}".format(ATTEMPT))
+        print ("\n\nAttemp = {}".format(attempt))
         rename_views(list(failed_sheets), is_default_format, attempt)
     t.Commit()
 
@@ -202,7 +206,7 @@ def rename_family(selected_element):
 
 
     except Exception as e:
-        print e
+        print (e)
         EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This name taken, try again.")
         t.RollBack()
         return

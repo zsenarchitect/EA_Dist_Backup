@@ -56,7 +56,7 @@ def process_tag(ref_tag, bad_tag, is_V):
     try:
         bad_tag.TagHeadPosition = temp_location
     except Exception as e:
-        #print e
+        #print (e)
         #print "Tag with no leaders cannot have tag head outside the host. Will try to add leader for you."
         bad_tag.HasLeader = True
         bad_tag.TagHeadPosition = temp_location

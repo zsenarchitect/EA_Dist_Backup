@@ -44,7 +44,7 @@ def update_view_name():
     except Exception as e:
         print current_name
         print new_name
-        print e
+        print (e)
         EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
 
 
@@ -334,12 +334,12 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
 
             else:
                 if "no views/sheets selected" in e:
-                    print e
+                    print (e)
                     print "000000000"
                     has_non_print_sheet = True
                 else:
 
-                    print e
+                    print (e)
 
     time_end = time.time()
     additional_msg = "exporting DWG takes {}s".format( time_end - time_start)

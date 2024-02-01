@@ -354,7 +354,7 @@ def make_new_filled_regions():
             create_filled_region_from_floor(floor)
         except Exception as e:
             print "Skip filled region creation on one floor element"
-            print e
+            print (e)
     """
     map(lambda x: create_filled_region_from_floor(x, filled_region_type, doc.ActiveView.Id), floors)
     write_new_data(new_filled_region_data)

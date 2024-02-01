@@ -100,7 +100,7 @@ def check_sync_queue():
 
     except Exception as e:
         #print "file not saved"
-        #print e #---->save doc is not allowed in this event
+        #print (e) #---->save doc is not allowed in this event
         pass
     return False
 

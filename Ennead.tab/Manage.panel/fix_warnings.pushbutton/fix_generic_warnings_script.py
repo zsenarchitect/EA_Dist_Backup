@@ -88,7 +88,7 @@ def random_pick(error_element_ids):
         bbox.Min = DB.XYZ(min_X, min_Y, min_Z)
         bbox.Max = DB.XYZ(max_X, max_Y, max_Z)
     except Exception as e:
-        #print e
+        #print (e)
         #print "This is usually becasue 2D element has no 3d boudning box"
         bbox = None
 
@@ -104,7 +104,7 @@ def random_pick(error_element_ids):
         try:
             doc.ActiveView.SetSectionBox(bbox)
         except Exception as e:
-            print e
+            print (e)
         t.Commit()
         try:
             for uiview in uidoc.GetOpenUIViews():

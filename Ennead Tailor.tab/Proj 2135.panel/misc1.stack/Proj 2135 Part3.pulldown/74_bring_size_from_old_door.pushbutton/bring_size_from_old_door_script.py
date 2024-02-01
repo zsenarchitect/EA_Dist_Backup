@@ -52,7 +52,7 @@ def update_current_door_size():
         except Exception as e:
             pass
             #print door.Id
-            print e
+            print (e)
     t.Commit()
 
 def record_old_door_size():

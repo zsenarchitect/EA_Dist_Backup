@@ -242,7 +242,7 @@ class Solution:
                 else:
                     para.Set(value)
             except Exception as e:
-                print e
+                print (e)
                 #print "Cannot assign {} becasue: {}".format(para_name, e)
 
     def create_new_type(self, bad_type, target_type_family):
@@ -250,7 +250,7 @@ class Solution:
         try:
             new_good_type = sample_type.Duplicate(bad_type.LookupParameter("Type Name").AsString())
         except Exception as e:
-            print e
+            print (e)
             return bad_type
 
 
@@ -694,7 +694,7 @@ class MergeFamily_UI(forms.WPFWindow):
             else:
                 type = self.target_type
         except Exception as e:
-            print e
+            print (e)
             return
         if not type:
             return

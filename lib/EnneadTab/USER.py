@@ -18,10 +18,10 @@ import FOLDER
 import UNIT_TEST
 
 
-
-for name, data in ENNEADTAB_DEVELOPERS.items():
-    if data["github_local"] is None:
-        data["github_local"] = ["C:\\Users\\{}\\github".format(x) for x in data["system"]]
+# is this lagacy code?
+# for name, data in ENNEADTAB_DEVELOPERS.items():
+#     if data["github_local"] is None:
+#         data["github_local"] = ["C:\\Users\\{}\\github".format(x) for x in data["system"]]
 
 
 

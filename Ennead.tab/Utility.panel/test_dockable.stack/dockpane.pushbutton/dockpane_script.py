@@ -41,7 +41,7 @@ class DockableExample(forms.WPFPanel):
         template_list = [forms.TemplateListItem(s) for s in sheets]
         #self.list_lb.ItemsSource = ObservableCollection[forms.TemplateListItem](template_list)
       except Exception as e:
-        print e.message
+        print (e.message)
 
 
 @EnneadTab.ERROR_HANDLE.try_catch_error

@@ -36,7 +36,7 @@ def set_area_layout_function(area, layout_function):
     except Exception as e:
         print "*"*10
         print "skipping area {} ".format(output.linkify(area.Id))
-        print e
+        print (e)
         print "*"*10
 
 def try_to_fix_area(layout_function):

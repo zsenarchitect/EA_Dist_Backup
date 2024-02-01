@@ -22,7 +22,7 @@ def about_beta_tester():
         #print new_pdf
         EnneadTab.EXE.open_file_in_default_application(new_pdf)
     except Exception as e:
-        print e
+        print (e)
         EnneadTab.EXE.open_file_in_default_application(og_pdf)
 ################## main code below #####################
 output = script.get_output()

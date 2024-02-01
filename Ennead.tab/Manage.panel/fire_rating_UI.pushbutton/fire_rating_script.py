@@ -230,7 +230,7 @@ def load_EA_family(title):
         #print "family loaded"
     except Exception as e:
         print "family cannot be loaded"
-        print e
+        print (e)
         t.RollBack()
         
 # Create a subclass of IExternalEventHandler

@@ -48,7 +48,7 @@ def fix_tag_in_view(view):
             location = tag.TagHeadPosition
         except Exception as e:
             print "*"*20
-            print e
+            print (e)
             print tag
             print tag.Id
             print view.Name

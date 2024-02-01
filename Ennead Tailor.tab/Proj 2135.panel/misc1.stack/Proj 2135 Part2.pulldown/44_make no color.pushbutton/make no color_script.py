@@ -109,7 +109,7 @@ def get_filter_by_name(name):
         return filter(lambda x: x.Name == name, view_filters)[0]
     except Exception as e:
         print "cannot find filter:<" + name + ">"
-        print e
+        print (e)
         return None
 
 

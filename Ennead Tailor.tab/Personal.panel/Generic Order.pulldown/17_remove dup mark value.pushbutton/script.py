@@ -41,7 +41,7 @@ def process_warning(warning):
                 new_value = old_value + "_ID: " + str(el.Id)
                 el.LookupParameter(key).Set(new_value)
             except Exception as e:
-                print e
+                print (e)
     #print warning.GetType()
 
     try:

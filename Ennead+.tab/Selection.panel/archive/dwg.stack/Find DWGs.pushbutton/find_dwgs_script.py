@@ -94,7 +94,7 @@ def list_dwg_size():
         try:
             file_ref = dwg.GetExternalFileReference ()
         except Exception as e:
-            print e
+            print (e)
             print dwg.LookupParameter("Type Name").AsString()
             continue
         file_path = file_ref.GetPath()
