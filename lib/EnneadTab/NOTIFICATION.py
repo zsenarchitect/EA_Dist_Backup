@@ -35,26 +35,7 @@ def get_toaster_level_setting():
     return 1
 
 
-def messager(main_text,
-             force_toast=False,
-             importance_level=1,
-             width = 1200,
-             height = 150,
-             image = None,
-             animation_stay_duration = 5,
-             print_note = False):
-    """!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    THIS IS TO TEMPORORYLY KEEP BACKWARD COMPABILITY, should remove after new year
-    """
-    messenger(main_text=main_text,
-             force_toast=force_toast,
-             importance_level=importance_level,
-             width=width,
-             height=height,
-             image=image,
-             animation_stay_duration=animation_stay_duration,
-             print_note=print_note)
+
 
 def messenger(main_text,
              force_toast=False,

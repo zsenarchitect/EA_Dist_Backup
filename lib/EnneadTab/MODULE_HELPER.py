@@ -40,12 +40,6 @@ def run_Rhino_button(folder, file_name, func_name, *args):
         *args: Positional arguments to pass to the function.
     """
 
-    # do this from..import to remove any dependecy that first time run it from Rhino button
-    # try:
-    #     from ENVIRONMENT import get_EnneadTab_For_Rhino_root
-    # except Exception as e:
-    #     print (e)
-    #     return
 
     root = ENVIRONMENT.get_EnneadTab_For_Rhino_root()
     module_path = "{}\Source Codes\{}\{}.py".format(root, folder, file_name)

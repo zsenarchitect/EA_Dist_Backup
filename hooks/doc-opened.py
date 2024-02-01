@@ -1,5 +1,6 @@
 import os
 from datetime import date
+import random
 
 from Autodesk.Revit import DB
 
@@ -356,12 +357,15 @@ def remove_ignorance(doc, warning_cate):
 
 
 def check_group_usage(doc):
+    if random.random() < 0.1:
+        return
     max_count = 10
     count = 0 
+    output = script.get_output()
     all_group_types = DB.FilteredElementCollector(doc).OfClass(DB.GroupType).ToElements()
     for group_type in all_group_types:
 
-        # cap max 10 ducks/msg
+        # cap max ducks/msg
         if count >= max_count:
             return
         
@@ -375,7 +379,7 @@ def check_group_usage(doc):
         if len(list(sample_group.GetMemberIds ())) == 1:
             count += 1
             EnneadTab.NOTIFICATION.messenger(main_text = "Group type <{}> has only 1 element inside the group.\nThis is not the best use of the group.".format(group_type.LookupParameter("Type Name").AsString())) 
-            output = script.get_output()
+            
             print ("\nFound group with only 1 elements.")
             print ("Sample Group: {}".format(output.linkify(sample_group.Id, title="Sample Group Instance")))
             if hasattr(sample_group, "OwnerViewId") and sample_group.OwnerViewId != DB.ElementId.InvalidElementId:
