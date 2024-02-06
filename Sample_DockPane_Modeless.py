@@ -10,7 +10,8 @@ from pyrevit.forms import WPFWindow
 
 import traceback
 from pyrevit import forms, script
-from Autodesk.Revit import DB, UI
+from Autodesk.Revit import DB
+from Autodesk.Revit import UI
 import os.path as op
 import EA_UTILITY
 import EnneadTab

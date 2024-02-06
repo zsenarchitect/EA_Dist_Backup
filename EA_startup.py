@@ -8,7 +8,8 @@ import os
 import random
 import time
 
-from Autodesk.Revit import DB, UI
+from Autodesk.Revit import DB
+from Autodesk.Revit import UI
 from pyrevit import forms, script
 from pyrevit.coreutils import envvars
 
@@ -122,7 +123,19 @@ def register_dimension_note_dockpane():
         EA_UTILITY.print_note( "Skipped registering dockable pane. Already exists.")
 
 
+def annouce_hibration_mode():
+    if random.random() < 0.2:
+        return
+    output = EnneadTab.OUTPUT.get_output()
+    output.write("EnneadTab in hibernation mode.", EnneadTab.OUTPUT.Style.Title) 
+    output.write("Due to staffing plan change, Sen Zhang is no longer maintaining EnneadTab.")
+    output.write("Bug-fix and feature-build are suspended.")
+    output.write("{}\\hibernation_large.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+
+    output.plot()
+
 def general_annoucement():
+    annouce_hibration_mode()
 
     from datetime import date
     today = date.today().strftime("%m/%d/%y")

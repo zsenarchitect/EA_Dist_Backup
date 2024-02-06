@@ -2,7 +2,8 @@
 from pyrevit import  EXEC_PARAMS, script
 
 import EnneadTab
-from Autodesk.Revit import DB, UI
+from Autodesk.Revit import DB
+from Autodesk.Revit import UI
 args = EXEC_PARAMS.event_args
 doc = args.ActiveDocument 
 uidoc = UI.UIDocument(doc)

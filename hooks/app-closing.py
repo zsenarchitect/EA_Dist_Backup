@@ -1,5 +1,6 @@
 #from pyrevit import script
-#from Autodesk.Revit import DB, UI
+#from Autodesk.Revit import DB
+from Autodesk.Revit import UI
 import EA_UTILITY
 import EnneadTab
 

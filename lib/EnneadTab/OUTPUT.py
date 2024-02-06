@@ -134,6 +134,8 @@ class Output:
             return "<button onclick='return sample_func(this)'>{}</button>".format(input.split("bt_")[1])
         
         if os.path.exists(str(input)):
+            if "_large" in str(input):
+                return "<img src='{}' height = '800'>".format(input)
             return "<img src='{}' height = '300'>".format(input)
         return str(input).replace("\n", "<br>")
 
