@@ -131,7 +131,8 @@ def annouce_hibration_mode():
     output.write("Due to staffing plan change, Sen Zhang is no longer maintaining EnneadTab.")
     output.write("Bug-fix and feature-build are suspended.")
     output.write("{}\\hibernation_large.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
-
+    """https://www.fontspace.com/cobemat-cartoon-font-f104361
+    this is the font webpage"""
     output.plot()
 
 def general_annoucement():
