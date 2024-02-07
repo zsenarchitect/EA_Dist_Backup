@@ -12,7 +12,7 @@ from pyrevit import script #
 import ENNEAD_LOG
 import EnneadTab
 import math
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 try:
     doc = __revit__.ActiveUIDocument.Document

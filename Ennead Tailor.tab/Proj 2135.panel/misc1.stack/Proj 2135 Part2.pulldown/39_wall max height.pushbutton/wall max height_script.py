@@ -11,7 +11,7 @@ from pyrevit import script #
 
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 
 doc = __revit__.ActiveUIDocument.Document
 

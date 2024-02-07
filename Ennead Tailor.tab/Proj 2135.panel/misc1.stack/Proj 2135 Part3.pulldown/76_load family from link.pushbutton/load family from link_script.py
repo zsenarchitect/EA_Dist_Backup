@@ -17,7 +17,7 @@ new idea, just give ability to open faimily from link and make active document. 
 
 
 from pyrevit import forms, script
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 import EA_UTILITY

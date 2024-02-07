@@ -13,7 +13,7 @@ from pyrevit import script #
 import EnneadTab
 import ENNEAD_LOG
 import time
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 
 FILE_NAME = "EA_Last_Sync_Record.json"

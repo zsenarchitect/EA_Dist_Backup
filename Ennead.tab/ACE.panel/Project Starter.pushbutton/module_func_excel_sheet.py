@@ -5,7 +5,7 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 
 def is_new_sheet_number_ok(doc, new_sheet_numbers):       
     all_sheets = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements()

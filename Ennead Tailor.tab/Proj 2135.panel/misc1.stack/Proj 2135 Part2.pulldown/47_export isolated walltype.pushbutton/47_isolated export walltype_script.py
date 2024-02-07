@@ -12,7 +12,7 @@ from pyrevit import script #
 import EA_UTILITY
 import EnneadTab
 import time
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 import traceback
 uidoc = __revit__.ActiveUIDocument
 # from Autodesk.Revit import UI

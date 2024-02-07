@@ -2,7 +2,7 @@ __doc__ = "NOT IN USE"
 __title__ = "26_align dim acroos sheet"
 
 from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 doc = __revit__.ActiveUIDocument.Document
 import EA_UTILITY
 import EnneadTab

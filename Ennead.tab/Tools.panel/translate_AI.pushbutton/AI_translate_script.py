@@ -11,7 +11,7 @@ __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 
 from pyrevit.forms import WPFWindow

@@ -7,7 +7,7 @@ __youtube_link__ = "https://youtu.be/xZhCxpuQKCs"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29705"
 __tip__ = True
 from Autodesk.Revit import UI
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

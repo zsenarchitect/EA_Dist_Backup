@@ -9,7 +9,7 @@ __title__ = "72_fix_area_view_title(NOT IN USE)"
 from pyrevit import forms #
 from pyrevit import script #
 
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 

@@ -14,7 +14,7 @@ import ENNEAD_LOG
 import EnneadTab
 import System
 from pyrevit.revit import ErrorSwallower
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()

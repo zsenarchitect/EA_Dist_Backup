@@ -10,7 +10,7 @@ __title__ = "All Cap Sheet Name and View Name"
 
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 

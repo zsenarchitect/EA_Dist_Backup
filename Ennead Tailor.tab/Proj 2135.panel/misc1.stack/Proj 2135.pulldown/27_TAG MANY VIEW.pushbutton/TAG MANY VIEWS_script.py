@@ -2,7 +2,7 @@ __doc__ = "Select views from project browser, remove tags that are too close to 
 __title__ = "27_TAG MANY VIEWS---"
 
 from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import Creation
 import EA_UTILITY
 import EnneadTab

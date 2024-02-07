@@ -10,7 +10,7 @@ __title__ = "Modify LineStyle in Group(For A.Chi)"
 from pyrevit import script #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 import EnneadTab
 from pyrevit.revit import ErrorSwallower
 # from Autodesk.Revit import UI

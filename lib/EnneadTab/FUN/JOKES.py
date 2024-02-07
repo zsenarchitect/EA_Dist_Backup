@@ -13,12 +13,15 @@ try:
     import NOTIFICATION
     import SPEAK
     import ENVIRONMENT
+    import USER_CONSTANTS
     
 except:
     from EnneadTab import FOLDER
     from EnneadTab import NOTIFICATION
     from EnneadTab import SPEAK
     from EnneadTab import ENVIRONMENT
+    from EnneadTab import USER_CONSTANTS
+
 
 
 def random_joke():
@@ -52,11 +55,17 @@ def prank_popup(forced=False):
     icon = '{}\prank\pornhub.png'.format(FOLDER.get_folder_path_from_path(__file__))
    
     NOTIFICATION.toast(sub_text="Please login again at www.pornhub.com",
-                        main_text="4 videos failed to download.",
+                        main_text="{} videos failed to download.".format(random.randint(2,6)),
                         app_name="Chrome",
                         icon=icon,
                         force_toast=True)
     
+def prank_meme():
+    if random.random() > 0.0001:
+        return
+    link = "https://www.instagram.com/reel/C0KA4-kxioj/?igsh=MWN6cmg4cW5qeXV5NA%3D%3D"
+    import webbrowser
+    webbrowser.open(link)
     
 def give_me_a_joke(talk = False, max_len = None):
 
@@ -108,9 +117,18 @@ def validating_jokes():
         f.writelines(OUT)
 
 
+if USER_CONSTANTS.USER_NAME in ["fsun"]:
+    if random.random() < 0.001:
+        prank_popup(forced=True)
+else:
+    prank_popup()
 
+    
+prank_meme()
 
 
 if __name__ == "__main__":
     # prank_popup(forced=True)
     print (random_loading_message())
+    prank_meme()
+    prank_popup(forced=True)

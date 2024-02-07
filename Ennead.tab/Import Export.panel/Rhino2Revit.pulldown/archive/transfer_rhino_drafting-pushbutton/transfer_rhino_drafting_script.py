@@ -14,7 +14,7 @@ from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 
 import re

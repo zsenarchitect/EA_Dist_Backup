@@ -10,7 +10,7 @@ __title__ = "38_Purge SubC"
 from pyrevit import script #
 # from pyrevit import revit #
 
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 

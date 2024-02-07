@@ -10,7 +10,7 @@ __title__ = "Check User History"
 from pyrevit import script #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 #doc = __revit__.ActiveUIDocument.Document
 

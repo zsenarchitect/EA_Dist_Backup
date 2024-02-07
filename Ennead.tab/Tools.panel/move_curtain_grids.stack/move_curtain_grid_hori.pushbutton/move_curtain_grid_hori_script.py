@@ -12,7 +12,7 @@ from pyrevit import script #
 
 import EnneadTab
 import ENNEAD_LOG
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 import clr
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()

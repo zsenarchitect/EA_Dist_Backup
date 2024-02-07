@@ -11,7 +11,7 @@ from pyrevit import script #
 # from pyrevit import revit #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 import random
 doc = __revit__.ActiveUIDocument.Document

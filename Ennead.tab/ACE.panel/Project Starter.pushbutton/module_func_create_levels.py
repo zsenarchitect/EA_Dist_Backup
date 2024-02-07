@@ -6,7 +6,7 @@ from pyrevit import script #
 
 import EnneadTab
 
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 
 
 def modify_level_pair(raw_data, level_name, level_gap,is_adding = True):

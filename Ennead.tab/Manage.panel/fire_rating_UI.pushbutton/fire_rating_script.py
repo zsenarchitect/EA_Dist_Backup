@@ -24,7 +24,7 @@ from pyrevit import script #
 #from pyrevit import HOST_APP
 
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()

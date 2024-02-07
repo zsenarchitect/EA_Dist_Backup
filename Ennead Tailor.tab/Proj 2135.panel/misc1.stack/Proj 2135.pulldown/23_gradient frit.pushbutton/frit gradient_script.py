@@ -2,7 +2,7 @@ __doc__ = "Apply grediant frit pattern to the ADP family instance."
 __title__ = "23_frit gradient"
 
 from pyrevit import script, revit #
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 import EA_UTILITY
 import EnneadTab
 doc = __revit__.ActiveUIDocument.Document

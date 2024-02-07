@@ -6,7 +6,7 @@ __title__ = "Apply Panel\nRadius"
 __tip__ = True
 
 from Autodesk.Revit import UI
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

@@ -85,7 +85,7 @@ def read_json_as_dict_in_shared_dump_folder(file_name, use_encode=False, create_
         _type_: _description_
     """
     filepath = FOLDER.get_shared_dump_folder_file(file_name)
-    return read_json_as_dict(filepath, use_encode, create_if_not_exist=create_if_not_exist)
+    return read_json_file_safely(filepath, use_encode, create_if_not_exist=create_if_not_exist)
 
 
 """

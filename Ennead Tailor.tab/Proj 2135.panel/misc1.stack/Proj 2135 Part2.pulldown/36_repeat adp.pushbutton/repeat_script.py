@@ -9,7 +9,7 @@ from pyrevit import script, revit #
 # from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 

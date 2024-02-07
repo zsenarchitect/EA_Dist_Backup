@@ -23,7 +23,7 @@ __tip__ = [__doc__,
            "BIM360 default cache folder is named by GUID of the projects and files, which no one can read. However, you can use the little decoder from EnneadTab to retreive the name. Just copy-paste in the textbar and decode."]
 
 from Autodesk.Revit import UI
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

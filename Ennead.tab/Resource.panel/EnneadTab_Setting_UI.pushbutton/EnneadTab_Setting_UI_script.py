@@ -14,18 +14,21 @@ __tip__ = [__doc__,
            "You can enjoy much more functions from the Ennead+ Version instead of staying in Lite Version."]
 
 from Autodesk.Revit import UI
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 
 
+import EnneadTab
 
 from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 from pyrevit.coreutils import ribbon
-from pyrevit.revit import tabs as TABS
+try:
+    from pyrevit.revit import tabs as TABS
+except:
+    EnneadTab.NOTIFICATION.messenger("Please update pyrevit to 4.8+.")
 
-import EnneadTab
 import ENNEAD_LOG
 import clr
 import System

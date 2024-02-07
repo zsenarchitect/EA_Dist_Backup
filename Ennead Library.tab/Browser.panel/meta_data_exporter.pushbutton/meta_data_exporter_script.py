@@ -19,7 +19,7 @@ import ENNEAD_LOG
 import EnneadTab
 import time
 from pyrevit.coreutils import envvars
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 import random
 

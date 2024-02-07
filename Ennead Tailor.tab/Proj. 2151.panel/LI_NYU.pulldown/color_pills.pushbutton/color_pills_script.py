@@ -6,7 +6,7 @@ from pyrevit import script #
 import os
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 try:
     doc = __revit__.ActiveUIDocument.Document

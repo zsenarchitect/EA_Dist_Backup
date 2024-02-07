@@ -14,7 +14,7 @@ import EnneadTab
 import time
 import os
 import os.path as op
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 

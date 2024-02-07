@@ -2,7 +2,7 @@ __doc__ = "Get the rooms that does not have associate level matching building id
 __title__ = "3.3_recreate room on correct level"
 
 from pyrevit import script #
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import Creation
 import EA_UTILITY
 import EnneadTab

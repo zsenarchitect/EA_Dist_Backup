@@ -21,7 +21,7 @@ from pyrevit import HOST_APP
 
 import EnneadTab
 import traceback
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 import random
 from Autodesk.Revit import UI
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()

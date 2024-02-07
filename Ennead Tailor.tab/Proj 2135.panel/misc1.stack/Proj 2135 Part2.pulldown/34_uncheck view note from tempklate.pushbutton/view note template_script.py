@@ -7,7 +7,7 @@ __title__ = "34_uncheck view note and translation from template"
 # from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 
 
 doc = __revit__.ActiveUIDocument.Document

@@ -13,7 +13,7 @@ from pyrevit.forms import WPFWindow
 from pyrevit import script #
 
 import traceback
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 import random
 # from Autodesk.Revit import UI
 uidoc = __revit__.ActiveUIDocument

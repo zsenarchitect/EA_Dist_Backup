@@ -12,7 +12,7 @@ from pyrevit import script #
 import EA_UTILITY
 import EnneadTab
 import ENNEAD_LOG
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 from rpw.extras.rhino import Rhino

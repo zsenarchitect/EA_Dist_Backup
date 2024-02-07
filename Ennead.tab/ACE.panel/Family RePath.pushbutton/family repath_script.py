@@ -2,7 +2,7 @@ import os
 
 from pyrevit import forms,  script
 from pyrevit.revit import ErrorSwallower
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 import EnneadTab
 

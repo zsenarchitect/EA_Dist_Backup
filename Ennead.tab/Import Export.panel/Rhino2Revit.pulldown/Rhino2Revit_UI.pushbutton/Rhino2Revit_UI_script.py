@@ -14,7 +14,7 @@ from pyrevit.revit import ErrorSwallower
 
 import EnneadTab
 import ENNEAD_LOG
-from Autodesk.Revit import DB  # fastest DB
+from Autodesk.Revit import DB  
 import clr
 import os
 import System

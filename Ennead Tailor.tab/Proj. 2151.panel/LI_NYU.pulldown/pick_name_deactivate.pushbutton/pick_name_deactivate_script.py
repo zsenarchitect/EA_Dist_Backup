@@ -11,7 +11,7 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB # fastest DB
+from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 from Autodesk.Revit.UI.Events import SelectionChangedEventArgs
