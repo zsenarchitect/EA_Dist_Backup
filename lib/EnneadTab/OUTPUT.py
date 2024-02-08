@@ -106,7 +106,7 @@ class Output:
             report_file.write(FUNCS)
 
             
-            report_file.write("<h1 style='text-align: center;'>{}</h1>".format("EnneadTab Output Window"))
+            report_file.write("<h1 style='text-align: center;'>{}</h1>".format("EnneadTab Console"))
             report_file.write("<div style='text-align: center;'>")
             report_file.write("<img src='{}\\ennead-e-logo.png' height='80'>".format(ENVIRONMENT.CORE_IMAGES_FOLDER))
             report_file.write("</div>")
