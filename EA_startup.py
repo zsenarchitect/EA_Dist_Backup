@@ -12,6 +12,7 @@ from Autodesk.Revit import DB
 from Autodesk.Revit import UI
 from pyrevit import forms, script
 from pyrevit.coreutils import envvars
+from pyrevit import versionmgr
 
 import EA_UTILITY
 import EnneadTab
@@ -23,6 +24,28 @@ import clr
 clr.AddReference('System.IO')
 from System.IO import DriveInfo
 
+
+def check_minimal_version_for_enneadtab():
+    v = versionmgr.get_pyrevit_version()
+
+    desired_major = 4
+    desired_minor = 8
+    major, minor, patch = v.as_int_tuple()
+    if major < desired_major or minor < desired_minor:
+        EnneadTab.NOTIFICATION.messenger("Please update pyrevit from self service port\n{}.{} ---> {}.{}".format(major, minor, desired_major, desired_minor))
+        output = EnneadTab.OUTPUT.get_output()
+
+        output.write("Please update pyrevit from self service port!!!",EnneadTab.OUTPUT.Style.Title)
+        output.write("Your version: {}.{} ---> Suggested version: {}.{}".format(major, minor, desired_major, desired_minor),EnneadTab.OUTPUT.Style.SubTitle)
+        output.insert_division()
+        output.write ("Did you know pyrevit 4.7 was released at end of 2019? That was so long ago Covid was not even a thing yet.")
+
+        covid_imgs = [f for f in os.listdir(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT) if "covid_joke" in f]
+        covid_img = random.choice(covid_imgs)
+        output.write("{}\\{}".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT,
+                                                     covid_img))
+
+        output.plot()
 
 # alwasy register dimension assist, but dont open it until button clicked
 
@@ -124,7 +147,7 @@ def register_dimension_note_dockpane():
 
 
 def annouce_hibration_mode():
-    if random.random() < 0.2:
+    if random.random() > 0.1:
         return
     output = EnneadTab.OUTPUT.get_output()
     output.write("EnneadTab in hibernation mode.", EnneadTab.OUTPUT.Style.Title) 
@@ -324,11 +347,14 @@ def check_C_drive_space():
     
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
+    
     if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
         return
     
     if not EnneadTab.ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
+
+    check_minimal_version_for_enneadtab()
 
     EnneadTab.FUN.HOLIDAY.festival_greeting()
     

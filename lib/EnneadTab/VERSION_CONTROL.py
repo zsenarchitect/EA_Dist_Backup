@@ -56,7 +56,7 @@ def _push_core_module_from_revit_repo_to_L_drive():
     dst_revit_repo = ENVIRONMENT.CORE_MODULE_FOLDER_FOR_PUBLISHED_BETA_REVIT
     FOLDER.copy_dir(src, dst_revit_repo)
     
-    print ("\n\nAll ennead Module updated from working Revit to L Drive Rhino")
+    print ("\n\nAll ennead Module updated from working Revit to L Drive Revit")
     SOUNDS.play_sound("sound effect_mario fireball.wav")
 
 
