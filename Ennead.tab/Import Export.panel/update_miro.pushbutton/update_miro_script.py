@@ -36,6 +36,8 @@ def update_miro():
     if not sheets:
         return
 
+    res = EnneadTab.REVIT.REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+
     dump_folder = "{}\\miro_dump".format(EnneadTab.FOLDER.get_EA_local_dump_folder())
 
     # make sure everytig is the lastest in this folder
@@ -62,6 +64,10 @@ def update_miro():
         data["app"] = "revit_sheet"
 
     EnneadTab.EXE.open_exe("MIRO")
+
+
+    if res:
+        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
     
 
 

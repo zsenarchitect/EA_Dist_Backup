@@ -86,7 +86,7 @@ def do_you_want_to_sync_and_close_after_done():
 
 def sync_and_close(close_others = True, disable_sync_queue = True):
 
-    from pyrevit import revit, script
+    from pyrevit import script
     from pyrevit.coreutils import envvars
     output = script.get_output()
     killtime = 30
