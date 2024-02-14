@@ -2,7 +2,7 @@
 import ENVIRONMENT
 
 import sys
-sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
+sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
 try:
     from termcolor import colored
 except:

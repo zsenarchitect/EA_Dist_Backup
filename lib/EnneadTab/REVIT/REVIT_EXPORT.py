@@ -159,7 +159,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
             if  "The files already exist!" in str(e):
                 file_name = file_name + "_same name"
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
             else:
                 print( e.message)

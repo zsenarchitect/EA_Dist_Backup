@@ -148,7 +148,17 @@ def publish_rui_to_users():
     folder = "{}\\Users".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
     
     for user_folder in os.listdir(folder):
+
+        # clean folder now
+        for f in os.listdir(folder + "\\" + user_folder):
+            if not f.endswith(".rui"):
+                try:
+                    os.remove(folder + "\\" + user_folder + "\\" + f)
+                except:
+                    pass
+        
         target = "{}\\{}\\EnneadTab.rui".format(folder, user_folder)
+        
         try:
             shutil.copyfile(EDITOR_VERSION, target)
         except:

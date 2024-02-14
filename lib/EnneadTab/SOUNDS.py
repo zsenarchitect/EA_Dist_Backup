@@ -37,7 +37,7 @@ def play_sound(file = "sound effect_popup msg3.wav"):
 
     try:
         import sys
-        sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER)
+        sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER_LEGACY)
         import playsound
         playsound.playsound(path)
     except Exception as e:

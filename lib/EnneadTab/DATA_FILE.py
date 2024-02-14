@@ -7,7 +7,7 @@ import json
 
 import FOLDER
 import USER
-
+import ENVIRONMENT_CONSTANTS
 
 from contextlib import contextmanager
 
@@ -356,6 +356,13 @@ def set_revit_ui_setting_data(key, value):
     save_dict_to_json(data, setting_file)
 
 
+def get_api_key(key_name):
+    
+    file_path = r"{}\EA_API_KEY.json".format(ENVIRONMENT_CONSTANTS.MISC_FOLDER)
+
+    data = read_json_file_safely(file_path)
+    return data.get(key_name, None)
+
 
 def unit_test():
 
@@ -363,6 +370,8 @@ def unit_test():
     test_dict = {"a": 1, "b": 2, "c": {"Monday": 10,
                                        "Tuesday": 50}}
     pretty_print_dict(test_dict)
+
+
 #############
 if __name__ == "__main__":
     print(__file__ + "   -----OK!")

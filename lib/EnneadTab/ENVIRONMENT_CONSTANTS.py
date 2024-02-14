@@ -3,6 +3,9 @@ everything here should have ZERO dependency becasue this is the foundation of ma
 
 
 import os
+import sys
+IS_PY3 = sys.version.startswith("3")
+IS_PY2 = not IS_PY3
 
 
 HOSTER_FOLDER = "L:\\4b_Applied Computing" # if in future the entire roject is reloacated, change this HOSTER FOLDER
@@ -43,7 +46,10 @@ PUBLISH_FOLDER_FOR_RHINO = "{}\\03_Rhino\\12_EnneadTab for Rhino".format(HOSTER_
 CORE_MODULE_FOLDER_FOR_PUBLISHED_RHINO = "{}\\Source Codes\\lib\\EnneadTab".format(PUBLISH_FOLDER_FOR_RHINO)
 
 
-DEPENDENCY_FOLDER = "{}\\03_Rhino\\12_EnneadTab for Rhino\\Dependency Modules".format(HOSTER_FOLDER)
+DEPENDENCY_FOLDER = DEPENDENCY_FOLDER_LEGACY = "{}\\03_Rhino\\12_EnneadTab for Rhino\\Dependency Modules".format(HOSTER_FOLDER)
+DEPENDENCY_FOLDER_PY2 = "{}\Dependency\PY2".format(PUBLISH_FOLDER_FOR_RHINO)
+DEPENDENCY_FOLDER_PY3 = "{}\Dependency\PY3".format(PUBLISH_FOLDER_FOR_RHINO)
+
 
 LIMITED_REVIT_PROJECTS = ["some gov project name that want to limit enenadtab access"]
 
@@ -108,9 +114,14 @@ def unit_test():
         
         if inspect.ismodule(content):
             continue
+        
         if not x.startswith("_") and not callable(content):
             print(x, " = ", content)
 
+            
+            if isinstance(content, bool):
+                continue
+            
             if not isinstance(content, list):
                 content = [content]
 
@@ -118,6 +129,7 @@ def unit_test():
                 if "\\" in item:
                     is_ok = os.path.exists(item) or os.path.isdir(item)
                     assert is_ok
+          
 
 
 ###############

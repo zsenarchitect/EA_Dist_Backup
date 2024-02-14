@@ -25,7 +25,7 @@ def run_func_in_module(module_path, func_name, *args):
     ref_module = imp.load_source(module_name, module_path)
     func = getattr(ref_module, func_name, None) or getattr(ref_module, module_name, None)
     if func is None:
-        NOTIFICATION.messenger(main_text="Oooops, cannot find the the source code.\nContact SZ and let him know. Thx!")
+        NOTIFICATION.messenger(main_text="Oooops, cannot find the the source code.\nSen Zhang is no longer working for EnneadTab unluckly.")
     else:
         func(*args)
 

@@ -119,8 +119,10 @@ class WarningHistory:
             self.doc = doc
             self.doc_name = doc.Title
         self.file = "REVIT_WARNING_HISTORY_{}.json".format(self.doc_name)
-        self.data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(self.file, create_if_not_exist=True)
-        
+        if os.path.exists(self.file):
+            self.data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(self.file, create_if_not_exist=True)
+        else:
+            self.data = {}
     
     def record_warning(self):
         # in event where doc is not valid, there is no data to record to

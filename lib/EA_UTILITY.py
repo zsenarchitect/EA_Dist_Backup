@@ -42,7 +42,7 @@ finally:
 try:
     from Autodesk.Revit import DB
 except:
-    print "Cannot import DB module"
+    print ("Cannot import DB module")
 
 """
 misc
@@ -102,7 +102,7 @@ def tool_has_ended():
     webbrowser.open("https://www.youtube.com/watch?v=jfKfPfyJRdk")
 
 def zombie_function():
-    print "B"
+    print ("B")
 
 
 def is_owned(element):
@@ -124,9 +124,9 @@ def is_owned(element):
         return False
     else:
         if get_good_name(element) is not None:
-            print "{}, {} Owned by {}".format(element.Id, get_good_name(element), eh.owner)
+            print ("{}, {} Owned by {}".format(element.Id, get_good_name(element), eh.owner))
         else:
-            print "{} Owned by {}".format(element.Id, eh.owner)
+            print ("{} Owned by {}".format(element.Id, eh.owner))
         return True
 
 def get_element_full_info(element, output = None):
@@ -231,7 +231,7 @@ def time_has_passed_too_long(unix_time, tolerence = 60 * 30):
             return True
         return False
     except Exception as e:
-        print "Failed becasue: {}".format(e) 
+        print ("Failed becasue: {}".format(e) )
 
 def mark_time():
     import time
@@ -687,7 +687,7 @@ def show_toast(message = "",
                 # image_path = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\lib\surprised_face.png"
                 image = main_folder.split(".extension")[0] + ".extension" + image.split(".extension")[1]
         except Exception as e:
-            print "Toast Error: " + str(e)
+            print ("Toast Error: " + str(e))
             image = backup_image
             #print image
         # print_note("processed image path for icon = {}".format(image))
@@ -739,7 +739,7 @@ def email(sender_email = None,
     if not receiver_email_list:
         return
     if isinstance(receiver_email_list, str):
-        print "Prefer list but ok."
+        print ("Prefer list but ok.")
         receiver_email_list = receiver_email_list.rstrip().split(";")
 
     if not body:
@@ -769,8 +769,8 @@ def email(sender_email = None,
     try:
         open_file_in_default_application(exe_location)
     except Exception as e:
-        print exe_location
-        print str(e)
+        print (exe_location)
+        print (str(e))
 
 """"""
 def old_send_email(contacts = ["address1", "address2"],
@@ -828,7 +828,7 @@ def old_send_email(contacts = ["address1", "address2"],
         s = smtplib.SMTP('localhost')
         s.send_message(msg)
         s.quit()
-        print "email sent"
+        print ("email sent")
 
     def send_email_method_3():
         import smtplib, ssl
@@ -925,7 +925,7 @@ def old_send_email(contacts = ["address1", "address2"],
 
     send_email_method_6()
 
-    print "email sent"
+    print ("email sent")
     return False
 
 
@@ -940,7 +940,7 @@ def get_real_name():
     filepath = script.get_bundle_file("EA account.txt")
     filepath = filepath.split(".extension")[0] + ".extension\lib\EA account.txt"
     datas = read_txt_as_list(filepath = filepath, use_encode = True)
-    print datas
+    print (datas)
     user_name = __revit__.Application.Username
     for data in datas:
         if user_name in data:
@@ -963,7 +963,7 @@ def save_autodesk_name(user_name):
     with open(filepath, 'a') as f:
         # f.writelines(list)
         f.write("\n{0}###{0}".format(user_name))
-    print read_txt_as_list(filepath = filepath, use_encode = True)
+    print (read_txt_as_list(filepath = filepath, use_encode = True))
 
 
 """"""
@@ -987,7 +987,7 @@ def is_SZ(pop_toast = False, additional_tester_ID = []):
         return True
 
     if app.Username in additional_tester_ID:
-        print "additional test user found = {}".format(app.Username)
+        print ("additional test user found = {}".format(app.Username))
         return True
 
     return False
@@ -1244,7 +1244,7 @@ def get_sticky_longterm(sticky_name, default_value_if_no_sticky):
     #print "***"
     #print get_filenames_in_folder(folder)
     if sticky_name + ".STICKY" not in get_filenames_in_folder(folder):
-        print "stickyname not found in folder"
+        print ("stickyname not found in folder")
         set_sticky_longterm(sticky_name, default_value_if_no_sticky)
         return default_value_if_no_sticky
     value = read_txt_as_list(file)
@@ -1671,7 +1671,7 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
 
     envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", not(disable_sync_queue))
     for log in logs:
-        print log
+        print (log)
     if not close_others:
         return
 
@@ -1688,22 +1688,22 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
                 print_note("doc {} is a link doc, skip".format(doc.Title))
                 continue
         except Exception as e:
-            print "Info:"
+            print ("Info:")
             print (e)
             print_note(str(doc))
             continue
 
         title = doc.Title
         try:
-            print "Trying to close [{}]".format(title)
+            print ("Trying to close [{}]".format(title))
             doc.Close(False)
             doc.Dispose()
         except Exception as e:
             print (e)
             try:
-                print "skip closing [{}]".format(title)
+                print ("skip closing [{}]".format(title))
             except:
-                print "skip closing some doc"
+                print ("skip closing some doc")
         """
         try to open a dummy family rvt file in the buldle folder and switch to that as active doc then close original active doc
         """
@@ -1754,7 +1754,7 @@ def open_and_active_project(filepath):
     except:
         pass
 
-    print "Activate Failed"
+    print ("Activate Failed")
 
 """"""
 def close_docs_by_name(names = [], close_all = False):
@@ -1763,7 +1763,7 @@ def close_docs_by_name(names = [], close_all = False):
         name = doc.Title
         doc.Close(False)
         doc.Dispose()#########################
-        print "{} closed".format(name)
+        print ("{} closed".format(name))
 
     docs = get_top_revit_docs()
     if close_all:
@@ -1776,7 +1776,7 @@ def close_docs_by_name(names = [], close_all = False):
                 safe_close(doc)
             except Exception as e:
                 print (e)
-                print "skip closing [{}]".format(doc.Title)
+                print ("skip closing [{}]".format(doc.Title))
 
 """"""
 def get_top_revit_docs():
@@ -1912,7 +1912,7 @@ def log_action_for_protected_element(doc, transcation, missing_elements):
     info.replace( info[len(info)-1:],"  }")
 
     data = "{}| {} | {} | missing: {}".format(localtime, user_name, transcation, info)
-    print data
+    print (data)
     filepath = get_protection_log_txt(doc)
     with open(filepath, "a") as f:
         f.write(data)
@@ -2020,7 +2020,7 @@ def get_unique_name(doc,x):# x is element
         level = doc.GetElement(x.LevelId).Name
         type = x.Name
         return "{}_{}".format(level, type)
-    print "Ask Sen to add this category:{}".format(x.Category.Name)
+    print ("Ask Sen to add this category:{}".format(x.Category.Name))
     return "No Name"
 
 def append_protected_elements_as_long_term_ID(doc, elements, override = False):

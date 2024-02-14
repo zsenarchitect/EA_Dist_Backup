@@ -33,7 +33,7 @@ class PythonFile:
     def replace_module_folder(self):
         OLD_MODULE_FOLDER = r"sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Dependency Modules')"
         NEW_MODULE_FOLDER = """import EnneadTab
-sys.path.append(EnneadTab.ENVIRONMENT.DEPENDENCY_FOLDER)"""
+sys.path.append(EnneadTab.ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)"""
         if OLD_MODULE_FOLDER not in self.content:
             return
         

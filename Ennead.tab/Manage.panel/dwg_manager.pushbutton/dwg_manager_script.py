@@ -3,7 +3,12 @@
 
 
 
-__doc__ = "A floating window that help you manager DWG in the files. You can find, select, zoom any dwgs with detailed infor on creator, view association, hidden status, workset, file path and file size. For linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder."
+__doc__ = """A floating window that help you manage DWG in the files. 
+You can find, select, zoom any dwgs with detailed infor on creator, view association, hidden status, workset, file path and file size. 
+
+For linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder."""
+
+
 __title__ = "DWG\nManager"
 __tip__ = True
 import os

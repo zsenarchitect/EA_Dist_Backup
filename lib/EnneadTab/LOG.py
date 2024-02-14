@@ -101,6 +101,10 @@ def log(script_path, func_name):
 
 def read_log(user_name = USER_CONSTANTS.USER_NAME):
     log_file = get_log_file(user_name)
+    if not os.path.exists(log_file):
+        with open(log_file, "w") as f:
+            data = dict()
+            json.dump(data, f)
     with open(log_file, "r") as f:
         data = json.load(f)
 

@@ -6,7 +6,7 @@ sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source
 sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Dependency Modules')
 
 #import EnneadTab
-#sys.path.append(EnneadTab.ENVIRONMENT.DEPENDENCY_FOLDER)
+#sys.path.append(EnneadTab.ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
 
 
 #from pyChatGPT import ChatGPT

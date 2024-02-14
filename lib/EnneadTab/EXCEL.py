@@ -15,7 +15,7 @@ import EXE
 import NOTIFICATION
 
 if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
-    sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
+    sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
     import xlrd
     import xlsxwriter
     

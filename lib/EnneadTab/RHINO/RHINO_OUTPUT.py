@@ -12,6 +12,7 @@ class OutputColorStyle:
     BlackWhite = "BlackWhite"
     Color = "Color"
     GrayScale = "GrayScale"
+    PrintColor = "PrintColor" # if print layout
 
 
 class PaperSize:

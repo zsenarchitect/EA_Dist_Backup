@@ -58,7 +58,7 @@ except:
     
     try:
         #when running inside python
-        sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER)
+        sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER_LEGACY)
         import git
     except:
         try:

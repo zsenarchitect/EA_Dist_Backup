@@ -4,7 +4,7 @@ import ENVIRONMENT
 import os
 import sys
 if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
-    sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
+    sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
 
 
 def merge_pdfs(combined_pdf_file_path, list_of_filepaths, reorder = False):
