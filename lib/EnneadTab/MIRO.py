@@ -1,3 +1,4 @@
+"""pack this exe using python 3"""
 import traceback
 import os
 import datetime
@@ -9,6 +10,8 @@ def log_error(error):
 
     with open(error_file, "w") as f:
         f.write(error)
+
+    # os.startfile(error_file)
 
 
 try:
@@ -81,7 +84,18 @@ def get_formatted_time(input_time):
 def get_token():
     return get_api_key("miro_oauth")
 
+class ShapeStyle:
+    New = "cross", "#48bbdb"
+    Update = "star", "#ffa500"
+    Duplicate = "hexagon", "#f94449"
 
+    @classmethod
+    def get_valid_shapes(cls):
+        return [ShapeStyle.New[0], 
+                ShapeStyle.Update[0], 
+                ShapeStyle.Duplicate[0]]
+
+    
 class Miro:
     def __init__(self, board_id):
         self.board_id = board_id
@@ -160,7 +174,7 @@ class Miro:
     
     def get_frame_children(self,
                            frame_or_frame_id):
-        if frame_or_frame_id.haskey("id"):
+        if frame_or_frame_id.has_key("id"):
             frame_id = frame_or_frame_id['id']
         else:
             frame_id = frame_or_frame_id
@@ -336,11 +350,10 @@ class Miro:
     def create_mark(self,
                     position,
                     width,
-                    is_new,
+                    style,
                     text = ""):
 
-        color = "#48bbdb" if is_new else "#ffa500"
-        shape = "cross" if is_new else "star"
+        shape, color = style
         
         url = "https://api.miro.com/v2/boards/{}/shapes".format(self.board_id)
 
@@ -419,9 +432,52 @@ class Miro:
         for frame_id in frame_ids:
             pass
 
+    def purge_markers(self):
+        url = "https://api.miro.com/v2/boards/{}/items?limit=50&type=shape".format(self.board_id)
 
+        headers = {
+            "accept": "application/json",
+            "authorization": "Bearer {}".format(self.token)
+        }
 
-    def purge_stars(self):
+        cursor = None
+        makrer_ids = []
+        while True:
+            if cursor:
+                final_url = url + "&cursor={}".format(cursor)
+            else:
+                final_url = url
+                
+
+            response = requests.get(final_url, headers=headers)
+            for item in response.json()["data"]:
+                if item["data"]["shape"] in ShapeStyle.get_valid_shapes():
+                    makrer_ids.append(item["id"])
+                    
+            if "cursor" in response.json():
+                cursor = response.json()["cursor"]
+            else:
+                break
+
+        if len(makrer_ids)==0:
+            print ("there is no marker on the board")
+            return None
+        
+        for i, id in enumerate(makrer_ids):
+            print ("delete {}/{} marker".format(i+1, len(makrer_ids)))
+            
+
+            url = "https://api.miro.com/v2/boards/{}/shapes/{}".format(self.board_id, id)
+
+            headers = {
+                "accept": "application/json",
+                "authorization": "Bearer {}".format(self.token)
+            }
+
+            response = requests.delete(url, headers=headers)
+           
+
+    def OLD_purge_markers(self):
         url = "https://api.miro.com/v2/boards/{}/items?limit=50&type=shape".format(self.board_id)
 
         headers = {
@@ -462,8 +518,57 @@ class Miro:
             print (response.text)
 
                 
+    def find_ids_as_dict(self, search_keys, type = None):
+        """keep looking up as long as ther is a cursor left, exhaust and collect all ids
 
+        Args:
+            search_keys (list): _description_
+            type (_type_, optional): _description_. Defaults to None.
 
+        Returns:
+            dict: a pair dict (search_key, item_id)
+        """
+
+        key_map = {"duplicated_item":[]}
+
+        if type:
+            url = "https://api.miro.com/v2/boards/{}/items?type={}".format(self.board_id, type)
+        else:
+            url = "https://api.miro.com/v2/boards/{}/items".format(self.board_id)
+
+        headers = {
+            "accept": "application/json",
+            "authorization": "Bearer {}".format(self.token)
+        }
+
+        cursor = None
+        while True:
+            if cursor:
+                if type:
+                    final_url = url + "&cursor={}".format(cursor)
+                else:
+                    final_url = url + "?cursor={}".format(cursor)
+            else:
+                final_url = url
+
+            response = requests.get(final_url, headers=headers)
+            for item in response.json()["data"]:
+                for key in search_keys:
+                    if key in item["data"]["title"]:
+                        print ("found {}".format(item["data"]["title"]))
+
+                        if key not in key_map:
+                            key_map[key] = item
+                        else:
+                            key_map["duplicated_item"].append(item)
+                            
+            if "cursor" in response.json():
+                cursor = response.json()["cursor"]
+            else:
+                break
+
+        return key_map
+    
     def find(self,
              human_name,
              type = None):
@@ -509,6 +614,7 @@ class Miro:
 
 ##################################################################
 
+
 def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
     """_summary_
 
@@ -521,7 +627,83 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
     """
     miro_board = Miro.get_board(miro_board_url)
 
-    miro_board.purge_stars()
+    miro_board.purge_markers()
+
+    guid_list = []
+    for sheet_img in sheet_imgs:
+        guid = sheet_img.split("\\")[-1].split("^")[0]
+        guid_list.append(guid)
+
+    key_map = miro_board.find_ids_as_dict(guid_list)
+
+    duplicated_items = key_map.pop("duplicated_item")
+    if duplicated_items:
+        print ("there are duplicated items")
+        for item in duplicated_items:
+            x, y = item["position"]["x"], item["position"]["y"]
+            w, h = item["geometry"]["width"], item["geometry"]["height"]
+            miro_board.create_mark((x - w*0.5, y - h*0.5),
+                               item["geometry"]["width"]*0.2,
+                               ShapeStyle.Duplicate)
+
+    
+    for i, sheet_img in enumerate(sheet_imgs):
+        print ("\n\n### Processs {} of {} sheets".format(i+1, len(sheet_imgs)))
+        guid = sheet_img.split("\\")[-1].split("^")[0]
+        full_path = sheet_img
+        sheet_num = sheet_img.split("\\")[-1].split("^")[1]
+        sheet_name = sheet_img.split("\\")[-1].split("^")[2].split(".")[0]
+ 
+
+        image_title = "[{}]_[{}]_{}".format(sheet_num, sheet_name, guid)
+        image = key_map.get(guid, None)
+
+
+        if not image:
+            print("creating image {}".format(image_title))
+
+            img = Image.open(full_path)
+            width, height = img.size
+
+            image = miro_board.create_image(full_path,
+                                            (i*(width *1.2),0),
+                                            image_title=image_title)
+            marker_style = ShapeStyle.New
+        else:
+            image_id = image["id"]
+            print("updating image {}".format(image_title))
+            image_title = image_title + "[Uploaded at {}]".format(get_formatted_current_time())
+            image = miro_board.update_image(image_id, 
+                                            full_path,
+                                            image_title=image_title)
+            marker_style = ShapeStyle.Update
+
+
+        x, y = image["position"]["x"], image["position"]["y"]
+        w, h = image["geometry"]["width"], image["geometry"]["height"]
+        miro_board.create_mark((x + w*0.5, y - h*0.5),
+                               image["geometry"]["width"]*0.1,
+                               marker_style)
+
+    print("!!!!!!!!!!!!!! Finish updating miro")
+
+    return miro_board
+    
+
+
+def OLD_update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
+    """_summary_
+
+    Args:
+        sheet_imgs (list): a typical img fiel name looks like this folder\\{guid}^{sheetNum}^{sheetName}.jpg
+        miro_board_url (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    miro_board = Miro.get_board(miro_board_url)
+
+    miro_board.purge_markers()
 
 
     for i, sheet_img in enumerate(sheet_imgs):
