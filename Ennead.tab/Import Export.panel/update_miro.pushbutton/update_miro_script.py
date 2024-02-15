@@ -23,7 +23,7 @@ def update_miro():
 
     print ("Note: At the moment CBI does not allow me to connect to Miro, so your team can ask me for a board on my personal account.")
     key = "recent_miro_url"
-    recent_url = EnneadTab.DATA_FILE.get_revit_ui_setting_data(key_defaule_value=(key,"https://miro.com/app/board/uXjVNtUGSrc=/"))
+    recent_url = EnneadTab.DATA_FILE.get_revit_ui_setting_data(key_defaule_value=(key,"https://miro.com/app/board/uXjVNsgWNfA=/"))
     miro_url = forms.ask_for_string(
         prompt = "Please input the Miro board URL:",
         default= recent_url,

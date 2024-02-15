@@ -343,15 +343,17 @@ def cleanup_name_in_folder(output_folder, desired_name, extension):
 
     for file_name in file_names:
         if desired_name in file_name and extension in file_name.lower():
-            #new_name = file_name.split(keyword)[0]
             new_name = desired_name
-            #new_name = file_name.split(keyword)[0]
 
+
+            # this prefix allow longer path limit
+            old_path = "\\\\?\\{}\\{}".format(output_folder, file_name)
+            new_path = "\\\\?\\{}\\{}".format(output_folder, new_name + extension)
             try:
-                os.rename(os.path.join(output_folder, file_name),os.path.join(output_folder, new_name + extension))
+                os.rename(old_path, new_path)
 
             except Exception as e:
-                ERROR_HANDLE.print_note( "B:skip {} becasue: {}".format(file_name, e))
+                ERROR_HANDLE.print_note( "filename clean up failed: skip {} becasue: {}".format(file_name, e))
 
 
 def rename_file_in_folder(search_file, new_file_name, folder):

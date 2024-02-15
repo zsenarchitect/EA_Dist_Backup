@@ -333,17 +333,20 @@ class Miro:
 
         return response.json()
 
-    def create_star(self,
+    def create_mark(self,
                     position,
                     width,
-                    text = "",
-                    color = "#ffa500"):
+                    is_new,
+                    text = ""):
 
+        color = "#48bbdb" if is_new else "#ffa500"
+        shape = "cross" if is_new else "star"
+        
         url = "https://api.miro.com/v2/boards/{}/shapes".format(self.board_id)
 
         payload = {
             "data": {
-                "shape": "star"
+                "shape": shape
             },
             "style": { "fillColor": color ,
                       "fillOpacity" : "1.0"},
@@ -361,7 +364,7 @@ class Miro:
         }
 
         response = requests.post(url, json=payload, headers=headers)
-        print("create a star")
+        print("create a {}".format(shape))
         # print(response.text)
 
 
@@ -435,15 +438,16 @@ class Miro:
             print ("there is nothing on the board")
             return None
         
-        star_ids = []
+        makrer_ids = []
         for item in response.json()["data"]:
 
-            if item["data"]["shape"] == "star":
-                star_ids.append(item["id"])
+            if item["data"]["shape"] in ["cross", "star"]:
+                makrer_ids.append(item["id"])
+            
 
 
-        for id in star_ids:
-            print ("delete a star")
+        for id in makrer_ids:
+            print ("delete a marker")
             
 
             url = "https://api.miro.com/v2/boards/{}/shapes/{}".format(self.board_id, id)
@@ -541,6 +545,7 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
             image = miro_board.create_image(full_path,
                                             (i*(width *1.2),0),
                                             image_title=image_title)
+            is_new = True
         else:
             # print (image)
             image_id = image["id"]
@@ -549,12 +554,14 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
             image = miro_board.update_image(image_id, 
                                             full_path,
                                             image_title=image_title)
+            is_new = False
 
 
         x, y = image["position"]["x"], image["position"]["y"]
         w, h = image["geometry"]["width"], image["geometry"]["height"]
-        miro_board.create_star((x + w*0.5, y - h*0.5),
-                               image["geometry"]["width"]*0.15)
+        miro_board.create_mark((x + w*0.5, y - h*0.5),
+                               image["geometry"]["width"]*0.1,
+                               is_new)
 
     print("!!!!!!!!!!!!!! Finish updating miro")
 
