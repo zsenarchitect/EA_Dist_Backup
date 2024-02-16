@@ -215,7 +215,7 @@ def update_sync_queue():
 
     EnneadTab.EMAIL.email(receiver_email_list="{}@ennead.com".format(next_user),
                             subject="Your Turn To Sync!",
-                            body="Hi there, it is your turn to sync!",
+                            body="Hi there, it is your turn to sync <{}>!".format(doc.Title),
                             body_image_link_list=["L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\lib\\EnneadTab\\images\\you sync first.jpg"])
 
     EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)

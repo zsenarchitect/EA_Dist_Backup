@@ -477,46 +477,6 @@ class Miro:
             response = requests.delete(url, headers=headers)
            
 
-    def OLD_purge_markers(self):
-        url = "https://api.miro.com/v2/boards/{}/items?limit=50&type=shape".format(self.board_id)
-
-        headers = {
-            "accept": "application/json",
-            "authorization": "Bearer {}".format(self.token)
-        }
-
-        response = requests.get(url, headers=headers)
-        print (response.text)
-
- 
-
-        if response.json()["size"]==0:
-            print ("there is nothing on the board")
-            return None
-        
-        makrer_ids = []
-        for item in response.json()["data"]:
-
-            if item["data"]["shape"] in ["cross", "star"]:
-                makrer_ids.append(item["id"])
-            
-
-
-        for id in makrer_ids:
-            print ("delete a marker")
-            
-
-            url = "https://api.miro.com/v2/boards/{}/shapes/{}".format(self.board_id, id)
-
-            headers = {
-                "accept": "application/json",
-                "authorization": "Bearer {}".format(self.token)
-            }
-
-            response = requests.delete(url, headers=headers)
-           
-            print (response.text)
-
                 
     def find_ids_as_dict(self, search_keys, type = None):
         """keep looking up as long as ther is a cursor left, exhaust and collect all ids
@@ -612,6 +572,27 @@ class Miro:
 
         return None
 
+
+
+
+class CornerLocation:
+    TopLeft = "TopLeft"
+    TopRight = "TopRight"
+    BottomLeft = "BottomLeft"
+    BottomRight = "BottomRight"
+
+    @staticmethod
+    def get_item_corner(item, location):
+        x, y = item["position"]["x"], item["position"]["y"]
+        w, h = item["geometry"]["width"], item["geometry"]["height"]
+        if location == CornerLocation.TopLeft:
+            return (x-w/2, y-h/2)
+        elif location == CornerLocation.TopRight:
+            return (x+w/2, y-h/2)
+        elif location == CornerLocation.BottomLeft:
+            return (x-w/2, y+h/2)
+        elif location == CornerLocation.BottomRight:
+            return (x+w/2, y+h/2)
 ##################################################################
 
 
@@ -640,9 +621,8 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
     if duplicated_items:
         print ("there are duplicated items")
         for item in duplicated_items:
-            x, y = item["position"]["x"], item["position"]["y"]
-            w, h = item["geometry"]["width"], item["geometry"]["height"]
-            miro_board.create_mark((x - w*0.5, y - h*0.5),
+            corner_location = CornerLocation.get_item_corner(item, CornerLocation.TopLeft)
+            miro_board.create_mark(corner_location,
                                item["geometry"]["width"]*0.2,
                                ShapeStyle.Duplicate)
 
@@ -679,75 +659,16 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
             marker_style = ShapeStyle.Update
 
 
-        x, y = image["position"]["x"], image["position"]["y"]
-        w, h = image["geometry"]["width"], image["geometry"]["height"]
-        miro_board.create_mark((x + w*0.5, y - h*0.5),
+        corner_location = CornerLocation.get_item_corner(image, CornerLocation.TopRight)
+        miro_board.create_mark(corner_location,
                                image["geometry"]["width"]*0.1,
                                marker_style)
 
     print("!!!!!!!!!!!!!! Finish updating miro")
 
     return miro_board
+
     
-
-
-def OLD_update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
-    """_summary_
-
-    Args:
-        sheet_imgs (list): a typical img fiel name looks like this folder\\{guid}^{sheetNum}^{sheetName}.jpg
-        miro_board_url (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    miro_board = Miro.get_board(miro_board_url)
-
-    miro_board.purge_markers()
-
-
-    for i, sheet_img in enumerate(sheet_imgs):
-        print ("\n\n### Processs {} of {} sheets".format(i+1, len(sheet_imgs)))
-        guid = sheet_img.split("\\")[-1].split("^")[0]
-        full_path = sheet_img
-        sheet_num = sheet_img.split("\\")[-1].split("^")[1]
-        sheet_name = sheet_img.split("\\")[-1].split("^")[2].split(".")[0]
- 
-
-        image_title = "[{}]_[{}]_{}".format(sheet_num, sheet_name, guid)
-        image = miro_board.find(guid, "image")
-
-
-        if not image or len(image) == 0:
-            print("creating image {}".format(image_title))
-
-            img = Image.open(full_path)
-            width, height = img.size
-
-            image = miro_board.create_image(full_path,
-                                            (i*(width *1.2),0),
-                                            image_title=image_title)
-            is_new = True
-        else:
-            # print (image)
-            image_id = image["id"]
-            print("updating image {}".format(image_title))
-            image_title = image_title + "[Uploaded at {}]".format(get_formatted_current_time())
-            image = miro_board.update_image(image_id, 
-                                            full_path,
-                                            image_title=image_title)
-            is_new = False
-
-
-        x, y = image["position"]["x"], image["position"]["y"]
-        w, h = image["geometry"]["width"], image["geometry"]["height"]
-        miro_board.create_mark((x + w*0.5, y - h*0.5),
-                               image["geometry"]["width"]*0.1,
-                               is_new)
-
-    print("!!!!!!!!!!!!!! Finish updating miro")
-
-    return miro_board
 
 def main():
     data = read_json_as_dict_in_dump_folder("miro.json")

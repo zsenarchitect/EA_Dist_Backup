@@ -46,6 +46,8 @@ def update_miro():
     if not sheets:
         return
 
+    sheets.sort(key=lambda x: x.SheetNumber)
+
     res = EnneadTab.REVIT.REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
 
     dump_folder = "{}\\miro_dump".format(EnneadTab.FOLDER.get_EA_local_dump_folder())
