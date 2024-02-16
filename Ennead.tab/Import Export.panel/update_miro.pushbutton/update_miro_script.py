@@ -53,9 +53,14 @@ def update_miro():
     dump_folder = "{}\\miro_dump".format(EnneadTab.FOLDER.get_EA_local_dump_folder())
 
     # make sure everytig is the lastest in this folder
-    if os.path.exists(dump_folder):
-        shutil.rmtree(dump_folder)
-    os.mkdir(dump_folder)
+
+    try:
+        if os.path.exists(dump_folder):
+            shutil.rmtree(dump_folder)
+
+        os.mkdir(dump_folder)
+    except:
+        pass
 
     for i, sheet in enumerate(sheets):
         sheet_name = sheet.Name

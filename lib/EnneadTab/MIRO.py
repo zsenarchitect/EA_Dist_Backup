@@ -1,4 +1,5 @@
 """pack this exe using python 3"""
+import time
 import traceback
 import os
 import datetime
@@ -11,12 +12,18 @@ def log_error(error):
     with open(error_file, "w") as f:
         f.write(error)
 
-    # os.startfile(error_file)
+    if os.environ["USERPROFILE"].split("\\")[-1] == "szhang":
+        os.startfile(error_file)
 
-
+        
 try:
     from PIL import Image
     import requests
+except:
+    pass
+
+try:
+    pass
 except:
     error = traceback.format_exc()
     log_error(error)
@@ -80,6 +87,31 @@ def get_formatted_time(input_time):
     year, month, day = '{:02d}'.format(input_time.year), '{:02d}'.format(input_time.month), '{:02d}'.format(input_time.day)
     hour, minute, second = '{:02d}'.format(input_time.hour), '{:02d}'.format(input_time.minute), '{:02d}'.format(input_time.second)
     return "{}-{}-{}_{}-{}-{}".format(year, month, day, hour, minute, second)
+
+
+def get_readable_time(time_in_seconds):
+
+    
+    
+    
+    time_in_seconds = int(time_in_seconds)
+    if time_in_seconds < 60:
+        return "{}s".format(time_in_seconds)
+    if time_in_seconds < 3600:
+        mins = int(time_in_seconds/60)
+        secs = time_in_seconds%60
+        return "{}m {}s".format(mins, secs)
+    
+    
+    # hours = int(time_in_seconds/3600)
+    # mins = time_in_seconds%60
+    # secs = time_in_seconds%60
+    
+    hours = time_in_seconds // 3600
+    mins = (time_in_seconds % 3600) // 60
+    secs = time_in_seconds % 60
+    return "{}h {}m {}s".format(hours, mins, secs)
+
 ###############################################################################
 def get_token():
     return get_api_key("miro_oauth")
@@ -97,8 +129,11 @@ class ShapeStyle:
 
     
 class Miro:
-    def __init__(self, board_id):
-        self.board_id = board_id
+    def __init__(self, board_id_or_url):
+        if "board/" in board_id_or_url:
+            board_id_or_url = board_id_or_url.split("board/")[-1].replace("/", "")
+        self.board_id = board_id_or_url
+
         self.token = get_token()
 
 
@@ -478,7 +513,7 @@ class Miro:
            
 
                 
-    def find_ids_as_dict(self, search_keys, type = None):
+    def find_ids_as_dict(self, search_keys = None, type = None):
         """keep looking up as long as ther is a cursor left, exhaust and collect all ids
 
         Args:
@@ -489,7 +524,8 @@ class Miro:
             dict: a pair dict (search_key, item_id)
         """
 
-        key_map = {"duplicated_item":[]}
+        key_map = {"duplicated_item":[],
+                   "all":[]}
 
         if type:
             url = "https://api.miro.com/v2/boards/{}/items?type={}".format(self.board_id, type)
@@ -512,16 +548,21 @@ class Miro:
                 final_url = url
 
             response = requests.get(final_url, headers=headers)
-            for item in response.json()["data"]:
-                for key in search_keys:
-                    if key in item["data"]["title"]:
-                        print ("found {}".format(item["data"]["title"]))
 
-                        if key not in key_map:
-                            key_map[key] = item
-                        else:
-                            key_map["duplicated_item"].append(item)
-                            
+            print (response.text)
+            for item in response.json()["data"]:
+                if search_keys:
+                    for key in search_keys:
+                        if key in item["data"]["title"]:
+                            print ("found {}".format(item["data"]["title"]))
+
+                            if key not in key_map:
+                                key_map[key] = item
+                            else:
+                                key_map["duplicated_item"].append(item)
+                    else:
+                        key_map["all"].append(item)
+                                
             if "cursor" in response.json():
                 cursor = response.json()["cursor"]
             else:
@@ -593,6 +634,34 @@ class CornerLocation:
             return (x-w/2, y+h/2)
         elif location == CornerLocation.BottomRight:
             return (x+w/2, y+h/2)
+
+
+
+class MiroListerner(Miro):
+    
+    def listen(self):
+        print ("listening to miro")
+        count = 80
+
+        # i want app to run infinitely until window is closed
+        while True:
+            print ("{} until the listen goes to sleep.".format(get_readable_time(count)))
+            time.sleep(1)
+            if count < 0:
+                break
+
+            count -= 1
+            self.download_data()
+
+    def download_data(self):  
+        data = self.find_ids_as_dict(type="shape")
+        all_shapes = data["all"]
+
+        print (all_shapes)
+        pass
+
+class MiroPusher(Miro):
+    pass
 ##################################################################
 
 
@@ -672,10 +741,22 @@ def update_revit_sheets_on_miro(sheet_imgs, miro_board_url):
 
 def main():
     data = read_json_as_dict_in_dump_folder("miro.json")
-    app, url, sheet_imgs = data["app"], data["url"], data["images"]
+    app, url=  data["app"], data["url"]
 
     if app == "revit_sheet":
+        sheet_imgs = data["images"]
         update_revit_sheets_on_miro(sheet_imgs, url)
+
+    elif app == "rhino_listener":
+        # lisnter only download json data, it does not bake.
+        # the bake action is handle in rhino when user decide to bake
+        miro_board = MiroListerner(url)
+        miro_board.listen()
+
+    elif app == "rhino_pusher":
+        geos = data["geos"]
+        miro_board = MiroPusher(url)
+        miro_board.push(geos)
 
 
 
