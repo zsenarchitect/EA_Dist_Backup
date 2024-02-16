@@ -46,7 +46,7 @@ def update_miro():
     if not sheets:
         return
 
-    sheets.sort(key=lambda x: x.SheetNumber)
+
 
     res = EnneadTab.REVIT.REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
 
@@ -72,7 +72,7 @@ def update_miro():
     
     with EnneadTab.DATA_FILE.update_data("miro.json") as data:
         data['url'] = miro_url
-        data["images"] = [os.path.join(dump_folder, f) for f in os.listdir(dump_folder)]
+        data["images"] = [os.path.join(dump_folder, f) for f in sorted(os.listdir(dump_folder), key=lambda x: x.split("^")[1])]
         data["app"] = "revit_sheet"
 
     EnneadTab.EXE.open_exe("MIRO")
