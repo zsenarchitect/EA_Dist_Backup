@@ -410,18 +410,15 @@ def main():
         global killtime
         killtime = 90
         output.self_destruct(killtime)
-        try:
-            doc = EXEC_PARAMS.event_args.Document
-        except:
+        
+        doc = EXEC_PARAMS.event_args.Document
+
+
+
+        if doc.IsFamilyDocument:
             return
 
-
-        if doc is None:
-            return
-
-        if doc.IsFamilyDocument == True or None:
-            return
-
+        EnneadTab.REVIT.REVIT_HISTORY.record_warning(doc)
         log_time_sheet(doc)
         
 
@@ -438,7 +435,6 @@ def main():
         basic_info(doc)
         pop_up_window(doc)
         
-        EnneadTab.REVIT.REVIT_HISTORY.record_warning(doc)
 
         
         ENNEAD_LOG.warn_revit_session_too_long(non_interuptive = True)

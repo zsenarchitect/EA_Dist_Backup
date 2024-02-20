@@ -63,6 +63,7 @@ def display_warning_history(using_current = True):
                                                       show_detail=show_detail)
     
     # EnneadTab.OUTPUT.display_output_on_browser()
+    print("Done")
 
 def hint_chart_js():
     hint_image = script.get_bundle_file("chart js hint.png")

@@ -8,6 +8,7 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 import DATA_FILE
 import time
+import FOLDER
 try:
     import ENNEAD_LOG
     from Autodesk.Revit import DB
@@ -115,31 +116,34 @@ class WarningHistory:
     def __init__(self, doc):
         if isinstance(doc, str):
             self.doc_name = doc
+            self.doc = None
         else:
             self.doc = doc
             self.doc_name = doc.Title
         self.file = "REVIT_WARNING_HISTORY_{}.json".format(self.doc_name)
-        if os.path.exists(self.file):
+
+        
+        if os.path.exists(FOLDER.get_shared_dump_folder_file(self.file)):
+            
             self.data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(self.file, create_if_not_exist=True)
         else:
+            print("data find not found")
             self.data = {}
     
     def record_warning(self):
         # in event where doc is not valid, there is no data to record to
-        if not self.data:
+        if not self.doc:
+            print("doc obj not valid")
             return
         
         today = time.strftime("%Y-%m-%d")
         today_data = self.data.get(today, {})
-        if self.doc.IsWorkshared:
-            is_creator_recorded = True
-        else:
-            is_creator_recorded = False
+
 
         for warning in self.doc.GetWarnings():
             description = warning.GetDescriptionText()
             
-            if is_creator_recorded:
+            if self.doc.IsWorkshared:
                 creators = list(set([DB.WorksharingUtils.GetWorksharingTooltipInfo (self.doc, x).Creator for x in warning.GetFailingElements()]))
             else:
                 creators = []
@@ -164,6 +168,7 @@ class WarningHistory:
         all_mentioned_users = []
         
         if not self.data:
+            print("empty data")
             return
 
         
@@ -295,4 +300,4 @@ def display_warning(doc_name, show_detail=True):
 
 
 if __name__ == "__main__":
-    pass
+    record_warning("temp2")

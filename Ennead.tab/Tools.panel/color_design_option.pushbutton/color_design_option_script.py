@@ -71,7 +71,7 @@ class Solution:
         elements = list(DB.FilteredElementCollector(doc).WhereElementIsNotElementType().ToElements())
         setting = DB.OverrideGraphicSettings ()
         for view in self.views:
-            print "- Resetting View = {}".format(view.Name)
+            print ("- Resetting View = {}".format(view.Name))
             try:
                 map(lambda x: view.SetElementOverrides (x.Id, setting), elements)
             except Exception as e:
@@ -116,9 +116,10 @@ class Solution:
 
         set_name = doc.GetElement(design_option.Parameter[DB.BuiltInParameter.OPTION_SET_ID].AsElementId()).Name
         print ("\n\nChecking design option: [{}]-->{}: {} Elements".format(set_name, design_option.Name, len(elements)))
+        output.freeze()
         for i, element in enumerate(elements):
             print ("{} - {}".format(i + 1, output.linkify(element.Id, title = element.Category.Name)))
-
+        output.unfreeze()
         print ("\nRGB = {},{},{}\n".format(R,G,B))
 
         for view in self.views:
