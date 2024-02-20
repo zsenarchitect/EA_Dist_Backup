@@ -5,17 +5,16 @@ import os
 import sys
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
-#print root_folder
+
 import FOLDER
 
 import DATA_CONVERSION
 import traceback
 try:
     from Autodesk.Revit import DB
-    #print "Import DATA_CONVERSION ok"
+
 except :
-    # print ("Import Error in REVIT_EXPORT")
-    # print (traceback.format_exc())
+
     pass
 
 
@@ -87,7 +86,7 @@ def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_exp
             if  "The files already exist!" in e:
                 file_name = file_name + "_same name"
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name))
 
             else:
                 print (e)
@@ -135,7 +134,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
     opts.SetViewsAndSheets(DATA_CONVERSION.list_to_system_list([view_or_sheet.Id]))
 
     attempt = 0
-    max_attempt = 10
+    max_attempt = 5
     if os.path.exists(opts.FilePath):
         try:
             os.remove(opts.FilePath)
@@ -147,7 +146,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
         if attempt > max_attempt:
             print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             return False
-            break
+            
         attempt += 1
 
         try:
@@ -158,8 +157,9 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
         except Exception as e:
             if  "The files already exist!" in str(e):
                 file_name = file_name + "_same name"
+                opts.FilePath = output_folder + '\\{}.jpg'.format(file_name)
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                print("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name))
 
             else:
                 print( e.message)

@@ -193,7 +193,11 @@ class main_setting_UI(forms.WPFWindow):
 
         data = EnneadTab.DATA_FILE.read_json_as_dict(setting_file)
         for key, value in data.items():
-            ui_obj = getattr(self, key)
+            ui_obj = getattr(self, key, None)
+            if not ui_obj:
+                continue
+
+            
             if "checkbox" in key or "toggle_bt" in key or "radio_bt" in key:
                 setattr(ui_obj, "IsChecked", value)
             if "textbox" in key:

@@ -549,7 +549,7 @@ class Miro:
 
             response = requests.get(final_url, headers=headers)
 
-            print (response.text)
+            # print (response.text)
             for item in response.json()["data"]:
                 if search_keys:
                     for key in search_keys:
@@ -560,8 +560,8 @@ class Miro:
                                 key_map[key] = item
                             else:
                                 key_map["duplicated_item"].append(item)
-                    else:
-                        key_map["all"].append(item)
+                else:
+                    key_map["all"].append(item)
                                 
             if "cursor" in response.json():
                 cursor = response.json()["cursor"]
@@ -641,13 +641,13 @@ class MiroListerner(Miro):
     
     def listen(self):
         print ("listening to miro")
-        count = 80
+        count = 5
 
         # i want app to run infinitely until window is closed
         while True:
             print ("{} until the listen goes to sleep.".format(get_readable_time(count)))
             time.sleep(1)
-            if count < 0:
+            if count <= 0:
                 break
 
             count -= 1
@@ -655,10 +655,8 @@ class MiroListerner(Miro):
 
     def download_data(self):  
         data = self.find_ids_as_dict(type="shape")
-        all_shapes = data["all"]
-
-        print (all_shapes)
-        pass
+        with open(get_EA_dump_folder_file("miro_download.json"), "w") as f:
+            json.dump(data, f, indent=4)
 
 class MiroPusher(Miro):
     pass

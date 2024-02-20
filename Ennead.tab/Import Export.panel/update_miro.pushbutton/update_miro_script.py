@@ -33,14 +33,14 @@ def update_miro():
 
     print ("Note: At the moment CBI does not allow me to connect to Miro, so your team can ask me for a board on my personal account.")
     key = "recent_miro_url"
-    recent_url = EnneadTab.DATA_FILE.get_revit_ui_setting_data(key_defaule_value=(key,"https://miro.com/app/board/uXjVNsgWNfA=/"))
+    recent_url = EnneadTab.DATA_FILE.get_sticky_longterm(key,"https://miro.com/app/board/uXjVNsgWNfA=/")
     miro_url = forms.ask_for_string(
         prompt = "Please input the Miro board URL:",
         default= recent_url,
         title = "Makrup Sheet In Miro")
 
     print ("Miro URL: " + miro_url)
-    EnneadTab.DATA_FILE.set_revit_ui_setting_data(key, miro_url)
+    EnneadTab.DATA_FILE.set_sticky_longterm(key, miro_url)
 
     sheets = forms.select_sheets(title = "Select sheets to update")
     if not sheets:
@@ -67,8 +67,8 @@ def update_miro():
         sheet_num = sheet.SheetNumber
         guid = sheet.UniqueId
         file = "{}^{}^{}.jpg".format(guid,
-                                        sheet_num,
-                                        sheet_name)
+                                    sheet_num,
+                                    sheet_name)
 
         EnneadTab.NOTIFICATION.messenger ("Exporting image {}/{}==> {}:{}".format(i + 1, len(sheets), sheet_num, sheet_name))
         EnneadTab.REVIT.REVIT_EXPORT.export_image(sheet, file, dump_folder)
