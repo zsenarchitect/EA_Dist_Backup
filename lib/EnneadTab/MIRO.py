@@ -549,12 +549,16 @@ class Miro:
 
             response = requests.get(final_url, headers=headers)
 
-            # print (response.text)
+            
             for item in response.json()["data"]:
                 if search_keys:
                     for key in search_keys:
-                        if key in item["data"]["title"]:
-                            print ("found {}".format(item["data"]["title"]))
+                        item_data = item["data"]
+                        title = item_data.get("title", None)
+                        if not title:
+                            continue
+                        if key in title:
+                            print ("found {}".format(title))
 
                             if key not in key_map:
                                 key_map[key] = item

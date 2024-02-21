@@ -413,7 +413,8 @@ def main():
         
         doc = EXEC_PARAMS.event_args.Document
 
-
+        if not doc:
+            return
 
         if doc.IsFamilyDocument:
             return
