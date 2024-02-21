@@ -331,7 +331,10 @@ def warn_ignorance(doc, warning_cate):
     
     record_file = "{}_{}.json".format(warning_cate,
                                       doc.Title)
-    record = EnneadTab.DATA_FILE.read_json_as_dict_in_shared_dump_folder(record_file, create_if_not_exist=True)
+    if not os.path.exists(record_file):
+        record = dict()
+    else:
+        record = EnneadTab.DATA_FILE.read_json_as_dict_in_shared_dump_folder(record_file, create_if_not_exist=True)
     
     import time
     if len(record.keys()) == 0:
