@@ -52,7 +52,7 @@ def change_extension_folder(is_force_tester, include_game):
     """Reads the user extension folders and updates the list"""
     current_external_folders = user_config.get_thirdparty_ext_root_dirs(include_default=False)
     print (current_external_folders)
-    #﻿ ['C:\\Users\\szhang\\github\\EnneadTab-for-Revit']
+
 
 
     beta_version_extension_folder = filter(lambda x: "Published_Beta_Version"  in x, current_external_folders)

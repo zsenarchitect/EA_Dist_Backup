@@ -421,6 +421,7 @@ def main():
 
     EnneadTab.REVIT.REVIT_REPO.update_pyrevit_extension_json()
     
+    
     if not EnneadTab.USER.is_SZ(pop_toast = True):
         return
     

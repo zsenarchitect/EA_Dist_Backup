@@ -79,8 +79,19 @@ def alert_finish():
         if i == len(freqs)-1:
             duration = 400
         winsound.Beep(f, duration)
+
+def update_extension_setting():
+    from pyrevit.userconfig import user_config
+
+    current_external_folders = user_config.get_thirdparty_ext_root_dirs(include_default=False)
+    for folder in current_external_folders:
+        if "4b_Applied Computing" in folder:
+            print("\n\nDo you want to consider using offline mode? It is more performative and do not need L drive access.\n\n")
+
+
+
+
     
-if __name__ == "__main__":
     try:
         update_pyrevit_extension_json()
     except Exception as e:
@@ -97,3 +108,6 @@ if __name__ == "__main__":
     finally:
         pass
         
+    
+if __name__ == "__main__":
+    update_extension_setting()
