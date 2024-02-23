@@ -3,7 +3,13 @@ from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
 import EnneadTab
 
+
+
 def proj_initiation():
+    if EnneadTab.ENVIRONMENT_CONSTANTS.is_RhinoInsideRevit_environment():
+        return
+
+    
     try:
         doc = EXEC_PARAMS.event_args.Document
     except:
@@ -13,7 +19,7 @@ def proj_initiation():
     if doc is None:
         return
 
-    if doc.IsFamilyDocument == True or None:
+    if doc.IsFamilyDocument:
         return
     
     

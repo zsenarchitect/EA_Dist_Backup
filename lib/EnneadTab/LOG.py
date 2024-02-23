@@ -274,7 +274,7 @@ def unit_test():
     update_time_sheet_rhino("test_project_rhino_1")
     # print_time_sheet_detail()
 
-    read_log()
+    # read_log()
     
 
     

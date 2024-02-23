@@ -84,7 +84,14 @@ def is_Revit_environment():
     except:
         return False
 
-
+def is_RhinoInsideRevit_environment():
+    import clr
+    try:
+        clr.AddReference('RhinoCommon')
+        clr.AddReference('RhinoInside.Revit')
+        return True
+    except:
+        return False
 
 def is_Revit_limited():
     """Many of the project has restriction requirement to 

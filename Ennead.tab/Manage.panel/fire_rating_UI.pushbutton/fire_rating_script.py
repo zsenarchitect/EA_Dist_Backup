@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that help you manager fire rating in wall property, and apply/update rating graphic across multiple views."
+__doc__ = """Manager fire rating in wall property, and apply/update rating graphic across multiple views."""
 __title__ = "Fire Rating\nGraphic"
 __tip__ = True
 import os
@@ -46,7 +46,7 @@ class FireRatingGraphicMaker:
         self.log += "\n" + string
 
     def print_log(self):
-        print self.log
+        print (self.log)
 
     def get_wall_rating(self, wall):
         return wall.WallType.LookupParameter("Fire Rating").AsString()
@@ -107,7 +107,7 @@ class FireRatingGraphicMaker:
         self.good_wall_type_ids = [x.Id for x in wall_types]
 
 
-        TG = DB.TransactionGroup(doc, "Create/Update fire rating graphic")
+        TG = DB.TransactionGroup(doc, "Create/Update Fire Rating Graphic")
         TG.Start()
         map(self.process_view, self.views)
 
@@ -220,7 +220,7 @@ def update_wall_data(data_grid_source):
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def load_EA_family(title):
-    lib_family = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published_Beta_Version\ENNEAD.extension\Ennead Library.tab\Contents.panel\2D Contents.pulldown\EA_Fire Rating.content\EA_Fire Rating_content.rfa"
+    lib_family = "{}\\ENNEAD.extension\\Ennead Library.tab\\Contents.panel\\2D Contents.pulldown\\EA_Fire Rating.content\\EA_Fire Rating_content.rfa".format(EnneadTab.ENVIRONMENT_CONSTANTS.PUBLISH_BETA_FOLDER_FOR_REVIT)
     local_copy = EnneadTab.FOLDER.copy_file_to_local_dump_folder(lib_family, "EA_Fire Rating.rfa")
     try:
         t = DB.Transaction(doc, __title__)
@@ -229,7 +229,7 @@ def load_EA_family(title):
         t.Commit()
         #print "family loaded"
     except Exception as e:
-        print "family cannot be loaded"
+        print ("family cannot be loaded")
         print (e)
         t.RollBack()
         
