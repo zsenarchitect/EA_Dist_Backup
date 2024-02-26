@@ -50,6 +50,32 @@ def update_view_name():
 
 
 def isolate_elements_temporarily(element_ids):
+    if IS_FROM_LINK:
+        everythings = DB.FilteredElementCollector(doc, doc.ActiveView.Id).WhereElementIsNotElementType ().ToElements()
+
+        for e in everythings:
+            if isinstance(e, DB.RevitLinkInstance ):
+                if e.GetLinkDocument().Title == export_doc.Title:
+                    doc.ActiveView.IsolateElementsTemporary(EnneadTab.DATA_CONVERSION.list_to_system_list([e.Id]))
+                    # now that the link instance is here, i am going to hide everything tht is not in keeping lst
+                    break
+
+
+
+        everything_in_link = DB.FilteredElementCollector(export_doc).WhereElementIsNotElementType ().ToElements()
+        bad_types = set()
+        for e in everything_in_link:
+            if e.Id not in element_ids:
+                try:
+                    # bad performance......i am not using batch hide becasue there are som etype cannot be hidden, and there is no( yet) easy way to find which can hide or not... so just treat them individually
+                    doc.ActiveView.HideElements (EnneadTab.DATA_CONVERSION.list_to_system_list([e.Id]))
+                except:
+                    # print ("cannot hide {}".format(type(e)))
+                    bad_types.add(type(e))
+                    pass
+        for bad_type in bad_types:
+            print ("cannot hide {}".format(bad_type))
+        return
     doc.ActiveView.IsolateElementsTemporary(EnneadTab.DATA_CONVERSION.list_to_system_list(element_ids))
     pass
 
@@ -94,6 +120,7 @@ def process_type(revit_type):
     t = DB.Transaction(doc, "make view")
     t.Start()
     isolate_elements_temporarily(elements)
+
     doc.ActiveView.ConvertTemporaryHideIsolateToPermanent()
     export_dwg_action(file_name, doc.ActiveView, doc, OUTPUT_FOLDER)
     #T.RollBack()
@@ -168,6 +195,7 @@ def get_wall_elements_ids(wall_type):
 
 
     wall_ids = [x.Id for x in my_walls]
+
     #uidoc.Selection.SetElementIds (EnneadTab.DATA_CONVERSION.list_to_system_list(wall_ids))
     for wall in my_walls:
         wall_ids.extend(get_element_ids_on_wall(wall))
@@ -365,6 +393,7 @@ def get_elements_by_OST(OST):
         all_els = DB.FilteredElementCollector(export_doc, doc.ActiveView.Id).OfCategory(OST).WhereElementIsNotElementType().ToElements()
     all_els = list(all_els)
     all_els.extend(all_els_in_primary_options)
+    print ("totally found {} items".format(len(all_els)))
     return all_els
 
 
