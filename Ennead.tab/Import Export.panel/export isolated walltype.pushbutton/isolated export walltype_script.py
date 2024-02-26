@@ -43,8 +43,8 @@ def update_view_name():
         t.Commit()
         #print "new name set"
     except Exception as e:
-        print current_name
-        print new_name
+        print (current_name)
+        print (new_name)
         print (e)
         EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
 
@@ -82,7 +82,7 @@ def process_type(revit_type):
         
 
     if len(elements) == 0:
-        print "None found in this view."
+        print ("None found in this view.")
         return
 
     """
@@ -112,17 +112,17 @@ def process_type(revit_type):
     pass
 
 def get_fam_ins_ids(symbol):
-    print "----"*5
+    print ("----"*5)
     type_name = symbol.LookupParameter("Type Name").AsString()
-    print "processing {} <{}>[{}]".format(symbol.Family.FamilyCategory.Name,
+    print ("processing {} <{}>[{}]".format(symbol.Family.FamilyCategory.Name,
                                           symbol.FamilyName,
-                                            type_name)
+                                            type_name))
     
     
     # cate_filter = DB.ElementCategoryFilter()
     option_filter = DB.PrimaryDesignOptionMemberFilter()
     all_els_in_primary_options = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategoryId(symbol.Family.FamilyCategoryId).WherePasses(option_filter).ToElements()
-    print "{} primary design option items".format(len(all_els_in_primary_options))
+    print ("{} primary design option items".format(len(all_els_in_primary_options)))
     all_els = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategoryId(symbol.Family.FamilyCategoryId).WhereElementIsNotElementType().ToElements()
     all_els = list(all_els)
     all_els.extend(all_els_in_primary_options)
@@ -135,9 +135,9 @@ def get_fam_ins_ids(symbol):
 
 
 def get_wall_elements_ids(wall_type):
-    print "----"*5
+    print ("----"*5)
     wall_type_name = wall_type.LookupParameter("Type Name").AsString()
-    print "processing walltype [{}]".format(wall_type_name)
+    print ("processing walltype [{}]".format(wall_type_name))
     # get walls instance of this type in current view
     all_walls = get_elements_by_OST(DB.BuiltInCategory.OST_Walls)
     #all_walls = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(DB.BuiltInCategory.OST_Walls).WhereElementIsNotElementType().ToElements()
@@ -176,9 +176,9 @@ def get_wall_elements_ids(wall_type):
 
 def get_floor_elements_ids(floor_type):
 
-    print "----"*5
+    print ("----"*5)
     floor_type_name = floor_type.LookupParameter("Type Name").AsString()
-    print "processing floortype [{}]".format(floor_type_name)
+    print ("processing floortype [{}]".format(floor_type_name))
 
     #all_floors = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(DB.BuiltInCategory.OST_Floors).WhereElementIsNotElementType().ToElements()
     all_floors = get_elements_by_OST(DB.BuiltInCategory.OST_Floors)
@@ -189,9 +189,9 @@ def get_floor_elements_ids(floor_type):
 
 def get_roof_elements_ids(roof_type):
 
-    print "----"*5
+    print ("----"*5)
     roof_type_name = roof_type.LookupParameter("Type Name").AsString()
-    print "processing rooftype [{}]".format(roof_type_name)
+    print ("processing rooftype [{}]".format(roof_type_name))
 
     #all_roofs = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(DB.BuiltInCategory.OST_Roofs).WhereElementIsNotElementType().ToElements()
     all_roofs = get_elements_by_OST(DB.BuiltInCategory.OST_Roofs)
@@ -206,9 +206,9 @@ def get_roof_elements_ids(roof_type):
 
 def get_column_elements_ids(column_type):
 
-    print "----"*5
+    print ("----"*5)
     column_type_name = column_type.LookupParameter("Type Name").AsString()
-    print "processing columntype [{}]".format(column_type_name)
+    print ("processing columntype [{}]".format(column_type_name))
 
     #all_archi_columns = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(DB.BuiltInCategory.OST_Columns).WhereElementIsNotElementType().ToElements()
     all_archi_columns = get_elements_by_OST(DB.BuiltInCategory.OST_Columns)
@@ -222,9 +222,9 @@ def get_column_elements_ids(column_type):
 
 def get_stair_elements_ids(stair_type):
 
-    print "----"*5
+    print ("----"*5)
     stair_type_name = stair_type.LookupParameter("Type Name").AsString()
-    print "processing stairtype [{}]".format(stair_type_name)
+    print ("processing stairtype [{}]".format(stair_type_name))
 
 
 
@@ -300,17 +300,17 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
     time_start = time.time()
     if r"/" in file_name:
         file_name = file_name.replace("/", "-")
-        print "Windows file name cannot contain '/' in its name, i will replace it with '-'"
+        print ("Windows file name cannot contain '/' in its name, i will replace it with '-'")
     if "\"" in file_name:
         file_name = file_name.replace("\"", "in")
-        print "Windows file name cannot contain '\"' in its name, i will replace it with 'in'"
+        print ("Windows file name cannot contain '\"' in its name, i will replace it with 'in'")
     if "'" in file_name:
         file_name = file_name.replace("'", "in")
-        print "Windows file name cannot contain '\'' in its name, i will replace it with 'ft'"
+        print ("Windows file name cannot contain '\'' in its name, i will replace it with 'ft'")
         
         
         
-    print "preparing [{}].dwg".format(file_name)
+    print ("preparing [{}].dwg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
     
     view_as_collection = EnneadTab.DATA_CONVERSION.list_to_system_list([view_or_sheet.Id])
@@ -320,12 +320,12 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
     #print view_or_sheet
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             break
         attempt += 1
         try:
             doc.Export(output_folder, r"{}".format(file_name), view_as_collection, DWG_option)
-            print "DWG export succesfully"
+            print ("DWG export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -336,7 +336,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
             else:
                 if "no views/sheets selected" in e:
                     print (e)
-                    print "000000000"
+                    print ("000000000")
                     has_non_print_sheet = True
                 else:
 
@@ -344,7 +344,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
 
     time_end = time.time()
     additional_msg = "exporting DWG takes {}s".format( time_end - time_start)
-    print additional_msg
+    print( additional_msg)
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".pcp")
 
     EA_UTILITY.show_toast(app_name = "EnneadTab Type Exporter",
@@ -352,41 +352,10 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
                             message = additional_msg)
 
 
-def OLD_process_wall_type(wall_type):
-    print "----"*5
-    wall_type_name = wall_type.LookupParameter("Type Name").AsString()
-    print "processing walltype [{}]".format(type_name)
-    # get walls instance of this type in current view
-    all_walls = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(DB.BuiltInCategory.OST_Walls).WhereElementIsNotElementType().ToElements()
-    my_walls = filter(lambda x: x.WallType.LookupParameter("Type Name").AsString() == wall_type.LookupParameter("Type Name").AsString(), all_walls  )
-    #print my_walls
-    #print len(my_walls)
-
-    def get_element_ids_on_wall(wall):
-        return list(wall.GetDependentElements(None))
-        curtain_grid = wall.CurtainGrid
-        panel_ids = list(curtain_grid.GetPanelIds())
-        #print panel_ids
-        return panel_ids
-
-
-    wall_ids = [x.Id for x in my_walls]
-    #uidoc.Selection.SetElementIds (EnneadTab.DATA_CONVERSION.list_to_system_list(wall_ids))
-    for wall in my_walls:
-        wall_ids.extend(get_element_ids_on_wall(wall))
-
-    #print wall_ids
-    isolate_elements_temporarily(wall_ids)
-    file_name = "WalType_{}".format(wall_type_name)
-    export_dwg_action(file_name, doc.ActiveView, doc, OUTPUT_FOLDER)
-    #restore_view
-    doc.ActiveView.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate)
-    pass
-
 def get_elements_by_OST(OST):
     filter = DB.PrimaryDesignOptionMemberFilter()
     all_els_in_primary_options = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(OST).WherePasses(filter).ToElements()
-    print "{} primary design option items".format(len(all_els_in_primary_options))
+    print ("{} primary design option items".format(len(all_els_in_primary_options)))
     all_els = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(OST).WhereElementIsNotElementType().ToElements()
     all_els = list(all_els)
     all_els.extend(all_els_in_primary_options)
