@@ -15,10 +15,8 @@ def merge_pdfs(combined_pdf_file_path, list_of_filepaths, reorder = False):
         list_of_filepaths (list): list of l=path for the input pdfs
         reorder (bool, optional): reorder the pdf alphabetically. Defaults to False.
     """
-    try:
-        from PyPDF2 import PdfFileMerger
-    except:
-        pass
+    from PyPDF2 import PdfFileMerger
+
     merger = PdfFileMerger()
 
     if reorder:
@@ -39,10 +37,8 @@ def merge_images_to_pdf(combined_pdf_file_path, list_of_filepaths, reorder = Fal
         list_of_filepaths (list): list of l=path for the input images
         reorder (bool, optional): reorder the pdf alphabetically. Defaults to False.
     """
-    try:
-        from PyPDF2 import PdfFileMerger
-    except:
-        pass
+    from PyPDF2 import PdfFileMerger
+
     from PIL import Image
     merger = PdfFileMerger()
 

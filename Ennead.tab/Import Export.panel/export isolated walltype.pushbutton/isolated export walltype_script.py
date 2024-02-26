@@ -17,6 +17,7 @@ import time
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 import traceback
+import sys
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
 
@@ -547,5 +548,8 @@ def export_ost_material_map():
 output = script.get_output()
 output.close_others()
 if __name__ == "__main__":
+    links = EnneadTab.REVIT.REVIT_APPLICATION.get_revit_link_docs(link_only=True)
+    if len(links) > 0:
+        doc = EnneadTab.REVIT.REVIT_APPLICATION.select_revit_link_docs(select_multiple = False, including_current_doc = True, link_only = True)
     main()
     ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)

@@ -34,6 +34,19 @@ class TextColor:
     Cyan = "cyan"
     White = "white"
 
+def from_rgb(r, g, b):
+    """_summary_
+
+    Args:
+        r (_type_): _description_
+        g (_type_): _description_
+        b (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    return Color.FromArgb(r, g, b)
+
 def get_random_color(return_tuple = True):
     """get random color
 
