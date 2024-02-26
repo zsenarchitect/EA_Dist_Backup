@@ -354,9 +354,15 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
 
 def get_elements_by_OST(OST):
     filter = DB.PrimaryDesignOptionMemberFilter()
-    all_els_in_primary_options = DB.FilteredElementCollector(export_doc, doc.ActiveView.Id).OfCategory(OST).WherePasses(filter).ToElements()
+    if IS_FROM_LINK:
+        all_els_in_primary_options = DB.FilteredElementCollector(export_doc).OfCategory(OST).WherePasses(filter).ToElements()
+    else:
+        all_els_in_primary_options = DB.FilteredElementCollector(export_doc, doc.ActiveView.Id).OfCategory(OST).WherePasses(filter).ToElements()
     print ("{} primary design option items".format(len(all_els_in_primary_options)))
-    all_els = DB.FilteredElementCollector(export_doc, doc.ActiveView.Id).OfCategory(OST).WhereElementIsNotElementType().ToElements()
+    if IS_FROM_LINK:
+        all_els = DB.FilteredElementCollector(export_doc).OfCategory(OST).WhereElementIsNotElementType().ToElements()
+    else:
+        all_els = DB.FilteredElementCollector(export_doc, doc.ActiveView.Id).OfCategory(OST).WhereElementIsNotElementType().ToElements()
     all_els = list(all_els)
     all_els.extend(all_els_in_primary_options)
     return all_els
@@ -520,7 +526,9 @@ if __name__ == "__main__":
     links = EnneadTab.REVIT.REVIT_APPLICATION.get_revit_link_docs(link_only=True)
     if len(links) > 0:
         export_doc = EnneadTab.REVIT.REVIT_APPLICATION.select_revit_link_docs(select_multiple = False, including_current_doc = True, link_only = False)
+        IS_FROM_LINK = True
     else:
         export_doc = doc
+        IS_FROM_LINK = False
     main()
     ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)
