@@ -111,7 +111,8 @@ def time_has_passed_too_long(unix_time, tolerence = 60 * 30):
             return True
         return False
     except Exception as e:
-        print ("Failed becasue: {}".format(e) )
+        # print ("Failed becasue: {}".format(e) )
+        return False
 
 
 class AutoTimer:

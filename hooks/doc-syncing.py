@@ -41,7 +41,7 @@ def check_sync_queue():
             continue
 
         #the checking include current user, if this user has a record too old, he/she should go to the back of the line.
-        if EA_UTILITY.time_has_passed_too_long(record_unix_time):
+        if EnneadTab.TIME.time_has_passed_too_long(record_unix_time):
             #default is 30mins
             bad_record.append(existing_item)
             #might make too old record removed later but not here,
