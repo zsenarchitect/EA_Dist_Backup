@@ -52,7 +52,10 @@ def get_dwgs(doc):
 
 def output_info(elements,doc,output):
     for el in elements:
-        output.print_md("DWG Id = {}".format(el.Id))
+        try:
+            output.print_md("DWG Id = {}".format(el.Id))
+        except:
+            print ("DWG Id = {}".format(el.Id))
 
         dwg_name = el.LookupParameter("Name").AsString()
         workset = doc.GetWorksetTable().GetWorkset(el.WorksetId).Name
