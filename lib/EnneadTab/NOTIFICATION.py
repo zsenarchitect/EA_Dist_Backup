@@ -81,7 +81,6 @@ def messenger(main_text,
     data["height"] = height or 150 + main_text.count("\n") * 40
     data["image"] = image
     data["x_offset"] = x_offset
-    DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSAGER.json") #TO-DO: this is for backward compatablity, will be removed later
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return

@@ -115,12 +115,14 @@ def get_filesize(filepath, return_bytes = False):
     return "{}{}".format(size, size_unit[i])
 
 def get_dwg_file_path(dwg):
-
+    
     dwg_type = doc.GetElement(dwg.GetTypeId ())
     try:
         file_ref = dwg_type.GetExternalFileReference ()
-    except:
-        return "Call Sen Zhang For Help."
+    except Exception as e:
+        # print (dwg)
+        # print(dwg_type)
+        return "{}. Is this a cloud address?".format(e)
     file_path = file_ref.GetPath()
     file_path = DB.ModelPathUtils.ConvertModelPathToUserVisiblePath(file_path)
     return file_path
