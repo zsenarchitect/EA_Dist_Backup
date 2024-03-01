@@ -14,6 +14,7 @@ try:
     import SPEAK
     import ENVIRONMENT
     import USER_CONSTANTS
+    import EXE
     
 except:
     from EnneadTab import FOLDER
@@ -66,7 +67,17 @@ def prank_meme():
     link = "https://www.instagram.com/reel/C0KA4-kxioj/?igsh=MWN6cmg4cW5qeXV5NA%3D%3D"
     import webbrowser
     webbrowser.open(link)
+
+
+def prank_dvd():
+    if random.random() > 0.001:
+        return
+
+    EXE.open_exe("BOUNCER")
     
+    
+
+     
 def give_me_a_joke(talk = False, max_len = None):
 
 
@@ -125,6 +136,8 @@ else:
 
     
 prank_meme()
+
+prank_dvd()
 
 
 if __name__ == "__main__":
