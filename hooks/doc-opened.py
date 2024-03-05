@@ -252,6 +252,8 @@ def register_silient_open(doc):
     #print doc.Title
     if not doc.IsModelInCloud:
         return
+    if not doc.IsWorkshared :
+        return
     model_path = doc.GetWorksharingCentralModelPath ()
     #print model_path.GetProjectGUID  ()
     #print model_path.GetModelGUID ()
