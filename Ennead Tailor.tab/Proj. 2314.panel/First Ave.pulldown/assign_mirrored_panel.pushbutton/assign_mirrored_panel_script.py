@@ -47,28 +47,7 @@ def assign_mirrored_panel():
     t.Commit()
     
     EnneadTab.NOTIFICATION.messenger(main_text="Done")
-    """
-    $$$$$$$$$$$$$$$$$$$
-    """
-"""
-def try_catch_error(func):
-    def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
-        try:
-            # print "main in wrapper"
-            return func(*args, **kwargs)
-        except Exception as e:
-            print str(e)
-            return "Wrapper func for EA Log -- Error: " + str(e)
-    return wrapper
-"""
-"""
-    phase_provider = DB.ParameterValueProvider( DB.ElementId(DB.BuiltInParameter.ROOM_PHASE))
-    phase_rule = DB.FilterElementIdRule(phase_provider, DB.FilterNumericEquals(), phase.Id)
-    phase_filter = DB.ElementParameterFilter(phase_rule)
-    all_rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).WherePasses(phase_filter).WhereElementIsNotElementType().ToElements()
-    return all_rooms
-"""
+
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

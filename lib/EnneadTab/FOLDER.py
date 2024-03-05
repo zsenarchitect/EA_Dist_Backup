@@ -153,6 +153,9 @@ def copy_dir(source, dest, show_progress = False, progress_bar_note = "", ignore
             print (detail)
 
 def copy_file(original_path, new_path):
+    target_folder = os.path.dirname(new_path)
+    if not os.path.exists(target_folder):
+        os.mkdir(target_folder)
     shutil.copyfile(original_path, new_path)
 
 def copy_file_to_folder(original_path, target_folder):

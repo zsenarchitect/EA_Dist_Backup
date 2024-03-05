@@ -44,7 +44,7 @@ def convert_unit(x):
     if RHINO_UNIT == "Millimeters" or  RHINO_UNIT == "Millimeter":
         return EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(float(x))
 
-    if RHINO_UNIT == "Feet" or RHINO_UNIT == "Foort":
+    if RHINO_UNIT == "Feet" or RHINO_UNIT == "Foot":
         return float(x)
 
     if RHINO_UNIT == "Inches" or RHINO_UNIT == "Inch":
