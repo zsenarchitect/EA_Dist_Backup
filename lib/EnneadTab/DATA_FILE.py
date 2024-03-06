@@ -4,7 +4,7 @@
 import io
 import os
 import json
-
+import shutil
 import FOLDER
 import USER
 import ENVIRONMENT_CONSTANTS
@@ -22,8 +22,11 @@ def read_json_file_safely(filepath, use_encode=False, create_if_not_exist = Fals
         dict | None: the content of the json file
     """
     local_path = FOLDER.get_EA_dump_folder_file("temp.json")
-    import shutil
-    shutil.copyfile(filepath, local_path)
+    try:
+        shutil.copyfile(filepath, local_path)
+    except IOError:
+        local_path = FOLDER.get_EA_dump_folder_file("temp2.json")
+        shutil.copyfile(filepath, local_path)
     # print "###"
     # print local_path
     content = read_json_as_dict(local_path, use_encode, create_if_not_exist)

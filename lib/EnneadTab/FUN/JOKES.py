@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from ctypes.wintypes import tagRECT
+
 import os
 import sys
 import random
@@ -51,12 +51,7 @@ def random_loading_message():
 
 
 def prank_ph():
-    if USER_CONSTANTS.USER_NAME in TARGETS:
-        chance = 0.02
-    else:
-        chance = 0.0001
-    if random.random() > chance:
-        return
+
     
     icon = '{}\prank\pornhub.png'.format(FOLDER.get_folder_path_from_path(__file__))
    
@@ -67,25 +62,14 @@ def prank_ph():
                         force_toast=True)
     
 def prank_meme():
-    if USER_CONSTANTS.USER_NAME in TARGETS:
-        chance = 0.05
-    else:
-        chance = 0.0001
-        
-    if random.random() > chance:
-        return
+
     link = "https://www.instagram.com/reel/C0KA4-kxioj/?igsh=MWN6cmg4cW5qeXV5NA%3D%3D"
     import webbrowser
     webbrowser.open(link)
 
 
 def prank_dvd():
-    if USER_CONSTANTS.USER_NAME in TARGETS:
-        chance = 0.05
-    else:
-        chance = 0.0001
-    if random.random() > chance:
-        return
+
 
     EXE.open_exe("BOUNCER")
     
@@ -142,20 +126,33 @@ def validating_jokes():
         f.writelines(OUT)
 
 
-if USER_CONSTANTS.USER_NAME in ["fsun"]:
-    if random.random() < 0.001:
-        prank_ph(forced=True)
+if USER_CONSTANTS.USER_NAME in TARGETS:
+    chance = 0.05
 else:
+    chance = 0.0001
+if random.random() < chance:
     prank_ph()
 
-    
-prank_meme()
 
-prank_dvd()
+if USER_CONSTANTS.USER_NAME in TARGETS:
+    chance = 0.05
+else:
+    chance = 0.0001
+if random.random() < chance:
+    prank_meme()
+
+
+
+if USER_CONSTANTS.USER_NAME in TARGETS:
+    chance = 0.05
+else:
+    chance = 0.0001
+if random.random() < chance:
+    prank_dvd()
 
 
 if __name__ == "__main__":
     # prank_ph(forced=True)
     print (random_loading_message())
     prank_meme()
-    prank_ph(forced=True)
+    prank_ph()

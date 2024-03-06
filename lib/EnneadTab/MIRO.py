@@ -485,6 +485,7 @@ class Miro:
                 
 
             response = requests.get(final_url, headers=headers)
+            print (response.text)
             for item in response.json()["data"]:
                 if item["data"]["shape"] in ShapeStyle.get_valid_shapes():
                     makrer_ids.append(item["id"])

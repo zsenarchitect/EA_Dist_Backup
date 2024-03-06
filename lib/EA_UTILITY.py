@@ -295,7 +295,7 @@ def get_solid_fill_pattern_id(doc):
 """"""
 def random_loading_message():
     import random
-    with open('{}\FUN\LOADING_SCREEN_MESSAGE.txt'.format(get_folder_path_from_path(__file__)), "r") as f:
+    with open('{}\FUN\_loading_screen_message.txt'.format(get_folder_path_from_path(__file__)), "r") as f:
         lines = f.readlines()
     random.shuffle(lines)
     return lines[0].replace("\n", "")

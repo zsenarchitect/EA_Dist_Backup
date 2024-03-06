@@ -1459,7 +1459,7 @@ class EA_Printer_UI(WPFWindow):
 
     def update_loading_message(self, preview_obj):
         self.textblock_export_status.Text = "{}\nEstimated time = {}".format( preview_obj.format_name, preview_obj.time_estimate_format)
-        self.textblock_load_screen.Text = EA_UTILITY.random_loading_message()
+        self.textblock_load_screen.Text = EnneadTab.FUN.JOKES.random_loading_message()
     """
     !! store time 3sitmate  dict[(ID, extension)] = time
 
