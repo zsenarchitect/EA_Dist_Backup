@@ -43,8 +43,7 @@ def speak(text, language='en', accent='com', force_talk = False):
     #accent = 'co.in'
     #accent = 'com'
     """
-    
-    FUN.JOKES.prank_popup()
+
     
     if not text:
         return

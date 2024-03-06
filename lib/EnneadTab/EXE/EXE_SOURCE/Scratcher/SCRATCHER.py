@@ -27,24 +27,30 @@ except:
 class LotteryScratch:
     def __init__(self, width=640, height=480):
         self.root_folder = os.path.dirname(__file__)
+        
+        self.capture_desktop()
         self.screen_width = width
         self.screen_height = height
+
+
+
+
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        self.screenshot_path = '{}\\desktop_screenshot.png'.format(self.root_folder)
-        self.blurry_screenshot_path = '{}\\blurry_screenshot.png'.format(self.root_folder)
-        self.radius = 20
         self.wipe_sound = pygame.mixer.Sound('{}\\wipe_sound.mp3'.format(self.root_folder))
         self.brush_shape = pygame.image.load('{}\\brush_shape.png'.format(self.root_folder)).convert_alpha()
 
     def capture_desktop(self):
+        self.screenshot_path = '{}\\desktop_screenshot.png'.format(self.root_folder)
+        self.blurry_screenshot_path = '{}\\blurry_screenshot.png'.format(self.root_folder)
+        
         screenshot = pyautogui.screenshot()
         screenshot.save(self.screenshot_path)
         original_image = Image.open(self.screenshot_path)
-        blurry_image = original_image.filter(ImageFilter.GaussianBlur(radius=5))
+        blurry_image = original_image.filter(ImageFilter.GaussianBlur(radius=10))
         blurry_image.save(self.blurry_screenshot_path)
 
     def setup(self):
-        self.capture_desktop()
+        
 
         self.background = pygame.image.load(self.screenshot_path).convert()
         self.scratch_layer = pygame.image.load(self.blurry_screenshot_path).convert_alpha()
@@ -57,11 +63,16 @@ class LotteryScratch:
                     running = False
                 if pygame.mouse.get_pressed()[0]:  # If left mouse button is pressed
                     mouse_x, mouse_y = pygame.mouse.get_pos()
-                    self.screen.blit(self.brush_shape, (mouse_x - self.brush_shape.get_width() / 2, mouse_y - self.brush_shape.get_height() / 2), special_flags=pygame.BLEND_RGBA_SUB)
+                    self.screen.blit(self.brush_shape, 
+                                     (mouse_x - self.brush_shape.get_width() / 2, 
+                                      mouse_y - self.brush_shape.get_height() / 2), 
+                                     special_flags=pygame.BLEND_RGBA_SUB)
                     self.wipe_sound.play()
 
             self.screen.blit(self.background, (0, 0))
-            self.screen.blit(self.scratch_layer, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.screen.blit(self.scratch_layer, 
+                             (0, 0), 
+                             special_flags=pygame.BLEND_RGBA_MULT)
             pygame.display.flip()
 
         pygame.quit()

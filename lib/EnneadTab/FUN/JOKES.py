@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from ctypes.wintypes import tagRECT
 import os
 import sys
 import random
@@ -23,10 +24,11 @@ except:
     from EnneadTab import ENVIRONMENT
     from EnneadTab import USER_CONSTANTS
 
-
+TARGETS = ['fsun', 
+           'eshaw']
 
 def random_joke():
-    import random
+
     joke_file = "{}\\FUN\\_dad_jokes.txt".format(ENVIRONMENT.CORE_MODULE_FOLDER_FOR_PUBLISHED_RHINO)
     with open(joke_file, "r") as f:
         lines = f.readlines()
@@ -48,9 +50,12 @@ def random_loading_message():
     return lines[0].replace("\n", "")
 
 
-def prank_popup(forced=False):
-    
-    if not forced and random.random() > 0.0001:
+def prank_ph():
+    if USER_CONSTANTS.USER_NAME in TARGETS:
+        chance = 0.02
+    else:
+        chance = 0.0001
+    if random.random() > chance:
         return
     
     icon = '{}\prank\pornhub.png'.format(FOLDER.get_folder_path_from_path(__file__))
@@ -62,7 +67,12 @@ def prank_popup(forced=False):
                         force_toast=True)
     
 def prank_meme():
-    if random.random() > 0.0001:
+    if USER_CONSTANTS.USER_NAME in TARGETS:
+        chance = 0.05
+    else:
+        chance = 0.0001
+        
+    if random.random() > chance:
         return
     link = "https://www.instagram.com/reel/C0KA4-kxioj/?igsh=MWN6cmg4cW5qeXV5NA%3D%3D"
     import webbrowser
@@ -70,7 +80,11 @@ def prank_meme():
 
 
 def prank_dvd():
-    if random.random() > 0.001:
+    if USER_CONSTANTS.USER_NAME in TARGETS:
+        chance = 0.05
+    else:
+        chance = 0.0001
+    if random.random() > chance:
         return
 
     EXE.open_exe("BOUNCER")
@@ -130,9 +144,9 @@ def validating_jokes():
 
 if USER_CONSTANTS.USER_NAME in ["fsun"]:
     if random.random() < 0.001:
-        prank_popup(forced=True)
+        prank_ph(forced=True)
 else:
-    prank_popup()
+    prank_ph()
 
     
 prank_meme()
@@ -141,7 +155,7 @@ prank_dvd()
 
 
 if __name__ == "__main__":
-    # prank_popup(forced=True)
+    # prank_ph(forced=True)
     print (random_loading_message())
     prank_meme()
-    prank_popup(forced=True)
+    prank_ph(forced=True)
