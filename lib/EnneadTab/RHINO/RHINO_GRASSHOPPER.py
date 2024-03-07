@@ -35,3 +35,24 @@ class AccessRhinoDoc():
 
     def __exit__(self, exception, exception_value, traceback):
         set_doc_to_ghdoc()
+
+
+"""
+it turns out you can load grasshopper compnent to rhino doc method.
+
+https://developer.rhino3d.com/guides/rhinopython/ghpython-call-components/#node-in-code-from-rhinopython
+
+import rhinoscriptsyntax as rs
+import ghpythonlib.components as ghcomp
+import scriptcontext
+ 
+points = rs.GetPoints(True, True)
+if points:
+    curves = ghcomp.Voronoi(points)   <----------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for curve in curves:
+        scriptcontext.doc.Objects.AddCurve(curve)
+    for point in points:
+        scriptcontext.doc.Objects.AddPoint(point)
+    scriptcontext.doc.Views.Redraw()
+
+"""

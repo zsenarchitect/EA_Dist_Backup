@@ -26,6 +26,7 @@ MISC_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc"
 SHARED_DATA_DUMP_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Shared Data Dump".format(HOSTER_FOLDER)
 
 
+RHINO_SCRIPT_FOLDER = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))) + "\\Toolbar"
 
 
 RHINO_USER_LOG_FOLDER = "{}\\03_Rhino\\12_EnneadTab for Rhino\\LOG".format(HOSTER_FOLDER)
