@@ -71,8 +71,8 @@ def prank_meme():
 
 
 def prank_dvd():
-    for _ in range(random.randint(1, 10)):
-        EXE.open_exe("BOUNCER")
+
+    EXE.open_exe("BOUNCER")
     
     
 
@@ -161,7 +161,9 @@ if m == 4 and d == 1 and random.random() < 0.2:
     elif dice < 0.4:
         NOTIFICATION.messenger(random_loading_message())
     elif dice < 0.6:
-        prank_dvd()
+        max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 1
+        for _ in range(random.randint(1, max)):
+            prank_dvd()
     elif dice < 0.8:
         prank_meme()
     else:
