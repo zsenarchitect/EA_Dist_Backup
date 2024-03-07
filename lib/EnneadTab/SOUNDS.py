@@ -48,7 +48,7 @@ def play_sound(file = "sound effect_popup msg3.wav"):
 
 
 
-def prank_play_sound(file):
+def prank_play_sound():
     import random
     chance = random.random()
     #print chance

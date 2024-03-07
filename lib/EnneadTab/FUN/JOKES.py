@@ -16,6 +16,8 @@ try:
     import ENVIRONMENT
     import USER_CONSTANTS
     import EXE
+    import TIME
+    import SOUNDS
     
 except:
     from EnneadTab import FOLDER
@@ -69,9 +71,8 @@ def prank_meme():
 
 
 def prank_dvd():
-
-
-    EXE.open_exe("BOUNCER")
+    for _ in range(random.randint(1, 10)):
+        EXE.open_exe("BOUNCER")
     
     
 
@@ -127,7 +128,7 @@ def validating_jokes():
 
 
 if USER_CONSTANTS.USER_NAME in TARGETS:
-    chance = 0.05
+    chance = 0.02
 else:
     chance = 0.0001
 if random.random() < chance:
@@ -135,7 +136,7 @@ if random.random() < chance:
 
 
 if USER_CONSTANTS.USER_NAME in TARGETS:
-    chance = 0.05
+    chance = 0.02
 else:
     chance = 0.0001
 if random.random() < chance:
@@ -150,9 +151,32 @@ else:
 if random.random() < chance:
     prank_dvd()
 
+y, m, d = TIME.get_date_as_tuple()
+if m == 4 and d == 1 and random.random() < 0.2:
+    dice = random.random()
+    if dice < 0.2:
+        prank_ph()
+    elif dice < 0.3:
+        NOTIFICATION.duck_pop(random_joke())
+    elif dice < 0.4:
+        NOTIFICATION.messenger(random_loading_message())
+    elif dice < 0.6:
+        prank_dvd()
+    elif dice < 0.8:
+        prank_meme()
+    else:
+        SOUNDS.play_meme_sound()
+        
+
+
 
 if __name__ == "__main__":
     # prank_ph(forced=True)
     print (random_loading_message())
-    prank_meme()
-    prank_ph()
+    # prank_meme()
+    # prank_ph()
+    prank_dvd()
+    # NOTIFICATION.messenger(random_joke())
+    # NOTIFICATION.messenger(random_loading_message())
+
+    # SOUNDS.play_meme_sound()

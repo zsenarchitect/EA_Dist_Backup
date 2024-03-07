@@ -28,8 +28,9 @@ class DVDLogoApp:
         initial_y = random.randint(0, self.screen_height - self.window_height)
         self.root.geometry(f"{self.window_width}x{self.window_height}+{initial_x}+{initial_y}")
 
-        self.speed_x = 3
-        self.speed_y = 3
+        
+        self.speed_x = 3 if random.random() > 0.5 else -3
+        self.speed_y = 3 if random.random() > 0.5 else -3
 
         self.move()
 
@@ -104,7 +105,7 @@ class DVDLogoApp:
             self.root.destroy()
 
     def change_background_color(self):
-        colors = ['red', 'blue', 'yellow', 'orange', 'purple', 'pink']
+        colors = ['red', 'blue', 'yellow', 'orange', 'purple', 'pink', "green"]
         new_color = random.choice(colors)
         self.apply_new_background(new_color)
 
