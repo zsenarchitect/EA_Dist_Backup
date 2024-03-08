@@ -1,6 +1,7 @@
 import os
 import time
 import json
+from EnneadTab import NOTIFICATION
 import USER_CONSTANTS
 import DATA_FILE
 import ENVIRONMENT_CONSTANTS
@@ -128,6 +129,10 @@ def update_time_sheet_rhino(doc_name):
 def update_time_sheet_by_software(doc_name, software):
     
     data = get_time_sheet_data()
+    if not data:
+        NOTIFICATION.messenger("Failed Data Reading")
+        
+        return
     software_data = data.get(software, {})
     today = time.strftime("%Y-%m-%d")
     today_data = software_data.get(today, {})
