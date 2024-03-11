@@ -14,12 +14,10 @@ this allow direct run of openai, pygame , matploylib,panda, and other modern py3
 import os
 
 for module in os.listdir(os.path.dirname(__file__)):
-    #print (module)
+
     if module == '__init__.py':
         continue
     
-    # if module == 'EXE_COLLECTION':
-    #     continue
 
     if module[-3:] != '.py':
         continue
