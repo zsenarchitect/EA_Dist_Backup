@@ -23,6 +23,8 @@ def festival_greeting():
     greeting_chinese_new_year()
     greeting_mid_moon()
     greeting_xmas()
+    greeting_pi()
+    greeting_may_force()
     
 
 def is_valid_date(date_tuple_start,
@@ -36,8 +38,60 @@ def is_valid_date(date_tuple_start,
                            date_tuple_end[2])
 
     return (d0 < today < d1)
-    
 
+
+def greeting_may_force():
+
+    if not is_valid_date((2024,5,3),(2024,5,5)):
+        return
+
+    # this will make every year 12-20-12-31 xmax
+    # _, m, d = TIME.get_date_as_tuple()
+    # if m != 12 or d < 20:
+    #     return
+
+    
+    image = "may_force.jpg"
+
+    image_file = "{}\\{}".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT,
+                                 image)
+    output = script.get_output()
+    output.print_image(image_file)
+    output.set_width(900)
+    output.set_height(700)
+    output.center()
+    output.set_title("Greeting from EnneadTab")
+
+    return 
+    file = 'sound effect_xmas_hohoho.wav'
+    SOUNDS.play_sound(file)
+    
+def greeting_pi():
+
+    if not is_valid_date((2024,3,13),(2024,3,15)):
+        return
+
+    # this will make every year 12-20-12-31 xmax
+    # _, m, d = TIME.get_date_as_tuple()
+    # if m != 12 or d < 20:
+    #     return
+
+    
+    image = "pi_day.jpeg"
+
+    image_file = "{}\\{}".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT,
+                                 image)
+    output = script.get_output()
+    output.print_image(image_file)
+    output.set_width(900)
+    output.set_height(700)
+    output.center()
+    output.set_title("Greeting from EnneadTab")
+
+    return 
+    file = 'sound effect_xmas_hohoho.wav'
+    SOUNDS.play_sound(file)
+  
 def greeting_xmas():
 
     if not is_valid_date((2023,12,20),(2024,1,3)):

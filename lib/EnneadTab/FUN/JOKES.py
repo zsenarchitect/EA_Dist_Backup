@@ -6,6 +6,8 @@ import os
 import sys
 import random
 
+from EnneadTab.FOLDER import is_file_exist_in_dump_folder
+
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
 
@@ -151,26 +153,34 @@ else:
 if random.random() < chance:
     prank_dvd()
 
-y, m, d = TIME.get_date_as_tuple()
-if m == 4 and d == 1 and random.random() < 0.2:
-    dice = random.random()
-    if dice < 0.2:
-        prank_ph()
-    elif dice < 0.3:
-        NOTIFICATION.duck_pop(random_joke())
-    elif dice < 0.4:
-        NOTIFICATION.messenger(random_loading_message())
-    elif dice < 0.6:
-        max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 1
-        for _ in range(random.randint(1, max)):
-            prank_dvd()
-    elif dice < 0.8:
-        prank_meme()
-    else:
-        SOUNDS.play_meme_sound()
+
+def april_fool():
+    y, m, d = TIME.get_date_as_tuple()
+    marker_file = FOLDER.get_EA_dump_folder_file("april_fooled.stupid")
+    
+    if m == 4 and d == 1 and random.random() < 0.2:
+        if os.path.exists(marker_file):
+            return
+        dice = random.random()
+        if dice < 0.2:
+            prank_ph()
+        elif dice < 0.3:
+            NOTIFICATION.duck_pop(random_joke())
+        elif dice < 0.4:
+            NOTIFICATION.messenger(random_loading_message())
+        elif dice < 0.8:
+            max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 1
+            for _ in range(random.randint(1, max)):
+                prank_dvd()
+
+        else:
+            SOUNDS.play_meme_sound()
+        with open(marker_file, 'w') as f:
+            f.write("You have been pranked.")
+        
         
 
-
+april_fool()
 
 if __name__ == "__main__":
     # prank_ph(forced=True)

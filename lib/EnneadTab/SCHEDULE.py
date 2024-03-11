@@ -34,3 +34,25 @@ At sceduled time, revit is started by EXE and in startup.py it look for if curre
 mark the json as assigned, can start to open doc headless, after openned, start the task, then close application, mark json as completed and move to DONE folder.
 
 """
+
+
+
+if __name__ == "__main__":
+    import sched
+    import time
+    import os
+
+    def delete_bad_hook():
+        files = ["L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\hooks\\doc-changed.py",
+                 "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published_Beta_Version\\ENNEAD.extension\\hooks\\doc-changed.py"]
+        for file in files:
+            os.remove(file)
+        print("delete hook!")
+
+    scheduler = sched.scheduler(time.time, time.sleep)
+
+    # Schedule the task to run at a specific time
+    specific_time = time.time() + 5*3600  # 5 xxxx from now
+    scheduler.enterabs(specific_time, 1, delete_bad_hook, ())
+
+    scheduler.run()
