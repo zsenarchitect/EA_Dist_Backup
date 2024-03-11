@@ -34,7 +34,7 @@ class FireRating:
         self.log += "\n" + string
 
     def print_log(self):
-        print self.log
+        print (self.log)
 
     def get_wall_rating(self, wall):
         return wall.WallType.LookupParameter("Fire Rating").AsString()

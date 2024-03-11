@@ -10,7 +10,7 @@ Probaly need to use external command.
 
 some potential usage might be:
     - there is no post command hook, so this is helpful to catch any post stage changes and make action
-
+    - pop ask if want to place new crated view at sheet(The is no post command hook so use this to monitor the creation of new view)
 
 
 Intentionally not using args to pass around, becasue 

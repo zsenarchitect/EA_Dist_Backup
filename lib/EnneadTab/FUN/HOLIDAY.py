@@ -42,7 +42,7 @@ def is_valid_date(date_tuple_start,
 
 def greeting_may_force():
 
-    if not is_valid_date((2024,5,3),(2024,5,5)):
+    if not is_valid_date((2024,5,1),(2024,5,6)):
         return
 
     # this will make every year 12-20-12-31 xmax

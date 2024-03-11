@@ -19,5 +19,6 @@ layout:
   - Shake All Tags #advanced_only
   - remove not placed area #advanced_only
   - Keynote Tags
+  - track_detail_group
   - parameter_manager #advanced_only
   - abstract_wall
