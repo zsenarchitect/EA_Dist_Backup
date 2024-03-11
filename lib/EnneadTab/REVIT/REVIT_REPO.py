@@ -1,5 +1,6 @@
 # run this in py2.7 becasue it is also called from start.py
-
+"""THIS is no longer needed becuse the binding is happening thru startup...
+BUT, make srill make a clean version for exe so it can attache anything."""
 import os
 import json
 import io

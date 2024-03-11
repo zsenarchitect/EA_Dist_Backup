@@ -453,9 +453,30 @@ def main():
             check_group_usage(doc)
         except SystemError:
             pass
-        
-        
-        
+
+
+    #example to make auto changes to doc continously
+    """
+    from EnneadTab import USER
+    if not USER.is_enneadtab_developer():
+        return
+    from EnneadTab.REVIT import REVIT_AUTO
+    
+
+    def my_func():
+        from EnneadTab.REVIT import REVIT_APPLICATION
+        doc = REVIT_APPLICATION.get_doc()
+        all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()
+        # print (len(all_sheets))
+    t = DB.Transaction(doc, "temp")
+    t.Start()
+    for sheet in all_sheets:
+        sheet.Name += "#"
+    t.Commit()
+    
+    updater = REVIT_AUTO.RevitUpdater(my_func)
+    updater.start()
+    """
 
 
 
