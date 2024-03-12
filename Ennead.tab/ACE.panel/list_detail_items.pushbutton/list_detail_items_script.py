@@ -126,6 +126,7 @@ def list_detail_items():
         view.Name = LIST_VIEW
         t.Commit()
 
+    uidoc.ActiveView = view
         
     t = DB.Transaction(doc, __title__)
     t.Start()
