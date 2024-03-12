@@ -47,13 +47,15 @@ class Deployer:
 
 
     def deploy_family(self, family):
+        if family.FamilyPlacementType != DB.FamilyPlacementType.ViewBased:
+            return
 
         self.reset_x()
   
         max_h = -1
         min_gap = 3
         for type_id in family.GetFamilySymbolIds():
-            print (self.pointer)
+            # print (self.pointer)
             family_type = doc.GetElement(type_id)
 
             if not family_type.IsActive:
@@ -83,7 +85,7 @@ class Deployer:
             DB.ElementTransformUtils.MoveElement(doc, instance.Id, DB.XYZ(size_x/2, size_y/2, 0))
 
             note = "[{}]\n{}".format(family.Name, family_type.LookupParameter("Type Name").AsString())
-            print (note)
+            # print (note)
 
 
             textnote_option = DB.TextNoteOptions()
