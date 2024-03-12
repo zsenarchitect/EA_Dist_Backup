@@ -133,6 +133,22 @@ def get_all_filledregion_types(doc, return_name=True):
     return types
 
 
+def get_all_textnote_types(doc=None, return_name=True):
+
+    doc = doc or DOC
+
+
+    
+    types = DB.FilteredElementCollector(doc).OfClass(
+        DB.TextNoteType).ToElements()
+    if return_name:
+        names = [x.LookupParameter("Type Name").AsString() for x in types]
+        names.sort()
+        return names
+    types = list(types)
+    types.sort(key=lambda x: x.LookupParameter("Type Name").AsString())
+    return types
+
 def get_subc(doc, subc_name, in_cate=None):
     """
     in_cate = Detail Items,
@@ -219,7 +235,7 @@ def get_rooms_in_phase(doc, phase):
     return all_rooms
 
 
-def pick_family(doc):
+def pick_family(doc, multi_select = False):
 
     families = DB.FilteredElementCollector(doc).OfClass(
         DB.Family).WhereElementIsNotElementType().ToElements()
@@ -227,12 +243,32 @@ def pick_family(doc):
 
     from pyrevit import forms
     family = forms.SelectFromList.show(families,
-                                       multiselect=False,
+                                       multiselect=multi_select,
                                        name_attr='Name',
                                        width=1000,
                                        title="Pick family",
                                        button_name='Select Family')
     return family
+
+
+def pick_detail_componenet(doc = None, multi_select = False):
+    doc = doc or DOC
+    
+    detail_componenet_types = DB.FilteredElementCollector(doc).OfCategory(
+        DB.BuiltInCategory.OST_DetailComponents).WhereElementIsElementType().ToElements()
+    familie_names = [x.FamilyName for x in detail_componenet_types if x.FamilyName != "Filled region"]
+    familie_names = list(set(familie_names))  # remove duplicates
+    familie_names.sort()
+    from pyrevit import forms
+    selected_names = forms.SelectFromList.show(familie_names,
+                                       multiselect=multi_select,
+                                       width=600,
+                                       title="Pick 2D family",
+                                       button_name='Select Family(s)')
+
+    families = DB.FilteredElementCollector(doc).OfClass(
+        DB.Family).WhereElementIsNotElementType().ToElements()
+    return [x for x in families if x.Name in selected_names]
 
 
 def pick_type(family):
@@ -392,6 +428,23 @@ def pick_subelements(prompt='Pick SubElements'):
     sub_objs = [DOC.GetElement(x) for x in sub_objs]
     return sub_objs
 
+
+def pick_textnote_type(doc=None):
+    doc = doc or DOC
+
+
+    from pyrevit import forms
+    class MyOption(forms.TemplateListItem):
+        @property
+        def name(self):
+            return "{}".format(self.LookupParameter("Type Name").AsString())
+    types = [MyOption(x) for x in get_all_textnote_types(return_name=False)]
+    my_type = forms.SelectFromList.show(types,
+                                        multiselect=False,
+                                        width=500,
+                                        title="Pick TextNote Type",
+                                        button_name='Select Type')
+    return my_type
 
 def get_selection(uidoc = UIDOC):
     doc = uidoc.Document

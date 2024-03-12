@@ -20,16 +20,30 @@ Intentionally not using args to pass around, becasue
 """
 
 class RevitUpdater:
-    """example:
+    tasks = []
+    """
+    probally make more sense if register at startup.
+
+    example:
     def my_func():
         doc = __revit__.ActiveUIDocument.Document
+        if not doc:
+            return
         all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()
         print (len(all_sheets))
         
     updater = EnneadTab.REVIT.REVIT_AUTO.RevitUpdater(my_func)
     updater.start()
     """
+
+    # check if passing func arg already exist in cls task, do not initate again if already exist
+
+
+    
     def __init__(self, func, interval = 2, max_life = -1):
+        if func.__name__ in RevitUpdater.tasks:
+            print ("func {} already exist in RevitUpdater".format(func.__name__))
+            return
         self.func = func
 
         self.interval = interval
@@ -42,6 +56,10 @@ class RevitUpdater:
 
         # register func
         self.registered_func_runner = REVIT_EVENT.ExternalEventRunner(self.func)
+
+
+        RevitUpdater.tasks.append(func.__name__)
+        
 
 
     def main_player(self):

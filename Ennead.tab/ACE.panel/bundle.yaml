@@ -17,3 +17,4 @@ layout:
   - family_tree
   - inspect_local_graphic_override
   - export_color_scheme
+  - list_detail_items
