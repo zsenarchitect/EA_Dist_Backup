@@ -6,7 +6,7 @@ import os
 import sys
 import random
 
-from EnneadTab.FOLDER import is_file_exist_in_dump_folder
+
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)

@@ -90,8 +90,12 @@ class FamilyRePath:
 
         #with forms.ProgressBar(title = "Checking Families, Hold On...({value} of {max_value})", step = 1, cancellable = False) as pb:
         for family in self.all_families:
-            indentation_title = "[{}]".format(family.Name)
-            self.repath(family, indentation_title)
+            try:
+                indentation_title = "[{}]".format(family.Name)
+                self.repath(family, indentation_title)
+            except Exception as e:
+                print (e)
+                print ("Failed to repath: {}".format(family.Name))
             counter += 1
             #pb.update_progress(counter, len(self.all_families))
 

@@ -18,3 +18,4 @@ layout:
   - AlignScopebox 
   - move_curtain_grids 
   - generic_healthcare_tool
+  - set_filled_region_border_line

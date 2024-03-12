@@ -31,6 +31,16 @@ def pick_linestyle(doc, filledregion_friendly=False, return_style=False,title=No
         all_linestyles = [doc.GetElement(x) for x in DB.FilledRegion.GetValidLineStyleIdsForFilledRegion (doc)]
     else:
         all_linestyles = get_all_linestyles(doc, return_name=False)
+
+    # if doc.IsFamilyDocument:
+    #     for cate in doc.Settings.Categories:
+    
+    #         if cate.Name == "Detail Items":
+    #             break
+    #     all_linestyles.append(cate)
+    #     all_linestyles.extend(list(cate.SubCategories ))
+    #-----> cannot set in family doc, so abodon this method
+
         
     title = title or "Pick Line Style"
     res = forms.SelectFromList.show(all_linestyles,
