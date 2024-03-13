@@ -61,6 +61,7 @@ def is_family_exist(family_name, doc=None):
 def get_family_by_name(family_name, 
                        doc=None, 
                        load_path_if_not_exist=None):
+    doc = doc or __revit__.ActiveUIDocument.Document
     all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
     families = filter(lambda x: x.Name == family_name, all_families)
     

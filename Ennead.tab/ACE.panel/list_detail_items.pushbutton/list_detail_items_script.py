@@ -3,15 +3,18 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "List selected detail items to a dump drafting view."
 __title__ = "List\nDetail Items"
 
+
+import os
+from EnneadTab import NOTIFICATION
 # from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
 import EnneadTab
-from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
@@ -21,10 +24,13 @@ LIST_VIEW = "EA_DETAIL_DUMP"
 
 
 class Deployer:
-    def __init__(self, view, families, textnote_type):
+    def __init__(self, view, families, tag_family):
         self.view = view
         self.families = families
-        self.textnote_type = textnote_type
+        # self.textnote_type = textnote_type
+        self.tag_symbol = doc.GetElement(list(tag_family.GetFamilySymbolIds())[0])
+        if not self.tag_symbol.IsActive:
+            self.tag_symbol.Activate()
 
         self.pointer = DB.XYZ(0, 0, 0)
 
@@ -59,7 +65,6 @@ class Deployer:
             family_type = doc.GetElement(type_id)
 
             if not family_type.IsActive:
-                
                 family_type.Activate()
 
             instance = doc.Create.NewFamilyInstance(self.pointer, family_type, self.view)
@@ -84,14 +89,29 @@ class Deployer:
             
             DB.ElementTransformUtils.MoveElement(doc, instance.Id, DB.XYZ(size_x/2, size_y/2, 0))
 
-            note = "[{}]\n{}".format(family.Name, family_type.LookupParameter("Type Name").AsString())
-            # print (note)
+
+            # add textnote
+            # note = "[{}]\n{}".format(family.Name, family_type.LookupParameter("Type Name").AsString())
+
+            # textnote_option = DB.TextNoteOptions()
+            # textnote_option.HorizontalAlignment = DB.HorizontalTextAlignment.Center
+            # textnote_option.TypeId = self.textnote_type.Id
+            # DB.TextNote.Create(doc, 
+            #                    self.view.Id, 
+            #                    self.pointer.Add(DB.XYZ(size_x/2, -min_gap * 0.5, 0)), 
+            #                    note, 
+            #                    textnote_option)
 
 
-            textnote_option = DB.TextNoteOptions()
-            textnote_option.HorizontalAlignment = DB.HorizontalTextAlignment.Center
-            textnote_option.TypeId = self.textnote_type.Id
-            DB.TextNote.Create(doc, self.view.Id, self.pointer.Add(DB.XYZ(size_x/2, -min_gap * 0.5, 0)), note, textnote_option)
+
+            # add tag
+            DB.IndependentTag.Create(doc, 
+                                     self.tag_symbol.Id, 
+                                     self.view.Id, 
+                                     DB.Reference(instance),
+                                     True,
+                                     DB.TagOrientation .Horizontal,
+                                     self.pointer.Add(DB.XYZ(size_x/2, -min_gap * 0.5, 0)))
 
             self.step_right(size_x * 1.2)
 
@@ -115,9 +135,9 @@ def list_detail_items():
     if not detail_families:
         return
 
-    textnote_type = REVIT_SELECTION.pick_textnote_type()
-    if not textnote_type:
-        return
+    # textnote_type = REVIT_SELECTION.pick_textnote_type()
+    # if not textnote_type:
+    #     return
 
     view = REVIT_VIEW.get_view_by_name(LIST_VIEW)
 
@@ -132,11 +152,19 @@ def list_detail_items():
         
     t = DB.Transaction(doc, __title__)
     t.Start()
-    Deployer(view, detail_families, textnote_type)
+
+    family_name = "EA_DetailItem_Tag"
+
+    tag_family = REVIT_FAMILY.get_family_by_name(family_name,
+                                                 load_path_if_not_exist="{}\\{}.rfa".format(os.path.dirname(__file__), family_name))
+    
+    Deployer(view, detail_families, tag_family)
 
     
     
     t.Commit()
+
+    NOTIFICATION.messenger("Detail Items listed at view: " + view.Name)
     
 
 
