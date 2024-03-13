@@ -4,7 +4,7 @@
 
 
 __doc__ = "Create new sheets based on data from Excel.\nIf you need help on what kind of Excel to prepare, you can open a sample excel and begin from there."
-__title__ = "Excel\nSheet Creator"
+__title__ = "Create Sheets\nBy Excel"
 __tip__ = True
 from pyrevit import forms #
 from pyrevit import script #

@@ -3,6 +3,7 @@ try:
     from Autodesk.Revit import DB
     REF_CLASS = DB.IFamilyLoadOptions
     import clr
+    DOC = __revit__.ActiveUIDocument.Document
 except:
     REF_CLASS = object # this is to trick that class can be used
 
@@ -40,7 +41,7 @@ def load_family(family_doc, project_doc):
     
     
 def load_family_by_path(family_path, project_doc=None, ):
-    project_doc = project_doc or __revit__.ActiveUIDocument.Document
+    project_doc = project_doc or DOC
     
     fam_ref = clr.StrongBox[DB.Family](None)
     family_path = FOLDER.copy_file_to_local_dump_folder(family_path, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
@@ -51,7 +52,7 @@ def load_family_by_path(family_path, project_doc=None, ):
   
 
 def is_family_exist(family_name, doc=None):
-    doc = doc or __revit__.ActiveUIDocument.Document
+    doc = doc or DOC
     all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
     for family in all_families:
         if family.Name == family_name:
@@ -61,7 +62,7 @@ def is_family_exist(family_name, doc=None):
 def get_family_by_name(family_name, 
                        doc=None, 
                        load_path_if_not_exist=None):
-    doc = doc or __revit__.ActiveUIDocument.Document
+    doc = doc or DOC
     all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
     families = filter(lambda x: x.Name == family_name, all_families)
     
