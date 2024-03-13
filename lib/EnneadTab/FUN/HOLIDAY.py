@@ -83,6 +83,7 @@ def greeting_pi():
                                  image)
     output = script.get_output()
     output.print_image(image_file)
+    output.print_md("#Happy Pi Day: 3.14")
     output.set_width(900)
     output.set_height(700)
     output.center()

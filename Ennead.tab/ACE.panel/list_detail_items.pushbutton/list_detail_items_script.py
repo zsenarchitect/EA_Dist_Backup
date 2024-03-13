@@ -15,7 +15,8 @@ from pyrevit import script #
 import ENNEAD_LOG
 import EnneadTab
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB
+from rpw.db import family 
 # from Autodesk.Revit import UI
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
@@ -35,7 +36,10 @@ class Deployer:
         self.pointer = DB.XYZ(0, 0, 0)
 
 
-        map(self.deploy_family, families)
+
+        for i, family in enumerate(families):
+            NOTIFICATION.messenger("{}/{}: [{}]".format(i+1, len(families), family.Name))
+            self.deploy_family(family)
             
 
 
@@ -59,7 +63,7 @@ class Deployer:
         self.reset_x()
   
         max_h = -1
-        min_gap = 3
+        min_gap = 1
         for type_id in family.GetFamilySymbolIds():
             # print (self.pointer)
             family_type = doc.GetElement(type_id)
@@ -74,6 +78,7 @@ class Deployer:
             # get rough 2D boundingbox
             self.view.IsolateElementTemporary (instance.Id)
             uidoc.ShowElements(instance)
+            doc.Regenerate()
             bbox = self.view.Outline
             if not bbox:
                 print ("no bbox for {}".format(instance))
@@ -105,13 +110,16 @@ class Deployer:
 
 
             # add tag
-            DB.IndependentTag.Create(doc, 
-                                     self.tag_symbol.Id, 
-                                     self.view.Id, 
-                                     DB.Reference(instance),
-                                     True,
-                                     DB.TagOrientation .Horizontal,
-                                     self.pointer.Add(DB.XYZ(size_x/2, -min_gap * 0.5, 0)))
+            tag = DB.IndependentTag.Create(doc, 
+                                            self.tag_symbol.Id, 
+                                            self.view.Id, 
+                                            DB.Reference(instance),
+                                            True,
+                                            DB.TagOrientation .Horizontal,
+                                            self.pointer.Add(DB.XYZ(size_x/2, -min_gap * 0.2, 0)))
+
+            DB.ElementTransformUtils.MoveElement(doc, tag.Id, self.view.ViewDirection + DB.XYZ(size_x/2, 0, 0)) # this force tag to regenreate graphic
+            
 
             self.step_right(size_x * 1.2)
 
@@ -146,6 +154,7 @@ def list_detail_items():
         t.Start()
         view = DB.ViewDrafting.Create(doc, REVIT_VIEW.get_default_view_type("drafting").Id)
         view.Name = LIST_VIEW
+        view.Scale = 2
         t.Commit()
 
     uidoc.ActiveView = view
