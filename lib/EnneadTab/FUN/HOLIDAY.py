@@ -1,6 +1,6 @@
 import datetime
 
-from EnneadTab.FUN import JOKES
+
 
 try:
     from pyrevit import script
@@ -48,7 +48,7 @@ def greeting_april_fools():
     if not is_valid_date((2024,3,31),(2024,4,1)):
         return
 
-
+    import JOKES
     for _ in range(random.randint(1, 5)):
         JOKES.prank_dvd()
 
