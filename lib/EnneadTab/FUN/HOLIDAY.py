@@ -1,5 +1,7 @@
 import datetime
 
+from EnneadTab.FUN import JOKES
+
 try:
     from pyrevit import script
 except:
@@ -18,12 +20,14 @@ import EXE
 import SOUNDS
 import ENVIRONMENT_CONSTANTS
 import TIME
+import NOTIFICATION
 
 def festival_greeting():
     greeting_chinese_new_year()
     greeting_mid_moon()
     greeting_xmas()
     greeting_pi()
+    greeting_april_fools()
     greeting_may_force()
     
 
@@ -37,7 +41,18 @@ def is_valid_date(date_tuple_start,
                            date_tuple_end[1],
                            date_tuple_end[2])
 
-    return (d0 < today < d1)
+    return (d0 <= today <= d1)
+
+def greeting_april_fools():
+
+    if not is_valid_date((2024,3,31),(2024,4,1)):
+        return
+
+    import JOKES
+    for _ in range(random.randint(1, 5)):
+        JOKES.prank_dvd()
+
+    NOTIFICATION.messenger(JOKES.random_loading_message())
 
 
 def greeting_may_force():
