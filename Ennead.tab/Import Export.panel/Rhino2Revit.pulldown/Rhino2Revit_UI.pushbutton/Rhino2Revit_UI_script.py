@@ -296,9 +296,17 @@ class Rhino2Revit_UI(forms.WPFWindow):
 
     def pick_files(self, sender, args):
         # print "pick files"
+        recent_output_folder = EnneadTab.DATA_FILE.get_sticky_longterm("RHINO2REVIT_FOLDER")
+        if not recent_output_folder:
+            recent_output_folder = os.path.join(os.path.expanduser("~"), "Desktop")
+            
+        if "EnneadTab Export By Layer" in recent_output_folder:
+            recent_output_folder = os.path.dirname(recent_output_folder)
+            
         files = forms.pick_file(files_filter='Rhino and AutoCAD (*.3dm; *.dwg)|*.3dm; *.dwg|'
                                 'Rhino (*.3dm)|*.3dm|'
                                 'AutoCAD|*.dwg',
+                                init_dir = recent_output_folder,
                                 multi_file=True,
                                 title="Pick your files, Rhino and/or CAD")
         # print files
