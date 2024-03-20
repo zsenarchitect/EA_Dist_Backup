@@ -51,8 +51,10 @@ def project_crv_to_ground(crv):
     Returns:
         DB.Curve: _description_
     """
-
-    pt0 = crv.GetEndPoint(0)
+    if crv.IsCyclic:
+        pt0 = crv.Evaluate(0, False)
+    else:
+        pt0 = crv.GetEndPoint(0)
     z = pt0.Z
 
     #print "original crv z = " + str(z)
@@ -101,6 +103,8 @@ def get_intersect_pt_from_crvs(crv1, crv2, project_to_ground = True):
             return projected_pt
         else:
             return raw_pt
+    else:
+        print(res)
     return None
 
 def nearest_pt_from_pts(my_pt, pts):
