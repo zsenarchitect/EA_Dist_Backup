@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
-
-__doc__ = """Update color scheme with office template excel version.
+__doc__ = """Update color scheme with office template excel version
+J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls.
 NOTE: excel should be saved with .xls instead of .xlsx format
 Also note, the column header should be as such:
 A: Department
@@ -30,6 +30,7 @@ doc = __revit__.ActiveUIDocument.Document
 
 
 
+EXCEL_PATH = "J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls"
 NAMING_MAP = {"department_color_map":"Primary_Department Category",
               "program_color_map":"Department Program Type"}
 
@@ -42,8 +43,7 @@ NAMING_MAP = {"department_color_map":"Primary_Department Category",
 def load_color_template():
     
     # load data from color excel
-    excel_path = "J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls"
-    data = EnneadTab.COLOR.get_color_template_data(excel_path)
+    data = EnneadTab.COLOR.get_color_template_data(EXCEL_PATH)
     
     
     # for key, value in data.items():
