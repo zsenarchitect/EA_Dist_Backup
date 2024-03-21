@@ -82,8 +82,8 @@ def process_data(doc, data, DICT_ost_mapping):
             detail_crv.LineStyle = OST_style
         except Exception as e:
             print (e)
-            print layer, type, geo_data
-            print DICT_ost_mapping.items()
+            print (layer, type, geo_data)
+            print (DICT_ost_mapping.items())
 
     return detail_crv
 
@@ -159,7 +159,7 @@ def create_detail_line(doc, geo_data):
         try:
             line = DB.Line.CreateBound(pt0, pt1)
         except Exception as e:
-            print "Cannot create line becasue: " + str(e)
+            print ("Cannot create line becasue: " + str(e))
             line = None
         #print line
         return line
@@ -187,7 +187,7 @@ def create_detail_arc(doc, geo_data):
     try:
         arc = DB.Arc.Create(pt0, pt2, pt1)#start, end, midpt
     except Exception as e:
-        print "Cannot create arc becasue: " + str(e)
+        print ("Cannot create arc becasue: " + str(e))
         arc = None
     #print arc
     return arc

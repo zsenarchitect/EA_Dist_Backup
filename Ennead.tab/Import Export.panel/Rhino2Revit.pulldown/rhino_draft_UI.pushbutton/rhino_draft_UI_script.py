@@ -19,12 +19,9 @@ from pyrevit import script, forms
 
 import EnneadTab
 import ENNEAD_LOG
-import clr
-import System
-import time
+
 import traceback
-import random
-import subprocess
+
 import os
 import math
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
@@ -157,7 +154,9 @@ def create_abstract_line(geo_data):
 
     x0, y0, z0, x1, y1, z1 = [convert_unit(x) for x in [x0, y0, z0, x1, y1, z1]]
 
-    #print x0, y0, z0, x1, y1, z1
+    for x in [x0, y0, z0, x1, y1, z1]:
+        if x is None:
+            raise "Find None value in data returned.\n{}".format([x0, y0, z0, x1, y1, z1])
 
 
 
