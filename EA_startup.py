@@ -343,11 +343,17 @@ def check_C_drive_space():
 
 
 
-
+def register_auto_update():
+    from pyrevit.userconfig import user_config
+    user_config.check_updates = True
+    user_config.save_changes()
+    
+    from pyrevit.versionmgr import updater
+    if updater.check_for_updates():
+        updater.update_pyrevit()
     
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    
     if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
         return
     
@@ -420,6 +426,7 @@ def main():
 
 
     EnneadTab.REVIT.REVIT_REPO.update_pyrevit_extension_json()
+    register_auto_update()
     
     
     if not EnneadTab.USER.is_SZ(pop_toast = True):
