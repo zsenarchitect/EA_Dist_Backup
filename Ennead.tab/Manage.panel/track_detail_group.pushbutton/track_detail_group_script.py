@@ -5,7 +5,7 @@
 
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
 __title__ = "Track\nDetail Group"
-
+__tip__ = True
 
 
 from pyrevit import forms 
@@ -72,10 +72,15 @@ def find_views_by_detail_group():
         views_used = [doc.GetElement(x) for x in view_ids_used]
         views_used.sort(key = lambda x: x.Name)
         for i, view in enumerate(views_used):
-            print (" - {}/{}: {} on sheet: {}:{}".format(i+1, len(views_used), 
-                                                         output.linkify(view.Id, title = view.Name),
-                                                        view.LookupParameter("Sheet Number").AsString(),
-                                                        view.LookupParameter("Sheet Name").AsString()))
+
+            if view.LookupParameter("Sheet Number") is None or view.LookupParameter("Sheet Name") is None:
+                print (" - {}/{}: {}".format(i+1, len(views_used), output.linkify(view.Id, title = view.Name)))
+
+            else:
+                print (" - {}/{}: {} on sheet: {}:{}".format(i+1, len(views_used), 
+                                                            output.linkify(view.Id, title = view.Name),
+                                                            view.LookupParameter("Sheet Number").AsString(),
+                                                            view.LookupParameter("Sheet Name").AsString()))
 
 ################## main code below #####################
 

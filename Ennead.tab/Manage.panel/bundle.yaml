@@ -11,14 +11,14 @@ layout:
   - dwg_manager
   - fire_rating_UI
   - Merge Family_UI_2.0
-  - working_view_cleanup #advanced_only
+  - working_view_cleanup 
   - workset_fixer
   - fix_warnings
-  - ">>>" #advanced_only
-  - load family to many docs #advanced_only
-  - Shake All Tags #advanced_only
-  - remove not placed area #advanced_only
+  - ">>>"
+  - load family to many docs 
+  - Shake All Tags 
+  - remove not placed area 
   - Keynote Tags
   - track_detail_group
-  - parameter_manager #advanced_only
+  - parameter_manager 
   - abstract_wall

@@ -91,7 +91,7 @@ def main():
 
     EnneadTab.REVIT.REVIT_FORMS.notification(main_text = display_text,
                                             sub_text = sub_display_text,
-                                            self_destruct = 10,
+                                            self_destruct = 5,
                                             window_width = 650)
 
 #############  main    ###########
