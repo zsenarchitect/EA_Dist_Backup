@@ -337,7 +337,7 @@ def transfer_in_draft(rhino_unit, is_grouping):
     file_path = EnneadTab.FOLDER.get_filepath_in_special_folder_in_EA_setting("Local Copy Dump", "EA_DRAFTING_TRANSFER.json")
     datas = EnneadTab.DATA_FILE.read_json_as_dict(file_path, use_encode = True)
     if not datas:
-        print ("There is no data saved. Have you exported from the Rhino?")
+        EnneadTab.NOTIFICATION.messenger ("There is no data saved. Have you exported from the Rhino?")
         return
 
 
@@ -648,36 +648,11 @@ class RhinoDraft_UI(forms.WPFWindow):
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def main():
-    #global RHINO_UNIT
-    #RHINO_UNIT = get_rhino_file_unit()
+
     modeless_form = RhinoDraft_UI()
 
 
-def NOT_IN_USE_get_rhino_file_unit():
 
-    try:
-        revit_unit = doc.GetUnits().GetFormatOptions (DB.UnitType.UT_Length ).DisplayUnits
-        revit_unit =  str(revit_unit).replace("DUT_", "").lower()
-
-    except:
-
-        revit_unit = doc.GetUnits().GetFormatOptions (EnneadTab.REVIT.REVIT_UNIT.lookup_unit_spec_id("length") ).GetUnitTypeId().TypeId
-        revit_unit = str(revit_unit).split("-")[0].split("unit:")[1]
-
-
-    if "feet_fractional_inches" == revit_unit or "feetFractionalInches" == revit_unit:
-        revit_unit = "feet, feet & inches"
-
-
-
-    if revit_unit == "millimeters":
-        rhino_unit = "Millimeters"
-    elif revit_unit in ["feet, feet & inches", "feet"]:
-        rhino_unit = "Feet"
-    elif revit_unit in ["inches, feet & inches", "inches"]:
-        rhino_unit = "Inches"
-
-    return rhino_unit
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
