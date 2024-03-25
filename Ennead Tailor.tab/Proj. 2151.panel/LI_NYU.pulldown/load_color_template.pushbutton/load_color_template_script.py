@@ -14,8 +14,8 @@ D: Program
 E: Program Abbr.
 F: Program Color
 
-ANYTHING ELSE WILL BE IGNORED, including the hex code text on color cell and red, green, blue value number. 
-Those cannot be trusted on the long run.
+ANYTHING ELSE IN THE EXCEL FILE WILL BE IGNORED, including the hex code text on color cell and red, green, blue value number. 
+Those manual color text cannot be trusted on the long run.
 """
 __title__ = "Load Color Template"
 
@@ -65,6 +65,8 @@ def load_color_template():
     
     EnneadTab.NOTIFICATION.messenger(main_text="Color Scheme Updated!")
     print ("\n\nDone!")
+
+    EnneadTab.OUTPUT.display_output_on_browser()
 
 
 def update_color_scheme(data, lookup_key):
