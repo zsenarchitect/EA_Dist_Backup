@@ -72,7 +72,7 @@ def load_color_template():
 def update_color_scheme(data, lookup_key):
     color_scheme = EnneadTab.REVIT.REVIT_SELECTION.get_color_scheme_by_name(NAMING_MAP[lookup_key])
     if not color_scheme:
-        EnneadTab.NOTIFICATION.message(main_text="Color Scheme [{}] not found!\nCheck spelling".format(NAMING_MAP[lookup_key]))
+        EnneadTab.NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(NAMING_MAP[lookup_key]))
         return
     
     output.print_md ("##Working on color scheme [{}]".format(color_scheme.Name))
