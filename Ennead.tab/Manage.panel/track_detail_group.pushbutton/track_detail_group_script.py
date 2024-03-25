@@ -24,7 +24,8 @@ from EnneadTab.REVIT import REVIT_FORMS
   
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def track_detail_group():
-    opts = ["Find detail groups by view",
+    opts = ["Find detail groups by views",
+            "Find detail groups by sheets",
             "Find views by detail group"]
 
     res = REVIT_FORMS.dialogue(options=opts, main_text="What do you want to do?")
@@ -32,23 +33,37 @@ def track_detail_group():
         return
 
     if res == opts[0]:
-        find_detail_groups_by_view()
+        views = forms.select_views()
+
+        if not views:
+            return
+        find_detail_groups_by_views(views)
+    elif res == opts[1]:
+        find_detail_groups_by_sheets()
     else:
         find_views_by_detail_group()
 
-def find_detail_groups_by_view():
-    views = forms.select_views()
-
-    if not views:
-        return
-
+def find_detail_groups_by_views(views):
+    
     for view in views:
-        print ("\n\nChecking view: [{}]".format(view.Name))
+        output.print_md ("###Checking view: [{}]".format(view.Name))
         all_detail_groups = DB.FilteredElementCollector(doc, view.Id).OfCategory(DB.BuiltInCategory.OST_IOSDetailGroups).WhereElementIsNotElementType().ToElements()
         all_detail_groups = sorted(all_detail_groups, key=lambda x: x.GroupType.LookupParameter("Type Name").AsString())
         for i,group in enumerate(all_detail_groups):
             print (" - {}/{}: {}".format(i+1, len(all_detail_groups), output.linkify(group.Id, title = group.GroupType.LookupParameter("Type Name").AsString())))
-    
+
+def find_detail_groups_by_sheets():
+    sheets = forms.select_sheets()
+
+    if not sheets:
+        return
+
+    for sheet in sheets:
+        print ("\n\n")
+        output.print_md ("#Checking sheet: [{}][{}]".format(sheet.SheetNumber, sheet.Name))
+        views = [doc.GetElement(x) for x in sheet.GetAllPlacedViews()]
+        find_detail_groups_by_views(views)
+
 
 def find_views_by_detail_group():
     all_group_types = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_IOSDetailGroups).WhereElementIsElementType().ToElements()
@@ -66,7 +81,7 @@ def find_views_by_detail_group():
         return
 
     for group_type in res:
-        print ("\n\nChecking detail group type: [{}]".format(group_type.LookupParameter("Type Name").AsString()))
+        output.print_md ("#Checking detail group type: [{}]".format(group_type.LookupParameter("Type Name").AsString()))
         group_instances = list(group_type.Groups)
         view_ids_used = list(set([x.OwnerViewId for x in group_instances]))
         views_used = [doc.GetElement(x) for x in view_ids_used]
