@@ -32,7 +32,7 @@ doc = __revit__.ActiveUIDocument.Document
 
 EXCEL_PATH = "J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls"
 NAMING_MAP = {"department_color_map":"Primary_Department Category",
-              "program_color_map":"Department Program Type"}
+              "program_color_map":"Primary_Department Program Type"}
 
 
 # NAMING_MAP = {"department_color_map":"test1",
@@ -70,6 +70,7 @@ def load_color_template():
 def update_color_scheme(data, lookup_key):
     color_scheme = EnneadTab.REVIT.REVIT_SELECTION.get_color_scheme_by_name(NAMING_MAP[lookup_key])
     if not color_scheme:
+        EnneadTab.NOTIFICATION.message(main_text="Color Scheme [{}] not found!\nCheck spelling".format(NAMING_MAP[lookup_key]))
         return
     
     output.print_md ("##Working on color scheme [{}]".format(color_scheme.Name))
@@ -119,7 +120,7 @@ def update_entry_color(color_scheme, department_data):
         lookup_data = department_data.get(entry_title, None)
         if not lookup_data:
             # print ("??? entry [{}] in current area scheme not found template excel".format(entry_title))
-            output.print_md("###  ??? entry [{}] in current area scheme not found template excel. Are you defining new entry?".format(entry_title))
+            output.print_md("###  ??? entry [{}] in current area scheme not found template excel. Are you defining new entry?\nThis entry is skipped for now.".format(entry_title))
                                                              
             continue
         
