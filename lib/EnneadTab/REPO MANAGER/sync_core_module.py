@@ -15,7 +15,7 @@ import TIME
 import TEXT
 
 
-def main():
+def sync_core():
     """try to set auto schedule run on the module compare
     to catch all the module"""
     
@@ -149,4 +149,4 @@ def folder_map(folder):
     return data
 
 if __name__ == "__main__":
-    main()
+    sync_core()

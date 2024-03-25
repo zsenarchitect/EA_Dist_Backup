@@ -51,7 +51,7 @@ class ColorizePills:
         self.is_valid = True
         self.doc = doc
         self.output = script.get_output()
-        # self.OLD_get_color_map()
+
         self.get_color_scheme_data()
         if len(self.color_map) == 0:
             self.is_valid = False
@@ -84,42 +84,6 @@ class ColorizePills:
             
     
     
-    
-    
-    def OLD_get_color_map(self):
-        # get script folder
-        folder = os.path.dirname(os.path.realpath(__file__))
-        # excel = "{}\\LI_NYU_COLOR_MAP.xlsx".format(folder)
-        color_file = "{}\\color_scheme_dict.json".format(folder)
-        
-        # # print excel
-        # # print EnneadTab.EXCEL.get_all_worksheets(excel)
-        # sheet = "Color Scheme"
-        # entries = EnneadTab.EXCEL.read_data_from_excel(excel, worksheet = sheet)
-        # print color_file
-        entries = EnneadTab.DATA_FILE.read_json_as_dict(color_file, use_encode = True)
-        
-        
-        
-        self.color_map = dict()
-        for entry, value in entries.items():
-            # if entry[3] == "Color R":
-            #     continue
-            
-            
-            # cate_name = entry[0]
-            
-            # try:
-            #     R, G, B = int(entry[3]), int(entry[4]), int(entry[5])
-            # except Exception as e:
-            #     R, G, B = 200,10,10
-            #     print entry
-            #     print "Error reading color for {}: {}".format(cate_name, e)
-            
-            
-            R, G, B = int(value[0]), int(value[1]), int(value[2])
-            revit_color = DB.Color(R, G, B)
-            self.color_map[entry] = revit_color
         
     
     def get_all_special_detail_components(self):

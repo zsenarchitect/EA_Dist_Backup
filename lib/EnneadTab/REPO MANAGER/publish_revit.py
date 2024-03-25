@@ -1,6 +1,6 @@
 
 
-def main():
+def publish_revit():
     try:
         import os
         # print (__file__)
@@ -36,4 +36,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    publish_revit()

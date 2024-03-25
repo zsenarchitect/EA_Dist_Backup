@@ -1,6 +1,6 @@
 
 
-def main():
+def publish_rhino():
     try:
         import os
         # print (__file__)
@@ -27,4 +27,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    publish_rhino()

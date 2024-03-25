@@ -46,6 +46,7 @@ def delete_views(view):
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def modify_creator_in_view_name(views, is_adding_creator):
+    views = EnneadTab.REVIT.REVIT_SELECTION.filter_elements_changable(views)
 
     t = DB.Transaction(doc, "Rename Views")
     t.Start()
