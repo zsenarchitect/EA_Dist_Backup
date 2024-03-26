@@ -4,10 +4,23 @@
 try:
     import Rhino
     import rhinoscriptsyntax as rs
+    import System
+    import traceback
+    
     REF_CLASS = Rhino.Display.DisplayConduit
 except:
     REF_CLASS = object
 
+
+def try_catch_conduit_error(func):
+    def wrapper(*args, **kwargs):
+        try:
+            out = func(*args, **kwargs)
+            return out
+        except Exception as e:
+            error = traceback.format_exc()
+            print (error)
+    return wrapper
 
 class ConduitTextSize:
     Title = 20
@@ -45,3 +58,9 @@ class RhinoConduit(REF_CLASS):
 
     def display_space(self, space = ConduitTextSize.Normal):
         self.pointer_2d += Rhino.Geometry.Vector2d(0, space)
+
+    def display_seperation_line(self, e):        
+        pt0 = System.Drawing.Point(self.pointer_2d[0], self.pointer_2d[1] )
+        pt1 = System.Drawing.Point(self.pointer_2d[0] + 500, self.pointer_2d[1] )
+        e.Display.Draw2dLine(pt0, pt1, self.default_color, 5)
+        self.display_space()

@@ -120,7 +120,9 @@ def fill_drafter_info():
         
         sheet.LookupParameter("Designed By").Set(DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, sheet.Id).LastChangedBy)
     t.Commit()
-            
+
+
+
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
@@ -136,6 +138,8 @@ def main():
     can_sync = check_sync_queue()
     if can_sync:
         ENNEAD_LOG.update_account_by_local_warning_diff(doc)
+
+
 
     # do this after checking ques so the primary EXE_PARAM is same as before
     fill_drafter_info()

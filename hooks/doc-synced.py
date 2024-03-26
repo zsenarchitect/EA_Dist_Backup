@@ -253,6 +253,8 @@ def update_sync_time_record():
     EnneadTab.MODULE_HELPER.run_revit_script(script_subfolder, func_name)
 
 
+
+    
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
 
@@ -309,6 +311,8 @@ def main():
     
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", True)
+
+
 
 
 

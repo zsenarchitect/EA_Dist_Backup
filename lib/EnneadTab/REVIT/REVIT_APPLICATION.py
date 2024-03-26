@@ -4,6 +4,7 @@ try:
     from Autodesk.Revit import UI
     from Autodesk.Revit import DB
     import REVIT_FORMS
+    import REVIT_VIEW
 except:
     pass
 import FOLDER
@@ -112,10 +113,12 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
     print("getting docs before sync")
     docs = get_docs()
     logs = []
+
     for doc in docs:
 
         if doc.IsLinked or doc.IsFamilyDocument:
             continue
+        REVIT_VIEW.switch_to_sync_draft_view(doc)
         # print "#####"
         # print ("# {}".format( doc.Title) )
         #with revit.Transaction("Sync {}".format(doc.Title)):
@@ -138,6 +141,8 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
         except Exception as e:
             logs.append( "\tSync [{}] Failed.\n{}\t".format(doc.Title, e))
 
+        REVIT_VIEW.switch_from_sync_draft_view()
+    
     envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", not(disable_sync_queue))
     for log in logs:
         print( log)

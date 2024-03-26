@@ -8,6 +8,8 @@ try:
     DOC = UIDOC.Document
     
     import REVIT_APPLICATION
+    import REVIT_SELECTION
+    from pyrevit.coreutils import envvars
 except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
@@ -31,3 +33,45 @@ def get_default_view_type(view_type, doc = DOC):
     view_family_types = DB.FilteredElementCollector(doc).OfClass(DB.ViewFamilyType).ToElements()
     potential_types = filter(lambda x: x.ViewFamily == mapper[view_type], view_family_types)
     return potential_types[0]
+
+
+
+def switch_to_sync_draft_view(doc):
+
+
+    view = get_view_by_name("EnneadTab Quick Sync", doc)
+
+    if not view:
+        t = DB.Transaction(doc, "Create Drafting View")
+        t.Start()
+        view = DB.ViewDrafting.Create(doc, get_default_view_type("drafting", doc = doc).Id)
+        view.Name = "EnneadTab Quick Sync"
+
+        DB.TextNote.Create(doc, 
+                           view.Id, 
+                           DB.XYZ(0, 0, 0), 
+                           "Syncing over drafting view is quicker.", 
+                           REVIT_SELECTION.get_all_textnote_types(doc = doc, return_name=False)[0].Id)
+        t.Commit()
+
+    envvars.set_pyrevit_env_var("LAST_VIEW_BEFORE_SYNC", REVIT_APPLICATION.get_uidoc().ActiveView.Name)
+    try:
+        REVIT_APPLICATION.get_uidoc().ActiveView = view
+    except:
+        pass
+
+def switch_from_sync_draft_view():
+    last_view_name = envvars.get_pyrevit_env_var("LAST_VIEW_BEFORE_SYNC")
+    if not last_view_name:
+        return
+    
+    view = get_view_by_name(last_view_name)
+    REVIT_APPLICATION.get_uidoc().ActiveView = view
+
+
+    for open_view in REVIT_APPLICATION.get_uidoc().GetOpenUIViews():
+        print (view.Name)
+        if view.Name == "EnneadTab Quick Sync":
+            open_view.Close()
+
+
