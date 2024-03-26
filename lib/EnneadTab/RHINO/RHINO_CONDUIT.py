@@ -29,6 +29,8 @@ class ConduitTextSize:
 
 class RhinoConduit(REF_CLASS):
     default_color = rs.CreateColor([87, 85, 83])
+    initial_x = initial_y = 30
+
 
     
     def display_text(self, e, text, size, color = None, is_middle_justified = False):
@@ -42,13 +44,10 @@ class RhinoConduit(REF_CLASS):
             color (_type_, optional): _description_. Defaults to None.
             is_middle_justified (bool, optional): _description_. Defaults to False.
         """
-        if not isinstance(size, ConduitTextSize):
-            raise Exception("size should be ConduitTextSize")
+
         if not hasattr(self, 'pointer_2d'):
-            initial_x = 100
-            initial_y = 100
             bounds = e.Viewport.Bounds
-            self.pointer_2d = Rhino.Geometry.Point2d(bounds.Left + initial_x, bounds.Top + initial_y)
+            self.pointer_2d = Rhino.Geometry.Point2d(bounds.Left + RhinoConduit.initial_x, bounds.Top + RhinoConduit.initial_y)
         
         if not color:
             color = RhinoConduit.default_color
@@ -62,5 +61,10 @@ class RhinoConduit(REF_CLASS):
     def display_seperation_line(self, e):        
         pt0 = System.Drawing.Point(self.pointer_2d[0], self.pointer_2d[1] )
         pt1 = System.Drawing.Point(self.pointer_2d[0] + 500, self.pointer_2d[1] )
-        e.Display.Draw2dLine(pt0, pt1, self.default_color, 5)
+        e.Display.Draw2dLine(pt0, pt1, self.default_color, 3)
         self.display_space()
+
+
+    def reset_pointer(self, e):
+        bounds = e.Viewport.Bounds
+        self.pointer_2d = Rhino.Geometry.Point2d(bounds.Left + RhinoConduit.initial_x, bounds.Top + RhinoConduit.initial_y)
