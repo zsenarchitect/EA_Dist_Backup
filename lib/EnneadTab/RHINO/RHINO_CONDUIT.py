@@ -46,8 +46,7 @@ class RhinoConduit(REF_CLASS):
         """
 
         if not hasattr(self, 'pointer_2d'):
-            bounds = e.Viewport.Bounds
-            self.pointer_2d = Rhino.Geometry.Point2d(bounds.Left + RhinoConduit.initial_x, bounds.Top + RhinoConduit.initial_y)
+            self.reset_pointer(e)
         
         if not color:
             color = RhinoConduit.default_color
