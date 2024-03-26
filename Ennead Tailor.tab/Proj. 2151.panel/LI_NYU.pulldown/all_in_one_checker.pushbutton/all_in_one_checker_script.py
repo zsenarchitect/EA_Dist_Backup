@@ -231,8 +231,11 @@ class InternalCheck:
             
             calc_type = utility.get_calculator_type_by_type_name(self.doc, type_name)         
             if not EnneadTab.REVIT.REVIT_SELECTION.is_changable(calc_type):
-                print("AHHHHHHHHHHH!   Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
-                                                                                    EnneadTab.REVIT.REVIT_SELECTION.get_owner(calc_type)))
+                note = "AHHHHHHHHHHH!   Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
+                                                                                    EnneadTab.REVIT.REVIT_SELECTION.get_owner(calc_type))
+                print (note)
+
+                EnneadTab.NOTIFICATION.messenger(note)
                 continue
             
             
