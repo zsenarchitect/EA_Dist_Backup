@@ -18,8 +18,7 @@ if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
     sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
     import xlrd
     import xlsxwriter
-    
-    
+
 
 class ExcelDataItem():
     def __init__(self, item, row, column):
@@ -181,6 +180,7 @@ def unit_test():
     for row_num in range(sheet.nrows):
         row = sheet.row_values(row_num)
         print(row)
+
 
 
 #############

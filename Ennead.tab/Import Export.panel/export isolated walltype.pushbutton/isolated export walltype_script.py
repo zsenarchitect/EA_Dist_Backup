@@ -553,7 +553,7 @@ output = script.get_output()
 output.close_others()
 if __name__ == "__main__":
     links = EnneadTab.REVIT.REVIT_APPLICATION.get_revit_link_docs(link_only=True)
-    if len(links) > 0:
+    if False and len(links) > 0: # giveup on exprt from link becasue you cannot isolate the elelments from links...unless use dynamic view filter, but that is too painful and bring little benifit.
         export_doc = EnneadTab.REVIT.REVIT_APPLICATION.select_revit_link_docs(select_multiple = False, including_current_doc = True, link_only = False)
         IS_FROM_LINK = True
     else:

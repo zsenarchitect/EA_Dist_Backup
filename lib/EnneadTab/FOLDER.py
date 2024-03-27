@@ -260,6 +260,12 @@ def get_appdata_folder():
     return "{}\AppData".format(os.environ["USERPROFILE"])
 
 
+def get_desktop_folder():
+    return os.path.expandvars('%userprofile%\\desktop')
+
+def download_folder():
+    return os.path.expandvars('%userprofile%\\downloads')
+
 def get_EA_setting_folder():
     folder = get_user_folder() + "\EnneadTab Settings"
     return secure_folder(folder)

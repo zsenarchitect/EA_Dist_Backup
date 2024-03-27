@@ -109,7 +109,7 @@ class FamilyRePath:
             return
 
         if family.IsInPlace :
-            print ("{} is InPlace Family. Will not skip repathing.".format(family.Name))
+            print ("{} is InPlace Family. Will skip repathing.".format(family.Name))
             return
         
         if not family.IsEditable:

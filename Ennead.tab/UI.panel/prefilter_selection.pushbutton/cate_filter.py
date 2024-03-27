@@ -6,6 +6,7 @@ from Autodesk.Revit import UI
 CATE_MAPPING = {
     "areas": DB.BuiltInCategory.OST_Areas,
     "areatags": DB.BuiltInCategory.OST_AreaTags,
+    "areaboundarylines": DB.BuiltInCategory.OST_AreaSchemeLines,
     "xxx": DB.BuiltInCategory.OST_AreaSchemeLines,
     "xxx": DB.BuiltInCategory.OST_Columns,
     "xxx": DB.BuiltInCategory.OST_StructuralColumns,
@@ -19,13 +20,16 @@ CATE_MAPPING = {
     "grids": DB.BuiltInCategory.OST_Grids,
     "rooms": DB.BuiltInCategory.OST_Rooms,
     "roomtags": DB.BuiltInCategory.OST_RoomTags,
+    "roomboundarylines": DB.BuiltInCategory.OST_RoomSeparationLines,
+    "detailitems": DB.BuiltInCategory.OST_DetailComponents,
     "xxx": DB.BuiltInCategory.OST_Truss,
     "xxx": DB.BuiltInCategory.OST_Walls,
     "xxx": DB.BuiltInCategory.OST_Windows,
     "xxx": DB.BuiltInCategory.OST_Ceilings,
     "xxx": DB.BuiltInCategory.OST_SectionBox,
     "xxx": DB.BuiltInCategory.OST_ElevationMarks,
-    "xxx": DB.BuiltInCategory.OST_Parking
+    "xxx": DB.BuiltInCategory.OST_Parking,
+    "lines": DB.BuiltInCategory.OST_Lines,
 }
 
 

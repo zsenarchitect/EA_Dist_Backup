@@ -147,7 +147,7 @@
         <Grid Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="650"/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column ="0" 
                    Height="100" 
@@ -264,6 +264,30 @@
                         <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                       Height="18"  IsChecked="False" 
                                       x:Name="toggle_bt_dimensions"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="2"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="Lines " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_lines"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="AreaBoundary " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_areaboundarylines"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="0"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="RoomBoundary " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_roomboundarylines"/>
                     </WrapPanel>
                 </Grid>
 
