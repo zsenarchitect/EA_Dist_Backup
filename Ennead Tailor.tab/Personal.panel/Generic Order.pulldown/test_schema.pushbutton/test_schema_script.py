@@ -19,14 +19,16 @@ doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
 
 
 from EnneadTab.REVIT import REVIT_SCHEMA
+from EnneadTab import NOTIFICATION
 
        
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def test_schema():
-
-    schema = REVIT_SCHEMA.get_schema_by_name("SampleSchema1")
+    schema_name = "SampleSchema2"
+    schema = REVIT_SCHEMA.get_schema_by_name(schema_name)
     if not schema:
-        schema = REVIT_SCHEMA.create_schema("SampleSchema1")
+        NOTIFICATION.messenger("need to make new schema")
+        schema = REVIT_SCHEMA.create_schema(schema_name)
 
 
 
@@ -34,7 +36,8 @@ def test_schema():
     t.Start()
     grids = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Grids).WhereElementIsNotElementType().ToElements()
     for grid in grids:
-        REVIT_SCHEMA.update_schema_entity(schema, grid, "IsProtectedElement", True)
+        #REVIT_SCHEMA.update_schema_entity(schema, grid, "IsProtectedElement", True)
+        REVIT_SCHEMA.update_schema_entity(schema, grid, "testtest", 12)
 
 
 

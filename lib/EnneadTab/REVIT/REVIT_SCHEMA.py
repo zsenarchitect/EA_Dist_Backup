@@ -38,14 +38,14 @@ STABLE_SCHEMA_DATAS = [
     "name": "SampleSchema1",
     "description": "Sample doc for the sample schema",
     "guid": "0DC954AE-ADEF-41c1-8D38-EB5B8225D255",
-    "fields":[("IsProtectedElement", 'bool'),
-              ("AppName", "str")]
+    "fields":[("IsProtectedElement", bool),
+              ("AppName", str)]
     },
     {
     "name": "SampleSchema2",
     "description": "Another sample doc for the sample schema",
     "guid": "0DC954AE-ADEF-41c1-8D38-EB5B8115D235",
-    "fields":[("test test", "bool")]
+    "fields":[("testtest", float)]
     }
                        ]
 
@@ -71,8 +71,8 @@ def create_schema(schema_name):
     schema_builder = DB.ExtensibleStorage.SchemaBuilder(guid)
 
     schema_builder.SetReadAccessLevel(DB.ExtensibleStorage.AccessLevel.Public) #.Application
-    schema_builder.SetWriteAccessLevel(DB.ExtensibleStorage.AccessLevel.Public)
-
+    schema_builder.SetWriteAccessLevel(DB.ExtensibleStorage.AccessLevel.Vendor)
+    schema_builder.SetVendorId("EnneadTab")
 
     schema_builder.SetSchemaName(schema_name)
     schema_builder.SetDocumentation(schema_description)
@@ -80,12 +80,10 @@ def create_schema(schema_name):
     for item in stable_schema_data.get("fields"):
         field_name, field_type = item
         print (field_name, field_type)
-        if field_type == "str":
-            field_builder = schema_builder.AddSimpleField(field_name, str)
-        elif field_type == "int":
-            field_builder = schema_builder.AddSimpleField(field_name, int)
-        elif field_type == "bool":
-            field_builder = schema_builder.AddSimpleField(field_name, bool)
+        if not schema_builder.AcceptableName (field_name):
+            raise ValueError("Field name is not acceptable: {}\n The allowable characters are ASCII letters, numbers (except the first character) and underscore. The length must be between 1 and 247 characters.".format(field_name))
+        field_builder = schema_builder.AddSimpleField(field_name, field_type)
+
 
 
 
@@ -98,11 +96,19 @@ def update_schema_entity(schema, element, field_name, value):
     entity = DB.ExtensibleStorage.Entity(schema)
 
     field = schema.GetField(field_name)
-    print(field)
-    print (field.FieldName)
+    if not field:
+        raise ValueError("No field found with the name: <{}> in schema: <{}>".format(field_name, schema.SchemaName))
 
-
-    entity.Set(field, value)
+    # entity.Set(field, value)
+    if type(value) == int:
+        entity.Set[int](field, value)
+    elif type(value) == float:
+        entity.Set[float](field, value)
+    elif type(value) == bool:
+        entity.Set[bool](field, value)
+    elif type(value) == str:
+        entity.Set[str](field, value)
+        
     element.SetEntity(entity)
 
 

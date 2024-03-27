@@ -16,6 +16,8 @@ def main():
     selection_ids = uidoc.Selection.GetElementIds()
     selection = [doc.GetElement(x) for x in selection_ids]
     for x in selection:
+        if not x.Category:
+            continue
         if "group" in x.Category.Name.lower():
             EnneadTab.NOTIFICATION.messenger("Mirroring group might lead to corrupted group later.")
             return
