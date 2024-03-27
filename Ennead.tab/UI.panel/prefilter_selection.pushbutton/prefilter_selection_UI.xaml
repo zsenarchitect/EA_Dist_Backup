@@ -289,6 +289,14 @@
                                       Height="18"  IsChecked="False" 
                                       x:Name="toggle_bt_roomboundarylines"/>
                     </WrapPanel>
+                    <WrapPanel Grid.Column="3"
+                               Grid.Row="2"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="Detail Items " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_detailitems"/>
+                    </WrapPanel>
                 </Grid>
 
                 <WrapPanel HorizontalAlignment="Left">
