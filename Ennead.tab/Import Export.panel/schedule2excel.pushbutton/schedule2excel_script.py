@@ -1,24 +1,27 @@
-#! python3
-import sys
-sys.path.append(r"L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Dependency\PY3")
-import pandas as pd
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "schedule2excel"
+__doc__ = "Export and open schedule in excel."
+__title__ = "Schedule2Excel"
+__tip__ = True
 
-from pyrevit import forms #
-from pyrevit import script #
-from pyrevit import revit #
+import csv
+from pyrevit import forms 
+from pyrevit import script, revit
 import os
+import xlsxwriter
+import csv
 import re
-
+import ENNEAD_LOG
+import EnneadTab
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = revit.doc
-
+doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+            
+@EnneadTab.ERROR_HANDLE.try_catch_error
 def schedule2excel():
 
     schedules = forms.select_schedules()
@@ -44,6 +47,7 @@ def schedule2excel():
         
         schedule.Export(basefolder, file_name, export_option)
         exported_csv = os.path.join(basefolder, file_name)
+        revit.files.correct_text_encoding(exported_csv)
 
         excel = convert_csv2excel(exported_csv)
         
@@ -51,14 +55,25 @@ def schedule2excel():
         os.startfile(excel)
 
 def convert_csv2excel(csv_file_path):
-    # Load the CSV data into a DataFrame
-    df = pd.read_csv(csv_file_path)
 
-    excel_file_path = csv_file_path.replace(".csv", ".xls")
 
-    # Export the DataFrame to an Excel file
-    df.to_excel(excel_file_path, index=False)
+    excel_file_path = csv_file_path.replace(".csv", ".xlsx")
+    # Create an Excel workbook and add a worksheet.
+    workbook = xlsxwriter.Workbook(excel_file_path)
+    worksheet = workbook.add_worksheet()
+
+    # Open the CSV file and read its rows.
+    with open(csv_file_path, 'rb') as csvfile:  # Use 'rb' mode for Python 2
+        reader = csv.reader(csvfile)
+        for row_index, row in enumerate(reader):
+            for column_index, cell in enumerate(row):
+                worksheet.write(row_index, column_index, cell)
+
+    # Close the Excel file.
+    workbook.close()
+
     return excel_file_path
+
 
 ################## main code below #####################
 

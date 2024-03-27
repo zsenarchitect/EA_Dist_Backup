@@ -10,6 +10,7 @@ layout:
   - export isolated walltype 
   - DWG export setting
   - export_ost_material_table
+  - schedule2excel
   - Rhino2Revit
   - ">>>"
   - update_miro #advanced_only
