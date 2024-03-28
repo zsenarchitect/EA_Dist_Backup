@@ -38,14 +38,17 @@ STABLE_SCHEMA_DATAS = [
     "name": "SampleSchema1",
     "description": "Sample doc for the sample schema",
     "guid": "0DC954AE-ADEF-41c1-8D38-EB5B8225D255",
-    "fields":[("IsProtectedElement", bool),
-              ("AppName", str)]
+    "fields":[("testboolean", bool),
+              ("teststring", str),
+              ("testfloat", float),
+              ("testint", int)]
     },
     {
     "name": "SampleSchema2",
     "description": "Another sample doc for the sample schema",
     "guid": "0DC954AE-ADEF-41c1-8D38-EB5B8115D235",
-    "fields":[("testtest", float)]
+    "fields":[
+              ("testint", int)]
     }
                        ]
 

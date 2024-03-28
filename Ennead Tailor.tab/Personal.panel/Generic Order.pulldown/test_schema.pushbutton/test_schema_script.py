@@ -37,7 +37,7 @@ def test_schema():
     grids = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Grids).WhereElementIsNotElementType().ToElements()
     for grid in grids:
         #REVIT_SCHEMA.update_schema_entity(schema, grid, "IsProtectedElement", True)
-        REVIT_SCHEMA.update_schema_entity(schema, grid, "testtest", 12)
+        REVIT_SCHEMA.update_schema_entity(schema, grid, "testtest", 12.0)
 
 
 

@@ -20,6 +20,7 @@ from Autodesk.Revit import DB
 # from Autodesk.Revit import UI
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+from EnneadTab.REVIT import REVIT_FORMS
             
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def schedule2excel():
@@ -30,8 +31,18 @@ def schedule2excel():
 
     basefolder = forms.pick_folder()
     export_option = DB.ViewScheduleExportOptions()
-    
-    export_option.ColumnHeaders = DB.ExportColumnHeaders.OneRow
+
+    opts = ["Export the column headers only.",
+            "Both column headers and grouped header cells are exported."]
+
+    res = REVIT_FORMS.dialogue(main_text="How to export the header?",
+                               options=opts)
+    if res == opts[0]:
+        export_option.ColumnHeaders = DB.ExportColumnHeaders.OneRow
+    elif res == opts[1]:
+        export_option.ColumnHeaders = DB.ExportColumnHeaders.MultipleRows
+    else:
+        return
     export_option.TextQualifier = DB.ExportTextQualifier.DoubleQuote
 
     # determine which separator to use
@@ -40,7 +51,19 @@ def schedule2excel():
 
     export_option.FieldDelimiter = csv_sp
     export_option.Title = False
-    export_option.HeadersFootersBlanks = False
+
+
+    opts = [["Yes", "Preserve visual as much as to revit."],
+        ["No", "More usful for manipulation"]]
+    res = REVIT_FORMS.dialogue(main_text="Whether to export group headers, footers, and blank lines",
+                               options=opts)
+    if res == opts[0][0]:
+        export_option.HeadersFootersBlanks = True
+    elif res == opts[1][0]:
+        export_option.HeadersFootersBlanks = False
+    else:
+        return
+    
 
     for schedule in schedules:
         file_name = re.sub(r'[\/:*?"<>|]', '', schedule.Name) + '.csv'
