@@ -253,7 +253,7 @@ class EA_search_UI(forms.WPFWindow):
         final_title = command.name
         custom_title = script_content.extract_param("__title__")
 
-        youtube_link = script_content.extract_param("__youtube_link__")
+        youtube_link = script_content.extract_param("__youtube__")
         post_link = script_content.extract_param("__post_link__")
         # if link is not None:
         #     print link

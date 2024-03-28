@@ -5,7 +5,7 @@
 
 __doc__ = "Recreate a filled region using the same shape as the floor."
 __title__ = "40_Floor to Filled region"
-__youtube_link__ = "https://youtu.be/ieGPe-3ACw4"
+__youtube__ = "https://youtu.be/ieGPe-3ACw4"
 import time
 from pyrevit import forms #
 from pyrevit import script #

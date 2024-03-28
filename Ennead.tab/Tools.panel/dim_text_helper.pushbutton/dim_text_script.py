@@ -6,7 +6,7 @@
 __doc__ = "A floating window that give you quick access to add dim text below your selected dim or dims.\nYou can use any of the popular dim text, or use your own by typing in the user bar.\nYou may also pick the relative position on the text to the default numbering.(Up, Down, Prefix, Surfix)"
 __title__ = "Dim Text\nHelper"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29672"
-__youtube_link__ = "https://youtu.be/WYs-_k5IV48"
+__youtube__ = "https://youtu.be/WYs-_k5IV48"
 __tip__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException

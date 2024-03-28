@@ -5,7 +5,7 @@
 
 __doc__ = "Create Revit perspective views based on Rhino cameras, this is handy for Revit Enscape view recreation."
 __title__ = "Import\nRhino camera"
-__youtube_link__ = "https://youtu.be/vBPvwEmu584"
+__youtube__ = "https://youtu.be/vBPvwEmu584"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #

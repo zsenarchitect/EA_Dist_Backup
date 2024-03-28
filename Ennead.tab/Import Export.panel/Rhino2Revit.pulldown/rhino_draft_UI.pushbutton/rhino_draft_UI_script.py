@@ -3,7 +3,7 @@
 
 __doc__ = "A drafter that allow you to take advantage of Rhino fast editing power. You can operate however you want for crvs and surfaces in Rhino, and transfer those content to Revit detail lines and filled regions with matching linestyle and filled region type.\n\nSome Rhino command to consider:\n+Trim\n+Split\n+Fillet\n+CurveBoolean\n+EditControlPoints\n+Surface trim/split.\n\nIt also support nurbs crv or srf with nurbs edge, and it support AreaBoundaryLine and RoomSeperationLine drafting."
 __title__ = "Rhino Drafter"
-__youtube_link__ = r"https://youtu.be/dYeVpdXsMYM"
+__youtube__ = r"https://youtu.be/dYeVpdXsMYM"
 __tip__ = True
 
 from Autodesk.Revit import UI
@@ -642,7 +642,7 @@ class RhinoDraft_UI(forms.WPFWindow):
 
     def play_demo_click(self, sender, args):
 
-        os.startfile(__youtube_link__)
+        os.startfile(__youtube__)
         
 
 

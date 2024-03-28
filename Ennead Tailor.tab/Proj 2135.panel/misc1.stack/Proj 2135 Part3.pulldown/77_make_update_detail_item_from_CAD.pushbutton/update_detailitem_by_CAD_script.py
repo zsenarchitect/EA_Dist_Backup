@@ -5,7 +5,7 @@
 
 __doc__ = "For each selected dwg file, create new detail item family and load in the dwg, save family as the same name as the dwg, then load the family to project.\n\nThis batch process is handy when your consaltant gives you dozens of CAD drawing and you need to convert all of them to detail item family.\n\nYou should also checkout EnneadTab for CAD for some CAD batch processing related tto this workflow."
 __title__ = "77_Create/Update detail item from CAD"
-__youtube_link__ = "https://youtu.be/fv0UqOl_mAI"
+__youtube__ = "https://youtu.be/fv0UqOl_mAI"
 import clr
 from pyrevit import forms #
 from pyrevit import script #

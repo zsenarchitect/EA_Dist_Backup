@@ -5,7 +5,7 @@
 
 __doc__ = "Move the vertical curtain grids on a curtain wall to nearest intersecting Detail Lines/Grids.\n\nDo this on plan view."
 __title__ = "Align V. Curtain Grid To Detail Lines/Grids(Plan)"
-__youtube_link__ = "https://youtu.be/iiAy-Gxl5ZU"
+__youtube__ = "https://youtu.be/iiAy-Gxl5ZU"
 __tip__ = True
 # from pyrevit import forms #
 from pyrevit import script #

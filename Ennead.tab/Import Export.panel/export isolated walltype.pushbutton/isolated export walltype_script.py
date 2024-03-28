@@ -7,7 +7,7 @@
 __doc__ = "Pick category and type for the dwg export. It will isolate elements by types in the view and give individual .dwg file.\n\nThe child elements such as shared family will be isolated as well.\n\nUse EnneadTab for Rhino <Import Revit Export Collection> to get things under type parent layers.\n\nCurrently handle Wall/Floor/Roof/Column/Stair\n\nThis tool primarily deal with the system family category that normally will be difficult to seperate in dwg export."
 __title__ = "Isolated Export\nBy System Family Type"
 __tip__ = True
-__youtube_link__ = "https://youtu.be/o_cnp-BvnHw"
+__youtube__ = "https://youtu.be/o_cnp-BvnHw"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #

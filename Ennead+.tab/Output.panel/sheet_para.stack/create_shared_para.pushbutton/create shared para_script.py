@@ -5,7 +5,7 @@
 
 __doc__ = "Pick your shared parameter, and bind it to the sheet parameter table across many open documents.\n\nThis is helpful when you are adding a new sheet issue date parameter and want to be consistent across many linked files."
 __title__ = "Bind Shared Para to Sheet in Many Docs"
-__youtube_link__ = "https://youtu.be/F1fp4xaewRo"
+__youtube__ = "https://youtu.be/F1fp4xaewRo"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #

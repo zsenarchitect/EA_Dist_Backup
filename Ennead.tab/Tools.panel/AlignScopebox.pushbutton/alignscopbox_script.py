@@ -8,7 +8,7 @@ import EnneadTab
 __doc__ = 'Need at leat one model line as refference, and one scopebox to play with. Becasue the initial oriteation of the scopebox can be unpredicatable so i cannot ganrantee it finish in one go, but by large it can find the angle within 3 clicks.'
 __tip__ = True
 __title__ = "Orient\nScopebox"
-__youtube_link__ = "https://youtu.be/NBQQd-GXGRQ"
+__youtube__ = "https://youtu.be/NBQQd-GXGRQ"
 
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()

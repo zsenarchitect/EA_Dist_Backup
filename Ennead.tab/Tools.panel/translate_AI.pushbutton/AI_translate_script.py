@@ -6,7 +6,7 @@
 __doc__ = "Translate sheet names, view names, and maybe one day annotations."
 __title__ = "AI\nTranslate"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29679"
-__youtube_link__ = "https://youtu.be/7dlOneO2Mts"
+__youtube__ = "https://youtu.be/7dlOneO2Mts"
 __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent

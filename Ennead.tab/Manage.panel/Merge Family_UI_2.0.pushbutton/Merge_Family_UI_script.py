@@ -3,7 +3,7 @@
 
 __doc__ = "Merge a few family types to a target family type: \n\nFor instance parameters, the tool tries to record as much information as it can, so after the merging, similar data can be applied back to maintain the graphical consistency.\n\nThere is a built-in check that will search for differences in type parameter data. Should differences be found, you will be prompted to decide to continue with merge or cancel.\n\nIf you find no ideal target type, you may also choose to create a new type under good family with the bad type data and type name.\n\nThis tool will work for most 2D and 3D families, as well as Tags."
 __title__ = "Merge\nFamily"
-__youtube_link__ = "https://youtu.be/xZhCxpuQKCs"
+__youtube__ = "https://youtu.be/xZhCxpuQKCs"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29705"
 __tip__ = True
 from Autodesk.Revit import UI

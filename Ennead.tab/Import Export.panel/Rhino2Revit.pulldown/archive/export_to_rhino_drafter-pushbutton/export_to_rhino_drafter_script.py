@@ -8,7 +8,7 @@ __doc__ = "Get the content of current view to Rhino as background, so you can\
 A empty Rhino will be fired up for you.\n\nIt worth mentioning that any non-perspective \
 Revit view can be exported and bring back as background:)"
 __title__ = "Export to Rhino Drafter"
-__youtube_link__ = "https://youtu.be/UGRFjFWCVqU"
+__youtube__ = "https://youtu.be/UGRFjFWCVqU"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #

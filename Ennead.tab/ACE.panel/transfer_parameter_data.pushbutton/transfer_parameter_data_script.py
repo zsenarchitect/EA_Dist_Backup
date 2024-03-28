@@ -5,7 +5,8 @@
 
 __doc__ = "Transfer some data from one parameter to another. When you inherated from older file some parameter is carried over and now you have duplcated parameter container. Use this to cleanup the parameter panel"
 __title__ = "Transfer\nParameter Data"
-
+__youtube__ = "https://youtu.be/onJCCtV0hts"
+__tip__ = True
 
 from pyrevit import forms #
 from pyrevit import script #

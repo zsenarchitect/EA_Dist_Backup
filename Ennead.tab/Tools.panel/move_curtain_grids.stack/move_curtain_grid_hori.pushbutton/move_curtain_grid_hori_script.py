@@ -5,7 +5,7 @@
 
 __doc__ = "Move the horitiontal curtain grids on a curtain wall to nearest intersecting Detail Lines/Levels.\n\nDo this on elevation view."
 __title__ = "Align H. Curtain Grid To Detail Lines/Levels(Elevation)"
-__youtube_link__ = "https://youtu.be/iiAy-Gxl5ZU"
+__youtube__ = "https://youtu.be/iiAy-Gxl5ZU"
 __tip__ = True
 # from pyrevit import forms #
 from pyrevit import script #

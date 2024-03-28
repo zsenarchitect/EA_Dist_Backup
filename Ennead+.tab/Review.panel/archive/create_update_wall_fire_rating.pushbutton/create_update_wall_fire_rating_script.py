@@ -7,7 +7,7 @@ __doc__ = "Add fire rating detail item family along walls that have 'Fire Rating
 in the wall type.\n\n1 HR or 2HR graphic will be overlayed. Works on staright and \
 arc walls."
 __title__ = "Create/Update\nWall Fire Rating Graphic"
-__youtube_link__ = "https://youtu.be/YHpJGcCpmUE"
+__youtube__ = "https://youtu.be/YHpJGcCpmUE"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #

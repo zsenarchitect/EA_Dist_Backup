@@ -6,7 +6,7 @@
 __doc__ = "Fire UP ChatGPT in Revit.\n\nIt can answer any questions you might have."
 __title__ = "ChatGPT"
 __context__ = 'zero-doc'
-__youtube_link__ = "https://youtu.be/NoJmQ7GFzMs"
+__youtube__ = "https://youtu.be/NoJmQ7GFzMs"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29655"
 # from pyrevit import forms #
 from pyrevit import script #

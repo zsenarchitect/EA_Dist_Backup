@@ -7,7 +7,7 @@ __doc__ = "Now that you have finished drafting in Rhino, you can bring them in \
 to Revit as detail lines.\n\nIf there are line style note found, you will be asked\
  to find a match.\n\nThis prototype works best in metric mm."
 __title__ = "Transfer From Rhino Drafting"
-__youtube_link__ = "https://youtu.be/UGRFjFWCVqU"
+__youtube__ = "https://youtu.be/UGRFjFWCVqU"
 from pyrevit import forms #
 from pyrevit import script #
 from pyrevit.revit import ErrorSwallower

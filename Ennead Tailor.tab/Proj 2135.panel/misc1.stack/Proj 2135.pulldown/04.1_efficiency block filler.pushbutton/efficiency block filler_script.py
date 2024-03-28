@@ -1,6 +1,6 @@
 __doc__ = "Get the data reading based on the rule from Efficiency schedule, process them and fill to the graphical symbal data calculator on sheets, which shows the workstation seat count, net area and gross area, and what is the efficiency rate of this level."
 __title__ = "04.1_efficiency block data filler"
-__youtube_link__ = "https://youtu.be/s8SdKBPqtfs"
+__youtube__ = "https://youtu.be/s8SdKBPqtfs"
 from pyrevit import forms, DB, revit, script
 import EA_UTILITY
 import EnneadTab

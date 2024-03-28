@@ -8,7 +8,7 @@ It will be searching for same name as block name.\n The biggest benift is \
 You will no longer be restricted by level based vertical up family. It can be \
 freeform as in Rhino."
 __title__ = "Map Rhino Block\nto Revit Family"
-__youtube_link__ = "https://youtu.be/FMLv-_szLpM"
+__youtube__ = "https://youtu.be/FMLv-_szLpM"
 import math
 # from pyrevit import forms #
 from pyrevit import script #
