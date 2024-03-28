@@ -61,9 +61,10 @@ def get_doc_create():
 
 def group_contents(new_elements):
     new_elements = filter(lambda x: x is not None, new_elements)
-    new_element_ids = [x.Id for x in new_elements]
-    if len(new_element_ids) == 0:
+    if len(new_elements) == 0:
         return
+
+    new_element_ids = [x.Id for x in new_elements]
     t = DB.Transaction(doc, "grouping content")
     t.Start()
     doc_create = get_doc_create()
