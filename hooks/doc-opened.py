@@ -431,6 +431,10 @@ def main():
         log_time_sheet(doc)
         
 
+        try:
+            check_group_usage(doc)
+        except SystemError:
+            pass
 
         check_if_keynote_file_pointing_to_library(doc)
 
@@ -452,10 +456,6 @@ def main():
 
         register_silient_open(doc)
 
-        try:
-            check_group_usage(doc)
-        except SystemError:
-            pass
 
 
     #example to make auto changes to doc continously
