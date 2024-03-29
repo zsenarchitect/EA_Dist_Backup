@@ -68,11 +68,14 @@ def group_contents(new_elements):
     t = DB.Transaction(doc, "grouping content")
     t.Start()
     doc_create = get_doc_create()
-    with ErrorSwallower() as swallower:
-        group = doc_create.NewGroup(EnneadTab.DATA_CONVERSION.list_to_system_list(new_element_ids))
+    try:
+        with ErrorSwallower() as swallower:
+            group = doc_create.NewGroup(EnneadTab.DATA_CONVERSION.list_to_system_list(new_element_ids))
 
-        group.GroupType.Name = "EA_Rhino_Drafting_Transfer_({}_{})".format(doc.ActiveView.Name,
-                                                                            EnneadTab.TIME.get_formatted_current_time())
+            group.GroupType.Name = "EA_Rhino_Drafting_Transfer_({}_{})".format(doc.ActiveView.Name,
+                                                                                EnneadTab.TIME.get_formatted_current_time())
+    except:
+        EnneadTab.NOTIFICATION.messenger("Cannot make the group of the new draft element but they are still there.")
     t.Commit()
 
 
