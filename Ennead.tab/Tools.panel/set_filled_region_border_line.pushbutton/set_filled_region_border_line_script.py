@@ -3,12 +3,12 @@
 
 
 
-__doc__ = "Set the filled region border line to a specific line style"
+__doc__ = "Set the filled region border line to a specific line style. You cannot access this tool while inside group editor, but you can still access each filled region by tabing and then use this button."
 __title__ = "Set FilledRegion\nBorder Style"
 
 from pyrevit import forms #
 from pyrevit import script #
-
+from pyrevit.revit import ErrorSwallower
 import ENNEAD_LOG
 import EnneadTab
 from EnneadTab.REVIT import REVIT_SELECTION
@@ -38,8 +38,9 @@ def set_filled_region_border_line():
 
     t = DB.Transaction(doc, __title__)
     t.Start()
-    for filled_region in selection:
-        filled_region.SetLineStyleId(line_style.Id)
+    with ErrorSwallower() as swallower:
+        for filled_region in selection:
+            filled_region.SetLineStyleId(line_style.Id)
 
     t.Commit()
 
