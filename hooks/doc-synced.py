@@ -44,6 +44,16 @@ def update_project_2151():
 
 
 
+    if EnneadTab.USER_CONSTANTS.USER_NAME != "sha.li":
+        return
+    if random.random() > 0.1:
+        return
+    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    func_name = "confirm_RGB"
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+
+
+
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_2314():
 

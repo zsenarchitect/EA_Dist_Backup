@@ -35,10 +35,8 @@ NAMING_MAP = {"department_color_map":"Primary_Department Category",
               "program_color_map":"Primary_Department Program Type"}
 
 
-# NAMING_MAP = {"department_color_map":"test1",
-#               "program_color_map":"test2"}
 
-   
+    
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def load_color_template():
     
@@ -65,7 +63,7 @@ def load_color_template():
     
     EnneadTab.NOTIFICATION.messenger(main_text="Color Scheme Updated!")
     print ("\n\nDone!")
-
+    
     EnneadTab.OUTPUT.display_output_on_browser()
 
 

@@ -26,6 +26,9 @@ class ExcelDataItem():
         self.row = row
         self.column = column
 
+    def __str__(self):
+        return "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
+
 
 def get_all_worksheets(filepath):
 
@@ -129,6 +132,8 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
                         data.item)
 
     workbook = xlsxwriter.Workbook(filepath)
+
+
     worksheet = workbook.add_worksheet(worksheet)
     for data_entry in data:
         write_data_item(worksheet, data_entry)
@@ -144,16 +149,14 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
     for column in column_max_width_dict.keys():
         worksheet.set_column(column,column , column_max_width_dict[column])
 
-    import RHINO
+
 
     try:
         workbook.close()
         if not open_after:
-
-
-            RHINO.RHINO_FORMS.notification(main_text = "Excel saved at '{}'".format(filepath), height = 500)
+            NOTIFICATION.messenger(main_text = "Excel saved at '{}'".format(filepath))
     except:
-        RHINO.RHINO_FORMS.notification(main_text = "the excel file you picked is still open, cannot override. Writing cancelled.", height = 500)
+        NOTIFICATION.messenger(main_text = "the excel file you picked is still open, cannot override. Writing cancelled.")
         return
 
     if open_after:
