@@ -319,6 +319,9 @@ def create_filled_region_from_srf(filled_region_name, obj_info):
 
     crv_loops = EnneadTab.DATA_CONVERSION.list_to_system_list(DB_crv_loops, type = "CurveLoop", use_IList = False)
     filled_region_type = EnneadTab.REVIT.REVIT_SELECTION.get_filledregion_type(doc, filled_region_name)
+    if not filled_region_type:
+        EnneadTab.NOTIFICATION.messenger("Cannot find the type of filled region: {}".format(filled_region_name),)
+        return None
     filled_region = DB.FilledRegion.Create(doc,
                                             filled_region_type.Id,
                                             doc.ActiveView.Id,
