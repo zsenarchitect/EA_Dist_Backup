@@ -85,6 +85,42 @@ def update_with_generic_healthcare_tool():
     EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
     return
 
+def update_sheet_name():
+
+    health_care_projects = ["1643_lhh bod-a_new"]
+    
+    if doc.Title.lower() not in health_care_projects:
+        return
+    
+    script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+    func_name = "rename_views"
+    sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
+    is_default_format = True
+    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, sheets, is_default_format)
+
+    
+def update_working_view_name():
+
+    health_care_projects = ["1643_lhh bod-a_new"]
+    
+    if doc.Title.lower() not in health_care_projects:
+        return
+    
+    script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+    func_name = "modify_creator_in_view_name"
+
+    fullpath = "{}\\ENNEAD.extension\\{}".format(EnneadTab.ENVIRONMENT.PUBLISH_FOLDER_FOR_REVIT, script)
+    import imp
+    ref_module = imp.load_source("manage_working_view_script", fullpath)
+
+
+
+    
+    views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+    no_sheet_views = filter(ref_module.is_no_sheet, views)
+    is_adding_creator = True
+    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, views, is_adding_creator)
+    
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_2306():
     if "universal hydrogen" not in doc.Title.lower():
@@ -319,6 +355,8 @@ def main():
 
     play_text_to_speech_audio()
     
+    update_sheet_name()
+    update_working_view_name()
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", True)
 

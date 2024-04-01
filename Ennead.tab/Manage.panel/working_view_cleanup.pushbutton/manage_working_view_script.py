@@ -111,7 +111,22 @@ class delete_view_SimpleEventHandler(IExternalEventHandler):
     def GetName(self):
         return "simple function executed by an IExternalEventHandler in a Form"
 
-
+def is_no_sheet(view):
+    if "{" in view.Name:
+        return False
+    if str(view.ViewType) in [ "Legend", "Schedule", "SystemBrowser", "ProjectBrowser", "DrawingSheet"]:
+        return False
+    if "revision" in view.Name.lower():
+        return False
+    if "schedule" in view.Name.lower():
+        return False
+    if view.IsTemplate:
+        return False
+    if view.LookupParameter("Sheet Number") is None:
+        return True
+    if view.LookupParameter("Sheet Number").AsString() == "---":
+        return True
+    return False
 
 class DataGrid_Preview_Obj(object):
 
@@ -186,22 +201,7 @@ class manage_working_view_ModelessForm(WPFWindow):
         self.Show()
 
     def get_non_sheet_views(self, is_me_only = False):
-        def is_no_sheet(view):
-            if "{" in view.Name:
-                return False
-            if str(view.ViewType) in [ "Legend", "Schedule", "SystemBrowser", "ProjectBrowser", "DrawingSheet"]:
-                return False
-            if "revision" in view.Name.lower():
-                return False
-            if "schedule" in view.Name.lower():
-                return False
-            if view.IsTemplate:
-                return False
-            if view.LookupParameter("Sheet Number") is None:
-                return True
-            if view.LookupParameter("Sheet Number").AsString() == "---":
-                return True
-            return False
+
 
 
         views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
