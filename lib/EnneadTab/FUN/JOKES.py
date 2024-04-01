@@ -155,12 +155,15 @@ if random.random() < chance:
 
 
 def april_fool():
-    # reload(TIME)
+    try:
+        reload(TIME)
+    except:
+        return
     y, m, d = TIME.get_date_as_tuple(return_string=False)
 
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled3.stupid")
     
-    if m == 4 and d == 1 and random.random() < 0.1 :
+    if m == 4 and d in [1, 2, 3] and random.random() < 0.1 :
 
 
         if os.path.exists(marker_file):
