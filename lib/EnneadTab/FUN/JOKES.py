@@ -155,6 +155,7 @@ if random.random() < chance:
 
 
 def april_fool():
+    reload(TIME)
     y, m, d = TIME.get_date_as_tuple(return_string=False)
 
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled2.stupid")
