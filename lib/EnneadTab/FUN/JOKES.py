@@ -158,7 +158,7 @@ def april_fool():
     y, m, d = TIME.get_date_as_tuple()
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled.stupid")
     
-    if m == 4 and d == 1 and random.random() < 0.05 :
+    if m == 4 and d == 1 and random.random() < 0.1 :
         if os.path.exists(marker_file):
             return
         dice = random.random()
