@@ -163,7 +163,7 @@ def april_fool():
 
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled3.stupid")
     
-    if m == 4 and d in [1, 2, 3] and random.random() < 0.1 :
+    if m == 4 and d in [1, 2, 3] and random.random() < 0.5 :
 
 
         if os.path.exists(marker_file):
@@ -176,8 +176,8 @@ def april_fool():
         # elif dice < 0.48:
         #     NOTIFICATION.messenger(random_loading_message())
         elif dice < 0.95:
-            max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 3
-            for _ in range(random.randint(1, max)):
+            max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 5
+            for _ in range(random.randint(3, max)):
                 prank_dvd()
 
         else:
