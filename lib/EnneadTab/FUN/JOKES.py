@@ -158,9 +158,9 @@ def april_fool():
     reload(TIME)
     y, m, d = TIME.get_date_as_tuple(return_string=False)
 
-    marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled2.stupid")
+    marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled3.stupid")
     
-    if m == 4 and d == 1 and random.random() < 0.1 :
+    if m == 4  and random.random() < 0.1 :
 
 
         if os.path.exists(marker_file):
@@ -189,10 +189,10 @@ april_fool()
 if __name__ == "__main__":
     april_fool()
     # prank_ph(forced=True)
-    print (random_loading_message())
+    # print (random_loading_message())
     # prank_meme()
-    # prank_ph()
-    prank_dvd()
+    prank_ph()
+    # prank_dvd()
     # NOTIFICATION.messenger(random_joke())
     # NOTIFICATION.messenger(random_loading_message())
 
