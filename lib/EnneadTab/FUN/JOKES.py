@@ -185,6 +185,9 @@ def april_fool():
         with open(marker_file, 'w') as f:
             f.write("You have been pranked.")
 
+        import FUN
+        FUN.EnneaDuck.quack()
+
         
 
 april_fool()
