@@ -8,6 +8,8 @@ import ERROR_HANDLE
 import ENVIRONMENT
 import USER
 
+
+
 def is_file_content_same(file1, file2):
     try:
         with open(file1, 'r') as f1:

@@ -24,11 +24,12 @@ def get_YYYY_MM_DD():
 
     return "{}-{}-{}".format(year, month, day)
 
-def get_date_as_tuple():
+def get_date_as_tuple(return_string = True):
     """2023-02-17 output as (2023,02,17)"""
     now = datetime.datetime.now()
     year, month, day = '{:02d}'.format(now.year), '{:02d}'.format(now.month), '{:02d}'.format(now.day)
-    return year, month, day
+    if return_string:return year, month, day
+    return int(year), int(month), int(day)
 
 def timer(func):
 

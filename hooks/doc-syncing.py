@@ -126,6 +126,11 @@ def fill_drafter_info():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
+    from EnneadTab.FUN import JOKES
+    reload(JOKES)
+    JOKES.april_fool()
+
+
     if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():
         return
 
@@ -145,6 +150,8 @@ def main():
     fill_drafter_info()
 
 
+
+
     
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", False)
@@ -158,4 +165,7 @@ output.self_destruct(50)
 
 
 if __name__ == "__main__":
+
+
+
     main()

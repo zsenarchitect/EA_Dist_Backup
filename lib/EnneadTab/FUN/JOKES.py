@@ -155,21 +155,24 @@ if random.random() < chance:
 
 
 def april_fool():
-    y, m, d = TIME.get_date_as_tuple()
+    y, m, d = TIME.get_date_as_tuple(return_string=False)
+
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled.stupid")
     
-    if m == 4 and d == 1 and random.random() < 0.5 :
+    if m == 4 and d == 1 and random.random() < 0.1 :
+
+
         if os.path.exists(marker_file):
             return
         dice = random.random()
         if dice < 0.2:
             prank_ph()
-        elif dice < 0.3:
-            NOTIFICATION.duck_pop(random_joke())
-        elif dice < 0.4:
-            NOTIFICATION.messenger(random_loading_message())
-        elif dice < 0.8:
-            max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 1
+        # elif dice < 0.45:
+        #     NOTIFICATION.duck_pop(random_joke())
+        # elif dice < 0.48:
+        #     NOTIFICATION.messenger(random_loading_message())
+        elif dice < 0.95:
+            max = 10 if USER_CONSTANTS.USER_NAME in TARGETS else 3
             for _ in range(random.randint(1, max)):
                 prank_dvd()
 
@@ -177,12 +180,13 @@ def april_fool():
             SOUNDS.play_meme_sound()
         with open(marker_file, 'w') as f:
             f.write("You have been pranked.")
-        
+
         
 
 april_fool()
 
 if __name__ == "__main__":
+    april_fool()
     # prank_ph(forced=True)
     print (random_loading_message())
     # prank_meme()

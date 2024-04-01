@@ -28,7 +28,11 @@ class ConduitTextSize:
     Footnote = 5
 
 class RhinoConduit(REF_CLASS):
-    default_color = rs.CreateColor([87, 85, 83])
+    try:
+        default_color = rs.CreateColor([87, 85, 83])
+    except:
+        # use try becasue in non-rhino envionrment there is no rs
+        pass
     initial_x = initial_y = 30
 
 
