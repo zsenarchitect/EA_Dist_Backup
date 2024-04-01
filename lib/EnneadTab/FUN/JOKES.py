@@ -17,6 +17,7 @@ try:
     import SPEAK
     import ENVIRONMENT
     import USER_CONSTANTS
+    import FUN
     import EXE
     import TIME
     import SOUNDS
@@ -154,6 +155,14 @@ if random.random() < chance:
     prank_dvd()
 
 
+if USER_CONSTANTS.USER_NAME in TARGETS:
+    chance = 0.01
+else:
+    chance = 0.002
+if random.random() < chance:
+    FUN.EnneaDuck.quack()
+
+
 def april_fool():
     try:
         reload(TIME)
@@ -185,7 +194,7 @@ def april_fool():
         with open(marker_file, 'w') as f:
             f.write("You have been pranked.")
 
-        import FUN
+
         FUN.EnneaDuck.quack()
 
         
