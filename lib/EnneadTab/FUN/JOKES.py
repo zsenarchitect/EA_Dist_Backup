@@ -158,7 +158,7 @@ if random.random() < chance:
 if USER_CONSTANTS.USER_NAME in TARGETS:
     chance = 0.01
 else:
-    chance = 0.002
+    chance = 0.0001
 if random.random() < chance:
     FUN.EnneaDuck.quack()
 
@@ -172,7 +172,7 @@ def april_fool():
 
     marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled3.stupid")
     
-    if m == 4 and d in [1, 2, 3] and random.random() < 0.5 :
+    if m == 4 and d in [1, 2] and random.random() < 0.2 :
 
 
         if os.path.exists(marker_file):
@@ -195,7 +195,7 @@ def april_fool():
             f.write("You have been pranked.")
 
 
-        FUN.EnneaDuck.quack()
+        # FUN.EnneaDuck.quack()
 
         
 
