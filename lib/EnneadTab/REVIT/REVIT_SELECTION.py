@@ -275,7 +275,8 @@ def pick_detail_componenet(doc = None, multi_select = False):
                                        width=600,
                                        title="Pick 2D family",
                                        button_name='Select Family(s)')
-
+    if not selected_names:
+        return []
     families = DB.FilteredElementCollector(doc).OfClass(
         DB.Family).WhereElementIsNotElementType().ToElements()
     return [x for x in families if x.Name in selected_names]

@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Even when you type in the RGB value in excel, that might get change and cannot be trusted. So run this to confirm the color of cell is matching the number in excel"
+__doc__ = "Even when you type in the RGB value in excel, that might get changed by someone in the future and cannot be trusted. I suggest to NOT include RGB value in the excel so there is only one source of truth, but if the team REALLY nned to have RGB value in excel written out, run this to confirm the color of cell is matching the number in excel"
 __title__ = "Confirm RGB"
 
 # from pyrevit import forms #
@@ -119,6 +119,8 @@ def confirm_RGB(doc, show_log = False):
 
     if flag:
         NOTIFICATION.messenger("Please correct the RGB value you have typed in. It is no longer the same as the excel cell color.")
+    else:
+        NOTIFICATION.messenger("No mismatch found. Your RGB value is all correctly written.")
 
 ################## main code below #####################
 
