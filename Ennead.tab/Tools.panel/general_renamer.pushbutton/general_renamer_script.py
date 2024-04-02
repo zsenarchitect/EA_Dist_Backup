@@ -90,7 +90,7 @@ def all_cap_spatial_element_name(will_cap_room, will_cap_area):
     
     
 @EnneadTab.ERROR_HANDLE.try_catch_error
-def rename_views(sheets, is_default_format, attempt = 0):
+def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
 
     if attempt > 3:
         return
@@ -121,7 +121,8 @@ def rename_views(sheets, is_default_format, attempt = 0):
             if doc.IsWorkshared:
                 current_owner = view.LookupParameter("Edited by").AsString()
                 if current_owner != "" and current_owner != EnneadTab.USER.get_autodesk_user_name():
-                    print( "###################skip view owned by {}. View Name = {}".format(current_owner, view.Name))
+                    if show_log:
+                        print( "Skip view owned by {}. View Name = {}".format(current_owner, view.Name))
                     continue
 
 
@@ -161,8 +162,8 @@ def rename_views(sheets, is_default_format, attempt = 0):
             if new_view_name in view_names_pool:
                 #print new_view_name
                 failed_sheets.add(sheet)
-
-                print ("Will try to visit <{}> again to avoid using same name.".format(view.Name))
+                if show_log:
+                    print ("Will try to visit <{}> again to avoid using same name.".format(view.Name))
                 view.Parameter[name_para_id].Set(new_view_name + "_Pending")
                 #print view
                 continue
@@ -171,13 +172,16 @@ def rename_views(sheets, is_default_format, attempt = 0):
                     view.Parameter[title_para_id].Set(original_name)
                 view.Parameter[name_para_id].Set(new_view_name)
             except:
-                print ("Skip {}".format(view.Name))
-
+                if show_log:
+                    print ("Skip {}".format(view.Name))
+               
 
     if len(list(failed_sheets)) > 0:
         attempt += 1
-        print ("\n\nAttemp = {}".format(attempt))
-        rename_views(list(failed_sheets), is_default_format, attempt)
+        if show_log:
+            print ("\n\nAttemp = {}".format(attempt))
+       
+        rename_views(doc, list(failed_sheets), is_default_format, attempt, show_log)
     t.Commit()
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
@@ -311,7 +315,7 @@ class general_renamer_ModelessForm(WPFWindow):
         if not sheets:
             return
         is_default_format = self.radial_bt_is_sheetnum_detailnum_title.IsChecked
-        self.rename_view_event_handler.kwargs = sheets, is_default_format
+        self.rename_view_event_handler.kwargs = doc, sheets, is_default_format
         self.ext_event_rename_view.Raise()
         res = self.rename_view_event_handler.OUT
         if res:

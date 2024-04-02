@@ -96,7 +96,8 @@ def update_sheet_name():
     func_name = "rename_views"
     sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
     is_default_format = True
-    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, sheets, is_default_format)
+    show_log = False
+    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
 
     
 def update_working_view_name():
