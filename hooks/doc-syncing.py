@@ -126,9 +126,6 @@ def fill_drafter_info():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    from EnneadTab.FUN import JOKES
-    reload(JOKES)
-    JOKES.april_fool()
 
 
     if EnneadTab.ENVIRONMENT_CONSTANTS.is_Revit_limited():

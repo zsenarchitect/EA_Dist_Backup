@@ -147,7 +147,7 @@ def register_dimension_note_dockpane():
 
 
 def annouce_hibration_mode():
-    if random.random() > 0.02:
+    if random.random() > 0.001:
         return
     output = EnneadTab.OUTPUT.get_output()
     output.write("EnneadTab in hibernation mode.", EnneadTab.OUTPUT.Style.Title) 

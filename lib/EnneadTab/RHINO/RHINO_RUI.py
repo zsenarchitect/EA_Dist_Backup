@@ -15,7 +15,7 @@ import EMAIL
 import random
 try:
     import rhinoscriptsyntax as rs
-    if random.random() < 0.05:
+    if random.random() < 0.001:
         import OUTPUT
         output = OUTPUT.get_output()
         output.write("EnneadTab in hibernation mode.", OUTPUT.Style.Title) 

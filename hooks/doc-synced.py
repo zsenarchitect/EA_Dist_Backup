@@ -87,10 +87,10 @@ def update_with_generic_healthcare_tool():
 
 def update_sheet_name():
 
-    health_care_projects = ["1643_lhh bod-a_new",
+    registered_projects = ["1643_lhh bod-a_new",
                             "2151_a-nyuli_hospital"]
     
-    if doc.Title.lower() not in health_care_projects:
+    if doc.Title.lower() not in registered_projects:
         return
     
     script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
@@ -104,10 +104,10 @@ def update_sheet_name():
 def update_working_view_name():
 
 
-    health_care_projects = ["1643_lhh bod-a_new",
+    registered_projects = ["1643_lhh bod-a_new",
                             "2151_a-nyuli_hospital"]
     
-    if doc.Title.lower() not in health_care_projects:
+    if doc.Title.lower() not in registered_projects:
         return
     
     script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
