@@ -8,6 +8,12 @@ from pyrevit.coreutils import envvars
 doc = EXEC_PARAMS.event_args.Document
 import random
 
+REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
+                        "2151_a-nyuli_hospital",
+                        "221004_FUTURE MUSEUM_ARCH_2024"]
+
+REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
+
 def warn_non_enclosed_area():
     areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
     bad_areas = filter(lambda x: x.Area == 0, areas)
@@ -87,10 +93,9 @@ def update_with_generic_healthcare_tool():
 
 def update_sheet_name():
 
-    registered_projects = ["1643_lhh bod-a_new",
-                            "2151_a-nyuli_hospital"]
+
     
-    if doc.Title.lower() not in registered_projects:
+    if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
     
     script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
@@ -104,10 +109,9 @@ def update_sheet_name():
 def update_working_view_name():
 
 
-    registered_projects = ["1643_lhh bod-a_new",
-                            "2151_a-nyuli_hospital"]
+
     
-    if doc.Title.lower() not in registered_projects:
+    if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
     
     script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"

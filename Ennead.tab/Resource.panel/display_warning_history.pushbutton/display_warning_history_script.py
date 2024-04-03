@@ -50,6 +50,7 @@ def display_warning_history(using_current = True):
     folder = EnneadTab.ENVIRONMENT_CONSTANTS.SHARED_DATA_DUMP_FOLDER
 
     file_list = [MyOption(x) for x in os.listdir(folder) if x.startswith("REVIT_WARNING_HISTORY_")]
+    file_list.sort(key=lambda x: x.name)
     res = forms.SelectFromList.show(file_list,
                                      button_name = "Select Document(s)",
                                      multiselect = True,
