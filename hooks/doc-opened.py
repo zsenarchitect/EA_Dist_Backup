@@ -362,15 +362,17 @@ def remove_ignorance(doc, warning_cate):
 
 
 def check_group_usage(doc):
-    if random.random() < 0.1:
+    if random.random() > 0.1:
         return
-    max_count = 10
+    max_count = 5
     count = 0 
     output = script.get_output()
     all_group_types = DB.FilteredElementCollector(doc).OfClass(DB.GroupType).ToElements()
     for group_type in all_group_types:
         group_name = group_type.LookupParameter("Type Name").AsString()
         if "ea" in group_name.lower():
+            continue
+        if "enneadtab" in group_name.lower():
             continue
 
         # cap max ducks/msg

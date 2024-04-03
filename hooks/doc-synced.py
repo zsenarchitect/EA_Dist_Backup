@@ -87,7 +87,8 @@ def update_with_generic_healthcare_tool():
 
 def update_sheet_name():
 
-    health_care_projects = ["1643_lhh bod-a_new"]
+    health_care_projects = ["1643_lhh bod-a_new",
+                            "2151_a-nyuli_hospital"]
     
     if doc.Title.lower() not in health_care_projects:
         return
@@ -101,10 +102,10 @@ def update_sheet_name():
 
     
 def update_working_view_name():
-    return
-    # bug to be fixed, it change all include sheets that is wrong....
 
-    health_care_projects = ["1643_lhh bod-a_new"]
+
+    health_care_projects = ["1643_lhh bod-a_new",
+                            "2151_a-nyuli_hospital"]
     
     if doc.Title.lower() not in health_care_projects:
         return
@@ -122,7 +123,7 @@ def update_working_view_name():
     views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
     no_sheet_views = filter(ref_module.is_no_sheet, views)
     is_adding_creator = True
-    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, views, is_adding_creator)
+    EnneadTab.MODULE_HELPER.run_revit_script(script, func_name, no_sheet_views, is_adding_creator)
     
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_2306():

@@ -114,6 +114,8 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
     for sheet in sheets:
         sheet_num = sheet.SheetNumber
 
+        is_only_one_view = len(list(sheet.GetAllPlacedViews())) == 1
+
         #for view on current sheet
         for view_id in sheet.GetAllPlacedViews():
             view = doc.GetElement(view_id)
@@ -137,13 +139,19 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
 
             refill_title = False
             detail_num_para_id = DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER
+            if is_only_one_view:
+                view.Parameter[detail_num_para_id].Set("10")
             detail_num = view.Parameter[detail_num_para_id].AsString() #get view detail num
+
+                
 
             title_para_id = DB.BuiltInParameter.VIEW_DESCRIPTION
             title = view.Parameter[title_para_id].AsString() #get view title
 
             name_para_id = DB.BuiltInParameter.VIEW_NAME
             original_name = view.Parameter[name_para_id].AsString() #get view name,if none, then use view name
+
+
             if not(title):
                 title = original_name
                 refill_title = True
@@ -154,6 +162,8 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
                 new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(title)
             #forms.alert(str(new_view_name))
 
+            if "_from" in new_view_name:
+                new_view_name = new_view_name.split("_from")[0]
 
             if new_view_name == view.Name:
                 #print "Skip {}".format(new_view_name)
