@@ -12,7 +12,7 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_VIEW
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_VIEW, REVIT_SELECTION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
@@ -28,6 +28,9 @@ WORKING_VIEW = "Program Shading_from(szhangXNLCX)"
 @ERROR_HANDLE.try_catch_error
 def excel_to_diagram():
     REVIT_VIEW.set_active_view_by_name(WORKING_VIEW)
+    solid_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
+
+    
     t = DB.Transaction(doc, __title__)
     t.Start()
     
@@ -90,46 +93,49 @@ def excel_to_diagram():
         print ("color = " + str(color))
 
         
-        
-        process_line(ref_num, title, count, unit_area, program_area, note, color)
+        graphic_override = DB.OverrideGraphicSettings ()
+        graphic_override.SetSurfaceForegroundPatternColor (DB.Color(*color))
+        graphic_override.SetSurfaceForegroundPatternId  (solid_id)
+        process_line(ref_num, title, count, unit_area, program_area, note, graphic_override)
 
 
 
     t.Commit()
 
 
-    def process_line(ref_num, title, count, unit_area, program_area, note, color):
-        pass
+def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override):
+    pass
 
-        # try find instance with ref_num, if not exist, create one
-        type_name = "{}_{}".format(ref_num, title)
+    # try find instance with ref_num, if not exist, create one
+    type_name = "{}_{}".format(ref_num, title)
 
-        family_type = REVIT_FAMILY.get_family_type_by_name(FAMILY_NAME, type_name)
-        if family_type is None:
-            family_type = REVIT_FAMILY.create_family_type(FAMILY_NAME, type_name)
-        instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, type_name)
-        if len(instances) == 0:
-            instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
-        elif len(instances) == 1:
-            instance = instances[0]
-            
-        elif len(instances) > 1:
-            print ("more than one, badddddddd!")
+    family_type = REVIT_FAMILY.get_family_type_by_name(FAMILY_NAME, type_name, create_if_not_exist=True)
 
-
-
-        # update the data to instance
-        family_type.LookupParameter("Count").Set(count)
-        family_type.LookupParameter("UnitArea").Set(unit_area)
-        family_type.LookupParameter("ProgramArea").Set(program_area)
-        family_type.LookupParameter("Note").Set(note)
-        family_type.LookupParameter("RefNum").Set(ref_num)
-        family_type.LookupParameter("Title").Set(title)
-
+    instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, type_name)
+    if len(instances) == 0:
+        instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
+    elif len(instances) == 1:
+        instance = instances[0]
         
+    elif len(instances) > 1:
+        print ("more than one, badddddddd!")
+
+
+    print (family_type)
+    # update the data to instance
+    family_type.LookupParameter("Count").Set(count)
+    family_type.LookupParameter("UnitArea").Set(unit_area)
+    family_type.LookupParameter("ProgramArea").Set(program_area)
+    family_type.LookupParameter("Note").Set(note)
+    family_type.LookupParameter("RefNum").Set(ref_num)
+    family_type.LookupParameter("Title").Set(title)
 
 
     
+    doc.ActiveView.SetElementOverrides (instance.Id, graphic_override)
+
+
+
 
 
 ################## main code below #####################

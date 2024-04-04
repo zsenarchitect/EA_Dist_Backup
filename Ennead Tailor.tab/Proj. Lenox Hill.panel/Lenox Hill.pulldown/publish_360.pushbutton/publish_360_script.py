@@ -6,9 +6,11 @@
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
 __title__ = "publish_360"
 
-import requests
-import urllib3
-
+try:
+    import requests
+    import urllib3
+except:
+    pass
 client_id = "25N1wBFU4AaAZmWiAG5V1lLQxwj472FV"
 client_secret = "APHGHGBdOTjdKuV7"
 
@@ -16,7 +18,7 @@ client_secret = "APHGHGBdOTjdKuV7"
 def ask_totken():
 
     url = 'https://website.example/id'  # Replace with your API endpoint
-    request = urllib3.Request(url, headers={'Authorization': f'access_token {myToken}'})
+    request = urllib3.Request(url, headers={'Authorization': 'access_token {}'.format(client_id)})
     response = urllib3.urlopen(request)
     # Process the response
 
