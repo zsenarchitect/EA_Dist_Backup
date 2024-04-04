@@ -1,5 +1,8 @@
 
 
+from EnneadTab import NOTIFICATION
+
+
 try:
 
     from Autodesk.Revit import DB
@@ -35,6 +38,15 @@ def get_default_view_type(view_type, doc = DOC):
     return potential_types[0]
 
 
+def set_active_view_by_name(view_name, doc = DOC):
+    view = get_view_by_name(view_name, doc)
+    if view:
+        REVIT_APPLICATION.get_uidoc().ActiveView = view
+    else:
+        NOTIFICATION.messenger("<{}> does not exist...".format(view_name))
+
+
+
 
 def switch_to_sync_draft_view(doc):
 
@@ -55,23 +67,18 @@ def switch_to_sync_draft_view(doc):
         t.Commit()
 
     envvars.set_pyrevit_env_var("LAST_VIEW_BEFORE_SYNC", REVIT_APPLICATION.get_uidoc().ActiveView.Name)
-    try:
-        REVIT_APPLICATION.get_uidoc().ActiveView = view
-    except:
-        pass
+    set_active_view_by_name("EnneadTab Quick Sync")
 
 def switch_from_sync_draft_view():
     last_view_name = envvars.get_pyrevit_env_var("LAST_VIEW_BEFORE_SYNC")
     if not last_view_name:
         return
-    
-    view = get_view_by_name(last_view_name)
-    REVIT_APPLICATION.get_uidoc().ActiveView = view
 
+    set_active_view_by_name(last_view_name)
 
     for open_view in REVIT_APPLICATION.get_uidoc().GetOpenUIViews():
-        print (view.Name)
-        if view.Name == "EnneadTab Quick Sync":
+        
+        if open_view.Name == "EnneadTab Quick Sync":
             open_view.Close()
 
 

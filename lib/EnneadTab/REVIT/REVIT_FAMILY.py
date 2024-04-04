@@ -75,3 +75,38 @@ def get_family_by_name(family_name,
             return None
         
     return families[0]
+
+
+def create_family_type(family_name, new_type_name, doc=None):
+    doc = doc or DOC
+    family = get_family_by_name(family_name, doc=doc)
+    if family is None:
+        return None
+    types = family.GetFamilySymbolIds()
+
+    for type in types:
+        if type.LookupParameter("Type Name").AsString() == new_type_name:
+            return type
+
+    return type.Duplicate(new_type_name)
+
+def get_family_type_by_name(family_name, type_name, doc=None):
+    doc = doc or DOC
+    family = get_family_by_name(family_name, doc=doc)
+    if family is None:
+        return None
+    types = family.GetFamilySymbolIds()
+
+    for type in types:
+        if type.LookupParameter("Type Name").AsString() == type_name:
+            return type
+    else:
+        return None
+
+    return type
+def get_family_instances_by_family_name_and_type_name(family_name, type_name, doc=None):
+    family_type = get_family_type_by_name(family_name, type_name, doc=doc)
+    if not family_type:
+        return
+
+    return [el for el in DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements() if el.Symbol.Id == family_type.Id]
