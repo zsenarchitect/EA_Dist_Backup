@@ -206,8 +206,8 @@ if __name__ == "__main__":
     # prank_ph(forced=True)
     # print (random_loading_message())
     # prank_meme()
-    prank_ph()
-    # prank_dvd()
+    # prank_ph()
+    prank_dvd()
     # NOTIFICATION.messenger(random_joke())
     # NOTIFICATION.messenger(random_loading_message())
 
