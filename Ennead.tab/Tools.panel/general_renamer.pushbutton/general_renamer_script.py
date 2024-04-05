@@ -146,26 +146,31 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
                 
 
             title_para_id = DB.BuiltInParameter.VIEW_DESCRIPTION
-            title = view.Parameter[title_para_id].AsString() #get view title
+            original_title = view.Parameter[title_para_id].AsString() #get view title
 
             name_para_id = DB.BuiltInParameter.VIEW_NAME
             original_name = view.Parameter[name_para_id].AsString() #get view name,if none, then use view name
 
 
-            if not(title):
-                title = original_name
+            if not(original_title):
+                new_title = original_name
                 refill_title = True
+            else:
+                new_title = original_title
+
+            if "_from" in new_title:
+                new_title = new_title.split("_from")[0]
 
             if is_default_format:
-                new_view_name = str(sheet_num) + "_" + str(detail_num) + "_" + str(title)
+                new_view_name = str(sheet_num) + "_" + str(detail_num) + "_" + str(new_title)
             else:
-                new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(title)
+                new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(new_title)
             #forms.alert(str(new_view_name))
 
             if "_from" in new_view_name:
                 new_view_name = new_view_name.split("_from")[0]
 
-            if new_view_name == view.Name:
+            if new_view_name == view.Name and new_title == original_title:
                 #print "Skip {}".format(new_view_name)
                 continue
 
@@ -178,8 +183,8 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
                 #print view
                 continue
             try:
-                if refill_title:
-                    view.Parameter[title_para_id].Set(original_name)
+                
+                view.Parameter[title_para_id].Set(new_title)
                 view.Parameter[name_para_id].Set(new_view_name)
             except:
                 if show_log:

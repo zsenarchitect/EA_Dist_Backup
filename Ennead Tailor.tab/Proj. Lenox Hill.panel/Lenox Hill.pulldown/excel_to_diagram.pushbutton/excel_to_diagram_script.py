@@ -11,7 +11,7 @@ from weakref import ref
 from pyrevit import script #
 
 import ENNEAD_LOG
-from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER
+from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_VIEW, REVIT_SELECTION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
@@ -22,7 +22,20 @@ doc = REVIT_APPLICATION.get_doc()
 
 EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-03-21 EA Program Responsibilities.xlsx"
 FAMILY_NAME = "AreaShader"
-WORKING_VIEW = "Program Shading_from(szhangXNLCX)"
+WORKING_VIEW = "SK-G09_10_Program Shading"
+CONTAINER_FACTOR_MAP = {
+    "10.0":3,
+    "10.1":1.8,
+    "11.0":2,
+    "13.0":1.8,
+    "14.0":1.8,
+    "15.0":2,
+    "15.1":1.5,
+    "15.3":1.5,
+    "15.4":1.5,
+    "16.0":1.4,
+    "16.1":1.2
+    }
 
 
 @ERROR_HANDLE.try_catch_error
@@ -69,10 +82,21 @@ def excel_to_diagram():
         count = line[3] if line[3] != "" else 1
         unit_area = line[4] if line[4] != "" else -1
 
-        if unit_area > 0:
-            program_area = unit_area * count
-        else:
-            program_area = line[5] if line[5] != "" else line[6]
+        for index in [6, 8, 10]:
+            program_area = line[index]
+            try:
+                program_area = float(program_area)
+                if program_area == 0:
+                    continue
+                if index == 10:
+                    is_remote = True
+                else:
+                    is_remote = False
+                break
+            except:
+                pass
+
+
             
 
         note = str(line[7])
@@ -82,7 +106,8 @@ def excel_to_diagram():
             color = [int(x) for x in color]
         
         
-        
+        if title == "Mother/Baby Dedicated Discharge":
+            ref_num = "11.10"
 
         print ("ref num = " + ref_num)
         print ("title = " + title)
@@ -96,15 +121,16 @@ def excel_to_diagram():
         graphic_override = DB.OverrideGraphicSettings ()
         graphic_override.SetSurfaceForegroundPatternColor (DB.Color(*color))
         graphic_override.SetSurfaceForegroundPatternId  (solid_id)
-        process_line(ref_num, title, count, unit_area, program_area, note, graphic_override)
+        process_line(ref_num, title, count, unit_area, program_area, note, graphic_override, is_remote)
 
 
 
     t.Commit()
+    NOTIFICATION.messenger("Bubble diagram data updated from Excel")
 
 
-def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override):
-    pass
+def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override, is_remote):
+
 
     # try find instance with ref_num, if not exist, create one
     type_name = "{}_{}".format(ref_num, title)
@@ -114,6 +140,11 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
     instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, type_name)
     if len(instances) == 0:
         instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
+        if program_area > 0:
+            instance.LookupParameter("W").Set(program_area**0.5)
+        else:
+            program_area = 999
+            note = "NO VALID AREA: " + note
     elif len(instances) == 1:
         instance = instances[0]
         
@@ -121,7 +152,7 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
         print ("more than one, badddddddd!")
 
 
-    print (family_type)
+    # print (family_type)
     # update the data to instance
     family_type.LookupParameter("Count").Set(count)
     family_type.LookupParameter("UnitArea").Set(unit_area)
@@ -130,6 +161,16 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
     family_type.LookupParameter("RefNum").Set(ref_num)
     family_type.LookupParameter("Title").Set(title)
 
+    if is_remote:
+        family_type.LookupParameter("is_remote").Set(1)
+        family_type.LookupParameter("RemoteNote").Set("(REMOTE)")
+    else:
+        family_type.LookupParameter("is_remote").Set(0)
+        family_type.LookupParameter("RemoteNote").Set("")
+
+
+    container_factor = CONTAINER_FACTOR_MAP.get(ref_num, 1)
+    family_type.LookupParameter("container_factor").Set(container_factor)
 
     
     doc.ActiveView.SetElementOverrides (instance.Id, graphic_override)
