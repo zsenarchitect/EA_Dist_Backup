@@ -39,8 +39,10 @@ def get_default_view_type(view_type, doc = DOC):
 
 
 def set_active_view_by_name(view_name, doc = DOC):
+
     view = get_view_by_name(view_name, doc)
     if view:
+        # UIDOC.RequestViewChange(view)
         REVIT_APPLICATION.get_uidoc().ActiveView = view
     else:
         NOTIFICATION.messenger("<{}> does not exist...".format(view_name))
@@ -76,9 +78,10 @@ def switch_from_sync_draft_view():
 
     set_active_view_by_name(last_view_name)
 
-    for open_view in REVIT_APPLICATION.get_uidoc().GetOpenUIViews():
-        
+    for open_ui_view in REVIT_APPLICATION.get_uidoc().GetOpenUIViews():
+        open_view = DOC.GetElement(open_ui_view.ViewId)
+
         if open_view.Name == "EnneadTab Quick Sync":
-            open_view.Close()
+            open_ui_view.Close()
 
 

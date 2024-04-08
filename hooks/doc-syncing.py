@@ -8,6 +8,8 @@ from pyrevit.coreutils import envvars
 
 
 
+
+
 def check_sync_queue():
     """
     return True is sync can go
@@ -152,6 +154,8 @@ def main():
     
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", False)
+
+
 #################################################################
 
 output = script.get_output()
