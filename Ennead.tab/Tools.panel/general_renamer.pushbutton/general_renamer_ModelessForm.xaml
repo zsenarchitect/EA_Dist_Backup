@@ -128,7 +128,8 @@
                             <Separator/>
                             <StackPanel HorizontalAlignment="Center">
                                 <RadioButton x:Name="radial_bt_is_sheetnum_detailnum_title"  Content="SheetNum+DetailNum+ViewTitle(Recommand)" IsChecked="True"/>
-                                <RadioButton Content="DetailNum+SheetNum+ViewTitle" />
+                                <RadioButton x:Name="radial_bt_is_detailnum_sheetnum_title" Content="DetailNum+SheetNum+ViewTitle" />
+                                <RadioButton x:Name="radial_bt_is_original_flavor" Content="Original Flavor" />
                             </StackPanel>
 
                             <Button Content="Rename View Names" Click="rename_view_Click" HorizontalAlignment="Center"/>

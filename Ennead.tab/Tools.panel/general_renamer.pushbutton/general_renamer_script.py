@@ -89,8 +89,9 @@ def all_cap_spatial_element_name(will_cap_room, will_cap_area):
 
     
     
+
 @EnneadTab.ERROR_HANDLE.try_catch_error
-def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
+def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0, show_log = True):
 
     if attempt > 3:
         return
@@ -170,6 +171,7 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
             if "_from" in new_view_name:
                 new_view_name = new_view_name.split("_from")[0]
 
+
             if new_view_name == view.Name and new_title == original_title:
                 #print "Skip {}".format(new_view_name)
                 continue
@@ -182,13 +184,31 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
                 view.Parameter[name_para_id].Set(new_view_name + "_Pending")
                 #print view
                 continue
-            try:
-                
-                view.Parameter[title_para_id].Set(new_title)
-                view.Parameter[name_para_id].Set(new_view_name)
-            except:
-                if show_log:
-                    print ("Skip {}".format(view.Name))
+
+            if is_original_flavor:
+                try:
+                    if str(sheet_num) + "_" + str(detail_num) + "_" in new_view_name:
+                        native_view_name = new_view_name.replace(str(sheet_num) + "_" + str(detail_num) + "_" , "")
+                    if str(detail_num) + "_" + str(sheet_num) + "_" in new_view_name:
+                        native_view_name = new_view_name.replace(str(detail_num) + "_" + str(sheet_num) + "_" , "")
+
+                    while native_view_name in view_names_pool:
+                        native_view_name = native_view_name + "_OverlappingViewName"
+                    print ("{}-->{}".format(new_view_name, native_view_name))
+                    view.Parameter[title_para_id].Set(new_title)
+                    view.Parameter[name_para_id].Set(native_view_name)
+                    view_names_pool.append(native_view_name)
+                except Exception as e:
+                    if show_log:
+                        print ("Skip {} becasue {}".format(view.Name, e))
+            else:
+                try:
+                    
+                    view.Parameter[title_para_id].Set(new_title)
+                    view.Parameter[name_para_id].Set(new_view_name)
+                except:
+                    if show_log:
+                        print ("Skip {}".format(view.Name))
                
 
     if len(list(failed_sheets)) > 0:
@@ -196,7 +216,7 @@ def rename_views(doc, sheets, is_default_format, attempt = 0, show_log = True):
         if show_log:
             print ("\n\nAttemp = {}".format(attempt))
        
-        rename_views(doc, list(failed_sheets), is_default_format, attempt, show_log)
+        rename_views(doc, list(failed_sheets), is_default_format, is_original_flavor, attempt, show_log)
     t.Commit()
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
@@ -330,7 +350,8 @@ class general_renamer_ModelessForm(WPFWindow):
         if not sheets:
             return
         is_default_format = self.radial_bt_is_sheetnum_detailnum_title.IsChecked
-        self.rename_view_event_handler.kwargs = doc, sheets, is_default_format
+        is_original_flavor = self.radial_bt_is_original_flavor.IsChecked
+        self.rename_view_event_handler.kwargs = doc, sheets, is_default_format, is_original_flavor
         self.ext_event_rename_view.Raise()
         res = self.rename_view_event_handler.OUT
         if res:
