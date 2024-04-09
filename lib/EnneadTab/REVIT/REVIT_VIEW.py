@@ -43,7 +43,10 @@ def set_active_view_by_name(view_name, doc = DOC):
     view = get_view_by_name(view_name, doc)
     if view:
         # UIDOC.RequestViewChange(view)
-        REVIT_APPLICATION.get_uidoc().ActiveView = view
+        try:
+            REVIT_APPLICATION.get_uidoc().ActiveView = view
+        except Exception as e:
+            NOTIFICATION.messenger(str(e))
     else:
         NOTIFICATION.messenger("<{}> does not exist...".format(view_name))
 
