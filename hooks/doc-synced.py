@@ -9,8 +9,7 @@ doc = EXEC_PARAMS.event_args.Document
 import random
 
 REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
-                        "2151_a-nyuli_hospital",
-                        "221004_FUTURE MUSEUM_ARCH_2024"]
+                        "2151_a-nyuli_hospital"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 
@@ -75,7 +74,20 @@ def update_project_2314():
     
     return
 
+@EnneadTab.ERROR_HANDLE.try_catch_error_silently
+def update_project_1643():
 
+    if "1634_lhh boa-a_new" not in doc.Title.lower():
+        return
+
+    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    func_name = "update_delta_area_graphic"
+    
+
+    
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    
+    return
 
     
 def update_with_generic_healthcare_tool():
@@ -342,6 +354,7 @@ def main():
     update_project_2314()
     update_project_2306()
     update_project_2151()
+    update_project_1643()
 
     update_with_generic_healthcare_tool()
 
