@@ -33,7 +33,7 @@ def publish_360():
 
     
     headers = {
-        "Authorization": f"Bearer {access_token}",
+        "Authorization": "Bearer {}".format(access_token),
         "Content-Type": "application/vnd.api+json"
     }
     payload = {
