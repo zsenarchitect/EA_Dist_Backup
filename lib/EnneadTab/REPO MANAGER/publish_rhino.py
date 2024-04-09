@@ -14,7 +14,7 @@ def publish_rhino():
         # print (sys.path)
         
         import VERSION_CONTROL, NOTIFICATION
-        VERSION_CONTROL.publish_Rhino_source_code(deep_copy=False)
+        VERSION_CONTROL.publish_Rhino_source_code(deep_copy=True)
         note = "RHINO Published!"
         NOTIFICATION.messenger(main_text=note)
         print (note)
