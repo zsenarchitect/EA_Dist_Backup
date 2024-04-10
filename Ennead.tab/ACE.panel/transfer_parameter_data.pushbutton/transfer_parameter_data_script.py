@@ -29,7 +29,9 @@ STORAGE_TYPE_MAP = {
 }
 
 CATEGORY_OPTIONS = {"Sheet":DB.BuiltInCategory.OST_Sheets,
-                    "View":DB.BuiltInCategory.OST_Views}
+                    "View":DB.BuiltInCategory.OST_Views,
+                    "Area":DB.BuiltInCategory.OST_Areas,
+                    "Room":DB.BuiltInCategory.OST_Rooms}
 
 @ERROR_HANDLE.try_catch_error
 def transfer_parameter_data():
@@ -45,16 +47,43 @@ def transfer_parameter_data():
     t.Commit()
 
 
+
+def get_para(sample_element, button_name):
+    try:
+        selected_para = forms.select_parameters(sample_element,
+                                            multiple=False,
+                                                button_name=button_name)
+    except:
+        selected_para = forms.select_parameters(sample_element,
+                                            multiple=False,
+                                                button_name=button_name,
+                                                include_type=False)
+
+
+        
+        # class MyOption(forms.TemplateListItem):
+        #     @property
+        #     def name(self):
+        #         return "{}".format(self.item.Definition.Name)
+
+        # paras = [MyOption(x) for x in sample_element.Parameters]
+        # paras.sort(key=lambda x: x.name)
+        # selected_para = forms.SelectFromList.show(paras,
+        #                                         multiselect=False,
+        #                                         button_name=button_name)
+
+    return selected_para
+
 def transfer_action(category):
     sample_element = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().FirstElement()
-    source_para = forms.select_parameters(sample_element,
-                                          multiple=False,
-                                            button_name="Select <SOURCE> parameter to extract data")
+
+    source_para = get_para(sample_element, "Select <SOURCE> parameter to extract data")
+            
     if source_para is None:
         return
-    target_para = forms.select_parameters(sample_element,
-                                          multiple=False,
-                                            button_name="Select <TARGET> parameter to apply data")
+    
+    target_para = get_para(sample_element, "Select <TARGET> parameter to apply data")
+    
     if target_para is None:
         return
 

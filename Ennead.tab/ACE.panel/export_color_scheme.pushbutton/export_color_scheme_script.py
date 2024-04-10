@@ -25,12 +25,13 @@ def export_color_scheme():
         def name(self):
             cate_name = DB.Category.GetCategory(doc, self.item.CategoryId).Name
             return "[{}]: {}".format(cate_name, self.item.Name)
-        
-    color_scheme = forms.SelectFromList.show(context = [MyOption(x) for x in color_schemes],
-                                        title = "Pick the color scheme to export the data.",
-                                        multiselect = False)
 
-    if not color_scheme:
+    options = [MyOption(x) for x in color_schemes]
+    color_schemes = forms.SelectFromList.show(context = sorted(options, key = lambda x: x.name),
+                                        title = "Pick the color scheme to export the data.",
+                                        multiselect = True)
+
+    if not color_schemes:
         return
     
     opts = ["Yes, only show me used color", "No, show me every color"]
@@ -44,16 +45,22 @@ def export_color_scheme():
         
         
         
-
+    for color_scheme in color_schemes:
+        export_color_scheme_to_excel(color_scheme, is_ignore_non_used)
     # Create a workbook and add a worksheet.
     #forms.save_excel_file()
-    file_location = forms.save_excel_file()
+
+def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
+    cate_name = DB.Category.GetCategory(doc, color_scheme.CategoryId).Name
+    excel_name =  "[{}] {}".format(cate_name, color_scheme.Name)
+    file_location = forms.save_file(file_ext='xlsx',
+                                    default_name=excel_name)
     workbook = xw.Workbook(file_location)
     worksheet = workbook.add_worksheet("Color Scheme")
 
     hex_color = EnneadTab.COLOR.rgb_to_hex((120,120,120))
     format = workbook.add_format({'bg_color' : hex_color})
-    worksheet.write(0,0,"Parameter Name", format)
+    worksheet.write(0,0,"Parameter Value", format)
     worksheet.set_column(0,0, 35)
     worksheet.write(0,1,"Is In Use", format)
     worksheet.write(0,2,"Color", format)
@@ -71,13 +78,16 @@ def export_color_scheme():
     
     for i, entry in enumerate(entries):
         i += 1
+        if not entry.Color.IsValid:
+            print ("Color is not valid for <{}>".format(entry.GetStringValue ()))
+            continue
         alt_dict[entry.GetStringValue ()] = [int(entry.Color.Red),
                                             int(entry.Color.Green),
                                             int(entry.Color.Blue)]
         
         
         worksheet.write(i,0,entry.GetStringValue ())
-        worksheet.write(i,1,entry.IsInUse)
+        worksheet.write(i,1,"Yes" if entry.IsInUse else "No")
         hex_color = '#{:02x}{:02x}{:02x}'.format(int(entry.Color.Red),
                                                  int(entry.Color.Green),
                                                  int(entry.Color.Blue))
