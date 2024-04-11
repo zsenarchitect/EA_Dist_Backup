@@ -6,11 +6,11 @@ __doc__ = """Update color scheme with office template excel version
 J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\2024-04-11 Color Scheme_LHH.xls.
 NOTE: excel should be saved with .xls instead of .xlsx format
 Also note, the column header should be as such:
-A: Department
+A: Department(Section Name)
 B: Department Abbr.
 C: Department Color
 
-D: Program
+D: Program(SubSection Name)
 E: Program Abbr.
 F: Program Color
 
