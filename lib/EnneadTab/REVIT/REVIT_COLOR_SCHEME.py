@@ -45,7 +45,7 @@ class ColorSchemeUpdater:
             NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(self.naming_map[lookup_key]))
             return
         
-        self.output.print_md("##Working on color scheme [{}]".format(color_scheme.Name))
+        self.output.print_md("#Working on color scheme [{}]".format(color_scheme.Name))
         department_data = data[lookup_key]
 
         try:
