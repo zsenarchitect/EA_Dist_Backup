@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import random
 import json
+
 try:
     from System.Drawing import Color
     BLACK = Color.FromArgb(0,0,0)
@@ -17,6 +18,7 @@ if ENVIRONMENT_CONSTANTS.is_Revit_environment():
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
     import Eto
 import NOTIFICATION
+import FOLDER
 
 
 ACCENT_COLOR = 70,70,70
@@ -193,18 +195,23 @@ def gather_data(raw_data, key_column):
     return temp_data
             
 def get_color_template_data(template = None):
-    if template.endswith(".json"):
-        with open(template, "r") as f:
+    if template:
+        safe_template = FOLDER.copy_file_to_local_dump_folder(template)
+    else:
+        safe_template = "OFFICE STANDARD FILE TO BE MADE"
+    
+    if safe_template.endswith(".json"):
+        with open(safe_template, "r") as f:
             return json.load(f)
         
-    if template.endswith(".xlsx"):
+    if safe_template.endswith(".xlsx"):
         NOTIFICATION.messenger(main_text="Please save as .xls instead of .xlsx")
         return {}
     
     
-    if template.endswith(".xls"):
+    if safe_template.endswith(".xls"):
         import EXCEL
-        raw_data = EXCEL.read_data_from_excel(template, 
+        raw_data = EXCEL.read_data_from_excel(safe_template, 
                                                 worksheet = "HEALTHCARE", 
                                                 return_dict=True)
 

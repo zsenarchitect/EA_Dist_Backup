@@ -25,6 +25,10 @@ def update_delta_area_graphic(doc, show_log = True):
 
     
     # get all the related areas
+    areas = get_areas()
+
+
+    
 
     # iterate the areas:
     # -what is he cureent area, lookup the ref num in dict for what it should be
@@ -32,7 +36,8 @@ def update_delta_area_graphic(doc, show_log = True):
     # - if the cureent area is greater than the ref num designed SF, find the data block that has ref num and put in the delta for "assigned too much!"
     # when cannot find the data block, create one in new dump draft view and active that view
     # when there are ref num not in the dict, notify user and continue
-    
+    for area in areas:
+        print(area.Area)
 
     """
     t = DB.Transaction(doc, __title__)
@@ -41,7 +46,9 @@ def update_delta_area_graphic(doc, show_log = True):
     t.Commit()
     """
 
-
+def get_areas():
+    areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).WhereElementIsNotElementType().ToElements()
+    return [x for x in areas if x.AreaScheme.Name == "abcdef"]
 ################## main code below #####################
 
 

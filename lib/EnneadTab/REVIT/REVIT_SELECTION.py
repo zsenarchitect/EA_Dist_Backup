@@ -613,12 +613,5 @@ def get_panel_location_map(panels):
     return panel_location_map
 
 def get_color_scheme_by_name(scheme_name, doc = DOC):
-    color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
-    color_schemes = filter(lambda x: x.Name == scheme_name, color_schemes)
-    if len(color_schemes)== 0:
-        NOTIFICATION.messenger(main_text = "Cannot find the color scheme [{}].\nMaybe you renamed your color scheme recently? Talk to SZ for update.".format(scheme_name))
-        return
-    if len(color_schemes) > 1:
-        NOTIFICATION.messenger(main_text = "Found more than one color scheme with the name [{}].\nNeed better naming.".format(scheme_name))
-        return
-    return color_schemes[0]
+    import REVIT_COLOR_SCHEME
+    return REVIT_COLOR_SCHEME.get_color_scheme_by_name(scheme_name, doc)
