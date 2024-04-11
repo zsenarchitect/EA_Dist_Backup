@@ -33,8 +33,8 @@ doc = __revit__.ActiveUIDocument.Document
 
 
 EXCEL_PATH = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\2024-04-11 Color Scheme_LHH.xls"
-NAMING_MAP = {"department_color_map":"Primary_Department Category",
-              "program_color_map":"Primary_Department Program Type"}
+NAMING_MAP = {"department_color_map":"Section Category",
+              "program_color_map":"SubSection Category"}
 
 
 
