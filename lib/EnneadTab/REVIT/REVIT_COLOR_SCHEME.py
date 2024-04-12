@@ -81,7 +81,7 @@ class ColorSchemeUpdater:
             
             lookup_data = department_data.get(entry_title, None)
             if not lookup_data:
-                self.output.print_md("###  ??? entry [{}] in current area scheme not found in template excel. Are you defining a new entry?\nThis entry is skipped for now.".format(entry_title))
+                self.output.print_md("###  ??? entry [{}] in current area scheme not found in template excel. Are you defining a new entry? Or the spelling is different?\nThis entry is skipped for now.".format(entry_title))
                 continue
             
             lookup_color = COLOR.tuple_to_color(lookup_data["color"])

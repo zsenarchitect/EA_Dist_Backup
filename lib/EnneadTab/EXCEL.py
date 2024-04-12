@@ -20,8 +20,16 @@ if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
     import xlsxwriter
 
 
+
+def letter_to_index(letter):
+    return ord(letter.upper()) - ord('A')
+
+
+
 class ExcelDataItem():
     def __init__(self, item, row, column):
+        if isinstance(column, str):
+            column = letter_to_index(column)
         self.item = item
         self.row = row
         self.column = column

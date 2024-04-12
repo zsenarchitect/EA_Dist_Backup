@@ -187,13 +187,15 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
         program_area = float(program_area)
         if program_area != 0:
             is_ok = True
+            note = ""
     except:
         pass
 
     if not is_ok:
         NOTIFICATION.messenger("Invalid program area for " + ref_num + " " + title)
-        program_area = 500
-        note = "!!!!!!!!INVALID AREA: " + note
+        program_area = 499
+        if  "CANCEL:" not in note:
+            note = "!!!!!!!!INVALID AREA: " + note
 
 
     # try find instance with ref_num, if not exist, create one
@@ -228,9 +230,7 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
     family_type.LookupParameter("Count").Set(count)
     family_type.LookupParameter("UnitArea").Set(unit_area)
 
-    if program_area <= 0:
-        program_area = 99
-        note = "NO VALID AREA: " + note
+
         
     family_type.LookupParameter("ProgramArea").Set(program_area)
     family_type.LookupParameter("ProgramNote").Set(note)
