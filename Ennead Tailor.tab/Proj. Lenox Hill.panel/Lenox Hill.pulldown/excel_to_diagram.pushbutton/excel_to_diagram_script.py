@@ -31,7 +31,10 @@ WORKING_VIEW = "SK-G09_10_Program Shading"
 CONTAINER_FACTOR_MAP = {
     "10.0":3,
     "10.1":1.8,
+    "10.2":1.8,
     "11.0":2,
+    "11.1":1.8,
+    "11.6":1.8,
     "13.0":1.8,
     "14.0":1.8,
     "15.0":2,
@@ -43,10 +46,14 @@ CONTAINER_FACTOR_MAP = {
     }
 
 
+USED_NAMES_IN_EXCEL = set()
+
+
 @ERROR_HANDLE.try_catch_error
 def excel_to_diagram():
     REVIT_VIEW.set_active_view_by_name(WORKING_VIEW)
     solid_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
+
 
     
     t = DB.Transaction(doc, __title__)
@@ -94,13 +101,13 @@ def excel_to_diagram():
         unit_area = line[4] if line[4] != "" else -1
 
   
-        for index in [6, 8, 10]:
+        for index in [6, 8, 11]:
             program_area_DGSF = line[index]
             try:
                 program_area_DGSF = float(program_area_DGSF)
                 if program_area_DGSF == 0:
                     continue
-                if index == 10:
+                if index == 11:
                     is_remote = True
                 else:
                     is_remote = False
@@ -108,7 +115,7 @@ def excel_to_diagram():
             except:
                 pass
         try:
-            program_area_NSF = float(line[5])
+            program_area_NSF = float(line[index-1])
         except:
             program_area_NSF = 0
 
@@ -116,10 +123,10 @@ def excel_to_diagram():
 
         note = str(line[7])
 
-        if line[14] != "":
-            color = line[14].split("-")
+        if line[15] != "":
+            color = line[15].split("-")
             color = [int(x) for x in color]
-        
+
         
         if title == "Mother/Baby Dedicated Discharge":
             ref_num = "11.10"
@@ -157,10 +164,20 @@ def excel_to_diagram():
                 title += "_SmallContainer"
                 process_line(ref_num, title, count, unit_area, program_area_DGSF, note, graphic_override, is_remote)
 
-
+  
 
     t.Commit()
     NOTIFICATION.messenger("Bubble diagram data updated from Excel")
+
+    types_in_proj = [doc.GetElement(x) for x in REVIT_FAMILY.get_family_by_name(FAMILY_NAME).GetFamilySymbolIds()]
+    type_names_in_proj = [x.LookupParameter("Type Name").AsString() for x in types_in_proj]
+
+    names_in_proj_but_not_in_excel = set(type_names_in_proj) - USED_NAMES_IN_EXCEL
+    for name in names_in_proj_but_not_in_excel:
+        print("Name in project but not in Excel: " + name)
+    names_in_excel_but_not_in_proj = USED_NAMES_IN_EXCEL - set(type_names_in_proj)
+    for name in names_in_excel_but_not_in_proj:
+        print("Name in Excel but not in project: " + name)
 
 
 def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override, is_remote):
@@ -175,12 +192,14 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
 
     if not is_ok:
         NOTIFICATION.messenger("Invalid program area for " + ref_num + " " + title)
-        program_area = 99999
+        program_area = 500
         note = "!!!!!!!!INVALID AREA: " + note
 
 
     # try find instance with ref_num, if not exist, create one
     type_name = "{}_{}".format(ref_num, title)
+    global USED_NAMES_IN_EXCEL
+    USED_NAMES_IN_EXCEL.add(type_name)
 
     family_type = REVIT_FAMILY.get_family_type_by_name(FAMILY_NAME, type_name, create_if_not_exist=True)
 
@@ -189,14 +208,15 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
         instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
         if program_area > 0:
             instance.LookupParameter("W").Set(program_area**0.5)
-    elif len(instances) == 1:
-        instance = instances[0]
-        
-    elif len(instances) > 1:
-        NOTIFICATION.messenger("More than one instance of type {} found, badddddddd!".format(type_name))
+        instances = [instance]
+    # elif len(instances) == 1:
+    #     pass
+    # elif len(instances) > 1:
+    #     NOTIFICATION.messenger("More than one instance of type {} found.".format(type_name))
 
 
-    if note.startswith("CANCEL:"):
+
+    if "CANCEL:" in note:
         family_type.LookupParameter("is_cancel").Set(1)
     else:
         family_type.LookupParameter("is_cancel").Set(0)
@@ -213,30 +233,29 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
         note = "NO VALID AREA: " + note
         
     family_type.LookupParameter("ProgramArea").Set(program_area)
-    family_type.LookupParameter("Note").Set(note)
-    family_type.LookupParameter("RefNum").Set(ref_num)
+    family_type.LookupParameter("ProgramNote").Set(note)
+    family_type.LookupParameter("ProgramRefNum").Set(ref_num)
 
     if "_SmallContainer" in title:
         title = title.replace("_SmallContainer", "")
-    family_type.LookupParameter("Title").Set(title)
+    family_type.LookupParameter("ProgramTitle").Set(title)
 
     if is_remote:
         family_type.LookupParameter("is_remote").Set(1)
-        family_type.LookupParameter("RemoteNote").Set("(REMOTE)")
+        family_type.LookupParameter("ProgramRemoteNote").Set("(REMOTE)")
     else:
         family_type.LookupParameter("is_remote").Set(0)
-        family_type.LookupParameter("RemoteNote").Set("")
+        family_type.LookupParameter("ProgramRemoteNote").Set("")
 
 
     # do not scale up becasue now using seperate container and it is eaiser to find a balanced number manuall and keep using that
     # container_factor = CONTAINER_FACTOR_MAP.get(ref_num, 1)
     # family_type.LookupParameter("container_factor").Set(container_factor)
 
-    
-    doc.ActiveView.SetElementOverrides (instance.Id, graphic_override)
-
-
-    instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
+    for instance in instances:
+        host_view = doc.GetElement(instance.OwnerViewId)
+        host_view.SetElementOverrides (instance.Id, graphic_override)
+        instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
 
 
 
