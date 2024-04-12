@@ -13,7 +13,7 @@ from weakref import ref
 from pyrevit import script #
 
 import ENNEAD_LOG
-from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER, NOTIFICATION
+from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER, NOTIFICATION, TIME
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_VIEW, REVIT_SELECTION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
@@ -164,6 +164,19 @@ def excel_to_diagram():
 
 
 def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override, is_remote):
+    is_ok = False
+
+    try:
+        program_area = float(program_area)
+        if program_area != 0:
+            is_ok = True
+    except:
+        pass
+
+    if not is_ok:
+        NOTIFICATION.messenger("Invalid program area for " + ref_num + " " + title)
+        program_area = 99999
+        note = "!!!!!!!!INVALID AREA: " + note
 
 
     # try find instance with ref_num, if not exist, create one
@@ -221,6 +234,9 @@ def process_line(ref_num, title, count, unit_area, program_area, note, graphic_o
 
     
     doc.ActiveView.SetElementOverrides (instance.Id, graphic_override)
+
+
+    instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
 
 
 
