@@ -13,6 +13,7 @@ except:
 import ENVIRONMENT
 import EXE
 import NOTIFICATION
+import COLOR
 
 if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
     sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
@@ -27,14 +28,17 @@ def letter_to_index(letter):
 
 
 class ExcelDataItem():
-    def __init__(self, item, row, column):
+    def __init__(self, item, row, column, cell_color = None):
         if isinstance(column, str):
             column = letter_to_index(column)
         self.item = item
         self.row = row
         self.column = column
+        self.cell_color = cell_color
 
     def __str__(self):
+        if self.cell_color:
+            return "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column) + " ({})".format(self.cell_color)
         return "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
 
 
@@ -133,11 +137,19 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
         open_after (bool, optional): _description_. Defaults to True.
     """
 
-
     def write_data_item(worksheet, data):
-        worksheet.write(data.row,
-                        data.column,
-                        data.item)
+
+        if hasattr(data, "cell_color") and data.cell_color:
+            hex_color = COLOR.rgb_to_hex(data.cell_color)
+            format = workbook.add_format({'bg_color' : hex_color})
+            worksheet.write(data.row,
+                            data.column,
+                            data.item,
+                            format)
+        else:
+            worksheet.write(data.row,
+                            data.column,
+                            data.item)
 
     workbook = xlsxwriter.Workbook(filepath)
 
