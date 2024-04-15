@@ -214,7 +214,7 @@ def check_formula(excel, worksheet, highlight_formula = True):
     excel_app = Excel.ApplicationClass()
     excel_app.Visible = False
 
-    excel = FOLDER.copy_file_to_local_dump_folder(excel)
+    excel = FOLDER.copy_file_to_local_dump_folder(excel, "LocalCopy_" + excel)
     workbook = excel_app.Workbooks.Open(excel)
     sheet = workbook.Sheets[worksheet]
     

@@ -38,7 +38,7 @@ def check_formula():
     $$$$$$$$$$$$$$$$$$$
     t.Commit()
     """
-    NOTIFICATION.messenger("Done! All formula printed")
+    NOTIFICATION.messenger("Done! All formula printed!\nAll formula cell are highlighted in dash border in a local copy.")
 
 
 ################## main code below #####################
