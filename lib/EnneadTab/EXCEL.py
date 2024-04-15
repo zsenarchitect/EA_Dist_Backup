@@ -204,7 +204,34 @@ def unit_test():
         row = sheet.row_values(row_num)
         print(row)
 
+def check_formula(excel, worksheet):
+    # find all the cells with formula and print the formula like this:
+    # B2 = A2 *1.4 + D4:D12
+    # Open the workbook and select the first sheet
+    import clr
+    clr.AddReference("Microsoft.Office.Interop.Excel")
+    from Microsoft.Office.Interop import Excel
+    excel_app = Excel.ApplicationClass()
+    excel_app.Visible = False
 
+    workbook = excel_app.Workbooks.Open(excel)
+    sheet = workbook.Sheets[worksheet]
+    
+    for col in range(1, sheet.UsedRange.Columns.Count + 1):
+        for row in range(1, sheet.UsedRange.Rows.Count + 1): 
+            cell = sheet.Cells(row, col)
+            # Check if there's a formula in the cell
+            if cell.HasFormula:
+                # Print the location and the formula
+                cell_value = cell.Value2 if cell.Value2 is not None else ""
+                print('cell[{}{}] = {} = {}'.format(chr(64 + col),
+                                                    row, 
+                                                    cell.Formula.replace("=", ""),
+                                                    cell_value))
+            
+    workbook.Close(False)
+    excel_app.Quit()
+        
 
 #############
 if __name__ == "__main__":

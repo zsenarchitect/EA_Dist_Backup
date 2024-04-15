@@ -19,3 +19,4 @@ layout:
   - export_color_scheme
   - list_detail_items
   - transfer_parameter_data
+  - check_formula
