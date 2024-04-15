@@ -3,8 +3,10 @@
 
 
 
-__doc__ = "Are you having trouble trusting the excel when it is past to you from someone else? What if the formula is incorrect and is citing the wrong cell? You could not know it unless you click each one of the cell and see if there is a hidden formula. Now this formula checker will help you find every hidden formula so you can see for yourself."
-__title__ = "Check Excel\nFormula"
+__doc__ = """Are you having trouble trusting the excel when it is past to you from someone else? What if the formula is incorrect and is citing the wrong cell? You could not know it unless you click each one of the cell and see if there is a hidden formula. 
+Now this formula checker will help you find every hidden formula so you can see for yourself.
+It highlight the cells as dash."""
+__title__ = "Inspect Excel\nFormula"
 __tip__ = True
 from pyrevit import forms #
 from pyrevit import script #

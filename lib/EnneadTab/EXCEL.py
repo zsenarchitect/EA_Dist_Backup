@@ -14,7 +14,7 @@ import ENVIRONMENT
 import EXE
 import NOTIFICATION
 import COLOR
-
+import FOLDER 
 if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
     sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER_LEGACY)
     import xlrd
@@ -204,7 +204,7 @@ def unit_test():
         row = sheet.row_values(row_num)
         print(row)
 
-def check_formula(excel, worksheet):
+def check_formula(excel, worksheet, highlight_formula = True):
     # find all the cells with formula and print the formula like this:
     # B2 = A2 *1.4 + D4:D12
     # Open the workbook and select the first sheet
@@ -214,6 +214,7 @@ def check_formula(excel, worksheet):
     excel_app = Excel.ApplicationClass()
     excel_app.Visible = False
 
+    excel = FOLDER.copy_file_to_local_dump_folder(excel)
     workbook = excel_app.Workbooks.Open(excel)
     sheet = workbook.Sheets[worksheet]
     
@@ -228,9 +229,22 @@ def check_formula(excel, worksheet):
                                                     row, 
                                                     cell.Formula.replace("=", ""),
                                                     cell_value))
-            
-    workbook.Close(False)
+                if highlight_formula:
+                    borders = cell.Borders
+                    borders.Weight = 3  # xlThick
+                    borders.LineStyle = -4115  # xlDash
+                    # borders.LineStyle = 1  # xlContinuous
+                    borders.Color = 0xff0000  # Red color
+
+    if highlight_formula:
+        workbook.Save()
+    else:
+        workbook.Close(False)
     excel_app.Quit()
+
+
+    if highlight_formula:
+        EXE.open_file_in_default_application(excel)
         
 
 #############
