@@ -61,11 +61,11 @@ def read_json_as_dict_in_dump_folder(file):
         return {}
     
     # reads it back
-    with open(filepath,"r") as f:
-        try:
+    try:
+        with open(filepath,"r") as f:
             dict = json.load(f)
-        except ValueError:
-            dict = {}
+    except ValueError:
+        dict = {}
     return dict
 
 def fake_test_data():

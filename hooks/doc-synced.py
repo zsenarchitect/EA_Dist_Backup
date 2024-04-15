@@ -9,7 +9,8 @@ doc = EXEC_PARAMS.event_args.Document
 import random
 
 REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
-                        "2151_a-nyuli_hospital"]
+                        "2151_a-nyuli_hospital",
+                        "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 

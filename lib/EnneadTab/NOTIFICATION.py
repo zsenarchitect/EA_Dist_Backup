@@ -68,7 +68,7 @@ def messenger(main_text,
      
 
     import random
-    if random.random() < 0.01:
+    if random.random() < 0.0001:
         duck_pop(main_text) 
         return
     
