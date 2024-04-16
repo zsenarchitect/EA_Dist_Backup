@@ -980,7 +980,7 @@ class EA_Printer_UI(WPFWindow):
                     #is_success = False
 
             if extension == ".jpg":
-                final_file = EXPORT_ACTION.export_image(view_or_sheet, raw_name, self.output_folder)
+                final_file = EXPORT_ACTION.export_image(view_or_sheet, raw_name, self.output_folder,  is_color_by_sheet = self.is_color_by_sheet)
                 self.files_exported_for_this_issue.append(final_file)
 
             time_end = time.time()

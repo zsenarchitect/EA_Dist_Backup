@@ -77,19 +77,25 @@ def average_RGB(R, G, B):
     return (R+G+B)/3
 
 
-def convert_image_to_greyscale(original_image_path, new_image_path):
+def convert_image_to_greyscale(original_image_path, new_image_path = None):
     """convert image to greyscale
 
     Args:
         original_image_path (str): _description_
         new_image_path (str): _description_
     """
+    if new_image_path is None:
+        new_image_path = original_image_path
     image = SD.Image.FromFile(original_image_path)
     for x in range(image.Width):
         for y in range(image.Height):
             pixel_color = image.GetPixel(x, y)
-            R, G, B, A = pixel_color
-            new_color = SD.Color.FromArgb(average_RGB(R, G, B), 
+            R = pixel_color.R
+            G = pixel_color.G
+            B = pixel_color.B
+            A = pixel_color.A
+            new_color = SD.Color.FromArgb(A,
+                                          average_RGB(R, G, B), 
                                           average_RGB(R, G, B), 
                                           average_RGB(R, G, B))
             image.SetPixel(x, y, new_color)

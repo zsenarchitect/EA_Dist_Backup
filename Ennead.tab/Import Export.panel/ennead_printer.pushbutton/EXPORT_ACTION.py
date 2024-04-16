@@ -3,6 +3,9 @@ import EA_UTILITY
 import EnneadTab
 from Autodesk.Revit import DB #pylint: disable=undefined-variable
 from pyrevit import script
+import os
+
+from EnneadTab import IMAGES
 
 # import ennead_printer_script as ENNEAD_PRINTER_SCRIPT
 #
@@ -55,7 +58,7 @@ def get_print_setting(doc, is_color_by_sheet, is_color = True, is_A1_paper = Tru
 """
 
 
-def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False):
+def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, is_color_by_sheet = True):
     """
     file_name exclude .jpg at end
     """
@@ -99,6 +102,25 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False):
             else:
                 print (e.message)
     EA_UTILITY.cleanup_name_in_folder(output_folder, file_name, ".jpg")
+
+
+    if view_or_sheet.LookupParameter("Print_In_Color"):
+        sheet_color_setting = view_or_sheet.LookupParameter("Print_In_Color").AsInteger()
+    else:
+        sheet_color_setting = 0
+
+    if not is_color_by_sheet:
+        sheet_color_setting = 0
+    if sheet_color_setting:
+        file_path = "{}\\{}.jpg".format(output_folder, file_name)
+        bw_file = "{}\\{}_BW.jpg".format(output_folder, file_name)
+        IMAGES.convert_image_to_greyscale(file_path, bw_file)
+
+        try:
+            os.remove(file_path)
+            os.rename(bw_file, file_path)
+        except:
+            pass
     return file_name + ".jpg"
 
 def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_export_view_on_sheet):
