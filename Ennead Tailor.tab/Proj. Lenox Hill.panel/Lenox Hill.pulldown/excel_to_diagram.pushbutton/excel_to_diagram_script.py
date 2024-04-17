@@ -21,8 +21,7 @@ from Autodesk.Revit import DB
 doc = REVIT_APPLICATION.get_doc()
 
 
-
-EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-03-21 EA Program Responsibilities.xlsx"
+EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-03-21 EA Program.xlsx"
 FAMILY_NAME = "AreaShader"
 WORKING_VIEW = "SK-G09_10_Program Shading"
 
@@ -86,8 +85,7 @@ def excel_to_diagram():
             title = line[2]
 
         # ignote this line, just make sense in excel, not related to diagram
-        if  "TOTAL PUBLIC, ADMIN., BLDG. SUPPORT" in str(ref_num):
-            continue
+
         if "NEED AMBULANCE/EMERGENCY DEPARTMENT CATEGORY" in str(ref_num):
             continue
             
@@ -123,9 +121,12 @@ def excel_to_diagram():
 
         note = str(line[7])
 
-        if line[15] != "":
-            color = line[15].split("-")
-            color = [int(x) for x in color]
+        if line[16] != "":
+            try:
+                color = line[16].split("-")
+                color = [int(x) for x in color]
+            except:
+                print (color)
 
         
         if title == "Mother/Baby Dedicated Discharge":
