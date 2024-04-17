@@ -8,6 +8,7 @@ __title__ = "Excel2Diagram"
 
 # from pyrevit import forms #
 from calendar import c
+from random import sample
 import re
 from weakref import ref
 from pyrevit import script #
@@ -61,7 +62,7 @@ def excel_to_diagram():
     temp = FOLDER.copy_file_to_local_dump_folder(EXCEL_FILE, "temp.xls")
     data = EXCEL.read_data_from_excel(temp, worksheet="LHH_Public Program")
 
-    data = data[6:] # remove header roows
+    data = data[5:] # remove header roows
     color = -1,-1,-1
 
     for line in data:
@@ -175,7 +176,14 @@ def excel_to_diagram():
 
     names_in_proj_but_not_in_excel = set(type_names_in_proj) - USED_NAMES_IN_EXCEL
     for name in names_in_proj_but_not_in_excel:
-        print("Name in project but not in Excel: " + name)
+        NOTIFICATION.messenger("Name in project but not in Excel: " + name)
+        samples = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, name)
+        if len(samples) != 0:
+            sample = samples[0]
+            print("Name in project but not in Excel: " + output.linkify(sample.Id, title = name))
+        else:
+            print("Name in project but 0 instances, should purge: " + name)
+
     names_in_excel_but_not_in_proj = USED_NAMES_IN_EXCEL - set(type_names_in_proj)
     for name in names_in_excel_but_not_in_proj:
         print("Name in Excel but not in project: " + name)
