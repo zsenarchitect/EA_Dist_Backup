@@ -4,7 +4,7 @@
 
 
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "Excel2Diagram"
+__title__ = "(OLD)Excel2Diagram"
 
 # from pyrevit import forms #
 from calendar import c
@@ -22,49 +22,33 @@ from Autodesk.Revit import DB
 doc = REVIT_APPLICATION.get_doc()
 
 
-EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-04-18 EA Program.xlsx"
+EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-03-21 EA Program.xlsx"
 FAMILY_NAME = "AreaShader"
 WORKING_VIEW = "SK-G09_10_Program Shading"
 
 
-
-CONTAINER_REF_NAMES = [
-    "10.0",
-    "10.1",
-    "10.2",
-    "11.0",
-    "11.1",
-    "11.6",
-    "13.0",
-    "14.0",
-    "15.0",
-    "15.1",
-    "15.3",
-    "15.4",
-    "16.0",
-    "16.1"
-    ]
+# just the key is important now... the value is ingored
+CONTAINER_FACTOR_MAP = {
+    "10.0":3,
+    "10.1":1.8,
+    "10.2":1.8,
+    "11.0":2,
+    "11.1":1.8,
+    "11.6":1.8,
+    "13.0":1.8,
+    "14.0":1.8,
+    "15.0":2,
+    "15.1":1.5,
+    "15.3":1.5,
+    "15.4":1.5,
+    "16.0":1.4,
+    "16.1":1.2
+    }
 
 
 USED_NAMES_IN_EXCEL = set()
 
-class LineData:
-    _column_names = {"G", "H", "I", ..., "W"}
 
-    def __init__(self, line):
-        self.line = line
-
-    def get_column(self, column_name):
-        return self.line[EXCEL.get_column_index(column_name)]
-
-    def get_next_column(self, column_name):
-        return self.line[EXCEL.get_column_index(column_name) + 1]
-
-    for column_name in _column_names:
-        locals()[column_name] = property(lambda self, column_name=column_name: self.get_column(column_name))
-        
-
-    
 @ERROR_HANDLE.try_catch_error
 def excel_to_diagram():
     REVIT_VIEW.set_active_view_by_name(WORKING_VIEW)
@@ -84,7 +68,7 @@ def excel_to_diagram():
     for line in data:
 
         
-
+        line = line[6:] # remove bad columns from left
         
         if line[0] == line[1] == line[2] == "":
             #empty line
@@ -93,75 +77,61 @@ def excel_to_diagram():
         
         print ("\n\n")
         print (line)
-        line_data = LineData(line)
 
-        if line_data.G != "":
-            ref_num = line_data.G
-            title = line_data.get_next_column("G")
+        if line[0] != "":
+            ref_num = line[0]
+            title = line[1]
         else:
-            ref_num = line_data.H
-            title = line_data.get_next_column("H")
+            ref_num = line[1]
+            title = line[2]
 
+        # ignote this line, just make sense in excel, not related to diagram
 
+        if "NEED AMBULANCE/EMERGENCY DEPARTMENT CATEGORY" in str(ref_num):
+            continue
+            
         #round to 2 digit
         if isinstance(ref_num, float):
             ref_num = round(float(ref_num), 3)
             ref_num = str(ref_num)
-        
-        if title == "Mother/Baby Dedicated Discharge":
-            ref_num = "11.10"
 
 
-        count = line_data.J if line_data.J != "" else 1
-        unit_area = line_data.K if line_data.K != "" else -1
+        count = line[3] if line[3] != "" else 1
+        unit_area = line[4] if line[4] != "" else -1
 
-
-        if line_data.L == "TBD":
-            continue
-
-
-        program_area_NSF = program_area_DGSF = 0
-        for index in ["L",  "S"]:
-            program_area_NSF = line_data.get_column(index)
-
-            try:
-                program_area_NSF = float(program_area_NSF)
-                if program_area_NSF != 0:
-                    break
-            except:
-                pass
-
-
-
-            
-        for index in ["M", "O", "T"]:
-            program_area_DGSF = line_data.get_column(index)
-
+  
+        for index in [6, 8, 11]:
+            program_area_DGSF = line[index]
             try:
                 program_area_DGSF = float(program_area_DGSF)
-                if index == "T":
+                if program_area_DGSF == 0:
+                    continue
+                if index == 11:
                     is_remote = True
                 else:
                     is_remote = False
-                if program_area_DGSF != 0:
-                    break
+                break
             except:
                 pass
-
-
-
+        try:
+            program_area_NSF = float(line[index-1])
+        except:
+            program_area_NSF = 0
 
             
 
-        note = str(line_data.N)
+        note = str(line[7])
 
-        if line_data.W != "":
+        if line[16] != "":
             try:
-                color = line_data.W.split("-")
+                color = line[16].split("-")
                 color = [int(x) for x in color]
             except:
                 print (color)
 
+        
+        if title == "Mother/Baby Dedicated Discharge":
+            ref_num = "11.10"
 
         print ("ref num = " + ref_num)
         print ("title = " + title)
@@ -178,9 +148,31 @@ def excel_to_diagram():
         graphic_override.SetSurfaceForegroundPatternId  (solid_id)
 
         
-        
-        process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote)
-        
+        if "TOTAL PUBLIC" in ref_num:
+            # all the SUMMERY
+            process_line(ref_num, title, count, unit_area, program_area_DGSF, note, graphic_override, is_remote)
+        else:
+            if ref_num not in CONTAINER_FACTOR_MAP:
+                # all the smallest bubble
+                process_line(ref_num, title, count, unit_area, program_area_NSF or program_area_DGSF, note, graphic_override, is_remote)
+            else:
+                if ref_num in ["13.0", "16.0"]:
+                    process_line(ref_num, title, count, unit_area, program_area_DGSF, note, graphic_override, is_remote)
+                elif ref_num.endswith("0"):
+                    # all the other top level container 
+                    process_line(ref_num, title + "(NSF)", count, unit_area, program_area_NSF, note, graphic_override, is_remote)# this is for the summery view
+                    process_line(ref_num, title, count, unit_area, program_area_DGSF, note, graphic_override, is_remote)
+                else:
+                    # all the middle level container, it need to show twice
+
+                    # show as inside top level containner
+                    process_line(ref_num, title, count, unit_area, program_area_NSF or program_area_DGSF, note, graphic_override, is_remote)
+
+
+                    # show as in containing all the smaller
+                    title += "_SmallContainer"
+                    process_line(ref_num, title, count, unit_area, program_area_DGSF, note, graphic_override, is_remote)
+
   
 
     t.Commit()
@@ -204,21 +196,22 @@ def excel_to_diagram():
         print("Name in Excel but not in project: " + name)
 
 
-def process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote):
+def process_line(ref_num, title, count, unit_area, program_area, note, graphic_override, is_remote):
+    is_ok = False
 
+    try:
+        program_area = float(program_area)
+        if program_area != 0:
+            is_ok = True
+            note = ""
+    except:
+        pass
 
-    if program_area_DGSF != 0 or program_area_NSF != 0:
-        is_ok = True
-        note = ""
-    else:
-        is_ok = False
-
-
-    if not is_ok and not is_remote:
+    if not is_ok:
         NOTIFICATION.messenger("Invalid program area for " + ref_num + " " + title)
-        program_area_DGSF = 499 if program_area_DGSF == 0 else program_area_DGSF
-        program_area_NSF = 499 if program_area_NSF == 0 else program_area_NSF
-        note = "!!!!INVALID AREA: " + note
+        program_area = 499
+        if  "CANCEL:" not in note:
+            note = "!!!!!!!!INVALID AREA: " + note
 
 
     # try find instance with ref_num, if not exist, create one
@@ -231,10 +224,14 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
     instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, type_name)
     if len(instances) == 0:
         instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
-        family_type.LookupParameter("container_factor").Set(1)
-        if program_area_DGSF > 0:
-            instance.LookupParameter("W").Set(program_area_DGSF**0.5)
+        if program_area > 0:
+            instance.LookupParameter("W").Set(program_area**0.5)
         instances = [instance]
+    # elif len(instances) == 1:
+    #     pass
+    # elif len(instances) > 1:
+    #     NOTIFICATION.messenger("More than one instance of type {} found.".format(type_name))
+
 
 
     if "CANCEL:" in note:
@@ -251,11 +248,12 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
 
 
         
-    family_type.LookupParameter("ProgramDGSFArea").Set(program_area_DGSF)
-    family_type.LookupParameter("ProgramNSFArea").Set(program_area_NSF)
+    family_type.LookupParameter("ProgramArea").Set(program_area)
     family_type.LookupParameter("ProgramNote").Set(note)
     family_type.LookupParameter("ProgramRefNum").Set(ref_num)
 
+    if "_SmallContainer" in title:
+        title = title.replace("_SmallContainer", "")
     family_type.LookupParameter("ProgramTitle").Set(title)
 
     if is_remote:
@@ -266,8 +264,9 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
         family_type.LookupParameter("ProgramRemoteNote").Set("")
 
 
-
-    
+    # do not scale up becasue now using seperate container and it is eaiser to find a balanced number manuall and keep using that
+    # container_factor = CONTAINER_FACTOR_MAP.get(ref_num, 1)
+    # family_type.LookupParameter("container_factor").Set(container_factor)
 
     for instance in instances:
         host_view = doc.GetElement(instance.OwnerViewId)

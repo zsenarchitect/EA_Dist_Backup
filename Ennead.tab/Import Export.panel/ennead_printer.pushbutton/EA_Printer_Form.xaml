@@ -139,7 +139,7 @@
 
                             <CheckBox x:Name ="checkbox_jpg" Content=".JPGs" Click ="extension_options_changed" Foreground="#FFDAE8FD" IsChecked="True" BorderBrush="#FFFF4141" Background="#FFBBBBBB" Cursor="Hand"/>
                         </StackPanel>
-                        <TextBlock Grid.Column="1" Text="Note: JPG only export in color." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"></TextBlock>
+                        <!--<TextBlock Grid.Column="1" Text="Note: JPG only export in color." VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left"></TextBlock>-->
                     </Grid>
 
 

@@ -25,7 +25,8 @@ if ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
 def letter_to_index(letter):
     return ord(letter.upper()) - ord('A')
 
-
+def get_column_index(letter):
+    return letter_to_index(letter)
 
 class ExcelDataItem():
     def __init__(self, item, row, column, cell_color = None):

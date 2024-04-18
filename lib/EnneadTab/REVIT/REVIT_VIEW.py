@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 from EnneadTab import NOTIFICATION
 
@@ -63,6 +63,10 @@ def switch_to_sync_draft_view(doc):
         t.Start()
         view = DB.ViewDrafting.Create(doc, get_default_view_type("drafting", doc = doc).Id)
         view.Name = "EnneadTab Quick Sync"
+        try:
+            view.LookupParameter("Views_$Series").Set(u"◔.̮◔✧")
+        except:
+            pass
 
         DB.TextNote.Create(doc, 
                            view.Id, 

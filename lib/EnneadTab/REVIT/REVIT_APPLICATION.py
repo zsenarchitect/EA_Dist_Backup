@@ -5,7 +5,8 @@ try:
     from Autodesk.Revit import DB
     import REVIT_FORMS
     import REVIT_VIEW
-except:
+except Exception as e:
+    # print (e)
     pass
 import FOLDER
 

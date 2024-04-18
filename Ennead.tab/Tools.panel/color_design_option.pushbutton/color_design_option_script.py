@@ -118,7 +118,10 @@ class Solution:
         print ("\n\nChecking design option: [{}]-->{}: {} Elements".format(set_name, design_option.Name, len(elements)))
         output.freeze()
         for i, element in enumerate(elements):
-            print ("{} - {}".format(i + 1, output.linkify(element.Id, title = element.Category.Name)))
+            if element.Category is None:
+                print ("{} - {}".format(i + 1, output.linkify(element.Id)))
+            else:
+                print ("{} - {}".format(i + 1, output.linkify(element.Id, title = element.Category.Name)))
         output.unfreeze()
         print ("\nRGB = {},{},{}\n".format(R,G,B))
 
