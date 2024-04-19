@@ -24,32 +24,16 @@ doc = REVIT_APPLICATION.get_doc()
 
 EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-04-18 EA Program.xlsx"
 FAMILY_NAME = "AreaShader"
-WORKING_VIEW = "SK-G09_10_Program Shading"
+WORKING_VIEW = "SK-G10_10_Program Shading"
 
 
 
-CONTAINER_REF_NAMES = [
-    "10.0",
-    "10.1",
-    "10.2",
-    "11.0",
-    "11.1",
-    "11.6",
-    "13.0",
-    "14.0",
-    "15.0",
-    "15.1",
-    "15.3",
-    "15.4",
-    "16.0",
-    "16.1"
-    ]
 
 
 USED_NAMES_IN_EXCEL = set()
 
 class LineData:
-    _column_names = {"G", "H", "I", ..., "W"}
+
 
     def __init__(self, line):
         self.line = line
@@ -60,7 +44,8 @@ class LineData:
     def get_next_column(self, column_name):
         return self.line[EXCEL.get_column_index(column_name) + 1]
 
-    for column_name in _column_names:
+    for i in range(ord('A'), ord('Z') + 1):
+        column_name = chr(i)
         locals()[column_name] = property(lambda self, column_name=column_name: self.get_column(column_name))
         
 
@@ -85,14 +70,13 @@ def excel_to_diagram():
 
         
 
-        
-        if line[0] == line[1] == line[2] == "":
+        if line[6:][0] == line[6:][1] == line[6:][2] == "":
             #empty line
             continue
 
         
         print ("\n\n")
-        print (line)
+        print (line[6:])
         line_data = LineData(line)
 
         if line_data.G != "":
@@ -120,7 +104,8 @@ def excel_to_diagram():
             continue
 
 
-        program_area_NSF = program_area_DGSF = 0
+
+
         for index in ["L",  "S"]:
             program_area_NSF = line_data.get_column(index)
 
@@ -131,9 +116,6 @@ def excel_to_diagram():
             except:
                 pass
 
-
-
-            
         for index in ["M", "O", "T"]:
             program_area_DGSF = line_data.get_column(index)
 
@@ -147,6 +129,11 @@ def excel_to_diagram():
                     break
             except:
                 pass
+
+        if isinstance(program_area_NSF, str):
+            program_area_NSF = 0
+        if isinstance(program_area_DGSF, str):
+            program_area_DGSF = 0
 
 
 
@@ -184,6 +171,7 @@ def excel_to_diagram():
   
 
     t.Commit()
+    
     NOTIFICATION.messenger("Bubble diagram data updated from Excel")
 
     types_in_proj = [doc.GetElement(x) for x in REVIT_FAMILY.get_family_by_name(FAMILY_NAME).GetFamilySymbolIds()]
@@ -203,7 +191,7 @@ def excel_to_diagram():
     for name in names_in_excel_but_not_in_proj:
         print("Name in Excel but not in project: " + name)
 
-
+@ERROR_HANDLE.try_pass
 def process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote):
 
 
@@ -216,10 +204,13 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
 
     if not is_ok and not is_remote:
         NOTIFICATION.messenger("Invalid program area for " + ref_num + " " + title)
-        program_area_DGSF = 499 if program_area_DGSF == 0 else program_area_DGSF
-        program_area_NSF = 499 if program_area_NSF == 0 else program_area_NSF
-        note = "!!!!INVALID AREA: " + note
+        if program_area_DGSF == 0:
+            program_area_DGSF = 499 
+            note = "!!!!INVALID DGSF AREA: " + note
 
+        if program_area_NSF == 0:
+            program_area_NSF = 499
+            note = "!!!!INVALID NSF AREA: " + note
 
     # try find instance with ref_num, if not exist, create one
     type_name = "{}_{}".format(ref_num, title)
@@ -249,10 +240,15 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
     family_type.LookupParameter("Count").Set(count)
     family_type.LookupParameter("UnitArea").Set(unit_area)
 
+    if count != 1:
+        # family_type.LookupParameter("divider").Set(count)# add solid line to eq divide the bubble
+        note = "@{}NSFx{} {}".format(unit_area, count, note)
+
+
 
         
-    family_type.LookupParameter("ProgramDGSFArea").Set(program_area_DGSF)
-    family_type.LookupParameter("ProgramNSFArea").Set(program_area_NSF)
+    family_type.LookupParameter("ProgramAreaDGSF").Set(program_area_DGSF)
+    family_type.LookupParameter("ProgramAreaNSF").Set(program_area_NSF)
     family_type.LookupParameter("ProgramNote").Set(note)
     family_type.LookupParameter("ProgramRefNum").Set(ref_num)
 
@@ -273,6 +269,7 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
         host_view = doc.GetElement(instance.OwnerViewId)
         host_view.SetElementOverrides (instance.Id, graphic_override)
         instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
+
 
 
 
