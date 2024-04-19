@@ -7,10 +7,6 @@ __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
 __title__ = "Excel2Diagram"
 
 # from pyrevit import forms #
-from calendar import c
-from random import sample
-import re
-from weakref import ref
 from pyrevit import script #
 
 import ENNEAD_LOG
@@ -23,10 +19,19 @@ doc = REVIT_APPLICATION.get_doc()
 
 
 EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-04-18 EA Program.xlsx"
-FAMILY_NAME = "AreaShader"
-WORKING_VIEW = "SK-G10_10_Program Shading"
+SHADER_FAMILY_NAME = "AreaShader"
+TITLER_FAMILY_NAME = "TitleMaker"
+WORKING_VIEW = "SK-G09_10_Program Shading"
 
 
+EXCLUSIVE_TITLE_MAKERS = [
+    "10.1",
+    "10.2",
+    "15.1",
+    "15.3",
+    "15.4",
+    "16.1"
+]
 
 
 
@@ -166,21 +171,31 @@ def excel_to_diagram():
 
         
         
-        process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote)
-        
+
+
+        if ref_num in EXCLUSIVE_TITLE_MAKERS:
+            update_titler(ref_num, title, program_area_NSF, program_area_DGSF)
+        else:
+            process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote)
+            if ref_num[-1].isalpha() or str(ref_num).endswith("0"):
+                # if has leeter in name, that is a sub item, do not need to make title
+                # if ref_num ends with 0, that is a department item, do not need to make title
+                pass
+            else:
+                update_titler(ref_num, title, program_area_NSF, program_area_DGSF)
   
 
     t.Commit()
     
     NOTIFICATION.messenger("Bubble diagram data updated from Excel")
 
-    types_in_proj = [doc.GetElement(x) for x in REVIT_FAMILY.get_family_by_name(FAMILY_NAME).GetFamilySymbolIds()]
+    types_in_proj = [doc.GetElement(x) for x in REVIT_FAMILY.get_family_by_name(SHADER_FAMILY_NAME).GetFamilySymbolIds()]
     type_names_in_proj = [x.LookupParameter("Type Name").AsString() for x in types_in_proj]
 
     names_in_proj_but_not_in_excel = set(type_names_in_proj) - USED_NAMES_IN_EXCEL
     for name in names_in_proj_but_not_in_excel:
         NOTIFICATION.messenger("Name in project but not in Excel: " + name)
-        samples = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, name)
+        samples = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(SHADER_FAMILY_NAME, name)
         if len(samples) != 0:
             sample = samples[0]
             print("Name in project but not in Excel: " + output.linkify(sample.Id, title = name))
@@ -217,9 +232,9 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
     global USED_NAMES_IN_EXCEL
     USED_NAMES_IN_EXCEL.add(type_name)
 
-    family_type = REVIT_FAMILY.get_family_type_by_name(FAMILY_NAME, type_name, create_if_not_exist=True)
+    family_type = REVIT_FAMILY.get_family_type_by_name(SHADER_FAMILY_NAME, type_name, create_if_not_exist=True)
 
-    instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(FAMILY_NAME, type_name)
+    instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(SHADER_FAMILY_NAME, type_name)
     if len(instances) == 0:
         instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
         family_type.LookupParameter("container_factor").Set(1)
@@ -271,6 +286,41 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
         instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
 
 
+
+
+@ERROR_HANDLE.try_pass
+def update_titler(ref_num, title, program_area_NSF, program_area_DGSF):
+
+
+
+
+
+
+    # try find instance with ref_num, if not exist, create one
+    type_name = "Title_{}_{}".format(ref_num, title)
+
+
+    family_type = REVIT_FAMILY.get_family_type_by_name(TITLER_FAMILY_NAME, type_name, create_if_not_exist=True)
+
+    instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(TITLER_FAMILY_NAME, type_name)
+    if len(instances) == 0:
+        instance = doc.Create.NewFamilyInstance(DB.XYZ(0, 0, 0), family_type, doc.ActiveView)
+        instances = [instance]
+
+        
+    family_type.LookupParameter("ProgramAreaDGSF").Set(program_area_DGSF)
+    family_type.LookupParameter("ProgramAreaNSF").Set(program_area_NSF)
+    family_type.LookupParameter("ProgramRefNum").Set(ref_num)
+
+    family_type.LookupParameter("ProgramTitle").Set(title)
+
+
+
+
+    
+
+    for instance in instances:
+        instance.LookupParameter("Comments").Set("Updated {}".format(TIME.get_formatted_current_time()))
 
 
 
