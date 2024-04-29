@@ -92,6 +92,10 @@ def excel_to_diagram():
             title = line_data.get_next_column("H")
 
 
+        if isinstance(ref_num, str) and ref_num.startswith("TOTAL"):
+            continue
+
+
         #round to 2 digit
         if isinstance(ref_num, float):
             ref_num = round(float(ref_num), 3)
@@ -101,8 +105,8 @@ def excel_to_diagram():
             ref_num = "11.10"
 
 
-        count = line_data.J if line_data.J != "" else 1
-        unit_area = line_data.K if line_data.K != "" else -1
+        count = int(line_data.J) if line_data.J != "" else 1
+        unit_area = int(line_data.K) if line_data.K != "" else -1
 
 
         if line_data.L == "TBD":
@@ -177,7 +181,9 @@ def excel_to_diagram():
             update_titler(ref_num, title, program_area_NSF, program_area_DGSF)
         else:
             process_line(ref_num, title, count, unit_area, program_area_NSF, program_area_DGSF, note, graphic_override, is_remote)
-            if ref_num[-1].isalpha() or str(ref_num).endswith("0"):
+            if ref_num == "11.10":# give mather baby a special treamnt
+                update_titler(ref_num, title, program_area_NSF, program_area_DGSF)
+            elif ref_num[-1].isalpha() or str(ref_num).endswith("0"):
                 # if has leeter in name, that is a sub item, do not need to make title
                 # if ref_num ends with 0, that is a department item, do not need to make title
                 pass
@@ -256,27 +262,42 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
     family_type.LookupParameter("UnitArea").Set(unit_area)
 
     if count != 1:
-        # family_type.LookupParameter("divider").Set(count)# add solid line to eq divide the bubble
-        note = "@{}NSFx{} {}".format(unit_area, count, note)
+        #family_type.LookupParameter("divider").Set(count)# add solid line to eq divide the bubble
+        area_special_note = "{}@{} {}".format(count, unit_area, note)
+        family_type.LookupParameter("AreaSpecialNote").Set(area_special_note)
+        family_type.LookupParameter("show_special_note").Set(1)
+        note = None
+    else:
+        family_type.LookupParameter("show_special_note").Set(0)
+        family_type.LookupParameter("AreaSpecialNote").Set(" ")
+        note = None
+
 
 
 
         
     family_type.LookupParameter("ProgramAreaDGSF").Set(program_area_DGSF)
     family_type.LookupParameter("ProgramAreaNSF").Set(program_area_NSF)
-    family_type.LookupParameter("ProgramNote").Set(note)
+    if note:
+        family_type.LookupParameter("show_note").Set(1)
+        family_type.LookupParameter("ProgramNote").Set(note)
+    else:
+        family_type.LookupParameter("show_note").Set(0)
+
+
     family_type.LookupParameter("ProgramRefNum").Set(ref_num)
 
-    family_type.LookupParameter("ProgramTitle").Set(title)
 
     if is_remote:
         family_type.LookupParameter("is_remote").Set(1)
         family_type.LookupParameter("ProgramRemoteNote").Set("(REMOTE)")
+        title += "(REMOTE)"
     else:
         family_type.LookupParameter("is_remote").Set(0)
         family_type.LookupParameter("ProgramRemoteNote").Set("")
 
 
+    family_type.LookupParameter("ProgramTitle").Set(title)
 
     
 
