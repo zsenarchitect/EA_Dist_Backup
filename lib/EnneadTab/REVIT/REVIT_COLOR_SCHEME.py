@@ -17,10 +17,11 @@ except:
 
 
 class ColorSchemeUpdater:
-    def __init__(self, doc, naming_map, excel_path=None):
+    def __init__(self, doc, naming_map, excel_path=None, is_remove_bad = False):
         self.doc = doc
         self.naming_map = naming_map
         self.excel_path = excel_path
+        self.is_remove_bad = is_remove_bad
         self.output = script.get_output()
     
     def load_color_template(self):
@@ -56,12 +57,22 @@ class ColorSchemeUpdater:
         storage_type = sample_entry.StorageType
 
         current_entry_names = [x.GetStringValue() for x in color_scheme.GetEntries()]
+        if self.is_remove_bad:
+            self.remove_non_used_entry(color_scheme)
         self.add_missing_entry(color_scheme, department_data, current_entry_names, storage_type)
         self.update_entry_color(color_scheme, department_data)
 
     @staticmethod
     def markdown_text(text, colorRGB):
         return '<span style="color:rgb{};">{}</span>'.format(str(colorRGB), text)
+
+
+    def remove_non_used_entry(self, color_scheme):
+        for existing_entry in color_scheme.GetEntries():
+            if color_scheme.CanRemoveEntry (existing_entry):
+                color_scheme.RemoveEntry(existing_entry)
+                entry_title = existing_entry.GetStringValue()
+                self.output.print_md("**---** entry [{}] removed{}".format(entry_title, ", not used" if existing_entry.IsInUse else ""))
 
     def add_missing_entry(self, color_scheme, department_data, current_entry_names, storage_type):
         for department in department_data.keys():
@@ -81,7 +92,9 @@ class ColorSchemeUpdater:
             
             lookup_data = department_data.get(entry_title, None)
             if not lookup_data:
-                self.output.print_md("###  ??? entry [{}] in current area scheme not found in template excel. Are you defining a new entry? Or the spelling is different?\nThis entry is skipped for now.".format(entry_title))
+                
+                self.output.print_md("###  ??? entry [{}] in current area scheme not found in template excel. Are you defining a new entry? Or the spelling is different?\nThis entry is skipped for now.\n".format(entry_title))
+                print ("\n")
                 continue
             
             lookup_color = COLOR.tuple_to_color(lookup_data["color"])

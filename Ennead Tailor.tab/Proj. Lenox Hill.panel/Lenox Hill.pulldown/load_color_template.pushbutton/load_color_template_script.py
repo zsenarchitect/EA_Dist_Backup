@@ -41,7 +41,7 @@ NAMING_MAP = {"department_color_map":"Section Category",
     
 @ERROR_HANDLE.try_catch_error
 def load_color_template():
-    REVIT_COLOR_SCHEME.load_color_template(doc, NAMING_MAP, EXCEL_PATH)
+    REVIT_COLOR_SCHEME.load_color_template(doc, NAMING_MAP, EXCEL_PATH, is_remove_bad = False)
     
 
 
