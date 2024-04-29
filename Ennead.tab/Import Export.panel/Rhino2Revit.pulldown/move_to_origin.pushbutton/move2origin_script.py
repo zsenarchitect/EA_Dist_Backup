@@ -7,6 +7,7 @@ from pyrevit import script
 from EA_UTILITY import dialogue
 import EA_UTILITY
 import EnneadTab
+from EnneadTab import NOTIFICATION 
 #forms.alert( "Work in progress. Coming in the next version")
 from Autodesk.Revit import DB
 uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
@@ -192,6 +193,9 @@ output.close_others()
 
 
 if __name__ == "__main__":
-    Solution().move_to_origin()
-    import ENNEAD_LOG
-    ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = "Rhino2Revit_Move2Origin", show_toast = True)
+    if doc.IsFamilyDocument :
+        NOTIFICATION.messenger("this function is meant to use in project environment not in family environment")
+    else:
+        Solution().move_to_origin()
+        import ENNEAD_LOG
+        ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = "Rhino2Revit_Move2Origin", show_toast = True)

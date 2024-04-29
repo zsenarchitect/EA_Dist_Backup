@@ -35,8 +35,6 @@ def get_toaster_level_setting():
     return 1
 
 
-
-
 def messenger(main_text,
              force_toast=False,
              importance_level=1,
