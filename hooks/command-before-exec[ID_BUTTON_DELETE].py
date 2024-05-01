@@ -37,15 +37,15 @@ def check_rvt_link():
         return
     
     options = ["Oops! Do not delete selected link(s).",
-               "Just DELETE selected link(s)."]
+               ["Just DELETE selected link(s).","This action will affect the whole team."]]
     
-    note = "Are you sure you want to delete revit link?"
+    note = "Are you sure you want to delete revit link(s)?"
     for link in links:
         note +=  "\n  + <" + link.GetLinkDocument ().Title + ">"
 
-    note += "\n\nYou might want to consider 'Unload for your machine only' if you do not want to see them."
+    note += "\n\nYou might want to consider 'Unload for me only' from link manager if you do not want to see them."
         
-    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are revit links in current selection.",
+    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are revit link(s) in current selection.",
                                                 sub_text = note,
                                                 options = options)
     if res == options[0]:
