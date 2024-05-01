@@ -37,7 +37,9 @@ def check_rvt_link():
     
     note = "Are you sure you want to delete revit link?"
     for link in links:
-        note +=  "\n  + " + link.GetLinkDocument ().Title
+        note +=  "\n  + <" + link.GetLinkDocument ().Title + ">"
+
+    note += "\n\nYou might want to consider 'Unload for your machine only' if you do not want to see them."
         
     res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are revit links in current selection.",
                                                 sub_text = note,
