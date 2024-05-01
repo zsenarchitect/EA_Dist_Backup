@@ -363,9 +363,13 @@ def cleanup_name_in_folder(output_folder, desired_name, extension):
             try:
                 os.rename(old_path, new_path)
 
-            except Exception as e:
-                ERROR_HANDLE.print_note( "filename clean up failed: skip {} becasue: {}".format(file_name, e))
+            except:
+                try:
+                    
+                    os.rename(os.path.join(output_folder, file_name),os.path.join(output_folder, new_name + extension))
 
+                except Exception as e:
+                    ERROR_HANDLE.print_note( "filename clean up failed: skip {} becasue: {}".format(file_name, e))
 
 def rename_file_in_folder(search_file, new_file_name, folder):
 

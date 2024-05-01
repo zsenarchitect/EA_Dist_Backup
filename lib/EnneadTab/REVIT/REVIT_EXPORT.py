@@ -117,6 +117,8 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
     opts = DB.ImageExportOptions()
     try:
         opts.FilePath = output_folder + '\\{}.jpg'.format(file_name)
+        if os.path.exists(opts.FilePath):
+            os.remove(opts.FilePath)
     except:
         print ("Error in export_image: {}".format(file_name))
         return False

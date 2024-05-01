@@ -8,7 +8,7 @@ __title__ = "(Depreciated)Format New Sheets"
 
 # from pyrevit import forms #
 from pyrevit import script #
-# from pyrevit import revit #
+
 import EA_UTILITY
 import ENNEAD_LOG
 import EnneadTab

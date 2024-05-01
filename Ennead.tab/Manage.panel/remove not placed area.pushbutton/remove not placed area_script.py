@@ -1,6 +1,7 @@
 __doc__ = "This gives you ability to remove rooms and areas that is not placed \
 in the file to increase document accuracy.\n\nUnbounded/redundent area and rooms\
- will be checked.\n\nYou also have the option to check room status by phase."
+ will be checked BUT NOT DELETED SO YOU CAN MAKE THE FINAL DECISION.(Mostly likely they are still important for you.)\n\nYou also have\
+the option to check room status by phase."
 __title__ = "Remove Not Placed\nArea and Rooms"
 __tip__ = True
 from pyrevit import forms,  script

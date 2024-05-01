@@ -6,8 +6,7 @@ __title__ = "Set Revision By BlackSquare"
 
 
 from pyrevit import script
-# from pyrevit import revit #
-# import EA_UTILITY
+
 import System
 import ENNEAD_LOG
 import EnneadTab
