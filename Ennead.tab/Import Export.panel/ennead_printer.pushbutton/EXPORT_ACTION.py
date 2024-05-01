@@ -70,7 +70,10 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
     opts = DB.ImageExportOptions()
     opts.FilePath = output_folder + r'\{}.jpg'.format(file_name)
     if os.path.exists(opts.FilePath):
-        os.remove(opts.FilePath)
+        try:
+            os.remove(opts.FilePath)
+        except:
+            pass
 
     
     opts.ImageResolution = DB.ImageResolution.DPI_300

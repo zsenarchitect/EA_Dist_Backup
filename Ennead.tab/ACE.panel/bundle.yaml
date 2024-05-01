@@ -20,3 +20,4 @@ layout:
   - list_detail_items
   - transfer_parameter_data
   - check_formula
+  - links_to_worksets

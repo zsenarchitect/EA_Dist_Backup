@@ -117,8 +117,6 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
     opts = DB.ImageExportOptions()
     try:
         opts.FilePath = output_folder + '\\{}.jpg'.format(file_name)
-        if os.path.exists(opts.FilePath):
-            os.remove(opts.FilePath)
     except:
         print ("Error in export_image: {}".format(file_name))
         return False
@@ -129,9 +127,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
     opts.ExportRange = DB.ExportRange.SetOfViews
     opts.ZoomType = DB.ZoomFitType.FitToPage
 
-    opts.PixelSize = resolution
-    if is_thumbnail:
-        opts.PixelSize = 1200
+    opts.PixelSize = 1200 if is_thumbnail else resolution
 
     opts.SetViewsAndSheets(DATA_CONVERSION.list_to_system_list([view_or_sheet.Id]))
 
