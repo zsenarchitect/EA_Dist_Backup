@@ -12,9 +12,13 @@ uiapp = UI.UIApplication(doc.Application)
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    check_depedent_views()
-    check_rvt_link()
+    should_cancel_1 = check_depedent_views()
+    should_cancel_2 = check_rvt_link()
 
+    if should_cancel_1 or should_cancel_2:
+        args.Cancel = True
+    else:
+        args.Cancel = False
 
 def check_rvt_link():
     selection_ids = uidoc.Selection.GetElementIds()
@@ -45,12 +49,13 @@ def check_rvt_link():
                                                 sub_text = note,
                                                 options = options)
     if res == options[0]:
-        args.Cancel = True
+        is_cancel = True
     if res == options[1]:
-        args.Cancel = False
+        is_cancel = False
     else:
-        args.Cancel = True
+        is_cancel = True
 
+    return is_cancel
 
 
         
@@ -90,11 +95,13 @@ def check_depedent_views():
                                                 sub_text = note,
                                                 options = options)
     if res == options[0]:
-        args.Cancel = True
+        is_cancel = True
     if res == options[1]:
-        args.Cancel = False
+        is_cancel = False
     else:
-        args.Cancel = True
+        is_cancel = True
+
+    return is_cancel
 ############################
 output = script.get_output()
 output.close_others()
