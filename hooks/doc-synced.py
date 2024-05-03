@@ -106,7 +106,10 @@ def update_with_generic_healthcare_tool():
 
 def update_sheet_name():
 
-
+    try:
+        doc.Title
+    except:
+        return
     
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
@@ -122,7 +125,10 @@ def update_sheet_name():
 def update_working_view_name():
 
 
-
+    try:
+        doc.Title
+    except:
+        return
     
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
