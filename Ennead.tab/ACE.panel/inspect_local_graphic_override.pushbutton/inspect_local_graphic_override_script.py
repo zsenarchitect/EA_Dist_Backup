@@ -32,7 +32,7 @@ def inspect_local_graphic_override():
     counter = 1
     for i, sheet in enumerate(sheets):
         if not is_excel_mode:
-            print "\n\n----{}/{}: {}-{}-----".format(i + 1, len(sheets), sheet.SheetNumber, sheet.Name)
+            print("\n\n----{}/{}: {}-{}-----".format(i + 1, len(sheets), sheet.SheetNumber, sheet.Name))
         for view_id in sheet.GetAllPlacedViews():
             view = doc.GetElement(view_id)
             view.EnableRevealHiddenMode ()
@@ -50,11 +50,11 @@ def inspect_local_graphic_override():
                 #print element
                 if element.IsHidden(view):
                     if is_excel_mode:
-                        print "{},{},Hidden,{}".format(counter,
+                        print("{},{},Hidden,{}".format(counter,)
                                                  "[{}]: {}".format(element.Category.Name, element.Id),
                                                 view.Name)
                     else:
-                        print "[{}]---{} is currently hidden in view: <{}>.".format(counter,
+                        print("[{}]---{} is currently hidden in view: <{}>.".format(counter,)
                                                                                     output.linkify(element.Id, title = "[{}]: {}".format(element.Category.Name, element.Id)),
                                                                                     output.linkify(view.Id, title = view.Name))
                     counter += 1
@@ -114,7 +114,7 @@ def inspect_local_graphic_override():
 
                     if is_graphic_same == False:
                         if is_excel_mode:
-                            print "{},{},{},{}".format(counter,
+                            print("{},{},{},{}".format(counter,)
                                                     "[{}]: {}".format(element.Category.Name, element.Id),
                                                     graphic_item,
                                                     view.Name)

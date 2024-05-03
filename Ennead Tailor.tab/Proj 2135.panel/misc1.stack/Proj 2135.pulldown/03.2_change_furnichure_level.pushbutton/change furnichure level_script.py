@@ -29,25 +29,25 @@ def check_associated_level(element):
     bldg_id = element.LookupParameter("MC_$BuildingID").AsString()
 
     """
-    print level_name
-    print bldg_id
+    print(level_name)
+    print(bldg_id)
     """
 
     if bldg_id == None :
-        print "bad {} element, level = {}, but does not have bldging ID, try assigning ID by scopebox----{}".format(element.Category.Name, level_name, output.linkify(element.Id, title = "Go To Element"))
+        print("bad {} element, level = {}, but does not have bldging ID, try assigning ID by scopebox----{}".format(element.Category.Name, level_name, output.linkify(element.Id, title = "Go To Element")))
         return True
     if bldg_id not in level_name :
         #print element.Parameter[DB.BuiltInParameter.FAMILY_LEVEL_PARAM].AsString()
-        print "bad {} element, level = {}, but building ID = {}, the element is location within the id scopebox but associated wrong level. Try to fix now".format(element.Category.Name, level_name, bldg_id)
+        print("bad {} element, level = {}, but building ID = {}, the element is location within the id scopebox but associated wrong level. Try to fix now".format(element.Category.Name, level_name, bldg_id))
 
         try:
             new_level_name = bldg_id + " - " + level_name.split(" - ")[1]
-            print "\tattemping new level name = {}".format(new_level_name)
+            print("\tattemping new level name = {}".format(new_level_name))
             #element.LookupParameter("Level").Set(get_level_by_name(new_level_name))
             element.Parameter[DB.BuiltInParameter.FAMILY_LEVEL_PARAM].Set(get_level_by_name(new_level_name))
-            print "\tfixing successful, new level is {}".format(new_level_name)
+            print("\tfixing successful, new level is {}".format(new_level_name))
         except:
-            print "\tfixing failed, cannot find a new level or there is a ownership conflict, please fix mannually or ask Sen for instruction.----{}".format(output.linkify(element.Id, title = "Go To Element"))
+            print("\tfixing failed, cannot find a new level or there is a ownership conflict, please fix mannually or ask Sen for instruction.----{}".format(output.linkify(element.Id, title = "Go To Element")))
         return True
     return False
 
@@ -62,7 +62,7 @@ def is_element_inside_scopebox(element, scopebox):
             return True
 
     except:
-        print "skipping element: {} becasue cannot find a location, possiblly a not placed area or room".format(element.Id)
+        print("skipping element: {} becasue cannot find a location, possiblly a not placed area or room".format(element.Id))
 
     return False
 
@@ -99,5 +99,5 @@ with revit.Transaction("fix furnichure level"):
     if len(bad) > 0:
         forms.alert("{} have {} bad placement, check output window for detail.\nAlso run assign id by scopebox again if need to.".format(category, len(bad)))
     else:
-        print "all furnichure level and bldg ID matching"
+        print("all furnichure level and bldg ID matching")
     output.unfreeze()

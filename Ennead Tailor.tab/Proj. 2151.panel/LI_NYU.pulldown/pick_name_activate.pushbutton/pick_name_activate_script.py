@@ -20,10 +20,10 @@ from System import EventHandler, Uri
                 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def pick_name_activate():
-    print __revit__.SelectionChanged
+    print(__revit__.SelectionChanged)
     for item in dir(__revit__.SelectionChanged):
-        print item
-    print __revit__.SelectionChanged.Event
+        print(item)
+    print(__revit__.SelectionChanged.Event)
     
     
     option = ["Activate","DeActivate"]

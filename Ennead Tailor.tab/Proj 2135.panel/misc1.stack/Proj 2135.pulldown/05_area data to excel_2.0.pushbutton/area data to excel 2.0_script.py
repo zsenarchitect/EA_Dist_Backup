@@ -52,7 +52,7 @@ def find_area_definition_column_in_excel(area):
         try:
             column = area_name_checklist.index(area_name)
         except:
-            print "area department:area name = '{}':'{}'.  Not found in chart".format(department_name, area_name)
+            print("area department:area name = '{}':'{}'.  Not found in chart".format(department_name, area_name))
             column = -2
 
 
@@ -73,7 +73,7 @@ class data_item():
         self.area_num += new_area.Area * new_area.LookupParameter("MC_$Discount Ratio").AsDouble()
 
     def print_data_detail(self):
-        print "data item detail:{};{}:{}..row:{}...column:{} ---{}".format(self.area_obj.Level.Name,
+        print("data item detail:{};{}:{}..row:{}...column:{} ---{}".format(self.area_obj.Level.Name,)
                                                     self.area_obj.LookupParameter("Area Department").AsString(),
                                                     self.area_obj.LookupParameter("Name").AsString(),
                                                     self.row,
@@ -100,7 +100,7 @@ def alert_bad_areas( doc = revit.doc):
         if area.LookupParameter("Area Department").AsString() in special_departments:# it does not need to list detail name
             continue
         if area.LookupParameter("Area Department").AsString() not in department_name_checklist or area.LookupParameter("Name").AsString() not in area_name_checklist:
-            print "------------This item below cannot find place in chart -------------"
+            print("------------This item below cannot find place in chart -------------")
             print_area_detail(area)
             bad_area_count += 1
     if bad_area_count != 0 :
@@ -122,7 +122,7 @@ def is_area_similar_to_data_item(area, data):
     return True
 
 def print_area_detail(area):
-    print "area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), EA_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble()))
+    print("area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), EA_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble())))
 
 
 def write_data_item(worksheet, data):
@@ -257,7 +257,7 @@ workbook = xw.Workbook(file_location)
 worksheet = workbook.add_worksheet("N3 AREA CHART")
 
 #print data_collection
-print "*"*50
+print("*"*50)
 for data in data_collection:
     data.print_data_detail()
     write_data_item(worksheet, data)

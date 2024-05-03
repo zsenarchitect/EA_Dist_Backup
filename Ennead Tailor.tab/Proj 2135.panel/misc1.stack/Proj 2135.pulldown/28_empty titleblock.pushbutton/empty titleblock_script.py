@@ -37,7 +37,7 @@ def update_titleblock():
     for titleblock_type in titleblock_types:
         if titleblock_type.Family.Name not in ["TTBLK_A0_Vert", "TTBLK_A1_Vert"]:
             continue
-        print "fixing titleblock [{}]".format(titleblock_type.Family.Name)
+        print("fixing titleblock [{}]".format(titleblock_type.Family.Name))
         titleblock_type.LookupParameter("#use empty titleblock").Set(not will_restore)
 
 def get_revision_by_para(para_name):
@@ -69,7 +69,7 @@ def set_revision_on_sheet(sheet):
 
 
 def process_sheet(sheet):
-    print "working on sheet [{}]".format(sheet.Name)
+    print("working on sheet [{}]".format(sheet.Name))
     if will_restore:
         set_revision_on_sheet(sheet)
     else:
@@ -106,6 +106,6 @@ para_names = [x.split("-----")[1] for x in raw_data]
 t = DB.Transaction(doc, "{} titleblock".format(res))
 t.Start()
 map(process_sheet, all_sheets)
-print "---"
+print("---")
 update_titleblock()
 t.Commit()

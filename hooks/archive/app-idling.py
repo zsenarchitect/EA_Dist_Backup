@@ -50,7 +50,7 @@ try:
 except Exception as e:
     print (e)
 finally:
-    print "fail"
+    print("fail")
 '''
 output = script.get_output()
 #output.close_others()
@@ -67,8 +67,8 @@ if int(old_time ) % life_span == 0:
     texts = DB.FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(DB.TextNote).WhereElementIsNotElementType().ToElements()
     if texts[0].Text == str(old_time):
         script.exit()
-    print old_time
-    print "every {} seconds".format(life_span)
+    print(old_time)
+    print("every {} seconds".format(life_span))
     with revit.Transaction("temp"):
 
         for text in texts:

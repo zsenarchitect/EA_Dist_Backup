@@ -23,13 +23,13 @@ def delete_view(view):
     try:
         if not EA_UTILITY.is_owned(view):
             doc.Delete(view.Id)
-            print "Delete view [{}]".format(view_name)
+            print("Delete view [{}]".format(view_name))
             delete_jpg_in_folder(DELETE_FOLDER, view_name)
     except Exception as e:
         if doc.ActiveView.Name == view_name:
-            print "Active view cannot be deleted. Skip"
+            print("Active view cannot be deleted. Skip")
             return
-        print "Cannot delete view [{}] becasue {}.".format(view_name, e)
+        print("Cannot delete view [{}] becasue {}.".format(view_name, e))
         #t.Commit()
         #script.exit()
 
@@ -92,4 +92,4 @@ map(delete_view, no_sheet_views)
 t.Commit()
 
 
-print "################### finish"
+print("################### finish")

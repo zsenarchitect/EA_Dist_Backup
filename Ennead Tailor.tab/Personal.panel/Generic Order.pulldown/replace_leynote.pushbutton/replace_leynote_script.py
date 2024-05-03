@@ -36,7 +36,7 @@ def replace_leynote():
         return
     symbol_types = EnneadTab.REVIT.REVIT_SELECTION.pick_type(family)
     if not symbol_types:
-        print "Cannot find this type"
+        print("Cannot find this type")
         
         return
     
@@ -54,11 +54,11 @@ def replace_leynote():
             continue
         
         
-        print "\n\n   "
-        print "*"*20
-        print output.linkify(tag.Id, title = "go to tag" )
+        print("\n\n   ")
+        print("*"*20)
+        print(output.linkify(tag.Id, title = "go to tag" ))
         if hasattr(tag, "TagText") and tag.TagText != "":
-            print "Display Content = {}".format(tag.TagText)
+            print("Display Content = {}".format(tag.TagText))
             
         head_position = tag.TagHeadPosition 
         # HasLeader
@@ -95,12 +95,12 @@ def replace_leynote():
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

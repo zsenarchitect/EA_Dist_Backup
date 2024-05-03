@@ -218,7 +218,7 @@ class FamilyRePath:
 
         print( "#" * 40 + "  Summary  " + "#" * 40)
         """
-        print "{} skipped\n{} no path\n{} found path on BIM 360\n{} found path on disk drive".format(
+        print("{} skipped\n{} no path\n{} found path on BIM 360\n{} found path on disk drive".format()
             len(self.collection_skip_family),
             len(self.collection_not_found),
             len(self.collection_BIM360_family),
@@ -226,14 +226,14 @@ class FamilyRePath:
         )
 
         if len(self.collection_skip_family) > 0:
-            print "\nFollowing families were skipped, mostly because of system family"
+            print("\nFollowing families were skipped, mostly because of system family")
             for item in self.collection_skip_family:
-                print "\t\t{}".format(item.Name)
+                print("\t\t{}".format(item.Name))
 
         if len(self.collection_not_found) > 0:
-            print "\nFollowing families have no file path found, mostly because of unsaved load"
+            print("\nFollowing families have no file path found, mostly because of unsaved load")
             for item in self.collection_not_found:
-                print "\t\t{}".format(item.Name)
+                print("\t\t{}".format(item.Name))
 
         if len(self.collection_BIM360_family) > 0:
             self.output.freeze()

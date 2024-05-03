@@ -4,11 +4,11 @@ __title__ = "List\nRevisions"
 from pyrevit import forms, DB, revit, script
 
 def print_revision(sheet):
-    print sheet.Name
+    print(sheet.Name)
     for id in sheet.GetAllRevisionIds():
         rev = revit.doc.GetElement(id)
-        print "\t{}\t{}".format(rev.Name, rev.RevisionDate )
-    print "-"*20
+        print("\t{}\t{}".format(rev.Name, rev.RevisionDate ))
+    print("-"*20)
 
 
 
@@ -20,8 +20,8 @@ def sheet_rev_data(sheet):
     #print data
     """
     for id in _rev_id_collection:
-        print id
-        print sheet.GetAllRevisionIds()[0]
+        print(id)
+        print(sheet.GetAllRevisionIds()[0])
     """
     _data_table.append( data )
 

@@ -52,11 +52,11 @@ class UI_Window(WPFWindow):
 
 
         for item in selection:
-            print item
+            print(item)
         elid = selection.element_ids
         data = elid[0].IntegerValue
 
-        print "Function run ok after clicking button\n\tget: {}".format(variable)
+        print("Function run ok after clicking button\n\tget: {}".format(variable))
         forms.alert("ref element selected: {}".format(data))
         UI.TaskDialog.Show(
             "title here from script",

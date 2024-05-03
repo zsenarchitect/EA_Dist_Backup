@@ -63,7 +63,7 @@ if __name__ == "__main__":
     with revit.TransactionGroup("review group by images"):
         bad_group = []
         total_count = len(detail_group_types)
-        print "total {} detail group types found...".format(total_count)
+        print("total {} detail group types found...".format(total_count))
 
         for i, detail_group_type in enumerate(detail_group_types):
 
@@ -82,9 +82,9 @@ if __name__ == "__main__":
             try:
                 opts.FilePath = dump_folder + r'\{}_({} in proj).jpg'.format(name, count)
             except Exception as e:
-                print "Skip [{}] becasue".format(name)
+                print("Skip [{}] becasue".format(name))
                 continue
-            print "\t\t{}/{}: exporting <{}>, {} found in the project".format(i+1, total_count, name, count)
+            print("\t\t{}/{}: exporting <{}>, {} found in the project".format(i+1, total_count, name, count))
             opts.ImageResolution = DB.ImageResolution.DPI_300
             opts.ExportRange = DB.ExportRange.VisibleRegionOfCurrentView
             opts.ZoomType = DB.ZoomFitType.FitToPage
@@ -92,7 +92,7 @@ if __name__ == "__main__":
             try:
                 revit.doc.ExportImage(opts)
             except:
-                print "!Detail group <{}> fail to export image. See solution at the end".format(name)
+                print("!Detail group <{}> fail to export image. See solution at the end".format(name))
                 bad_group.append(name)
 
             with revit.Transaction("local delete"):
@@ -108,11 +108,11 @@ if __name__ == "__main__":
         """
         if len(bad_group) > 0:
 
-            print "\n\n Group name contatining any of the following character cannot be saved on window folder, please consider replace special character with underscore '_':"
-            print r'/\?*<>":'
+            print("\n\n Group name contatining any of the following character cannot be saved on window folder, please consider replace special character with underscore '_':")
+            print(r'/\?*<>":')
 
-            print "\n\nshort list groups that give errors during export"
+            print("\n\nshort list groups that give errors during export")
             for item in bad_group:
-                print item
+                print(item)
 
 

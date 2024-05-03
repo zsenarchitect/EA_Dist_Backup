@@ -14,13 +14,13 @@ doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
 
 def is_owned(element):
     eh = revit.query.get_history(element)
-    print eh.owner
+    print(eh.owner)
     if len(eh.owner) == 0:
         return False
     elif eh.owner == revit.doc.Application.Username:
         return False
     else:
-        print "{} Owned by {}".format(element.Id, eh.owner)
+        print("{} Owned by {}".format(element.Id, eh.owner))
         return True
 
 
@@ -33,16 +33,16 @@ def override_2D_element(element,is_user_tag = False,is_wrong_tag_type = False, r
 
     if is_wrong_tag_type:
         if element.Parameter[DB.BuiltInParameter.KEY_SOURCE_PARAM].AsString() == "Material":
-            print "find wrong type, Element tag family tagging Material keynote."
+            print("find wrong type, Element tag family tagging Material keynote.")
             color = DB.Color(255,0,255)
 
         if element.Parameter[DB.BuiltInParameter.KEY_SOURCE_PARAM].AsString() == "Element":
-            print "find wrong type, Material tag family tagging Element keynote."
+            print("find wrong type, Material tag family tagging Element keynote.")
             color = DB.Color(255,128,0)
         else:
             color = DB.Color(255,0,0)
     if is_user_tag:
-        print "find user tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        print("find user tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         color = DB.Color(0,0,215)
 
     #print color
@@ -64,13 +64,13 @@ def main():
         for tag in key_note_tags:
             """
             #tag.Parameter[DB.BuiltInParameter.KEY_SOURCE_PARAM].AsString() == "User"
-            print "*"*20
-            print tag, tag.Name,tag.Parameter[DB.BuiltInParameter.SYMBOL_NAME_PARAM].AsElementId()
-            print tag.Parameter[DB.BuiltInParameter.KEY_SOURCE_PARAM].AsString()
-            print "###"
+            print("*"*20)
+            print(tag, tag.Name,tag.Parameter[DB.BuiltInParameter.SYMBOL_NAME_PARAM].AsElementId())
+            print(tag.Parameter[DB.BuiltInParameter.KEY_SOURCE_PARAM].AsString())
+            print("###")
             #print tag.Parameter(DB.BuiltInParameter.SYMBOL_NAME_PARAM)#.AsString()
             for para in tag.Parameters:
-                print para.Definition.Name
+                print(para.Definition.Name)
             """
 
 
@@ -100,18 +100,18 @@ def main():
                 if is_string_in_pool("wall", search_pool) or is_string_in_pool("system", search_pool):
                     override_2D_element(tag,reset = True)
                     continue
-            print "\n\n   "
-            print "*"*20
+            print("\n\n   ")
+            print("*"*20)
 
-            print revit.doc.GetElement(tag.OwnerViewId).Name
+            print(revit.doc.GetElement(tag.OwnerViewId).Name)
             view_id_collection.add(tag.OwnerViewId)
             eh = revit.query.get_history(tag)
-            print "Created by:{}".format(eh.creator)
-            print output.linkify(tag.Id, title = "go to tag" )
+            print("Created by:{}".format(eh.creator))
+            print(output.linkify(tag.Id, title = "go to tag" ))
             if hasattr(tag, "TagText") and tag.TagText != "":
-                print "Display Content = {}".format(tag.TagText)
+                print("Display Content = {}".format(tag.TagText))
             if is_owned(tag):
-                print "skip element owned by other."
+                print("skip element owned by other.")
                 continue
             if key_source == "User":
                 override_2D_element(tag,is_user_tag = True, is_wrong_tag_type = False)
@@ -120,18 +120,18 @@ def main():
 
     output.unfreeze()
     if len(view_id_collection) >= 1:
-        print "\n\n\n\n  "
-        print "#"*20
-        print "check below views"
+        print("\n\n\n\n  ")
+        print("#"*20)
+        print("check below views")
         for view_id in list(view_id_collection):
-            print output.linkify(view_id, title = "{}".format(revit.doc.GetElement(view_id).Name))
+            print(output.linkify(view_id, title = "{}".format(revit.doc.GetElement(view_id).Name)))
 
-        print "#Rule for tag name checking.\nCheck 'Type Name' and 'Fmaily Name', if contain keyword 'material', then check for material keynote.\nif contain keyword 'wall' or 'system', then check for element keynote."
+        print("#Rule for tag name checking.\nCheck 'Type Name' and 'Fmaily Name', if contain keyword 'material', then check for material keynote.\nif contain keyword 'wall' or 'system', then check for element keynote.")
 
 
-        print "\n\nBlue = User Keynote, should avoid as much as you can.\nPink = Element Tag taging Material key\nOrange = Material Key tagging Element key."
+        print("\n\nBlue = User Keynote, should avoid as much as you can.\nPink = Element Tag taging Material key\nOrange = Material Key tagging Element key.")
     else:
-        print "No wrong keynote tag found."
+        print("No wrong keynote tag found.")
 
 ################## main code below #####################
 if __name__ == "__main__":

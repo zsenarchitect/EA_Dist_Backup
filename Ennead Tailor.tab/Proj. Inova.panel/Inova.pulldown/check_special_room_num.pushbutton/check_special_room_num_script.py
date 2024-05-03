@@ -83,9 +83,9 @@ def check_special_room_num():
                 else:
                     design_option_note = "Main Model"
     
-                print "--{}, created by [{}], last edit by [{}]. Design Option = {}".format(output.linkify(room_id, title = room_name), creator, editor, design_option_note)
+                print("--{}, created by [{}], last edit by [{}]. Design Option = {}".format(output.linkify(room_id, title = room_name), creator, editor, design_option_note))
 
-    print "\n\n\nDone!"
+    print("\n\n\nDone!")
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

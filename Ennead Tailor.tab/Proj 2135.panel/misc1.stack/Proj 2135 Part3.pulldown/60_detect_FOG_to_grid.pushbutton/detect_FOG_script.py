@@ -154,15 +154,15 @@ def get_mistake(dist, tolerance):
     1448.29 ---> 1500
     """
     """
-    print dist
-    print dist / float(tolerance)
-    print int(dist / float(tolerance))
-    print int(dist / float(tolerance)) * tolerance
+    print(dist)
+    print(dist / float(tolerance))
+    print(int(dist / float(tolerance)))
+    print(int(dist / float(tolerance)) * tolerance)
     """
     """
-    print dist
-    print round(dist, -1)
-    print int(round(dist, -1))
+    print(dist)
+    print(round(dist, -1))
+    print(int(round(dist, -1)))
     """
 
     #intent = int(dist / float(tolerance)) * tolerance
@@ -188,7 +188,7 @@ def detect_FOG():
     tolerance = 10
 
     #output.show()
-    print "detecting walls and grids..."
+    print("detecting walls and grids...")
     # print get_mistake(1502.56, tolerance)
     # print get_mistake(1448.22, tolerance)
     #
@@ -204,7 +204,7 @@ def detect_FOG():
         output.update_progress(i, len(walls))
         if i % 20 == 0:
             #output.unfreeze()
-            print "\n###{} of {}".format(i, len(walls))
+            print("\n###{} of {}".format(i, len(walls)))
             #output.freeze()
         result = process_wall(wall, tolerance)
         if result:
@@ -214,7 +214,7 @@ def detect_FOG():
 
 
     #output.unfreeze()
-    print "#"*20
+    print("#"*20)
 
     # print important_walls[0]
 
@@ -257,17 +257,17 @@ def detect_FOG():
     important_walls = filter(lambda x: x[0].WallType.LookupParameter("Type Name").AsString() in selected_types, important_walls)
     for i, data in enumerate(important_walls):
         wall, dist = data
-        print "\n###{} of {}".format(i, len(important_walls))
-        print "wall_type = {}---->{}".format(wall.WallType.LookupParameter("Type Name").AsString(),output.linkify(wall.Id))
-        print "{}mm to near grid.".format(dist)
+        print("\n###{} of {}".format(i, len(important_walls)))
+        print("wall_type = {}---->{}".format(wall.WallType.LookupParameter("Type Name").AsString(),output.linkify(wall.Id)))
+        print("{}mm to near grid.".format(dist))
         #output.print_md("##{}mm off.".format(dist % tolerance))
         output.print_md("##{}mm off.".format(get_mistake(dist, tolerance)))
 
 
-    print "\n\nFOG check view created/updated: (Wall inside design option still need to be selected by excluding design option)"
+    print("\n\nFOG check view created/updated: (Wall inside design option still need to be selected by excluding design option)")
     for type in selected_types:
         view_name = "EnneadTab FOG Check_" + type
-        print "\t\t" + view_name
+        print("\t\t" + view_name)
         view = get_plan_view(view_name)
         __revit__.ActiveUIDocument.ActiveView = view
 

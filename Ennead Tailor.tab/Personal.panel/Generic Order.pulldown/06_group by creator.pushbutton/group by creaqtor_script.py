@@ -30,15 +30,15 @@ for group in groups:
     group_collection.append(group)
 with revit.Transaction("rename groups"):
     for group in group_collection:
-        print "^"*10
-        print group.Name
+        print("^"*10)
+        print(group.Name)
         creator = created_by_who(group.GroupType)
-        print creator
+        print(creator)
         if creator in group.Name:
-            print "skip, named this before"
+            print("skip, named this before")
             continue
         group.GroupType.Name = "{}_{}".format(creator, group.Name)
-        print "new group name = " + group.Name
+        print("new group name = " + group.Name)
 
 ########note to self to research
 #GUI window?
@@ -47,7 +47,7 @@ with revit.Transaction("rename groups"):
 
 """
 from datetime import date
-print date.today()
+print(date.today())
 """
 """
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\

@@ -193,7 +193,7 @@ def try_create_filled_region_from_floor(floor, filled_region_type, view_id):
 
         curveloop = top_face.GetEdgesAsCurveLoops ()
         t.RollBack()
-        print curveloop
+        print(curveloop)
         return curveloop
 
 
@@ -298,17 +298,17 @@ def update_existing_filled_regions():
             create_filled_region_from_floor(floor, filled_region_type, view.Id)
 
         elif not exist_floor and exist_filled_region:
-            print "Floor '{}' is no longer in the file. Associated filled region will be removed".format(floor_id)
+            print("Floor '{}' is no longer in the file. Associated filled region will be removed".format(floor_id))
 
         elif exist_floor and not exist_filled_region:
-            print "Filled Region '{}' is no longer in the file, but source floor exist, will regenerate.".format(filled_region_id)
+            print("Filled Region '{}' is no longer in the file, but source floor exist, will regenerate.".format(filled_region_id))
             create_filled_region_from_floor(floor, filled_region_type, view.Id)
 
         elif not exist_floor and not exist_filled_region:
-            print "Both floor and associateed filled region is gone."
+            print("Both floor and associateed filled region is gone.")
 
         else:
-            print "Things go wrong"
+            print("Things go wrong")
 
     write_new_data(new_filled_region_data)
     current_datas = EA_UTILITY.read_txt_as_list(file_path)
@@ -353,7 +353,7 @@ def make_new_filled_regions():
         try:
             create_filled_region_from_floor(floor)
         except Exception as e:
-            print "Skip filled region creation on one floor element"
+            print("Skip filled region creation on one floor element")
             print (e)
     """
     map(lambda x: create_filled_region_from_floor(x, filled_region_type, doc.ActiveView.Id), floors)
@@ -537,7 +537,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -613,9 +613,9 @@ forms.toast(message, title='pyRevit', appid='pyRevit', icon=None, click=None, ac
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

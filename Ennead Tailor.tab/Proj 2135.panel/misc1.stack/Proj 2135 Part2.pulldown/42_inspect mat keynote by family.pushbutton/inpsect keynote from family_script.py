@@ -98,8 +98,8 @@ def get_data_in_all_family():
 
 def inspect_family(family, enable_print = True):
     if enable_print:
-        print "--------"
-        print "inspecting family [{}]".format(family.Name)
+        print("--------")
+        print("inspecting family [{}]".format(family.Name))
     temp = []
     try:
         family_doc = doc.EditFamily(family)
@@ -141,7 +141,7 @@ def inspect_family(family, enable_print = True):
     try:
         family_doc.Close(False)
     except Exception as e:
-        print "Family can not be closed becasue:" + e
+        print("Family can not be closed becasue:" + e)
     return temp
 
 def print_detail(data_collection, prefix = "", keyword_that_has_to_include = None):
@@ -152,11 +152,11 @@ def print_detail(data_collection, prefix = "", keyword_that_has_to_include = Non
         else:
             if keyword_that_has_to_include not in x:
                 continue
-        print "{}[{}]--->[{}]--->[{}]--->[{}]--->[{}]".format(prefix, x[0], x[1], x[2], x[3], x[4])
+        print("{}[{}]--->[{}]--->[{}]--->[{}]--->[{}]".format(prefix, x[0], x[1], x[2], x[3], x[4]))
 
 
 def check_keynote_in_family(keynote_target, family_data_collection):
-    print "------------\nInspecting keynote: {}".format(keynote_target)
+    print("------------\nInspecting keynote: {}".format(keynote_target))
     for data in family_data_collection:
         #print "A"
         #print data
@@ -171,13 +171,13 @@ def check_keynote_in_family(keynote_target, family_data_collection):
             mat_keynote = map_entry[3]
             if mat_keynote == keynote_target:
                 print_detail(sub_c_mapping, prefix = family_name + ": ", keyword_that_has_to_include = mat_keynote)
-                print "\n"
+                print("\n")
                 break # break so i dont print same family twice
                 # print "{}:{}".format(family_name, map_entry)
-    print "\n\n"
+    print("\n\n")
 
 def check_appearance_in_family(appearance_target, family_data_collection):
-    print "------------\nInspecting Appearance: {}".format(appearance_target)
+    print("------------\nInspecting Appearance: {}".format(appearance_target))
     for data in family_data_collection:
         #print "A"
         #print data
@@ -192,14 +192,14 @@ def check_appearance_in_family(appearance_target, family_data_collection):
             mat_appearance = map_entry[4]
             if mat_appearance == appearance_target:
                 print_detail(sub_c_mapping, prefix = family_name + ": ", keyword_that_has_to_include = mat_appearance)
-                print "\n"
+                print("\n")
                 break # break so i dont print same family twice
                 # print "{}:{}".format(family_name, map_entry)
-    print "\n\n"
+    print("\n\n")
 
 
 def check_data_in_family(target, family_data_collection, data_position):
-    print "------------\nInspecting: {}".format(target)
+    print("------------\nInspecting: {}".format(target))
     for data in family_data_collection:
         #print "A"
         #print data
@@ -214,10 +214,10 @@ def check_data_in_family(target, family_data_collection, data_position):
             inspected_item = map_entry[data_position]
             if inspected_item == target:
                 print_detail(sub_c_mapping, prefix = family_name + ": ", keyword_that_has_to_include = inspected_item)
-                print "\n"
+                print("\n")
                 break # break so i dont print same family twice
                 # print "{}:{}".format(family_name, map_entry)
-    print "\n\n"
+    print("\n\n")
 
 
 def action_0_inspect_by_family():
@@ -260,11 +260,11 @@ def action_4_inspect_keynotes_to_OST():
 
 
     for keynote in selected_keynotes:
-        print "---------"
-        print "inspecting keynote [{}]".format(keynote)
+        print("---------")
+        print("inspecting keynote [{}]".format(keynote))
         object_style_display = get_obj_styles_by_keynote(keynote)
         display_list(object_style_display)
-        print "\n\n"
+        print("\n\n")
 
 
 def action_5_insepect_keynotes():
@@ -272,12 +272,12 @@ def action_5_insepect_keynotes():
     all_materials = get_sorted_all_materials()
 
     for keynote in selected_keynotes:
-        print "---------"
-        print "checking keynote usage of {}".format(keynote)
+        print("---------")
+        print("checking keynote usage of {}".format(keynote))
         for material in all_materials:
             if material.LookupParameter("Keynote").AsString() == keynote:
-                print "--[{}]".format(material.Name)
-        print "\n\n"
+                print("--[{}]".format(material.Name))
+        print("\n\n")
 
 
 def action_6_inspect_materials():
@@ -289,7 +289,7 @@ def action_6_inspect_materials():
                                                 multiselect = True)
 
     for mat in selected_materials:
-        print "[{}]--->[{}]".format(mat.Name, mat.LookupParameter("Keynote").AsString())
+        print("[{}]--->[{}]".format(mat.Name, mat.LookupParameter("Keynote").AsString()))
 
 def action_8_inspect_mat_to_appearance():
 
@@ -302,7 +302,7 @@ def action_8_inspect_mat_to_appearance():
     for mat in selected_materials:
         appearance_element = doc.GetElement(mat.AppearanceAssetId)
         appearance_name = appearance_element.Name if appearance_element else ""
-        print "[{}]--->[{}]".format(mat.Name, appearance_name)
+        print("[{}]--->[{}]".format(mat.Name, appearance_name))
 
 def action_7_inspect_appearance():
 
@@ -317,8 +317,8 @@ def action_7_inspect_appearance():
     map(lambda x: check_appearance_in_family(x.Name, all_family_data), selected_appearances)
     """
     for appearance in selected_appearances:
-        print "_"*10
-        print appearance.Name
+        print("_"*10)
+        print(appearance.Name)
         #print "[{}]--->[{}]".format(appearance.Name, appearance.LookupParameter("Keynote").AsString())
     """
 
@@ -400,15 +400,15 @@ def action_9_export_map_OST_to_material():
         layer_name, revit_material_name, rhino_material_name = data
         data = "{}-->{}-->{}".format(layer_name, revit_material_name, rhino_material_name)
         unique_rhino_mat_names.add(rhino_material_name)
-        print data
+        print(data)
         OUT.append(data)
     output.print_md( "Format explain ***Layer Name/ Object Style-->Revit Material Name-->Mapped Rhino Material Name***")
 
     unique_rhino_mat_names = sorted(list(unique_rhino_mat_names))
-    print "\n\n"
+    print("\n\n")
     output.print_md("**Unique Rhino Material Names below.**")
     for x in unique_rhino_mat_names:
-        print x
+        print(x)
 
 
 
@@ -420,7 +420,7 @@ def action_9_export_map_OST_to_material():
 
 def display_list(list):
     for x in list:
-        print "--{}".format(x)
+        print("--{}".format(x))
 
 
 ################## main code below #####################
@@ -466,4 +466,4 @@ if ACTION == options[9]:
     action_9_export_map_OST_to_material()
 
 output.unfreeze()
-print "\n\n-------------inspection finished"
+print("\n\n-------------inspection finished")

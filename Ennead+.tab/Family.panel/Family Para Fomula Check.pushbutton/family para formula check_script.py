@@ -41,10 +41,10 @@ def check_label(my_para):
     if sels is None:
         return "no selection"
 
-    print "\n\nInspecting dimension label for [{}]".format(my_para.Definition.Name)
+    print("\n\nInspecting dimension label for [{}]".format(my_para.Definition.Name))
     for dim in sels:
 
-        print "\t\tDimension ---> {}".format(output.linkify(dim.Id, title = "Go To Element"))
+        print("\t\tDimension ---> {}".format(output.linkify(dim.Id, title = "Go To Element")))
 
     return "checked"
 
@@ -127,14 +127,14 @@ def check_link_para(my_para):
     if sels is None:
         return "no selection"
 
-    print "\n\nInspecting associated parameters for [{}]".format(my_para.Definition.Name)
+    print("\n\nInspecting associated parameters for [{}]".format(my_para.Definition.Name))
     for para in sels:
         if isinstance(para.Element, DB.FamilyInstance):
-            print "\t\tFamily Instance [{}] , associated parameter = [{}] ---> {}".format(para.Element.Symbol.FamilyName,
+            print("\t\tFamily Instance [{}] , associated parameter = [{}] ---> {}".format(para.Element.Symbol.FamilyName,)
                                                                                         para.Definition.Name,
                                                                                         output.linkify(para.Element.Id, title = "Go To Element"))
         else:
-            print "\t\tFamily Element [{}] , associated parameter = [{}] ---> {}".format(para.Element.GetType(),
+            print("\t\tFamily Element [{}] , associated parameter = [{}] ---> {}".format(para.Element.GetType(),)
                                                                                         para.Definition.Name,
                                                                                         output.linkify(para.Element.Id, title = "Go To Element"))
     return "checked"
@@ -144,7 +144,7 @@ def check_link_para(my_para):
 def process_para(my_para):
 
     if check_link_para(my_para) == "not used" and check_label(my_para) == "not used" and check_formula(my_para) == "not used":
-        print "Parameter [{}] not in use by formula or other elements or dimension labels".format(my_para.Definition.Name)
+        print("Parameter [{}] not in use by formula or other elements or dimension labels".format(my_para.Definition.Name))
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

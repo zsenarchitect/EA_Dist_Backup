@@ -57,7 +57,7 @@ def load_family_to_docs(doc, family_doc):
         (To do)alternatively, it should open a safety doc before closing family doc.
         Revit API cannot close active doc with active view, so need to switch to other file first.
         """
-        print "Cannot close {}".format(family_doc.Title)
+        print("Cannot close {}".format(family_doc.Title))
 
 def update_log(string):
     global LOG
@@ -161,14 +161,14 @@ def process_family():
             doc_list += "\n" + doc.Title
 
         try:
-            print EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3)
+            print(EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3))
         except:
             pass
         #close_family(selected_family_doc)
 
 
     for line in LOG:
-        print line
+        print(line)
 
     if will_sync_and_close:
         EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
@@ -180,7 +180,7 @@ def process_family():
 
             selected_family_doc.Close()
         except Exception as e:
-            print "Fail to close family doc becasue: {}".format(e)
+            print("Fail to close family doc becasue: {}".format(e))
     """
 
 
@@ -193,8 +193,8 @@ def close_family(family_doc):
     family_doc.Close(False)
     return
     ui_views = uidoc.GetOpenUIViews ()
-    print ui_views
-    print [x.viewid for x in ui_views]
+    print(ui_views)
+    print([x.viewid for x in ui_views])
     uidoc.RequestViewChange (my_view)
     uidoc.RefreshActiveView ()
     if will_close_family:

@@ -101,7 +101,7 @@ class ColorizePills:
         owner_view_id = pill.OwnerViewId
         view = self.doc.GetElement(owner_view_id)
         if not EnneadTab.REVIT.REVIT_SELECTION.is_changable(view):
-            print "View <{}> cannot be editted right now due to ownership by {}.".format(view.Name,view .LookupParameter("Edited by").AsString())
+            print("View <{}> cannot be editted right now due to ownership by {}.".format(view.Name,view .LookupParameter("Edited by").AsString()))
             return
         
         category_name = pill.LookupParameter("bubble_diagram_label").AsString()
@@ -119,14 +119,14 @@ class ColorizePills:
         color = self.color_map.get(category_name, None)
         pattern_id = self.pattern_map.get(category_name, None)
         if color is None:
-            print "No color for <{}> found in color map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,
+            print("No color for <{}> found in color map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,)
                                                                                       self.output.linkify(pill.Id, title="Select Pill Shape"))
             color = self.bad_color
             pattern_id = self.solid_pattern_id
          
         """   
         if pattern_id is None:
-            print "No pattern for <{}> found in pattern map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,
+            print("No pattern for <{}> found in pattern map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,)
                                                                                       self.output.linkify(pill.Id, title="Select Pill Shape"))
         """
         

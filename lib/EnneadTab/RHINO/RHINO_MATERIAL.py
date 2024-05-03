@@ -16,9 +16,9 @@ if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
 def get_material_by_name(name, return_index = False):
     mats = sc.doc.Materials
     """
-    print "searching material with name: " + name
+    print("searching material with name: " + name)
     for mat in mats:
-        print mat.Name
+        print(mat.Name)
     """
 
     mat = filter(lambda x: x.Name == name, mats)

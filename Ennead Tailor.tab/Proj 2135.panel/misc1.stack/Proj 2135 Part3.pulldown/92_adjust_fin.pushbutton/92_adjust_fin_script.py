@@ -18,7 +18,7 @@ doc = __revit__.ActiveUIDocument.Document
 
 
 def process_ball(ball, guide_crv):
-    print "$$$$$$$$$$$$"
+    print("$$$$$$$$$$$$")
     location = ball.Location.Point
     #print location
     location = EnneadTab.REVIT.REVIT_GEOMETRY.project_pt_in_view(location, doc.ActiveView)
@@ -36,7 +36,7 @@ def process_ball(ball, guide_crv):
     h_diff = Xpt.Z - location.Z
     h_diff = EnneadTab.REVIT.REVIT_UNIT.internal_to_mm(h_diff)
     h_diff = round(h_diff/10)*10
-    print h_diff
+    print(h_diff)
     if abs(h_diff) > 15000:
         return
     if abs(h_diff) < 5:
@@ -56,7 +56,7 @@ def adjust_fin():
     if len(selection_ids) == 0:
         selection = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Subelement, "Pick diagram curve")
         selection = [doc.GetElement(x) for x in selection]
-        print selection
+        print(selection)
     else:
         selection = [doc.GetElement(x) for x in selection_ids]
 
@@ -74,7 +74,7 @@ def adjust_fin():
 
     guide_crv = filter(is_ok_crv, selection)
     if len(guide_crv) != 1:
-        print "Pick just one guide curve"
+        print("Pick just one guide curve")
         return
 
     guide_crv = guide_crv[0].GeometryCurve
@@ -97,7 +97,7 @@ def adjust_fin():
     map(lambda x: process_ball(x, guide_crv), balls)
     t.Commit()
 
-    print "\n\n\nAll finished"
+    print("\n\n\nAll finished")
 
 ################## main code below #####################
 output = script.get_output()

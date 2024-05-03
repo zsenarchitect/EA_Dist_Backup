@@ -22,15 +22,15 @@ templates = filter(lambda x: x.IsTemplate, views)
 t = DB.Transaction(doc, "make view note not check in template")
 t.Start()
 for template in templates:
-    print "----"
-    print template.Name
+    print("----")
+    print(template.Name)
     if template.LookupParameter("View Note") is not None:
 
         current_non_check_para_ids = template.GetNonControlledTemplateParameterIds()
         current_non_check_para_ids.Add(template.LookupParameter("View Note").Id)
         template.SetNonControlledTemplateParameterIds (current_non_check_para_ids)
     else:
-        print "skip View Note control change"
+        print("skip View Note control change")
 
     if template.LookupParameter("MC_$Translate") is not None:
 
@@ -38,28 +38,28 @@ for template in templates:
         current_non_check_para_ids.Add(template.LookupParameter("MC_$Translate").Id)
         template.SetNonControlledTemplateParameterIds (current_non_check_para_ids)
     else:
-        print "skip View Trnalation control change"
+        print("skip View Trnalation control change")
 
 
 t.Commit()
-print "------------tool finished"
+print("------------tool finished")
 
 
 
 """
 all_para_ids = template.GetTemplateParameterIds()
 # temp = []
-print "**"
-print template.LookupParameter("View Note").Id
+print("**")
+print(template.LookupParameter("View Note").Id)
 for para_id in all_para_ids:
-    print para_id
+    print(para_id)
     try:
-        print doc.GetElement(para_id).Name
+        print(doc.GetElement(para_id).Name)
     except Exception as e:
         print (e)
         continue
     if doc.GetElement(para_id).Name == "View Note":
-        print "find"
+        print("find")
         current_non_check_para_ids.append(para_id)
 # para = x.LookupParameter("View Note")
 # para_ids = x.GetTemplateParameterIds()
@@ -243,7 +243,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -319,9 +319,9 @@ forms.toast(message, title='pyRevit', appid='pyRevit', icon=None, click=None, ac
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

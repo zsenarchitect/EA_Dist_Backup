@@ -47,11 +47,11 @@ def fix_tag_in_view(view):
         try:
             location = tag.TagHeadPosition
         except Exception as e:
-            print "*"*20
+            print("*"*20)
             print (e)
-            print tag
-            print tag.Id
-            print view.Name
+            print(tag)
+            print(tag.Id)
+            print(view.Name)
             return delete_happened
 
         for other_tag in get_all_tags(view, is_room_tag = use_room, is_area_tag = use_area):
@@ -95,8 +95,8 @@ def fix_tag_in_view(view):
                 continue
 
             doc.Delete(other_tag.Id)
-            print "---"
-            print "delete tag too close( only if tagging same element), distance {} is smaller than tolerance {}".format(dist, tolerance)
+            print("---")
+            print("delete tag too close( only if tagging same element), distance {} is smaller than tolerance {}".format(dist, tolerance))
             delete_happened = True
 
             break

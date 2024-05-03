@@ -54,7 +54,7 @@ grids_in_links = []
 levels_in_links = []
 revit_links = DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkInstance).WhereElementIsNotElementType().ToElements()
 if len(revit_links) == 0:
-    print "no link loaded"
+    print("no link loaded")
     script.exit()
 for revit_link in revit_links:
     link_doc = revit_link.GetLinkDocument()
@@ -82,15 +82,15 @@ for x in get_main_grids_in_doc(doc):
     EA_UTILITY.print_note(x.Name)
 """
 my_levels = get_levels_in_doc(doc)
-print "num of grids in current document = {}".format(len(my_grids))
-print "num of grids in link = {}".format(len(grids_in_links))
-print "*"*20
-print "num of levels in current document = {}".format(len(my_levels))
-print "num of levels in link = {}".format(len(levels_in_links))
+print("num of grids in current document = {}".format(len(my_grids)))
+print("num of grids in link = {}".format(len(grids_in_links)))
+print("*"*20)
+print("num of levels in current document = {}".format(len(my_levels)))
+print("num of levels in link = {}".format(len(levels_in_links)))
 
 
 
-print "#"*30
+print("#"*30)
 my_grid_names = [x.Name for x in my_grids]
 link_grid_names = [x.Name for x in grids_in_links]
 my_level_names = [x.Name for x in my_levels]
@@ -113,7 +113,7 @@ for grid_name in unique_grids_names:
     if grid_name in link_grid_names:
         grids_in_links_but_not_in_site.append(grid_name)
         continue
-    print "bad bad {}".format(grid_name)
+    print("bad bad {}".format(grid_name))
 
 
 for level_name in unique_levels_names:
@@ -123,7 +123,7 @@ for level_name in unique_levels_names:
     if level_name in link_level_names:
         levels_in_links_but_not_in_site.append(level_name)
         continue
-    print "bad bad {}".format(level_name)
+    print("bad bad {}".format(level_name))
 
 
 
@@ -135,34 +135,34 @@ levels_in_links_but_not_in_site.sort(key = lambda x: x)
 
 def print_names(list):
     if len(list) == 0:
-        print "Empty"
+        print("Empty")
         return
 
     OUT = "|"
     for x in list:
         OUT += "{}|".format(x)
-    print OUT
+    print(OUT)
 
-print "grids_in_site_but_not_in_links"
+print("grids_in_site_but_not_in_links")
 print_names( grids_in_site_but_not_in_links)
-print "*"*20
-print "grids_in_links_but_not_in_site"
+print("*"*20)
+print("grids_in_links_but_not_in_site")
 print_names( grids_in_links_but_not_in_site)
-print "*"*20
-print "levels_in_site_but_not_in_links"
+print("*"*20)
+print("levels_in_site_but_not_in_links")
 print_names( levels_in_site_but_not_in_links)
-print "*"*20
-print "levels_in_links_but_not_in_site"
+print("*"*20)
+print("levels_in_links_but_not_in_site")
 print_names( levels_in_links_but_not_in_site)
 
 
 
-print "&"*40
+print("&"*40)
 for grid_name in grids_in_site_but_not_in_links:
     grid = get_grid_by_name(grid_name)
     if not grid.IsMonitoringLinkElement():
 
-        print "----[{}] is not monitoring grids in link".format(grid_name)
+        print("----[{}] is not monitoring grids in link".format(grid_name))
         continue
     monitoring_grid_id = list(grid.GetMonitoredLinkElementIds())[0]
     link_doc = doc.GetElement(monitoring_grid_id).GetLinkDocument()
@@ -174,7 +174,7 @@ for level_name in levels_in_site_but_not_in_links:
     level = get_level_by_name(level_name)
     if not level.IsMonitoringLinkElement():
 
-        print "----[{}] is not monitoring levels in link".format(level_name)
+        print("----[{}] is not monitoring levels in link".format(level_name))
         continue
     monitoring_level_id = list(level.GetMonitoredLinkElementIds())[0]
     link_doc = doc.GetElement(monitoring_level_id).GetLinkDocument()
@@ -335,7 +335,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -411,9 +411,9 @@ forms.toast(message, title='pyRevit', appid='pyRevit', icon=None, click=None, ac
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

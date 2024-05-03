@@ -39,7 +39,7 @@ def checker_board_selection():
         #print grids.GetVGridLineIds()
         """
         for Vgrid in grids.GetVGridLineIds():
-            print revit.doc.GetElement(Vgrid).FullCurve.GetEndPoint(0)
+            print(revit.doc.GetElement(Vgrid).FullCurve.GetEndPoint(0))
         """
 
         panel_collection = [ doc.GetElement(x) for x in wall.CurtainGrid.GetPanelIds()]

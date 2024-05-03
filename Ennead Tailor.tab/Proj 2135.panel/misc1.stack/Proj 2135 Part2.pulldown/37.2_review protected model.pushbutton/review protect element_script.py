@@ -19,19 +19,19 @@ def list_all_protected_els():
     #print existing_protected_elements
     #print missing_protected_elements
 
-    print "Showing existing protected elements"
+    print("Showing existing protected elements")
     for item in existing_protected_elements:
         category, record_name, local_session_id = item.Category.Name, EA_UTILITY.get_unique_name(doc,item), item.Id
         #local_session_id = doc.GetElement(stableID).Id
-        print "[{}][{}]-->{}".format(category, record_name, output.linkify(local_session_id, title = "Go to Element"))
+        print("[{}][{}]-->{}".format(category, record_name, output.linkify(local_session_id, title = "Go to Element")))
 
-    print "\n\n"
-    print "Showing missing protected elements"
+    print("\n\n")
+    print("Showing missing protected elements")
     if len(missing_protected_elements) == 0:
-        print "Nothing missing."
+        print("Nothing missing.")
         return
     for item in missing_protected_elements:
-        print item
+        print(item)
         #print "[{}]->{}".format(item,  output.linkify(item.Id, title = "Go to Element"))
 
         #category, record_name = item.Category.Name, EA_UTILITY.get_unique_name(doc,item), item.Id
@@ -224,7 +224,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -300,9 +300,9 @@ forms.toast(message, title='pyRevit', appid='pyRevit', icon=None, click=None, ac
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

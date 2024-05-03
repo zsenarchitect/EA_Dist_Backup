@@ -20,14 +20,14 @@ doc = __revit__.ActiveUIDocument.Document
 ORIENTATION_PARA = "Orientation"
 
 def process_view(view):
-    print "\n##############"
-    print "Processing view [{}]".format(view.Name)
+    print("\n##############")
+    print("Processing view [{}]".format(view.Name))
     if view.LookupParameter(ORIENTATION_PARA) is None:
-        print "No oritation parameter yet, skipping"
+        print("No oritation parameter yet, skipping")
         return
     my_orientation = view.LookupParameter(ORIENTATION_PARA).AsString()
     if my_orientation == "" or not view.LookupParameter(ORIENTATION_PARA).HasValue:
-        print "No oritation assigned to this view, skipping"
+        print("No oritation assigned to this view, skipping")
         return
 
     everything = DB.FilteredElementCollector(doc, view.Id).WhereElementIsNotElementType().ToElements()
@@ -48,7 +48,7 @@ def process_view(view):
     if count > 0:
         view.HideElements (EA_UTILITY.list_to_system_list([x.Id for x in sections]))
         for section in sections:
-            print "\tHiding [{}]".format(section.Name)
+            print("\tHiding [{}]".format(section.Name))
 
 
 

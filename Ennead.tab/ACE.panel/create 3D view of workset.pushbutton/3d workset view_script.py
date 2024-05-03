@@ -26,7 +26,7 @@ def make_3D_views_from_workset():
     #02_Working > Workset Check
     """
     for workset in worksets:
-        print workset.Name
+        print(workset.Name)
     """
 
     views = [create_view(x.Name) for x in worksets]

@@ -20,7 +20,7 @@ def open_dwg_by_size():
             file_ref = dwg.GetExternalFileReference ()
         except Exception as e:
             print (e)
-            print dwg.LookupParameter("Type Name").AsString()
+            print(dwg.LookupParameter("Type Name").AsString())
             continue
         file_path = file_ref.GetPath()
         file_path = DB.ModelPathUtils.ConvertModelPathToUserVisiblePath(file_path)
@@ -54,7 +54,7 @@ def open_dwg_by_size():
         try:
             EA_UTILITY.open_file_in_default_application(dwg_path)
         except:
-            print "Cannot open file: {}".format(dwg_path)
+            print("Cannot open file: {}".format(dwg_path))
 
 
 def get_filesize(filepath, return_bytes = False):

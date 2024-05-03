@@ -19,14 +19,14 @@ def update_timestamp(elevator):
 
 
 def print_all_para(element):
-    print "^"*10
+    print("^"*10)
     for para in element.Parameters:
-        print para.Definition.Name
+        print(para.Definition.Name)
 
-    print "/"*10
+    print("/"*10)
 
 def print_element_link(el):
-    print "{}".format(output.linkify(el.Id, title = "Go to elevator"))
+    print("{}".format(output.linkify(el.Id, title = "Go to elevator")))
 
 def get_all_elevators():
     all_symbol_types =  DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_SpecialityEquipment).WhereElementIsNotElementType().ToElements()
@@ -36,7 +36,7 @@ def get_all_elevators():
 
 def set_data_to_elevator(elevator):
     global hide_note
-    print "*"*20
+    print("*"*20)
     #print_all_para(elevator)
     level_base = revit.doc.GetElement(elevator.LookupParameter("Base Level").AsElementId()).Name
     level_top = revit.doc.GetElement(elevator.LookupParameter("Top Level").AsElementId()).Name
@@ -48,7 +48,7 @@ def set_data_to_elevator(elevator):
     description = elevator.LookupParameter("Elevator ID").AsString()
 
     note = "{}:\n{}\n{}".format(description, level_base, level_top)
-    print note
+    print(note)
     print_element_link(elevator)
 
     elevator.LookupParameter("Comments").Set("{} --> {}".format(level_base, level_top))

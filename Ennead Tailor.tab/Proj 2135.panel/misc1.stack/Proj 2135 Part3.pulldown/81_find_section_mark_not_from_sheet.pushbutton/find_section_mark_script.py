@@ -31,7 +31,7 @@ def get_source_view_scale(ref_view):
 def process_view(view_id, sheet_num):
 
     view = doc.GetElement(view_id)
-    print "\n\n Checking <{}>---------".format(output.linkify(view.Id, title = view.Name))
+    print("\n\n Checking <{}>---------".format(output.linkify(view.Id, title = view.Name)))
     #section_marks = DB.FilteredElementCollector(doc, view_id).OfCategory(DB.BuiltInCategory.OST_Sections).ToElements()
     #section_marks = DB.FilteredElementCollector(doc, view_id).OfCategory(DB.BuiltInCategory.OST_Views).ToElements()
     #section_marks = DB.FilteredElementCollector(doc, view_id).OfClass(DB.ViewSection).ToElements()
@@ -44,7 +44,7 @@ def process_view(view_id, sheet_num):
         if item.Category is None:
             continue
         if item.Category.Name == "Views":
-            print "  Find view marker <{}>".format(item.Name)
+            print("  Find view marker <{}>".format(item.Name))
             #print item
             #print item.GetType()
             #actual_view = doc.GetElement(DB.ReferenceableViewUtils.GetReferencedViewId (doc, item.Id))
@@ -52,13 +52,13 @@ def process_view(view_id, sheet_num):
             #for para in item.Parameters():
                 #print para.Definition.Name
             if not is_on_current_sheet(item, sheet_num):
-                print "    <{}> is not refering to a viewport on this sheet.".format(output.linkify(item.Id, title = item.Name))
+                print("    <{}> is not refering to a viewport on this sheet.".format(output.linkify(item.Id, title = item.Name)))
                 scale = get_source_view_scale(item)
                 if scale > 20:
-                    print "$"*50
+                    print("$"*50)
                     output.print_md( "***Above Refering view scale is*** [{}], larger than 20, **potentially is a system view not a detail view.** ".format(scale))
-                    print "$"*50
-                    print "\n\n  "
+                    print("$"*50)
+                    print("\n\n  ")
     #section_marks = DB.FilteredElementCollector(doc, view_id).OfCategory(DB.BuiltInCategory.OST_Views).ToElements()
     #print section_marks
 
@@ -67,13 +67,13 @@ def find_section_mark_not_from_sheet():
     if not sheets:
         return
     for sheet in sheets:
-        print "\n\n ###############################Checking sheet <{}>####################".format(output.linkify(sheet.Id, title = sheet.SheetNumber))
+        print("\n\n ###############################Checking sheet <{}>####################".format(output.linkify(sheet.Id, title = sheet.SheetNumber)))
         sheet_num = sheet.SheetNumber
         map(lambda x:process_view(x, sheet_num), sheet.GetAllPlacedViews())
     pass
 
-    print "-"*100
-    print "TOOL FINISH"
+    print("-"*100)
+    print("TOOL FINISH")
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

@@ -924,7 +924,7 @@ class EA_Printer_UI(WPFWindow):
 
 
         job_time_start = time.time()
-        print "Let The Printing Begin:"
+        print("Let The Printing Begin:")
         self.Topmost = False
         current_sheet_id = None
         for i, preview_obj in enumerate(self.data_grid_preview.ItemsSource):
@@ -1298,7 +1298,7 @@ class EA_Printer_UI(WPFWindow):
         EA_UTILITY.open_file_in_default_application(file_path)
         output.show()
         output.print_md( "open your **bluebeam administrator**(not the bluebeam viewer)")
-        print "on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below."
+        print("on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below.")
         img_path = script.get_bundle_file("bluebeam admin setting.png")
         output.set_height(1000)
         output.print_image(img_path)
@@ -1520,7 +1520,7 @@ def ennead_printer():
         EA_UTILITY.open_file_in_default_application(error_file)
         EA_UTILITY.show_toast(title = "Send the output window to Sen Zhang", message = "Oops..Something is wrong.")
         output.print_md( "##Print send the below screenshot to Sen Zhang##")
-        print "\n\n\n\n"
+        print("\n\n\n\n")
         print (traceback.format_exc())
         if 'window' in vars():
             window.Close()
@@ -1534,12 +1534,12 @@ def ennead_printer():
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

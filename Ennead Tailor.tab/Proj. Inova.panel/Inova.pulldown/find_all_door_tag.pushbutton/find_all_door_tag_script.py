@@ -69,13 +69,13 @@ def find_all_door_tag():
             
             # everythign is cast as LinkElementId, but only true link element has valid Id with "LinkedElementId" property, so can use this to filter out the link from local.-------note for future me.
             door_ids_link = tagged_door_ids_all - tagged_door_ids_local
-            print tagged_door_ids_all
-            print tagged_door_ids_local
-            print door_ids_link
+            print(tagged_door_ids_all)
+            print(tagged_door_ids_local)
+            print(door_ids_link)
             for door_id in door_ids_link:
-                print door_id
-                print door_id.LinkInstanceId
-                print door_id.LinkedElementId
+                print(door_id)
+                print(door_id.LinkInstanceId)
+                print(door_id.LinkedElementId)
             if len(door_ids_link) == 0:
                 continue
             for door_id in door_ids_link:
@@ -96,9 +96,9 @@ def is_excluded_family(door_id):
     try:
         door = doc.GetElement(door_id)
     except:
-        print door_id
-        print door_id.LinkInstanceId
-        print door_id.LinkedElementId
+        print(door_id)
+        print(door_id.LinkInstanceId)
+        print(door_id.LinkedElementId)
         link_doc = doc.GetElement(door_id.LinkInstanceId)
         door = link_doc.GetElement(door_id.LinkedElementId)
     if door.Symbol.Family.Name in BAD_NAMES:

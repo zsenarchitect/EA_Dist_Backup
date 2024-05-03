@@ -20,11 +20,11 @@ def get_floor_type_by_name(name):
     all_types = DB.FilteredElementCollector(doc).OfClass(DB.FloorType).ToElements()
 
     """
-    print "####looking for " + name
+    print("####looking for " + name)
     for x in all_types:
         pass
-        print x.LookupParameter("Type Name").AsString()
-    print "####"
+        print(x.LookupParameter("Type Name").AsString())
+    print("####")
     """
     return filter(lambda x:x.LookupParameter("Type Name").AsString() == name, all_types)[0]
 
@@ -41,7 +41,7 @@ def process_floor(floor):
                         "Composite_150mm+120mm_BULKHEAD":(150,120),
                         "Composite_Roof_600mm+120mm(OCCUPIABLE)":(600,120)}
     if floor.Name not in checked_type_dict.keys():
-        print "this type not sure what to do: " + floor.Name
+        print("this type not sure what to do: " + floor.Name)
         return
 
     finish_thickness, structural_thickness = get_info_from_floortype(floor.Name, checked_type_dict)

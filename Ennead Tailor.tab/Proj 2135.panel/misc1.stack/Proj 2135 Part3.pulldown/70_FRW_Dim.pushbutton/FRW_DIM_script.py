@@ -25,7 +25,7 @@ def get_adj_FRW(family_instance, search_pool):
 
     OUT.sort(key = lambda x: x[1])
     adj_instance_list = [x[0] for x in OUT]
-    print OUT
+    print(OUT)
     return adj_instance_list
 
 def dim_FRW():
@@ -37,14 +37,14 @@ def dim_FRW():
     # for each FRW, get location point and two other close to it
     exisiting_pair = []
     for FRW in FRWs:
-        print "$" * 20
+        print("$" * 20)
 
 
         adj_FRWs = get_adj_FRW(FRW, FRWs)
 
         # for each pair of family instance, "GetReferences(IList Ref type" to get CenterLeftRight refs
         for i, other_FRW in enumerate(adj_FRWs):
-            print exisiting_pair
+            print(exisiting_pair)
             if i == 2:
                 break
             if sorted([other_FRW.Id, FRW.Id]) in exisiting_pair:

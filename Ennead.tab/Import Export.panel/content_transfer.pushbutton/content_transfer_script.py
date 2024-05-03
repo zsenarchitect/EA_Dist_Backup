@@ -35,7 +35,7 @@ class CopyUseDestination(DB.IDuplicateTypeNamesHandler):
         """Use destination model types if duplicate."""
         if self.is_strict:
             elements = [args.Document.GetElement(x) for x in args.GetTypeIds()]
-            print "{} has duplicate name in [{}].".format([x.Name for x in elements], args.Document.Title)
+            print("{} has duplicate name in [{}].".format([x.Name for x in elements], args.Document.Title))
             return DB.DuplicateTypeAction.Abort
         else:
             return DB.DuplicateTypeAction.UseDestinationTypes
@@ -121,7 +121,7 @@ def transfer_views(views, src_doc, dest_docs):
         for elevation_view in elevation_views:
             marker = get_elevation_marker(src_doc, elevation_view)
             success, failed = copy_elements([marker.Id], src_doc, dest_doc, is_strict = True)
-            print success, failed
+            print(success, failed)
 
         t.Commit()
 
@@ -262,8 +262,8 @@ def transfer_family(families, src_doc, dest_docs, shared_using_project):
         family_doc.Close(False)
 
         
-    print LOG
-    print "\n\nDone!"
+    print(LOG)
+    print("\n\nDone!")
     EnneadTab.NOTIFICATION.messenger(main_text = "Transfer family finished.")
     
 

@@ -108,7 +108,7 @@ class Solution:
 
         radius = panel.Host.get_Parameter(DB.BuiltInParameter.CURVE_ELEM_ARC_RADIUS).AsDouble()
         if radius == 0.0:
-            print "Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel"))
+            print("Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel")))
 
             self.error_panel_found = True
 
@@ -201,12 +201,12 @@ class test_youtube_UI(forms.WPFWindow):
         html += "</body></html>"
 
         import urllib
-        print html
-        print "###########"
+        print(html)
+        print("###########")
         html = html.format(txt_link.split('=')[1])
-        print html
+        print(html)
         html = urllib.quote_plus(html)
-        print html
+        print(html)
         #from requests.compat import urljoin
         """
         """
@@ -246,7 +246,7 @@ class test_youtube_UI(forms.WPFWindow):
 
         # Create a Uri object from the string URL
         uri = Uri(url_string)
-        print uri
+        print(uri)
         #self.web.Navigate("https://www.youtube.com/watch?v=Pe_-870butM&list=PLz3VQzyVrU1haAuLItzhxEXajzyIv95pR&index=29")
 
         self.web.Source = uri

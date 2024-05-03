@@ -30,7 +30,7 @@ def get_all_markup_contents(category_name):
         elif "RevisionCloud" in str(type):
             return True
         else:
-            print type
+            print(type)
             type_name = "bad"
 
         if "markup" in type_name.lower():
@@ -67,9 +67,9 @@ def process_view(view_id, collection):
     view = doc.GetElement(view_id)
 
     if view.IsTemplate:
-        print "---checkinging on template: {}".format(view.Name)
+        print("---checkinging on template: {}".format(view.Name))
     else:
-        print "---checkinging on view: {}".format(view.Name)
+        print("---checkinging on view: {}".format(view.Name))
 
     if "Save to Central" in view.Name:
         return
@@ -86,15 +86,15 @@ def process_view(view_id, collection):
 
     action_list = System.Collections.Generic.List[DB.ElementId](action_list)
     if len(action_list) == 0:
-        print "nothing to do here."
-        print "\n\n"
+        print("nothing to do here.")
+        print("\n\n")
         return
     else:
-        print "found {} related items".format(len(action_list))
+        print("found {} related items".format(len(action_list)))
         if EA_UTILITY.is_owned(view):
-            print "\n\n"
+            print("\n\n")
             return
-        print "\n\n"
+        print("\n\n")
 
     if try_hidding_all:
         view.HideElements(action_list)
@@ -122,21 +122,21 @@ def process_collection(collection, is_owned_view_only = True):
 
         """
         for ww in range(100):
-            print "---"
-            print all_views[ww].Name
-            print all_views[ww].ViewTemplateId
+            print("---")
+            print(all_views[ww].Name)
+            print(all_views[ww].ViewTemplateId)
             if doc.GetElement(all_views[ww].ViewTemplateId) != None:
-                print doc.GetElement(all_views[ww].ViewTemplateId).Name
+                print(doc.GetElement(all_views[ww].ViewTemplateId).Name)
         """
         # print view_ids
     view_ids = sorted(list(view_ids), key = lambda x: doc.GetElement(x).Name)
     #map(lambda x: process_view(x, collection), view_ids)
     for i,x in enumerate(view_ids):
-        print "#{}/{}".format(i + 1, len(view_ids))
+        print("#{}/{}".format(i + 1, len(view_ids)))
         process_view(x, collection)
 
 
-    print "\n\n##finish processing views."
+    print("\n\n##finish processing views.")
 
 
 
@@ -203,7 +203,7 @@ def process_office_layout_template(template):
         template.SetFilterVisibility(filter_office_layout_id, not(try_hidding_all))
         template.SetFilterOverrides (filter_meeting_room_id, meeting_room_override_setting)
     except Exception as e:
-        print "skip {} becasue:{}".format(template.Name, e)
+        print("skip {} becasue:{}".format(template.Name, e))
 
 
 def save_template_to_file():

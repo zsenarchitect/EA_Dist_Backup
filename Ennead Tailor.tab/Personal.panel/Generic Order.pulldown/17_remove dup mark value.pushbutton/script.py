@@ -16,7 +16,7 @@ __doc__ = 'remove dup value in warning'
 def process_warning(warning):
 
     des =  warning.GetDescriptionText()
-    print des
+    print(des)
     key = ""
     if "have duplicate" in des:
         if "Number" in des:
@@ -34,7 +34,7 @@ def process_warning(warning):
             el = revit.doc.GetElement(error_el)
             current_owner = el.LookupParameter("Edited by").AsString()
             if current_owner != "" and current_owner != EnneadTab.USER.get_autodesk_user_name():
-                print "skip element ownded by {}".format(current_owner)
+                print("skip element ownded by {}".format(current_owner))
                 continue
             try:
                 old_value = el.LookupParameter(key).AsString()
@@ -52,7 +52,7 @@ def process_warning(warning):
 
 
     #script.insert_divider(level = "")
-    print "-------------------------------------"
+    print("-------------------------------------")
 
 class w_dict:
     def __init__(self, description):

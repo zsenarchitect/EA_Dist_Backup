@@ -34,10 +34,10 @@ def set_area_layout_function(area, layout_function):
     try:
         area.LookupParameter("Area Layout Function").Set(layout_function)
     except Exception as e:
-        print "*"*10
-        print "skipping area {} ".format(output.linkify(area.Id))
+        print("*"*10)
+        print("skipping area {} ".format(output.linkify(area.Id)))
         print (e)
-        print "*"*10
+        print("*"*10)
 
 def try_to_fix_area(layout_function):
 

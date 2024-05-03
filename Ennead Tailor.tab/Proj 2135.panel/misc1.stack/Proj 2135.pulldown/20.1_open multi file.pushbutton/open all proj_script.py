@@ -50,7 +50,7 @@ def export_from_doc(doc):
     output.print_md( "##{}".format(doc.Title))
     for sheet in sheets:
         output.print_md( sheet.Name)
-    print "-------------------export finish"
+    print("-------------------export finish")
 
 def open_doc_siliently(doc_name, no_workset_option = False):
     for data in GUID_list:
@@ -74,7 +74,7 @@ def open_doc_and_activate(doc_name):
             break
 
     cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(System.Guid(data[1]), System.Guid(data[2]) )
-    print cloud_path
+    print(cloud_path)
     # open_options = DB.OpenOptions()
     # new_doc = app.OpenDocumentFile(cloud_path,
     #                             open_options)
@@ -98,8 +98,8 @@ def background_action():
 
     docs_already_open = [x.Title for x in get_top_revit_docs()]
     docs_to_be_opened_by_API = [x for x in docs_to_process if x not in docs_already_open]
-    print "docs alrady open = {}".format(docs_already_open)
-    print "docs to be opened = {}".format(docs_to_be_opened_by_API)
+    print("docs alrady open = {}".format(docs_already_open))
+    print("docs to be opened = {}".format(docs_to_be_opened_by_API))
 
 
 
@@ -109,7 +109,7 @@ def background_action():
     with ErrorSwallower() as swallower:
         for doc_name in docs_to_be_opened_by_API:
             open_doc_siliently(doc_name, no_workset_option = open_without_workset)
-    print "silent mode finish"
+    print("silent mode finish")
     for doc_name in docs_to_be_opened_by_API:
         open_doc_and_activate(doc_name)
 
@@ -160,7 +160,7 @@ bili_file_list = ["2135_BiliBili SH HQ_N3",
 """
 docs = get_top_revit_docs()
 for doc in docs:
-    print doc.Title
+    print(doc.Title)
 """
 #close_docs_by_name(close_all = True)
 #script.exit()

@@ -25,10 +25,10 @@ def convert_size(size_bytes):
 
 
 def print_para(element):
-	print '------'
+	print('------')
 	for para in element.Parameters:
-		print "{}--->{}".format(para.Definition.Name, para.AsValueString())
-	print "-----------\n\n"
+		print("{}--->{}".format(para.Definition.Name, para.AsValueString()))
+	print("-----------\n\n")
 
 
 
@@ -124,28 +124,28 @@ def user_select(list_raw):
 def final_print():
 	for item in family_item_collection:
 		if item.family_name in family_item_collection_selected:
-			print "~~~~~"
+			print("~~~~~")
 
 			if item.family_size_text != "N/A":
-				print "Family '{}' takes {} Kb.". format(item.family_name, item.family_size_text)
+				print("Family '{}' takes {} Kb.". format(item.family_name, item.family_size_text))
 			else:
-				print "Family '{}' size info not available, usually due to being a system family, or a in-place family, or the user saved the family to a local folder.".format(item.family_name)
+				print("Family '{}' size info not available, usually due to being a system family, or a in-place family, or the user saved the family to a local folder.".format(item.family_name))
 
 
 			if item.category == "N/A":
-				print "Category info not available. Ask your ACE for assistant."
+				print("Category info not available. Ask your ACE for assistant.")
 			else:
-				print "It is {} category. ". format(item.category)
+				print("It is {} category. ". format(item.category))
 
 			if item.note_InPlace :
-				print "It is a In-Place family."
+				print("It is a In-Place family.")
 
 			if item.note_UserCreated :
-				print "It was created by {}". format(item.creator)
-				print "It was last edited by {}. ". format( item.last_editor)
+				print("It was created by {}". format(item.creator))
+				print("It was last edited by {}. ". format( item.last_editor))
 
 			if item.critical_level_text != "":
-				print "{} Its size condition is {}.".format(item.emoji, item.critical_level_text)
+				print("{} Its size condition is {}.".format(item.emoji, item.critical_level_text))
 
 			#print "{}".format(output.linkify(item.id, title = "Go To View"))
 
@@ -181,7 +181,7 @@ if __name__== "__main__":
 	'''
 	#pick category first
 	for item in revit.doc.Settings.Categories:
-		print item.Name
+		print(item.Name)
 	'''
 
 	global_counter = 0

@@ -11,7 +11,7 @@ __doc__ = 'Randomly deselect from selection input. Most likely to be used in cur
 
 '''
 list = [1,2,3,4,5,6]
-print list[:len(list)]
+print(list[:len(list)])
 '''
 
 

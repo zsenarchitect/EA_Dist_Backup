@@ -77,7 +77,7 @@ def shake_tags(view):
                 print (e)
 
             if tag.TagText != old_text:
-                print "Tag content refreshed as {}".format(tag.TagText)
+                print("Tag content refreshed as {}".format(tag.TagText))
         with revit.Transaction("#3"):
             if pin_condition:
                 tag.Pinned = True

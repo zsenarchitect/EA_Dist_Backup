@@ -108,7 +108,7 @@ def get_conversation(input):
         #print "Thinking..."
 
         if attempt > max_attempt:
-            print "cannot get response"
+            print("cannot get response")
             break
         attempt += 1
         time.sleep(1)
@@ -276,7 +276,7 @@ class chatGPT_modelessForm(WPFWindow):
                 break
             wait += 1
             deco = "." * (wait % 5)
-            print deco
+            print(deco)
             if not self.simple_event_handler.OUT:
                 self.debug_textbox.Text = current_text + "\n\nThinking{}".format(deco)
 
@@ -352,17 +352,17 @@ def main_manual():
     run_exe()
     attempt = 0
     while True:
-        print "Thinking..."
+        print("Thinking...")
 
         if attempt > max_attempt:
-            print "cannot get response"
+            print("cannot get response")
             break
         attempt += 1
         time.sleep(1)
         record = EA_UTILITY.read_json_as_dict(file_path)
 
         if record["direction"] == "output":
-            print record["conversation_history"].split(record["key_prompt"])[-1]
+            print(record["conversation_history"].split(record["key_prompt"])[-1])
             break
 
 

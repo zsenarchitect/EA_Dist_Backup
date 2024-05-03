@@ -221,7 +221,7 @@ class Solution:
                 continue
             para = instance.LookupParameter(para_name)
             if not para:
-                print "No matching instance parameter to apply: {}".format(para_name)
+                print("No matching instance parameter to apply: {}".format(para_name))
                 continue
 
             if para.IsReadOnly:
@@ -496,12 +496,12 @@ class MergeFamily_UI(forms.WPFWindow):
                 if not get_para_by_name(sample_instance_target, para_name):
                     note = "\n\nType A: Instance Parameter <{}>".format(para_name)
                     note += "\nType B: Cannot find a matching instance parameter."
-                    print note
+                    print(note)
                     self.mismatch_detail += note
                     found_mismatch = True
 
         if found_mismatch:
-            print "Please beaware there are mismatch of type parameter between <{}>:{} and <{}>:{}".format(bad_type.Family.Name,
+            print("Please beaware there are mismatch of type parameter between <{}>:{} and <{}>:{}".format(bad_type.Family.Name,)
                                                                                                         bad_type.LookupParameter("Type Name").AsString(),
                                                                                                         target_type.Family.Name,
                                                                                                         target_type.LookupParameter("Type Name").AsString())
@@ -665,20 +665,20 @@ class MergeFamily_UI(forms.WPFWindow):
     def dropdown_list_value_changed(self, sender, args):
         return
         #self.is_pass_convert_precheck()
-        print self.type_list_bad.ItemsSource
+        print(self.type_list_bad.ItemsSource)
         for x in self.type_list_bad.ItemsSource:
-            print x
-            print x.item
-            print x.display_text
+            print(x)
+            print(x.item)
+            print(x.display_text)
 
-        print "###################################"
+        print("###################################")
         if not self.type_list_target.ItemsSource:
             return
-        print self.type_list_target.ItemsSource
+        print(self.type_list_target.ItemsSource)
         for x in self.type_list_target.ItemsSource:
-            print x
-            print x.item
-            print x.display_text
+            print(x)
+            print(x.item)
+            print(x.display_text)
 
     def zoom_target_click(self, sender, args):
         self.handle_zoom(is_bad_type = False)

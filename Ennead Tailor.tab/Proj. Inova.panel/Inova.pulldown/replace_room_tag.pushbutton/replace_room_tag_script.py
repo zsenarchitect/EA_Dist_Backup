@@ -68,7 +68,7 @@ def replace_room_tag():
     t = DB.Transaction(doc, __title__)
     t.Start()
     for i, sheet in enumerate(sheets):
-        print "\n\n---{}/{} sheet: {}-{}".format(i + 1, len(sheets), sheet.SheetNumber, sheet.Name)
+        print("\n\n---{}/{} sheet: {}-{}".format(i + 1, len(sheets), sheet.SheetNumber, sheet.Name))
         for view_id in sheet.GetAllPlacedViews ():
             view = doc.GetElement(view_id)
             tags = DB.FilteredElementCollector(doc, view.Id).OfClass(DB.SpatialElementTag ).WhereElementIsNotElementType().ToElements()

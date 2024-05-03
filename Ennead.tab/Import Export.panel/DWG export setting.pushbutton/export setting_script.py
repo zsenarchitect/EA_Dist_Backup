@@ -49,9 +49,9 @@ def process_setting(sel_setting):
         new_layer_info = DB.ExportLayerInfo()
         """
         if export_layer_key.SubCategoryName == "Corner_Fin Main":
-            print "x"
+            print("x")
         if export_layer_key.SubCategoryName == "Clearance":
-            print "y"
+            print("y")
         """
         if export_layer_key.SubCategoryName == "":
             LayerName = "{}".format(export_layer_key.CategoryName)
@@ -68,9 +68,9 @@ def process_setting(sel_setting):
 
         """
         if "bridge" in export_layer_key.SubCategoryName.lower():
-            print "---"
-            print export_layer_key.SubCategoryName
-            print LayerName
+            print("---")
+            print(export_layer_key.SubCategoryName)
+            print(LayerName)
         """
         #print "*"*8
         #safety += 1

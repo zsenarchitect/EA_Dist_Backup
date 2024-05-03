@@ -11,10 +11,10 @@ __doc__ = 'show the ref plane info.'
 
 
 def print_para(element):
-	print '------'
+	print('------')
 	for para in element.Parameters:
-		print "{}--->{}".format(para.Definition.Name, para.AsValueString())
-	print "-----------\n\n"
+		print("{}--->{}".format(para.Definition.Name, para.AsValueString()))
+	print("-----------\n\n")
 
 
 
@@ -101,28 +101,28 @@ def user_select(list_raw):
 def final_print():
 	for item in ref_plane_item_collection:
 		if item.ref_plane_name in ref_plane_item_collection_selected:
-			print "~~~~~"
+			print("~~~~~")
 
 			if item.ref_plane_name == "Unnamed Ref Plane":
-				print "{} is in workset:<{}>".format(item.ref_plane_name,item.workset)
+				print("{} is in workset:<{}>".format(item.ref_plane_name,item.workset))
 			else:
-				print "Ref Plane {} is in workset:<{}>".format(item.ref_plane_name,item.workset)
+				print("Ref Plane {} is in workset:<{}>".format(item.ref_plane_name,item.workset))
 			if "View" in item.workset:
-				print "This Ref Plane is view specific."
+				print("This Ref Plane is view specific.")
 
 
 			if item.subcategory != "N/A":
-				print "It is in {} subcategory.". format(item.subcategory)
+				print("It is in {} subcategory.". format(item.subcategory))
 			else:
-				print "It is not assigned in any subcategory."
+				print("It is not assigned in any subcategory.")
 
 			if item.scope_box != "N/A":
-				print "It is in scope box {}.". format(item.scope_box)
+				print("It is in scope box {}.". format(item.scope_box))
 			else:
-				print "It is not in scope box."
+				print("It is not in scope box.")
 
-			print "{} Its health condition is {}.".format(item.emoji, item.critical_level_text)
-			print "{}".format(output.linkify(item.sample.Id, title = "Go To RP"))
+			print("{} Its health condition is {}.".format(item.emoji, item.critical_level_text))
+			print("{}".format(output.linkify(item.sample.Id, title = "Go To RP")))
 
 
 def final_print_table():

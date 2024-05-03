@@ -16,7 +16,7 @@ def append_data(file,data_entry):
 
         for item in current_data:
             if str(date.today()) in item:
-                print "data with this date {} exist already".format(date.today())
+                print("data with this date {} exist already".format(date.today()))
                 script.exit()
 
 
@@ -43,7 +43,7 @@ def read_data(file):
         current_data  = pickle.load(f)
         f.close()
     except:
-        print "data with this file title {} do not exist".format(revit_name)
+        print("data with this file title {} do not exist".format(revit_name))
         script.exit()
 
     #print current_data
@@ -53,11 +53,11 @@ def read_data(file):
     #print "~~33333"
     """
     for line in current_data:
-        print line
+        print(line)
     """
 
     last_item = current_data[-1]
-    print compare_data(last_item)
+    print(compare_data(last_item))
 
 def compare_data(previous_data):
     old_date = previous_data.split(":")[0]

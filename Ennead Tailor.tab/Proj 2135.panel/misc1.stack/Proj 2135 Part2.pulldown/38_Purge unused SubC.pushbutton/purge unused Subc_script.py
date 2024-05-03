@@ -18,7 +18,7 @@ doc = __revit__.ActiveUIDocument.Document
 def fake_delete_subC(subC):
     global safety
     is_purgable = False
-    print "***************[{0}]--->[{1}]".format(c.Name , sub_c.Name)
+    print("***************[{0}]--->[{1}]".format(c.Name , sub_c.Name))
     t = DB.Transaction(doc, "temp")
     t.Start()
     try:
@@ -36,10 +36,10 @@ def fake_delete_subC(subC):
     if not is_purgable:
         return
 
-    print removed_elements.Count
+    print(removed_elements.Count)
     for id in list(removed_elements):
         graphic_style = doc.GetElement(id)
-        print graphic_style
+        print(graphic_style)
         # print graphic_style.GetType()
         # print graphic_style.Name #, graphic_style.GraphicsStyleCategory, graphic_style.GraphicsStyleType , graphic_style.GetDependentElements()
 

@@ -20,14 +20,14 @@ doc = __revit__.ActiveUIDocument.Document
 
 def export_image_from_view(view, doc):
 
-    print "-----"
+    print("-----")
 
 
     time_start = time.time()
 
     file_name = view.Name
 
-    print "preparing [{}].jpg".format(file_name)
+    print("preparing [{}].jpg".format(file_name))
 
     output_folder = "{}\Documents\{}".format(os.environ["USERPROFILE"], "###Axon Views Jpgs for [{}]".format(doc.Title))
 
@@ -51,7 +51,7 @@ def export_image_from_view(view, doc):
             break
         try:
             doc.ExportImage(opts)
-            print "Image export succesfully"
+            print("Image export succesfully")
             break
         except Exception as e:
             attempt += 1
@@ -61,11 +61,11 @@ def export_image_from_view(view, doc):
                 output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
             else:
-                print "failed export view [{}] becasue: {}".format(view.Name, e)
+                print("failed export view [{}] becasue: {}".format(view.Name, e))
                 return
     time_end = time.time()
     #cleanup_jpg_name()
-    print "view to Jpg takes {} seconds".format( time_end - time_start)
+    print("view to Jpg takes {} seconds".format( time_end - time_start))
     cleanup_jpg_name(output_folder, file_name, str(view.ViewType))
     #add_to_log(file_name + ".jpg", time_end - time_start)
     EA_UTILITY.show_toast(app_name = "EnneadTab Exporter",
@@ -104,14 +104,14 @@ def export_gif_from_archive():
     view = doc.ActiveView
     ref_view_name = view.Name
     if view.ViewType.ToString() != "ThreeD":
-        print "Can ony do 3D view"
+        print("Can ony do 3D view")
         return
     camera = view.GetOrientation
 
     # get a list of  files to detach, use short cut. short cut name  is date.
     files = list(forms.pick_file(file_ext = "rvt", multi_file=True, title = "Pick the shortcut to your revit archive."))
 
-    print files
+    print(files)
 
     # process shortcut, open with detach,
     map(lambda x: process_file(x, camera, ref_view_name), files)

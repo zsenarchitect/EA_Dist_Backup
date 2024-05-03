@@ -47,13 +47,13 @@ def mark_RFR_detail():
 
 
 
-    print "-"*50
+    print("-"*50)
     if  VIEW_KEY_NAME not in doc.ActiveView.Name:
         EA_UTILITY.dialogue(main_text = "Do it in view '{}' only.".format(VIEW_KEY_NAME))
 
         return
 
-    print doc.ActiveView.Name
+    print(doc.ActiveView.Name)
 
     all_details_placed = DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).\
                         WhereElementIsNotElementType().ToElements()
@@ -88,7 +88,7 @@ def mark_RFR_detail():
     #print unique_storaged_names
     for name in unique_storaged_names:
         if name not in unique_placed_names:
-            print "<{}> not placed in anywhere, might get purged accidentally. Please place at least here.".format(name)
+            print("<{}> not placed in anywhere, might get purged accidentally. Please place at least here.".format(name))
 
 
     # get all RFR detail instance in current view
@@ -100,28 +100,28 @@ def mark_RFR_detail():
     all_details_placed_not_current_view = filter(lambda x: x.OwnerViewId.IntegerValue != doc.ActiveView.Id.IntegerValue , all_details_placed)
 
     unique_placed_names_in_current_view = sorted(list(set([x.Symbol.Family.Name for x in all_details_placed_current_view])))
-    print "-"*50
+    print("-"*50)
     for name in unique_storaged_names:
         if name not in unique_placed_names_in_current_view:
-            print "<{}> not placed in QAQC view. Please place at least here.".format(name)
+            print("<{}> not placed in QAQC view. Please place at least here.".format(name))
 
     unique_placed_names_not_in_current_view = sorted(list(set([x.Symbol.Family.Name for x in all_details_placed_not_current_view])))
-    print "-"*50
+    print("-"*50)
     for name in unique_storaged_names:
         if name not in unique_placed_names_not_in_current_view:
-            print "<{}> not placed in documentation set yet. ".format(name)
+            print("<{}> not placed in documentation set yet. ".format(name))
 
 
 
 
 
 
-    print "\n\n--------------"
+    print("\n\n--------------")
     # process ite in current view, find its cousin in other view, get view location sheet number sheet etc, feed back to detail in current view.
     t = DB.Transaction(doc, "Mark RFR items in Comments")
     t.Start()
     for item in all_details_placed_current_view:
-        print "\n    "
+        print("\n    ")
         family_name = item.Symbol.Family.Name
         comment = ""
         for other_item in all_details_placed_not_current_view:
@@ -149,17 +149,17 @@ def mark_RFR_detail():
                 #comment += "{}/{}/{}\n".format(detail_num, sheet_num,  view_title)
                 comment += "{}\n".format(view.Name)
                 #print "---find <{}> in {}/{}/{};".format(family_name, detail_num, sheet_num,  view_title)
-                print "---find <{}> in <{}>".format(family_name, output.linkify(view.Id, title = view.Name))
+                print("---find <{}> in <{}>".format(family_name, output.linkify(view.Id, title = view.Name)))
         if len(comment) == 0:
-            print "---cannot find <{}> in any view".format(family_name)
+            print("---cannot find <{}> in any view".format(family_name))
             comment = "Not placed in documentation set."
         item.LookupParameter("Comments").Set(comment)
 
 
     t.Commit()
 
-    print "\n\n--------------"
-    print "tool finish"
+    print("\n\n--------------")
+    print("tool finish")
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

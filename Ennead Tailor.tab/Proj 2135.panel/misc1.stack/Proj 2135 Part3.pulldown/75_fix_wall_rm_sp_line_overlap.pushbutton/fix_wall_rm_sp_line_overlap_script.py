@@ -55,7 +55,7 @@ def create_view(view_name):
     view = get_view_by_name(desired_name)
     if view is not None:
         return view
-    print "####creating new axon view for " + view_name
+    print("####creating new axon view for " + view_name)
     view = DB.View3D.CreateIsometric (doc, get_threeD_view_type().Id)
     view.Name = desired_name
     return view

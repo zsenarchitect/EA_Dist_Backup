@@ -26,7 +26,7 @@ def created_by_who(view):
 
 def export_image_from_view(view, doc, adding_creator):
 
-    print "-----"
+    print("-----")
     global counter
     counter += 1
 
@@ -41,7 +41,7 @@ def export_image_from_view(view, doc, adding_creator):
     file_name = file_name.replace("}", "]")
     """
 
-    print "preparing [{}].jpg".format(file_name)
+    print("preparing [{}].jpg".format(file_name))
     
 
     #output_folder = "{}\Documents".format(os.environ["USERPROFILE"])
@@ -67,7 +67,7 @@ def export_image_from_view(view, doc, adding_creator):
             break
         try:
             doc.ExportImage(opts)
-            print "Image export succesfully"
+            print("Image export succesfully")
             break
         except Exception as e:
             attempt += 1
@@ -77,11 +77,11 @@ def export_image_from_view(view, doc, adding_creator):
                 output.print_md("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
             else:
-                print "failed export view [{}] becasue: {}".format(view.Name, e)
+                print("failed export view [{}] becasue: {}".format(view.Name, e))
                 return
     time_end = time.time()
     #cleanup_jpg_name()
-    print "view to Jpg takes {} seconds".format( time_end - time_start)
+    print("view to Jpg takes {} seconds".format( time_end - time_start))
     cleanup_jpg_name(output_folder, file_name, str(view.ViewType))
     #add_to_log(file_name + ".jpg", time_end - time_start)
     EA_UTILITY.show_toast(app_name = "Bilibili exporter",
@@ -106,7 +106,7 @@ def cleanup_jpg_name(output_folder, desired_name, keyword):
             try:
                 os.rename(op.join(output_folder, file_name),op.join(output_folder, new_name + ".jpg"))
             except Exception as e:
-                print "skip {} becasue: {}".format(file_name, e)
+                print("skip {} becasue: {}".format(file_name, e))
 
 def is_no_sheet(view):
 
@@ -158,4 +158,4 @@ if will_sync_and_close:
     EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
 
 
-print "################### finish"
+print("################### finish")

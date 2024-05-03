@@ -26,7 +26,7 @@ def get_element_warning(element, key_word_in_description = None):
 
 
 def process_view(view):
-    print "--working on view: " + view.Name
+    print("--working on view: " + view.Name)
     rooms = DB.FilteredElementCollector(doc, view.Id).OfCategory(DB.BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
     for room in rooms:
         warning = get_element_warning(room, "Room volumes overlap")
@@ -41,7 +41,7 @@ def add_tag_to_room(view, type_name, room):
     X, Y = room.Location.Point.X, room.Location.Point.Y
     UV = DB.UV(X, Y)
     tag = doc.Create.NewRoomTag(DB.LinkElementId(room.Id), UV, view.Id)
-    print "----found room overlay, checker tag added."
+    print("----found room overlay, checker tag added.")
     type_ids = tag.GetValidTypes()
     for type_id in type_ids:
         type = doc.GetElement(type_id)
@@ -51,7 +51,7 @@ def add_tag_to_room(view, type_name, room):
             break
             #tag.RoomTagType = type
     else:
-        print "Change find this checker tag type. Tool terminated."
+        print("Change find this checker tag type. Tool terminated.")
         script.exit()
 
 def OLD_get_room_tag_type_by_name(name, tag):
@@ -70,7 +70,7 @@ def tag_room_too_high():
         return
 
     for i, sheet in enumerate(sheets):
-        print "{} of {}. working on sheet: {}".format(i + 1, len(sheets), sheet.Name)
+        print("{} of {}. working on sheet: {}".format(i + 1, len(sheets), sheet.Name))
         for view_id in sheet.GetAllPlacedViews():
             view = doc.GetElement(view_id)
             process_view(view)

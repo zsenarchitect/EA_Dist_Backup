@@ -34,8 +34,8 @@ def check_associated_level(element):
     bldg_id = element.LookupParameter("MC_$BuildingID").AsString()
 
     """
-    print level_name
-    print bldg_id
+    print(level_name)
+    print(bldg_id)
     """
 
 
@@ -44,13 +44,13 @@ def check_associated_level(element):
 
     element.LookupParameter("Spatial Element Note").Set("")
     if bldg_id == None :
-        print "bad {} element, level = {}, but does not have bldging ID, the scopebox and element are not intersecting----{}".format(element.Category.Name, level_name, output.linkify(element.Id, title = "Go To Element"))
+        print("bad {} element, level = {}, but does not have bldging ID, the scopebox and element are not intersecting----{}".format(element.Category.Name, level_name, output.linkify(element.Id, title = "Go To Element")))
         mark_bad(element)
         return True
     if bldg_id not in level_name :
-        print "bad {} element, level = {}, but building ID = {}, the element is location within the scopebox but associated wrong level.----{}".format(element.Category.Name, level_name, bldg_id, output.linkify(element.Id, title = "Go To Element"))
+        print("bad {} element, level = {}, but building ID = {}, the element is location within the scopebox but associated wrong level.----{}".format(element.Category.Name, level_name, bldg_id, output.linkify(element.Id, title = "Go To Element")))
         try:
-            print "element above is in [{}] area scheme".format(element.AreaScheme.Name)
+            print("element above is in [{}] area scheme".format(element.AreaScheme.Name))
         except:
             pass
         mark_bad(element)
@@ -94,7 +94,7 @@ def is_element_inside_scopebox(element, scopebox):
         if outline.Contains(check_pt, 0):
             return True
     except:
-        print "skipping element: [{}]{} becasue cannot find a location.".format(element.Category.Name, output.linkify(element.Id))
+        print("skipping element: [{}]{} becasue cannot find a location.".format(element.Category.Name, output.linkify(element.Id)))
 
     return False
 """
@@ -106,7 +106,7 @@ def is_element_inside_scopebox(element, scopebox):
             if outline.Contains(element.Location.Curve.GetEndPoint(0), 0):
                 return True
         except:
-            print "skipping element: {} becasue cannot find a location, possiblly a not placed area or room".format(output.linkify(element.Id))
+            print("skipping element: {} becasue cannot find a location, possiblly a not placed area or room".format(output.linkify(element.Id)))
 
     return False
 """
@@ -183,42 +183,42 @@ for i in range(len(category)):
 def process_within_scopebox(scopebox):
     global category
     target_id = scopebox.Name
-    print "   ."
-    print "[Working on scopebox: {}]".format(target_id)
+    print("   .")
+    print("[Working on scopebox: {}]".format(target_id))
     with revit.Transaction("Push ID data"):
         for cate in category:
-            print "*"*20
+            print("*"*20)
             current_elements = category_to_element(cate, scopebox)
-            print "---processing {}, {} elements found".format(cate, len(current_elements))
+            print("---processing {}, {} elements found".format(cate, len(current_elements)))
             if len(current_elements) == 0:
                 continue
             if current_elements[0].LookupParameter(ID_para) == None:
-                print "This category have no parameter {}".format(ID_para)
+                print("This category have no parameter {}".format(ID_para))
                 continue
 
             for element in current_elements:
                 """
-                print element.Name
-                print ID_para
-                print element.LookupParameter(ID_para).AsString()
+                print(element.Name)
+                print(ID_para)
+                print(element.LookupParameter(ID_para).AsString())
                 """
                 if EA_UTILITY.is_owned(element):
-                    print "skipping {} due to ownership."
+                    print("skipping {} due to ownership.")
                     continue
                 try:
                     element.LookupParameter(ID_para).Set(target_id)
                 except Exception as e:
-                    print element.Id
+                    print(element.Id)
                     try:
-                        print "skipping {}, {}".format(element.Name, e)
+                        print("skipping {}, {}".format(element.Name, e))
                     except:
-                        print "skipping {}, {}".format(element.LookupParameter("Name").AsString(), e)
+                        print("skipping {}, {}".format(element.LookupParameter("Name").AsString(), e))
 
 with revit.TransactionGroup("Push ID data by scopebox"):
     map(process_within_scopebox, scopeboxs)
     fix_basement_ID()
 
-print "all elements processed."
+print("all elements processed.")
 
 t = DB.Transaction(revit.doc, "mark bad")
 t.Start()
@@ -233,7 +233,7 @@ for cate in category:
 
     bad = filter(check_associated_level, all_elements)
     if len(bad) > 0:
-        print "*" * 20
+        print("*" * 20)
         forms.alert("{} have {} bad placement, check output window for detail".format(cate, len(bad)))
 output.unfreeze()
 output.set_width(1200)

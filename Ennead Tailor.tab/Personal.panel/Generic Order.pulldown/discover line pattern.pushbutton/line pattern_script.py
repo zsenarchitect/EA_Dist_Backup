@@ -11,16 +11,16 @@ def print_pattern_detail(pattern, show_name = False):
     except:
         pattern_definition = pattern
     if show_name:
-        print pattern_definition.Name
+        print(pattern_definition.Name)
     #print get_definition_sequence(pattern_definition)
     data = get_definition_sequence(pattern_definition)
     for x, y in zip(data[::2], data[1::2]):
-        print "{} = {}mm = {}in".format(x,EA_UTILITY.ft_to_mm(y), EA_UTILITY.ft_to_inch(y))
+        print("{} = {}mm = {}in".format(x,EA_UTILITY.ft_to_mm(y), EA_UTILITY.ft_to_inch(y)))
 
 def is_almost_equal(x,y):
     """
     a, b = float(x), float(y)
-    print a, b
+    print(a, b)
     factor = 1000.0
     """
     tolerance = 0.5 # unit is mm
@@ -52,10 +52,10 @@ class line_pattern_family:
         if len(self.base_definition.GetSegments()) != len(other_definition.GetSegments()):
             return False
         """
-        print "&+&"
-        print get_definition_sequence(self.base_definition)
-        print get_definition_sequence(other_definition)
-        print "&-&"
+        print("&+&")
+        print(get_definition_sequence(self.base_definition))
+        print(get_definition_sequence(other_definition))
+        print("&-&")
         """
         for x,y in zip(get_definition_sequence(self.base_definition),get_definition_sequence(other_definition)):
 
@@ -79,10 +79,10 @@ line_patterns = DB.FilteredElementCollector(revit.doc).OfClass(DB.LinePatternEle
 
 """# when debug, show to see raw data
 for pattern in line_patterns:
-    print "*"*10
+    print("*"*10)
     print_pattern_detail(pattern, show_name = True)
-    print "*"*10
-print "@%&"*10
+    print("*"*10)
+print("@%&"*10)
 """
 
 
@@ -98,10 +98,10 @@ for current_pattern in line_patterns:
     found_status = False
     for family in collection:
         """
-        print "999"
-        print get_definition_sequence(family.base_definition)
-        print get_definition_sequence(pattern_definition)
-        print "99+9"
+        print("999")
+        print(get_definition_sequence(family.base_definition))
+        print(get_definition_sequence(pattern_definition))
+        print("99+9")
         """
         if family.is_similar_definition(current_pattern_definition):
             family.add_name(current_pattern_definition.Name)
@@ -117,16 +117,16 @@ for current_pattern in line_patterns:
         collection.append(line_pattern_family(current_pattern_definition))
 
 
-print "---"*50
+print("---"*50)
 for item in collection:
-    print "the following line patterns are visually similar to this pattern"
-    print item.names
+    print("the following line patterns are visually similar to this pattern")
+    print(item.names)
     print_pattern_detail(item.base_definition)
     print("  \n  ")
 
 output.unfreeze()
 
-print "Use Ideate Style Manager to merge."
+print("Use Ideate Style Manager to merge.")
 
 #ideas:
 """
@@ -243,7 +243,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -317,9 +317,9 @@ forms.select_swatch(title='Select Color Swatch', button_name='Select')
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

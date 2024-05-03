@@ -113,7 +113,7 @@ class UI_Window(WPFWindow):
                 try:
                     self.process_data(data)
                 except Exception as e:
-                    print "Failed to set workset for: {}".format(data.type_name)
+                    print("Failed to set workset for: {}".format(data.type_name))
                     EA_UTILITY.print_traceback()
                 self.progress_bar.Value = i + 1
                 self.progress_bar_display.Text = "{}/{}\nChange {}".format(int(self.progress_bar.Value),\
@@ -191,7 +191,7 @@ try:
 
     #EA_UTILITY.show_toast(title = "Local File Saved.")
 except:
-    print "save failed"
+    print("save failed")
     pass
 ## save revit
 main()

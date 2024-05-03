@@ -34,9 +34,9 @@ def main():
         create_revision(doc, description, revision_date)
         t.Commit()
 
-    print "[{}] revision created for the document".format(description)
+    print("[{}] revision created for the document".format(description))
     for doc in docs:
-        print "\n\t\t" + doc.Title
+        print("\n\t\t" + doc.Title)
 
 
 

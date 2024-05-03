@@ -25,13 +25,13 @@ def fix_dim(dim, text_to_search, text_to_replace):
     if dim.NumberOfSegments == 0:
         if dim.Below == text_to_search:
             dim.Below = text_to_replace
-            print dim.Id
+            print(dim.Id)
         return
 
     for dim_seg in dim.Segments:
         if dim_seg.Below == text_to_search:
             dim_seg.Below = text_to_replace
-            print dim.Id
+            print(dim.Id)
 
     pass
 ################## main code below #####################
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     t.Start()
     replace_dim_text()
     t.Commit()
-    print "Tool finished"
+    print("Tool finished")

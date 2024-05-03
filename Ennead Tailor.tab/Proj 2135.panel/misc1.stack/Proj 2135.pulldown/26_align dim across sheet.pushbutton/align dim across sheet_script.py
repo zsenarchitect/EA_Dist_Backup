@@ -47,7 +47,7 @@ def process_view(view):
         # get dist now those are parallel
         # DB.Line.CreateUnbound(dim.Curve.GetEndPoint(0), vector)
         dist = ohter_dim.Curve.Distance(dim.Curve.GetEndPoint(0))
-        print EA_UTILITY.interal_to_mm(dist)
+        print(EA_UTILITY.interal_to_mm(dist))
         return dist
 
 
@@ -65,7 +65,7 @@ def process_view(view):
             if not dist:
                 continue
             if dist < tolerance:
-                print "very close"
+                print("very close")
                 pass
 
 
@@ -240,7 +240,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -314,9 +314,9 @@ forms.select_swatch(title='Select Color Swatch', button_name='Select')
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

@@ -33,7 +33,7 @@ def get_type_by_name(name):
 
     my_type = filter(lambda x: get_name(x) == name, types)
     if len(my_type) == 0:
-        print "##Cannot find family type: " + name
+        print("##Cannot find family type: " + name)
         return None
     return my_type[0]
 

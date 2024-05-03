@@ -47,10 +47,10 @@ if len(user_keynotes_tags)>0:
         key_text = "Keynote Text = " + tag.Parameter[DB.BuiltInParameter.KEYNOTE_TEXT].AsString()
         parent_view = tag.OwnerViewId
         print ("{}: tag Id = {}-->{}".format(idx+1,tag.Id,output.linkify(tag.Id, title = "Go To Tag")))
-        print key_value
-        print key_text
-        print "Found in this view: {} :-->{}".format(revit.doc.GetElement(parent_view).Name,output.linkify(parent_view, title = "Go To View"))#ViewNmae
-        print seperation
+        print(key_value)
+        print(key_text)
+        print("Found in this view: {} :-->{}".format(revit.doc.GetElement(parent_view).Name,output.linkify(parent_view, title = "Go To View")))#ViewNmae
+        print(seperation)
 
 
-print '{0} KEYNOTE(S) FOUND IN SELECTED SHEETS.'.format(len(user_keynotes_tags))
+print('{0} KEYNOTE(S) FOUND IN SELECTED SHEETS.'.format(len(user_keynotes_tags)))

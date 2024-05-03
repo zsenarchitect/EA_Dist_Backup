@@ -48,9 +48,9 @@ def main():
     field = get_field(schedules[0])
     map(lambda x:add_filed_to_schedule(field, x), schedules)
     #definition = EA_UTILITY.pick_shared_para_definition(doc)
-    print "[{}] field added to schedules:".format(field.GetName(doc))
+    print("[{}] field added to schedules:".format(field.GetName(doc)))
     for schedule in schedules:
-        print "\n\t\t{}".format(schedule.Name)
+        print("\n\t\t{}".format(schedule.Name))
 
 def add_filed_to_schedule(field, schedule):
     schedule.Definition.AddField(field)

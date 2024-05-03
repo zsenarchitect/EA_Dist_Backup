@@ -38,13 +38,13 @@ def fix():
         EA_UTILITY.dialogue(main_text = "Need to select at least one stair that you want to make 'end with riser' checked", sub_text = "Stair inside group must be fixed manually.")
         return
 
-    print "{} stairs selected".format(len(stairs))
+    print("{} stairs selected".format(len(stairs)))
     t = DB.Transaction(doc, "fix stair riser condition")
     t.Start()
 
     for stair in stairs:
         if stair.GroupId.IntegerValue  > 0:
-            print " [Contained in a group.] Cannot modify by script."
+            print(" [Contained in a group.] Cannot modify by script.")
             continue
         view.SetElementOverrides(stair.Id, DB.OverrideGraphicSettings() )
 
@@ -56,7 +56,7 @@ def fix():
 
 
     t.Commit()
-    print "\n\n Tool finished. Run it again after modifying stairs to keep checking."
+    print("\n\n Tool finished. Run it again after modifying stairs to keep checking.")
 
 
 ################## main code below #####################

@@ -22,13 +22,13 @@ class Solution:
 
 
     def process_view(self, view, option):
-        print "\n####### View = {}".format(view.Name)
+        print("\n####### View = {}".format(view.Name))
         set_name = doc.GetElement(option.Parameter[DB.BuiltInParameter.OPTION_SET_ID].AsElementId()).Name
-        print "Checking design option: [{}]-->{}".format(set_name, option.Name)
+        print("Checking design option: [{}]-->{}".format(set_name, option.Name))
         R = self.color_map[option.Id].Red
         G = self.color_map[option.Id].Green
         B = self.color_map[option.Id].Blue
-        print "RGB = {},{},{}".format(R,G,B)
+        print("RGB = {},{},{}".format(R,G,B))
 
         def enhance_color(x):
             return min(256, int(float(x * 1.1)))
@@ -107,12 +107,12 @@ class Solution:
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

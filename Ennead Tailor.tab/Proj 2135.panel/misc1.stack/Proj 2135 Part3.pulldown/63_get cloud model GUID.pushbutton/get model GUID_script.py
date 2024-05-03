@@ -14,9 +14,9 @@ from Autodesk.Revit import DB
 doc = __revit__.ActiveUIDocument.Document
 
 def get_guid():
-    print doc.Title
+    print(doc.Title)
     model_path = doc.GetWorksharingCentralModelPath ()
-    print model_path.GetModelGUID ()
+    print(model_path.GetModelGUID ())
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

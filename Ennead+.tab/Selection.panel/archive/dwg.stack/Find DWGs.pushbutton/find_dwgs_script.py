@@ -14,7 +14,7 @@ def get_dwgs():
     try:
         dwgs_list = DB.FilteredElementCollector(revit.doc).OfClass(DB.ImportInstance).WhereElementIsNotElementType().ToElements()
     except:
-        print "fail to get DWGs. Action cancelled."
+        print("fail to get DWGs. Action cancelled.")
         script.exit()
 
 
@@ -41,18 +41,18 @@ def is_linked(dwg):
 
 def output_info(elements):
     if len(elements) == 0:
-        print "None found."
+        print("None found.")
         return
     for el in elements:
         print("DWG Id = {} --->{}".format(el.Id, output.linkify(el.Id, title = "Select DWG")))
 
         """
         for para in el.Parameters:
-            print para.Definition.Name, para.AsString()
+            print(para.Definition.Name, para.AsString())
         """
 
         """
-        print el.WorksetId, revit.doc,DB.Document
+        print(el.WorksetId, revit.doc,DB.Document)
         """
 
 
@@ -63,7 +63,7 @@ def output_info(elements):
         workset = revit.doc.GetWorksetTable().GetWorkset(el.WorksetId).Name
         print ("DWG name = {}".format(dwg_name))
         creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(revit.doc, el.Id).Creator
-        print "Initially created by [{}]".format(creator)
+        print("Initially created by [{}]".format(creator))
 
         if el.ViewSpecific:
             view_id = el.OwnerViewId
@@ -75,18 +75,18 @@ def output_info(elements):
             print ("It is view specific 2D dwg in view '{}' --->{}".format(view_name, output.linkify(view_id, title = "Go To View")))
 
             if el.IsHidden(revit.doc.GetElement(view_id)):
-                print "It is currently hidden in the view."
+                print("It is currently hidden in the view.")
         else:
             print ("It is 3D dwg. ")
             print ("Workset = {}".format(workset))
 
 
-        print seperation_small
+        print(seperation_small)
 
 
 def list_dwg_size():
 
-    print "\n\n\nrank size"
+    print("\n\n\nrank size")
     dwgs_list = DB.FilteredElementCollector(revit.doc).OfClass(DB.CADLinkType ).ToElements()
     #print dwgs_list
     dwg_links = []
@@ -95,7 +95,7 @@ def list_dwg_size():
             file_ref = dwg.GetExternalFileReference ()
         except Exception as e:
             print (e)
-            print dwg.LookupParameter("Type Name").AsString()
+            print(dwg.LookupParameter("Type Name").AsString())
             continue
         file_path = file_ref.GetPath()
         file_path = DB.ModelPathUtils.ConvertModelPathToUserVisiblePath(file_path)
@@ -111,7 +111,7 @@ def list_dwg_size():
     dwg_links.sort(key = lambda x: x[1], reverse = True)
     for item in dwg_links:
         output.print_md( "**{}** --> {}".format( get_filesize(item[0], return_bytes = False), item[0]))
-    print "\n\nrank size done"
+    print("\n\nrank size done")
 
 
 def get_filesize(filepath, return_bytes = False):
@@ -157,24 +157,24 @@ for dwg in all_dwgs:
 
 output.print_md("#" + seperation_special + "Linked DWGs Below" + seperation_special)
 output_info(dwgs_linked)
-print seperation_big
+print(seperation_big)
 output.print_md("#" + seperation_special + "Imported DWGs Below" + seperation_special)
 output_info(dwgs_imported)
 
 
 #do summary
-print seperation_big
+print(seperation_big)
 output.print_md("# Summary")
 output.print_md("Total {} **linked** DWGs found.".format(len(dwgs_linked)))
 output.print_md("Total {} **imported** DWGs found.".format(len(dwgs_imported)))
 if len(dwgs_imported)>5:
-    print "Too many imported DWGs."
-print "If possible, use as little as possible imported DWGs."
+    print("Too many imported DWGs.")
+print("If possible, use as little as possible imported DWGs.")
 
 list_dwg_size()
 
 
-print "\n"*8
+print("\n"*8)
 output.print_md( "***Tool Tips 1: If you click to jump to dwg first, Revit search view could be slow, so it is better to jump to the specific listed view first before select the dwg.***")
 output.print_md( "***Tool Tips 2: You can pin the window to keep it stay on top. Very handy when you have multiple dwg to track.***")
 path = script.get_bundle_file('pin.png')

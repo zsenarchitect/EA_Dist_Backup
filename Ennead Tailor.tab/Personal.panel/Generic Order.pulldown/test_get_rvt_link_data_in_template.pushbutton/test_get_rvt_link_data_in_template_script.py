@@ -25,9 +25,9 @@ def test_get_rvt_link_data_in_template():
     
     cate_id = DB.Category.GetCategory(doc, DB.BuiltInCategory.OST_RvtLinks).Id
     is_link_cate_hidden = template.GetCategoryHidden(cate_id)
-    print is_link_cate_hidden
+    print(is_link_cate_hidden)
     override  = template.GetCategoryOverrides(cate_id)
-    print override
+    print(override)
     """
     t = DB.Transaction(doc, __title__)
     t.Start()
@@ -37,12 +37,12 @@ def test_get_rvt_link_data_in_template():
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

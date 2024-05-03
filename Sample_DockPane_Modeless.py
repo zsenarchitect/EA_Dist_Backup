@@ -45,17 +45,17 @@ def try_catch_error(func):
 
 
 def sample_func_1(count):
-    print "##sample func 1 begin"
+    print("##sample func 1 begin")
     for i in range(count):
-        print i
-    print "## sample func 1 end"
+        print(i)
+    print("## sample func 1 end")
 
 
 def sample_func_2(count):
-    print "##sample func 2 begin"
+    print("##sample func 2 begin")
     for i in range(count):
-        print i * i
-    print "## sample func 2 end"
+        print(i * i)
+    print("## sample func 2 end")
 
 # Create a subclass of IExternalEventHandler
 class SimpleEventHandler(IExternalEventHandler):
@@ -111,7 +111,7 @@ class SampleDockable(forms.WPFPanel):
     def primary_button_Clicked(self, sender, e):
         self.update_UI()
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
-        print "primary button clicked"
+        print("primary button clicked")
         kwargs = "to be replaced by any thing"
         func_name = "sample_func_1"
         self.generic_click(func_name, kwargs)
@@ -134,7 +134,7 @@ class SampleDockable(forms.WPFPanel):
 
 
 def register_event(func):
-    print "registering new func"
+    print("registering new func")
     # Now we need to make an instance of this handler. Moreover, it shows that the same class could be used to for
     # different functions using different handler class instances
     simple_event_handler = SimpleEventHandler(func)
@@ -143,7 +143,7 @@ def register_event(func):
     # We now need to create the ExternalEvent
     ext_event = ExternalEvent.Create(simple_event_handler)
     #ext_event.Raise()
-    print "registering finished"
+    print("registering finished")
     return ext_event
 
 

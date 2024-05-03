@@ -31,7 +31,7 @@ def transfer_sheet_order():
         data = sheet.LookupParameter("Sheet Order").AsString()
         if not data:
             continue
-        print data
+        print(data)
         try:
             sheet.LookupParameter("Sheet_$Order").Set(int(data))
             sheet.LookupParameter("Sheet Order").Set("Old_{}".format(data))
@@ -44,12 +44,12 @@ def transfer_sheet_order():
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

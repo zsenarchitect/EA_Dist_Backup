@@ -123,7 +123,7 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
 
 
 
-def load_color_template(doc, naming_map, excel_path = None):
+def load_color_template(doc, naming_map, excel_path = None, is_remove_bad = False):
     """Update color scheme with office template excel version
 NOTE: excel should be saved with .xls instead of .xlsx format
 Also note, the column header should be as such:
@@ -147,5 +147,5 @@ naming map should looks like this. Key are what to lookup in excel, value is the
 naming_map = {"department_color_map":"Primary_Department Category",
               "program_color_map":"Primary_Department Program Type"}
 """
-    updater = ColorSchemeUpdater(doc, naming_map, excel_path)
+    updater = ColorSchemeUpdater(doc, naming_map, excel_path, is_remove_bad)
     updater.load_color_template()

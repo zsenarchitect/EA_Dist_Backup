@@ -27,10 +27,10 @@ def set_rm_department(room, department):
     try:
         room.LookupParameter("Department").Set(department)
     except Exception as e:
-        print "*"*10
-        print "skipping room {} ".format(output.linkify(room.Id))
+        print("*"*10)
+        print("skipping room {} ".format(output.linkify(room.Id)))
         print (e)
-        print "*"*10
+        print("*"*10)
 
 def try_to_fix_rm(department):
 

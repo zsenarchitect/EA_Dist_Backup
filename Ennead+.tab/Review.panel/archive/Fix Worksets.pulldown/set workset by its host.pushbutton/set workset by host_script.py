@@ -30,7 +30,7 @@ def set_element_workset(element):
         """
         return "OK"
     except:
-        print "\n---------------------------------"
+        print("\n---------------------------------")
 
 
         id_card = get_id_card(element)
@@ -45,8 +45,8 @@ def set_element_workset(element):
         if element.GroupId != -1: #-1 means not in group
             try:
                 group_name = revit.doc.GetElement(element.GroupId).Name
-                print "\nFail to set workset for {0} becasue it is in group '{3}'---> {1}--->{2}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"),script.get_output().linkify(element.GroupId, title = "Go To Group"), group_name)
-                print "This group is currently in workset '{}'".format(get_element_workset(revit.doc.GetElement(element.GroupId)).Name)
+                print("\nFail to set workset for {0} becasue it is in group '{3}'---> {1}--->{2}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"),script.get_output().linkify(element.GroupId, title = "Go To Group"), group_name))
+                print("This group is currently in workset '{}'".format(get_element_workset(revit.doc.GetElement(element.GroupId)).Name))
             except:
                 group_name = "None"
 
@@ -54,7 +54,7 @@ def set_element_workset(element):
 
             try:
                 #if revit.doc.GetElement(element.GroupId).DesignOption:
-                print "The group '{}' is in design option '{}'. You may use 'Go To Group' while that design option is in edit mode.\n\n ".format(group_name, revit.doc.GetElement(element.GroupId).DesignOption.Name)
+                print("The group '{}' is in design option '{}'. You may use 'Go To Group' while that design option is in edit mode.\n\n ".format(group_name, revit.doc.GetElement(element.GroupId).DesignOption.Name))
                 return "Group In DesignOption"
             except:#no attribute designoption, just say it is in a group
                 return "In Group"
@@ -63,22 +63,22 @@ def set_element_workset(element):
                 pass
 
         elif element.DesignOption != -1:#-1 means not in design option
-            print "The element is in design option '{}'. You may use 'Go To Element' while that design option is in edit mode.\n\n ".format(element.DesignOption.Name)
+            print("The element is in design option '{}'. You may use 'Go To Element' while that design option is in edit mode.\n\n ".format(element.DesignOption.Name))
             return "Element In DesignOption"
 
         else:
-            print "Fail to set workset on {0} ---> {1}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"))
+            print("Fail to set workset on {0} ---> {1}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element")))
             return "Unknown"
 
-        print "Contact SenZhang"
+        print("Contact SenZhang")
 
 def get_element_workset(element):
 
     try:
         return revit.doc.GetWorksetTable().GetWorkset(element.WorksetId)
     except:
-        print element
-        print element.Id
+        print(element)
+        print(element.Id)
         pass
 
 def collect_door():
@@ -113,8 +113,8 @@ for element in elements:
     """
     #if element.Host == None:
     if element.Symbol.Family.IsInPlace:
-        print "Cannot edit '{0}' due to it is in-place family---> {1}".format(get_id_card(element),script.get_output().linkify(element.Id, title = "Go To Element"))
-        print "It is currently in workset '{}'\n~~~~~~~~".format(get_element_workset(element).Name)
+        print("Cannot edit '{0}' due to it is in-place family---> {1}".format(get_id_card(element),script.get_output().linkify(element.Id, title = "Go To Element")))
+        print("It is currently in workset '{}'\n~~~~~~~~".format(get_element_workset(element).Name))
         fail_inPlace += 1
         continue
 
@@ -155,7 +155,7 @@ with revit.Transaction("Set Workset by Host"):
         #print get_element_workset(element).Name
         ownership = DB.WorksharingUtils.GetWorksharingTooltipInfo(revit.doc,element.Id).Owner
         if ownership and (ownership != HOST_APP.username):
-            print "Cannot edit {0} due to ownership by {2}---> {1}".format(get_id_card(element),script.get_output().linkify(element.Id, title = "Go To Element"),ownership)
+            print("Cannot edit {0} due to ownership by {2}---> {1}".format(get_id_card(element),script.get_output().linkify(element.Id, title = "Go To Element"),ownership))
             fail_owner += 1
 
             continue
@@ -174,7 +174,7 @@ with revit.Transaction("Set Workset by Host"):
                 fail_convert += 1
 """
 if len(elements) == success_count:
-    print "All elements changed workset successfully."
+    print("All elements changed workset successfully.")
     script.get_output().self_destruct(1)
 """
 script.get_output().unfreeze()

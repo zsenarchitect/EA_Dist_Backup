@@ -185,7 +185,7 @@ class AI_Report_modelessForm(WPFWindow):
         output = script.get_output()
         while attempt < max_wait:
             attempt += 1
-            print attempt
+            print(attempt)
             output.set_width(10)
             output.set_height(10)
 

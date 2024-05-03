@@ -25,13 +25,13 @@ def reload_family(family):
         #print load_option
         """
         famDoc = revit.doc.Application.OpenDocumentFile(file)
-        print famDoc
+        print(famDoc)
         famDoc.LoadFamily(revit.doc, load_option)
         """
         _main_doc.LoadFamily(file, load_option, clr.StrongBox[DB.Family](family))
     except Exception as e:
         print (e)
-        print "Skip family <{}> reload".format(family.Name)
+        print("Skip family <{}> reload".format(family.Name))
 
 class FamilyOption(DB.IFamilyLoadOptions) :
     def OnFamilyFound(self, familyInUse, overwriteParameterValues):
@@ -55,19 +55,19 @@ collection_BIM360_family = []
 collection_drive_family = []
 with forms.ProgressBar(title = "Checking Families, Hold On...({value} of {max_value})", step = 1, cancellable = True) as pb:
     for family in all_families:
-        print "-"*20
+        print("-"*20)
         try:
             famDoc = revit.doc.EditFamily(family)
         except:
-            print "Skipping family <{}>".format(family.Name)
+            print("Skipping family <{}>".format(family.Name))
             collection_skip_family.append(family)
             continue
 
         if not famDoc.PathName:
-            print "Family <{}> path location not found".format(family.Name)
+            print("Family <{}> path location not found".format(family.Name))
             collection_not_found.append(family)
         else:
-            print "Family <{}> \npath = {}".format(family.Name, famDoc.PathName)
+            print("Family <{}> \npath = {}".format(family.Name, famDoc.PathName))
 
             if "BIM 360" in famDoc.PathName:
                 collection_BIM360_family.append(family)
@@ -81,20 +81,20 @@ with forms.ProgressBar(title = "Checking Families, Hold On...({value} of {max_va
         if pb.cancelled:
             script.exit()
 
-print "#"*40 + "  Summery  " +"#"*40
+print("#"*40 + "  Summery  " +"#"*40)
 
-print "{} skipped\n{} no path\n{} found path on BIM 360\n{} found path on disk drive".format(len(collection_skip_family), len(collection_not_found) , len(collection_BIM360_family),len(collection_drive_family))
+print("{} skipped\n{} no path\n{} found path on BIM 360\n{} found path on disk drive".format(len(collection_skip_family), len(collection_not_found) , len(collection_BIM360_family),len(collection_drive_family)))
 
 
 if len(collection_skip_family) > 0:
-    print "\nFollowing families were skipped, mostly becasue of system family"
+    print("\nFollowing families were skipped, mostly becasue of system family")
     for item in collection_skip_family:
-        print "\t\t{}".format(item.Name)
+        print("\t\t{}".format(item.Name))
 
 if len(collection_not_found) > 0:
-    print "\nFollowing families have no file path found, mostly becasue of unsaved load"
+    print("\nFollowing families have no file path found, mostly becasue of unsaved load")
     for item in collection_not_found:
-        print "\t\t{}".format(item.Name)
+        print("\t\t{}".format(item.Name))
 
 if len(collection_BIM360_family) > 0:
     output.freeze()
@@ -146,7 +146,7 @@ FREQUENTLY_SELECTED_CATEGORIES = [
 
 """
 from datetime import date
-print date.today()
+print(date.today())
 """
 """
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -210,9 +210,9 @@ forms.select_swatch(title='Select Color Swatch', button_name='Select')
 """
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

@@ -16,7 +16,7 @@ def open_code():
     files.remove(special_folder)
     """
     for file in files:
-        print file
+        print(file)
     """
     keyword = "<Open Entire Code Folder...>"
     files.insert(0, keyword)

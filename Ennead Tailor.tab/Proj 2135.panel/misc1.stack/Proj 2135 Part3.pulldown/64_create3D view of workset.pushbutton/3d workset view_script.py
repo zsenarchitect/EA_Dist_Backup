@@ -22,12 +22,12 @@ def make_3D_views_from_workset():
     worksets = get_all_userworkset()
     """
     for workset in worksets:
-        print workset.Name
+        print(workset.Name)
     """
 
     views = [create_view(x.Name) for x in worksets]
     for view, workset in zip(views, worksets):
-        print "---working on setting workset visibility for view: " + view.Name
+        print("---working on setting workset visibility for view: " + view.Name)
         view.SetWorksetVisibility(workset.Id, DB.WorksetVisibility.Visible)
         for other_workset in worksets:
             if other_workset == workset:
@@ -47,7 +47,7 @@ def create_view(view_name):
     view = get_view_by_name(desired_name)
     if view is not None:
         return view
-    print "####creating new axon view for " + view_name
+    print("####creating new axon view for " + view_name)
     view = DB.View3D.CreateIsometric (doc, get_threeD_view_type().Id)
     view.Name = desired_name
     return view

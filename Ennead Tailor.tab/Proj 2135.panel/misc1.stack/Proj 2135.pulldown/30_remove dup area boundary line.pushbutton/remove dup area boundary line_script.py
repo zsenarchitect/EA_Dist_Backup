@@ -33,7 +33,7 @@ def process_view(view):
                 continue
             try:
                 doc.Delete(other_line.Id)
-                print "overlaping line deleted, now total warning count = {}".format(current_warning_count())
+                print("overlaping line deleted, now total warning count = {}".format(current_warning_count()))
                 # EA_UTILITY.show_toast(title = "deleting")
             except:
                 pass
@@ -44,7 +44,7 @@ def process_view(view):
 
 
     boundary_lines = get_all_boundary()
-    print "---------Working on view: {}".format(view.Name)
+    print("---------Working on view: {}".format(view.Name))
     EA_UTILITY.show_toast(title = "Working on view: {}".format(view.Name))
     map(fix_boundary, boundary_lines)
 
@@ -70,7 +70,7 @@ t.Start()
 map(process_view, views)
 t.Commit()
 EA_UTILITY.show_toast(title = "Tool finished!!!", message = "{} warnings reduced".format(warning_num - current_warning_count() ))
-print "Tool finished"
-print "{} warnings reduced".format(warning_num - current_warning_count() )
+print("Tool finished")
+print("{} warnings reduced".format(warning_num - current_warning_count() ))
 
 # EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()

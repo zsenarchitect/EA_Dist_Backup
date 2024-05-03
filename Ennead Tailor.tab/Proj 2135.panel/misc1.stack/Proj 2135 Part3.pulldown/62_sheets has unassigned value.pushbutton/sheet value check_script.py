@@ -24,42 +24,42 @@ def check_default_value(correct_error = True):
     for sheet in all_sheets:
         para = sheet.LookupParameter(key_para)
         if EA_UTILITY.parameter_has_unassigned_value(para):
-            print "not assigned Print In Color value at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("not assigned Print In Color value at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             if correct_error:
                 para.Set(0)
 
         if not sheet.LookupParameter("Appears In Sheet List").AsInteger():
             sheet.LookupParameter("Appears In Sheet List").Set(1)
             sheet.LookupParameter("Sheet Note").Set("Internal")
-            print "force 'appear in sheet list' turn on and assign 'internal' sheet note at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("force 'appear in sheet list' turn on and assign 'internal' sheet note at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
 
 
 
         if sheet.LookupParameter("Sheet Note").AsString() == "DD":
-            print "sheet note as 'DD' at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("sheet note as 'DD' at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet Note").Set("Internal")
 
         if "SK" in sheet.SheetNumber:
-            print "sheet SK at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("sheet SK at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet Note").Set("Internal")
             sheet.LookupParameter("Sheet_$Order").Set(-5)
 
         if "P-" == sheet.SheetNumber[0:2]:
-            print "sheet presentation at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("sheet presentation at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet Note").Set("Internal")
             sheet.LookupParameter("Sheet_$Order").Set(-10)
 
         if "X" == sheet.SheetNumber[0]:
-            print "sheet X at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("sheet X at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet Note").Set("Internal")
             sheet.LookupParameter("Sheet_$Order").Set(-20)
 
         if sheet.LookupParameter("Sheet Note").AsString() == r"NOT ISSUE for 05/27":
-            print "sheet note as 'not issue for 05/27' at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("sheet note as 'not issue for 05/27' at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet Note").Set("Internal")
 
         if sheet.LookupParameter("Sheet_$Group").AsString() in ["02_DD_Documentation", "02_SD_Documentation"]:
-            print "changing DD folder and SD folder to basic document folder at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+            print("changing DD folder and SD folder to basic document folder at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             sheet.LookupParameter("Sheet_$Group").Set("02_Documentation")
 
         issues = ["Issue 2022/09/23", "Issue 2022/09/29"]
@@ -72,7 +72,7 @@ def check_default_value(correct_error = True):
 
             if issue_para.AsString() == u"\u25A0":
                 if sheet.LookupParameter("Sheet Note").AsString() == "Internal":
-                    print "remove internal note for sheet that will print at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name)
+                    print("remove internal note for sheet that will print at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
                     sheet.LookupParameter("Sheet Note").Set("")
 ################## main code below #####################
 output = script.get_output()
@@ -82,10 +82,10 @@ output.close_others()
 if __name__ == "__main__":
     docs = EA_UTILITY.select_top_level_docs()
     for doc in docs:
-        print "\n\n------------------- working on doc: " + doc.Title
+        print("\n\n------------------- working on doc: " + doc.Title)
         t = DB.Transaction(doc, "fix unassigned value")
         t.Start()
         check_default_value()
         t.Commit()
 
-    print "\n\n####### Tool finish"
+    print("\n\n####### Tool finish")

@@ -22,10 +22,10 @@ def fix_area_view_title():
             view = doc.GetElement(view_id)
 
             title = view.LookupParameter("Title on Sheet").AsString()
-            print title
+            print(title)
 
             new_title = title.replace("_NoSheet-", "").split("_from")[0].replace("NoSheet", "").replace(")", ") ")
-            print new_title
+            print(new_title)
 
             view.LookupParameter("Title on Sheet").Set(new_title)
 

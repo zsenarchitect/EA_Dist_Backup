@@ -27,7 +27,7 @@ def bind_para(doc, definition):
     try:
         DB.SharedParameterElement.Create(doc, definition)
     except Exception as e:
-        print "doc = " + doc.Title
+        print("doc = " + doc.Title)
         print (e)
         return
 
@@ -56,9 +56,9 @@ def create_shared_para(doc):
         t.Start()
         bind_para(doc, definition)
         t.Commit()
-    print "new shared parameter [{}] added to docs:".format(definition.Name)
+    print("new shared parameter [{}] added to docs:".format(definition.Name))
     for doc in docs:
-        print "\n\t\t" + doc.Title
+        print("\n\t\t" + doc.Title)
 
 
 

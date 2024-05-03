@@ -11,6 +11,7 @@ __tip__ = True
 from pyrevit import script #
 
 import EnneadTab
+from EnneadTab import NOTIFICATION
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
@@ -49,7 +50,7 @@ def get_intersect_pt_from_crvs(crv1, crv2):
         #iResult = StrongBox[resultArray](DB.IntersectionResultArray())
         crv1.Intersect(crv2,iResult)
         if iResult.Size > 1:
-            print "%%%%many intersection"
+            print("%%%%many intersection")
 
 
         raw_pt = iResult.Item[0].XYZPoint
@@ -63,7 +64,7 @@ def nearest_Z_from_zList(my_Z, zList):
 
 
 def process_wall(wall, crvs):
-    print "Processing wall: {}".format(output.linkify(wall.Id))
+    print("Processing wall: {}".format(output.linkify(wall.Id)))
 
     intersect_pts_Z = []
 
@@ -77,7 +78,7 @@ def process_wall(wall, crvs):
             options = DB.Options()
             options.View = doc.ActiveView
             abstract_crv = crv.Geometry[options]
-            print abstract_crv
+            print(abstract_crv)
             """
 
 
@@ -114,14 +115,17 @@ def move_curtain_grid():
 
     walls = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Element, "Pick walls")
     walls = [doc.GetElement(x) for x in walls]
+    walls = filter(lambda x: isinstance(x, DB.Wall), walls)
     if len(walls) == 0:
+        NOTIFICATION.messenger("No walls selected.")
         return
 
-    crvs = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Subelement, "Pick detail crvs or levels that will intersect your wall")
-    crvs = [doc.GetElement(x) for x in crvs]
+    crvs = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Subelement, "Pick detail crvs or grids that will intersect your wall")
     if len(crvs) == 0:
+        NOTIFICATION.messenger("No detail crvs or grids selected.")
         return
 
+    crvs = [doc.GetElement(x) for x in crvs]
 
 
 

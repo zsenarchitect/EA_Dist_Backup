@@ -25,8 +25,8 @@ def rename_schedule():
 
     #user_name = DB.BasicFileInfo.Username
     user_name, localtime = get_update_notice()
-    print user_name
-    print localtime
+    print(user_name)
+    print(localtime)
     new_name = schedule.Name.split(key_word)[0] + key_word + user_name + " at local time " + localtime
     schedule.Name = new_name
     pass
@@ -40,19 +40,19 @@ def get_element_level(element):
         level = revit.doc.GetElement( element.LevelId).Name
     except:
         level = 99
-        print "cannot find level for {}".format(output.linkify(element.Id))
+        print("cannot find level for {}".format(output.linkify(element.Id)))
     return level
 
 def print_all_para(element):
-    print "^"*10
+    print("^"*10)
     for para in element.Parameters:
         #print para.Definition.Name
         if para.Definition.Name == "Workstation Occupancy":
-            print "*"*50
-    print "/"*10
+            print("*"*50)
+    print("/"*10)
 
 def print_element_link(el):
-    print "{}".format(output.linkify(el.Id))
+    print("{}".format(output.linkify(el.Id)))
 
 def get_all_efficiency_data_blocks():
     all_symbol_types =  DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_GenericAnnotation).WhereElementIsElementType().ToElements()
@@ -130,8 +130,8 @@ def get_function_area_by_level(level):
     for area in GFA_in_level:
         """
         if level == str(9):
-            print area.LookupParameter("Name").AsString()
-            print EA_UTILITY.sqft_to_sqm(area.Area)
+            print(area.LookupParameter("Name").AsString())
+            print(EA_UTILITY.sqft_to_sqm(area.Area))
         """
         area_function = area.LookupParameter("Area Layout Function").AsString()
         temp_area = area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble()
@@ -145,19 +145,19 @@ def get_function_area_by_level(level):
     #EA_UTILITY.sqft_to_sqm(x)
 
     if net_office_area + core_area + other_area == 0:
-        print "Level element not found in current file."
+        print("Level element not found in current file.")
     return net_office_area, core_area, other_area
 
 
 
 def set_data_to_data_block(data_block):
 
-    print "*"*20
+    print("*"*20)
     level = data_block.LookupParameter("Type Name").AsString()
     data_block.LookupParameter("level").Set(level)
-    print level
+    print(level)
     workstation_count = get_worksation_count_by_level(level)
-    print "workstation count = {}".format(workstation_count)
+    print("workstation count = {}".format(workstation_count))
     data_block.LookupParameter("workstation count").Set(workstation_count)
 
     def get_placement_count(data_block_type):
@@ -170,9 +170,9 @@ def set_data_to_data_block(data_block):
     data_block.LookupParameter("placement count").Set(get_placement_count(data_block))
 
     net_office_area, core_area, other_area = get_function_area_by_level(level)
-    print "net_office_area = {}".format(EA_UTILITY.sqft_to_sqm(net_office_area))
-    print "core_area = {}".format(EA_UTILITY.sqft_to_sqm(core_area))
-    print "amenity_area = {}".format(EA_UTILITY.sqft_to_sqm(other_area))
+    print("net_office_area = {}".format(EA_UTILITY.sqft_to_sqm(net_office_area)))
+    print("core_area = {}".format(EA_UTILITY.sqft_to_sqm(core_area)))
+    print("amenity_area = {}".format(EA_UTILITY.sqft_to_sqm(other_area)))
     data_block.LookupParameter("net office area").Set(net_office_area)
     data_block.LookupParameter("core area").Set(core_area)
     data_block.LookupParameter("amenity area").Set(other_area)

@@ -96,7 +96,7 @@ def change_workset(element, target_workset) :
             return True, True, "[Read Only] The workset is read only."
         para.Set(target_workset.Id.IntegerValue)
     except Exception as e:
-        print "Skipping workset change for element [{}] becasue {}".format(output.linkify(element.Id, title = "Go To Element"), e)
+        print("Skipping workset change for element [{}] becasue {}".format(output.linkify(element.Id, title = "Go To Element"), e))
     log = None
     return True, False, log
 
@@ -173,7 +173,7 @@ def update_worksets(changed_cates):
         is_fail_convert_count = len([x for x in res if x[1] == True])
         is_success_convert_count = in_wrong_workset_count - is_fail_convert_count
         log = [x[2] for x in res if x[2] != None]
-        print "\n".join(log)
+        print("\n".join(log))
         
         fail_group_count = len([x for x in log if "[Group]" in x.lower()])
         fail_design_option_count = len([x for x in log if "[Design Option]" in x.lower()])

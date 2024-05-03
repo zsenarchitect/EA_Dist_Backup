@@ -16,7 +16,7 @@ __doc__ = 'Get Clickable Warnings.'
 def process_warning(warning):
     print ("#{0} {1}:".format(counter, warning.GetSeverity()))
     #print warning.ToString()
-    print warning.GetDescriptionText()
+    print(warning.GetDescriptionText())
 
 
 
@@ -42,7 +42,7 @@ def process_warning(warning):
 
 
     #script.insert_divider(level = "")
-    print "-------------------------------------"
+    print("-------------------------------------")
 
 class w_dict:
     def __init__(self, description):

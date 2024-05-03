@@ -78,7 +78,7 @@ def main():
     #output.self_destruct(150)
     output.print_md("#The following subCategory(s) brought to the project does not exist before family loaded. Please take screenshot and use Ideate tool to manage object style properly.")
     for item in new_sub_c_list:
-        print item
+        print(item)
     """
 
     if len(new_sub_c_list) == 0:

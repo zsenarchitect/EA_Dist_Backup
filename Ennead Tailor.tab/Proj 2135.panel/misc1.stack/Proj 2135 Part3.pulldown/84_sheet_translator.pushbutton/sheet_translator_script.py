@@ -108,7 +108,7 @@ class rename_sheet_ModelessForm(WPFWindow):
     def get_new_sheet(self):
         all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
 
-        print all_sheets
+        print(all_sheets)
         def is_empty_translation(sheet):
             para =  sheet.LookupParameter("MC_$Translate")
             if not para:
@@ -119,11 +119,11 @@ class rename_sheet_ModelessForm(WPFWindow):
 
         sheets = filter(is_empty_translation, all_sheets)
         sheets.sort(key = lambda x:x.SheetNumber)
-        print sheets
+        print(sheets)
         try:
             sheet = sheet[0]
         except Exception as e:
-            print str(e)
+            print(str(e))
             return
 
 

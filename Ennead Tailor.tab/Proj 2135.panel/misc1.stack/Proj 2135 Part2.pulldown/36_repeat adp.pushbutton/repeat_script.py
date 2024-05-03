@@ -21,8 +21,8 @@ output.close_others()
 """
 adps = DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements()
 for x in adps:
-    print x
-print len(adps)
+    print(x)
+print(len(adps))
 script.exit()
 """
 selection = revit.get_selection()

@@ -18,13 +18,13 @@ from pyrevit.coreutils import envvars
 
 
 def process_instance_recording(instance):
-    print "###############"
-    print instance
-    print instance.UniqueId
+    print("###############")
+    print(instance)
+    print(instance.UniqueId)
     data_entry_pack = []
     for para in instance.Parameters:
         definition = para.Definition
-        print definition.Name
+        print(definition.Name)
         #print para.StorageType
         if para.StorageType == DB.StorageType.Integer:
             #print para.AsInteger()
@@ -44,23 +44,23 @@ def process_instance_recording(instance):
     global DATA
     #DATA[instance.Id.IntegerValue] = para
     DATA[instance.UniqueId] = data_entry_pack
-    print data_entry_pack
+    print(data_entry_pack)
 
 
 def process_instance_applying(instance):
-    print "###############"
-    print instance
-    print instance.UniqueId
+    print("###############")
+    print(instance)
+    print(instance.UniqueId)
     global DATA
     if instance.UniqueId not in DATA:
         type_name = instance.Symbol.LookupParameter("Type Name").AsString()
         family_name = instance.Symbol.FamilyName
         format_name = "{{{}}}:{}--->Cannot find matching ElementId---->{}".format(family_name, type_name, output.linkify(instance.Id, title = "Go to element"))
-        print format_name
+        print(format_name)
         return
     #para = DATA[instance.Id.IntegerValue]
 
-    print DATA[instance.UniqueId]
+    print(DATA[instance.UniqueId])
     data_entry_pack = DATA[instance.UniqueId]
     for data_entry in data_entry_pack:
         para_name, para_type, value = data_entry
@@ -83,19 +83,19 @@ def process_instance_applying(instance):
             value = para.AsElementId()
         """
         if para_name in ["Type Id", "Type"]:
-            print "Skip assinging those parameter: {}".format(para_name)
+            print("Skip assinging those parameter: {}".format(para_name))
             continue
         para = instance.LookupParameter(para_name)
         if para.IsReadOnly:
-            print "<" + para_name + "> is read-only"
+            print("<" + para_name + "> is read-only")
             continue
 
         if value is None:
-            print "Skip assinging those parameter if has no value in record: {}".format(para_name)
+            print("Skip assinging those parameter if has no value in record: {}".format(para_name))
         try:
             para.Set(value)
         except Exception as e:
-            print "Cannot assign {} becasue: {}".format(para_name, e)
+            print("Cannot assign {} becasue: {}".format(para_name, e))
 
 
 
@@ -136,7 +136,7 @@ def record_instance_property():
                                     multiselect = False,
                                     button_name='Select panel to record')
 
-    print "Recording types: " + type_detail_name
+    print("Recording types: " + type_detail_name)
     # get all_instance of family
     all_instances = get_all_instance_of_type(type_detail_name)
     #print all_instances
@@ -151,7 +151,7 @@ def map_instance_property():
                                     multiselect = False,
                                     button_name='Select panel to load data')
 
-    print "Assiggning types: " + type_detail_name
+    print("Assiggning types: " + type_detail_name)
     # get all_instance of family
     all_instances = get_all_instance_of_type(type_detail_name)
     global DATA

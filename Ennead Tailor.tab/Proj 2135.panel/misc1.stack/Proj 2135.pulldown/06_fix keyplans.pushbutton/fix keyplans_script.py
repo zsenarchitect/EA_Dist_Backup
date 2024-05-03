@@ -30,7 +30,7 @@ def fix_titleblock(tb):
                 for para_name in para_names:
                     tb.LookupParameter(para_name).Set(1)
         except:
-            print "skip {}:{}".format(sheet_number, tb.LookupParameter("Sheet Name").AsString())
+            print("skip {}:{}".format(sheet_number, tb.LookupParameter("Sheet Name").AsString()))
 
 
 

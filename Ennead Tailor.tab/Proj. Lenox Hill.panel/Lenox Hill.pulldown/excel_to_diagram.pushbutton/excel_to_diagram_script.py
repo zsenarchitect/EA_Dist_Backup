@@ -18,7 +18,7 @@ from Autodesk.Revit import DB
 doc = REVIT_APPLICATION.get_doc()
 
 
-EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-04-18 EA Program.xlsx"
+EXCEL_FILE = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\EA 2024-05-03 EA Program.xlsx"
 SHADER_FAMILY_NAME = "AreaShader"
 TITLER_FAMILY_NAME = "TitleMaker"
 WORKING_VIEW = "SK-G09_10_Program Shading"
@@ -232,6 +232,13 @@ def process_line(ref_num, title, count, unit_area, program_area_NSF, program_are
         if program_area_NSF == 0:
             program_area_NSF = 499
             note = "!!!!INVALID NSF AREA: " + note
+
+
+    if ref_num in ["11.10",
+                    "11.11",
+                    "11.12",
+                    "15.1H"]:
+        program_area_NSF = 19 # this is to ensure those special program geo shaper does not fail...They are never assigned with real data in program
 
     # try find instance with ref_num, if not exist, create one
     type_name = "{}_{}".format(ref_num, title)

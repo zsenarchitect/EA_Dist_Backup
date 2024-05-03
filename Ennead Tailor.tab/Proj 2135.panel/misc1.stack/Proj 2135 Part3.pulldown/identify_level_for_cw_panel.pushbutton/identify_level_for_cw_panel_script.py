@@ -57,9 +57,9 @@ def identify_level_for_cw_panel():
 
 
         if panel.LookupParameter("#is_arch B").AsInteger():
-            print "\n####################"
-            print "{}".format(output.linkify(panel.Id))
-            print near_level.Name
+            print("\n####################")
+            print("{}".format(output.linkify(panel.Id)))
+            print(near_level.Name)
 
             moudle_note = "_{} module".format(panel.LookupParameter("Width").AsValueString ())
 
@@ -81,7 +81,7 @@ def identify_level_for_cw_panel():
 
     t.Commit()
 
-    print "################################################ Finished"
+    print("################################################ Finished")
 
     # apply name to comments
 
@@ -93,12 +93,12 @@ def identify_level_for_cw_panel():
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

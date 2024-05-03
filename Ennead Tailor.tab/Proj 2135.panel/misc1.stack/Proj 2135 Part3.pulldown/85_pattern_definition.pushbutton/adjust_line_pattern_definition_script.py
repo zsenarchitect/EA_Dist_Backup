@@ -17,9 +17,9 @@ doc = __revit__.ActiveUIDocument.Document
 
 
 def process_line_pattern_element(line_pattern_element):
-    print "\n\n  "
-    print "#"*20
-    print line_pattern_element.Name
+    print("\n\n  ")
+    print("#"*20)
+    print(line_pattern_element.Name)
     # get line pattern segements list
     line_pattern = line_pattern_element.GetLinePattern ()
     segements= line_pattern.GetSegments()
@@ -28,9 +28,9 @@ def process_line_pattern_element(line_pattern_element):
     if max_length < 2:
         return
     for seg in segements:
-        print seg.Type
+        print(seg.Type)
         length = EA_UTILITY.internal_to_mm(seg.Length)
-        print length
+        print(length)
 
 
 

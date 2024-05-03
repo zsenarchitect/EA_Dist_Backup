@@ -30,14 +30,14 @@ def process_dummy(dummy):
         if "_{}".format(plot_id) in link_doc.Title:
             break
     else:
-        print "Cannot find doc " + plot_id + " in the loaded links."
+        print("Cannot find doc " + plot_id + " in the loaded links.")
         return
 
 
     # get the view by stable id,
     link_view = link_doc.GetElement(view_stable_id)
     if not link_view:
-        print "Cannot find view by the stable Id"
+        print("Cannot find view by the stable Id")
         return
 
     detail_num = dummy.LookupParameter("detail number").AsString()
@@ -55,9 +55,9 @@ def process_dummy(dummy):
 
     #owner_view = doc.GetElement(dummy.OwnerViewId )
     #print owner_view
-    print "\n------------------"
-    print "Getting update to dummy callout {}.".format(output.linkify(dummy.Id, title = "Click to show Dummy Callout"))
-    print "{}-->{}/{}/{}".format(record, sheet_num, detail_num, title)
+    print("\n------------------")
+    print("Getting update to dummy callout {}.".format(output.linkify(dummy.Id, title = "Click to show Dummy Callout")))
+    print("{}-->{}/{}/{}".format(record, sheet_num, detail_num, title))
 
 
 def get_data_from_view(link_view):

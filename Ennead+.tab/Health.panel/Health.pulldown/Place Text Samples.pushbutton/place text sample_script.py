@@ -18,10 +18,10 @@ need to add parts where the view scale can be factored to the textnote spacing
 
 
 def print_para(element):
-    print '------'
+    print('------')
     for para in element.Parameters:
-        print "{}--->{}".format(para.Definition.Name, para.AsValueString())
-    print "-----------\n\n"
+        print("{}--->{}".format(para.Definition.Name, para.AsValueString()))
+    print("-----------\n\n")
 
 def print_table(list):
     table_data = []
@@ -32,14 +32,14 @@ def print_table(list):
         text_size = item.LookupParameter("Text Size").AsValueString()
 
         """
-        print item.LookupParameter("Color")
-        print item.LookupParameter("Color").AsElementId()
-        print item.LookupParameter("Color").AsDouble()
-        print item.LookupParameter("Color").AsString()
-        print item.LookupParameter("Color").AsValueString()
+        print(item.LookupParameter("Color"))
+        print(item.LookupParameter("Color").AsElementId())
+        print(item.LookupParameter("Color").AsDouble())
+        print(item.LookupParameter("Color").AsString())
+        print(item.LookupParameter("Color").AsValueString())
         """
         """
-        print item.Parameter[DB.BuiltInParameter.TEXT_COLOR].GetType()
+        print(item.Parameter[DB.BuiltInParameter.TEXT_COLOR].GetType())
 
         color_r = item.Parameter[DB.BuiltInParameter.TEXT_COLOR].Color.Red
         color_g = item.LookupParameter("Color").Color.Green
@@ -76,12 +76,12 @@ def create_along_Y(location_start, type_list):
             type_height = type_list[i - 1].LookupParameter("Text Size").AsDouble()
         except:
             type_height = 0
-        print type_height
-        print DB.UnitUtils.ConvertToInternalUnits( 2, DB.DisplayUnitType.DUT_MILLIMETERS)
+        print(type_height)
+        print(DB.UnitUtils.ConvertToInternalUnits( 2, DB.DisplayUnitType.DUT_MILLIMETERS))
         step_dist = DB.UnitUtils.ConvertToInternalUnits( type_height * 4, DB.DisplayUnitType.DUT_MILLIMETERS)##multiple by 3 becasue there are three lines in the sampelk text, then convert to internal value
-        print step_dist
-        print type_height * 3
-        print "```````"
+        print(step_dist)
+        print(type_height * 3)
+        print("```````")
         step_vector = step_dist * -1 * revit.active_view.UpDirection
         #step_vector = 5 * type_height * -1 * revit.active_view.UpDirection
         '''
@@ -132,22 +132,22 @@ if __name__ == "__main__":
 
     location_ref = selection[0].Coord
     '''
-    print location_ref.X
-    print location_ref.Y
-    print location_ref.Z
+    print(location_ref.X)
+    print(location_ref.Y)
+    print(location_ref.Z)
     '''
 
     type_list_raw = DB.FilteredElementCollector(revit.doc).OfClass(DB.TextNoteType).WhereElementIsElementType().ToElements()
 
     '''
     for x in type_list:
-        print x
-        print x.GetType()
-        print x.LookupParameter("Text Size").AsDouble()
+        print(x)
+        print(x.GetType())
+        print(x.LookupParameter("Text Size").AsDouble())
 
-    print "~~~~~~~~~"
-    print type_list
-    print list(type_list)
+    print("~~~~~~~~~")
+    print(type_list)
+    print(list(type_list))
     '''
     type_list = list(type_list_raw)
     type_list.sort(key = lambda x: x.LookupParameter("Text Size").AsDouble(), reverse = False)
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     for x in type_list:
         print_para(x)
 
-    print "~~~~~~~~~"
+    print("~~~~~~~~~")
     '''
 
 

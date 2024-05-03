@@ -27,7 +27,7 @@ def find_empty_tag():
         if key_number == "":
 
             view = doc.GetElement(tag.OwnerViewId)
-            print "\n\n{} has empty key number in view <{}>.".format(output.linkify(tag.Id, title = "Keynote Tag"), view.Name)
+            print("\n\n{} has empty key number in view <{}>.".format(output.linkify(tag.Id, title = "Keynote Tag"), view.Name))
             t = DB.Transaction(doc, "step1")
             t.Start()
             tag.Pinned = not tag.Pinned
@@ -45,9 +45,9 @@ def find_empty_tag():
 
             key_number = tag.Parameter[DB.BuiltInParameter.KEY_VALUE].AsString()
             if key_number == "":
-                print "Fix failed."
+                print("Fix failed.")
             else:
-                print "It has now been fixed."
+                print("It has now been fixed.")
 
             #key_number = tag.Parameter[DB.BuiltInParameter.KEY_VALUE].AsString()
             #print "after alter, curent key_number = " + key_number
@@ -57,7 +57,7 @@ def find_empty_tag():
 
 
     #T.Commit()
-    print "tool finished"
+    print("tool finished")
     """
 
     import selected object style from project or family

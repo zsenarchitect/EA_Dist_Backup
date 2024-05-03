@@ -60,7 +60,7 @@ def repath_all_dwgs(new_folder, dwg_type_list):
             new_path = EnneadTab.FOLDER.copy_file_to_folder(file_path, new_folder)
             dwg_type.LoadFrom(new_path)
         except Exception as e:
-            print "Skip this dwg: {}\nBecasue: {}\n\n".format( dwg_type.LookupParameter("Type Name").AsString() , e )
+            print("Skip this dwg: {}\nBecasue: {}\n\n".format( dwg_type.LookupParameter("Type Name").AsString() , e ))
             continue
     t.Commit()
 

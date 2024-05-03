@@ -96,16 +96,16 @@ def give_me_cheat_sheet():
     final_print_table()
 
     """
-    print script.get_script_path()
-    print script.get_bundle_files()
-    print script.get_bundle_file('triangle.png')
+    print(script.get_script_path())
+    print(script.get_bundle_files())
+    print(script.get_bundle_file('triangle.png'))
     """
     #get_bundle file location
     output.print_image(script.get_bundle_file("triangle.png"))
 
-    print "Advanced Examples:"
-    print "show_mullion_H._intermediate = if(or(is_louver, H - spandrel_H < 3000), no, yes)"
-    print "when you have louver or the glass height below spandrel is smaller than 3000mm, in either case the intermediate mullion will be hidden."
+    print("Advanced Examples:")
+    print("show_mullion_H._intermediate = if(or(is_louver, H - spandrel_H < 3000), no, yes)")
+    print("when you have louver or the glass height below spandrel is smaller than 3000mm, in either case the intermediate mullion will be hidden.")
 
 if __name__ == "__main__":
     give_me_cheat_sheet()

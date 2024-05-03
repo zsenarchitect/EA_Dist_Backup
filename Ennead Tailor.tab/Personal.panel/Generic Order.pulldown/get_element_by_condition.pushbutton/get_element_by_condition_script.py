@@ -16,7 +16,7 @@ from Autodesk.Revit import DB
 doc = __revit__.ActiveUIDocument.Document
 
 def get_element_by_condition():
-    print "ASK SZ for update"
+    print("ASK SZ for update")
     pass
 
 

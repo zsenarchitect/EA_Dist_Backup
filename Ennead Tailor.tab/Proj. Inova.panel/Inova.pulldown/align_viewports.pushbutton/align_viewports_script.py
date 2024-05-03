@@ -72,8 +72,8 @@ def align_viewports():
         view = doc.GetElement(view_id)
         boundary = view.GetCropRegionShapeManager()
         crvs = list(boundary.GetCropShape ())# return a curveloop
-        print crvs
-        print crvs[0]
+        print(crvs)
+        print(crvs[0])
         right_ptX = None
         crvs = crvs[0]
         for crv in crvs:
@@ -101,19 +101,19 @@ def align_viewports():
             #viewport.LabelLineLength
             viewport.LabelOffset += diff
         except:
-            print "No view title move for this guy"
+            print("No view title move for this guy")
         view.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate)
     t.Commit()
 
 """
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
-        print "Wrapper func for EA Log -- Begin:"
+        print("Wrapper func for EA Log -- Begin:")
         try:
             # print "main in wrapper"
             return func(*args, **kwargs)
         except Exception as e:
-            print str(e)
+            print(str(e))
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """

@@ -33,12 +33,12 @@ def print_detail(elements):
     for key in dict.keys():
         for item in dict[key]:
             display = get_display_text(item)
-            print "[{}] {}, {}".format(key, display, output.linkify(item.Id))
+            print("[{}] {}, {}".format(key, display, output.linkify(item.Id)))
 
-    print "*"*20
+    print("*"*20)
 
     for key in dict.keys():
-        print "{} {} elements".format(len(dict[key]), key)
+        print("{} {} elements".format(len(dict[key]), key))
 
 def get_display_text(item):
     for check in ["FamilyInstance", "Panel"]:
@@ -91,21 +91,21 @@ new_list.sort(key = lambda x: get_display_text(x))
 print_detail(new_list)
 
 output.freeze()
-print "*"*100
+print("*"*100)
 children = []
 parent_elements = []
 for element in elements:
 
-    print "*****"
-    print str(element.GetType())
+    print("*****")
+    print(str(element.GetType()))
     child = element.GetDependentElements (None)
     if len(list(child)) <= 1:
-        print "-------------------no depdent"
+        print("-------------------no depdent")
     else:
-        print len(list(child))
+        print(len(list(child)))
         parent_elements.append(element)
     temp = [str(x.GetType()) for x in list(child)]
-    print temp
+    print(temp)
     children.extend([doc.GetElement(x) for x in child])
 # children = list(set(children))
 # print len(children)
@@ -119,7 +119,7 @@ new_elements = elements[:]
 # print len(new_elements)
 for child in children:
     if child in elements:
-        print "remove****************************"
+        print("remove****************************")
         new_elements.remove(child)
 # print len(new_elements)
 print_detail(new_elements)

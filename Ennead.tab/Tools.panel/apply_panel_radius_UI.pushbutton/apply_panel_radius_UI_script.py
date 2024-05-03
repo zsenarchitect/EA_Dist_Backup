@@ -108,7 +108,7 @@ class Solution:
 
         radius = panel.Host.get_Parameter(DB.BuiltInParameter.CURVE_ELEM_ARC_RADIUS).AsDouble()
         if radius == 0.0:
-            print "Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel"))
+            print("Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel")))
 
             self.error_panel_found = True
 
@@ -316,11 +316,11 @@ class apply_panel_radius_UI(forms.WPFWindow):
     def dropdown_list_value_changed(self, sender, args):
         return
         #self.is_pass_convert_precheck()
-        print self.type_list_bad.ItemsSource
+        print(self.type_list_bad.ItemsSource)
         for x in self.type_list_bad.ItemsSource:
-            print x
-            print x.item
-            print x.display_text
+            print(x)
+            print(x.item)
+            print(x.display_text)
 
 
 

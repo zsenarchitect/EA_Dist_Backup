@@ -191,7 +191,7 @@ class EA_search_UI(forms.WPFWindow):
                 if "search" in command.name.lower():
                     for x in dir(command):
                         try:
-                            print "{} = {}".format(x, getattr(command, x))
+                            print("{} = {}".format(x, getattr(command, x)))
                         except Exception as e:
                             print (e)
                 #print cmd.extension
@@ -216,7 +216,7 @@ class EA_search_UI(forms.WPFWindow):
             if "version note" in command.name.lower():
                 for x in dir(command):
                     try:
-                        print "\n{} = {}".format(x, getattr(command, x))
+                        print("\n{} = {}".format(x, getattr(command, x)))
                     except Exception as e:
                         print (e)
         """
@@ -230,9 +230,9 @@ class EA_search_UI(forms.WPFWindow):
         return
 
         for name, tooltip in self.search_datas.items():
-            print "\n#######################"
-            print name
-            print tooltip
+            print("\n#######################")
+            print(name)
+            print(tooltip)
 
 
 
@@ -410,7 +410,7 @@ class EA_search_UI(forms.WPFWindow):
         # Escape: set response to none and close
         if args.Key == Input.Key.Escape:
             #self.Close()
-            print "escape"
+            print("escape")
         # Enter: close, returns matched response automatically
         elif args.Key == Input.Key.Enter:
         #if self.search_guess_textbox.Text != '':
@@ -596,7 +596,7 @@ class EA_search_UI(forms.WPFWindow):
         try:
             webbrowser.open(self.youtube_link)
         except:
-            print "Cannot play video."
+            print("Cannot play video.")
 
     @EnneadTab.ERROR_HANDLE.try_catch_error
     def main_expander_changed(self, sender, args):
@@ -612,7 +612,7 @@ class EA_search_UI(forms.WPFWindow):
         try:
             webbrowser.open(self.post_link)
         except:
-            print "Cannot show post."
+            print("Cannot show post.")
 
     def close_click(self, sender, args):
         self.Close()
@@ -634,9 +634,9 @@ class EA_search_UI(forms.WPFWindow):
         import sys
         for module_name in sys.modules:
             if x == module_name:
-                print "+++++++++++<{}> is imported at line {}".format(x, mark)
+                print("+++++++++++<{}> is imported at line {}".format(x, mark))
                 return
-        print "--------------<{}> is NOT imported at line {}".format(x, mark)
+        print("--------------<{}> is NOT imported at line {}".format(x, mark))
 
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
@@ -647,9 +647,9 @@ def main():
     modeless_form = EA_search_UI()
 
 def list_imported_modules():
-    print "Currently imported modules:"
+    print("Currently imported modules:")
     for module_name in sys.modules:
-        print module_name
+        print(module_name)
 
 
 
@@ -659,7 +659,7 @@ def list_imported_modules():
 
 def print_dir(x):
     for attr in dir(x):
-        print "{} = {}".format(attr, getattr(x, attr))
+        print("{} = {}".format(attr, getattr(x, attr)))
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

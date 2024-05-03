@@ -22,7 +22,7 @@ def offset_view_crop():
     try:
         offset = float(offset)
     except:
-        print "cannot convert this number"
+        print("cannot convert this number")
         return
     selection_ids = uidoc.Selection.GetElementIds ()
     selection = [doc.GetElement(x) for x in selection_ids]

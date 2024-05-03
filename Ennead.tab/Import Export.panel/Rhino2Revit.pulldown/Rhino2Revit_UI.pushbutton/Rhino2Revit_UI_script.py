@@ -460,10 +460,10 @@ def get_graphic_style_by_name(name):
             continue
         if not style.GraphicsStyleType == DB.GraphicsStyleType.Projection :
             continue
-        print "$$$$$$$$$$$$$$"
-        print style.GraphicsStyleType
+        print("$$$$$$$$$$$$$$")
+        print(style.GraphicsStyleType)
         for subC in style.GraphicsStyleCategory.SubCategories:
-            print subC.Name
+            print(subC.Name)
             if subC.Name == name:
 
                 return subC

@@ -43,4 +43,4 @@ selection_set = redefine_selection_set("dim_internal")
 add_markup_dims_to_set(selection_set)
 
 t.Commit()
-print "tool finish"
+print("tool finish")

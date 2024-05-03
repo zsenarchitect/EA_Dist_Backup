@@ -58,7 +58,7 @@ def main():
         # UI.UIDocument(doc).ActiveView = new_view
 
         
-    print 1
+    print(1)
     
 ############################
 # output = script.get_output()

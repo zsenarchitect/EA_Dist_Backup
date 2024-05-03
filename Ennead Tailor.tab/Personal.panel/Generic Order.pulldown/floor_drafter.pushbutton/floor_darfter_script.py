@@ -77,7 +77,7 @@ class Solution:
 
         floor_type_name = layer_name.split("OUT")[1]
         type = EnneadTab.REVIT.REVIT_SELECTION.pick_system_type(doc, system_type = "floor", type_name = floor_type_name)
-        print type
+        print(type)
 
         t = DB.Transaction(doc, __title__)
 

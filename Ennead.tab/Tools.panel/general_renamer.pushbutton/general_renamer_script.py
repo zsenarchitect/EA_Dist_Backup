@@ -97,7 +97,8 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
         return
 
     t = DB.Transaction(doc, "Rename Views")
-    t.Start()
+    if not t.HasStarted():
+        t.Start()
 
     failed_sheets = set()
     all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
@@ -217,7 +218,9 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
             print ("\n\nAttemp = {}".format(attempt))
        
         rename_views(doc, list(failed_sheets), is_default_format, is_original_flavor, attempt, show_log)
-    t.Commit()
+
+    if not t.HasEnded():
+        t.Commit()
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def rename_family(selected_element):

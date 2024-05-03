@@ -22,20 +22,20 @@ class Solution:
         if view.ViewType.ToString() in ["Schedule", "Legend", "Rendering", "ColumnSchedule"]:
             return
 
-        print "\n\n Processing <{}>".format(view.Name)
+        print("\n\n Processing <{}>".format(view.Name))
         view.EnableTemporaryViewPropertiesMode(view.Id)
 
         to_be_hidden = False  # True
         status = "shown"  # "hidden"
         for cate in self.categories:
             if view.GetCategoryHidden (cate.Id) == to_be_hidden:
-                print cate.Name + " already " + status
+                print(cate.Name + " already " + status)
                 continue
             try:
                 view.SetCategoryHidden (cate.Id, to_be_hidden)
-                print cate.Name + " is now " + status
+                print(cate.Name + " is now " + status)
             except:
-                print "$$ Cannot turn on " + cate.Name
+                print("$$ Cannot turn on " + cate.Name)
 
 
 

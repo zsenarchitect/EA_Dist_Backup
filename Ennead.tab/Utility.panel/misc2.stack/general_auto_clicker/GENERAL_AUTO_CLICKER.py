@@ -181,7 +181,7 @@ def main():
         if count_down_found < 0 :
             """
             if life_count % (5 * FPS) == 0:
-                print 123
+                print(123)
             """
                 #print "trying to find icon" + icons
             if life_count % (5 * FPS) == 0 and is_there_icons(icons):

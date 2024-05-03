@@ -26,7 +26,7 @@ def get_category_by_name(parent_name, sub_c_name):
             if sub_c.Name == sub_c_name:
                 #print sub_c
                 return sub_c
-    print "cannot find {}:{}".format(parent_name, sub_c_name)
+    print("cannot find {}:{}".format(parent_name, sub_c_name))
     return None
 
 def set_cate_cut_pattern(template, CATE, is_no_color_fill):
@@ -47,24 +47,24 @@ def set_cate_pattern_hidden_status(template, cate, to_be_hidden, modify_surface 
     if modify_surface:
         if modify_foreground:
             override_setting.SetSurfaceForegroundPatternVisible(not(to_be_hidden))
-            print "[{}] surface foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown")
+            print("[{}] surface foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown"))
         else:
             override_setting.SetSurfaceBackgroundPatternVisible(not(to_be_hidden))
-            print "[{}] surface background pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown")
+            print("[{}] surface background pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown"))
     else:
         if modify_foreground:
             override_setting.SetCutForegroundPatternVisible(not(to_be_hidden))
-            print "[{}] cut foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown")
+            print("[{}] cut foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown"))
         else:
             override_setting.SetCutBackgroundPatternVisible(not(to_be_hidden))
-            print "[{}] cut foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown")
+            print("[{}] cut foreground pattern--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown"))
 
 
     try:
         template.SetCategoryOverrides (cate.Id, override_setting)
 
     except Exception as e:
-        print "{} failed".format(cate.Name)
+        print("{} failed".format(cate.Name))
 
 def set_cate_hidden_status(template, cate, to_be_hidden):
     #cat_id = DB.ElementId(int(cat_id))
@@ -72,9 +72,9 @@ def set_cate_hidden_status(template, cate, to_be_hidden):
         return
     try:
         template.SetCategoryHidden (cate.Id, to_be_hidden)
-        print "[{}]--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown")
+        print("[{}]--->{}".format(cate.Name, "hidden" if to_be_hidden else "shown"))
     except Exception as e:
-        print "{} failed".format(cate.Name)
+        print("{} failed".format(cate.Name))
 
 
 def set_filter_surface_pattern_hidden_status(template, filter, to_be_hidden, use_foreground = True, use_background = False):
@@ -108,7 +108,7 @@ def get_filter_by_name(name):
     try:
         return filter(lambda x: x.Name == name, view_filters)[0]
     except Exception as e:
-        print "cannot find filter:<" + name + ">"
+        print("cannot find filter:<" + name + ">")
         print (e)
         return None
 
@@ -117,16 +117,16 @@ def get_filter_by_name(name):
 
 
 def modify_template_for_PDF(template, is_no_color_fill):
-    print "--------------"
+    print("--------------")
     template_name = template.Name
-    print "modifying template [{}]".format(template_name)
+    print("modifying template [{}]".format(template_name))
     is_elevation = "elevation" in template_name.lower()
     is_section = "section" in template_name.lower()
     is_plan = "plan" in template_name.lower()
     is_axon = "axon" in template_name.lower()
     """
     if all([is_elevation, is_section, is_plan, is_axon]) == False:
-        print "Cannot find keyword in this template"
+        print("Cannot find keyword in this template")
     """
     # get following category id to turn off/on: FRW_H, FRW_V, room color
     # get following category id to enable/disable pattern display in surface: Detail item, curtain panel, generic model
@@ -162,7 +162,7 @@ def modify_template_for_PDF(template, is_no_color_fill):
 
     #  for elevations:
     if is_elevation or is_axon:
-        print "use elevation axon rule"
+        print("use elevation axon rule")
         # always on: FRW_H, FRW_V
         set_cate_hidden_status(template, CATE_FRW_H, True)
         set_cate_hidden_status(template, CATE_FRW_V, False)
@@ -190,7 +190,7 @@ def modify_template_for_PDF(template, is_no_color_fill):
 
     #  for sections:
     if is_section:
-        print "use section rule"
+        print("use section rule")
         # always on: FRW_H, FRW_V, room color
         set_cate_hidden_status(template, CATE_FRW_H, True)
         set_cate_hidden_status(template, CATE_FRW_V, False)
@@ -223,7 +223,7 @@ def modify_template_for_PDF(template, is_no_color_fill):
 
     #  for plans:
     if is_plan:
-        print "use plan rule"
+        print("use plan rule")
         # always on: FRW_H, FRW_V
         set_cate_hidden_status(template, CATE_FRW_H, False)
         set_cate_hidden_status(template, CATE_FRW_V, True)
@@ -281,16 +281,16 @@ def modify_template_for_PDF(template, is_no_color_fill):
 
 
 def modify_template_for_DWG(template, is_no_color_fill):
-    print "--------------"
+    print("--------------")
     template_name = template.Name
-    print "modifying template [{}]".format(template_name)
+    print("modifying template [{}]".format(template_name))
     is_elevation = "elevation" in template_name.lower()
     is_section = "section" in template_name.lower()
     is_plan = "plan" in template_name.lower()
     is_axon = "axon" in template_name.lower()
     """
     if all([is_elevation, is_section, is_plan, is_axon]) == False:
-        print "Cannot find keyword in this template"
+        print("Cannot find keyword in this template")
     """
     # get following category id to turn off/on: FRW_H, FRW_V, room color
     # get following category id to enable/disable pattern display in surface: Detail item, curtain panel, generic model
@@ -321,7 +321,7 @@ def modify_template_for_DWG(template, is_no_color_fill):
 
     #  for elevations:
     if is_elevation or is_axon:
-        print "use elevation axon rule"
+        print("use elevation axon rule")
         # always on: FRW_H, FRW_V
         set_cate_hidden_status(template, CATE_FRW_H, True)
         set_cate_hidden_status(template, CATE_FRW_V, False)
@@ -343,7 +343,7 @@ def modify_template_for_DWG(template, is_no_color_fill):
 
     #  for sections:
     if is_section:
-        print "use section rule"
+        print("use section rule")
         # always on: FRW_H, FRW_V, room color
         set_cate_hidden_status(template, CATE_FRW_H, True)
         set_cate_hidden_status(template, CATE_FRW_V, False)
@@ -368,7 +368,7 @@ def modify_template_for_DWG(template, is_no_color_fill):
 
     #  for plans:
     if is_plan:
-        print "use plan rule"
+        print("use plan rule")
 
         # always on: FRW_H, FRW_V
         set_cate_hidden_status(template, CATE_FRW_H, False)
@@ -451,4 +451,4 @@ if format_is_pdf:
 else:
     map(lambda x:modify_template_for_DWG(x, is_no_color_fill), selected_templates)
 t.Commit()
-print "tool finish"
+print("tool finish")

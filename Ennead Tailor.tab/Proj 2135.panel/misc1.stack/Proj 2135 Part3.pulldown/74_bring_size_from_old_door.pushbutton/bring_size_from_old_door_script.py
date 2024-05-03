@@ -43,7 +43,7 @@ def update_current_door_size():
             continue
         #print door.GroupId
         if door.GroupId.IntegerValue  != -1:
-            print "Door inside a group---->{}".format(output.linkify(door.Id))
+            print("Door inside a group---->{}".format(output.linkify(door.Id)))
             continue
 
         try:

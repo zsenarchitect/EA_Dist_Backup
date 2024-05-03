@@ -96,7 +96,7 @@ def main():
 
     """
     for x in selection:
-        print x.GetType(),x,x.Category.Name
+        print(x.GetType(),x,x.Category.Name)
     """
 
     scopeboxs = [x for x in selection if x.Category.Name == "Scope Boxes"]

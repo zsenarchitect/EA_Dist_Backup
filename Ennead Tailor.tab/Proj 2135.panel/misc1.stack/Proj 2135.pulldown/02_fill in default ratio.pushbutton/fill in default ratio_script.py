@@ -30,7 +30,7 @@ def get_all_areas_in_GFA_scheme(doc = revit.doc):
 
 
 def print_area_detail(area):
-    print "area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), EA_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble()))
+    print("area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), EA_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble())))
 
 
 ################## main code below #####################

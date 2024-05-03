@@ -55,14 +55,14 @@ def get_XYZ_from_data(data):
     elif UNIT_INCH:
         data = [x / 12.0 for x in data]
     else:
-        print "Someting is wrong."
+        print("Someting is wrong.")
 
     x, y, z = data
     return DB.XYZ(x, y, z)
 
 def import_camera_action(view_info):
-    print "----processing camera: " + view_info.Name
-    print view_info.Viewport.CameraLocation
+    print("----processing camera: " + view_info.Name)
+    print(view_info.Viewport.CameraLocation)
 
     rhino_camera_position = get_XYZ_from_data(view_info.Viewport.CameraLocation)
     rhino_camera_direction = get_XYZ_from_data(view_info.Viewport.CameraDirection)
@@ -71,7 +71,7 @@ def import_camera_action(view_info):
 
 
 
-    print rhino_camera_direction
+    print(rhino_camera_direction)
 
     new_view = DB.View3D.CreatePerspective(doc, get_threeD_view_type().Id)
     global RHINO_NAME

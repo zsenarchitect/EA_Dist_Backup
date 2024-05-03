@@ -32,7 +32,7 @@ class Solution:
     @EnneadTab.ERROR_HANDLE.try_catch_error
     def main(self, brep_data):
 
-        print brep_data
+        print(brep_data)
 
     
         t = DB.Transaction(doc, 'Create simple cap.')
@@ -65,7 +65,7 @@ class Solution:
   
 
         for ver in self.vertex:
-            print "{}".format(output.linkify(ver.Id))
+            print("{}".format(output.linkify(ver.Id)))
         
         """
         array = DB.CombinableElementArray ()
@@ -96,20 +96,20 @@ class Solution:
             return DB.XYZ(x[0], x[1], x[2])
 
     def line_by_pts(self, p1, p2):
-        print "---------making new line"
+        print("---------making new line")
         pt_arry = DB.ReferencePointArray()
         for pt in [p1, p2]:
             for ref_pt in self.vertex:
   
                 if ref_pt.Position.IsAlmostEqualTo (pt, 0.001) :
                     pt_arry.Append(ref_pt)
-                    print "using exisiting rp point: " + ref_pt.Position.ToString()
+                    print("using exisiting rp point: " + ref_pt.Position.ToString())
                     break
             else:
                 new_ref_pt = doc.FamilyCreate.NewReferencePoint(pt)
-                print "add new rp point: " + new_ref_pt.Position.ToString()
+                print("add new rp point: " + new_ref_pt.Position.ToString())
                 self.vertex.append(new_ref_pt)
-                print "self.vertex = " + str(self.vertex)
+                print("self.vertex = " + str(self.vertex))
                 pt_arry.Append(new_ref_pt)
 
         """
@@ -118,7 +118,7 @@ class Solution:
                 return edge
         """
 
-        print "line pt size = " + pt_arry.Size.ToString()
+        print("line pt size = " + pt_arry.Size.ToString())
         edge = doc.FamilyCreate.NewCurveByPoints (pt_arry)
         edge.IsReferenceLine = True
   

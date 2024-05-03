@@ -96,7 +96,7 @@ def process_room(room):
         tag_insert_location = tag_info[0]
         tag_view = tag_info[1]
         new_tag = doc.Create.NewRoomTag(DB.LinkElementId(new_room.Id), tag_insert_location, tag_view.Id)
-        print "tag added"
+        print("tag added")
 
     # print target_level.Name
 
@@ -118,7 +118,7 @@ def get_matching_level(room):
         return filter(test_level, all_levels)[0]
     except IndexError:
         guested_level_name = room.LookupParameter("MC_$BuildingID").AsString() + " - " + room.Level.Name.split(" - ")[1]
-        print "cannot find {}".format(guested_level_name)
+        print("cannot find {}".format(guested_level_name))
         return room.Level
 
 def check_associated_level(element):
@@ -146,7 +146,7 @@ T = DB.TransactionGroup(doc, "find tag")
 T.Start()
 count = len(bad_rooms)
 for room in bad_rooms:
-    print count
+    print(count)
     count -= 1
     # print room.Id
     tag = get_tag_on_room(room)
@@ -161,10 +161,10 @@ for room in bad_rooms:
 T.RollBack()
 
 for key in dict.keys():
-    print dict[key]
+    print(dict[key])
 # script.exit()
 
-print "start"
+print("start")
 cur_value, max_value = 0, len(bad_rooms)
 #PROCESS EACH VIEW
 t = DB.Transaction(doc, "fix room")
@@ -172,6 +172,6 @@ t.Start()
 map(process_room, bad_rooms)
 t.Commit()
 
-print "{} room recreated".format(max_value)
+print("{} room recreated".format(max_value))
 
 EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()

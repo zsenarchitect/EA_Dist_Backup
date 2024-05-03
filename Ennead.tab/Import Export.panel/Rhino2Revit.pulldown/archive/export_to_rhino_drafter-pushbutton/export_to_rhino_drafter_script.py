@@ -66,8 +66,8 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
     time_start = time.time()
     if r"/" in file_name:
         file_name = file_name.replace("/", "-")
-        print "Windows file name cannot contain '/' in its name, i will replace it with '-'"
-    print "preparing [{}].dwg".format(file_name)
+        print("Windows file name cannot contain '/' in its name, i will replace it with '-'")
+    print("preparing [{}].dwg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
     view_as_collection = EA_UTILITY.list_to_system_list([view_or_sheet.Id])
     max_attempt = 10
@@ -76,12 +76,12 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
     #print view_or_sheet
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             break
         attempt += 1
         try:
             doc.Export(output_folder, r"{}".format(file_name), view_as_collection, DWG_option)
-            print "DWG export succesfully"
+            print("DWG export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -92,7 +92,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
             else:
                 if "no views/sheets selected" in e:
                     print (e)
-                    print "000000000"
+                    print("000000000")
                     has_non_print_sheet = True
                 else:
 
@@ -100,7 +100,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
 
     time_end = time.time()
     additional_msg = "exporting DWG takes {}s".format( time_end - time_start)
-    print additional_msg
+    print(additional_msg)
 
     EA_UTILITY.show_toast(app_name = "Draft Transfer Exporter",
                             title = "[{}.dwg] saved.".format(file_name),
@@ -111,8 +111,8 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, DWG_option, 
 def export_to_rhino_drafter(doc):
     # stop if doing sheet sheet
     if str(doc.ActiveView.ViewType) not in ["Detail", "Section", "AreaPlan", "Elevation", "FloorPlan", "CeilingPlan", "DraftingView"]:
-        print "Cannot do it in view type " + str(doc.ActiveView.ViewType)
-        print "Ask SZ for suggestion, tool canceled."
+        print("Cannot do it in view type " + str(doc.ActiveView.ViewType))
+        print("Ask SZ for suggestion, tool canceled.")
         return
     #if doc.ActiveView.ViewType not in
 
@@ -150,12 +150,12 @@ def open_template_rhino(doc):
     try:
         revit_unit = doc.GetUnits().GetFormatOptions (DB.UnitType.UT_Length ).DisplayUnits
         revit_unit =  str(revit_unit).replace("DUT_", "").lower()
-        print revit_unit
+        print(revit_unit)
     except:
 
         revit_unit = doc.GetUnits().GetFormatOptions (EA_UTILITY.lookup_unit_spec_id("length") ).GetUnitTypeId().TypeId
         revit_unit = str(revit_unit).split("-")[0].split("unit:")[1]
-        print revit_unit
+        print(revit_unit)
     """
     possible revit unit
     feet_fractional_inches

@@ -122,7 +122,7 @@ if __name__ == "__main__":
     index = 1
     for brep_name, brep_data in data.items():
         
-        print "processing: {} of {}".format(index, len(data))
+        print("processing: {} of {}".format(index, len(data)))
         index += 1
 
         

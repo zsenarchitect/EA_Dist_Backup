@@ -437,7 +437,7 @@ def main():
 
     """
     for x in all_types:
-        print x.Category.Name
+        print(x.Category.Name)
     """
 
 

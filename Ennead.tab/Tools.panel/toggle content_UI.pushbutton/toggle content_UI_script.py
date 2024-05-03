@@ -69,7 +69,7 @@ def toggle_bubble(is_grid):
             el.HideBubbleInView(DB.DatumEnds.End1,doc.ActiveView)
 
         else:
-            print "something wrong"
+            print("something wrong")
 
 
     doc.Regenerate()
@@ -130,7 +130,7 @@ def hide_OST(sheets, categories, to_hide, is_temp_view_property_only):
             if view.ViewType.ToString() in ["Schedule", "Legend", "Rendering", "ColumnSchedule"]:
                 continue
 
-            print "\n\n Processing <{}>".format(view.Name)
+            print("\n\n Processing <{}>".format(view.Name))
             view.EnableTemporaryViewPropertiesMode(view.Id)
 
             status = "hidden" if to_hide else "shown"
@@ -140,14 +140,14 @@ def hide_OST(sheets, categories, to_hide, is_temp_view_property_only):
                     cate = DB.Category.GetCategory(doc, cate)
 
                 if view.GetCategoryHidden (cate.Id) == to_hide:
-                    print cate.Name + " already " + status
+                    print(cate.Name + " already " + status)
                     continue
                 try:
                     view.SetCategoryHidden (cate.Id, to_hide)
-                    print cate.Name + " is now " + status
+                    print(cate.Name + " is now " + status)
                     count += 1
                 except:
-                    print "$$ Cannot modify " + cate.Name
+                    print("$$ Cannot modify " + cate.Name)
 
     return count
 
@@ -182,7 +182,7 @@ def reset_temp_template(sheets):
             if view.ViewType.ToString() in ["Schedule", "Legend", "Rendering", "ColumnSchedule"]:
                 continue
 
-            print "\n\n Processing <{}>".format(view.Name)
+            print("\n\n Processing <{}>".format(view.Name))
             if view.IsTemporaryViewPropertiesModeEnabled ():
                 view.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryViewProperties)
                 count += 1
@@ -404,7 +404,7 @@ class ToggleContent_UI(forms.WPFWindow):
         elif isinstance(category, list):
             categories = category
         else:
-            print "!!!Something wrong, tell SZ"
+            print("!!!Something wrong, tell SZ")
 
         self.toggle_hide_event_handler.kwargs = sheets, categories, to_hide, is_temp_view_property_only
         self.ext_event_toggle_hide.Raise()

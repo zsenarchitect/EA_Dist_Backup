@@ -109,7 +109,7 @@ def main():
     # logo
     #exe_folder = os.path.abspath( os.path.dirname( __file__ ) )
     exe_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\SEARCH_EDIT_REQUEST"
-    print exe_folder
+    print(exe_folder)
     EA_logo = pygame.image.load("{}\images\\Ennead_Architects_Logo.png".format(exe_folder)).convert_alpha()
     target_img_size = (100, 100)
     EA_logo = pygame.transform.scale(EA_logo, target_img_size)
@@ -150,11 +150,11 @@ def main():
         if count_down_found < 0 :
             """
             if life_count % (5 * FPS) == 0:
-                print 123
+                print(123)
             """
                 #print "trying to find icon" + request_icon_file
             if life_count % (5 * FPS) == 0 and is_there_edit_request(request_icon_file):
-                print "found icon"
+                print("found icon")
                 lines = EA_UTILITY.read_txt_as_list(filepath = "{}\_talk lines.txt".format(exe_folder), use_encode = True)
                 random.shuffle(lines)
                 EA_UTILITY.speak(lines[0])
@@ -231,7 +231,7 @@ try:
 
 except:
   error = traceback.format_exc()
-  print error
+  print(error)
   exe_folder = os.path.abspath( os.path.dirname( __file__ ) )
   with open(r"{}\error_log.txt".format(exe_folder), "w") as f:
       f.write(error)

@@ -25,18 +25,18 @@ def OLD_get_para_by_name(type, name):
 def OLD_process_fillregion_type(type):
     key = "Preserved Color"
     """
-    print "***"
+    print("***")
     #print type
-    print type.LookupParameter("Type Name").AsString()
+    print(type.LookupParameter("Type Name").AsString())
     #print type.FamilyName
-    print get_para_by_name(type, "Type Comments").AsString()
+    print(get_para_by_name(type, "Type Comments").AsString())
     if get_para_by_name(type, "Type Comments").AsString() is not None:
-        print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     return
-    print type.LookupParameter("Line Weight").AsString()
+    print(type.LookupParameter("Line Weight").AsString())
     return
     for para in type.Parameters:
-        print para.Definition.Name
+        print(para.Definition.Name)
     """
     type_comments = type.LookupParameter("Type Comments").AsString()
     if type_comments is None:
@@ -72,14 +72,14 @@ def process_detailitem_type(type):
         new_name = current_name + "_" + key
         #type.LookupParameter("Type Name").Set(new_name)
         type.Name = new_name
-        print "name change: {}--->{}".format(current_name, new_name)
+        print("name change: {}--->{}".format(current_name, new_name))
     else:
         current_name = type.LookupParameter("Type Name").AsString()
         if key in current_name:
             new_name = current_name.replace("_" + key, "")
             #type.LookupParameter("Type Name").Set(new_name)
             type.Name = new_name
-            print "name change: {}--->{}".format(current_name, new_name)
+            print("name change: {}--->{}".format(current_name, new_name))
 
 def run():
     #fill_region_types = DB.FilteredElementCollector(doc).OfClass(DB.FilledRegionType).ToElements()

@@ -31,15 +31,15 @@ if __name__== "__main__":
         except:
             last_item = MARK_HISTORY.read_data(file)[-1]
         warning_count = len(revit.doc.GetWarnings())
-        print MARK_HISTORY.compare_data(last_item,warning_count)
+        print(MARK_HISTORY.compare_data(last_item,warning_count))
 
     elif "all" in res:
         all_history = MARK_HISTORY.read_data(file)
         for item in all_history:
-            print item
+            print(item)
         """
         for i in range(len(all_history)):
-            print MARK_HISTORY.compare_data(all_history[i])
+            print(MARK_HISTORY.compare_data(all_history[i]))
         """
     else:
         script.exit()

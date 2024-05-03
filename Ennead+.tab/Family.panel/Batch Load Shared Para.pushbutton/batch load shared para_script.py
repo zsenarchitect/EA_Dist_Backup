@@ -48,7 +48,7 @@ if __name__ == "__main__":
         #print definition_group.Name
         for definition in definition_group.Definitions:
             '''
-            print "\t{} -- {} -- {}".format(definition.Name, \
+            print("\t{} -- {} -- {}".format(definition.Name, \)
                                         definition.ParameterType, \
                                         definition.UnitType)
             '''

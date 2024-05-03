@@ -100,12 +100,12 @@ def process_family():
         doc_list = ""
         for doc in selected_docs:
             doc_list += "\n" + doc.Title
-        print EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3)
+        print(EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3))
         #close_family(selected_family_doc)
 
 
     for line in LOG:
-        print line
+        print(line)
 
     if will_sync_and_close:
         EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
@@ -117,7 +117,7 @@ def process_family():
 
             selected_family_doc.Close()
         except Exception as e:
-            print "Fail to close family doc becasue: {}".format(e)
+            print("Fail to close family doc becasue: {}".format(e))
     """
 
 
@@ -130,8 +130,8 @@ def close_family(family_doc):
     family_doc.Close(False)
     return
     ui_views = uidoc.GetOpenUIViews ()
-    print ui_views
-    print [x.viewid for x in ui_views]
+    print(ui_views)
+    print([x.viewid for x in ui_views])
     uidoc.RequestViewChange (my_view)
     uidoc.RefreshActiveView ()
     if will_close_family:
@@ -285,7 +285,7 @@ returns an iterator that is already filtered.
 
 
 from datetime import date
-print date.today()
+print(date.today())
 
 
 keynotes = DB.FilteredElementCollector(revit.doc,revit.active_view.Id)\
@@ -359,9 +359,9 @@ forms.select_swatch(title='Select Color Swatch', button_name='Select')
 
 output = pyrevit.output.get_output()
 output.print_image(r'C:\image.gif')
-print script.get_script_path()
-print script.get_bundle_files()
-print script.get_bundle_file('triangle.png')
+print(script.get_script_path())
+print(script.get_bundle_files())
+print(script.get_bundle_file('triangle.png'))
 output.set_width(1500)
 output.set_height(900)
 output.center()

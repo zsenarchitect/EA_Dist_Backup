@@ -25,25 +25,25 @@ def get_solid_fill_pattern_id():
 
 
 def modify_material_surface(material):
-    print "---surface background fix, working on: {}".format(material.Name)
+    print("---surface background fix, working on: {}".format(material.Name))
     try:
         material.SurfaceBackgroundPatternColor  = material.SurfaceForegroundPatternColor
         material.SurfaceBackgroundPatternId = material.SurfaceForegroundPatternId
         material.SurfaceForegroundPatternId = DB.ElementId(-1)
         #material.SurfaceForegroundPatternId = get_solid_fill_pattern_id()
     except Exception as e:
-        print "fail, error = {}".format(e)
+        print("fail, error = {}".format(e))
     pass
 
 def modify_material_cut(material):
-    print "---cut background fix, working on: {}".format(material.Name)
+    print("---cut background fix, working on: {}".format(material.Name))
     try:
         material.CutBackgroundPatternColor  = material.CutForegroundPatternColor
         material.CutBackgroundPatternId = material.CutForegroundPatternId
         material.CutForegroundPatternId = DB.ElementId(-1)
         #material.SurfaceForegroundPatternId = get_solid_fill_pattern_id()
     except Exception as e:
-        print "fail, error = {}".format(e)
+        print("fail, error = {}".format(e))
     pass
 
 def get_bad_material():
@@ -51,16 +51,16 @@ def get_bad_material():
     temp_cut_problem = []
     my_materials = list(DB.FilteredElementCollector(doc).OfClass(DB.Material).WhereElementIsNotElementType().ToElements())
     my_materials.sort(key = lambda x: x.Name)
-    print "those materials has background pattern setting as None"
+    print("those materials has background pattern setting as None")
     for material in my_materials:
         #print "{}:{}".format(material.Name, material.SurfaceBackgroundPatternId)
 
         if material.SurfaceBackgroundPatternId.IntegerValue == -1:
-            print material.Name
+            print(material.Name)
             temp_surface_problem.append(material)
 
         if material.CutBackgroundPatternId.IntegerValue == -1:
-            print material.Name
+            print(material.Name)
             temp_cut_problem.append(material)
     return temp_surface_problem, temp_cut_problem
 

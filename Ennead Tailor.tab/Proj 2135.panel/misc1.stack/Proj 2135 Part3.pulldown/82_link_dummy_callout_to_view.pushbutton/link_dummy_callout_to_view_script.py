@@ -118,13 +118,13 @@ def link_dummy_callout_to_view():
 
     detail_num, sheet_num, title = get_data_from_view(link_view)
     """
-    print link_view.LookupParameter("Detail Number").AsString()
-    print link_view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].AsString()
-    print link_view.Parameter[DB.BuiltInParameter.VIEWER_DETAIL_NUMBER].AsString()
+    print(link_view.LookupParameter("Detail Number").AsString())
+    print(link_view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].AsString())
+    print(link_view.Parameter[DB.BuiltInParameter.VIEWER_DETAIL_NUMBER].AsString())
 
-    print "#"*5
-    print link_view.LookupParameter("Sheet Number").AsString()
-    print link_view.Parameter[DB.BuiltInParameter.SHEET_NUMBER].AsString()
+    print("#"*5)
+    print(link_view.LookupParameter("Sheet Number").AsString())
+    print(link_view.Parameter[DB.BuiltInParameter.SHEET_NUMBER].AsString())
     """
 
 

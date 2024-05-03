@@ -73,11 +73,11 @@ def report():
             for run_id in run_ids:
                 run = doc.GetElement(run_id)
                 if not run.EndsWithRiser:
-                    print "\t\t{} Run is not ending with riser---->{}".format(addition_note, output.linkify(run.Id, title = "Select run"))
+                    print("\t\t{} Run is not ending with riser---->{}".format(addition_note, output.linkify(run.Id, title = "Select run")))
 
 
     t.Commit()
-    print "\n\n Tool finished. Run it again after modifying stairs to keep checking."
+    print("\n\n Tool finished. Run it again after modifying stairs to keep checking.")
 
 
 
@@ -106,7 +106,7 @@ def create_view(view_name):
     view = get_view_by_name(desired_name)
     if view is not None:
         return view
-    print "####creating new axon view for " + view_name
+    print("####creating new axon view for " + view_name)
 
     view = DB.View3D.CreateIsometric (doc, get_threeD_view_type().Id)
     view.Name = desired_name

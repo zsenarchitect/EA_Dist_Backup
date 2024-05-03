@@ -98,7 +98,7 @@ class TTS:
 
         res = self.speak(text, language, accent)
         if res:
-            print "speak finish"
+            print("speak finish")
 
             EnneadTab.FOLDER.remove_exisitng_file_in_folder(dump_folder, file_name)
             return True
@@ -150,7 +150,7 @@ class TTS:
         dump_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
         file_name = "EA_TALKIE_KILL.kill"
         if EnneadTab.FOLDER.is_file_exist_in_folder(file_name, dump_folder):
-            print "Lets the murder begin..."
+            print("Lets the murder begin...")
             return True
         return False
     """
@@ -187,7 +187,7 @@ class TTS:
     def main(self):
         if self.is_another_TTS_running():
             #speak("there is another 'EnneadTab Talkie' opened. Now quiting")
-            print "other TTS running"
+            print("other TTS running")
             return
 
 

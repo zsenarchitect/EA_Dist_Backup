@@ -70,7 +70,7 @@ def edit_line_style_in_group():
     t = DB.Transaction(doc, "change wait groups")
     t.Start()
     editor_group = doc.GetElement(editor_group_id)
-    print editor_group
+    print(editor_group)
     if len(wait_groups) > 0:
         for group in temp_type.Groups:
             group.GroupType = editor_group.GroupType
@@ -143,7 +143,7 @@ def AA_edit_line_style_in_group():
     t = DB.Transaction(doc, "change wait groups")
     t.Start()
     editor_group = doc.GetElement(editor_group_id)
-    print editor_group
+    print(editor_group)
     if len(wait_groups) > 0:
         for group in temp_type.Groups:
             group.GroupType = editor_group.GroupType

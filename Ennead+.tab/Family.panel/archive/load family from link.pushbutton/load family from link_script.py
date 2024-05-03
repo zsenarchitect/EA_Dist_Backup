@@ -103,7 +103,7 @@ def load_families():
 
 
     for line in LOG:
-        print line
+        print(line)
 
     EA_UTILITY.tool_has_ended()
 

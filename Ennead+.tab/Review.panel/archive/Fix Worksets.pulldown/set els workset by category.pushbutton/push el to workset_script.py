@@ -35,7 +35,7 @@ def set_element_workset(element,workset):
         """
         return "OK"
     except:
-        print "\n---------------------------------"
+        print("\n---------------------------------")
         id_card = get_id_card(element)
         ########print element.Symbol.GetPreviewImage(Drawing.Size(200,200))
         #if hasattr(obj, 'attr_name')
@@ -48,23 +48,23 @@ def set_element_workset(element,workset):
             except AttributeError:
                 view_name = revit.doc.GetElement(view_id).Name
 
-            print "dwg name: {}".format(view_name)
+            print("dwg name: {}".format(view_name))
             print ("It is view specific 2D dwg in view '{}' --->{}".format(view_name, script.get_output().linkify(view_id, title = "Go To View")))
 
             if element.IsHidden(revit.doc.GetElement(view_id)):
-                print "It is currently hidden in the view."
+                print("It is currently hidden in the view.")
             return
         '''
         if element.ViewSpecific:
-            print "View Specific item has no user workset.{}".format(script.get_output().linkify(element.Id, title = "Go To Element"))
+            print("View Specific item has no user workset.{}".format(script.get_output().linkify(element.Id, title = "Go To Element")))
             return "View Specific"
 
 
         if element.GroupId != -1: #-1 means not in group
             try:
                 group_name = revit.doc.GetElement(element.GroupId).Name
-                print "\nFail to set workset for {0} becasue it is in group '{3}'---> {1}--->{2}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"),script.get_output().linkify(element.GroupId, title = "Go To Group"), group_name)
-                print "This group is currently in workset '{}'".format(get_element_workset(revit.doc.GetElement(element.GroupId)).Name)
+                print("\nFail to set workset for {0} becasue it is in group '{3}'---> {1}--->{2}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"),script.get_output().linkify(element.GroupId, title = "Go To Group"), group_name))
+                print("This group is currently in workset '{}'".format(get_element_workset(revit.doc.GetElement(element.GroupId)).Name))
             except:
                 group_name = "None"
 
@@ -72,7 +72,7 @@ def set_element_workset(element,workset):
 
             try:
                 #if revit.doc.GetElement(element.GroupId).DesignOption:
-                print "The group '{}' is in design option '{}'. You may use 'Go To Group' while that design option is in edit mode.\n\n ".format(group_name, revit.doc.GetElement(element.GroupId).DesignOption.Name)
+                print("The group '{}' is in design option '{}'. You may use 'Go To Group' while that design option is in edit mode.\n\n ".format(group_name, revit.doc.GetElement(element.GroupId).DesignOption.Name))
                 return "Group In DesignOption"
             except:#no attribute designoption, just say it is in a group
                 return "In Group"
@@ -81,17 +81,17 @@ def set_element_workset(element,workset):
                 pass
 
         elif element.DesignOption != -1:#-1 means not in design option
-            print "The element is in design option '{}'. You may use 'Go To Element' while that design option is in edit mode.\n\n ".format(element.DesignOption.Name)
+            print("The element is in design option '{}'. You may use 'Go To Element' while that design option is in edit mode.\n\n ".format(element.DesignOption.Name))
             return "Element In DesignOption"
 
 
 
         else:
-            print "Fail to set workset on {0} ---> {1}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element"))
+            print("Fail to set workset on {0} ---> {1}".format(id_card,script.get_output().linkify(element.Id, title = "Go To Element")))
             return "Unknown"
 
 
-        print "Contact SenZhang"
+        print("Contact SenZhang")
 
 def get_all_userworkset():
     all_worksets = []
@@ -159,7 +159,7 @@ def collect_scopebox():
     """
     scopeboxs = []
     for item in temp:
-        print item.Category.Name
+        print(item.Category.Name)
         try:
             if item.Category.Name == "Scope Boxes":
                 scopeboxs.append(item)
@@ -195,8 +195,8 @@ def main_func():
     """
     safety_counter = 0
     for x in elements:
-        print x
-        print get_element_workset(x).Name, get_element_workset(x).Kind
+        print(x)
+        print(get_element_workset(x).Name, get_element_workset(x).Kind)
         safety_counter += 1
         if safety_counter > 50:
             break
@@ -205,9 +205,9 @@ def main_func():
 
     #print user_select_workset()
     """
-    print "************"
+    print("************")
     for x in get_all_userworkset():
-        print x.Name
+        print(x.Name)
     """
 
     selected_workset = user_select_workset()
@@ -262,7 +262,7 @@ def main_func():
             #print get_element_workset(element).Name
             ownership = DB.WorksharingUtils.GetWorksharingTooltipInfo(revit.doc,element.Id).Owner
             if ownership and (ownership != HOST_APP.username):
-                print "Cannot edit {0} due to ownership by {2}---> {1}".format(element.Id,script.get_output().linkify(element.Id, title = "Go To Element"),ownership)
+                print("Cannot edit {0} due to ownership by {2}---> {1}".format(element.Id,script.get_output().linkify(element.Id, title = "Go To Element"),ownership))
                 fail_owner += 1
 
                 continue
@@ -284,7 +284,7 @@ def main_func():
 
     """
     if len(elements) == success_count:
-        print "All elements changed workset successfully."
+        print("All elements changed workset successfully.")
         script.get_output().self_destruct(1)
     """
 

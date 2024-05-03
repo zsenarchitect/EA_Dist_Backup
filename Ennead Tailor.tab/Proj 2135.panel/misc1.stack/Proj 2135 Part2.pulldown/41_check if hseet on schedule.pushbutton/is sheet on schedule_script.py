@@ -14,10 +14,10 @@ sheets = DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OS
 sheets = sorted(sheets)
 t = DB.Transaction(revit.doc, "Fix up appear in sheet schedule")
 t.Start()
-print "Sheets below native checkbox are not on."
+print("Sheets below native checkbox are not on.")
 for sheet in sheets:
     if not sheet.LookupParameter("Appears In Sheet List").AsInteger():
-        print "{} - {}".format(sheet.SheetNumber, sheet.Name)
+        print("{} - {}".format(sheet.SheetNumber, sheet.Name))
         sheet.LookupParameter("Appears In Sheet List").Set(1)
         sheet.LookupParameter("Sheet Note").Set("NOT ISSUE for 05/27")
 

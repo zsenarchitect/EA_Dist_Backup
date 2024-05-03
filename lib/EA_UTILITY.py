@@ -414,8 +414,8 @@ def speak(text, language = 'en', accent = 'com'):
     try:
         open_file_in_default_application(exe_location)
     except Exception as e:
-        print exe_location
-        print str(e)
+        print(exe_location)
+        print(str(e))
     """
 
 """"""
@@ -1301,7 +1301,7 @@ def read_data_from_excel(filepath, worksheet = "Sheet1", by_line = True):
     with open(filepath,'rb') as f:
         reader = csv.reader(f)
         for row in reader:
-            print row
+            print(row)
     return reader
     """
 

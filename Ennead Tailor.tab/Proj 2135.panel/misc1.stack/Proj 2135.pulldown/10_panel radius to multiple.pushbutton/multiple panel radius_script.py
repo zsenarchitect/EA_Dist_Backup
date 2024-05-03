@@ -21,7 +21,7 @@ def find_similar_panels(type_id):
                 return False
             else:
                 print (e)
-                print x.Id
+                print(x.Id)
                 return False
 
     all_panels = DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_CurtainWallPanels).WhereElementIsNotElementType().ToElements()
@@ -33,7 +33,7 @@ def find_panel_host_wall_radius(panel):
 
     radius = panel.Host.get_Parameter(DB.BuiltInParameter.CURVE_ELEM_ARC_RADIUS).AsDouble()
     if radius == 0.0:
-        print "Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel"))
+        print("Panel {} should be in curved wall.{}".format(panel.Id, output.linkify(panel.Id,title = "Click to zoom to panel")))
         global error_panel_found
         error_panel_found = True
 
@@ -117,10 +117,10 @@ opts = ["{Edge Railing_Edge_Main}:Arc",\
 
 missing_types = types_not_in_list(opts)
 if missing_types:
-    print "Following types not in the data set:"
+    print("Following types not in the data set:")
     OUT = ""
     for x in missing_types:
-        print x
+        print(x)
         OUT += "\n" + x
 
     EA_UTILITY.dialogue(main_text = "Following types not in the data set:",
@@ -146,11 +146,11 @@ with revit.Transaction("Panel get host wall radius"):
                 panel.LookupParameter("R").Set(desires_r)
                 fix_count += 1
         except:
-            print "panel might has no 'R' parameter. Check the name list."
+            print("panel might has no 'R' parameter. Check the name list.")
 
 
 revit.get_selection().set_to(panels)
 forms.alert("{} panels found, {} updated".format(len(panels), fix_count))
 if error_panel_found:
-    print "###"
+    print("###")
     forms.alert("Also find curved panel(s) on a flat wall, please take a look at the output window.")

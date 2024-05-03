@@ -53,7 +53,7 @@ def get_detail_group_content_info(group_instance, print_output):
 			insulation_count += 1
 		else:
 			if print_output:
-				print "unique item: " + item.Category.Name
+				print("unique item: " + item.Category.Name)
 			other_count += 1
 
 	is_critical_A = False
@@ -88,7 +88,7 @@ def get_detail_group_content_info(group_instance, print_output):
 
 
 	else:#print values when asked to print, used in final stage
-		print "#Detail Group: '{}' has {} elements inside.".format(group_instance.Name,len(content)-sketch_count)
+		print("#Detail Group: '{}' has {} elements inside.".format(group_instance.Name,len(content)-sketch_count))
 
 		output_text = "It has"
 		if lines_count > 0:
@@ -112,7 +112,7 @@ def get_detail_group_content_info(group_instance, print_output):
 
 		output_text = output_text[:-1] + "."#replace the last "," with "."
 
-		print output_text
+		print(output_text)
 		#print "It has {} lines, {} textnotes, {} dimensions, {} detail items, {} generic annotation, {} constriants, {} others.".format(lines_count, textnotes_count, dimension_count, detailitem_count, generic_anno_count, constraint_count, other_count)
 
 		if is_critical_A:
@@ -180,15 +180,15 @@ def get_group_type_list(groups_raw):
 
 def final_print(group_type):
 	if group_type.critical_level:
-		print "{Critical}-->" + group_type.critical_level
+		print("{Critical}-->" + group_type.critical_level)
 	get_detail_group_content_info(group_type.sample, True)
-	print "This group is placed {} time(s).".format(group_type.count)
+	print("This group is placed {} time(s).".format(group_type.count))
 	if group_type.over_used:
-		print "[D]:This groups is used too many times and it is slowing down the performance. Try to break down to smaller detail components."
+		print("[D]:This groups is used too many times and it is slowing down the performance. Try to break down to smaller detail components.")
 	if group_type.under_used:
-		print "[E]:This groups is only used once. Please evaluate if we need to keep this."
-	print "{}".format(output.linkify(group_type.sample.Id, title = "Go To Sample Group"))
-	print "\n-----"
+		print("[E]:This groups is only used once. Please evaluate if we need to keep this.")
+	print("{}".format(output.linkify(group_type.sample.Id, title = "Go To Sample Group")))
+	print("\n-----")
 
 
 

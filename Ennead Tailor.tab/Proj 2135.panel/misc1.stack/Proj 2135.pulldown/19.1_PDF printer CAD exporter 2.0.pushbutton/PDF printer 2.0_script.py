@@ -31,7 +31,7 @@ import EnneadTab
 
 def legalize_filename(name):
     if r"/" in name:
-        print "Windows file name cannot contain '/' in its name, i will replace it with '-'"
+        print("Windows file name cannot contain '/' in its name, i will replace it with '-'")
     return name.replace("/", "-")
 
 def reactivate_output():
@@ -49,7 +49,7 @@ def remove_extra_dot():
             try:
                 os.rename(op.join(fix_folder, file_name),op.join(fix_folder, file_name.replace("..", ".")))
             except:
-                print "skip {}".format(file_name)
+                print("skip {}".format(file_name))
 
 
 def delete_extra_file(basefolder, key_ext):
@@ -80,7 +80,7 @@ def cleanup_jpg_name():
             try:
                 os.rename(op.join(output_folder, file_name),op.join(output_folder, new_name + ".jpg"))
             except:
-                print "skip {}".format(file_name)
+                print("skip {}".format(file_name))
 
 def cleanup_pdf_name():
 
@@ -103,7 +103,7 @@ def cleanup_pdf_name():
             try:
                 os.rename(op.join(output_folder, file_name),op.join(output_folder, new_name))
             except:
-                print "skip renaming {} due to ownership".format(file_name)
+                print("skip renaming {} due to ownership".format(file_name))
 
 
 def print_time(title, time_end, time_start, use_minutes = False):
@@ -124,7 +124,7 @@ def get_issue_date_info(doc):
 
 def show_setting_helper():
     output.print_md( "open your **bluebeam administrator**(not the bluebeam viewer)")
-    print "on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below."
+    print("on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below.")
     img_path = script.get_bundle_file("bluebeam admin setting.png")
     output.set_height(1000)
     output.print_image(img_path)
@@ -139,7 +139,7 @@ def close_docs_by_name(names = [], close_all = False):
         name = doc.Title
         doc.Close(False)
         doc.Dispose()#########################
-        print "{} closed".format(name)
+        print("{} closed".format(name))
 
     docs = get_top_revit_docs()
     if close_all:
@@ -152,7 +152,7 @@ def close_docs_by_name(names = [], close_all = False):
                 safe_close(doc)
             except Exception as e:
                 print (e)
-                print "skip closing [{}]".format(doc.Title)
+                print("skip closing [{}]".format(doc.Title))
 
 
 def get_top_revit_docs():
@@ -271,11 +271,11 @@ def get_print_setting(doc, is_color = True, is_A1_paper = True):
     if is_color:
         print ("use color")
         print_parameters.ColorDepth = DB.ColorDepthType.Color
-        print print_parameters.ColorDepth
+        print(print_parameters.ColorDepth)
     else:
-        print "use grayscale"
+        print("use grayscale")
         print_parameters.ColorDepth = DB.ColorDepthType.GrayScale
-        print print_parameters.ColorDepth
+        print(print_parameters.ColorDepth)
     return
 
     if is_A1_paper:
@@ -286,7 +286,7 @@ def get_print_setting(doc, is_color = True, is_A1_paper = True):
 
 
 def export_image_from_sheet(sheet, doc):
-    print "-----"
+    print("-----")
     time_start = time.time()
 
     file_name = "{} - {}".format(sheet.SheetNumber, sheet.Name)
@@ -294,7 +294,7 @@ def export_image_from_sheet(sheet, doc):
         file_name = index_dict[sheet.SheetNumber] + "_" + file_name
 
     file_name = legalize_filename(file_name)
-    print "preparing [{}].jpg".format(file_name)
+    print("preparing [{}].jpg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".jpg")
 
     opts = DB.ImageExportOptions()
@@ -309,7 +309,7 @@ def export_image_from_sheet(sheet, doc):
     max_attempt = 10
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             global failed_export
             failed_export.append(file_name)
             break
@@ -317,7 +317,7 @@ def export_image_from_sheet(sheet, doc):
 
         try:
             doc.ExportImage(opts)
-            print "Image export succesfully"
+            print("Image export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -337,7 +337,7 @@ def export_image_from_sheet(sheet, doc):
                             message = "{} more to do in current document".format(total - counter))
 
 def export_views_on_sheet(sheet, doc):
-    print "--------try to export views on sheet first:"
+    print("--------try to export views on sheet first:")
     view_ids = sheet.GetAllPlacedViews()
     useful_sheet_count = 0
     for view_id in view_ids:
@@ -361,29 +361,29 @@ def export_views_on_sheet(sheet, doc):
             file_name = index_dict[sheet.SheetNumber] + "_" + file_name
         export_dwg_action(file_name, view, doc)
     if useful_sheet_count == 0:
-        print "no exportable viewport found on this sheet."
+        print("no exportable viewport found on this sheet.")
 
 def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
     time_start = time.time()
     file_name = legalize_filename(file_name)
     if r"/" in file_name:
         file_name = file_name.replace("/", "-")
-        print "Windows file name cannot contain '/' in its name, i will replace it with '-'"
-    print "preparing [{}].dwg".format(file_name)
+        print("Windows file name cannot contain '/' in its name, i will replace it with '-'")
+    print("preparing [{}].dwg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
     view_as_collection = System.Collections.Generic.List[DB.ElementId]([view_or_sheet.Id])
     max_attempt = 10
     attempt = 0
     while True:
         if attempt > max_attempt:
-            print  "Give up on <{}>, too many failed attempts, see reason above.".format(file_name)
+            print("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
             global failed_export
             failed_export.append(file_name)
             break
         attempt += 1
         try:
             doc.Export(output_folder, r"{}".format(file_name), view_as_collection, DWG_option)
-            print "DWG export succesfully"
+            print("DWG export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -394,7 +394,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
             else:
                 if "no views/sheets selected" in e:
                     print (e)
-                    print "000000000"
+                    print("000000000")
                     has_non_print_sheet = True
                 else:
 
@@ -412,17 +412,17 @@ def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
 
 
 def export_DWG_from_sheet(sheet, doc):
-    print "-----"
+    print("-----")
 
     if is_export_view_on_sheet:
         try:
             export_views_on_sheet(sheet, doc)
         except Exception as e:
-            print "Something is not right, let Sen know. Error = {}".format(e)
+            print("Something is not right, let Sen know. Error = {}".format(e))
 
 
     time_start = time.time()
-    print "--------try to export sheet:"
+    print("--------try to export sheet:")
     file_name = "{} - {}".format(sheet.SheetNumber, sheet.Name)
     if has_index:
         file_name = index_dict[sheet.SheetNumber] + "_" + file_name
@@ -430,7 +430,7 @@ def export_DWG_from_sheet(sheet, doc):
     export_dwg_action(file_name, sheet, doc, additional_msg = "{} more to do in current document".format(total - counter))
     return
     """
-    print "preparing [{}].dwg".format(file_name)
+    print("preparing [{}].dwg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
 
     #print_manager.PrintToFileName = r"{}\{}.dwg".format(output_folder, file_name)
@@ -444,7 +444,7 @@ def export_DWG_from_sheet(sheet, doc):
     while True:
         try:
             doc.Export(output_folder, file_name, sheet_as_collection, DWG_option)
-            print "DWG export succesfully"
+            print("DWG export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -455,7 +455,7 @@ def export_DWG_from_sheet(sheet, doc):
             else:
                 if "no views/sheets selected" in e:
                     print (e)
-                    print "000000000"
+                    print("000000000")
                     has_non_print_sheet = True
                 else:
                     print (e)
@@ -471,7 +471,7 @@ def export_DWG_from_sheet(sheet, doc):
 
 def print_PDF_from_sheet(sheet, print_manager, doc):
     #global print_manager
-    print "-----"
+    print("-----")
     time_start = time.time()
 
     file_name = "{} - {}".format(sheet.SheetNumber, sheet.Name)
@@ -479,7 +479,7 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
         file_name = index_dict[sheet.SheetNumber] + "_" + file_name
 
     file_name = legalize_filename(file_name)
-    print "preparing [{}].pdf".format(file_name)
+    print("preparing [{}].pdf".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".pdf")
 
 
@@ -506,7 +506,7 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
     # print_manager.Apply()
     #t.Commit()
     #"""
-    print "Print Setting Name = [{}]".format(print_manager.PrintSetup.CurrentPrintSetting.Name)
+    print("Print Setting Name = [{}]".format(print_manager.PrintSetup.CurrentPrintSetting.Name))
     print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
     print_manager.PrintRange = DB.PrintRange.Select
     view_set = DB.ViewSet()
@@ -514,7 +514,7 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
     try:
         print_manager.ViewSheetSetting.InSession.Views = view_set
     except:
-        print "InSession ViewSheetSet failed, trying with CurrentViewSheetSet..."
+        print("InSession ViewSheetSet failed, trying with CurrentViewSheetSet...")
         print_manager.ViewSheetSetting.CurrentViewSheetSet.Views = view_set
     # print_manager.Apply()
     # t.Commit()
@@ -526,9 +526,9 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
             try:
                 print_manager.SubmitPrint(sheet)
             except:
-                print "2nd method"
+                print("2nd method")
                 print_manager.SubmitPrint()
-            print "PDF export succesfully"
+            print("PDF export succesfully")
             break
         except Exception as e:
             if  "The files already exist!" in e:
@@ -538,14 +538,14 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
 
             elif "no views/sheets selected" in e:
                 print (e)
-                print "..."
-                print print_manager.PrintToFileName
-                print "problem sheet = {}".format(sheet.Name)
+                print("...")
+                print(print_manager.PrintToFileName)
+                print("problem sheet = {}".format(sheet.Name))
                 has_non_print_sheet = True
             else:
                 print (e)
-                print print_manager.PrintToFileName
-                print "problem sheet = {}".format(sheet.Name)
+                print(print_manager.PrintToFileName)
+                print("problem sheet = {}".format(sheet.Name))
             break
     time_end = time.time()
 
@@ -561,12 +561,12 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
 
 
 def print_all_sheet_index():
-    print "--------indexing all the sheets including file not printing now.--------"
+    print("--------indexing all the sheets including file not printing now.--------")
     sorted_dict = sorted(index_dict.items(), key = lambda x: x[1])
     #print sorted_dict
     for key, value in sorted_dict:
-        print "[{}] ---> {}".format(key, value)
-    print "-------- end of index--------"
+        print("[{}] ---> {}".format(key, value))
+    print("-------- end of index--------")
 
 
 def index_all_sheets(docs, print_out = True):
@@ -590,8 +590,8 @@ def index_all_sheets(docs, print_out = True):
 
     """
     for sheet in sheets:
-        print "******"
-        print sheet.LookupParameter("MC_$PlotID").AsString(), sheet.LookupParameter("Sheet_$Order").AsInteger(), sheet.SheetNumber
+        print("******")
+        print(sheet.LookupParameter("MC_$PlotID").AsString(), sheet.LookupParameter("Sheet_$Order").AsInteger(), sheet.SheetNumber)
     """
 
     global index_dict
@@ -652,11 +652,11 @@ def is_sheet_in_current_issue_para(sheet):
         if "EA_INTERNAL PRINT" == key_para and sheet.LookupParameter(key_para).AsString() == u"\u25A0":
             return True
     except Exception as e:
-        print "part A has issue."
+        print("part A has issue.")
         print (e)
-        print sheet
-        print sheet.SheetNumber
-        print sheet.Name
+        print(sheet)
+        print(sheet.SheetNumber)
+        print(sheet.Name)
         note = "Part A:" + str(e) + "____" + sheet.SheetNumber + "___" + sheet.Name
         EA_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
         script.exit()
@@ -677,11 +677,11 @@ def is_sheet_in_current_issue_para(sheet):
             return False
 
     except Exception as e:
-        print "!!! Stop and see below:"
+        print("!!! Stop and see below:")
         print (e)
-        print sheet
-        print sheet.SheetNumber
-        print sheet.Name
+        print(sheet)
+        print(sheet.SheetNumber)
+        print(sheet.Name)
         note = "Part B:" + str(e) + "____" + sheet.SheetNumber + "___" + sheet.Name
         EA_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
         script.exit()
@@ -706,7 +706,7 @@ def get_sheets_from_doc(doc):
     if doc is None:
         return []
     if "2135_BiliBili" not in doc.Title:
-        print "skip document: " + doc.Title
+        print("skip document: " + doc.Title)
         return []
     sheets = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements()
 
@@ -810,18 +810,18 @@ def export_content_in_doc(doc):
 
     """
     for sheet in sheets:
-        print sheet.Name
+        print(sheet.Name)
     """
 
 
     #test sheets
     #sheets = DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements()
     #sheets = list(sheets)[10:15]
-    print "*"*20
-    print "Below are sheets that will be printed....."
+    print("*"*20)
+    print("Below are sheets that will be printed.....")
     for sheet in sheets:
-        print "\t{} - {}".format(sheet.SheetNumber, sheet.Name)
-    print "*"*20
+        print("\t{} - {}".format(sheet.SheetNumber, sheet.Name))
+    print("*"*20)
     #script.exit()
 
 
@@ -857,20 +857,20 @@ def export_content_in_doc(doc):
                     #t = DB.Transaction(doc, "temp")
                     #t.Start()
                     counter += 1
-                    print "\n\n#exporting {} of {}".format(counter, total)
+                    print("\n\n#exporting {} of {}".format(counter, total))
                     print_PDF_from_sheet(sheet, print_manager, doc)
                     #t.Commit()
                     pb.update_progress(counter, total)
 
                 if export_dwg:
                     counter += 1
-                    print "\n\n#exporting {} of {}".format(counter, total)
+                    print("\n\n#exporting {} of {}".format(counter, total))
                     export_DWG_from_sheet(sheet, doc)
                     pb.update_progress(counter, total)
 
                 if export_image:
                     counter += 1
-                    print "\n\n#exporting {} of {}".format(counter, total)
+                    print("\n\n#exporting {} of {}".format(counter, total))
                     export_image_from_sheet(sheet, doc)
                     pb.update_progress(counter, total)
 
@@ -884,17 +884,17 @@ def export_content_in_doc(doc):
 
             if export_pdf:
                 counter += 1
-                print "\n\n#exporting {} of {}".format(counter, total)
+                print("\n\n#exporting {} of {}".format(counter, total))
                 print_PDF_from_sheet(sheet, print_manager, doc)
 
             if export_dwg:
                 counter += 1
-                print "\n\n#exporting {} of {}".format(counter, total)
+                print("\n\n#exporting {} of {}".format(counter, total))
                 export_DWG_from_sheet(sheet, doc)
 
             if export_image:
                 counter += 1
-                print "\n\n#exporting {} of {}".format(counter, total)
+                print("\n\n#exporting {} of {}".format(counter, total))
                 export_image_from_sheet(sheet, doc)
 
 
@@ -1003,7 +1003,7 @@ def set_export_job_setting():
     #print output_folder
     #get save folder
     output_folder = forms.pick_folder(title = "folder for the output PDF/DWG, best if you can create a empty folder")
-    print output_folder
+    print(output_folder)
     script.exit()
     """
 
@@ -1112,14 +1112,14 @@ def proceed_all_sheets():
 
 
     time_end = time.time()
-    print "#"*20
-    print "all sheets from selected revit files have been printed.\nIssue parameter = [{}]".format(key_para)
+    print("#"*20)
+    print("all sheets from selected revit files have been printed.\nIssue parameter = [{}]".format(key_para))
     print_time("print {} sheets".format(sheet_count), time_end, time_start, use_minutes = True)
 
 
     for doc in docs:
         if doc.Title in docs_to_process:
-            print "Date used on titleblock: [{}] = {}".format(doc.Title, get_issue_date_info(doc))
+            print("Date used on titleblock: [{}] = {}".format(doc.Title, get_issue_date_info(doc)))
 
 
     if export_image:
@@ -1144,9 +1144,9 @@ def proceed_all_sheets():
     print_ranked_log()
 
     if len(failed_export) != 0:
-        print "\n\nThere are several view/sheet failed to export. See below and search your print log with 'Ctrl + F'"
+        print("\n\nThere are several view/sheet failed to export. See below and search your print log with 'Ctrl + F'")
         for item in failed_export:
-            print item
+            print(item)
 
     #print output_folder
     localtime = time.asctime( time.localtime(time.time()) ).replace(":","-")
@@ -1159,7 +1159,7 @@ def proceed_all_sheets():
         time.sleep(30)
     else:
         if export_pdf:
-            print "wait 15s so the reamining bluebeam PDF is outputed"
+            print("wait 15s so the reamining bluebeam PDF is outputed")
             time.sleep(20)
         """
         if "yes" == EA_UTILITY.dialogue(main_text = "end of printing. \nSave a print log?", options = ["yes", "no"]):
@@ -1270,7 +1270,7 @@ def combine_final_pdf():
             continue
         if file in files_exported_this_round:
             file_path = op.join(output_folder, file)
-            print "--combining PDF: {}".format(file_path)
+            print("--combining PDF: {}".format(file_path))
             list_of_filepaths.append(file_path)
 
     combined_pdf_file_path = "{}\{}.pdf".format(output_folder, COMBINE_PDF_NAME)
@@ -1356,8 +1356,8 @@ from pyrevit import _HostApplication as host_app
 
 """
 qqq = (90, "qq")
-print qqq
-print qqq[0]
+print(qqq)
+print(qqq[0])
 script.exit()
 """
 

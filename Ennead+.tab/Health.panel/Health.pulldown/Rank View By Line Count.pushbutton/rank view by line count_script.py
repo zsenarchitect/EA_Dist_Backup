@@ -84,15 +84,15 @@ def user_select(list_raw):
 def final_print():
 	for item in view_item_collection:
 		if item.view_name in view_item_collection_selected:
-			print "~~~~~"
+			print("~~~~~")
 
-			print "View '{}' has {} lines.". format(item.view_name, item.line_count)
+			print("View '{}' has {} lines.". format(item.view_name, item.line_count))
 
-			print "This view was created by {}".format(item.creator)
+			print("This view was created by {}".format(item.creator))
 			if item.critical_level_text != "":
-				print "{} Its condition is {}.".format(item.emoji, item.critical_level_text)
+				print("{} Its condition is {}.".format(item.emoji, item.critical_level_text))
 
-			print "{}".format(output.linkify(item.id, title = "Go To View"))
+			print("{}".format(output.linkify(item.id, title = "Go To View")))
 
 
 def final_print_table():
