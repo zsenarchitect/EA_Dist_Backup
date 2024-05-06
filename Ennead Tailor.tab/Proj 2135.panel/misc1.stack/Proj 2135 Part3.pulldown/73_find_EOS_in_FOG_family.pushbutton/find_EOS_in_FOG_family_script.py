@@ -46,9 +46,9 @@ def find_EOS_in_FOG_family():
                 continue
             has_EOS = True if marker.LookupParameter("has EOS line").AsInteger() else False
             if has_EOS:
-                print("{}--has instance EOS = {}--{}".format(owner_view.Name,)
+                print("{}--has instance EOS = {}--{}".format(owner_view.Name,
                                         has_EOS,
-                                        output.linkify(marker.Id, title = "Click me to zoom in"))
+                                        output.linkify(marker.Id, title = "Click me to zoom in")))
     pass
 ################## main code below #####################
 output = script.get_output()

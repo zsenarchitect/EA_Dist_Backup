@@ -9,6 +9,7 @@ except:
 
     
 import FOLDER 
+import REVIT_SELECTION
 
 
 
@@ -95,10 +96,15 @@ def get_family_type_by_name(family_name, type_name, doc=None, create_if_not_exis
         else:
             return None
 
-def get_family_instances_by_family_name_and_type_name(family_name, type_name, doc=None):
+def get_family_instances_by_family_name_and_type_name(family_name, type_name, doc=None, editable_only = False):
     doc = doc or DOC
     family_type = get_family_type_by_name(family_name, type_name, doc=doc)
     if not family_type:
         return
 
-    return [el for el in DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements() if el.Symbol.Id == family_type.Id]
+    res = [el for el in DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements() if el.Symbol.Id == family_type.Id]
+
+    if res and editable_only:
+        res = REVIT_SELECTION.filter_elements_changable(res)
+
+    return res

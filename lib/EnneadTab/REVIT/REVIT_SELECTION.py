@@ -496,10 +496,8 @@ def get_owner(x):
     return x.LookupParameter("Edited by").AsString()
 
 def is_changable(x):
-    try:
-        current_owner = get_owner(x)
-    except:
-        current_owner = x.LookupParameter("Edited by").AsString()
+    current_owner = get_owner(x)
+
     #print current_owner
     if current_owner == "":
         return True

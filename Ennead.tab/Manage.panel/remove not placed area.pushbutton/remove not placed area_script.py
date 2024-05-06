@@ -166,11 +166,11 @@ def find_non_close_or_redundent_room(phase):
             #print area.LookupParameter("Area").AsValueString() ### is this equal to redundent or not enclosed?
             #print area.Perimeter
             #print area.Geometry[DB.Options()]
-            print("not enclosed room or redundent room. Phase = {}\nLevel = {}, room department = {}, room name = {}----{}".format( phase.Name,)
+            print("not enclosed room or redundent room. Phase = {}\nLevel = {}, room department = {}, room name = {}----{}".format( phase.Name,
                                                                                                                             doc.GetElement(room.LevelId).Name,
                                                                                                                             room.LookupParameter("Department").AsString(),
                                                                                                                             room.LookupParameter("Name").AsString(),
-                                                                                                                            output.linkify(room.Id, title = "Select Room"))
+                                                                                                                            output.linkify(room.Id, title = "Select Room")))
     else:
         dialogue(main_text = "no non-enclose or redundent Room found.")
 
@@ -193,11 +193,11 @@ def find_non_close_or_redundent_area():
             #print area.Perimeter
             #print area.Geometry[DB.Options()]
             area_department = area.LookupParameter("Area Department").AsString() if area.LookupParameter("Area Department") else "N/A"
-            print("not enclosed area or redundent area. {}\nArea Scheme = {}, Level = {}, area department = {}, area name = {}----{}".format(get_element_phase(area),)
+            print("not enclosed area or redundent area. {}\nArea Scheme = {}, Level = {}, area department = {}, area name = {}----{}".format(get_element_phase(area),
                                                                                                                                             area.AreaScheme.Name,
                                                                                                                                             doc.GetElement(area.LevelId).Name,
                                                                                                                                             area_department,area.LookupParameter("Name").AsString(),
-                                                                                                                                            output.linkify(area.Id, title = "Select Area"))
+                                                                                                                                            output.linkify(area.Id, title = "Select Area")))
     else:
         dialogue(main_text = "no non-enclose or redundent area found.")
 

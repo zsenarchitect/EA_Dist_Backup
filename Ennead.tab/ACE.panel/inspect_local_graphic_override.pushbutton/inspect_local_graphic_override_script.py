@@ -50,13 +50,13 @@ def inspect_local_graphic_override():
                 #print element
                 if element.IsHidden(view):
                     if is_excel_mode:
-                        print("{},{},Hidden,{}".format(counter,)
+                        print("{},{},Hidden,{}".format(counter,
                                                  "[{}]: {}".format(element.Category.Name, element.Id),
-                                                view.Name)
+                                                view.Name))
                     else:
-                        print("[{}]---{} is currently hidden in view: <{}>.".format(counter,)
+                        print("[{}]---{} is currently hidden in view: <{}>.".format(counter,
                                                                                     output.linkify(element.Id, title = "[{}]: {}".format(element.Category.Name, element.Id)),
-                                                                                    output.linkify(view.Id, title = view.Name))
+                                                                                    output.linkify(view.Id, title = view.Name)))
                     counter += 1
 
                 cate_graphic = view.GetCategoryOverrides(element.Category.Id)
@@ -114,10 +114,10 @@ def inspect_local_graphic_override():
 
                     if is_graphic_same == False:
                         if is_excel_mode:
-                            print("{},{},{},{}".format(counter,)
+                            print("{},{},{},{}".format(counter,
                                                     "[{}]: {}".format(element.Category.Name, element.Id),
                                                     graphic_item,
-                                                    view.Name)
+                                                    view.Name))
                         else:
                             print ("[{}]---{} is has local {} override in view: <{}>.".format(counter,
                                                                                             output.linkify(element.Id, title = "[{}]: {}".format(element.Category.Name, element.Id)),

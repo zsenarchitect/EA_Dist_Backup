@@ -12,15 +12,13 @@ from Autodesk.Revit.Exceptions import InvalidOperationException
 
 
 
-from pyrevit.revit import ErrorSwallower
+
 from pyrevit import script, forms
 
 
 import EnneadTab
 import ENNEAD_LOG
-import clr
-import System
-import time
+
 import traceback
 import random
 

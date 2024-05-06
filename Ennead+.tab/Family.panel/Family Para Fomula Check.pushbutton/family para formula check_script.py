@@ -130,13 +130,13 @@ def check_link_para(my_para):
     print("\n\nInspecting associated parameters for [{}]".format(my_para.Definition.Name))
     for para in sels:
         if isinstance(para.Element, DB.FamilyInstance):
-            print("\t\tFamily Instance [{}] , associated parameter = [{}] ---> {}".format(para.Element.Symbol.FamilyName,)
+            print("\t\tFamily Instance [{}] , associated parameter = [{}] ---> {}".format(para.Element.Symbol.FamilyName,
                                                                                         para.Definition.Name,
-                                                                                        output.linkify(para.Element.Id, title = "Go To Element"))
+                                                                                        output.linkify(para.Element.Id, title = "Go To Element")))
         else:
-            print("\t\tFamily Element [{}] , associated parameter = [{}] ---> {}".format(para.Element.GetType(),)
+            print("\t\tFamily Element [{}] , associated parameter = [{}] ---> {}".format(para.Element.GetType(),
                                                                                         para.Definition.Name,
-                                                                                        output.linkify(para.Element.Id, title = "Go To Element"))
+                                                                                        output.linkify(para.Element.Id, title = "Go To Element")))
     return "checked"
 
 

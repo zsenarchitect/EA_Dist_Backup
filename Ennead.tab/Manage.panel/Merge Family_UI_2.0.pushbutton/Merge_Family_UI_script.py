@@ -501,10 +501,10 @@ class MergeFamily_UI(forms.WPFWindow):
                     found_mismatch = True
 
         if found_mismatch:
-            print("Please beaware there are mismatch of type parameter between <{}>:{} and <{}>:{}".format(bad_type.Family.Name,)
+            print("Please beaware there are mismatch of type parameter between <{}>:{} and <{}>:{}".format(bad_type.Family.Name,
                                                                                                         bad_type.LookupParameter("Type Name").AsString(),
                                                                                                         target_type.Family.Name,
-                                                                                                        target_type.LookupParameter("Type Name").AsString())
+                                                                                                        target_type.LookupParameter("Type Name").AsString()))
             return False
         return True
 

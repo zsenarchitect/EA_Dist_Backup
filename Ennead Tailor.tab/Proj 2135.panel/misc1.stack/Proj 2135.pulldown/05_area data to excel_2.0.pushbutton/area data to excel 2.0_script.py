@@ -73,12 +73,12 @@ class data_item():
         self.area_num += new_area.Area * new_area.LookupParameter("MC_$Discount Ratio").AsDouble()
 
     def print_data_detail(self):
-        print("data item detail:{};{}:{}..row:{}...column:{} ---{}".format(self.area_obj.Level.Name,)
+        print("data item detail:{};{}:{}..row:{}...column:{} ---{}".format(self.area_obj.Level.Name,
                                                     self.area_obj.LookupParameter("Area Department").AsString(),
                                                     self.area_obj.LookupParameter("Name").AsString(),
                                                     self.row,
                                                     self.column,
-                                                    EA_UTILITY.sqft_to_sqm(self.area_num))
+                                                    EA_UTILITY.sqft_to_sqm(self.area_num)))
 
 
 

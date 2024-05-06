@@ -119,8 +119,8 @@ class ColorizePills:
         color = self.color_map.get(category_name, None)
         pattern_id = self.pattern_map.get(category_name, None)
         if color is None:
-            print("No color for <{}> found in color map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,)
-                                                                                      self.output.linkify(pill.Id, title="Select Pill Shape"))
+            print("No color for <{}> found in color map. Check spelling....{}(Link only works while run from tailor tab)".format(category_name,
+                                                                                      self.output.linkify(pill.Id, title="Select Pill Shape")))
             color = self.bad_color
             pattern_id = self.solid_pattern_id
          
