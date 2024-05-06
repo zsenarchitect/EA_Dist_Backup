@@ -49,7 +49,7 @@ if len(user_keynotes_tags)>0:
         print ("{}: tag Id = {}-->{}".format(idx+1,tag.Id,output.linkify(tag.Id, title = "Go To Tag")))
         print(key_value)
         print(key_text)
-        print("Found in this view: {} :-->{}".format(revit.doc.GetElement(parent_view).Name,output.linkify(parent_view, title = "Go To View")))#ViewNmae
+        print("Found in this view: {} :-->{}".format(revit.doc.GetElement(parent_view).Name,output.linkify(parent_view, title = "Go To View")))
         print(seperation)
 
 
