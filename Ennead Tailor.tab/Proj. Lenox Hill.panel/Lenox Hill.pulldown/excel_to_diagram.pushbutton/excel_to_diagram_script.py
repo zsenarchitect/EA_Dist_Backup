@@ -145,8 +145,9 @@ def excel_to_diagram(doc):
             program_area_DGSF = 0
 
 
-        if ref_num in ["14.2", "14.3"]:
+        if ref_num in ["14.2", "14.3", "10.2C", "10.2D"]:
             is_remote = True
+            program_area_NSF = 300
 
 
 
