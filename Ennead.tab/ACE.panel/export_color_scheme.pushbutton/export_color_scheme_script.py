@@ -76,6 +76,7 @@ def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
     
     alt_dict = {}
     
+    
     for i, entry in enumerate(entries):
         i += 1
         if not entry.Color.IsValid:

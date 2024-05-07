@@ -121,7 +121,7 @@ def rgb_to_hex(rgb_tuple):
     Returns:
         str: _description_
     """
-    return '#{:02x}{:02x}{:02x}'.format(rgb_tuple[0],rgb_tuple[1],rgb_tuple[2])
+    return '#{:02x}{:02x}{:02x}'.format(int(rgb_tuple[0]),int(rgb_tuple[1]),int(rgb_tuple[2]))
 
 
 def hex_to_rgb(hex_str):

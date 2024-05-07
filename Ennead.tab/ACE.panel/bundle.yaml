@@ -10,14 +10,15 @@ layout:
   - Family RePath
   - Project Starter
   - List_Legend and Schedule
+  - export_color_scheme
   - ">>>"
   - create_worksets
   - excel_sheet_creator
   - CollectTextures
   - family_tree
   - inspect_local_graphic_override
-  - export_color_scheme
   - list_detail_items
   - transfer_parameter_data
   - check_formula
+  - export_filled_region_types
   - links_to_worksets

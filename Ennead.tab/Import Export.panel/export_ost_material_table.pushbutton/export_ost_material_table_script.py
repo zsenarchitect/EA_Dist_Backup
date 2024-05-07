@@ -11,14 +11,17 @@ If you have not done already, you can update dwg export layer mapping with Ennea
 __title__ = "Export SubCategory\nMaterial Table"
 __tip__ = True
 # from pyrevit import forms #
+import pprint
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+from  EnneadTab import NOTIFICATION, DATA_FILE
+from EnneadTab.REVIT import REVIT_APPLICATION
+
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 class Solution:
@@ -75,9 +78,10 @@ class Solution:
                 self.process_category(sub_c)
         
 
-        EnneadTab.DATA_FILE.pretty_print_dict (self.table)
-        EnneadTab.DATA_FILE.save_dict_to_json_in_dump_folder(self.table, "SUBC_MATERIAL_TABLE.json", use_encode = True)
-        EnneadTab.NOTIFICATION.messenger(main_text="Export done, now swicth to 'map Revit SubC' in Rhino")
+        DATA_FILE.pretty_print_dict (self.table)
+        # pprint.pprint(self.table, indent=4)
+        DATA_FILE.save_dict_to_json_in_dump_folder(self.table, "SUBC_MATERIAL_TABLE.json", use_encode = True)
+        NOTIFICATION.messenger(main_text="Export done, now swicth to 'map Revit SubC' in Rhino")
 ################## main code below #####################
 
 

@@ -56,7 +56,7 @@ class LineData:
 
     
 @ERROR_HANDLE.try_catch_error
-def excel_to_diagram():
+def excel_to_diagram(doc):
     REVIT_VIEW.set_active_view_by_name(WORKING_VIEW)
     solid_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
 
@@ -101,7 +101,7 @@ def excel_to_diagram():
             ref_num = round(float(ref_num), 3)
             ref_num = str(ref_num)
         
-        if title == "Mother/Baby Dedicated Discharge":
+        if title == "Mother/Child Dedicated Discharge":
             ref_num = "11.10"
 
 
@@ -143,6 +143,10 @@ def excel_to_diagram():
             program_area_NSF = 0
         if isinstance(program_area_DGSF, str):
             program_area_DGSF = 0
+
+
+        if ref_num in ["14.2", "14.3"]:
+            is_remote = True
 
 
 
@@ -359,7 +363,7 @@ def update_titler(ref_num, title, program_area_NSF, program_area_DGSF):
 if __name__ == "__main__":
     output = script.get_output()
     output.close_others()
-    excel_to_diagram()
+    excel_to_diagram(doc)
     ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)
 
 
