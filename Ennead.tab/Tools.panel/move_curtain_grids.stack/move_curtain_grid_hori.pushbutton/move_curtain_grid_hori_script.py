@@ -120,9 +120,13 @@ def move_curtain_grid():
         NOTIFICATION.messenger("No walls selected.")
         return
 
-    crvs = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Subelement, "Pick detail crvs or grids that will intersect your wall")
+    try:
+        crvs = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Subelement, "Pick detail crvs or levels that will intersect your wall")
+    except:
+        NOTIFICATION.messenger("NO intersection content picked.")
+        return
     if len(crvs) == 0:
-        NOTIFICATION.messenger("No detail crvs or grids selected.")
+        NOTIFICATION.messenger("No detail crvs or levels selected.")
         return
 
     crvs = [doc.GetElement(x) for x in crvs]
