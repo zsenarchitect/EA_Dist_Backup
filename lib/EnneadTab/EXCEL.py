@@ -140,7 +140,7 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
 
     def write_data_item(worksheet, data):
 
-        if hasattr(data, "cell_color") and data.cell_color:
+        if data.cell_color:
             hex_color = COLOR.rgb_to_hex(data.cell_color)
             format = workbook.add_format({'bg_color' : hex_color})
             worksheet.write(data.row,

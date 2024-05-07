@@ -31,8 +31,13 @@ def export_filled_region_types():
 
     data = []
     for i, filled_region_type in enumerate(all_filled_region_types):
+
+        masker_color = (255,255, 255) if filled_region_type.IsMasking else (200, 200, 200)
         type_name = filled_region_type.LookupParameter("Type Name").AsString()
-        data.append(ExcelDataItem(type_name, i+1, 0))
+        data.append(ExcelDataItem(type_name, i+1, 0, masker_color))
+
+        is_mask = "Yes" if filled_region_type.IsMasking else "No"
+        data.append(ExcelDataItem(is_mask, i+1, 1, masker_color))
 
         
         background_color = filled_region_type.BackgroundPatternColor
@@ -41,8 +46,8 @@ def export_filled_region_types():
                     background_color.Blue)
         # print (color_pack)
         color_text = "{}-{}-{}".format(*color_pack)
-        data.append(ExcelDataItem("", i+1, 1, color_pack))
-        data.append(ExcelDataItem(color_text, i+1, 2))
+        data.append(ExcelDataItem("", i+1, 2, color_pack))
+        data.append(ExcelDataItem(color_text, i+1, 3))
 
         
         foreground_color = filled_region_type.ForegroundPatternColor
@@ -54,8 +59,9 @@ def export_filled_region_types():
         data.append(ExcelDataItem(color_text, i+1, 5))
         
     data.append(ExcelDataItem("FilledRegionType", 0, 0))
-    data.append(ExcelDataItem("ForegroundColor", 0, 1))
-    data.append(ExcelDataItem("ForegroundColorRGB", 0, 2))
+    data.append(ExcelDataItem("IsMasking", 0, 1))
+    data.append(ExcelDataItem("ForegroundColor", 0, 2))
+    data.append(ExcelDataItem("ForegroundColorRGB", 0, 3))
     data.append(ExcelDataItem("BackgroundColor", 0, 4))
     data.append(ExcelDataItem("BackgroundColorRGB", 0, 5))
 
