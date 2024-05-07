@@ -29,18 +29,22 @@ def get_column_index(letter):
     return letter_to_index(letter)
 
 class ExcelDataItem():
-    def __init__(self, item, row, column, cell_color = None):
+    def __init__(self, item, row, column, cell_color = None, text_color = None, border_style = None, border_color = None ):
         if isinstance(column, str):
             column = letter_to_index(column)
         self.item = item
         self.row = row
         self.column = column
         self.cell_color = cell_color
+        self.text_color = text_color
+        self.border_style = border_style
+        self.border_color = border_color
 
     def __str__(self):
+        info = "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
         if self.cell_color:
-            return "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column) + " ({})".format(self.cell_color)
-        return "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
+            info += " ({})".format(self.cell_color)
+        return info
 
 
 def get_all_worksheets(filepath):
@@ -137,7 +141,8 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
         worksheet (str, optional): _description_. Defaults to "EnneadTab".
         open_after (bool, optional): _description_. Defaults to True.
     """
-
+    # note to self: rework the format method in dataitem so can construct any combonation format
+    # see doc here: https://xlsxwriter.readthedocs.io/format.html#format-set-border
     def write_data_item(worksheet, data):
 
         if data.cell_color:

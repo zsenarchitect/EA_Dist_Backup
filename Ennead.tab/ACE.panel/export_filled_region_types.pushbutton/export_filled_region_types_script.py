@@ -57,7 +57,9 @@ def export_filled_region_types():
         color_text = "{}-{}-{}".format(*color_pack)
         data.append(ExcelDataItem("", i+1, 4, color_pack))
         data.append(ExcelDataItem(color_text, i+1, 5))
-        
+
+
+    
     data.append(ExcelDataItem("FilledRegionType", 0, 0))
     data.append(ExcelDataItem("IsMasking", 0, 1))
     data.append(ExcelDataItem("ForegroundColor", 0, 2))
