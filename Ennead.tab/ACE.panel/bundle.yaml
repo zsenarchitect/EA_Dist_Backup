@@ -6,12 +6,13 @@
 # this entire panel is commented out from the overall yaml tab layout for the basic user
 layout:
   - create 3D view of workset
-  - QAQC_AI
   - Family RePath
   - Project Starter
-  - List_Legend and Schedule
   - export_color_scheme
+  - export_filled_region_types
   - ">>>"
+  - List_Legend and Schedule
+  - QAQC_AI
   - create_worksets
   - excel_sheet_creator
   - CollectTextures
@@ -20,5 +21,4 @@ layout:
   - list_detail_items
   - transfer_parameter_data
   - check_formula
-  - export_filled_region_types
   - links_to_worksets
