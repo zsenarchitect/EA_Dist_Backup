@@ -56,6 +56,7 @@ def get_para(sample_element, button_name):
                                             multiple=False,
                                                 button_name=button_name)
     except:
+        
         selected_para = forms.select_parameters(sample_element,
                                             multiple=False,
                                                 button_name=button_name,
@@ -65,6 +66,9 @@ def get_para(sample_element, button_name):
 
 def transfer_action(category):
     sample_element = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().FirstElement()
+    if sample_element is None:
+        NOTIFICATION.messenger("No element in the selected category")
+        return
 
     source_para = get_para(sample_element, "Select <SOURCE> parameter to extract data")
             

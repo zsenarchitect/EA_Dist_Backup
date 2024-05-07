@@ -2,9 +2,12 @@ import threading
 import time
 
 import REVIT_EVENT
+"""
+Also make a versionfor Rhino maybe...
+"""
 
-
-"""the idea is simple, this contain a abstract class that can use to make a thread that attach any funcs. The args of the func might need to be stored in runtime sticky
+"""the idea is simple, this contain a abstract class that can use to make a thread that attach any funcs. 
+The args of the func might need to be stored in runtime sticky
 it auto run every 2 seconds under revit. It is not a idle hook!
 Probaly need to use external command.
 
@@ -44,7 +47,7 @@ class RevitUpdater:
         if func.__name__ in RevitUpdater.tasks:
             print ("func {} already exist in RevitUpdater".format(func.__name__))
             return
-        self.func = func
+        self.func = func #############!!!!!! this is not good, this means there are only one func allow to auto run. Need to upgrade to a dict toallow parrell run funcs. Need change to the runner logic as well.
 
         self.interval = interval
         self.max_life = max_life
