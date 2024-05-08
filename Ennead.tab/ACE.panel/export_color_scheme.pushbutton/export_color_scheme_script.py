@@ -4,7 +4,7 @@
 
 
 __doc__ = "Use me tp export selected Color Scheme To Excel. You have the option to exclude unused color."
-__title__ = "Export Color Scheme\nTo Excel"
+__title__ = "ColorScheme\nTo Excel"
 __tip__ = True
 from pyrevit import forms #
 from pyrevit import script #

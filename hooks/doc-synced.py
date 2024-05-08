@@ -78,16 +78,26 @@ def update_project_2314():
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_1643():
 
-    if "1634_lhh boa-a_new" not in doc.Title.lower():
+    if "1643_lhh bod-a_new" not in doc.Title.lower():
         return
+    return
+    from EnneadTab import USER
+    if not USER.is_SZ():
+        return
+    # folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    # func_name = "update_delta_area_graphic"
+    # EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
-    func_name = "update_delta_area_graphic"
-    
 
-    
-    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
-    
+    from EnneadTab.REVIT import REVIT_LIFE_SAFETY
+    data_source = REVIT_LIFE_SAFETY.SpatialDataSource(
+                source =  "Area",
+                 para_name_load_per_area = "Rooms_$LS_Occupancy AreaPer",
+                 para_name_load_manual = "LSLoadManual",
+                 para_name_target = "LSTarget"
+                 )
+    REVIT_LIFE_SAFETY.update_life_safety(doc, data_source)
+
     return
 
     

@@ -8,6 +8,8 @@ except:
 
 import math
 
+from EnneadTab import NOTIFICATION
+
 
 class EgressData:
     data_collection = dict()
@@ -160,6 +162,19 @@ class LifeSafetyChecker:
         # loop thru all spatial element, either from area or from room. 
         cate = DB.BuiltInCategory.OST_Rooms if self.data_source.Source == "Room" else DB.BuiltInCategory.OST_Areas
         all_spatial_elements = DB.FilteredElementCollector(self.doc).OfCategory(cate).WhereElementIsNotElementType().ToElements()
+        if len(all_spatial_elements) == 0:
+            return
+
+        # get a test spatial element to see if all needed parameter is valid
+        tester = all_spatial_elements[0]
+        for para_name in [self.data_source.ParaNameLoadPerArea,
+                          self.data_source.ParaNameLoadManual,
+                          self.data_source.ParaNameTarget]:
+            if tester.LookupParameter(para_name) is None:
+                NOTIFICATION.messenger("Missing <{}> for the spatial element".format(para_name))
+                return
+                          
+
         
         # for each egress data, 
             # collect final load number
