@@ -93,6 +93,8 @@ class LifeSafetyChecker:
 
     @staticmethod
     def get_stair_width(stair):
+        if not stair:
+            return 
         runs = [stair.Document.GetElement(x) for x in stair.GetStairsRuns()]
         
         max_width = runs[0].ActualRunWidth
@@ -181,8 +183,8 @@ class LifeSafetyChecker:
             data_item.EgressDoorWidth = door_width
             data_item.OccupancyDoorCapacity = int(math.floor(data_item.EgressDoorWidth * 12 /0.2))
 
-
-            data_item.EgressStairWidth = family_type.LookupParameter("EgressStairWidth").AsDouble()
+            stair = data_item.RevitStairObjCollection[0] if len(data_item.RevitStairObjCollection) > 0 else None
+            data_item.EgressStairWidth = LifeSafetyChecker.get_stair_width(stair) or family_type.LookupParameter("EgressStairWidth").AsDouble()
             data_item.OccupancyStairCapacity = int(math.floor(data_item.EgressStairWidth * 12 /0.3))
 
             if data_item.EgressId in ["Stair 1", "Stair 2", "Exit 1", "Exit 2"]:
