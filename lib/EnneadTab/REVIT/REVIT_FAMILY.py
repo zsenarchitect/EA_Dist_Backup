@@ -78,7 +78,12 @@ def get_family_by_name(family_name,
     return families[0]
 
 
-
+def get_all_types_by_family_name(family_name, doc=None):
+    doc = doc or DOC
+    family = get_family_by_name(family_name, doc=doc)
+    if family is None:
+        return None
+    return [doc.GetElement(x) for x in family.GetFamilySymbolIds()]
 
 def get_family_type_by_name(family_name, type_name, doc=None, create_if_not_exist=False):
     doc = doc or DOC

@@ -84,9 +84,9 @@ def update_project_1643():
     from EnneadTab import USER
     if not USER.is_SZ():
         return
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
-    func_name = "update_life_safety"
-    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    # folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    # func_name = "update_life_safety"
+    # EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
 
 
