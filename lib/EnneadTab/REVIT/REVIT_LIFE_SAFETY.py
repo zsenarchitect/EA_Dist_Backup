@@ -46,6 +46,9 @@ class EgressData:
              instance = DoorData(level_name, egress_id)
         cls.data_collection[key] = instance
         return instance
+
+    def add_load(self, load):
+        self.occupancy_load += load
     
     def add_room_occupancy_load(self, room, branch_count): 
         self.source_rooms.append(room)
@@ -162,17 +165,17 @@ class LifeSafetyChecker:
         # loop thru all spatial element, either from area or from room. 
         cate = DB.BuiltInCategory.OST_Rooms if self.data_source.Source == "Room" else DB.BuiltInCategory.OST_Areas
         all_spatial_elements = DB.FilteredElementCollector(self.doc).OfCategory(cate).WhereElementIsNotElementType().ToElements()
+
+        if self.data_source.Source == "Area":
+            all_spatial_elements = filter(lambda x: x.AreaScheme.Name == self.data_source.AreaSchemeName, all_spatial_elements)
+
         if len(all_spatial_elements) == 0:
             return
 
         # get a test spatial element to see if all needed parameter is valid
         tester = all_spatial_elements[0]
-        for para_name in [self.data_source.ParaNameLoadPerArea,
-                          self.data_source.ParaNameLoadManual,
-                          self.data_source.ParaNameTarget]:
-            if tester.LookupParameter(para_name) is None:
-                NOTIFICATION.messenger("Missing <{}> for the spatial element".format(para_name))
-                return
+        if not self.varify_para_exist(tester):
+            return
                           
 
         
@@ -196,15 +199,35 @@ class LifeSafetyChecker:
             
 
 
+        # for ground level need to treat specially: the immediate load(NOT the worst load) from above and below of EACH stair need to converge
+        #  but do not need to add current ground level load to the same door
+
+        
         # for each item data, get a data calculator and update.
         # why not use revit obj directly? becasue stair can not easitl disply data by level. and stair and door if mixed in multi-category schdule can cause confusion, althoug it is technically possoble
+        # for data_item in EgressData.data_collection.values():
+        #     data_item.print_data(show_log = True)
 
 
+    def varify_para_exist(self, tester):
+        
+        for para_name in [self.data_source.ParaNameLoadPerArea,
+                          self.data_source.ParaNameLoadManual,
+                          self.data_source.ParaNameTarget]:
+            if tester.LookupParameter(para_name) is None:
+                NOTIFICATION.messenger("Missing <{}> for the spatial element".format(para_name))
+                return False
+
+        return True
+
+    
     def get_spatial_element_target_list(self, spatial_element):
         target_list = spatial_element.LookupParameter(self.data_source.ParaNameTarget).AsString()
         if target_list == "" or target_list is None:
-            target = "--No Egress Target--"
-            print ("{}Target not assigned, please fix.".format(self.output.linkify(spatial_element.Id, title = spatial_element.LookupParameter("Name").AsString())))
+            empty_target = "--No Egress Target--"
+            print ("{}Egress target not assigned, please fix. Level = [{}]".format(self.output.linkify(spatial_element.Id, title = spatial_element.LookupParameter("Name").AsString()),
+                                                                   spatial_element.Level.Name))
+            spatial_element.LookupParameter(self.data_source.ParaNameTarget).Set(empty_target)
             return []
         
         if "+" in target_list:
@@ -235,15 +258,20 @@ class LifeSafetyChecker:
 class SpatialDataSource:
     """use this format to define how to extract lfe safety data, 
     each project mght want to s=do sometingdifferently."""
-    def __init__(self, source =  "Area" or "Room",
-                 para_name_load_per_area = "Rooms_$LS_Occupancy AreaPer",
-                 para_name_load_manual = "LSLoadManual",
-                 para_name_target = "LSTarget"):
-        self.Source = source
+    def __init__(self, source,
+                 para_name_load_per_area,
+                 para_name_load_manual,
+                 para_name_target,
+                 area_scheme_name = None,
+                 ):
+        self.Source = source# "Area" or "Room"
+        self.AreaSchemeName = area_scheme_name
         self.ParaNameLoadPerArea = para_name_load_per_area
         self.ParaNameLoadManual = para_name_load_manual
         self.ParaNameTarget = para_name_target
 
 def update_life_safety(doc, data_source):
+    t = DB.Transaction(doc, "Life Safety Update")
+    t.Start()
     LifeSafetyChecker(doc, data_source).run_check()
-
+    t.Commit()
