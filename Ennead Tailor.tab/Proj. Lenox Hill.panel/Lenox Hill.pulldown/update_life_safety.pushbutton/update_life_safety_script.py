@@ -11,7 +11,7 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_LIFE_SAFETY
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_LIFE_SAFETY
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
@@ -28,8 +28,19 @@ def update_life_safety(doc):
                  para_name_egress_id = "Door_$LS_Exit Name",
                  para_name_door_width = "Door_$LS_Clear Width"
                  )
+
+    t = DB.Transaction(doc, "Life Safety Update")
+    t.Start()
     REVIT_LIFE_SAFETY.update_life_safety(doc, data_source)
 
+
+
+    tags = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name("LS Door Data", "SD")
+    for tag in tags:
+        if not tag.Host.LookupParameter("Door_$LS_Exit Name").HasValue or tag.Host.LookupParameter("Door_$LS_Exit Name").AsString() == "":
+            doc.Delete(tag.Id)
+
+    t.Commit()
 
 ################## main code below #####################
 

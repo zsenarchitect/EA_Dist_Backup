@@ -182,6 +182,9 @@ class LifeSafetyChecker:
             data_item.OccupancyDoorCapacity = int(math.floor(data_item.EgressDoorWidth * 12 /0.2))
 
 
+            data_item.EgressStairWidth = family_type.LookupParameter("EgressStairWidth").AsDouble()
+            data_item.OccupancyStairCapacity = int(math.floor(data_item.EgressStairWidth * 12 /0.3))
+
             if data_item.EgressId in ["Stair 1", "Stair 2", "Exit 1", "Exit 2"]:
                 data_item.Zone = "New"
             else:
@@ -310,8 +313,6 @@ class SpatialDataSource:
         self.ParaNameDoorWidth = para_name_door_width
 
 def update_life_safety(doc, data_source):
-    t = DB.Transaction(doc, "Life Safety Update")
-    t.Start()
+
     LifeSafetyChecker(doc, data_source).run_check()
     NOTIFICATION.messenger("Life Safety updated")
-    t.Commit()
