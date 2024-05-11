@@ -8,11 +8,11 @@ except:
 
 import math
 
-from EnneadTab import NOTIFICATION
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_SELECTION, REVIT_VIEW, REVIT_UNIT
 
 LIFE_SAFETY_CALCULATOR_FAMILY_NAME = "LifeSafetyCalculator"
-LIFE_SAFETY_CALCULATOR_FAMILY_PATH = "{}.rvt".format(LIFE_SAFETY_CALCULATOR_FAMILY_NAME)
+LIFE_SAFETY_CALCULATOR_FAMILY_PATH = "{}\\REVIT\\{}.rvt".format(ENVIRONMENT_CONSTANTS.CORE_MODULE_FOLDER_FOR_PUBLISHED_REVIT, LIFE_SAFETY_CALCULATOR_FAMILY_NAME)
 LIFE_SAFETY_CALCULATOR_DUMP_VIEW = "EnneadTab_LifeSafetyCalculater"
 
 
@@ -107,6 +107,9 @@ class LifeSafetyChecker:
         self.doc = doc
         self.data_source = data_source
         self.output = script.get_output()
+
+        REVIT_FAMILY.get_family_by_name(LIFE_SAFETY_CALCULATOR_FAMILY_NAME, 
+                                         load_path_if_not_exist = LIFE_SAFETY_CALCULATOR_FAMILY_PATH)
 
     def run_check(self):
         # loop thru all spatial element, either from area or from room. 
@@ -297,7 +300,7 @@ class LifeSafetyChecker:
 
 class SpatialDataSource:
     """use this format to define how to extract lfe safety data, 
-    each project mght want to s=do sometingdifferently."""
+    each project mght want to do someting differently."""
     def __init__(self, source,
                  para_name_load_per_area,
                  para_name_load_manual,

@@ -37,18 +37,11 @@ def reload_action():
 
 
 
-def update_repo():
-
-    EnneadTab.GIT.run_updater()
 
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def main():
-    
-    try:
-        update_repo()
-    except Exception as e:
-        print (traceback.format_exc())
+
     
     reload_action()
 

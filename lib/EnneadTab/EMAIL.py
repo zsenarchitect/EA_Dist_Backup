@@ -61,6 +61,8 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
             
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
         developer_emails = USER.get_rhino_developer_emails()
+        if USER.is_SZ():
+            developer_emails = developer_emails.remove("szhang@ennead.com")
 
 
     # to-do: if current user is a developer of the software, should only sent the email to self to avoid bothering other editor during test runs.

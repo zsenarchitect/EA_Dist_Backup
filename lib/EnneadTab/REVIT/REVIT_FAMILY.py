@@ -8,6 +8,7 @@ except:
     REF_CLASS = object # this is to trick that class can be used
 
     
+import NOTIFICATION
 import FOLDER 
 import REVIT_SELECTION
 
@@ -105,6 +106,7 @@ def get_family_instances_by_family_name_and_type_name(family_name, type_name, do
     doc = doc or DOC
     family_type = get_family_type_by_name(family_name, type_name, doc=doc)
     if not family_type:
+        NOTIFICATION.messenger("Cannot find any type")
         return
 
     res = [el for el in DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements() if el.Symbol.Id == family_type.Id]
