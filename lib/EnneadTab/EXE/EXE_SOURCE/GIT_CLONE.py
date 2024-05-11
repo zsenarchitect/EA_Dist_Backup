@@ -4,6 +4,7 @@ import zipfile
 import os
 import shutil
 import filecmp
+import time
 import traceback
 import getpass
 
@@ -49,27 +50,26 @@ class RepositoryUpdater:
         if not os.path.exists(self.final_dir):
             os.makedirs(self.final_dir)
         
+        # Force copy everything over
         source_files = {os.path.join(dp, f): os.path.relpath(os.path.join(dp, f), self.source_dir) for dp, dn, filenames in os.walk(self.source_dir) for f in filenames}
-        target_files = {os.path.join(dp, f): os.path.relpath(os.path.join(dp, f), self.final_dir) for dp, dn, filenames in os.walk(self.final_dir) for f in filenames}
-        
         for src_path, rel_path in source_files.items():
             tgt_path = os.path.join(self.final_dir, rel_path)
-            if os.path.exists(tgt_path):
-                if not filecmp.cmp(src_path, tgt_path, shallow=False):
-                    shutil.copy2(src_path, tgt_path)
-            else:
-                os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
-                shutil.copy2(src_path, tgt_path)
-        
+            os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
+            shutil.copy2(src_path, tgt_path)
 
-        for tgt_path, rel_path in list(target_files.items()):
-            if rel_path not in source_files:
-                os.remove(tgt_path)
-                try:
-                    os.removedirs(os.path.dirname(tgt_path))
-                except OSError:
-                    pass
-                
+            
+        # Delete files older than 3 days
+        now = time.time()
+        three_days_ago = now - 3 * 24 * 60 * 60
+        for dp, dn, filenames in os.walk(self.final_dir):
+            for f in filenames:
+                file_path = os.path.join(dp, f)
+                if os.stat(file_path).st_mtime < three_days_ago:
+                    os.remove(file_path)
+                    try:
+                        os.rmdir(dp)  # Attempt to remove the directory if empty
+                    except OSError:
+                        pass
         print("Files have been updated.")
     
     def cleanup(self):
