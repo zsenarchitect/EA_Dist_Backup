@@ -64,6 +64,7 @@ def get_nth_commit_number():
 
 
 def push_changes_to_main(repository_path):
+    """this is importatnt and should keep. It push the change of Distrubuter Folder to git repo"""
 
     # Change to the Git repository directory
     os.chdir(repository_path)
