@@ -12,9 +12,9 @@ import USER
 
 def is_file_content_same(file1, file2):
     try:
-        with open(file1, 'r') as f1:
+        with open(file1, 'r', encoding='utf-8') as f1:
             content1 = f1.read()
-        with open(file2, 'r') as f2:
+        with open(file2, 'r', encoding='utf-8') as f2:
             content2 = f2.read()
 
         if content1 == content2:
