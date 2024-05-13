@@ -4,6 +4,7 @@ import random
 
 from Autodesk.Revit import DB
 
+from EnneadTab import NOTIFICATION
 from pyrevit import forms, script
 from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
@@ -62,7 +63,8 @@ def pop_up_window(doc):
 
 
 
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text, sub_text = display_text, self_destruct = 10) # make sure this self destruct time is shorter than the script kill time defined below
+        NOTIFICATION.messenger(display_text)
+        # EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text, sub_text = display_text, self_destruct = 10) # make sure this self destruct time is shorter than the script kill time defined below
         data_entry = "{}:{}".format(date.today(), warning_count)
         EnneadTab.REVIT.REVIT_HISTORY.append_data(file,data_entry)
 
@@ -420,8 +422,10 @@ def main():
         global killtime
         killtime = 90
         output.self_destruct(killtime)
-        
-        doc = EXEC_PARAMS.event_args.Document
+        try:
+            doc = EXEC_PARAMS.event_args.Document
+        except:
+            return
 
         if not doc:
             return

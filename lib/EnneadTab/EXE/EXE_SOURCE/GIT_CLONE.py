@@ -3,7 +3,6 @@ import requests
 import zipfile
 import os
 import shutil
-import filecmp
 import time
 import traceback
 import getpass
@@ -37,7 +36,7 @@ class RepositoryUpdater:
                     f.write(chunk)
             print("Zip file downloaded successfully.")
         else:
-            raise Exception(f"Failed to download the repository. Status code: {response.status_code}")
+            raise Exception("Failed to download the repository. Status code: {}".format(response.status_code))
     
     def extract_zip(self):
         self.temp_dir = os.path.join(self.extract_to, "temp_extract")
@@ -78,10 +77,11 @@ class RepositoryUpdater:
         print("Cleanup completed.")
 
 def save_traceback_and_open(user, error_message):
-    error_path = os.path.expanduser("~/Desktop/GIT_CLONE_error.txt") if user != "szhang" else os.path.expanduser("~/GIT_CLONE_error.txt")
+    error_path = os.path.expanduser("~/Desktop/GIT_CLONE_error.txt")  
+
     with open(error_path, 'w') as f:
         f.write(error_message)
-    if user == "szhang":
+    if user in ["szhang", "Sen Zhang"]:
         os.startfile(error_path)
 
 # Usage

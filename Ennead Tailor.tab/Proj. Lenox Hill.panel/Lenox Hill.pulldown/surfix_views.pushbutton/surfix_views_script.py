@@ -4,7 +4,7 @@
 
 
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "surfix_views"
+__title__ = "Rename Views"
 
 from pyrevit import forms #
 from pyrevit import script #
@@ -25,7 +25,18 @@ def surfix_views():
     t.Start()
     views = forms.select_views(use_selection=True)
     for view in views:
-        view.Name = view.Name + "_PH5"
+        title_para_id = DB.BuiltInParameter.VIEW_DESCRIPTION
+        original_title = view.Parameter[title_para_id].AsString()
+        
+        new_title = original_title.replace("PH1", "Existing")\
+                            .replace("PH2", "Milestone 1")\
+                            .replace("PH3", "Milestone 2")\
+                            .replace("PH4", "Milestone 2.5")\
+                            .replace("PH5", "Milestone 3")
+
+        view.Parameter[title_para_id].Set(new_title)
+
+        
     t.Commit()
 
 
