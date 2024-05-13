@@ -347,6 +347,8 @@ def register_auto_update():
     from pyrevit.userconfig import user_config
     user_config.check_updates = True
     user_config.save_changes()
+
+    return # disable autoupdater for now for better performace.
     
     from pyrevit.versionmgr import updater
     if updater.check_for_updates():
