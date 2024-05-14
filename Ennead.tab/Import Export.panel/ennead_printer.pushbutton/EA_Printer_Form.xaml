@@ -5,6 +5,7 @@
         FontFamily="RomanD" ResizeMode="NoResize"   
         SizeToContent="WidthAndHeight" Title="EnneadTab Exporter" 
         Topmost="False" BorderBrush="#FF3F96FF" 
+        MouseLeftButtonDown="mouse_down_main_panel"
         
         Foreground="#FFDAE8FD" OpacityMask="#FFDAE8FD" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <StackPanel  Margin="20,20,20,20" >
@@ -12,7 +13,7 @@
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="450"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width ="10"/>
@@ -148,8 +149,9 @@
             <GroupBox Header="Step 3: [Naming Format]" Grid.Column = "1" Grid.Row = "2" Grid.ColumnSpan="1" Margin="0,10,0,0">
                 <StackPanel>
                     <TextBlock Text="This affects all file extension." TextWrapping="Wrap"/>
-                    <RadioButton Content="[FileId]__[Index]__[SheetNum]__[SheetName]" Background="#FFBBBBBB" x:Name="radio_button_plotId_sheetNum_sheetName" Click="name_format_changed" IsChecked="True" Foreground="#FFDAE8FD"></RadioButton>
-                    <RadioButton Content="[SheetNum]__[SheetName]" Background="#FFBBBBBB" x:Name="radio_button_sheetNum_sheetName" Click="name_format_changed" Foreground="#FFDAE8FD"></RadioButton>
+                    <RadioButton Content="[FileId]__[Index]_[SheetNum]-[SheetName]" Background="#FFBBBBBB" x:Name="radio_button_plotId_sheetNum_sheetName" Click="name_format_changed" IsChecked="True" Foreground="#FFDAE8FD"></RadioButton>
+                    <RadioButton Content="[SheetNum]-[SheetName]" Background="#FFBBBBBB" x:Name="radio_button_sheetNum_sheetName" Click="name_format_changed" Foreground="#FFDAE8FD"></RadioButton>
+                    <RadioButton Content="[Sheet__$Group]__[Sheet_$Series]_[SheetNum]-[SheetName]" Background="#FFBBBBBB" x:Name="radio_button_sheetGroup_sheetSeries_sheetNum_sheetName" Click="name_format_changed" Foreground="#FFDAE8FD"></RadioButton>
                 </StackPanel>
 
 

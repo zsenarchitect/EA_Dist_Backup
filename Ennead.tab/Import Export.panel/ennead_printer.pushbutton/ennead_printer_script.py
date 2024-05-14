@@ -30,7 +30,7 @@ from pyrevit import forms
 from pyrevit.forms import WPFWindow
 import os
 import sys
-import os.path as op
+
 import re
 import time
 from datetime import date
@@ -54,7 +54,7 @@ class DataGrid_Preview_Obj(object):
         return name.replace("/", "-")#.replace("*","")
 
 
-    def __init__(self, view_or_sheet, file_id, index, extension, time_estimate, is_in_height_light_zone = False):
+    def __init__(self, view_or_sheet, file_id, index, extension, time_estimate, is_in_height_light_zone = False, is_sheet_group_prefix = False):
 
         # used to show zone in datagrid when there is more than one doc to print
         self.is_in_height_light_zone = is_in_height_light_zone
@@ -87,7 +87,12 @@ class DataGrid_Preview_Obj(object):
                                                         self.sheet_name,
                                                         extension)
 
-
+        if is_sheet_group_prefix:
+            self.format_name = "[{}]-[{}]_{} - {}{}".format(self.item.LookupParameter("Sheet_$Group").AsString(),
+                                                       self.item.LookupParameter("Sheet_$Series").AsString(),
+                                                       self.sheet_number,
+                                                        self.sheet_name, 
+                                                        extension)
 
 
     @property
@@ -424,6 +429,7 @@ class EA_Printer_UI(WPFWindow):
         out_data["is_export_pdf"] = self.checkbox_pdf.IsChecked
         out_data["is_export_jpg"] = self.checkbox_jpg.IsChecked
         out_data["is_name_format_with_plotId"] = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+        out_data["is_name_format_with_sheetGroup"] = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
         out_data["is_play_sound"] = self.checkbox_play_sound.IsChecked
         out_data["is_combine_pdf"] = self.checkbox_combine_pdf.IsChecked
         #out_data["dwg_setting_name"] = self.dwg_setting_name
@@ -498,6 +504,7 @@ class EA_Printer_UI(WPFWindow):
             self.is_export_pdf = self.checkbox_pdf.IsChecked
             self.is_export_jpg = self.checkbox_jpg.IsChecked
             self.is_name_format_with_plotId = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+            self.is_name_format_with_sheetGroup = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
             self.is_play_sound = self.checkbox_play_sound.IsChecked
             self.is_combine_pdf = self.checkbox_combine_pdf.IsChecked
             self.is_sync_and_close = self.checkbox_sync_and_close.IsChecked
@@ -538,6 +545,11 @@ class EA_Printer_UI(WPFWindow):
         self.checkbox_jpg.IsChecked = self.is_export_jpg
         self.radio_button_plotId_sheetNum_sheetName.IsChecked = self.is_name_format_with_plotId
         self.radio_button_sheetNum_sheetName.IsChecked = not(self.is_name_format_with_plotId)
+        try:
+            self.is_name_format_with_sheetGroup
+        except:
+            self.is_name_format_with_sheetGroup = False
+        self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked = self.is_name_format_with_sheetGroup
         self.checkbox_play_sound.IsChecked = self.is_play_sound
         self.checkbox_combine_pdf.IsChecked = self.is_combine_pdf
         self.checkbox_sync_and_close.IsChecked = self.is_sync_and_close
@@ -714,21 +726,21 @@ class EA_Printer_UI(WPFWindow):
                 extension = ".pdf"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
             if self.is_export_dwg:
                 extension = ".dwg"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
             if self.is_export_jpg:
                 extension = ".jpg"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
             # to flip height light color for next zone
@@ -1240,6 +1252,7 @@ class EA_Printer_UI(WPFWindow):
 
     def name_format_changed(self, sender, args):
         self.is_name_format_with_plotId = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+        self.is_name_format_with_sheetGroup = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
 
 
         self.update_data_grid_preview()
@@ -1492,6 +1505,11 @@ class EA_Printer_UI(WPFWindow):
 
     def get_record_path_by_doc(self, doc):
         return "{}\{}.json".format(self.record_folder, self.central_doc_name(doc))
+
+
+    def mouse_down_main_panel(self, sender, args):
+        #print "mouse down"
+        sender.DragMove()
 ##################################################
 
 
