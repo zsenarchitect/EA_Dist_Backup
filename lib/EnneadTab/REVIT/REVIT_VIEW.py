@@ -25,6 +25,7 @@ def get_view_by_name( view_name, doc = DOC):
             return view
     return None
 
+
 def get_default_view_type(view_type, doc = DOC):
 
     mapper = {"3d":DB.ViewFamily.ThreeDimensional,
@@ -92,3 +93,10 @@ def switch_from_sync_draft_view():
             open_ui_view.Close()
 
 
+
+
+def get_view_title(view):
+    return view.Parameter[DB.BuiltInParameter.VIEW_DESCRIPTION].AsString()
+
+def get_detail_number(view):
+    return view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].AsString()
