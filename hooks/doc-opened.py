@@ -63,7 +63,7 @@ def pop_up_window(doc):
 
 
 
-        NOTIFICATION.messenger(display_text)
+        NOTIFICATION.messenger(main_text)
         # EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text, sub_text = display_text, self_destruct = 10) # make sure this self destruct time is shorter than the script kill time defined below
         data_entry = "{}:{}".format(date.today(), warning_count)
         EnneadTab.REVIT.REVIT_HISTORY.append_data(file,data_entry)
