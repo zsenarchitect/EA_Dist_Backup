@@ -8,9 +8,9 @@ layout:
   - content_transfer
   - ennead_printer
   - export isolated walltype 
-  - DWG export setting
-  - export_ost_material_table
   - schedule2excel
   - Rhino2Revit
   - ">>>"
-  - update_miro #advanced_only
+  - update_miro
+  - export_ost_material_table
+  - DWG export setting

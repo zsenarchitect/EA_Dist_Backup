@@ -39,6 +39,19 @@ def match_phase_sheet_layout():
     data = {}
     title_length = -1
     title_offset = None
+
+    # get the first first viewport as all data source
+    for viewport_id in ref_sheet.GetAllViewports():
+        viewport = doc.GetElement(viewport_id)
+        view = doc.GetElement(viewport.ViewId)
+        detail_num = REVIT_VIEW.get_detail_number(view)
+        if detail_num == "11":
+            title_length = viewport.LabelLineLength
+            title_offset = viewport.LabelOffset
+            break
+
+
+            
     # get all viewports in the ref sheet, store each viewport data into a dict.
     # the key is the detail number of the viewport, the value is another set of dict, where it store those data:
     # viewport location, viewport title offset, title length
@@ -47,17 +60,8 @@ def match_phase_sheet_layout():
         view = doc.GetElement(viewport.ViewId)
         detail_num = REVIT_VIEW.get_detail_number(view)
         position = viewport.GetBoxCenter()
-
-        if title_length == -1:
-            title_length = viewport.LabelLineLength
-        else:
-            viewport.LabelLineLength = title_length
-
-        if title_offset is None:
-            title_offset = viewport.LabelOffset
-        else:
-            viewport.LabelOffset = title_offset
-
+        viewport.LabelOffset = title_offset
+        viewport.LabelLineLength = title_length
             
         data[detail_num] = {
             "position": position,

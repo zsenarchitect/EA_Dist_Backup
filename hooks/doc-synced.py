@@ -9,6 +9,7 @@ doc = EXEC_PARAMS.event_args.Document
 import random
 
 REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
+                         "1643_lhh_bod-a_existing",
                         "2151_a-nyuli_hospital",
                         "Facade System"]
 
