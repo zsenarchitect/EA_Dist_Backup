@@ -88,7 +88,14 @@ def all_cap_spatial_element_name(will_cap_room, will_cap_area):
     EnneadTab.NOTIFICATION.messenger (main_text = "All Rooms and Areas name reformated!")
 
     
-    
+def remove_creator_mark(name):
+    if "_from" in name:
+        name = name.split("_from")[0]
+
+    if "____from" in name:
+        name = name.split("____from")[0]
+
+    return name
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0, show_log = True):
@@ -160,8 +167,8 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
             else:
                 new_title = original_title
 
-            if "_from" in new_title:
-                new_title = new_title.split("_from")[0]
+
+            new_title = remove_creator_mark(new_title)
 
             if is_default_format:
                 new_view_name = str(sheet_num) + "_" + str(detail_num) + "_" + str(new_title)
@@ -169,9 +176,8 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
                 new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(new_title)
             #forms.alert(str(new_view_name))
 
-            if "_from" in new_view_name:
-                new_view_name = new_view_name.split("_from")[0]
 
+            new_view_name = remove_creator_mark(new_view_name)
 
             if new_view_name == view.Name and new_title == original_title:
                 #print "Skip {}".format(new_view_name)

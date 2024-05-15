@@ -58,21 +58,52 @@ def modify_creator_in_view_name(views, is_adding_creator):
         if "enneadtab" in view.Name.lower():
             continue
         creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, view.Id).Creator
+        simple_creator = creator.split("@")[0] if "@" in creator else creator
+        
         if is_adding_creator:
-            new_name = "{}_from({})".format(view.Name, creator)
-            if "_from(" in view.Name:
+            # skip view that alrady in new format
+            if "____from(" in view.Name:
                 continue
+
+            # handle old format, first return the old format to raw name then directly assign new name
+            if "_from(" in view.Name:
+                temp_name = "{}____from({})".format(view.Name.split("_from(")[0], simple_creator)
+                while True:
+                    try:
+                        view.Name = temp_name
+                        break
+                    except:
+                        temp_name += "_new"
+                continue
+
+            new_name = "{}____from({})".format(view.Name, simple_creator)
+
             try:
                 view.Name = new_name
             except Exception as e:
                 print ("Cannot modify view name for <{}> becasue {}".format(output.linkify(view.Id, title = view.Name), e))
-        else:
+
+
+        else:# removing creator from view name
+
+            #handle old format
             if "_from(" not in view.Name:
                 continue
-            new_name = view.Name.replace("_from({})".format(creator), "")
+
+            #handle new format
+            if "____from(" not in view.Name:
+                continue
+
+
+            if "_from({})".format(creator) in view.Name:
+                new_name = view.Name.replace("_from({})".format(creator), "")
+            if "____from({})".format(simple_creator) in view.Name:
+                new_name = view.Name.replace("____from({})".format(simple_creator), "")
+
+            
             while True:
                 try:
-                    view.Name = new_name
+                    view.Name = new_name.rstrip("_")
                     break
                 except:
                     new_name += "_new"

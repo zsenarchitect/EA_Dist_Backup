@@ -64,19 +64,26 @@ def switch_to_sync_draft_view(doc):
         t.Start()
         view = DB.ViewDrafting.Create(doc, get_default_view_type("drafting", doc = doc).Id)
         view.Name = "EnneadTab Quick Sync"
-        try:
-            view.LookupParameter("Views_$Group").Set("Ennead")
-            view.LookupParameter("Views_$Series").Set(u"Sync Monitor  ◔.̮◔✧")
-        except:
-            pass
 
         DB.TextNote.Create(doc, 
                            view.Id, 
                            DB.XYZ(0, 0, 0), 
                            'Confucius Says:\n"Syncing over drafting view is quicker.\n⎛ -᷄ ᴥ -᷅ ⎞೯"', 
                            REVIT_SELECTION.get_all_textnote_types(doc = doc, return_name=False)[0].Id)
+
         t.Commit()
 
+
+    t = DB.Transaction(doc, "Sync Quicker...")
+    t.Start()
+    try:
+        view.LookupParameter("Views_$Group").Set("Ennead")
+        view.LookupParameter("Views_$Series").Set(u"Sync Monitor  ◔.̮◔✧")
+    except:
+        pass
+    t.Commit()
+
+    
     envvars.set_pyrevit_env_var("LAST_VIEW_BEFORE_SYNC", REVIT_APPLICATION.get_uidoc().ActiveView.Name)
     set_active_view_by_name("EnneadTab Quick Sync")
 
