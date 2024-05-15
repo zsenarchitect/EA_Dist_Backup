@@ -11,6 +11,11 @@ import random
 REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                          "1643_lhh_bod-a_existing",
                         "2151_a-nyuli_hospital",
+                        "2135_Bilibili SH HQ_N3",
+                        "2135_Bilibili SH HQ_N4",
+                        "2135_Bilibili SH HQ_N5",
+                        "2135_Bilibili SH HQ_N6",
+                        "2135_Bilibili SH HQ_Site",
                         "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
