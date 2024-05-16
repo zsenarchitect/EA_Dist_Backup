@@ -27,11 +27,11 @@ def make_3D_views_for_warning_cleaning():
     t.Start()
     view = create_view("Generic")
 
-
     try:
-        view.LookupParameter("Views_$Group").Set("00_EA's_Little Helper")
-        view.LookupParameter("Views_$Series").Set("Warning Cleaning")
+        view.LookupParameter("Views_$Group").Set("Ennead")
+        view.LookupParameter("Views_$Series").Set("Fix Errors  (°⌓°)")
 
+        
     except:
 
         EnneadTab.ERROR_HANDLE.print_note( traceback.format_exc())

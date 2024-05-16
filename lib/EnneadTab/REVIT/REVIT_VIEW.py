@@ -68,7 +68,7 @@ def switch_to_sync_draft_view(doc):
         DB.TextNote.Create(doc, 
                            view.Id, 
                            DB.XYZ(0, 0, 0), 
-                           'Confucius Says:\n"Syncing over drafting view is quicker.\n⎛ -᷄ ᴥ -᷅ ⎞೯"', 
+                           'Confucius Says:\n"Syncing over drafting view is quicker."\n⎛ -᷄ ᴥ -᷅ ⎞೯', 
                            REVIT_SELECTION.get_all_textnote_types(doc = doc, return_name=False)[0].Id)
 
         t.Commit()

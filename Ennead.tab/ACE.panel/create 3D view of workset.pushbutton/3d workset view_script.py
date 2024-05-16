@@ -43,7 +43,7 @@ def make_3D_views_from_workset():
             view.LookupParameter("Views_$Group").Set("Ennead")
             view.LookupParameter("Views_$Series").Set("Workset Check  *⸜( •ᴗ• )⸝*")
 
-            #view.LookupParameter("Views_$Group").Set("00_EA's_Little Helper")
+         
         except:
             pass
 

@@ -44,6 +44,8 @@ def delete_views(view):
 
     return is_success
 
+
+
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def modify_creator_in_view_name(views, is_adding_creator):
     views = EnneadTab.REVIT.REVIT_SELECTION.filter_elements_changable(views)
@@ -59,24 +61,45 @@ def modify_creator_in_view_name(views, is_adding_creator):
             continue
         creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, view.Id).Creator
         simple_creator = creator.split("@")[0] if "@" in creator else creator
+
+
+        ########################################################
+        FORMAT_KEY = "____("# 4 underscore and ()
+        FORMAT_FULL_SURFIX = FORMAT_KEY + simple_creator + ")"
+        ########################################################
         
         if is_adding_creator:
             # skip view that alrady in new format
-            if "____from(" in view.Name:
+            if FORMAT_KEY in view.Name:
                 continue
 
-            # handle old format, first return the old format to raw name then directly assign new name
-            if "_from(" in view.Name:
-                temp_name = "{}____from({})".format(view.Name.split("_from(")[0], simple_creator)
-                while True:
+            # this is 2nd version also retiring
+            if "____from(" in view.Name:
+                temp_name = "{}____({})".format(view.Name.split("____from(")[0], simple_creator)
+                count = 0
+                while count < 5:
                     try:
                         view.Name = temp_name
                         break
                     except:
                         temp_name += "_new"
+                        count += 1
                 continue
 
-            new_name = "{}____from({})".format(view.Name, simple_creator)
+            # handle 1st old format, first return the old format to raw name then directly assign new name
+            if "_from(" in view.Name:
+                temp_name = "{}____from({})".format(view.Name.split("_from(")[0], simple_creator)
+                count = 0
+                while count < 5:
+                    try:
+                        view.Name = temp_name
+                        break
+                    except:
+                        temp_name += "_new"
+                        count += 1
+                continue
+
+            new_name = view.Name + FORMAT_FULL_SURFIX
 
             try:
                 view.Name = new_name
@@ -86,27 +109,43 @@ def modify_creator_in_view_name(views, is_adding_creator):
 
         else:# removing creator from view name
 
-            #handle old format
-            if "_from(" not in view.Name:
-                continue
+            # #handle 1st old format
+            # if "_from(" not in view.Name:
+            #     continue
 
-            #handle new format
-            if "____from(" not in view.Name:
-                continue
+            # #handle 2nd format
+            # if "____from(" not in view.Name:
+            #     continue
+
+            # # handle current format
+            # if FORMAT_KEY not in view.Name:
+            #     continue
+
+            # print FORMAT_FULL_SURFIX
 
 
+            found_flag = False
             if "_from({})".format(creator) in view.Name:
                 new_name = view.Name.replace("_from({})".format(creator), "")
+                found_flag = True
             if "____from({})".format(simple_creator) in view.Name:
                 new_name = view.Name.replace("____from({})".format(simple_creator), "")
+                found_flag = True
+            if FORMAT_FULL_SURFIX in view.Name:
+                new_name = view.Name.replace(FORMAT_FULL_SURFIX, "")
+                found_flag = True
 
-            
-            while True:
+            if not found_flag:
+                continue
+
+            count = 0
+            while count < 5:
                 try:
                     view.Name = new_name.rstrip("_")
                     break
                 except:
                     new_name += "_new"
+                    count += 1
     t.Commit()
 
     return
