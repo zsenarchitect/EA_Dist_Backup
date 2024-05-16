@@ -11,11 +11,6 @@ import random
 REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                          "1643_lhh_bod-a_existing",
                         "2151_a-nyuli_hospital",
-                        "2135_Bilibili SH HQ_N3",
-                        "2135_Bilibili SH HQ_N4",
-                        "2135_Bilibili SH HQ_N5",
-                        "2135_Bilibili SH HQ_N6",
-                        "2135_Bilibili SH HQ_Site",
                         "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
@@ -83,7 +78,11 @@ def update_project_2314():
 
 @EnneadTab.ERROR_HANDLE.try_catch_error_silently
 def update_project_1643():
+    update_new()
+    update_existing()
 
+
+def update_new():
     if "1643_lhh bod-a_new" not in doc.Title.lower():
         return
 
@@ -94,7 +93,14 @@ def update_project_1643():
     func_name = "grid_magic_name"
     EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
+def update_existing():
+    if "1643_lhh bod-a_existing" not in doc.Title.lower():
+        return
 
+
+    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    func_name = "update_grid_bldgId"
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
     
 def update_with_generic_healthcare_tool():
