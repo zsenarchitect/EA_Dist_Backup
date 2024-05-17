@@ -14,8 +14,11 @@ uiapp = UI.UIApplication(doc.Application)
 def main():
     should_cancel_1 = check_depedent_views()
     should_cancel_2 = check_rvt_link()
+    should_cancel_3 = check_level_grid()
 
-    if should_cancel_1 or should_cancel_2:
+
+
+    if should_cancel_1 or should_cancel_2 or should_cancel_3:
         args.Cancel = True
     else:
         args.Cancel = False
@@ -50,13 +53,46 @@ def check_rvt_link():
                                                 options = options)
     if res == options[0]:
         is_cancel = True
-    if res == options[1]:
+    if res == options[1][0]:
         is_cancel = False
     else:
         is_cancel = True
 
     return is_cancel
 
+def check_level_grid():
+    selection_ids = uidoc.Selection.GetElementIds()
+    selection = [doc.GetElement(x) for x in selection_ids]
+   
+    def is_level_grid(x):
+        
+        return x.Category.Name in ["Grids", "Levels"]
+
+    
+
+    grid_levels = filter(is_level_grid, selection)
+   
+
+    if len(grid_levels) == 0: 
+        return
+    
+    options = ["Oops! Do not delete selected grid/level(s).",
+               ["Just DELETE selected grid/level(s).","I KNOW what I am doing!"]]
+    
+    note = "Are you sure you want to delete grid/level(s)?"
+
+        
+    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are grid/level(s) in current selection.",
+                                                sub_text = note,
+                                                options = options)
+    if res == options[0]:
+        is_cancel = True
+    if res == options[1][0]:
+        is_cancel = False
+    else:
+        is_cancel = True
+
+    return is_cancel
 
         
 def check_depedent_views():

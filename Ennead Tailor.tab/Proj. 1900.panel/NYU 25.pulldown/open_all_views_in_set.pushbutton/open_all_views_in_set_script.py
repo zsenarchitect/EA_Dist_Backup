@@ -33,13 +33,19 @@ def open_all_views_in_set():
         return
 
     for print_set in selected_print_sets:
-        for i, view in enumerate(print_set.Views):
-            NOTIFICATION.messenger("Openning <{}/{}>[{}] in the background, hold on...".format(i, len(list(print_set.Views)), view.Name))
+        views = sorted(list(print_set.Views), key = lambda x: x.Name)
+        for i, view in enumerate(views):
+            NOTIFICATION.messenger("Openning <{}/{}>[{}] in the background, hold on...".format(i, len(views), view.Name))
             try:
                 REVIT_APPLICATION.get_uidoc().ActiveView = view
             except Exception as e:
                 NOTIFICATION.messenger(str(e))
 
+                
+    try:
+        REVIT_APPLICATION.get_uidoc().ActiveView = views[0]
+    except Exception as e:
+        NOTIFICATION.messenger(str(e))
 
 
 ################## main code below #####################
