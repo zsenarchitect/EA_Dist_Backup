@@ -106,5 +106,11 @@ def switch_from_sync_draft_view():
 def get_view_title(view):
     return view.Parameter[DB.BuiltInParameter.VIEW_DESCRIPTION].AsString()
 
+def set_view_title(view, title):
+    view.Parameter[DB.BuiltInParameter.VIEW_DESCRIPTION].Set(title)
+
 def get_detail_number(view):
     return view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].AsString()
+
+def set_detail_number(view, detail_number):
+    view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].Set(detail_number)

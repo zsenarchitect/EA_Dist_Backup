@@ -59,7 +59,10 @@ def output_info(elements,doc,output):
 
         dwg_name = el.LookupParameter("Name").AsString()
         workset = doc.GetWorksetTable().GetWorkset(el.WorksetId).Name
-        output.print_md ("- DWG name = {}".format(dwg_name))
+        try:
+            output.print_md ("- DWG name = {}".format(dwg_name))
+        except:
+            continue
 
         if el.ViewSpecific:
             view_id = el.OwnerViewId

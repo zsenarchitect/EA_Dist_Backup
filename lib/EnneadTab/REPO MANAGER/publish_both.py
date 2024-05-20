@@ -1,6 +1,3 @@
-
-
-
 import publish_revit
 import publish_rhino
 import sync_core_module
