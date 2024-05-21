@@ -19,7 +19,7 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, USER, NOTIFICATION, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, USER, NOTIFICATION, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 import random

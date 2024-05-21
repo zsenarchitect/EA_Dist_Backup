@@ -19,11 +19,9 @@ from pyrevit import script, forms
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import ENNEAD_LOG
-import clr
-import System
-import time
+
 import traceback
 import random
 uidoc = REVIT_APPLICATION.get_uidoc()

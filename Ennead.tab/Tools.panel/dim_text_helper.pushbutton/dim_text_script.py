@@ -16,7 +16,7 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 

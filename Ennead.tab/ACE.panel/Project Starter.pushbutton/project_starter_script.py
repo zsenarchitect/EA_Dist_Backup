@@ -21,7 +21,7 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_APPLICATION
-from EnneadTab import USER, NOTIFICATION, ENVIRONMENT, ERROR_HANDLE, EXCEL, FOLDER
+from EnneadTab import USER, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, EXCEL, FOLDER
 import traceback
 from Autodesk.Revit import DB 
 import random

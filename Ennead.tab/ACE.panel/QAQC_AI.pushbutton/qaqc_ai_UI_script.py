@@ -24,7 +24,7 @@ from pyrevit.forms import WPFWindow
 
 
 from EnneadTab.REVIT import REVIT_FORMS
-from EnneadTab import EXE, DATA_FILE, SOUNDS, TIME, ERROR_HANDLE, FOLDER
+from EnneadTab import EXE, DATA_FILE, SOUNDS, TIME, ERROR_HANDLE, FOLDER, ENVIRONMENT_CONSTANTS
 import traceback
 
 from Autodesk.Revit import DB 

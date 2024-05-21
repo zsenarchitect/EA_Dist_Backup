@@ -23,7 +23,7 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER
+from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 uidoc = REVIT_APPLICATION.get_uidoc()

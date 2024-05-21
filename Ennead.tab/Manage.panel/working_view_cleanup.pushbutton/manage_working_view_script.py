@@ -17,7 +17,7 @@ import os
 import time
 
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
-from EnneadTab import USER, NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER
+from EnneadTab import USER, NOTIFICATION, DATA_CONVERSION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 import traceback
 from Autodesk.Revit import DB 
 import random

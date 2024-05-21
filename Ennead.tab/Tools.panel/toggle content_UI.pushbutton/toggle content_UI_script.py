@@ -14,19 +14,16 @@ from Autodesk.Revit.Exceptions import InvalidOperationException
 
 
 
-from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 
 
 
 from EnneadTab.REVIT import REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, DATA_CONVERSION, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, DATA_CONVERSION, ERROR_HANDLE
 import ENNEAD_LOG
-import clr
-import System
-import time
+
 import traceback
-import random
+
 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()

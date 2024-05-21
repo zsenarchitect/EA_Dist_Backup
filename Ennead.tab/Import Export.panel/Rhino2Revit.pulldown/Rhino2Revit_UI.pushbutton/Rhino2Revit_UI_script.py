@@ -13,8 +13,8 @@ from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 
 
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
-from EnneadTab import DATA_FILE, NOTIFICATION, ENVIRONMENT, ERROR_HANDLE, FOLDER
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import DATA_FILE, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
 from Autodesk.Revit import DB  
 import clr
@@ -449,7 +449,7 @@ def get_subC_by_name(name):
 
 
 def get_graphic_style_by_name(name):
-    # return REVIT_SELECTION.get_linestyle(doc, name)
+
     all_graphic_styles = DB.FilteredElementCollector(
         doc).OfClass(DB.GraphicsStyle).ToElements()
     for style in all_graphic_styles:

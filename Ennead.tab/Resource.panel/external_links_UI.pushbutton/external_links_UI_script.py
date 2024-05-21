@@ -35,13 +35,11 @@ from pyrevit import script, forms
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import DOCUMENTATION, EXE, DATA_FILE, USER, ENVIRONMENT, ERROR_HANDLE, LOG, FOLDER
+from EnneadTab import DOCUMENTATION, EXE, DATA_FILE, USER, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, LOG, FOLDER
 import ENNEAD_LOG
-import clr
-import System
-import time
+
 import traceback
-import random
+
 import subprocess
 import os
 # uidoc = REVIT_APPLICATION.get_uidoc()

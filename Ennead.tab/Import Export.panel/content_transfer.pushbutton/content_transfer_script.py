@@ -15,12 +15,12 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
-import random
+
 from Autodesk.Revit import UI
-import System
+
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True

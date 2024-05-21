@@ -18,7 +18,7 @@ from pyrevit import script, forms
 
 
 from EnneadTab.REVIT import REVIT_FORMS
-from EnneadTab import ENVIRONMENT, NOTIFICATION, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION, ERROR_HANDLE
 import ENNEAD_LOG
 import clr
 import System

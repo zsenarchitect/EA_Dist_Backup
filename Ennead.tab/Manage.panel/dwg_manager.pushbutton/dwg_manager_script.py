@@ -30,7 +30,7 @@ from pyrevit import HOST_APP
 
 
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
-from EnneadTab import EXE, NOTIFICATION, ENVIRONMENT, ERROR_HANDLE, FOLDER
+from EnneadTab import EXE, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 uidoc = REVIT_APPLICATION.get_uidoc()

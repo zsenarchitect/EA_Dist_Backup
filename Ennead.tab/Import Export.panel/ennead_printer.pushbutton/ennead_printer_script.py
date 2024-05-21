@@ -16,7 +16,7 @@ import EA_UTILITY
 import ENNEAD_LOG
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ENVIRONMENT, SOUNDS, SPEAK, ERROR_HANDLE, FOLDER
+from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ENVIRONMENT_CONSTANTS, SOUNDS, SPEAK, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 import traceback

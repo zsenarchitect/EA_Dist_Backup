@@ -25,7 +25,7 @@ from pyrevit import HOST_APP
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
-from EnneadTab import ENVIRONMENT, SOUNDS, USER, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT_CONSTANTS, SOUNDS, USER, ERROR_HANDLE
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 uidoc = REVIT_APPLICATION.get_uidoc()

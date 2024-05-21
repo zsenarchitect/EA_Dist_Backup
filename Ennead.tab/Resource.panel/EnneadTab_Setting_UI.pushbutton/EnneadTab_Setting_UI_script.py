@@ -21,9 +21,9 @@ from Autodesk.Revit.Exceptions import InvalidOperationException
 
 
 from EnneadTab.REVIT import REVIT_APPLICATION
-from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT, SPEAK, ERROR_HANDLE, FOLDER
+from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT_CONSTANTS, SPEAK, ERROR_HANDLE, FOLDER
 
-from pyrevit.revit import ErrorSwallower
+
 from pyrevit import script, forms
 from pyrevit.coreutils import ribbon
 try:
@@ -32,11 +32,10 @@ except:
     NOTIFICATION.messenger("Please update pyrevit to 4.8+.")
 
 import ENNEAD_LOG
-import clr
+
 import System
-import time
 import traceback
-import random
+
 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
