@@ -19,12 +19,12 @@ import ENNEAD_LOG
 import EnneadTab
 import time
 from pyrevit.coreutils import envvars
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 import random
 
 try:
-    doc = __revit__.ActiveUIDocument.Document
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
     uidoc = __revit__.ActiveUIDocument
 except:
     pass

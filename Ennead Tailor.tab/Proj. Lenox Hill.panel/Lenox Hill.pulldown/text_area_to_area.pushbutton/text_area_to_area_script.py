@@ -11,8 +11,8 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
             

@@ -80,7 +80,7 @@ def is_Revit_environment():
         bool: True if current environment is Revit.
     """
     try:
-        from Autodesk.Revit import DB
+        from Autodesk.Revit import DB # pyright: ignore
         return True
     except:
         return False

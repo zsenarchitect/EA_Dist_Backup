@@ -14,8 +14,8 @@ import ENNEAD_LOG
 
 from EnneadTab.REVIT import REVIT_UNIT, REVIT_SELECTION, REVIT_APPLICATION
 from EnneadTab import SOUNDS, DATA_FILE, FOLDER, ERROR_HANDLE
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 app = __revit__.Application

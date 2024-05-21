@@ -13,8 +13,8 @@ import traceback
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 

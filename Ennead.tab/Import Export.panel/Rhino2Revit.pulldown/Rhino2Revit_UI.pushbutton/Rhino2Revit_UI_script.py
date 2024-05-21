@@ -16,7 +16,7 @@ from pyrevit.revit import ErrorSwallower
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import DATA_FILE, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
-from Autodesk.Revit import DB  
+from Autodesk.Revit import DB # pyright: ignore  
 import clr
 import os
 import System
@@ -30,7 +30,7 @@ sys.path.append(script_folder)
 import RHINO2REVIT_UTILITY
 
 
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 doc = REVIT_APPLICATION.get_doc()
 
 # parent_category = doc.OwnerFamily.FamilyCategory

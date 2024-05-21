@@ -10,9 +10,9 @@ __title__ = "81_find_section_mark_not_from_sheet"
 from pyrevit import forms #
 from pyrevit import script #
 
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def is_on_current_sheet(view, sheet_num):

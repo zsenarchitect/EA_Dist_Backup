@@ -2,8 +2,8 @@ __doc__ = "For office markup elements( internal textnotes, sketch dims, etc), th
 __title__ = "24.1_Show/Hide Markups and Office layout 2.0"
 
 from pyrevit import forms, script #
-from Autodesk.Revit import DB 
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 import System
 import EA_UTILITY
 import EnneadTab

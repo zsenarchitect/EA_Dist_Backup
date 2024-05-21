@@ -22,7 +22,7 @@ from pyrevit import HOST_APP
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import ENVIRONMENT_CONSTANTS, ERROR_HANDLE
 import traceback
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
 
 uidoc = REVIT_APPLICATION.get_uidoc()

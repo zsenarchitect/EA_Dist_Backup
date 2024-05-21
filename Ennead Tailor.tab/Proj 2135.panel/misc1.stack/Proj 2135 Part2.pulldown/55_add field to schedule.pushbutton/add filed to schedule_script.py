@@ -11,9 +11,9 @@ from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def get_schedules():
     all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()

@@ -4,7 +4,7 @@
 # clr.AddReference('RevitAPI')
 # clr.AddReference('RevitAPIUI')
 
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 from pyrevit import forms
 
 from EnneadTab.REVIT import REVIT_APPLICATION

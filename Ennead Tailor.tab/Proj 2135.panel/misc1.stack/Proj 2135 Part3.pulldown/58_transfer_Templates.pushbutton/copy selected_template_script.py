@@ -3,8 +3,8 @@ __title__ = "58_Copy selected template to other open doc"
 #pylint: disable=import-error,invalid-name
 from pyrevit import revit
 from pyrevit import forms
-from Autodesk.Revit import DB
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 selected_viewtemplates = forms.select_viewtemplates(doc = doc)
 t = DB.Transaction(doc, "temp")

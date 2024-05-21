@@ -1,9 +1,9 @@
 
 try:
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
     REF_CLASS = DB.IFamilyLoadOptions
     import clr
-    DOC = __revit__.ActiveUIDocument.Document
+    DOC = __revit__.ActiveUIDocument.Document # pyright: ignore
 except:
     REF_CLASS = object # this is to trick that class can be used
 

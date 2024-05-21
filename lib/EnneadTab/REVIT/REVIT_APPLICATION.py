@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 try:
-    from Autodesk.Revit import UI
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import UI # pyright: ignore
+    from Autodesk.Revit import DB # pyright: ignore
     import REVIT_FORMS
     import REVIT_VIEW
 except Exception as e:
@@ -57,7 +57,7 @@ def get_document():
     
 """
 uidoc = __revit__.ActiveUIDocument
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 """
 
     
@@ -102,7 +102,7 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
 
     def get_docs():
         try:
-            doc = __revit__.ActiveUIDocument.Document
+            doc = __revit__.ActiveUIDocument.Document # pyright: ignore
             docs = doc.Application.Documents
             print("get docs using using method 1")
         except:
@@ -211,13 +211,13 @@ def open_and_active_project(filepath):
         pass
 
     try:
-        app = __revit__.ActiveUIDocument.Document.Application
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore.Application
         return UI.UIApplication(app).OpenAndActivateDocument (filepath)
     except:
         pass
 
     try:
-        app = __revit__.ActiveUIDocument.Document.Application
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore.Application
         open_options = DB.OpenOptions()
         return UI.UIApplication(app).OpenAndActivateDocument (filepath, open_options, False)
     except:
@@ -295,7 +295,7 @@ def get_all_family_docs(including_current_doc = False):
         if not doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-            if doc.Title == __revit__.ActiveUIDocument.Document.Title:
+            if doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
                 continue
         OUT.append(doc)
     return OUT
@@ -342,7 +342,7 @@ def get_revit_link_docs(including_current_doc = False, link_only = False):
         if not including_current_doc:
 
             try:
-                if doc.Title == __revit__.ActiveUIDocument.Document.Title:
+                if doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
                     continue
             except:
                 pass

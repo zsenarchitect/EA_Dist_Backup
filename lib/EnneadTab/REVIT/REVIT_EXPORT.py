@@ -11,7 +11,7 @@ import IMAGES
 import DATA_CONVERSION
 import traceback
 try:
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
 
 except :
 

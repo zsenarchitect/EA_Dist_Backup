@@ -12,12 +12,12 @@ from pyrevit import script #
 import ENNEAD_LOG
 import EnneadTab
 import math
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 
 from collections import defaultdict
 try:
-    doc = __revit__.ActiveUIDocument.Document
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 except:
     pass
 

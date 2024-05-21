@@ -24,8 +24,8 @@ from pyrevit import script #
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True

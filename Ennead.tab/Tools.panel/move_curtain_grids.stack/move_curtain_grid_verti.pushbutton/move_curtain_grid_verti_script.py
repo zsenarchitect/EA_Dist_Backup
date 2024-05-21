@@ -14,8 +14,8 @@ from pyrevit import script #
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 import clr
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()

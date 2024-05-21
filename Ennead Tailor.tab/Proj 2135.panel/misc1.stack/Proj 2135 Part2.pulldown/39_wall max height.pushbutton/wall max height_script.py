@@ -11,9 +11,9 @@ from pyrevit import script #
 
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def check_max_height(wall):
     predefined_max = wall.LookupParameter("Element_Max_Height_Target").AsDouble()

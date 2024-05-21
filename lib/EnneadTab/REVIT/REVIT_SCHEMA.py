@@ -25,8 +25,8 @@ one more from Archi-lab, should read this FIRST!!!!!!!!!!!!!!!!!!!!!!!!!"""
 
 try:
 
-    from Autodesk.Revit import DB
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import DB # pyright: ignore
+    from Autodesk.Revit import UI # pyright: ignore
     from System import Guid, String
 
 except:

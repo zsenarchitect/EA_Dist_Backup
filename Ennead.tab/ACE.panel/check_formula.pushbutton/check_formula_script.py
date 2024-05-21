@@ -14,7 +14,7 @@ from pyrevit import script #
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, EXCEL, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
 doc = REVIT_APPLICATION.get_doc()
 

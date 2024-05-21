@@ -4,8 +4,8 @@ __title__ = "Family Parameter\nCreation In Many Families"
 from pyrevit import forms, script
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 import re
 
 def ft_to_mm(dist):

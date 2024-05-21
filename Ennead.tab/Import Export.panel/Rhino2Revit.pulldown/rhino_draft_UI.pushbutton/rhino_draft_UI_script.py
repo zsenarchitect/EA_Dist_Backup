@@ -6,8 +6,8 @@ __title__ = "Rhino Drafter"
 __youtube__ = r"https://youtu.be/dYeVpdXsMYM"
 __tip__ = True
 
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

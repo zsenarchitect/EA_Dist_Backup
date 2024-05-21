@@ -11,8 +11,8 @@ __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 
 from pyrevit.forms import WPFWindow
 from pyrevit import script, forms

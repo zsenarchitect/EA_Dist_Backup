@@ -2,7 +2,7 @@ import os
 from datetime import date
 import random
 
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 from EnneadTab import NOTIFICATION
 from pyrevit import forms, script

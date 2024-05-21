@@ -11,9 +11,9 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def get_level_by_z(z):

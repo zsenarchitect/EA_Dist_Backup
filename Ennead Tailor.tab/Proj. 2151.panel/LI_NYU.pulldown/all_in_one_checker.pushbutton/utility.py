@@ -1,6 +1,6 @@
 
 import EnneadTab
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 from constants import CALCULATOR_FAMILY_NAME
 

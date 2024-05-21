@@ -5,8 +5,8 @@ __doc__ = "Pick curtain panel type and apply host wall radius to panel radius on
 __title__ = "Apply Panel\nRadius"
 __tip__ = True
 
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

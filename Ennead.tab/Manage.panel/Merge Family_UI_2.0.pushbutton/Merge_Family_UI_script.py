@@ -6,8 +6,8 @@ __title__ = "Merge\nFamily"
 __youtube__ = "https://youtu.be/xZhCxpuQKCs"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29705"
 __tip__ = True
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 
@@ -27,7 +27,7 @@ import random
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 # uidoc = __revit__.ActiveUIDocument
-# doc = __revit__.ActiveUIDocument.Document
+# doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 
 

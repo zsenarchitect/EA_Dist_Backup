@@ -14,9 +14,9 @@ import EnneadTab
 import time
 import os
 import os.path as op
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def created_by_who(view):

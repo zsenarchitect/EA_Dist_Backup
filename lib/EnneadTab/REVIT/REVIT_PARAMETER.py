@@ -9,8 +9,8 @@ import NOTIFICATION
 
 try:
 
-    from Autodesk.Revit import DB
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import DB # pyright: ignore
+    from Autodesk.Revit import UI # pyright: ignore
 except:
     pass
 

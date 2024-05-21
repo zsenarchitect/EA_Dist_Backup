@@ -12,9 +12,9 @@ from pyrevit import script #
 import ENNEAD_LOG
 import EnneadTab
 import clr
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def project_pt_in_view(pt, view):

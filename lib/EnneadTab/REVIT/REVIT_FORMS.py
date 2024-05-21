@@ -104,7 +104,7 @@ def dialogue( title = "EnneadTab",
 
 
 
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import UI # pyright: ignore
     main_dialog = UI.TaskDialog(title)
     main_dialog.MainInstruction = main_text
     main_dialog.MainContent = sub_text

@@ -5,8 +5,8 @@ __doc__ = "NOT IN USE, test web WPF"
 __title__ = "Test Youtube Player"
 
 
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 
@@ -27,7 +27,7 @@ import traceback
 import random
 
 uidoc = __revit__.ActiveUIDocument
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 
 

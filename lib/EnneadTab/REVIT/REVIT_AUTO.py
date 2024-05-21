@@ -29,7 +29,7 @@ class RevitUpdater:
 
     example:
     def my_func():
-        doc = __revit__.ActiveUIDocument.Document
+        doc = __revit__.ActiveUIDocument.Document # pyright: ignore
         if not doc:
             return
         all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()

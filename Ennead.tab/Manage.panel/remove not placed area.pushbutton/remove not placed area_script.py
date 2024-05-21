@@ -6,7 +6,7 @@ __title__ = "Remove Not Placed\nArea and Rooms"
 __tip__ = True
 from pyrevit import forms,  script
 from EA_UTILITY import dialogue
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE

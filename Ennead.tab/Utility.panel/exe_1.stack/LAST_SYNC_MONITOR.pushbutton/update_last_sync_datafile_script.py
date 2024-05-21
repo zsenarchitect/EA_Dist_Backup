@@ -15,8 +15,8 @@ from EnneadTab.REVIT import REVIT_FORMS
 from EnneadTab import EXE, DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
 import time
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 
 FILE_NAME = "EA_Last_Sync_Record.json"
 def get_record_file_path():

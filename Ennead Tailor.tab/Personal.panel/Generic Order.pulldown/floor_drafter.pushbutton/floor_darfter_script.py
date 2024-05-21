@@ -12,9 +12,9 @@ from pyrevit import script #
 import traceback
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 app = __revit__.Application
 

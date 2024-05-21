@@ -10,11 +10,11 @@ __title__ = "Modify LineStyle in Group(For A.Chi)"
 from pyrevit import script #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import EnneadTab
 from pyrevit.revit import ErrorSwallower
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def edit_line_style_in_group():
     bad_line_style = EnneadTab.REVIT.REVIT_SELECTION.get_linestyle(doc, linestyle_name = ".07")

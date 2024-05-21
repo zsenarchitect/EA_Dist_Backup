@@ -11,10 +11,10 @@ from pyrevit import script
 import ENNEAD_LOG
 import EnneadTab
 import random
-from Autodesk.Revit import DB  
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore  
+# from Autodesk.Revit import UI # pyright: ignore
 try:
-    doc = __revit__.ActiveUIDocument.Document
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 except:
     pass
 

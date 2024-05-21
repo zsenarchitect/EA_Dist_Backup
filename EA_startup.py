@@ -8,8 +8,8 @@ import os
 import random
 import time
 
-from Autodesk.Revit import DB
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore
+from Autodesk.Revit import UI # pyright: ignore
 from pyrevit import forms, script
 from pyrevit.coreutils import envvars
 from pyrevit import versionmgr

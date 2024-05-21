@@ -9,9 +9,9 @@ __title__ = "Review\nError Reports"
 # from pyrevit import forms #
 from pyrevit import script #
 
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-#doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+#doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 import ENNEAD_LOG
 def review_error_log():
     ENNEAD_LOG.print_error_log()

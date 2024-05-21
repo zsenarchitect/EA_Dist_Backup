@@ -2,8 +2,8 @@ import os
 
 from pyrevit import forms,  script
 from pyrevit.revit import ErrorSwallower
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_FORMS
 from EnneadTab import OUTPUT, ERROR_HANDLE, NOTIFICATION
 

@@ -10,9 +10,9 @@ __title__ = "38_Purge SubC"
 from pyrevit import script #
 # from pyrevit import revit #
 
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def fake_delete_subC(subC):

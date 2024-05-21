@@ -12,11 +12,11 @@ from pyrevit import script #
 import EA_UTILITY
 import EnneadTab
 import time
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import traceback
 uidoc = __revit__.ActiveUIDocument
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def update_view_name():
     current_name = doc.ActiveView.Name

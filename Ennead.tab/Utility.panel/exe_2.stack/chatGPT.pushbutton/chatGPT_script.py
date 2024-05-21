@@ -23,11 +23,11 @@ import EA_UTILITY
 from EnneadTab import SOUNDS, FOLDER, ERROR_HANDLE
 import traceback
 
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import random
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 
 

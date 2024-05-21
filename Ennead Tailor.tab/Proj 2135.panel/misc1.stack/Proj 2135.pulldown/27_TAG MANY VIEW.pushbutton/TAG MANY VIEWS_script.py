@@ -2,15 +2,15 @@ __doc__ = "Select views from project browser, remove tags that are too close to 
 __title__ = "27_TAG MANY VIEWS---"
 
 from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit import Creation
 import EA_UTILITY
 import EnneadTab
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 # uidoc = __revit__.ActiveUIDocument
 
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 # uiapp = UI.UIApplicationapp
 # uidoc = UI.UIDocument
 # optional
@@ -221,7 +221,7 @@ __all__ = ('pick_element', 'pick_element_by_category',
            'pick_point', 'pick_rectangle', 'get_selection_category_set',
            'get_selection')
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 doc = revit.doc
 uidoc = revit.uidoc

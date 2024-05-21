@@ -12,9 +12,9 @@ from pyrevit.revit import ErrorSwallower
 import ENNEAD_LOG
 
 from EnneadTab.REVIT import REVIT_SELECTION
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 
 

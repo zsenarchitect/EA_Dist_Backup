@@ -14,9 +14,9 @@ import EA_UTILITY
 from EnneadTab.REVIT import REVIT_FORMS
 from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 from rpw.extras.rhino import Rhino
 """
 >>> pt1 = rc.Geometry.Point3d(0,0,0)

@@ -9,11 +9,11 @@ from pyrevit import script #
 from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def get_level_by_name(name):
     grids = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements()
@@ -268,7 +268,7 @@ __all__ = ('pick_element', 'pick_element_by_category',
            'pick_point', 'pick_rectangle', 'get_selection_category_set',
            'get_selection')
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 doc = revit.doc
 uidoc = revit.uidoc

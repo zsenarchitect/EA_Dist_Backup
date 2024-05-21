@@ -14,9 +14,9 @@ try:
         
     from EnneadTab import ERROR_HANDLE
     import ENNEAD_LOG
-    from Autodesk.Revit import DB 
-    # from Autodesk.Revit import UI
-    doc = __revit__.ActiveUIDocument.Document
+    from Autodesk.Revit import DB # pyright: ignore 
+    # from Autodesk.Revit import UI # pyright: ignore
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 except:
     #print "cannot import base module for Urgent Request main script"
     pass

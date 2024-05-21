@@ -12,8 +12,8 @@ from pyrevit import script #
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, EXCEL, FOLDER, NOTIFICATION, TIME
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_VIEW, REVIT_SELECTION
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 

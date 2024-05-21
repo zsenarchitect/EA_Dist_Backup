@@ -8,7 +8,7 @@ from pyrevit import script #
 from EnneadTab.REVIT import REVIT_UNIT
 from EnneadTab import NOTIFICATION, ERROR_HANDLE
 
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
 
 def modify_level_pair(raw_data, level_name, level_gap,is_adding = True):

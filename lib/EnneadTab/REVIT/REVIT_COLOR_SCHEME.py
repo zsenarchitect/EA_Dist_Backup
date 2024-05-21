@@ -6,8 +6,8 @@ import NOTIFICATION, COLOR, OUTPUT
 import REVIT_SELECTION
 
 try:
-    from Autodesk.Revit import DB
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import DB # pyright: ignore
+    from Autodesk.Revit import UI # pyright: ignore
     UIDOC = __revit__.ActiveUIDocument
     DOC = UIDOC.Document
     from pyrevit import script

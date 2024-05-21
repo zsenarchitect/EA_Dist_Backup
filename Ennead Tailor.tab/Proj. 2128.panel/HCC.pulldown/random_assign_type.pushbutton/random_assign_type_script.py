@@ -1,7 +1,7 @@
 import random
 
 import clr
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 from pyrevit import script
 from pyrevit import forms
 
@@ -11,7 +11,7 @@ __title__ = "Randomly Reduce Panel Selection to 5 pack, requested by Chiwhei"
 __doc__ = 'Randomly deselect from selection input.'
 
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 TYPE_NAMES = ["A1",
               "C1",

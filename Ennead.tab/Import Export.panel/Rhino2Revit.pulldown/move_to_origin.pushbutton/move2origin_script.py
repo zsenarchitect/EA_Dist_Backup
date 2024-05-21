@@ -11,7 +11,7 @@ from EnneadTab.REVIT import REVIT_UNIT, REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE
 from EnneadTab import NOTIFICATION 
 #forms.alert( "Work in progress. Coming in the next version")
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 

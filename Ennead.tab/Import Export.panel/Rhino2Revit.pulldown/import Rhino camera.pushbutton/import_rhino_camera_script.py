@@ -8,7 +8,7 @@ import EA_UTILITY
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __title__ = "Import Rhino Camera"

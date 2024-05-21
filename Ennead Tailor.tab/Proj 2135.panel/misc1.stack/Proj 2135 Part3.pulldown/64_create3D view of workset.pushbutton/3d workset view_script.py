@@ -9,9 +9,9 @@ __title__ = "64_3D workset views(Legacy)"
 # from pyrevit import forms #
 from pyrevit import script #
 
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def get_all_userworkset():
     worksets = DB.FilteredWorksetCollector(doc).ToWorksets()

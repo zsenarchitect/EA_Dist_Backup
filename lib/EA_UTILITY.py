@@ -40,7 +40,7 @@ finally:
 
 
 try:
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
 except:
     print ("Cannot import DB module")
 
@@ -263,7 +263,7 @@ def almost(a,b):
 """"""
 def dim_text(added_text):
     app = get_application()
-    doc = __revit__.ActiveUIDocument.Document
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
     uidoc = __revit__.ActiveUIDocument
     selection_ids = uidoc.Selection.GetElementIds ()
     selection = [doc.GetElement(x) for x in selection_ids]
@@ -519,7 +519,7 @@ def dialogue( title = "EnneadTab",
     if not is_SZ():
         return
     """
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import UI # pyright: ignore
     main_dialog = UI.TaskDialog(title)
     main_dialog.MainInstruction = main_text
     main_dialog.MainContent = sub_text
@@ -1631,7 +1631,7 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
 
     def get_docs():
         try:
-            doc = __revit__.ActiveUIDocument.Document
+            doc = __revit__.ActiveUIDocument.Document # pyright: ignore
             docs = doc.Application.Documents
             print_note("get docs using using method 1")
         except:
@@ -1727,7 +1727,7 @@ def set_active_doc_as_new_family():
 """"""
 def open_and_active_project(filepath):
 
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import UI # pyright: ignore
     try:
         app = __revit__
         return UI.UIApplication(app).OpenAndActivateDocument (filepath)
@@ -1735,13 +1735,13 @@ def open_and_active_project(filepath):
         pass
 
     try:
-        app = __revit__.ActiveUIDocument.Document.Application
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore.Application
         return UI.UIApplication(app).OpenAndActivateDocument (filepath)
     except:
         pass
 
     try:
-        app = __revit__.ActiveUIDocument.Document.Application
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore.Application
         open_options = DB.OpenOptions()
         return UI.UIApplication(app).OpenAndActivateDocument (filepath, open_options, False)
     except:
@@ -1797,7 +1797,7 @@ def get_all_family_docs(including_current_doc = False):
         if not doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-            if doc.Title == __revit__.ActiveUIDocument.Document.Title:
+            if doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
                 continue
         OUT.append(doc)
     return OUT
@@ -1832,7 +1832,7 @@ def get_revit_link_docs(including_current_doc = False):
         if doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-            if doc.Title == __revit__.ActiveUIDocument.Document.Title:
+            if doc.Title == __revit__.ActiveUIDocument.Document: # pyright: ignore
                 continue
 
         OUT.append(doc)

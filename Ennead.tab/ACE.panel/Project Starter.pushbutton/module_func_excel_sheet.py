@@ -4,7 +4,7 @@
 from pyrevit import forms #
 
 from EnneadTab import EXE, EXCEL, FOLDER, ERROR_HANDLE
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
 def is_new_sheet_number_ok(doc, new_sheet_numbers):       
     all_sheets = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements()

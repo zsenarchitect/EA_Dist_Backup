@@ -12,9 +12,9 @@ from pyrevit import script #
 
 from EnneadTab.REVIT import REVIT_FORMS
 from EnneadTab import ERROR_HANDLE
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 @ERROR_HANDLE.try_catch_error

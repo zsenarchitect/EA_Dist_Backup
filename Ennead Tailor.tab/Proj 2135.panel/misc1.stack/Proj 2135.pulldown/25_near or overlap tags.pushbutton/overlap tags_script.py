@@ -2,16 +2,16 @@ __doc__ = "Remove area tag or room tags that is visually very close on same view
 __title__ = "25_remove near or overlapped area or room tags"
 
 # from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import EA_UTILITY
 import EnneadTab
 from pyrevit import revit, script, forms
 # from Autodesk.Revit import Creation
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 # uidoc = __revit__.ActiveUIDocument
 
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 # uiapp = UI.UIApplicationapp
 # uidoc = UI.UIDocument
 # optional

@@ -2,12 +2,12 @@ __doc__ = "Get the area boundary lines and areas from one area scheme to another
 __title__ = "29_transfer area to other scheme"
 
 from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import Creation
 import EA_UTILITY
 import EnneadTab
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 

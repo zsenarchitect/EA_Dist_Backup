@@ -7,10 +7,10 @@ __title__ = "34_uncheck view note and translation from template"
 # from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 ################## main code below #####################
 output = script.get_output()
@@ -176,7 +176,7 @@ __all__ = ('pick_element', 'pick_element_by_category',
            'pick_point', 'pick_rectangle', 'get_selection_category_set',
            'get_selection')
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 doc = revit.doc
 uidoc = revit.uidoc

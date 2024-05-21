@@ -6,12 +6,12 @@ from pyrevit.forms import WPFWindow
 
 
 
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 
 import traceback
 from pyrevit import forms, script
-from Autodesk.Revit import DB
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore
+from Autodesk.Revit import UI # pyright: ignore
 import os.path as op
 import EA_UTILITY
 import EnneadTab

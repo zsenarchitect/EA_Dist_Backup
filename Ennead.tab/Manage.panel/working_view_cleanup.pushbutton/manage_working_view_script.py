@@ -19,9 +19,9 @@ import time
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
 from EnneadTab import USER, NOTIFICATION, DATA_CONVERSION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, FOLDER
 import traceback
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import random
-from Autodesk.Revit import UI
+from Autodesk.Revit import UI # pyright: ignore
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True

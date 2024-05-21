@@ -24,9 +24,9 @@ import ENNEAD_LOG
 
 from EnneadTab.REVIT import REVIT_EXPORT, REVIT_APPLICATION
 from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ERROR_HANDLE, FOLDER
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import os
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
             

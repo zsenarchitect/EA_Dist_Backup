@@ -3,9 +3,9 @@ __title__ = "Copy Selected Template\nTo Other Open Docs"
 #pylint: disable=import-error,invalid-name
 from pyrevit import revit
 from pyrevit import forms
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 import ENNEAD_LOG
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def copy_view_template():

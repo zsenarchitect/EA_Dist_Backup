@@ -32,7 +32,7 @@ import Rhino
 import Grasshopper
 
 # revit API
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 # rhino.inside utilities
 import RhinoInside

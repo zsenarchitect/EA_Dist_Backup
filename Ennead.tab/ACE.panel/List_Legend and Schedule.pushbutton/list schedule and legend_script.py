@@ -6,7 +6,7 @@ __title__ = "Legend&Schedule\nWhere?"
 __tip__ = True
 
 from pyrevit import script
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE

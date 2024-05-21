@@ -6,7 +6,7 @@ It makes life in Rhino easier after exporting contents over."""
 __title__ = "DWG Export\nUpdate Layer"
 __tip__ = True
 from pyrevit import forms, script
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 import random
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION

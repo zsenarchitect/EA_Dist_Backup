@@ -10,8 +10,8 @@ import DATA_CONVERSION
 import NOTIFICATION
 try:
 
-    from Autodesk.Revit import DB
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import DB # pyright: ignore
+    from Autodesk.Revit import UI # pyright: ignore
     UIDOC = __revit__.ActiveUIDocument
     DOC = UIDOC.Document
     

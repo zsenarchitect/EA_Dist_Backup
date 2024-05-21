@@ -5,8 +5,8 @@ __doc__ = "Legacy, now you can do better in color code design option"
 __title__ = "31_what is in design option?(Legacy)"
 
 from pyrevit import script, forms #
-from Autodesk.Revit import DB 
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 

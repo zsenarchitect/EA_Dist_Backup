@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 try:
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
 except:
     pass
 

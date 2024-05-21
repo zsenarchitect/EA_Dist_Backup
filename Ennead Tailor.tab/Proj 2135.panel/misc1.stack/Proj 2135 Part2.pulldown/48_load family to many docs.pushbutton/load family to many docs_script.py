@@ -226,7 +226,7 @@ __all__ = ('pick_element', 'pick_element_by_category',
            'pick_point', 'pick_rectangle', 'get_selection_category_set',
            'get_selection')
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 doc = revit.doc
 uidoc = revit.uidoc

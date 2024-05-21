@@ -1,5 +1,5 @@
 
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 from pyrevit import forms
 
 from EnneadTab import NOTIFICATION, ERROR_HANDLE

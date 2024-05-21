@@ -22,8 +22,8 @@ __tip__ = [__doc__,
            "All your BIM360 files have a local cache on your computer, which will take up precise C drive space.\nOvertime, the projects you are no longer editing will accumulate and new project might not be able to download cache with the remaining C drive space.\nThis is the number 1 leading cause for files cannot open in Revit.\nLuckily, you can open the cache folder directly with this helper button and you can safely delete anything that is no longer relavent.",
            "BIM360 default cache folder is named by GUID of the projects and files, which no one can read. However, you can use the little decoder from EnneadTab to retreive the name. Just copy-paste in the textbar and decode."]
 
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

@@ -9,9 +9,9 @@ __title__ = "67_mark preserve color fillregion and detail item type"
 # from pyrevit import forms #
 from pyrevit import script #
 
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def OLD_get_para_by_name(type, name):

@@ -11,9 +11,9 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 from Autodesk.Revit.UI.Events import SelectionChangedEventArgs
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from System import EventHandler, Uri
@@ -50,9 +50,9 @@ def event_handler_function(sender, args):
     sys.path.append("L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\lib")
     import EnneadTab
     from pyrevit import forms
-    from Autodesk.Revit import DB 
-    # from Autodesk.Revit import UI
-    doc = __revit__.ActiveUIDocument.Document
+    from Autodesk.Revit import DB # pyright: ignore 
+    # from Autodesk.Revit import UI # pyright: ignore
+    doc = __revit__.ActiveUIDocument.Document # pyright: ignore
     from Autodesk.Revit.UI.Events import SelectionChangedEventArgs
     from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
     from System import EventHandler, Uri

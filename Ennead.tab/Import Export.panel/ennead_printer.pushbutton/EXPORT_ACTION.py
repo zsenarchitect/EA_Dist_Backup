@@ -3,7 +3,7 @@ import EA_UTILITY
 
 from EnneadTab import NOTIFICATION
 from EnneadTab import FOLDER
-from Autodesk.Revit import DB #pylint: disable=undefined-variable
+from Autodesk.Revit import DB # pyright: ignore #pylint: disable=undefined-variable
 from pyrevit import script
 import os
 

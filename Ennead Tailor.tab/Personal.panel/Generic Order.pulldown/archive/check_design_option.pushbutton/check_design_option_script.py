@@ -11,10 +11,10 @@ from pyrevit import script #
 # from pyrevit import revit #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 import random
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 class Solution:
     def __init__(self):

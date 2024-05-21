@@ -17,7 +17,7 @@ from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import DATA_FILE, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import time
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import traceback
 import sys
 uidoc = REVIT_APPLICATION.get_uidoc()

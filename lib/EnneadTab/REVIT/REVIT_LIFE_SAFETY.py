@@ -1,7 +1,7 @@
 
 try:
     from pyrevit import script
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
 except:
     pass
 

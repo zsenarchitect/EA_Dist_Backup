@@ -2,12 +2,12 @@ __doc__ = "Remove duplicated the area boundary line for each view."
 __title__ = "30_remove dup area boundary line"
 
 from pyrevit import forms, revit, script #
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import Creation
 import EA_UTILITY
 import EnneadTab
 
-doc = __revit__.ActiveUIDocument.Document
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def current_warning_count():
     return len(doc.GetWarnings())

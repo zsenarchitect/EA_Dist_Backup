@@ -14,9 +14,9 @@ from pyrevit import script #
 
 from EnneadTab import ENVIRONMENT, MODULE_HELPER
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def ChatGPT():
     #C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_2.stack\chatGPT.pushbutton\chatGPT_script.py

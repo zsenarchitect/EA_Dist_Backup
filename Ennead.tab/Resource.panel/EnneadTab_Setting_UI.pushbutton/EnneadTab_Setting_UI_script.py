@@ -13,8 +13,8 @@ __context__ = "zero-doc"
 __tip__ = [__doc__,
            "You can enjoy much more functions from the Ennead+ Version instead of staying in Lite Version."]
 
-from Autodesk.Revit import UI
-from Autodesk.Revit import DB 
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 

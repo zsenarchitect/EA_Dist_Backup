@@ -169,7 +169,7 @@ def get_top_revit_docs():
 
 
 def active_original_doc(doc_name):
-    from Autodesk.Revit import UI
+    from Autodesk.Revit import UI # pyright: ignore
     for data in GUID_list:
         if data[0] == doc_name:
             break

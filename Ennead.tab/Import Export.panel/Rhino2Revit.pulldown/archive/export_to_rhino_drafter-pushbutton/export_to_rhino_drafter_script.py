@@ -14,8 +14,8 @@ from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 
 import time
 
@@ -201,4 +201,4 @@ output.close_others()
 
 
 if __name__ == "__main__":
-    export_to_rhino_drafter(doc = __revit__.ActiveUIDocument.Document)
+    export_to_rhino_drafter(doc = __revit__.ActiveUIDocument.Document # pyright: ignore)

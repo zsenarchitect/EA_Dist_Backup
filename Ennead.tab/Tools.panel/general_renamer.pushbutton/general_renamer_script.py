@@ -21,9 +21,9 @@ from pyrevit import script #
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import ENVIRONMENT_CONSTANTS, USER, NOTIFICATION, ERROR_HANDLE
 import traceback
-from Autodesk.Revit import DB 
+from Autodesk.Revit import DB # pyright: ignore 
 import random
-from Autodesk.Revit import UI
+from Autodesk.Revit import UI # pyright: ignore
 import System
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()

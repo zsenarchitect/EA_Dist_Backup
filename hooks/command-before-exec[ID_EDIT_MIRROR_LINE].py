@@ -2,8 +2,9 @@
 from pyrevit import  EXEC_PARAMS, script
 import os
 import EnneadTab
-from Autodesk.Revit import DB
-from Autodesk.Revit import UI
+
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore  
 args = EXEC_PARAMS.event_args
 doc = args.ActiveDocument 
 uiapp = UI.UIApplication(doc.Application)

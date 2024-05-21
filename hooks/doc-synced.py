@@ -1,5 +1,5 @@
 from pyrevit import EXEC_PARAMS, script
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 import EA_UTILITY
 import EnneadTab
 import ENNEAD_LOG

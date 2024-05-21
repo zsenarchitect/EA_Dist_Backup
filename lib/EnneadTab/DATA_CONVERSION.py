@@ -28,7 +28,7 @@ def list_to_system_list(list, type = DataType.ElementId, use_IList = False):
 
     import System
     if ENVIRONMENT_CONSTANTS.is_Revit_environment():
-        from Autodesk.Revit import DB
+        from Autodesk.Revit import DB # pyright: ignore
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
         import Rhino
 

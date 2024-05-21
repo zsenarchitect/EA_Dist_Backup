@@ -30,7 +30,7 @@ THIS is direct copy from old MARK_HISTORY script with NO modification, it will f
 To-Do migrate this to new way of doing things and make startup.py point to this"""
 
 try:
-    from Autodesk.Revit import DB
+    from Autodesk.Revit import DB # pyright: ignore
 except:
     pass
 

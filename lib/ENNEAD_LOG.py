@@ -383,7 +383,7 @@ def get_central_name(doc=None):
         except Exception as e:
             print("Default doc getter error")
             print(traceback.format_exc())
-            doc = __revit__.ActiveUIDocument.Document
+            doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
     if not doc:
         return "Zero Doc"

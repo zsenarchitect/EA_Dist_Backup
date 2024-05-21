@@ -18,8 +18,8 @@ import ENNEAD_LOG
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab.FUN import JOKES
 from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ENVIRONMENT_CONSTANTS, SOUNDS, SPEAK, ERROR_HANDLE, FOLDER
-from Autodesk.Revit import DB 
-from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+from Autodesk.Revit import UI # pyright: ignore
 import traceback
 
 uidoc = REVIT_APPLICATION.get_uidoc()

@@ -4,8 +4,8 @@
 import random
 import time
 from EnneadTab import ERROR_HANDLE, NOTIFICATION, SOUNDS
-# from Autodesk.Revit import DB
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import DB # pyright: ignore
+# from Autodesk.Revit import UI # pyright: ignore
 # args = EXEC_PARAMS.event_args
 # doc = args.ActiveDocument 
 # uidoc = UI.UIDocument(doc)

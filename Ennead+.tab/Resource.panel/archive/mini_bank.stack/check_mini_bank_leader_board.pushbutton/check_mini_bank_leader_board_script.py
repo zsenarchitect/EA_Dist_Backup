@@ -10,9 +10,9 @@ __title__ = "Check Mini Bank\nLeader Board"
 from pyrevit import script #
 
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-#doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+#doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def check_mini_bank_leader_board():
     ENNEAD_LOG.print_leader_board()

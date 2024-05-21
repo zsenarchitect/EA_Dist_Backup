@@ -4,7 +4,7 @@ clr.AddReference('RevitAPI')
 
 from RhinoInside.Revit import Convert
 
-from Autodesk.Revit import DB
+from Autodesk.Revit import DB # pyright: ignore
 
 clr.ImportExtensions(Convert.Geometry)
 

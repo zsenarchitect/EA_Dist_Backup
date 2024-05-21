@@ -14,8 +14,8 @@ from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 import EA_UTILITY
 import EnneadTab
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
 
 import re
 
@@ -356,7 +356,7 @@ output.close_others()
 
 if __name__ == "__main__":
 
-    transfer_rhino_drafting(doc = __revit__.ActiveUIDocument.Document)
+    transfer_rhino_drafting(doc = __revit__.ActiveUIDocument.Document # pyright: ignore)
 
 
     #print "\n\n----------tool finished."

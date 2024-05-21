@@ -13,9 +13,9 @@ from pyrevit import script #
 import EA_UTILITY
 import EnneadTab
 import ENNEAD_LOG
-from Autodesk.Revit import DB 
-# from Autodesk.Revit import UI
-#doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+# from Autodesk.Revit import UI # pyright: ignore
+#doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 def show_goose():
     exe_location = r"L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\Project Settings\exe\DesktopGoose\GooseDesktop.exe - Shortcut"

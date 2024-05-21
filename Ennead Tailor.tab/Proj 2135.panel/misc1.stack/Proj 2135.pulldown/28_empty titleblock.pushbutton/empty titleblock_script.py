@@ -3,15 +3,15 @@
 __title__ = "28_Set/Reset Empty Titleblock."
 __doc__ = "Some LDI prefer a totally empty titleblock. Unfortunately, the revision schedule cannot be turned on/off by parameter control. SO this tool, will remove the sheet revisions, and store that information at the issue parameters. Then the titleblock can be turned empty. After the export, the tool can be used to recover sheet revision schedule.\n\nWhy not switch to another empty titleblock family? Becasue when switching, non-shared-instance-parameter will reset.So you will lose any local setting."
 from pyrevit import forms, script #
-from Autodesk.Revit import DB 
-doc = __revit__.ActiveUIDocument.Document
+from Autodesk.Revit import DB # pyright: ignore 
+doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 # uidoc = __revit__.ActiveUIDocument
 # app = doc.Application
 
 import EA_UTILITY
 import EnneadTab
 
-# from Autodesk.Revit import UI
+# from Autodesk.Revit import UI # pyright: ignore
 # uiapp = UI.UIApplicationapp
 # uidoc = UI.UIDocument
 # #optional
