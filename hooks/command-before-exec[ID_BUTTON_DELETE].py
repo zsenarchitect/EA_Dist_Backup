@@ -65,7 +65,8 @@ def check_level_grid():
     selection = [doc.GetElement(x) for x in selection_ids]
    
     def is_level_grid(x):
-        
+        if not hasattr(x, 'Category'):
+            return False
         return x.Category.Name in ["Grids", "Levels"]
 
     
