@@ -21,14 +21,16 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION, REVIT_VIEW
+from EnneadTab import DATA_FILE, NOTIFICATION, ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def abstract_wall(current_only):
     solution = Solution()
     if not solution.res:
@@ -38,7 +40,7 @@ def abstract_wall(current_only):
         solution.run(doc.ActiveView)
     else:
         if solution.res == solution.opts[1][0]:
-            EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text="If want to update wall based on diagram, this is only allowed in single view, not multiple view.",
+            REVIT_FORMS.dialogue(main_text="If want to update wall based on diagram, this is only allowed in single view, not multiple view.",
                                                  sub_text="Use left click instead.")
             return
         views = forms.select_views(title="Select views to convert to abstract wall", 
@@ -55,11 +57,11 @@ class Solution:
     
     def __init__(self):
         self.data_file_name = "ABSTRACT_WALL_{}.json".format(doc.Title)
-        self.data = EnneadTab.DATA_FILE.read_json_as_dict_in_shared_dump_folder(self.data_file_name, create_if_not_exist=True)
+        self.data = DATA_FILE.read_json_as_dict_in_shared_dump_folder(self.data_file_name, create_if_not_exist=True)
         self.prefix = "EnneadTab Abstract Wall_"
         self.opts = [["Wall-->Diagram", "Generate abstract walls to review and update"],
                 ["Diagram-->Wall", "Use abstract walls to update original wall locations. This will also delete other diagram lines of the same CW wall."]]
-        self.res, self.is_eos_added = EnneadTab.REVIT.REVIT_FORMS.dialogue(options = self.opts, 
+        self.res, self.is_eos_added = REVIT_FORMS.dialogue(options = self.opts, 
                                                                  main_text = "Pick your action!",
                                                                  verification_check_box_text = "Add EOS(Edge of Slab)?  [Note: the edited EOS lines cannot update floor boundary], this only help you to check where they are.")
         if not self.res:
@@ -68,7 +70,7 @@ class Solution:
     def run(self, starting_view):
         # confirm current active view is a plan view or RCP, cancel and warn if not
         if starting_view.ViewType not in [DB.ViewType.FloorPlan, DB.ViewType.CeilingPlan]:
-            EnneadTab.NOTIFICATION.messenger(main_text="Current active view is not a plan view or RCP, abort.")
+            NOTIFICATION.messenger(main_text="Current active view is not a plan view or RCP, abort.")
             return
         
         
@@ -111,7 +113,7 @@ class Solution:
         for key in list(set(self.removable_keys_in_dict)):
             del self.data[key]
             
-        EnneadTab.DATA_FILE.save_dict_to_json_in_shared_dump_folder(self.data, self.data_file_name)
+        DATA_FILE.save_dict_to_json_in_shared_dump_folder(self.data, self.data_file_name)
     
     
     
@@ -133,7 +135,7 @@ class Solution:
  
         
         if len(all_walls)==0:
-            EnneadTab.NOTIFICATION.messenger(main_text = "No curtain walls found in current view, abort.")
+            NOTIFICATION.messenger(main_text = "No curtain walls found in current view, abort.")
             return
 
         working_view = self.prepare_view_wall2line()
@@ -145,8 +147,8 @@ class Solution:
         # for each wall, get the line/arc geometry, create new detailline in the new duplicated view
             # save the pairing data: new view uniqueId, wall uniqueId, new line uniqueId
             # set linestyle
-        self.picked_linestyle =  EnneadTab.REVIT.REVIT_SELECTION.get_linestyle(doc, "EnneadTab_FOG", creation_data_if_not_exsit={"color": (0,128,255)})
-        # self.picked_linestyle = EnneadTab.REVIT.REVIT_SELECTION.pick_linestyle(doc, 
+        self.picked_linestyle =  REVIT_SELECTION.get_linestyle(doc, "EnneadTab_FOG", creation_data_if_not_exsit={"color": (0,128,255)})
+        # self.picked_linestyle = REVIT_SELECTION.pick_linestyle(doc, 
         #                                                                        return_style=True,
         #                                                                        title="Pick a line style for the [AbstractWalls]")
         if not self.picked_linestyle:
@@ -162,10 +164,10 @@ class Solution:
             
         
         #  store the data in L drive? in project custoe schema?
-        EnneadTab.DATA_FILE.save_dict_to_json_in_shared_dump_folder(self.data, self.data_file_name)
+        DATA_FILE.save_dict_to_json_in_shared_dump_folder(self.data, self.data_file_name)
         
         
-        EnneadTab.NOTIFICATION.messenger(main_text = "You can start checking/updating the abstract walls in\n[{}].".format(working_view.Name))
+        NOTIFICATION.messenger(main_text = "You can start checking/updating the abstract walls in\n[{}].".format(working_view.Name))
         
         
         pass
@@ -177,10 +179,10 @@ class Solution:
   
         
         if len(all_floors)==0:
-            EnneadTab.NOTIFICATION.messenger(main_text = "No floor with type name containning 'struc' found in current view, skip EOS creation.")
+            NOTIFICATION.messenger(main_text = "No floor with type name containning 'struc' found in current view, skip EOS creation.")
             return
-        self.picked_eos_linestyle =  EnneadTab.REVIT.REVIT_SELECTION.get_linestyle(doc, "EnneadTab_EOS", creation_data_if_not_exsit={"color": (255,0,0)})
-        # self.picked_eos_linestyle = EnneadTab.REVIT.REVIT_SELECTION.pick_linestyle(doc, 
+        self.picked_eos_linestyle =  REVIT_SELECTION.get_linestyle(doc, "EnneadTab_EOS", creation_data_if_not_exsit={"color": (255,0,0)})
+        # self.picked_eos_linestyle = REVIT_SELECTION.pick_linestyle(doc, 
         #                                                                        return_style=True,
         #                                                                        title="Pick a line style for the [EdgeOfSlab]")
         if not self.picked_eos_linestyle:
@@ -330,12 +332,12 @@ class Solution:
     def prepare_view_line2wall(self):
         
         if self.prefix not in doc.ActiveView.Name:
-            EnneadTab.NOTIFICATION.messenger(main_text="Current active view is not a abstract wall view, cannot find its source view..")
+            NOTIFICATION.messenger(main_text="Current active view is not a abstract wall view, cannot find its source view..")
             return None
         desired_source_view_name = doc.ActiveView.Name.replace(self.prefix, "")
-        source_view = EnneadTab.REVIT.REVIT_VIEW.get_view_by_name(desired_source_view_name)
+        source_view = REVIT_VIEW.get_view_by_name(desired_source_view_name)
         if not source_view:
-            EnneadTab.NOTIFICATION.messenger(main_text="The source view of this diagram view cannot be found...")
+            NOTIFICATION.messenger(main_text="The source view of this diagram view cannot be found...")
             return None
         
         uidoc.ActiveView = source_view
@@ -349,7 +351,7 @@ class Solution:
         
         
         if self.prefix in doc.ActiveView.Name:
-            EnneadTab.NOTIFICATION.messenger(main_text="Current active view is already a diagram view, abort.")
+            NOTIFICATION.messenger(main_text="Current active view is already a diagram view, abort.")
             
             return None
         
@@ -358,7 +360,7 @@ class Solution:
         t = DB.Transaction(doc, "Prepare new view")
         t.Start()
         desired_view_name = self.prefix + doc.ActiveView.Name
-        working_view = EnneadTab.REVIT.REVIT_VIEW.get_view_by_name(desired_view_name)
+        working_view = REVIT_VIEW.get_view_by_name(desired_view_name)
         
         
         if not working_view:

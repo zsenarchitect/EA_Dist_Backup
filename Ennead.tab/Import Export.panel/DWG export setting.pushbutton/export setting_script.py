@@ -8,10 +8,12 @@ __tip__ = True
 from pyrevit import forms, script
 from Autodesk.Revit import DB
 import random
-import EnneadTab
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import NOTIFICATION, ERROR_HANDLE
+
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 def print_table(setting):
@@ -95,7 +97,7 @@ def process_setting(sel_setting):
     t.Start()
     #DB.ExportDWGSettings.Create(revit.doc, setting_name, DWGExportOptions)
     sel_setting.SetDWGExportOptions(existing_option)
-    EnneadTab.NOTIFICATION.messenger(main_text = "<{}> layer names and colors updated.".format(new_setting.Name))
+    NOTIFICATION.messenger(main_text = "<{}> layer names and colors updated.".format(new_setting.Name))
     #forms.alert("<{}> layer names and colors updated.".format(new_setting.Name))
     t.Commit()
 
@@ -111,7 +113,7 @@ def process_setting(sel_setting):
     sel_setting.Name = old_name
     t.Commit()
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     existing_dwg_settings = DB.FilteredElementCollector(doc)\
@@ -126,7 +128,7 @@ def main():
                                             button_name='Format Layer Names and Randomize Color', \
                                             title = "Select existing Export Setting to Modify.")
     if sel_settings == None:
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "You didn't select any export setting.\nNothing is changed.",
+        REVIT_FORMS.notification(main_text = "You didn't select any export setting.\nNothing is changed.",
                                                  self_destruct = 10)
         return
     

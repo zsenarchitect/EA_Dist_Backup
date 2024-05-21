@@ -7,9 +7,11 @@ __tip__ = True
 
 from pyrevit import script
 from Autodesk.Revit import DB
-import EnneadTab
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 class Solution:
     def who_created(self, view_name):
@@ -29,7 +31,7 @@ class Solution:
             self.dicts[name] = [item]
             
             
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def main(self):
         onsheet_schedule_names = set()
         on_sheet_schedules = DB.FilteredElementCollector(doc).OfClass(DB.ScheduleSheetInstance).WhereElementIsNotElementType().ToElements()

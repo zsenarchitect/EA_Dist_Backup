@@ -84,14 +84,18 @@ def save_traceback_and_open(user, error_message):
     if user in ["szhang", "Sen Zhang"]:
         os.startfile(error_path)
 
-# Usage
+def main():
+    repo_url = "https://github.com/zsenarchitect/EA_Dist/archive/refs/heads/master.zip"
+    extract_to = r"~\Documents\EnneadTab Ecosystem"
+    updater = RepositoryUpdater(repo_url, extract_to)
+    updater.run_update()
+
 if __name__ == '__main__':
+
     try:
-        repo_url = "https://github.com/zsenarchitect/EA_Dist/archive/refs/heads/master.zip"
-        extract_to = r"~\Documents\EnneadTab Ecosystem"
-        updater = RepositoryUpdater(repo_url, extract_to)
-        updater.run_update()
+        main()
     except Exception as e:
         error_info = traceback.format_exc()
         username = getpass.getuser()
         save_traceback_and_open(username, error_info)
+

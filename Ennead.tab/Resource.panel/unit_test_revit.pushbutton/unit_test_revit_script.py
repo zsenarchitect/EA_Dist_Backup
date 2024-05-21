@@ -11,18 +11,19 @@ from pyrevit import script #
 
 
 
-import EnneadTab
+
+from EnneadTab import FOLDER, UNIT_TEST, EMAIL, ERROR_HANDLE
 
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def unit_test_revit():
-    EnneadTab.UNIT_TEST.test_core_module()
+    UNIT_TEST.test_core_module()
     
     # if is_SZ():
     #.    return 
-    dest_file = EnneadTab.FOLDER.get_EA_dump_folder_file("UnitTest.html")
+    dest_file = FOLDER.get_EA_dump_folder_file("UnitTest.html")
     output.save_contents(dest_file)
-    EnneadTab.EMAIL.email(sender_email=None,
+    EMAIL.email(sender_email=None,
                             receiver_email_list=["szhang@ennead.com"],
                             subject="Revit Unit Test Result",
                             body="This is the unit test result from Revit side",

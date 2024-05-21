@@ -11,7 +11,8 @@ try:
     from pyrevit import script #
     # from pyrevit import revit #
     import EA_UTILITY
-    import EnneadTab
+        
+    from EnneadTab import ERROR_HANDLE
     import ENNEAD_LOG
     from Autodesk.Revit import DB 
     # from Autodesk.Revit import UI
@@ -20,7 +21,7 @@ except:
     #print "cannot import base module for Urgent Request main script"
     pass
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def remover_repeating_item_in_list(collection):
     out = []
     for item in collection:
@@ -28,7 +29,7 @@ def remover_repeating_item_in_list(collection):
             out.append()
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def urge_request():
 
     # after view actived
@@ -59,7 +60,7 @@ def try_catch_error(func):
             return "Wrapper func for EA Log -- Error: " + str(e)
     return wrapper
 """
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def run_exe():
 
     #exe_location = r"L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\Project Settings\Exe\LAST_SYNC_MONITOR\LAST_SYNC_MONITOR.exe - Shortcut"

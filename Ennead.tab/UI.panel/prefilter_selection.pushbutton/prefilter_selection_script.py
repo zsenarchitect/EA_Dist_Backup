@@ -21,17 +21,19 @@ __tip__ = True
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import NOTIFICATION, ERROR_HANDLE
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 
 
 
-class PrefilterUI(EnneadTab.REVIT.REVIT_FORMS.EnneadTabModelessForm):
+class PrefilterUI(REVIT_FORMS.EnneadTabModelessForm):
     
     
     def get_filter_toggle_bt(self):
@@ -46,23 +48,25 @@ class PrefilterUI(EnneadTab.REVIT.REVIT_FORMS.EnneadTabModelessForm):
 
         # print (self.selection_cate_setting)
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def select_click(self, sender, e):
-        import EnneadTab # need to import again after inherating class....this is a bug in pyrevit that has troubled me since SearchUI
+                
+        from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
+        from EnneadTab import NOTIFICATION, ERROR_HANDLE # need to import again after inherating class....this is a bug in pyrevit that has troubled me since SearchUI
         import os
         import sys
         if not self._toggle_bt_enabled.IsChecked:
-            EnneadTab.NOTIFICATION.messenger(main_text="Filter is disabled now...")
+            NOTIFICATION.messenger(main_text="Filter is disabled now...")
             return
         self.update_cate_selection()
 
         
         if True not in self.selection_cate_setting.values():
-            EnneadTab.NOTIFICATION.messenger(main_text="You have disabled all categories.")
+            NOTIFICATION.messenger(main_text="You have disabled all categories.")
             return
         
-        EnneadTab.NOTIFICATION.messenger(main_text="Go ahead and select in window now...")
-        uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
+        NOTIFICATION.messenger(main_text="Go ahead and select in window now...")
+        uidoc = REVIT_APPLICATION.get_uidoc()
 
         current_folder = os.path.dirname(os.path.realpath(__file__))
         sys.path.append(current_folder)
@@ -73,8 +77,8 @@ class PrefilterUI(EnneadTab.REVIT.REVIT_FORMS.EnneadTabModelessForm):
         for x in raw_elements:
             final_elements.append(x)
         
-        EnneadTab.REVIT.REVIT_SELECTION.set_selection(final_elements)
-        EnneadTab.NOTIFICATION.messenger(main_text="{} elements selected.".format(len(final_elements)))
+        REVIT_SELECTION.set_selection(final_elements)
+        NOTIFICATION.messenger(main_text="{} elements selected.".format(len(final_elements)))
         uidoc.RefreshActiveView()
         return
         self.rename_view_event_handler.kwargs = sheets, is_default_format
@@ -87,19 +91,19 @@ class PrefilterUI(EnneadTab.REVIT.REVIT_FORMS.EnneadTabModelessForm):
 
             
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def reset_filter_click(self, sender, e):
         for item in self.get_filter_toggle_bt():
             item.IsChecked = False
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error        
+    @ERROR_HANDLE.try_catch_error        
     def toggle_enabler_click(self, sender, e):
         self.tblock_enabler.Text = "Filter is now Enabled " if self._toggle_bt_enabled.IsChecked else "Filter is now Disabled "
         for item in self.get_filter_toggle_bt():
             item.IsEnabled = self._toggle_bt_enabled.IsChecked
 
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def prefilter_selection():
 
     external_funcs = []

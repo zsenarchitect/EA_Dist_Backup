@@ -16,14 +16,16 @@ from Autodesk.Revit.Exceptions import InvalidOperationException
 from pyrevit import script, forms
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import ENNEAD_LOG
 
 import traceback
 import random
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
@@ -36,7 +38,7 @@ def get_all_instance_of_type(type):
     return instances
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def apply_radius_action(window):
     t = DB.Transaction(doc, __title__)
     t.Start()
@@ -47,7 +49,7 @@ def apply_radius_action(window):
 
     if len(bad_instances) == 0:
         note = "Cannot get anything from {}".format(solution.bad_type.LookupParameter("Type Name").AsString())
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = note,
+        REVIT_FORMS.notification(main_text = note,
                                                 sub_text = "There might be no instance of bad type in the file, you should try purging.",
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -71,7 +73,7 @@ def apply_radius_action(window):
 
 
 
-    EnneadTab.NOTIFICATION.toast(sub_text = "",
+    NOTIFICATION.toast(sub_text = "",
                                 main_text = "Radius Applied Finished!")
 
 
@@ -185,7 +187,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
         xaml_file_name = 'apply_panel_radius_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.Height = 800
         self.family_bad = None
         self.Show()
@@ -203,7 +205,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def apply_radius_clicked(self, sender, args):
 
 
@@ -224,7 +226,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
         sub_text += "\nStep 3(Optional): Preview the panel by clicking the zoom."
         sub_text += "\nStep 4: Input the instance parameter where you want to load the wall radius info."
         sub_text += "\nStep 5: Apply radius"
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text,
+        REVIT_FORMS.notification(main_text = main_text,
                                                 sub_text = sub_text,
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -234,7 +236,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
 
 
     def open_youtube(self, sender, args):
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "not recorded yet",
+        REVIT_FORMS.notification(main_text = "not recorded yet",
                                                 sub_text = "blah blah blah",
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -245,7 +247,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
         script.open_url(r"https://youtu.be/gb2rG6ZteP8")
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_type_bad(self, sender, args):
         #print "pick bad type"
         self.family_bad = self.get_family()
@@ -326,7 +328,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
     def zoom_bad_click(self, sender, args):
         self.handle_zoom()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def handle_zoom(self):
 
         if not self.bad_type:
@@ -334,12 +336,12 @@ class apply_panel_radius_UI(forms.WPFWindow):
 
         instances = get_all_instance_of_type(self.bad_type)
         if len(instances) == 0:
-            EnneadTab.NOTIFICATION.toast(main_text = "Found no elements of this type.", force_toast = True)
+            NOTIFICATION.toast(main_text = "Found no elements of this type.", force_toast = True)
             return
         random.shuffle(instances)
         instance = instances[0]
         uidoc.ShowElements(instance)
-        uidoc.Selection.SetElementIds(EnneadTab.DATA_CONVERSION.list_to_system_list([instance.Id]))
+        uidoc.Selection.SetElementIds(DATA_CONVERSION.list_to_system_list([instance.Id]))
 
 
     def handleclick(self, sender, args):
@@ -354,7 +356,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     modeless_form = apply_panel_radius_UI()

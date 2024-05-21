@@ -48,6 +48,8 @@ LEVLE_MAP = {
 }
 
 def get_all_phase():
+    phase_array = doc.Phases
+    return list(phase_array)
     all_phase_ids = DB.FilteredElementCollector(doc).OfClass(DB.Phase).ToElementIds ()
     return sorted([ doc.GetElement(phase_id) for phase_id in all_phase_ids], key = lambda x: x.Name)
 
@@ -59,6 +61,11 @@ def match_phase_sheet_layout():
     t.Start()
     
     sheet = REVIT_SHEET.get_sheet_by_sheet_num(REF_SHEET)
+    for j, viewport_id in enumerate(sheet.GetAllViewports()):
+        viewport = doc.GetElement(viewport_id)
+        view = doc.GetElement(viewport.ViewId)
+        REVIT_VIEW.set_detail_number(view, "temp{}".format(j))
+        
     for j, viewport_id in enumerate(sheet.GetAllViewports()):
         viewport = doc.GetElement(viewport_id)
         view = doc.GetElement(viewport.ViewId)

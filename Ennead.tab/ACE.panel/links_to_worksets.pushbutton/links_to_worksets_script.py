@@ -14,7 +14,7 @@ from EnneadTab import ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
 @ERROR_HANDLE.try_catch_error

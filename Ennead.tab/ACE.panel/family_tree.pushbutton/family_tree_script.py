@@ -11,28 +11,30 @@ __tip__ = True
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE, EXE, FOLDER
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 class Solution:
     def __init__(self):
         self.docs_to_be_closed = []
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def family_tree(self):
         output.print_md("#The family tree of [{}]#".format(doc.Title))
         indent = ""
         output.print_md("**{}< {} >**".format(indent, doc.Title))
         self.process_family(family_doc = doc, indent = indent)
 
-        dest_file = EnneadTab.FOLDER.get_EA_dump_folder_file("Family Tree of {}.html".format(doc.Title))
+        dest_file = FOLDER.get_EA_dump_folder_file("Family Tree of {}.html".format(doc.Title))
         output.save_contents(dest_file)
         output.close()
-        EnneadTab.EXE.open_file_in_default_application(dest_file)
+        EXE.open_file_in_default_application(dest_file)
 
 
         for family_doc in self.docs_to_be_closed:

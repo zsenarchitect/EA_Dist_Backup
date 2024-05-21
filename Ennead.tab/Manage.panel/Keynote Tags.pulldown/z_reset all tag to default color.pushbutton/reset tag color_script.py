@@ -2,14 +2,16 @@ __doc__ = "Reset all keynote tag local override color to default. It might got i
 __title__ = "KeynoteTAG Reset Color"
 __tip__ = True
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from pyrevit import forms, DB, revit, script
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     key_note_tags = DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_KeynoteTags).WhereElementIsNotElementType().ToElements()
 

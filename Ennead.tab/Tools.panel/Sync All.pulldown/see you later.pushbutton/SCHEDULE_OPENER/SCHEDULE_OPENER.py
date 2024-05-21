@@ -4,7 +4,8 @@
 
 import sys
 sys.path.append(r'L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\lib')
-import EnneadTab
+
+from EnneadTab import EXE, DATA_FILE, FOLDER
 import pygame
 import pyautogui
 import random
@@ -168,8 +169,8 @@ def main():
         if datetime.datetime.now() > target_time:
             revit_version = data['revit_version']
             start_revit(revit_version)
-            EnneadTab.FOLDER.copy_file_to_local_dump_folder(EnneadTab.FOLDER.get_EA_dump_folder_file(data_file), file_name = "action_" + data_file )
-            EnneadTab.FOLDER.remove_file_from_dump_folder(data_file)
+            FOLDER.copy_file_to_local_dump_folder(FOLDER.get_EA_dump_folder_file(data_file), file_name = "action_" + data_file )
+            FOLDER.remove_file_from_dump_folder(data_file)
             return True
 
         
@@ -209,7 +210,7 @@ def main():
          
         if life_count % (1 * FPS) == 0:
             data_file = "EA_SCHEDULE_OPENER.json"
-            data = EnneadTab.DATA_FILE.read_json_as_dict_in_dump_folder(data_file)
+            data = DATA_FILE.read_json_as_dict_in_dump_folder(data_file)
         if data:
             res = display_data(data)
             if res:
@@ -269,4 +270,4 @@ if __name__ == "__main__":
         exe_folder = os.path.abspath( os.path.dirname( __file__ ) )
         with open(r"{}\error_log.txt".format(exe_folder), "w") as f:
             f.write(error)
-            EnneadTab.EXE.open_file_in_default_application(r"{}\error_log.txt".format(exe_folder))
+            EXE.open_file_in_default_application(r"{}\error_log.txt".format(exe_folder))

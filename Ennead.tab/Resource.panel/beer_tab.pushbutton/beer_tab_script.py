@@ -10,12 +10,13 @@ __context__ = "zero-doc"
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab import ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def beer_tab():
     script.open_url("https://newyorksimply.com/nyc-bars-financial-district-new-york-city/")
 

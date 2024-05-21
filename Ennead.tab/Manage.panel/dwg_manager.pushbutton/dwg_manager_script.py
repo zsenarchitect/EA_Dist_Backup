@@ -28,11 +28,13 @@ from pyrevit import script #
 # from pyrevit import _HostApplication
 from pyrevit import HOST_APP
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import EXE, NOTIFICATION, ENVIRONMENT, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
@@ -46,7 +48,7 @@ def get_dwgs():
     return dwgs_list
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def repath_all_dwgs(new_folder, dwg_type_list):
 
     t = DB.Transaction(doc, "Repath All Linked Dwgs")
@@ -57,7 +59,7 @@ def repath_all_dwgs(new_folder, dwg_type_list):
             file_path = file_ref.GetPath()
 
             file_path = DB.ModelPathUtils.ConvertModelPathToUserVisiblePath(file_path)
-            new_path = EnneadTab.FOLDER.copy_file_to_folder(file_path, new_folder)
+            new_path = FOLDER.copy_file_to_folder(file_path, new_folder)
             dwg_type.LoadFrom(new_path)
         except Exception as e:
             print("Skip this dwg: {}\nBecasue: {}\n\n".format( dwg_type.LookupParameter("Type Name").AsString() , e ))
@@ -198,7 +200,7 @@ class dwg_manage_ModelessForm(WPFWindow):
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         self.pre_actions()
         xaml_file_name = "dwg_manager_ModelessForm.xaml" ###>>>>>> if change from window to dockpane, the top level <Window></Window> need to change to <Page></Page>
@@ -211,7 +213,7 @@ class dwg_manage_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab DWG Manager UI"
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
 
 
         #get all dwgs in project
@@ -233,7 +235,7 @@ class dwg_manage_ModelessForm(WPFWindow):
 
         self.Show()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def init_data_grid(self):
 
         def good_dwg(dwg):
@@ -261,7 +263,7 @@ class dwg_manage_ModelessForm(WPFWindow):
         self.main_data_grid.ItemsSource = [data_grid_obj(dwg) for dwg in self.dwgs_linked+self.dwgs_imported if good_dwg(dwg)]
         
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def preview_selection_changed(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -292,7 +294,7 @@ class dwg_manage_ModelessForm(WPFWindow):
             self.bt_open_dwg.Visibility = System.Windows.Visibility.Hidden
             self.bt_open_dwg_folder.Visibility = System.Windows.Visibility.Hidden
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def generic_click(self, is_V):
         #print "Clicking " + keyword
         if not self.ref_tag:
@@ -309,22 +311,22 @@ class dwg_manage_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def select_dwg_click(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
             return
-        EnneadTab.REVIT.REVIT_SELECTION.set_selection(obj.dwg)
+        REVIT_SELECTION.set_selection(obj.dwg)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def zoom_dwg_click(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
             return
-        EnneadTab.REVIT.REVIT_SELECTION.zoom_selection(obj.dwg) 
+        REVIT_SELECTION.zoom_selection(obj.dwg) 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_view_click(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -337,7 +339,7 @@ class dwg_manage_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_dwg_click(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -349,14 +351,14 @@ class dwg_manage_ModelessForm(WPFWindow):
 
         if not os.path.exists(obj.file_path):
             self.debug_textbox.Text = "This DWG file path does not exist."
-            EnneadTab.NOTIFICATION.messenger("This dwg path is not valid.")
+            NOTIFICATION.messenger("This dwg path is not valid.")
             return
-        EnneadTab.EXE.open_file_in_default_application(obj.file_path)
+        EXE.open_file_in_default_application(obj.file_path)
 
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_dwg_folder_click(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -367,7 +369,7 @@ class dwg_manage_ModelessForm(WPFWindow):
         os.startfile(dwg_folder)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def repath_dwgs_click(self, sender, args):
         
 
@@ -396,7 +398,7 @@ class dwg_manage_ModelessForm(WPFWindow):
         self.Close()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def setting_changed(self, sender, args):
         self.init_data_grid()
         return
@@ -413,7 +415,7 @@ class dwg_manage_ModelessForm(WPFWindow):
             self.main_data_grid.ItemsSource = [x for x in self.main_data_grid.ItemsSource if x.dwg_kind == "Imported"]
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         self.Close()

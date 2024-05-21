@@ -8,9 +8,11 @@ User keynote, since no one should really use it, will be highlighted as blue."""
 __title__ = "Identify Wrong Type\nOf KeynoteTAG"
 __tip__ = True
 from pyrevit import DB, revit, script
-import EnneadTab
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 def is_owned(element):
     eh = revit.query.get_history(element)
@@ -52,7 +54,7 @@ def override_2D_element(element,is_user_tag = False,is_wrong_tag_type = False, r
     view.SetElementOverrides(element.Id, OG_setting)
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     key_note_tags = DB.FilteredElementCollector(revit.doc).OfCategory(DB.BuiltInCategory.OST_KeynoteTags).WhereElementIsNotElementType().ToElements()

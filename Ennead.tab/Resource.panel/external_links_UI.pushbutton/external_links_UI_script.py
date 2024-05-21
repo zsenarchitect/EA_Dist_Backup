@@ -33,7 +33,9 @@ from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import DOCUMENTATION, EXE, DATA_FILE, USER, ENVIRONMENT, ERROR_HANDLE, LOG, FOLDER
 import ENNEAD_LOG
 import clr
 import System
@@ -42,8 +44,8 @@ import traceback
 import random
 import subprocess
 import os
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
@@ -101,7 +103,7 @@ class ExternalLinks_UI(forms.WPFWindow):
         forms.WPFWindow.__init__(self, xaml_file_name)
         self.subtitle.Text = "Everything you need to know.."
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.bt_jianbiaoku.Content = "Open 建标库 website"
         self.set_image_source(self.jianbiaoku_icon, "jianbiaoku_icon.png")
         self.set_image_source(self.youtube_icon, "youtube_icon.png")
@@ -124,67 +126,67 @@ class ExternalLinks_UI(forms.WPFWindow):
         self.Show()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def ei_wiki_click(self, sender, args):
         script.open_url(r"https://ei.ennead.com/toolbox/BIMManual_01/0_Home%20Page.aspx")
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def autodesk_health_click(self, sender, args):
         script.open_url("https://health.autodesk.com/")
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def how_to_rhino_click(self, sender, args):
         script.open_url("https://ei.ennead.com/toolbox/BIMManual_01/20.1.9_EnneadTab%20For%20Rhino.aspx")
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def how_to_revit_click(self, sender, args):
         script.open_url("https://ei.ennead.com/toolbox/BIMManual_01/44.09_EnneadTab%20for%20Revit.aspx")
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def how_to_cad_click(self, sender, args):
         path = r"file:\\L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Library Docs\CAD LISP\CAD Command list.txt"
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def feedback_click(self, sender, args):
         opts = [["I have a EnneadTab related question", "Including trouble shooting/feature request/bug report"],
                 ["I have a general question about Revit.", "Will be redirected to the General Applied Computing helpdesk."]]
-        res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "What is going on?", options = opts, title = "This plug-in sucks!")
+        res = REVIT_FORMS.dialogue(main_text = "What is going on?", options = opts, title = "This plug-in sucks!")
 
 
         if res == opts[0][0]:
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "You know what, directly message me thru Teams is the quickest way to get my attention.",
+            REVIT_FORMS.notification(main_text = "You know what, directly message me thru Teams is the quickest way to get my attention.",
                                             sub_text = "My name is Sen Zhang, by the way.")
         else:
             script.open_url("https://airtable.com/shrWqu9wtGkdVwF53")
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def youtube_click(self, sender, args):
         script.open_url("https://youtube.com/playlist?list=PLz3VQzyVrU1iyoGV-kzWhCPsmh9cQWWoV")
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def learn_command_search_click(self, sender, args):
         script.open_url("https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29754")
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def family_fomula_click(self, sender, args):
         import family_fomula_cheat_sheet
         family_fomula_cheat_sheet.give_me_cheat_sheet()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def SD_reference_click(self, sender, args):
         path = r"file:\\L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Library Docs\SD Documentation Samples\#PDF in this directory are reference only"
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def DD_reference_click(self, sender, args):
         path = r"file:\\L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Library Docs\DD Documentation Samples\#PDF in this directory are reference only"
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def SH_code_click(self, sender, args):
         folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Library Docs\Codes"
-        files = EnneadTab.FOLDER.get_filenames_in_folder(folder)
+        files = FOLDER.get_filenames_in_folder(folder)
         special_folder = "#PDF in this directory are reference only"
         files.remove(special_folder)
 
@@ -202,45 +204,45 @@ class ExternalLinks_UI(forms.WPFWindow):
             return
 
         filepath = folder + "\\" + selected_opt
-        EnneadTab.EXE.open_file_in_default_application(filepath)
+        EXE.open_file_in_default_application(filepath)
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def jianbiaoku_click(self, sender, args):
         script.open_url("http://www.jianbiaoku.com/")
 
         
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def meme_generator_click(self, sender, args):
         script.open_url("https://imgflip.com/memegenerator")
 
         
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def training_click(self, sender, args):
         folder_scott = "L:\\4b_Applied Computing\\10_Learning Resources\\01_Revit\\Essentials"
         os.startfile(folder_scott)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_cache_revit_click(self, sender, args):
         path = r"{}\AppData\Local\Autodesk\Revit\PacCache".format(os.environ["USERPROFILE"])
-        EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "The cache in the upcoming folder 'C:\Users\YouName\AppData\Local\Autodesk\Revit' are all safe to delete. There are Crash journals, very old rvt links, unusaed locals, etc. from every version of Revit you have used.\n\n##BUT PLEASE DELETE THEM ONLY WHEN REVIT HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -Autodesk Revit 20xx\n  -PacCache\n\nNote:\nAfter Cache are deleted, you next Revit document openning will take longer than ususal because it will download cache again as needed.")
+        REVIT_FORMS.dialogue(main_text = "The cache in the upcoming folder 'C:\Users\YouName\AppData\Local\Autodesk\Revit' are all safe to delete. There are Crash journals, very old rvt links, unusaed locals, etc. from every version of Revit you have used.\n\n##BUT PLEASE DELETE THEM ONLY WHEN REVIT HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -Autodesk Revit 20xx\n  -PacCache\n\nNote:\nAfter Cache are deleted, you next Revit document openning will take longer than ususal because it will download cache again as needed.")
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_cache_rhino_click(self, sender, args):
         path = r"{}\AppData\Local\McNeel\Rhinoceros\temp".format(os.environ["USERPROFILE"])
-        EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are autosaves you might no longer need in the upcoming folder 'C:\Users\YouName\AppData\Local\McNeel\Rhinoceros' are safe to delete.\n\n##BUT PLEASE DELETE THEM ONLY WHEN RHINO HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -6.0\n  -7.0")
+        REVIT_FORMS.dialogue(main_text = "There are autosaves you might no longer need in the upcoming folder 'C:\Users\YouName\AppData\Local\McNeel\Rhinoceros' are safe to delete.\n\n##BUT PLEASE DELETE THEM ONLY WHEN RHINO HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -6.0\n  -7.0")
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def decode_guid_click(self, sender, args):
         # to-do: make also a selection list so user can decide which folder to delete cahe or restore recent crash local
         
         guid = self.textbox_cache_decoder.Text
         filepath = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Misc\doc_opener.json"
-        data = EnneadTab.DATA_FILE.read_json_as_dict(filepath)
+        data = DATA_FILE.read_json_as_dict(filepath)
         note = "This Guid has not been recored in EnneadTab DataBase."
         for doc_title, value in data.items():
             project_guid, file_guid,_ = value
@@ -255,24 +257,24 @@ class ExternalLinks_UI(forms.WPFWindow):
                 break
         self.textbox_decoder.Text = note
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def force_kill_sync_record_click(self, sender, args):
         import imp
         full_file_path = r'C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\update_last_sync_datafile_script.py'
-        if not EnneadTab.USER.is_SZ():
-            full_file_path = EnneadTab.FOLDER.remap_filepath_to_folder(full_file_path)
+        if not USER.is_SZ():
+            full_file_path = FOLDER.remap_filepath_to_folder(full_file_path)
         ref_module = imp.load_source("update_last_sync_datafile_script", full_file_path)
 
         ref_module.kill_record()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_all_documentation_click(self, sender, args):
-        EnneadTab.DOCUMENTATION.print_documentation_book_for_review_revit()
+        DOCUMENTATION.print_documentation_book_for_review_revit()
         
         
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def print_time_sheet_detail_click(self, sender, args):
-        EnneadTab.LOG.print_time_sheet_detail()  
+        LOG.print_time_sheet_detail()  
         
     def handleclick(self, sender, args):
         print ("surface clicked")
@@ -286,7 +288,7 @@ class ExternalLinks_UI(forms.WPFWindow):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     modeless_form = ExternalLinks_UI()

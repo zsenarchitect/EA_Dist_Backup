@@ -19,7 +19,7 @@ from EnneadTab import ERROR_HANDLE, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
 

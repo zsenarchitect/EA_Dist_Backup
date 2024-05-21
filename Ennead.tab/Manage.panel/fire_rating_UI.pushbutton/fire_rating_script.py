@@ -6,9 +6,7 @@
 __doc__ = """Manager fire rating in wall property, and apply/update rating graphic across multiple views."""
 __title__ = "Fire Rating\nGraphic"
 __tip__ = True
-import os
-import math
-import random
+
 import traceback
 import System
 
@@ -23,11 +21,13 @@ from pyrevit import script #
 # from pyrevit import _HostApplication
 #from pyrevit import HOST_APP
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
@@ -134,7 +134,7 @@ class FireRatingGraphicMaker:
 
         t0 = DB.Transaction(doc, "purge old graphic")
         t0.Start()
-        doc.Delete(EnneadTab.DATA_CONVERSION.list_to_system_list([x.Id for x in instances]))
+        doc.Delete(DATA_CONVERSION.list_to_system_list([x.Id for x in instances]))
         #doc.Regenerate()
         t0.Commit()
         
@@ -142,7 +142,7 @@ class FireRatingGraphicMaker:
 
     def process_view(self, view):
         self.update_log( "\n\n## processing view: {}".format(output.linkify(view.Id, title = view.Name)))
-        EnneadTab.NOTIFICATION.messenger(main_text = "Processing view: {}".format(view.Name))
+        NOTIFICATION.messenger(main_text = "Processing view: {}".format(view.Name))
         self.clear_all_EA_rating_graphic(view)
         
         walls = DB.FilteredElementCollector(doc, view.Id).OfClass(DB.Wall).WhereElementIsNotElementType().ToElements()
@@ -196,7 +196,7 @@ class FireRatingGraphicMaker:
                
         self.update_log( "-------")
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def update_fire_rating_graphic( views, rating_list):
 
     # t = DB.Transaction(doc, "Update fire rating graphic.")
@@ -205,7 +205,7 @@ def update_fire_rating_graphic( views, rating_list):
     # t.Commit()
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def update_wall_data(data_grid_source):
 
     t = DB.Transaction(doc, "Update wall rating data.")
@@ -218,10 +218,10 @@ def update_wall_data(data_grid_source):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def load_EA_family(title):
-    lib_family = "{}\\ENNEAD.extension\\Ennead Library.tab\\Contents.panel\\2D Contents.pulldown\\EA_Fire Rating.content\\EA_Fire Rating_content.rfa".format(EnneadTab.ENVIRONMENT_CONSTANTS.PUBLISH_BETA_FOLDER_FOR_REVIT)
-    local_copy = EnneadTab.FOLDER.copy_file_to_local_dump_folder(lib_family, "EA_Fire Rating.rfa")
+    lib_family = "{}\\ENNEAD.extension\\Ennead Library.tab\\Contents.panel\\2D Contents.pulldown\\EA_Fire Rating.content\\EA_Fire Rating_content.rfa".format(ENVIRONMENT_CONSTANTS.PUBLISH_BETA_FOLDER_FOR_REVIT)
+    local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "EA_Fire Rating.rfa")
     try:
         t = DB.Transaction(doc, __title__)
         t.Start()
@@ -301,7 +301,7 @@ class fire_rating_ModelessForm(WPFWindow):
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         self.pre_actions()
 
@@ -315,7 +315,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
 
 
         self.selected_views = None
@@ -325,7 +325,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
         self.Show()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def init_data_grid(self):
         self.rating_list = ["Unrated",
                             "1 HR",
@@ -342,7 +342,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
         
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def preview_selection_changed(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -376,14 +376,14 @@ class fire_rating_ModelessForm(WPFWindow):
                                                                                                         len(project_walls))
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def UI_setting_changed(self, sender, args):
         if self.checkbox_auto_update.IsChecked:
             self.textblock_wall_detail.Visibility = System.Windows.Visibility.Visible
         else:
             self.textblock_wall_detail.Visibility = System.Windows.Visibility.Collapsed
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_graphic_click(self, sender, args):
 
         # push update for current wall data first
@@ -392,7 +392,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
 
         if not self.is_EA_family_loaded():
-            res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There is no EA fire rating graphic family loaded.",
+            res = REVIT_FORMS.dialogue(main_text = "There is no EA fire rating graphic family loaded.",
                                                        sub_text = "Do you want to load it now?",
                                                        options = ["Yes", "No"])
             if res == "No" or res is None:
@@ -405,7 +405,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
         
         if not self.selected_views:
-            res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "No view selected",
+            res = REVIT_FORMS.dialogue(main_text = "No view selected",
                                                        sub_text = "Do you want to apply active view instead?",
                                                        options = ["Yes", "No"])
             if res == "No" or res is None:
@@ -424,7 +424,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_wall_type_data_click(self, sender, args):
 
         self.update_wall_data_event_handler.kwargs = self.main_data_grid.ItemsSource,
@@ -436,7 +436,7 @@ class fire_rating_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
   
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_view_click(self, sender, args):
         self.selected_views = PYFORM_SELECT_VIEWS(filterfunc = lambda x: x.ViewType == DB.ViewType.FloorPlan or  x.ViewType == DB.ViewType.AreaPlan)
         if not self.selected_views:
@@ -459,7 +459,7 @@ class fire_rating_ModelessForm(WPFWindow):
         return False
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         self.Close()

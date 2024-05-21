@@ -6,7 +6,9 @@
 
 from Autodesk.Revit import DB 
 from pyrevit import forms
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 __title__ = "Create\nWorksets"
 DEFAULT_LIST = ['0_References', 
                 '0_Shared Levels & Grids', 
@@ -25,11 +27,11 @@ for item in DEFAULT_LIST:
 __tip__ = True
 
 # Obtain the document object
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     # # get all existing workset names
     # names = [ws.Name for ws in DB.FilteredWorksetCollector(doc) if ws.Kind == DB.WorksetKind.UserWorkset]

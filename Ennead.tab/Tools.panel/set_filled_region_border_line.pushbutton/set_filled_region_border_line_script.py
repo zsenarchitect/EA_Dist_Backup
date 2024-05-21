@@ -10,7 +10,7 @@ from pyrevit import forms #
 from pyrevit import script #
 from pyrevit.revit import ErrorSwallower
 import ENNEAD_LOG
-import EnneadTab
+
 from EnneadTab.REVIT import REVIT_SELECTION
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI

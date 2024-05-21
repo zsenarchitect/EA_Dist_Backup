@@ -8,7 +8,8 @@ from pyrevit import script
 from pyrevit.loader import sessionmgr
 from pyrevit.loader import sessioninfo
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab import ERROR_HANDLE
 
 
 import traceback
@@ -39,7 +40,7 @@ def reload_action():
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error_silently
+@ERROR_HANDLE.try_catch_error_silently
 def main():
 
     

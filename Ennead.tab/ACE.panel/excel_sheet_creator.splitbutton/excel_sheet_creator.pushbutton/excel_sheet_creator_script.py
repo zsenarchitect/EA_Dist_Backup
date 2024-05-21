@@ -10,11 +10,13 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import NOTIFICATION, ERROR_HANDLE, EXCEL
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
         
 def OLD_get_titleblock_id():
     all_ids = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_TitleBlocks).WhereElementIsElementType().ToElements()
@@ -39,15 +41,15 @@ def is_new_sheet_number_ok(new_sheet_numbers):
     
 
      
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def excel_sheet_creator():
     excel_path = forms.pick_excel_file(title="Where is the excel thjat has the new sheet data?")   
     # this is the sample excel for reference. 
     # excel_path = r"J:\2306\2_Record\2023-07-31 SD Submission\SD Sheetlist_REV00.xlsx"
     
-    data = EnneadTab.EXCEL.read_data_from_excel(excel_path, worksheet = "Sheet1", by_line = True)
+    data = EXCEL.read_data_from_excel(excel_path, worksheet = "Sheet1", by_line = True)
     if not data:
-        EnneadTab.NOTIFICATION.messenger(main_text = "Cannot open this excel")
+        NOTIFICATION.messenger(main_text = "Cannot open this excel")
         return
     data = [x for x in data if x[0] == "YES"]
     # print (data)

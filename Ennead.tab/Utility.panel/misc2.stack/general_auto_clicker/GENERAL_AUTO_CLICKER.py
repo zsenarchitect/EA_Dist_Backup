@@ -6,7 +6,8 @@ try:
     import os
     import sys
     sys.path.append(r'L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\lib')
-    import EnneadTab
+    
+from EnneadTab import FOLDER
     import pygame
     import pyautogui
     import random
@@ -106,7 +107,8 @@ def main():
     # print ("%%%%%%%%%%%%%%%%%%%%%")
     # print (script_dir)
     import pygame
-    import EnneadTab
+    
+from EnneadTab import FOLDER
     pygame.init()
 
 
@@ -145,9 +147,9 @@ def main():
     angle = 0
 
 
-    icons_folder = "{}\\Auto_Clicker".format(EnneadTab.FOLDER.get_EA_local_dump_folder())
-    EnneadTab.FOLDER.secure_folder(icons_folder)
-    icons = [icons_folder + "\\" + x for x in EnneadTab.FOLDER.get_filenames_in_folder(icons_folder)]
+    icons_folder = "{}\\Auto_Clicker".format(FOLDER.get_EA_local_dump_folder())
+    FOLDER.secure_folder(icons_folder)
+    icons = [icons_folder + "\\" + x for x in FOLDER.get_filenames_in_folder(icons_folder)]
     print (icons_folder)
     print (icons)
 

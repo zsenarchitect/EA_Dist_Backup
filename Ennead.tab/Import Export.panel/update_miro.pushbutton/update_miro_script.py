@@ -21,26 +21,28 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_EXPORT, REVIT_APPLICATION
+from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 import os
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def update_miro():
 
     print ("Note: At the moment CBI does not allow me to connect to Miro, so your team can ask me for a board on my personal account.")
     key = "recent_miro_url"
-    recent_url = EnneadTab.DATA_FILE.get_sticky_longterm(key,"https://miro.com/app/board/uXjVNsgWNfA=/")
+    recent_url = DATA_FILE.get_sticky_longterm(key,"https://miro.com/app/board/uXjVNsgWNfA=/")
     miro_url = forms.ask_for_string(
         prompt = "Please input the Miro board URL:",
         default= recent_url,
         title = "Makrup Sheet In Miro")
 
     print ("Miro URL: " + miro_url)
-    EnneadTab.DATA_FILE.set_sticky_longterm(key, miro_url)
+    DATA_FILE.set_sticky_longterm(key, miro_url)
 
     sheets = forms.select_sheets(title = "Select sheets to update")
     if not sheets:
@@ -48,9 +50,9 @@ def update_miro():
 
 
 
-    res = EnneadTab.REVIT.REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+    res = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
 
-    dump_folder = "{}\\miro_dump".format(EnneadTab.FOLDER.get_EA_local_dump_folder())
+    dump_folder = "{}\\miro_dump".format(FOLDER.get_EA_local_dump_folder())
 
     # make sure everytig is the lastest in this folder
 
@@ -70,21 +72,21 @@ def update_miro():
                                     sheet_num,
                                     sheet_name)
 
-        EnneadTab.NOTIFICATION.messenger ("Exporting image {}/{}==> {}:{}".format(i + 1, len(sheets), sheet_num, sheet_name))
-        EnneadTab.REVIT.REVIT_EXPORT.export_image(sheet, file, dump_folder)
+        NOTIFICATION.messenger ("Exporting image {}/{}==> {}:{}".format(i + 1, len(sheets), sheet_num, sheet_name))
+        REVIT_EXPORT.export_image(sheet, file, dump_folder)
     
-    EnneadTab.NOTIFICATION.duck_pop("Image Export done!\nPreparing to upload to Miro!")
+    NOTIFICATION.duck_pop("Image Export done!\nPreparing to upload to Miro!")
     
-    with EnneadTab.DATA_FILE.update_data("miro.json") as data:
+    with DATA_FILE.update_data("miro.json") as data:
         data['url'] = miro_url
         data["images"] = [os.path.join(dump_folder, f) for f in sorted(os.listdir(dump_folder), key=lambda x: x.split("^")[1])]
         data["app"] = "revit_sheet"
 
-    EnneadTab.EXE.open_exe("MIRO")
+    EXE.open_exe("MIRO")
 
 
     if res:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        REVIT_APPLICATION.sync_and_close()
     
 
 

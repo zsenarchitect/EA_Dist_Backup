@@ -16,7 +16,9 @@ from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab import ENVIRONMENT, NOTIFICATION, ERROR_HANDLE
 import ENNEAD_LOG
 import clr
 import System
@@ -38,7 +40,7 @@ def get_all_instance_of_type(type):
     return instances
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def apply_radius_action(window):
     t = DB.Transaction(doc, __title__)
     t.Start()
@@ -49,7 +51,7 @@ def apply_radius_action(window):
 
     if len(bad_instances) == 0:
         note = "Cannot get anything from {}".format(solution.bad_type.LookupParameter("Type Name").AsString())
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = note,
+        REVIT_FORMS.notification(main_text = note,
                                                 sub_text = "There might be no instance of bad type in the file, you should try purging.",
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -73,7 +75,7 @@ def apply_radius_action(window):
 
 
 
-    EnneadTab.NOTIFICATION.toast(sub_text = "",
+    NOTIFICATION.toast(sub_text = "",
                                 main_text = "Radius Applied Finished!")
 
 
@@ -187,7 +189,7 @@ class test_youtube_UI(forms.WPFWindow):
         xaml_file_name = 'test_youtube_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.Height = 800
         self.family_bad = None
 
@@ -267,7 +269,7 @@ class test_youtube_UI(forms.WPFWindow):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     modeless_form = test_youtube_UI()

@@ -11,16 +11,18 @@ from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 class Solution:
     
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def color_design_option(self):
 
         self.views = forms.select_views(multiple = True, button_name = 'Select View. When nothing is selected, it will work on active view')
@@ -52,7 +54,7 @@ class Solution:
             return
 
 
-        self.solid_id = EnneadTab.REVIT.REVIT_SELECTION.get_solid_fill_pattern_id(doc)
+        self.solid_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
         self.color_map = dict()
         for design_option in design_options:
             self.color_map[design_option.Id] = DB.Color(int(100*random.random()) + 100,

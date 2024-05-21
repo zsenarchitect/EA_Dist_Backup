@@ -19,7 +19,8 @@ from pyrevit.forms import WPFWindow
 from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab import SOUNDS, FOLDER, ERROR_HANDLE
 import traceback
 
 from Autodesk.Revit import DB 
@@ -30,7 +31,7 @@ doc = __revit__.ActiveUIDocument.Document
 __persistentengine__ = True
 
 
-#@EnneadTab.ERROR_HANDLE.try_catch_error
+#@ERROR_HANDLE.try_catch_error
 def clock_work(window):
     current_text = window.debug_textbox.Text
     max_wait = 20
@@ -117,7 +118,7 @@ def get_conversation(input):
         if record["direction"] == "output":
             #print record["conversation_history"].split(record["key_prompt"])[-1]
             #print "Figured out!!!!!!!!!!!!!!"
-            EnneadTab.SOUNDS.play_sound("sound effect_popup msg3.wav")
+            SOUNDS.play_sound("sound effect_popup msg3.wav")
             return record["conversation_history"].split(record["key_prompt"])[-1]
 
 
@@ -201,7 +202,7 @@ class chatGPT_modelessForm(WPFWindow):
 
     def __init__(self):
         self.pre_actions()
-        self.script_location = EnneadTab.FOLDER.get_folder_path_from_path(__file__)
+        self.script_location = FOLDER.get_folder_path_from_path(__file__)
         xaml_file_name = "{}\EA_Copilot_ModelessForm.xaml".format(self.script_location) ###>>>>>> if change from window to dockpane, the top level <Window></Window> need to change to <Page></Page>
         WPFWindow.__init__(self, xaml_file_name)
 
@@ -266,7 +267,7 @@ class chatGPT_modelessForm(WPFWindow):
         pass
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def clock_work(self):
         current_text = self.debug_textbox.Text
         max_wait = 200

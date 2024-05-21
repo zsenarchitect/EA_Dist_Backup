@@ -15,20 +15,22 @@ from pyrevit import script #
 # from pyrevit import revit #
 import os
 import time
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import USER, NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER
 import traceback
 from Autodesk.Revit import DB 
 import random
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def delete_views(view):
 
     t = DB.Transaction(doc, "Delete Views")
@@ -46,9 +48,9 @@ def delete_views(view):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def modify_creator_in_view_name(views, is_adding_creator):
-    views = EnneadTab.REVIT.REVIT_SELECTION.filter_elements_changable(views)
+    views = REVIT_SELECTION.filter_elements_changable(views)
 
     t = DB.Transaction(doc, "Rename Views")
     t.Start()
@@ -252,7 +254,7 @@ class manage_working_view_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab Manage Working Views"
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.set_image_source(self.monitor_icon, "monitor_icon.png")
         self.set_image_source(self.preview_image, "DEFAULT PREVIEW_CANNOT FIND PREVIEW IMAGE.png")
         self.set_image_source(self.status_icon, "update_icon.png")
@@ -278,12 +280,12 @@ class manage_working_view_ModelessForm(WPFWindow):
         no_sheet_views = filter(is_no_sheet, views)
         no_sheet_views.sort(key = lambda x:x.Name)
         if is_me_only:
-            no_sheet_views = filter(lambda x: DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, x.Id).Creator == EnneadTab.USER.get_autodesk_user_name(), no_sheet_views)
+            no_sheet_views = filter(lambda x: DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, x.Id).Creator == USER.get_autodesk_user_name(), no_sheet_views)
         return no_sheet_views
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def export_working_views_Click(self, sender, e):
-        will_close = EnneadTab.REVIT.REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+        will_close = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
         total = len(self.data_grid.ItemsSource)
         for i, preview_obj in enumerate(self.data_grid.ItemsSource):
             self.debug_textbox.Text = "{}/{}".format(i + 1, total)
@@ -298,12 +300,12 @@ class manage_working_view_ModelessForm(WPFWindow):
         self.debug_textbox.Text = "{} preview updated.".format( total)
         if will_close:
             self.Close()
-            EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+            REVIT_APPLICATION.sync_and_close()
             
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def preview_selection_changed(self, sender, e):
         if len(self.data_grid.ItemsSource) == 0:
             return
@@ -323,22 +325,22 @@ class manage_working_view_ModelessForm(WPFWindow):
             self.set_image_source(self.preview_image, "DEFAULT PREVIEW_CANNOT FIND PREVIEW IMAGE.png")
             self.textblock_export_status.Text = ""
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def UI_changed(self, sender, e):
         self.update_preview_grid()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def refresh_table_Click(self, sender, e):
         self.update_preview_grid()
         self.debug_textbox.Text = "Currently showing {} views.".format(len(self.data_grid.ItemsSource))
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_preview_grid(self):
         is_me_only = self.checkbox_me_only.IsChecked
         self.data_grid.ItemsSource = [DataGrid_Preview_Obj(x) for x in self.get_non_sheet_views(is_me_only)]
         pass
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def open_view_click(self, sender, e):
         obj = self.data_grid.SelectedItem
         if not obj:
@@ -349,7 +351,7 @@ class manage_working_view_ModelessForm(WPFWindow):
         uidoc.ActiveView = obj.view
         pass
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def delete_view_click(self, sender, e):
         obj = self.data_grid.SelectedItem
         if not obj:
@@ -377,12 +379,12 @@ class manage_working_view_ModelessForm(WPFWindow):
         preview_image = "{}\{}".format(self.output_folder, file)
         return preview_image
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def append_creator_name_click(self, sender, e):
         self.view_name_change(is_adding_creator = True)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def remove_creator_name_click(self, sender, e):
         self.view_name_change(is_adding_creator = False)
 
@@ -430,14 +432,14 @@ class manage_working_view_ModelessForm(WPFWindow):
 
 
         opts = DB.ImageExportOptions()
-        opts.FilePath = EnneadTab.FOLDER.get_EA_dump_folder_file('{}.jpg'.format(file_name))
+        opts.FilePath = FOLDER.get_EA_dump_folder_file('{}.jpg'.format(file_name))
         if os.path.exists(opts.FilePath):
             os.remove(opts.FilePath)
         opts.ImageResolution = DB.ImageResolution.DPI_300
         opts.ExportRange = DB.ExportRange.SetOfViews
         opts.ZoomType = DB.ZoomFitType.FitToPage
         opts.PixelSize = 3000
-        opts.SetViewsAndSheets(EnneadTab.DATA_CONVERSION.list_to_system_list([view.Id]))
+        opts.SetViewsAndSheets(DATA_CONVERSION.list_to_system_list([view.Id]))
 
         attempt = 0
 
@@ -459,23 +461,23 @@ class manage_working_view_ModelessForm(WPFWindow):
         print ("view to Jpg takes {} seconds".format( time_end - time_start))
 
         #add_to_log(file_name + ".jpg", time_end - time_start)
-        EnneadTab.NOTIFICATION.toast(app_name = "EnneadTab Exporter",
+        NOTIFICATION.toast(app_name = "EnneadTab Exporter",
                                 main_text = "[{}.jpg] saved.".format(view.Name))
 
         """clean jpg name"""
-        file_names = os.listdir(EnneadTab.FOLDER.get_EA_local_dump_folder())
+        file_names = os.listdir(FOLDER.get_EA_local_dump_folder())
         desired_name = file_name
 
         for file_name in file_names:
             if desired_name in file_name and ".jpg" in file_name.lower():
                 try:
                     # os.path.join(output_folder, file_name)
-                    os.rename("{}\{}".format(EnneadTab.FOLDER.get_EA_local_dump_folder(), file_name),os.path.join(EnneadTab.FOLDER.get_EA_local_dump_folder(), desired_name + ".jpg"))
+                    os.rename("{}\{}".format(FOLDER.get_EA_local_dump_folder(), file_name),os.path.join(FOLDER.get_EA_local_dump_folder(), desired_name + ".jpg"))
                 except Exception as e:
                     print ("skip {} becasue: {}".format(file_name, e))
 
 
-        final_path = EnneadTab.FOLDER.copy_file_to_folder(opts.FilePath, output_folder)
+        final_path = FOLDER.copy_file_to_folder(opts.FilePath, output_folder)
         os.remove(opts.FilePath)
         return final_path
 

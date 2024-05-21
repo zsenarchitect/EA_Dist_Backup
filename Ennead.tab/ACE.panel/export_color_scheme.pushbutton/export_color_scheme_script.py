@@ -10,13 +10,15 @@ from pyrevit import forms #
 from pyrevit import script #
 import xlsxwriter as xw
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, COLOR, EXE, DATA_FILE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def export_color_scheme():
     
     color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
@@ -35,7 +37,7 @@ def export_color_scheme():
         return
     
     opts = ["Yes, only show me used color", "No, show me every color"]
-    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Should it ignore the color that is not in use?", options = opts)
+    res = REVIT_FORMS.dialogue(main_text = "Should it ignore the color that is not in use?", options = opts)
     is_ignore_non_used = True if res == opts[0] else False
     # for entry in color_scheme.GetEntries():
         
@@ -58,7 +60,7 @@ def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
     workbook = xw.Workbook(file_location)
     worksheet = workbook.add_worksheet("Color Scheme")
 
-    hex_color = EnneadTab.COLOR.rgb_to_hex((120,120,120))
+    hex_color = COLOR.rgb_to_hex((120,120,120))
     format = workbook.add_format({'bg_color' : hex_color})
     worksheet.write(0,0,"Parameter Value", format)
     worksheet.set_column(0,0, 35)
@@ -100,16 +102,16 @@ def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
         worksheet.write(i,5,entry.Color.Blue)
         
         
-    EnneadTab.DATA_FILE.save_dict_to_json_in_dump_folder(alt_dict, "color_scheme_dict.json", use_encode = True)
+    DATA_FILE.save_dict_to_json_in_dump_folder(alt_dict, "color_scheme_dict.json", use_encode = True)
 
     
     
     try:
         workbook.close()
-        EnneadTab.NOTIFICATION.messenger("Excel saved at '{}'".format(file_location))
-        EnneadTab.EXE.open_file_in_default_application(file_location)
+        NOTIFICATION.messenger("Excel saved at '{}'".format(file_location))
+        EXE.open_file_in_default_application(file_location)
     except:
-        EnneadTab.NOTIFICATION.messenger("the excel file you picked is still open, cannot override. Writing cancelled.")
+        NOTIFICATION.messenger("the excel file you picked is still open, cannot override. Writing cancelled.")
     
 
 

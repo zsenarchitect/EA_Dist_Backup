@@ -19,13 +19,14 @@ from pyrevit import script #
 # from pyrevit import _HostApplication
 from pyrevit import HOST_APP
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE, ENVIRONMENT_CONSTANTS
 import traceback
 from Autodesk.Revit import DB 
-import random
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
@@ -33,7 +34,7 @@ import ENNEAD_LOG
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def placeholder(ref_tag, bad_tags, is_V):
 
     t = DB.Transaction(doc, "tag align")
@@ -102,7 +103,7 @@ class who_did_that_ModelessForm(WPFWindow):
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         self.pre_actions()
 
@@ -116,7 +117,7 @@ class who_did_that_ModelessForm(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.selection = None
 
 
@@ -135,11 +136,11 @@ class who_did_that_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def view_update_event_handler_function(self,sender, args):
         self.update_active_view_info()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_active_view_info(self):
         try:
             doc.ActiveView
@@ -150,11 +151,11 @@ class who_did_that_ModelessForm(WPFWindow):
         if not doc.ActiveView:
             self.active_view_info_textbox.Text = "Cannot obtain active view information. Doc = {}".format(doc.Title)
             return
-        note = "ActiveView: {}\n{}".format(doc.ActiveView.Name, EnneadTab.REVIT.REVIT_SELECTION.get_tooltip_info(doc, doc.ActiveView))
+        note = "ActiveView: {}\n{}".format(doc.ActiveView.Name, REVIT_SELECTION.get_tooltip_info(doc, doc.ActiveView))
         self.active_view_info_textbox.Text = note
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def selection_update_event_handler_function(self,sender, args):
 
         """
@@ -180,7 +181,7 @@ class who_did_that_ModelessForm(WPFWindow):
             return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_selection_info(self):
         if not self.selection or len(self.selection) == 0:
             self.selection_info_textbox.Text = "No selection"
@@ -198,11 +199,11 @@ class who_did_that_ModelessForm(WPFWindow):
 
 
             
-            note += EnneadTab.REVIT.REVIT_SELECTION.get_tooltip_info(doc, element) + "\n\n"
+            note += REVIT_SELECTION.get_tooltip_info(doc, element) + "\n\n"
         self.selection_info_textbox.Text = note.rstrip("\n\n")
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def show_main_info_click(self, sender, args):
             
         selection_ids = uidoc.Selection.GetElementIds ()
@@ -210,7 +211,7 @@ class who_did_that_ModelessForm(WPFWindow):
         self.update_selection_info()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_template_click(self, sender, args):
         from pyrevit import forms
         templates = forms.select_viewtemplates()
@@ -219,13 +220,13 @@ class who_did_that_ModelessForm(WPFWindow):
             return
         for template in templates:
             print ("################\nTemplate Name : {}\nTemplate Type : {}\n\n".format(template.Name, template.ViewType))
-            print (EnneadTab.REVIT.REVIT_SELECTION.get_tooltip_info(doc, template))
+            print (REVIT_SELECTION.get_tooltip_info(doc, template))
             
             print ("\n\n")
         
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         self.Close()

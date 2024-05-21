@@ -14,7 +14,8 @@ import math
 from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab import ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
@@ -189,7 +190,7 @@ def map_block():
         place_new_instance(block_name, transform, rotation_tuple, reflection)
 
     
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     t = DB.Transaction(doc, "map blocks")
     t.Start()

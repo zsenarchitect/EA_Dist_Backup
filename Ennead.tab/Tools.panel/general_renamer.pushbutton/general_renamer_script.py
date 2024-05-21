@@ -17,20 +17,22 @@ from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, USER, NOTIFICATION, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 import random
 from Autodesk.Revit import UI
 import System
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def view_prefix_modifier(is_adding_prefix, prefix ):
     views = forms.select_views(title="Select views to modify",
                                use_selection=True)
@@ -47,9 +49,9 @@ def view_prefix_modifier(is_adding_prefix, prefix ):
         else:
             view.Name = view.Name.replace(prefix, "")
     t.Commit()
-    EnneadTab.NOTIFICATION.messenger (main_text = "All views name prefix modified!")
+    NOTIFICATION.messenger (main_text = "All views name prefix modified!")
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def all_cap_view_name(will_cap_sheet, will_cap_view):
     t = DB.Transaction(doc, "Cap View/Sheet Names")
     t.Start()
@@ -64,10 +66,10 @@ def all_cap_view_name(will_cap_sheet, will_cap_view):
                 view.Name = view.Name.upper()
 
     t.Commit()
-    EnneadTab.NOTIFICATION.messenger (main_text = "All views/sheets name reformated!")
+    NOTIFICATION.messenger (main_text = "All views/sheets name reformated!")
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def all_cap_spatial_element_name(will_cap_room, will_cap_area):
     t = DB.Transaction(doc, "Cap Rooms and Areas")
     t.Start()
@@ -85,7 +87,7 @@ def all_cap_spatial_element_name(will_cap_room, will_cap_area):
           
 
     t.Commit()
-    EnneadTab.NOTIFICATION.messenger (main_text = "All Rooms and Areas name reformated!")
+    NOTIFICATION.messenger (main_text = "All Rooms and Areas name reformated!")
 
     
 def remove_creator_mark(name):
@@ -97,7 +99,7 @@ def remove_creator_mark(name):
 
     return name
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0, show_log = True):
 
     if attempt > 3:
@@ -131,7 +133,7 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
 
             if doc.IsWorkshared:
                 current_owner = view.LookupParameter("Edited by").AsString()
-                if current_owner != "" and current_owner != EnneadTab.USER.get_autodesk_user_name():
+                if current_owner != "" and current_owner != USER.get_autodesk_user_name():
                     if show_log:
                         print( "Skip view owned by {}. View Name = {}".format(current_owner, view.Name))
                     continue
@@ -228,7 +230,7 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
     if not t.HasEnded():
         t.Commit()
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def rename_family(selected_element):
     current_family_name = selected_element.Symbol.Family.Name
     t = DB.Transaction(doc, "Rename Views")
@@ -255,7 +257,7 @@ def rename_family(selected_element):
 
     except Exception as e:
         print (e)
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This name taken, try again.")
+        REVIT_FORMS.notification(main_text = "This name taken, try again.")
         t.RollBack()
         return
 
@@ -342,9 +344,9 @@ class general_renamer_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab Renamer UI"
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.set_image_source(self.sample_img_project_browser, "sample project browser.png")
-        if not EnneadTab.USER.is_SZ() or True:
+        if not USER.is_SZ() or True:
             self.tab_grid_level.Visibility = System.Windows.Visibility.Collapsed
             self.tab_subC_name.Visibility = System.Windows.Visibility.Collapsed
 
@@ -353,7 +355,7 @@ class general_renamer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def rename_view_Click(self, sender, e):
         sheets = forms.select_sheets(title = "Pick sheets that has the views to modify.")
         if not sheets:
@@ -369,7 +371,7 @@ class general_renamer_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def rename_family_click(self, sender, e):
         selection_ids = uidoc.Selection.GetElementIds ()
         if len(selection_ids) != 1:
@@ -391,7 +393,7 @@ class general_renamer_ModelessForm(WPFWindow):
         else:
             self.debug_textbox.Text = "Debug Output:"
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def view_prefix_modifier_click(self, sender, e):
         
         is_adding_prefix = self.radial_bt_prefix_add.IsChecked
@@ -405,7 +407,7 @@ class general_renamer_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
 
             
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def all_cap_view_name_click(self, sender, e):
         
         will_cap_sheet, will_cap_view =  True, True
@@ -418,7 +420,7 @@ class general_renamer_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def all_cap_spatical_element_name_click(self, sender, e):
         will_cap_room, will_cap_area =  True, True
         self.all_cap_spatical_element_event_handler.kwargs = will_cap_room, will_cap_area 

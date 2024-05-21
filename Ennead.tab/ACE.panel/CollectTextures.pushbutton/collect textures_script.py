@@ -3,12 +3,13 @@ from rpw import db, revit, DB, exceptions
 from pyrevit import forms
 from shutil import copy
 import os
-import EnneadTab
+
+from EnneadTab import ERROR_HANDLE
 __title__ = 'Collect\nTextures'
 __doc__ = 'Choose a new destination for texture images. Then Collect Textures copies all material texture images to this new location, and updates texture image path.\n'
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     materials = get_materials()
     # new_folder = create_folder()

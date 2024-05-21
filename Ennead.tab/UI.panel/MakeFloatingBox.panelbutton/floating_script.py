@@ -1,3 +1,4 @@
-import EnneadTab
+
+from EnneadTab import DOCUMENTATION
 __doc__ = "Make this little panel float over other window"
-EnneadTab.DOCUMENTATION.show_floating_box_warning()
+DOCUMENTATION.show_floating_box_warning()

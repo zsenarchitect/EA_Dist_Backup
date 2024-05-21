@@ -18,13 +18,15 @@ from pyrevit import script #
 # from pyrevit import _HostApplication
 from pyrevit import HOST_APP
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
@@ -78,7 +80,7 @@ def process_tag(ref_tag, bad_tag, is_V):
             pass
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def align_tags(ref_tag, bad_tags, is_V):
 
     t = DB.Transaction(doc, "tag align")
@@ -147,7 +149,7 @@ class tag_align_ModelessForm(WPFWindow):
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         self.pre_actions()
 
@@ -161,7 +163,7 @@ class tag_align_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab TagAlign UI"
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
 
         self.ref_tag = None
         self.hostapp = HOST_APP#_HostApplication(__revit__)
@@ -171,7 +173,7 @@ class tag_align_ModelessForm(WPFWindow):
         self.Show()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def selection_update_event_handler_function(self,sender, args):
 
 
@@ -194,7 +196,7 @@ class tag_align_ModelessForm(WPFWindow):
                 note += "{}\n".format(x)
         self.debug_textbox.Text = note
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_ref_tag_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         selection_ids = uidoc.Selection.GetElementIds ()
@@ -238,7 +240,7 @@ class tag_align_ModelessForm(WPFWindow):
         selection = filter(lambda x: "tag" in x.Category.Name.lower(), selection )
         return selection
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def generic_click(self, is_V):
         #print "Clicking " + keyword
         if not self.ref_tag:
@@ -255,7 +257,7 @@ class tag_align_ModelessForm(WPFWindow):
             self.debug_textbox.Text = "Debug Output:"
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         self.Close()

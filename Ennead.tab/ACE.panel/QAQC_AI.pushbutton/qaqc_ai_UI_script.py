@@ -6,7 +6,7 @@
 __doc__ = "Allow you to generate basic QAQC report based on current document, and use human language to chat with the report to get QAQC status.\nThis tool features openAI in the background for the chatbot part."
 __title__ = "QAQC\nReporter"
 
-import os
+
 import System
 
 from pyrevit import script
@@ -22,7 +22,9 @@ from pyrevit.forms import WPFWindow
 
 # from pyrevit import revit #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab import EXE, DATA_FILE, SOUNDS, TIME, ERROR_HANDLE, FOLDER
 import traceback
 
 from Autodesk.Revit import DB 
@@ -41,7 +43,7 @@ def get_api_key():
 
 
 
-    data = EnneadTab.DATA_FILE.read_json_as_dict(file_path)
+    data = DATA_FILE.read_json_as_dict(file_path)
     return data["reporter_api_key"]
 
 
@@ -107,7 +109,7 @@ class AI_Report_modelessForm(WPFWindow):
     
         return
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         run_exe()
         self.pre_actions()
@@ -122,12 +124,12 @@ class AI_Report_modelessForm(WPFWindow):
         self.Title = "EnneadTab QAQC Reporter"
         #self.Width = 800
         self.Height = 1000
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.set_image_source(self.pop_warning_img, "pop_warning.png")
     
         self.initiate_form()
         self.get_previous_conversation()
-        self.session_name = "QAQC_SESSION_{}".format(EnneadTab.TIME.get_formatted_current_time())
+        self.session_name = "QAQC_SESSION_{}".format(TIME.get_formatted_current_time())
         self.Show()
 
 
@@ -136,20 +138,20 @@ class AI_Report_modelessForm(WPFWindow):
         file_name = "EA_QAQC_REPORT_LOG.json"
         return file_name
 
-        return EnneadTab.FOLDER.get_EA_dump_folder_file(file_name)
+        return FOLDER.get_EA_dump_folder_file(file_name)
 
    
     def get_previous_conversation(self):
  
-        if EnneadTab.FOLDER.is_file_exist_in_dump_folder(self.log_file):
-            record = EnneadTab.DATA_FILE.read_json_as_dict_in_dump_folder(self.log_file)
+        if FOLDER.is_file_exist_in_dump_folder(self.log_file):
+            record = DATA_FILE.read_json_as_dict_in_dump_folder(self.log_file)
             self.tbox_conversation.Text = record["conversation_history"]
         else:
             self.tbox_conversation.Text = ""
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def ask_Click(self, sender, e):
-        # if not EnneadTab.USER.is_SZ():
+        # if not USER.is_SZ():
         #     self.debug_textbox.Text = "WIP function."
         #     return
         query = self.tbox_input.Text
@@ -173,8 +175,8 @@ class AI_Report_modelessForm(WPFWindow):
         data["store_name"] = self.session_name
         data["response"] = "No results."
         
-        self.data_file = EnneadTab.FOLDER.get_EA_dump_folder_file("QAQC_REPORT_DATA.json")
-        EnneadTab.DATA_FILE.save_dict_to_json(data, self.data_file)
+        self.data_file = FOLDER.get_EA_dump_folder_file("QAQC_REPORT_DATA.json")
+        DATA_FILE.save_dict_to_json(data, self.data_file)
         
         run_exe()
         self.debug_textbox.Text = "Thinking..."
@@ -194,10 +196,10 @@ class AI_Report_modelessForm(WPFWindow):
                 self.debug_textbox.Text = EnneadTab.FUN.JOKES.random_loading_message()
             
             time.sleep(1)
-            temp_data = EnneadTab.DATA_FILE.read_json_file_safely(self.data_file)
+            temp_data = DATA_FILE.read_json_file_safely(self.data_file)
             if temp_data["direction"] == "OUT":
                  
-                EnneadTab.SOUNDS.play_sound("sound effect_popup msg3.wav")
+                SOUNDS.play_sound("sound effect_popup msg3.wav")
 
                 self.tbox_conversation.Text += "\n\nQ: {}\nA:{}".format(query, temp_data["response"])
                 #self.tbox_conversation.Text = temp_data["response"]
@@ -211,10 +213,10 @@ class AI_Report_modelessForm(WPFWindow):
 
             
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def clear_history_Click(self, sender, e):
-        if EnneadTab.FOLDER.is_file_exist_in_dump_folder(self.log_file):
-            EnneadTab.FOLDER.remove_file_from_dump_folder(self.log_file)
+        if FOLDER.is_file_exist_in_dump_folder(self.log_file):
+            FOLDER.remove_file_from_dump_folder(self.log_file)
         self.tbox_conversation.Text = ''
         #self.conversation_SimpleEventHandler.OUT = None
         pass
@@ -239,18 +241,18 @@ class AI_Report_modelessForm(WPFWindow):
     def save_conversation(self):
         record = dict()
         record["conversation_history"] = self.tbox_conversation.Text
-        EnneadTab.DATA_FILE.save_dict_to_json_in_dump_folder(record, self.log_file)
+        DATA_FILE.save_dict_to_json_in_dump_folder(record, self.log_file)
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def generate_report_click(self, sender, args):
         import QAQC_runner
         self.report = QAQC_runner.QAQC(script.get_output()).get_report(pdf_file = None, save_html = self.is_saving_html.IsChecked)
 
         if self.report == "PREVIOUSLY CLOSED":
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "You have closed your last report window.", sub_text = "Please restart the QAQC reporter if you want to see the report again.")
+            REVIT_FORMS.notification(main_text = "You have closed your last report window.", sub_text = "Please restart the QAQC reporter if you want to see the report again.")
             self.Close()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def bt_pick_pdf_clicked(self, sender, args):
         self.pdf = forms.pick_file(file_ext='*.pdf')
         if not self.pdf:
@@ -258,7 +260,7 @@ class AI_Report_modelessForm(WPFWindow):
         self.pdf_display.Text = self.pdf
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def radial_bt_source_changed(self, sender, args):
         if self.radio_bt_is_reading_pdf.IsChecked:
             self.pdf_source_panel.Visibility = System.Windows.Visibility.Visible
@@ -272,7 +274,7 @@ def run_exe():
 
 
     
-    EnneadTab.EXE.open_file_in_default_application(exe_location)
+    EXE.open_file_in_default_application(exe_location)
 
 
 

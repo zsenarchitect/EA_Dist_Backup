@@ -19,7 +19,9 @@ from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT, SPEAK, ERROR_HANDLE, FOLDER
 
 from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
@@ -27,7 +29,7 @@ from pyrevit.coreutils import ribbon
 try:
     from pyrevit.revit import tabs as TABS
 except:
-    EnneadTab.NOTIFICATION.messenger("Please update pyrevit to 4.8+.")
+    NOTIFICATION.messenger("Please update pyrevit to 4.8+.")
 
 import ENNEAD_LOG
 import clr
@@ -36,13 +38,13 @@ import time
 import traceback
 import random
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def change_extension_folder(is_force_tester, include_game):
     """this arg has no effect"""
 
@@ -67,11 +69,13 @@ def change_extension_folder(is_force_tester, include_game):
     enneadtab_beta_tester_version_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published_Beta_Version"
     enneadtab_game_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Misc"
 
-    import EnneadTab
+    
+    from EnneadTab.REVIT import REVIT_APPLICATION
+    from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT, SPEAK, ERROR_HANDLE, FOLDER
 
-    if not EnneadTab.USER.is_SZ():
+    if not USER.is_SZ():
             
-        if EnneadTab.USER.is_revit_beta_tester():
+        if USER.is_revit_beta_tester():
             if enneadtab_beta_tester_version_folder not in current_external_folders:
                 current_external_folders.append(enneadtab_beta_tester_version_folder)
             if enneadtab_stable_version_folder in current_external_folders:
@@ -158,17 +162,17 @@ class main_setting_UI(forms.WPFWindow):
         xaml_file_name = 'EnneadTab_Setting_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.Height = 800
         """
-        if not EnneadTab.USER.is_SZ():
+        if not USER.is_SZ():
             self.reminder_level_setting.Visibility = System.Windows.Visibility.Collapsed
             #self.ribbon_tab_setting.Visibility = System.Windows.Visibility.Collapsed
         """
 
         self.load_setting()
 
-        self.toggle_bt_is_beta_tester.IsChecked = EnneadTab.USER.is_revit_beta_tester()
+        self.toggle_bt_is_beta_tester.IsChecked = USER.is_revit_beta_tester()
         if not self.toggle_bt_is_beta_tester.IsChecked:
             self.checkbox_tab_beta.Visibility = System.Windows.Visibility.Collapsed
 
@@ -179,19 +183,19 @@ class main_setting_UI(forms.WPFWindow):
         self.Show()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def load_setting(self):
 
-        setting_file = EnneadTab.FOLDER.get_EA_dump_folder_file('revit_ui_setting.json')
-        if not EnneadTab.FOLDER.is_path_exist(setting_file):
-            EnneadTab.DATA_FILE.save_dict_to_json(dict(), setting_file)
+        setting_file = FOLDER.get_EA_dump_folder_file('revit_ui_setting.json')
+        if not FOLDER.is_path_exist(setting_file):
+            DATA_FILE.save_dict_to_json(dict(), setting_file)
             self.checkbox_tab_tailor.IsChecked = True
             self.checkbox_tab_library.IsChecked = True
             self.checkbox_tab_beta.IsChecked = True
             return
 
 
-        data = EnneadTab.DATA_FILE.read_json_as_dict(setting_file)
+        data = DATA_FILE.read_json_as_dict(setting_file)
         for key, value in data.items():
             ui_obj = getattr(self, key, None)
             if not ui_obj:
@@ -208,10 +212,10 @@ class main_setting_UI(forms.WPFWindow):
         self.update_UI()
             
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def save_setting(self):
-        setting_file = EnneadTab.FOLDER.get_EA_dump_folder_file('revit_ui_setting.json')
-        data = EnneadTab.DATA_FILE.read_json_as_dict(setting_file)
+        setting_file = FOLDER.get_EA_dump_folder_file('revit_ui_setting.json')
+        data = DATA_FILE.read_json_as_dict(setting_file)
 
 
         setting_list = ["checkbox_tab_tailor", 
@@ -239,17 +243,17 @@ class main_setting_UI(forms.WPFWindow):
 
 
 
-        EnneadTab.DATA_FILE.save_dict_to_json(data, setting_file)
+        DATA_FILE.save_dict_to_json(data, setting_file)
 
         self.update_TTS()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def send_duck_click(self, sender, args):
         EnneadTab.FUN.EnneaDuck.quack()
  
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def tab_setting_changed(self, sender, args):
         for tab in ribbon.get_current_ui():
             #print tab.name
@@ -269,13 +273,15 @@ class main_setting_UI(forms.WPFWindow):
                 # not new state since the visible value is reverse
                 tab.visible = self.checkbox_tab_beta.IsChecked
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def apply_setting_click(self, sender, args):
         self.save_setting()
         is_tester = self.toggle_bt_is_beta_tester.IsChecked
         is_game_included = self.checkbox_game.IsChecked
-        import EnneadTab
-        EnneadTab.USER.set_revit_beta_tester(is_tester)
+        
+        from EnneadTab.REVIT import REVIT_APPLICATION
+        from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT, SPEAK, ERROR_HANDLE, FOLDER
+        USER.set_revit_beta_tester(is_tester)
         self.change_extension_event_handler.kwargs = is_tester, is_game_included
         self.ext_event.Raise()
         res = self.change_extension_event_handler.OUT
@@ -283,7 +289,7 @@ class main_setting_UI(forms.WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def toggle_tab_color_click(self, sender, args):
         
         TABS.toggle_doc_colorizer()
@@ -293,11 +299,11 @@ class main_setting_UI(forms.WPFWindow):
         should also add function to display color legend for what current tabs color refer to what files
         """
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def radio_bt_sync_monitor_click(self, sender, args):
         self.update_UI()
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_UI(self):
         if  self.radio_bt_sync_monitor_is_checking.IsChecked:
             self.textbox_sync_monitor_interval.IsEnabled = True
@@ -308,17 +314,17 @@ class main_setting_UI(forms.WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_TTS(self):
         file_name = "EA_TALKIE_KILL.kill"
         
         # if self.toggle_bt_is_talkie.IsChecked: # True means it is enabled
-        if EnneadTab.FOLDER.is_file_exist_in_dump_folder(file_name):
-            EnneadTab.FOLDER.remove_file_from_dump_folder(file_name)
-        EnneadTab.SPEAK.speak("I am back! How are you doing?")
+        if FOLDER.is_file_exist_in_dump_folder(file_name):
+            FOLDER.remove_file_from_dump_folder(file_name)
+        SPEAK.speak("I am back! How are you doing?")
 
         # else:
-        #     filepath = EnneadTab.FOLDER.get_EA_dump_folder_file(file_name)
+        #     filepath = FOLDER.get_EA_dump_folder_file(file_name)
         #     with open(filepath, 'w') as f:
         #         f.write("Kill!")
 
@@ -336,7 +342,7 @@ class main_setting_UI(forms.WPFWindow):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     modeless_form = main_setting_UI()

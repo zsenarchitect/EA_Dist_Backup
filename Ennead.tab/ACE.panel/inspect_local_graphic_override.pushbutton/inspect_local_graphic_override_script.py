@@ -9,13 +9,15 @@ __title__ = "Inspect Local\nGraphic Override"
 from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab import ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
 doc = __revit__.ActiveUIDocument.Document
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def inspect_local_graphic_override():
 
     sheets = forms.select_sheets(title = "sheets with views to check")
@@ -23,7 +25,7 @@ def inspect_local_graphic_override():
         return
 
     opts = ["Review in Revit", ["Later export to excel", "You can save the output window and open in Excel, use ',' as common delimiter"]]
-    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(options = opts,
+    res = REVIT_FORMS.dialogue(options = opts,
                                                 main_text = "How do you want to review it?")
     is_excel_mode = True if res == opts[1][0] else False
     unique_cate = set()

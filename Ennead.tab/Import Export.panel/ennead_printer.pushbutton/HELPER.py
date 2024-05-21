@@ -1,4 +1,5 @@
-import EnneadTab
+
+from EnneadTab import NOTIFICATION
 from Autodesk.Revit import DB
 
 
@@ -14,13 +15,13 @@ def create_color_setting_to_sheet(doc):
     sample_sheet = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().FirstElement()
     para = sample_sheet.LookupParameter("Print_In_Color")
     if para:
-        EnneadTab.NOTIFICATION.messenger(main_text='[Print_In_Color] parameter already exist in current file.')
+        NOTIFICATION.messenger(main_text='[Print_In_Color] parameter already exist in current file.')
         return
     
 
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
-        EnneadTab.NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
+        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
         filepath = r"L:\4b_Applied Computing\01_Revit\03_Library\EA_SharedParam.txt"
         doc.Application.SharedParametersFilename = filepath
 
@@ -58,7 +59,7 @@ def create_color_setting_to_sheet(doc):
     t.Commit()
     
     
-    EnneadTab.NOTIFICATION.messenger(main_text='[Print_In_Color] parameter added to the current document.')
+    NOTIFICATION.messenger(main_text='[Print_In_Color] parameter added to the current document.')
     
 
 
@@ -68,13 +69,13 @@ def create_issue_para_to_sheet(doc, issue_name):
     sample_sheet = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().FirstElement()
     para = sample_sheet.LookupParameter(issue_name)
     if para:
-        EnneadTab.NOTIFICATION.messenger(main_text='[{}] parameter already exist in current file.'.format(issue_name))
+        NOTIFICATION.messenger(main_text='[{}] parameter already exist in current file.'.format(issue_name))
         return
     
 
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
-        EnneadTab.NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
+        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
         filepath = r"L:\4b_Applied Computing\01_Revit\03_Library\EA_SharedParam.txt"
         doc.Application.SharedParametersFilename = filepath
 
@@ -112,7 +113,7 @@ def create_issue_para_to_sheet(doc, issue_name):
     t.Commit()
     
     
-    EnneadTab.NOTIFICATION.messenger(main_text='[{}] parameter added to the current document.'.format(issue_name))
+    NOTIFICATION.messenger(main_text='[{}] parameter added to the current document.'.format(issue_name))
     
 
 

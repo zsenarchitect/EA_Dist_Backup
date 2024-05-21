@@ -3,9 +3,10 @@ __title__ = "Family Fomula\nCheat Sheet"
 __context__ = 'zero-doc'
 
 from pyrevit import script
-import EnneadTab
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+from EnneadTab import ERROR_HANDLE
+
+@ERROR_HANDLE.try_catch_error
 def give_me_cheat_sheet():
     data_table = []
     def data(name, description, note):

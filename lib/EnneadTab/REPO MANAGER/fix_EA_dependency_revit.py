@@ -1,5 +1,6 @@
 import os
 import random
+
 parent_folder = os.path.dirname(os.path.dirname(__file__))
 
 import sys
@@ -75,21 +76,62 @@ import EnneadTab
         
         self.open_file()
 
-    
+
     def open_file(self):
         os.startfile(self.file_path)
         
     def save_content(self, content):
         self.is_modified = True
         
-        print ("pretend to save content")
-        return
+        # print ("pretend to save content")
+        # return
         
         with open(self.file_path, "w") as f:
                 f.write(content)
                 
+    def replace_core_module_caller(self):
+        basic_import = set()
+        checkers = ["EXE", "GIT"]
+        for file in os.listdir(r"C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\lib\EnneadTab"):
+            if file.endswith(".py"):
+                checkers.append(file[:-3])
+        for checker in checkers:
+            if "EnneadTab." + checker in self.content:
+                basic_import.add(checker)
+                self.content = self.content.replace("EnneadTab." + checker, checker)
+
+        if basic_import:
+            new_import = "from EnneadTab import"
+            for importer in list(basic_import):
+                new_import += " " + importer + ","
+            new_import = new_import[:-1]
+            self.content = self.content.replace("import EnneadTab", "import EnneadTab\n" + new_import)
 
 
+        revit_import = set()
+        checkers = []
+        for file in os.listdir(r"C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\lib\EnneadTab\REVIT"):
+            if file.endswith(".py"):
+                checkers.append(file[:-3])
+        for checker in checkers:
+            if "EnneadTab.REVIT." + checker in self.content:
+                revit_import.add(checker)
+                self.content = self.content.replace("EnneadTab.REVIT." + checker, checker)
+                
+        if revit_import:
+            new_import = "from EnneadTab.REVIT import"
+            for importer in list(revit_import):
+                new_import += " " + importer + ","
+            new_import = new_import[:-1]
+            self.content = self.content.replace("import EnneadTab", "import EnneadTab\n" + new_import)
+
+        if "import EnneadTab" in self.content:
+            self.content = self.content.replace("import EnneadTab", "")
+            self.save_content(self.content)
+        print (basic_import)
+        print (revit_import)
+        if basic_import or revit_import:
+            self.save_content(self.content)
 
 def fix_EA_dependency_in_file(file_path):
     
@@ -101,8 +143,9 @@ def fix_EA_dependency_in_file(file_path):
         # python_file.replace_old_EA()
         # python_file.insert_lib_path()
         
-        python_file.add_deco()
+        # python_file.add_deco()
         # python_file.replace_module_folder()
+        python_file.replace_core_module_caller()
         
         if python_file.is_modified:
             python_file.open_file()
@@ -114,7 +157,7 @@ def fix_EA_dependency_in_file(file_path):
 
             
 def fix_EA_dependency():
-    max_count = 1000
+    max_count = 200
     count = 0
     to_do_list = []
     

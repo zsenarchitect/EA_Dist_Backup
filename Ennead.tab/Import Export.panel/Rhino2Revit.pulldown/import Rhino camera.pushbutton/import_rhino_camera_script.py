@@ -4,11 +4,13 @@
 from pyrevit import forms
 from pyrevit import script
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
 from Autodesk.Revit import DB
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __title__ = "Import Rhino Camera"
 __doc__ = "Work with Camera exported in Rhino side to recreate the same perspective camera.\n\nIt can be useful for Enscape view recreation in Revit."
 __tip__ = True
@@ -59,7 +61,7 @@ class CameraImporter:
         file3dm = file3dm.Read(filepath)
 
         if file3dm is None:
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text="Save as your rhino camera file as Rhino5 for direct import to work.",
+            REVIT_FORMS.notification(main_text="Save as your rhino camera file as Rhino5 for direct import to work.",
                                              sub_text="rpw Rhino module was last published in 2017. That's why direct support is limited.",
                                              window_height=350,
                                              window_width=550,
@@ -90,7 +92,7 @@ class CameraImporter:
         
         
         
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     importer = CameraImporter()
     importer.import_rhino_camera()

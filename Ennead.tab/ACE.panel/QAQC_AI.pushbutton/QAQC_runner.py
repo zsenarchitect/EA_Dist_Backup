@@ -4,7 +4,8 @@ from pyrevit import script
 
 
 
-import EnneadTab
+
+from EnneadTab import EXE, DATA_FILE, TIME, FOLDER
 
 from Autodesk.Revit import DB  
 
@@ -304,7 +305,7 @@ class QAQC:
         # warning counter per category per user
         for user, log_data in user_personal_log.items():
             self.LOG("---")
-            #EnneadTab.DATA_FILE.pretty_print_dict(log_data)
+            #DATA_FILE.pretty_print_dict(log_data)
 
             warning_count_per_categoty_chart = self.output.make_pie_chart()
             warning_count_per_categoty_chart.options.title = {
@@ -516,16 +517,16 @@ class QAQC:
         self.view_template_report()
 
         used_time = time.time() - begin_time
-        used_time = EnneadTab.TIME.get_readable_time(used_time)
+        used_time = TIME.get_readable_time(used_time)
         self.LOG("\n\nTotal run time = {}".format(used_time))
 
         # for line in self.OUT.split("\n"):
         
 
         if save_html:
-            file = EnneadTab.FOLDER.get_EA_dump_folder_file("QAQC_REPORT_LOCAL.html")
+            file = FOLDER.get_EA_dump_folder_file("QAQC_REPORT_LOCAL.html")
             script.get_output().save_contents(file)
-            EnneadTab.EXE.open_file_in_default_application(file)
+            EXE.open_file_in_default_application(file)
 
 
 

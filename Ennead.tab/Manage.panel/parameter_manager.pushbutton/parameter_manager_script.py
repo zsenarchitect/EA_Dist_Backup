@@ -11,19 +11,21 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def parameter_manager(doc):
-    definitions = EnneadTab.REVIT.REVIT_SELECTION.pick_shared_para_definition(doc, select_multiple = True)
+    definitions = REVIT_SELECTION.pick_shared_para_definition(doc, select_multiple = True)
 
     if not definitions:
         return
-    docs = EnneadTab.REVIT.REVIT_SELECTION.pick_top_level_docs()
+    docs = REVIT_SELECTION.pick_top_level_docs()
     if not docs:
         return
     cate_list = [("OST_Grids", "Grids"),

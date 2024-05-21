@@ -5,7 +5,7 @@
 import sys
 sys.path.append(r'L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\lib')
 import EA_UTILITY
-import EnneadTab
+
 import pygame
 import pyautogui
 import random

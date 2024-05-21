@@ -17,21 +17,23 @@ from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import ENNEAD_LOG
 import clr
 import System
 import time
 import traceback
 import random
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 # uidoc = __revit__.ActiveUIDocument
 # doc = __revit__.ActiveUIDocument.Document
 __persistentengine__ = True
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def get_all_instance_of_type(type, active_view_only):
 
     if active_view_only:
@@ -69,7 +71,7 @@ def get_all_instance_of_type(type, active_view_only):
     return instances
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def merge_action(window):
     t = DB.Transaction(doc, __title__)
     t.Start()
@@ -85,7 +87,7 @@ def merge_action(window):
 
     if len(bad_instances) == 0:
         note = "Cannot get anything from {}".format(solution.bad_type.LookupParameter("Type Name").AsString())
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = note,
+        REVIT_FORMS.notification(main_text = note,
                                                 sub_text = "There might be no instance of bad type in the file, you should try purging.",
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -116,7 +118,7 @@ def merge_action(window):
     solution.cleanup_type()
 
 
-    EnneadTab.NOTIFICATION.toast(sub_text = "",
+    NOTIFICATION.toast(sub_text = "",
                                 main_text = "Family Merge Finished!")
 
 
@@ -376,7 +378,7 @@ class MergeFamily_UI(forms.WPFWindow):
         forms.WPFWindow.__init__(self, xaml_file_name)
         
         
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.Height = 800
         self.family_bad = None
         self.family_target = None
@@ -509,7 +511,7 @@ class MergeFamily_UI(forms.WPFWindow):
         return True
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def merge_clicked(self, sender, args):
         if not self.bad_type:
             return
@@ -523,7 +525,7 @@ class MergeFamily_UI(forms.WPFWindow):
                                             self.target_type.LookupParameter("Type Name").AsString(),
                                             self.mismatch_detail)
             opts = [["Stop Merging for those two types.","Let me look at the detailed comparison."], ["Keep Merging.", "Ignore local difference, just use the tartget type data."]]
-            res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "There are type parameter data not matching between the two types you picked.",
+            res = REVIT_FORMS.dialogue(main_text = "There are type parameter data not matching between the two types you picked.",
                                                         sub_text = note,
                                                         options = opts)
 
@@ -551,7 +553,7 @@ class MergeFamily_UI(forms.WPFWindow):
         sub_text += "\nStep 3: Click merge to merge. There is also a built in check, if the two types have different type data, or the instance have different parameter structure, you will have to option to pause merge or force merge."
         sub_text += "\nStep 4: All the instance parameter data is recorded as much as it can, then the type will be swapped, and instance parameter reapplied."
         sub_text += "\nStep 5: Repeat."
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text,
+        REVIT_FORMS.notification(main_text = main_text,
                                                 sub_text = sub_text,
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -562,7 +564,7 @@ class MergeFamily_UI(forms.WPFWindow):
 
     def open_youtube(self, sender, args):
         """
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "not recorded yet",
+        REVIT_FORMS.notification(main_text = "not recorded yet",
                                                 sub_text = "blah blah blah",
                                                 window_title = "EnneadTab",
                                                 button_name = "Close",
@@ -583,7 +585,7 @@ class MergeFamily_UI(forms.WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def get_family(self, is_picking_bad_type):
 
         families = DB.FilteredElementCollector(doc).OfClass(DB.Family).WhereElementIsNotElementType().ToElements()
@@ -686,7 +688,7 @@ class MergeFamily_UI(forms.WPFWindow):
     def zoom_bad_click(self, sender, args):
         self.handle_zoom(is_bad_type = True)
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def handle_zoom(self, is_bad_type):
         try:
             if is_bad_type:
@@ -701,12 +703,12 @@ class MergeFamily_UI(forms.WPFWindow):
 
         instances = get_all_instance_of_type(type, self.is_current_view_only)
         if len(instances) == 0:
-            EnneadTab.NOTIFICATION.toast(main_text = "Found no elements of this type.", force_toast = True)
+            NOTIFICATION.toast(main_text = "Found no elements of this type.", force_toast = True)
             return
         random.shuffle(instances)
         instance = instances[0]
         uidoc.ShowElements(instance)
-        uidoc.Selection.SetElementIds(EnneadTab.DATA_CONVERSION.list_to_system_list([instance.Id]))
+        uidoc.Selection.SetElementIds(DATA_CONVERSION.list_to_system_list([instance.Id]))
 
 
     def handleclick(self, sender, args):
@@ -721,7 +723,7 @@ class MergeFamily_UI(forms.WPFWindow):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     modeless_form = MergeFamily_UI()
 

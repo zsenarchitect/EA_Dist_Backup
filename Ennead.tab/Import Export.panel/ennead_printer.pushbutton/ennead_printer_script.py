@@ -14,13 +14,15 @@ from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 import EA_UTILITY
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ENVIRONMENT, SOUNDS, SPEAK, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 import traceback
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 import clr
 clr.AddReference('System.Windows.Forms')
@@ -52,7 +54,7 @@ class DataGrid_Preview_Obj(object):
         if r"/" in name:
             pass#print "Windows file name cannot contain '/' in its name, i will replace it with '-'"
         if "*" in name:
-            EnneadTab.NOTIFICATION.messenger (main_text="* is found in <{}>. Better remove this.".format(name))
+            NOTIFICATION.messenger (main_text="* is found in <{}>. Better remove this.".format(name))
         return name.replace("/", "-")#.replace("*","")
 
 
@@ -199,8 +201,8 @@ class ExportRecordData(object):
         self.time_span = time_span
 
 class EA_Printer_UI(WPFWindow):
-    #@EnneadTab.ERROR_HANDLE.try_catch_error
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    #@ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         xamlfile = script.get_bundle_file('EA_Printer_Form.xaml')
         #print xamlfile
@@ -215,9 +217,9 @@ class EA_Printer_UI(WPFWindow):
         EA_UTILITY.secure_folder(self.output_folder)
         self.record_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exporter_Record"
         try:
-            EnneadTab.DATA_FILE.save_dict_to_json(dict(), self.record_folder + "\\SH_Access_test.json")
+            DATA_FILE.save_dict_to_json(dict(), self.record_folder + "\\SH_Access_test.json")
         except:
-            self.record_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+            self.record_folder = FOLDER.get_EA_local_dump_folder()
 
 
         self.export_queue = []
@@ -260,7 +262,7 @@ class EA_Printer_UI(WPFWindow):
         self.copy_folder_note_A.Text = "Folder you pick (example: I:/2135/2_Record/2022-09-30 50% DD)\n    -FileId\n       -PDFs\n         -A101_xx.pdf\n         -A102_xx.pdf\n       -DWGs\n         -A101_xx.dwg\n         -A102_xx.dwg"
         self.copy_folder_note_B.Text = "For example above, the final selection folder should say '2022-09-30 50% DD', not '2022-09-30 50% DD/FileId'"
         self.button_main.Content = "Setting Incomplete"
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.set_image_source(self.update_icon, "update_icon.png")
         self.set_image_source(self.monitor_icon, "monitor_icon.png")
 
@@ -481,12 +483,12 @@ class EA_Printer_UI(WPFWindow):
                                     body = self.email_body.Text,
                                     is_adding_final_folder_link = self.checkbox_add_folder_link.IsChecked)
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def load_setting(self):
         try:
             data = EA_UTILITY.read_json_as_dict(self.setting_file_path)
         except:
-            #EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Creating setting file for first-time user. ", sub_text = "Open exporter tool again to start exporting!", self_destruct = 15)
+            #REVIT_FORMS.notification(main_text = "Creating setting file for first-time user. ", sub_text = "Open exporter tool again to start exporting!", self_destruct = 15)
             data = dict()
             EA_UTILITY.save_dict_to_json(data, self.setting_file_path)
 
@@ -500,7 +502,7 @@ class EA_Printer_UI(WPFWindow):
                 self.doc_model_path_pair = {self.central_doc_name(doc): doc.GetWorksharingCentralModelPath()}
             else:
                 self.doc_model_path_pair = {self.central_doc_name(doc): None}
-                EnneadTab.NOTIFICATION.messenger(main_text = "This document is not workshared.")
+                NOTIFICATION.messenger(main_text = "This document is not workshared.")
             self.update_data_grid_map_id()
             self.is_export_dwg = self.checkbox_dwg.IsChecked
             self.is_export_pdf = self.checkbox_pdf.IsChecked
@@ -540,7 +542,7 @@ class EA_Printer_UI(WPFWindow):
             self.doc_model_path_pair = {self.central_doc_name(doc): doc.GetWorksharingCentralModelPath()}
         else:
             self.doc_model_path_pair = {self.central_doc_name(doc): None}
-            EnneadTab.NOTIFICATION.messenger(main_text = "This document is not workshared.")
+            NOTIFICATION.messenger(main_text = "This document is not workshared.")
         self.update_data_grid_map_id()
         self.checkbox_dwg.IsChecked = self.is_export_dwg
         self.checkbox_pdf.IsChecked = self.is_export_pdf
@@ -806,7 +808,7 @@ class EA_Printer_UI(WPFWindow):
         
         for item in self.data_grid_preview.ItemsSource:
             if "*" in item.format_name:
-                EnneadTab.NOTIFICATION.messenger(main_text="Please remove * at " + item.format_name)
+                NOTIFICATION.messenger(main_text="Please remove * at " + item.format_name)
                 self.button_main.Content = "There are * in some name."
                 return False
 
@@ -847,7 +849,7 @@ class EA_Printer_UI(WPFWindow):
         open_options = DB.OpenOptions()
         #EA_UTILITY.print_note( "setting active doc as {}".format(data[0]))
         try:
-            return UI.UIApplication(EnneadTab.REVIT.REVIT_APPLICATION.get_application()).OpenAndActivateDocument (model_path,
+            return UI.UIApplication(REVIT_APPLICATION.get_application()).OpenAndActivateDocument (model_path,
                                                                                             open_options,
                                                                                             False)
         except Exception as e:
@@ -864,7 +866,7 @@ class EA_Printer_UI(WPFWindow):
         #output.print_md( "background open file {}".format(doc_name))
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def main_export_Clicked(self, sender, args):###sender and args must be here even when not used to pass data between GUI and python
 
         if "export finish" in self.button_main.Content.lower():
@@ -948,7 +950,7 @@ class EA_Printer_UI(WPFWindow):
 
             print ("\n\n-------{}/{} preparing : {} ---------".format(i + 1, len(self.data_grid_preview.ItemsSource), preview_obj))
             if len(self.data_grid_preview.ItemsSource) - i < 5:
-                EnneadTab.SPEAK.speak(None)
+                SPEAK.speak(None)
 
             time_start = time.time()
             # main export action
@@ -1081,7 +1083,7 @@ class EA_Printer_UI(WPFWindow):
             EXPORT_ACTION.combine_final_pdf(self.output_folder, self.files_exported_for_this_issue, combined_pdf_name, copy_folder)
 
         if self.is_play_sound:
-            EnneadTab.SOUNDS.play_sound("sound effect_mario stage clear.wav")
+            SOUNDS.play_sound("sound effect_mario stage clear.wav")
 
 
 
@@ -1117,13 +1119,13 @@ class EA_Printer_UI(WPFWindow):
         print (self.is_sync_and_close, self.is_printing_interupted)
         print ("####")
         if self.is_sync_and_close and not self.is_printing_interupted:
-            EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+            REVIT_APPLICATION.sync_and_close()
             self.Close()
 
         total_time_min_part = int(math.floor(total_time_second / 60))
         total_time_sec_part = int(total_time_second % 60)
 
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "EnneadTab Export done.",
+        REVIT_FORMS.notification(main_text = "EnneadTab Export done.",
                                         sub_text = "Total time = {}m {}s".format(total_time_min_part, total_time_sec_part),
                                         window_title = "EnneadTab Exporter",
                                         button_name = "Close",
@@ -1134,7 +1136,7 @@ class EA_Printer_UI(WPFWindow):
         ending_announcement = "enni-ed tab exporter has just finished exporting {} items after {} minutes and {} seconds.".format(len(self.files_exported_for_this_issue), total_time_min_part, total_time_sec_part)
         if self.is_send_email:
             ending_announcement += "Also, an email is scheduled to sent. Subject line: {}".format(self.email_subject_line.Text.lower().replace("ennead", "enni-ed "))
-        EnneadTab.SPEAK.speak(ending_announcement)
+        SPEAK.speak(ending_announcement)
 
         if not self.is_sync_and_close:
             self.update_data_grid_preview()
@@ -1145,11 +1147,11 @@ class EA_Printer_UI(WPFWindow):
             while True:
                 safety += 1
                 if EA_UTILITY.is_file_exist_in_folder(self.log_file, self.output_folder):
-                    EnneadTab.SPEAK.speak("Output log file saved.")
+                    SPEAK.speak("Output log file saved.")
                     break
 
                 if safety % 5 == 0:
-                    EnneadTab.SPEAK.speak("Waiting for output log file to save.")
+                    SPEAK.speak("Waiting for output log file to save.")
                 time.sleep(1)
 
 
@@ -1157,7 +1159,7 @@ class EA_Printer_UI(WPFWindow):
                     break
             self.email_data.update_info(self)
             self.email_data.send()
-            EnneadTab.SPEAK.speak("Email is scheduled to send.")
+            SPEAK.speak("Email is scheduled to send.")
 
     def print_ranked_log(self):
         rank_list = self.data_grid_preview.ItemsSource[:]
@@ -1244,7 +1246,7 @@ class EA_Printer_UI(WPFWindow):
         self.checkbox_add_folder_link.IsEnabled = self.checkbox_send_email.IsChecked
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def local_issue_para_text_changed(self, sender, args):
         self.issue = self.textbox_local_isse_para_name.Text
         if len(self.issue_name) == 0:
@@ -1306,7 +1308,7 @@ class EA_Printer_UI(WPFWindow):
 
     def show_feature_Clicked(self, sender, args):
 
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Features:",
+        REVIT_FORMS.notification(main_text = "Features:",
                                         sub_text = self.feature_sum_note)
         """
         file_path = script.get_bundle_file("fix bluebeam setting.pdf")
@@ -1386,7 +1388,7 @@ class EA_Printer_UI(WPFWindow):
 
     def show_sample_marker_Clicked(self, sender, args):
         filepath = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\lib\MARKER.txt"
-        EnneadTab.EXE.open_file_in_default_application(filepath)
+        EXE.open_file_in_default_application(filepath)
         
         
     def generate_issue_Clicked(self, sender, args):
@@ -1397,7 +1399,7 @@ class EA_Printer_UI(WPFWindow):
         
         for doc in self.docs_to_process:
             if doc.IsLinked:
-                EnneadTab.NOTIFICATION.messenger(main_text='[{}] is a link file, cannot edit.'.format(doc.Title))
+                NOTIFICATION.messenger(main_text='[{}] is a link file, cannot edit.'.format(doc.Title))
                 continue
             HELPER.create_issue_para_to_sheet(doc, issue_name)
         
@@ -1408,7 +1410,7 @@ class EA_Printer_UI(WPFWindow):
         script.open_url(url)
         main_text = "Goal: Add shared parameter 'Issue XXX' to sheet parameter."
         sub_text = "Step 1:\nCreate new shared parameter from the manager window.\n\nStep 2:\nUse the method from demo video to bind this parameter to sheet category in multiple documents"
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text,
+        REVIT_FORMS.notification(main_text = main_text,
                                         sub_text = sub_text)
 
 
@@ -1421,7 +1423,7 @@ class EA_Printer_UI(WPFWindow):
         
         for doc in self.docs_to_process:
             if doc.IsLinked:
-                EnneadTab.NOTIFICATION.messenger(main_text='[{}] is a link file, cannot edit.'.format(doc.Title))
+                NOTIFICATION.messenger(main_text='[{}] is a link file, cannot edit.'.format(doc.Title))
                 continue
             HELPER.create_color_setting_to_sheet(doc)
         
@@ -1433,7 +1435,7 @@ class EA_Printer_UI(WPFWindow):
         script.open_url(url)
         main_text = "Goal: Add shared parameter 'Print_In_Color' to sheet parameter."
         sub_text = "Step 1:\nCreate new shared parameter from the manager window.\n\nStep 2:\nUse the method from demo video to bind this parameter to sheet category in multiple documents"
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = main_text,
+        REVIT_FORMS.notification(main_text = main_text,
                                         sub_text = sub_text)
 
 

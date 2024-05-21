@@ -11,11 +11,13 @@ from pyrevit import script #
 
 import traceback
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_UNIT, REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import SOUNDS, DATA_FILE, FOLDER, ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 app = __revit__.Application
 
 
@@ -24,14 +26,14 @@ app = __revit__.Application
 
 class Solution:
     def __init__(self):
-        family = EnneadTab.REVIT.REVIT_SELECTION.pick_family(doc)
+        family = REVIT_SELECTION.pick_family(doc)
         if family is None:
             return
-        self.type = EnneadTab.REVIT.REVIT_SELECTION.pick_type(family)
+        self.type = REVIT_SELECTION.pick_type(family)
         if self.type is None:
             return
 
-        self.unit = EnneadTab.REVIT.REVIT_UNIT.pick_incoming_file_unit()
+        self.unit = REVIT_UNIT.pick_incoming_file_unit()
         if self.unit is None:
             return
   
@@ -41,15 +43,15 @@ class Solution:
     def make_revit_pt(self, x):
         if self.unit == 0:
                 
-            X = EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(x[0])
-            Y = EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(x[1])
-            Z = EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(x[2])
+            X = REVIT_UNIT.mm_to_internal(x[0])
+            Y = REVIT_UNIT.mm_to_internal(x[1])
+            Z = REVIT_UNIT.mm_to_internal(x[2])
             return DB.XYZ(X, Y, Z)
         elif self.unit == 1:
   
             return DB.XYZ(x[0], x[1], x[2])
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def main(self, brep_data):
 
         #print brep_data
@@ -117,8 +119,8 @@ if __name__ == "__main__":
     solution = Solution()
     T = DB.TransactionGroup(doc, __title__)
     T.Start()
-    file = EnneadTab.FOLDER.get_EA_dump_folder_file("SRF2ADP_DATA.json")
-    data = EnneadTab.DATA_FILE.read_json_as_dict(file)
+    file = FOLDER.get_EA_dump_folder_file("SRF2ADP_DATA.json")
+    data = DATA_FILE.read_json_as_dict(file)
     index = 1
     for brep_name, brep_data in data.items():
         
@@ -127,7 +129,7 @@ if __name__ == "__main__":
 
         
         solution.main(brep_data)
-    EnneadTab.SOUNDS.play_sound("sound effect_mario message.wav")
+    SOUNDS.play_sound("sound effect_mario message.wav")
     T.Commit()
     ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)
 

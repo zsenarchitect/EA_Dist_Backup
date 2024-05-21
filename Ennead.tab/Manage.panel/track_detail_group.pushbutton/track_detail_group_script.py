@@ -12,17 +12,19 @@ from pyrevit import forms
 from pyrevit import script
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from Autodesk.Revit import DB
 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 from EnneadTab.REVIT import REVIT_FORMS
 
   
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def track_detail_group():
     opts = ["Find detail groups by views",
             "Find detail groups by sheets",

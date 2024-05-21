@@ -12,7 +12,9 @@ from pyrevit import script
 from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import DATA_FILE, NOTIFICATION, ENVIRONMENT, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
 from Autodesk.Revit import DB  
 import clr
@@ -29,7 +31,7 @@ import RHINO2REVIT_UTILITY
 
 
 # from Autodesk.Revit import UI
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+doc = REVIT_APPLICATION.get_doc()
 
 # parent_category = doc.OwnerFamily.FamilyCategory
 # print parent_category.Name
@@ -52,9 +54,9 @@ def is_family_adaptive():
 class DataGridObj(object):
     def __init__(self, file_path, OST_list, selected_name=None):
         self.file_path = file_path
-        self.display_name = EnneadTab.FOLDER.get_file_name_from_path(file_path)
+        self.display_name = FOLDER.get_file_name_from_path(file_path)
         self.display_name_naked = self.display_name.split(".")[0]
-        self.extension = EnneadTab.FOLDER.get_file_extension_from_path(
+        self.extension = FOLDER.get_file_extension_from_path(
             file_path).lower()
         self.OST_list = OST_list
         if selected_name:
@@ -68,7 +70,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
         xaml_file_name = 'Rhino2Revit_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.button_convert.Visibility = System.Windows.Visibility.Collapsed
         self.Height = 800
 
@@ -82,7 +84,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
                 self.button_convert.BorderBrush = System.Windows.Media.Brushes.Black
                 self.button_convert.BorderThickness = System.Windows.Thickness(
                     1)
-                # EnneadTab.NOTIFICATION.toast(main_text = "Not all object style is assigned")
+                # NOTIFICATION.toast(main_text = "Not all object style is assigned")
                 self.button_convert.Content = "ObjectStyle Test Not Passed"
                 # self.button_convert.Width = 300
                 self.button_convert.IsEnabled = False
@@ -125,11 +127,11 @@ class Rhino2Revit_UI(forms.WPFWindow):
                 self.DWG_convert(item)
 
             time_span = time.time() - start_time
-            EnneadTab.NOTIFICATION.toast(main_text="{} import finished!!".format(item.display_name),
+            NOTIFICATION.toast(main_text="{} import finished!!".format(item.display_name),
                                          sub_text="Import used {} seconds = {} mins".format(time_span, time_span/60))
         t.Commit()
         tool_time_span = time.time() - tool_start_time
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text="Rhino2Revit Finished.",
+        REVIT_FORMS.notification(main_text="Rhino2Revit Finished.",
                                                  sub_text="Files processeds:\n{}\nTotal time = {} seconds = {} mins".format(detail_list, tool_time_span, tool_time_span/60))
         self.Close()
 
@@ -281,7 +283,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
         self.object_style_combos.ItemsSource = raw_subC_names
 
     def open_details_describtion(self, sender, args):
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text="<.3dm Files>\nPros:\n\tStable, feel more similar to native Revit elements.\n\tIndividual control on Boolean, Subc, Visibility, Dimension Control\nCons:\n\tRequire Higer Standard of Cleaness in model.\n\tCannot handle curves.\n\n<.DWG Files>\nPros:\n\tMore tolerance on imperfection in models\n\tCan deal with lines, arcs and circle. Can also deal with Nurbs if all control points on same CPlane.\nCons:\n\tNo individual control for multiple elements, each import from same source file is glued.\n\tIntroduce Import SubC (which can be fixed automatically)",
+        REVIT_FORMS.notification(main_text="<.3dm Files>\nPros:\n\tStable, feel more similar to native Revit elements.\n\tIndividual control on Boolean, Subc, Visibility, Dimension Control\nCons:\n\tRequire Higer Standard of Cleaness in model.\n\tCannot handle curves.\n\n<.DWG Files>\nPros:\n\tMore tolerance on imperfection in models\n\tCan deal with lines, arcs and circle. Can also deal with Nurbs if all control points on same CPlane.\nCons:\n\tNo individual control for multiple elements, each import from same source file is glued.\n\tIntroduce Import SubC (which can be fixed automatically)",
                                                  sub_text="With the exception of curve elements, .3dm is always prefered format, if it fails to convert, try some fix source model as far as you can. You can see the help from the output window.\nUse .dwg as your last resort.",
                                                  window_title="EnneadTab",
                                                  button_name="Close",
@@ -296,7 +298,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
 
     def pick_files(self, sender, args):
         # print "pick files"
-        recent_output_folder = EnneadTab.DATA_FILE.get_sticky_longterm("RHINO2REVIT_FOLDER")
+        recent_output_folder = DATA_FILE.get_sticky_longterm("RHINO2REVIT_FOLDER")
         if not recent_output_folder:
             recent_output_folder = os.path.join(os.path.expanduser("~"), "Desktop")
             
@@ -412,7 +414,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
             print("###############")
             print("Cannot convert spline object {} becasue {}".format(geo_crv, e))
             print("###############")
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text="There are geometry that Revit didn't accept becasue {}".format(e),
+            REVIT_FORMS.notification(main_text="There are geometry that Revit didn't accept becasue {}".format(e),
                                                      sub_text="Revit spline has to live in a plane. The plane can be angled, but a plane nonetheless.\n\nIf you need spatial free curve, consider make the curve a surface ribbon in Rhino and bring in here in Revit. You can then use the edge of this surface to do sweep and then keep the ribbon category hidden in template.", self_destruct=30)
             """
             refptarr = DB.ReferencePointArray()
@@ -447,7 +449,7 @@ def get_subC_by_name(name):
 
 
 def get_graphic_style_by_name(name):
-    # return EnneadTab.REVIT.REVIT_SELECTION.get_linestyle(doc, name)
+    # return REVIT_SELECTION.get_linestyle(doc, name)
     all_graphic_styles = DB.FilteredElementCollector(
         doc).OfClass(DB.GraphicsStyle).ToElements()
     for style in all_graphic_styles:
@@ -508,12 +510,12 @@ def clean_import_object_style(existing_OSTs):
     # print "\n\nCleaning finish."
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     if not doc.IsFamilyDocument:
-        EnneadTab.NOTIFICATION.toast(sub_text="For effective subCategory",
+        NOTIFICATION.toast(sub_text="For effective subCategory",
                                      main_text="Must be in a family environment")
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text="Must be in a family environment for subCategory to be useful.",
+        REVIT_FORMS.notification(main_text="Must be in a family environment for subCategory to be useful.",
                                                  sub_text="DirectShape is never a good solution, so dont do it in project environment.",
                                                  window_title="EnneadTab",
                                                  button_name="Close",

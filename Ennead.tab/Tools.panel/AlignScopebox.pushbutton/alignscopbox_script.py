@@ -3,15 +3,17 @@ from pyrevit import revit, DB
 from pyrevit import script
 from pyrevit import forms
 import math
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 
 __doc__ = 'Need at leat one model line as refference, and one scopebox to play with. Becasue the initial oriteation of the scopebox can be unpredicatable so i cannot ganrantee it finish in one go, but by large it can find the angle within 3 clicks.'
 __tip__ = True
 __title__ = "Orient\nScopebox"
 __youtube__ = "https://youtu.be/NBQQd-GXGRQ"
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 def find_angle(vec1,vec2):
     angle = math.degrees(vec1.AngleTo(vec2))
@@ -87,7 +89,7 @@ def update_display_text(scopeboxs):
     else:
         return  "Not all scopeboxs are ready.\nPlease try oritent option continously."
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     selection = list(revit.get_selection())
     if not selection:

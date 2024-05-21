@@ -17,15 +17,17 @@ from pyrevit.revit import ErrorSwallower
 from pyrevit import script, forms
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_EXPORT, REVIT_FORMS, REVIT_UNIT, REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import EXE, DATA_FILE, DATA_CONVERSION, NOTIFICATION, ENVIRONMENT, SOUNDS, TIME, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
 
 import traceback
 
 import os
 import math
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
@@ -39,7 +41,7 @@ def convert_unit(x):
     #print RHINO_UNIT
     # why there are two versions....Becasue one system(left) comes from older manual maping, one system(right) comes from newer mapping based on DB.ExportUnit Enum. 
     if RHINO_UNIT == "Millimeters" or  RHINO_UNIT == "Millimeter":
-        return EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(float(x))
+        return REVIT_UNIT.mm_to_internal(float(x))
 
     if RHINO_UNIT == "Feet" or RHINO_UNIT == "Foot":
         return float(x)
@@ -70,12 +72,12 @@ def group_contents(new_elements):
     doc_create = get_doc_create()
     try:
         with ErrorSwallower() as swallower:
-            group = doc_create.NewGroup(EnneadTab.DATA_CONVERSION.list_to_system_list(new_element_ids))
+            group = doc_create.NewGroup(DATA_CONVERSION.list_to_system_list(new_element_ids))
 
             group.GroupType.Name = "EA_Rhino_Drafting_Transfer_({}_{})".format(doc.ActiveView.Name,
-                                                                                EnneadTab.TIME.get_formatted_current_time())
+                                                                                TIME.get_formatted_current_time())
     except:
-        EnneadTab.NOTIFICATION.messenger("Cannot make the group of the new draft element but they are still there.")
+        NOTIFICATION.messenger("Cannot make the group of the new draft element but they are still there.")
     t.Commit()
 
 
@@ -122,10 +124,10 @@ def process_layer_data(layer, contents):
             try:
                 detail_crvs = [doc_create.NewDetailCurve(doc.ActiveView, abstract_crv) for abstract_crv in abstract_crvs if abstract_crv]
             except Exception as e:
-                EnneadTab.NOTIFICATION.messenger(main_text = "Error in creating detail crvs:\n{}".format(e))
+                NOTIFICATION.messenger(main_text = "Error in creating detail crvs:\n{}".format(e))
                 return []
             for detail_crv in detail_crvs:
-                detail_crv.LineStyle = EnneadTab.REVIT.REVIT_SELECTION.get_linestyle(doc, linestyle_name)
+                detail_crv.LineStyle = REVIT_SELECTION.get_linestyle(doc, linestyle_name)
             return detail_crvs
 
 
@@ -286,11 +288,11 @@ def create_abstract_nurbs(geo_data):
     # print pts
     pt_count = len(pts)
     # print pt_count
-    pts = EnneadTab.DATA_CONVERSION.list_to_system_list(pts, type = "XYZ", use_IList = False)
+    pts = DATA_CONVERSION.list_to_system_list(pts, type = "XYZ", use_IList = False)
 
     weights = [1.0] * pt_count
     # print weights
-    weights = EnneadTab.DATA_CONVERSION.list_to_system_list(weights, type = "Double", use_IList = False)
+    weights = DATA_CONVERSION.list_to_system_list(weights, type = "Double", use_IList = False)
     #print weights
 
 
@@ -320,10 +322,10 @@ def create_filled_region_from_srf(filled_region_name, obj_info):
         DB_crv_loops.append(DB_crv_loop)
 
 
-    crv_loops = EnneadTab.DATA_CONVERSION.list_to_system_list(DB_crv_loops, type = "CurveLoop", use_IList = False)
-    filled_region_type = EnneadTab.REVIT.REVIT_SELECTION.get_filledregion_type(doc, filled_region_name)
+    crv_loops = DATA_CONVERSION.list_to_system_list(DB_crv_loops, type = "CurveLoop", use_IList = False)
+    filled_region_type = REVIT_SELECTION.get_filledregion_type(doc, filled_region_name)
     if not filled_region_type:
-        EnneadTab.NOTIFICATION.messenger("Cannot find the type of filled region in your project: {}\nI will use a default type instead.".format(filled_region_name),)
+        NOTIFICATION.messenger("Cannot find the type of filled region in your project: {}\nI will use a default type instead.".format(filled_region_name),)
         filled_region_type = DB.FilteredElementCollector(doc).OfClass(DB.FilledRegionType).FirstElement()
     filled_region = DB.FilledRegion.Create(doc,
                                             filled_region_type.Id,
@@ -331,7 +333,7 @@ def create_filled_region_from_srf(filled_region_name, obj_info):
                                             crv_loops)
     return filled_region
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_in_draft(rhino_unit, is_grouping):
 
     # global RHINO_UNIT
@@ -341,10 +343,10 @@ def transfer_in_draft(rhino_unit, is_grouping):
 
 
     # get dump data
-    file_path = EnneadTab.FOLDER.get_filepath_in_special_folder_in_EA_setting("Local Copy Dump", "EA_DRAFTING_TRANSFER.json")
-    datas = EnneadTab.DATA_FILE.read_json_as_dict(file_path, use_encode = True)
+    file_path = FOLDER.get_filepath_in_special_folder_in_EA_setting("Local Copy Dump", "EA_DRAFTING_TRANSFER.json")
+    datas = DATA_FILE.read_json_as_dict(file_path, use_encode = True)
     if not datas:
-        EnneadTab.NOTIFICATION.messenger ("There is no data saved. Have you exported from the Rhino?")
+        NOTIFICATION.messenger ("There is no data saved. Have you exported from the Rhino?")
         return
 
 
@@ -368,10 +370,10 @@ def transfer_in_draft(rhino_unit, is_grouping):
 
 
 
-    EnneadTab.NOTIFICATION.toast(main_text = "Draft content created!")
+    NOTIFICATION.toast(main_text = "Draft content created!")
     import ENNEAD_LOG
     ENNEAD_LOG.use_enneadtab(coin_change = 30, tool_used = "Rhino2Revit_Rhino Draft Import", show_toast = True)
-    EnneadTab.SOUNDS.play_sound("sound effect_popup msg1.wav")
+    SOUNDS.play_sound("sound effect_popup msg1.wav")
 
 
 # Create a subclass of IExternalEventHandler
@@ -436,7 +438,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         forms.WPFWindow.__init__(self, xaml_file_name)
         self.subtitle.Text = "A helper window that transfer draft content between Rhino and Revit. You might do any combination of lines, polylines, arcs and freeform nurbs for detail lines, area boundary lines, room seperation lines and edges of filled regions."
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.set_image_source(self.rhino_button_icon_1, "drafting.png")
         self.set_image_source(self.rhino_button_icon_2, "drafting.png")
         self.combobox_dwg_setting.ItemsSource = self.get_dwg_settings()
@@ -446,7 +448,7 @@ class RhinoDraft_UI(forms.WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def get_dwg_settings(self, setting_name = None):
         existing_dwg_settings = DB.FilteredElementCollector(doc).OfClass(DB.ExportDWGSettings).WhereElementIsNotElementType().ToElements()
 
@@ -461,7 +463,7 @@ class RhinoDraft_UI(forms.WPFWindow):
                     return x
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def export_view_click(self, sender, args):
         if str(doc.ActiveView.ViewType) not in ["Detail", 
                                                 "Section", 
@@ -471,19 +473,19 @@ class RhinoDraft_UI(forms.WPFWindow):
                                                 "CeilingPlan", 
                                                 "DraftingView"]:
             self.debug_textbox.Text = "Cannot do it in view type " + str(doc.ActiveView.ViewType)
-            EnneadTab.NOTIFICATION.messenger(main_text = "Cannot export in view type " + str(doc.ActiveView.ViewType))
+            NOTIFICATION.messenger(main_text = "Cannot export in view type " + str(doc.ActiveView.ViewType))
             return
 
 
         self.debug_textbox.Text = ""
         crop_region_shape_manager = doc.ActiveView.GetCropRegionShapeManager ()
         if crop_region_shape_manager.Split :
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "The view appears to have view break.", sub_text = "You can still draft in Rhino, but be aware that Rhino will not understand Revit view break in dwg, so when importing back, the draft might see partial shift.", self_destruct = 10)
+            REVIT_FORMS.notification(main_text = "The view appears to have view break.", sub_text = "You can still draft in Rhino, but be aware that Rhino will not understand Revit view break in dwg, so when importing back, the draft might see partial shift.", self_destruct = 10)
 
 
 
         if self.combobox_dwg_setting.SelectedItem == "No available dwg setting...":
-            EnneadTab.NOTIFICATION.messenger(main_text = "No valid dwg setting selected.\nCannot export without a valid dwg setting.")
+            NOTIFICATION.messenger(main_text = "No valid dwg setting selected.\nCannot export without a valid dwg setting.")
             return
 
 
@@ -498,8 +500,8 @@ class RhinoDraft_UI(forms.WPFWindow):
 
         file_name = "EA_TRANSFER_DRAFT_BACKGROUND"
         view = doc.ActiveView
-        output_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
-        EnneadTab.REVIT.REVIT_EXPORT.export_dwg(view, file_name, output_folder, self.combobox_dwg_setting.SelectedItem)
+        output_folder = FOLDER.get_EA_local_dump_folder()
+        REVIT_EXPORT.export_dwg(view, file_name, output_folder, self.combobox_dwg_setting.SelectedItem)
 
         self.update_global_unit()
 
@@ -531,7 +533,7 @@ class RhinoDraft_UI(forms.WPFWindow):
             #print revit_unit
         except:
 
-            revit_unit = doc.GetUnits().GetFormatOptions (EnneadTab.REVIT.REVIT_UNIT.lookup_unit_spec_id("length") ).GetUnitTypeId().TypeId
+            revit_unit = doc.GetUnits().GetFormatOptions (REVIT_UNIT.lookup_unit_spec_id("length") ).GetUnitTypeId().TypeId
             revit_unit = str(revit_unit).split("-")[0].split("unit:")[1]
             #print revit_unit
         """
@@ -569,7 +571,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         # note:
         # Use "Draft Transfer" from EnneadTab for Rhino to continue working.
 
-        for template in EnneadTab.FOLDER.get_filenames_in_folder(rhino_template_folder):
+        for template in FOLDER.get_filenames_in_folder(rhino_template_folder):
             #print template
             if self.revit_unit in template.lower():
                 break
@@ -577,8 +579,8 @@ class RhinoDraft_UI(forms.WPFWindow):
 
         self.template_file_path = rhino_template_folder + "\\" + template
 
-        #EnneadTab.FOLDER.copy_file_to_folder(file_path, EnneadTab.FOLDER.get_EA_local_dump_folder())
-        file_path = EnneadTab.FOLDER.get_EA_local_dump_folder() + "\\" + template
+        #FOLDER.copy_file_to_folder(file_path, FOLDER.get_EA_local_dump_folder())
+        file_path = FOLDER.get_EA_local_dump_folder() + "\\" + template
         final_file = file_path.replace(".3dm", "_{}.3dm".format(doc.ActiveView.Name
                                                                 .replace("/","-")))
 
@@ -588,28 +590,28 @@ class RhinoDraft_UI(forms.WPFWindow):
     def open_template_rhino(self, doc):
         final_file = self.final_file
         try:
-            EnneadTab.FOLDER.copy_file(self.template_file_path, final_file)
+            FOLDER.copy_file(self.template_file_path, final_file)
         except:
-            EnneadTab.NOTIFICATION.messenger(main_text = "Cannot start current file, there might be illegal character\nfor window filename from your view name.")
-            EnneadTab.NOTIFICATION.duck_pop(main_text = "..Or your previous export for rhino of same view is not closed.")
+            NOTIFICATION.messenger(main_text = "Cannot start current file, there might be illegal character\nfor window filename from your view name.")
+            NOTIFICATION.duck_pop(main_text = "..Or your previous export for rhino of same view is not closed.")
             return
         
-        EnneadTab.EXE.open_file_in_default_application(final_file)
-        EnneadTab.NOTIFICATION.toast(main_text = "New empty Rhino is starting...")
+        EXE.open_file_in_default_application(final_file)
+        NOTIFICATION.toast(main_text = "New empty Rhino is starting...")
 
     def save_export_setting(self):
-        line_style_names = EnneadTab.REVIT.REVIT_SELECTION.get_all_linestyles(doc)
-        filled_region_type_names = EnneadTab.REVIT.REVIT_SELECTION.get_all_filledregion_types(doc)
+        line_style_names = REVIT_SELECTION.get_all_linestyles(doc)
+        filled_region_type_names = REVIT_SELECTION.get_all_filledregion_types(doc)
         OUT = dict()
         OUT["line_styles"] = line_style_names
         OUT["filled_region_type_names"] = filled_region_type_names
         OUT["revit_unit"] = self.revit_unit
         OUT["final_file"] = self.final_file
-        file = EnneadTab.FOLDER.get_EA_dump_folder_file("EA_TRANSFER_DRAFT_SETTING.json")
-        EnneadTab.DATA_FILE.save_dict_to_json(OUT, file, use_encode = True)
+        file = FOLDER.get_EA_dump_folder_file("EA_TRANSFER_DRAFT_SETTING.json")
+        DATA_FILE.save_dict_to_json(OUT, file, use_encode = True)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_in_click(self, sender, args):
 
 
@@ -620,7 +622,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         elif self.revit_unit in ["inches, feet & inches", "inches"]:
             rhino_unit = "Inches"
         else:
-            EnneadTab.NOTIFICATION.toast(main_text = " bad unit, talk to SZ")
+            NOTIFICATION.toast(main_text = " bad unit, talk to SZ")
             return
 
 
@@ -653,7 +655,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     modeless_form = RhinoDraft_UI()

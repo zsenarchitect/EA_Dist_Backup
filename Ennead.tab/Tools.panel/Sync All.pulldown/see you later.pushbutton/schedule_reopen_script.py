@@ -8,7 +8,9 @@ This si especially helpful for team taking long time to open files everyday."""
 
 
 __tip__ = True
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import EXE, DATA_FILE, USER, ERROR_HANDLE, FOLDER
 from pyrevit import forms, script
 # import datetime
 from datetime import datetime, timedelta
@@ -16,28 +18,28 @@ import time
 # https://pypi.org/project/tkTimePicker/
 # time picker
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
 
     # get all open docs
-    docs = EnneadTab.REVIT.REVIT_APPLICATION.get_application().Documents
+    docs = REVIT_APPLICATION.get_application().Documents
     docs = [doc for doc in docs if not doc.IsLinked]
     docs = [doc.Title for doc in docs if not doc.IsFamilyDocument]
 
     data_file = "EA_SCHEDULE_OPENER.json"
 
     data = None
-    if EnneadTab.FOLDER.is_file_exist_in_dump_folder(data_file):
-        data = EnneadTab.DATA_FILE.read_json_as_dict_in_dump_folder(
+    if FOLDER.is_file_exist_in_dump_folder(data_file):
+        data = DATA_FILE.read_json_as_dict_in_dump_folder(
             data_file, True)
         
     if data is None:
         data = dict()
 
-    data["revit_version"] = EnneadTab.REVIT.REVIT_APPLICATION.get_application().VersionNumber
+    data["revit_version"] = REVIT_APPLICATION.get_application().VersionNumber
     recorded_docs = data.get("docs", [])
     for doc in docs:
         recorded_docs.append(doc)
@@ -67,26 +69,26 @@ def main():
     else:
         return
     data["open_time"] = schedule_time.isoformat()
-    res = EnneadTab.DATA_FILE. save_dict_to_json_in_dump_folder(
+    res = DATA_FILE. save_dict_to_json_in_dump_folder(
         data, data_file, use_encode=True)
     # print (res)
     
     
     
     exe = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\SCHEDULE_OPENER_0.2\SCHEDULE_OPENER.EXE"
-    EnneadTab.EXE.open_file_in_default_application(exe)
+    EXE.open_file_in_default_application(exe)
     
-    if EnneadTab.USER.get_user_name() in ["paula.gronda"]:
+    if USER.get_user_name() in ["paula.gronda"]:
         auto_clicker_exe = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\GENERAL_AUTO_CLICKER\GENERAL_AUTO_CLICKER.exe"
-        EnneadTab.EXE.open_file_in_default_application(auto_clicker_exe)
+        EXE.open_file_in_default_application(auto_clicker_exe)
     
-    EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+    REVIT_APPLICATION.sync_and_close()
     
     import time
     time.sleep(5)
-    EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
-    EnneadTab.REVIT.REVIT_APPLICATION.close_revit_app()
-    EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "There is nothing to see here. Close this revit.",
+    REVIT_APPLICATION.sync_and_close()
+    REVIT_APPLICATION.close_revit_app()
+    REVIT_FORMS.notification(main_text = "There is nothing to see here. Close this revit.",
                                              sub_text = "Your scheduled reopen revit file will show up in new session.")
 
 

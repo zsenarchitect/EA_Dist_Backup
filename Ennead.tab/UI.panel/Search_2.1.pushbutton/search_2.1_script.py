@@ -30,11 +30,13 @@ import pyrevit.extensions as py_extensions
 from pyrevit import HOST_APP
 
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import USER, ENVIRONMENT, SOUNDS, TIME, ERROR_HANDLE, FOLDER
 import ENNEAD_LOG
 
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
@@ -42,7 +44,7 @@ WPF_COLLAPSED = System.Windows.Visibility.Collapsed
 WPF_VISIBLE = System.Windows.Visibility.Visible
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def run_command_action(command, is_enneadtab):
 
     def run_enneadtab_command(command):
@@ -138,7 +140,7 @@ class EA_search_UI(forms.WPFWindow):
         except:
             return
         
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.load_commands()
         self._result_index = 0
         self._search_results = []
@@ -179,7 +181,7 @@ class EA_search_UI(forms.WPFWindow):
             return True
         return False
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def load_commands(self):
         """
         enneadtab_commands = dict()
@@ -267,8 +269,8 @@ class EA_search_UI(forms.WPFWindow):
 
 
 
-    #@EnneadTab.TIME.timer
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    #@TIME.timer
+    @ERROR_HANDLE.try_catch_error
     def update_results_display(self, fill_match = False):
 
 
@@ -354,16 +356,18 @@ class EA_search_UI(forms.WPFWindow):
         # print "raw index = " + str(self._result_index)
 
         #print "ui updated"
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def set_button_icon_display(self, script_path):
         import os
         if not os.path.exists(script_path):
             self.set_visibility_collapse(self.button_icon_display)
             return 'Native Revit'
 
-        import EnneadTab
-        folder = EnneadTab.FOLDER.get_folder_path_from_path(script_path)
-        for file in EnneadTab.FOLDER.get_filenames_in_folder(folder):
+        
+        from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+        from EnneadTab import USER, ENVIRONMENT, SOUNDS, TIME, ERROR_HANDLE, FOLDER
+        folder = FOLDER.get_folder_path_from_path(script_path)
+        for file in FOLDER.get_filenames_in_folder(folder):
             if "icon.png" in file.lower():
                 break
         icon_path = "{}\{}".format(folder, file)
@@ -400,13 +404,15 @@ class EA_search_UI(forms.WPFWindow):
         import System
         obj.Visibility = System.Windows.Visibility.Visible
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def handle_keyboard_key(self, sender, args):    #pylint: disable=W0613
         """Handle keyboard input event."""
         self.is_x_imported("System", "handle keyboard input begin")
         from pyrevit.framework import Input
         import System
-        import EnneadTab
+        
+        from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+        from EnneadTab import USER, ENVIRONMENT, SOUNDS, TIME, ERROR_HANDLE, FOLDER
         # Escape: set response to none and close
         if args.Key == Input.Key.Escape:
             #self.Close()
@@ -422,19 +428,19 @@ class EA_search_UI(forms.WPFWindow):
             self._result_index -= 1
             self.update_results_display()
             self.search_textbox.Focus()
-            #EnneadTab.SOUNDS.play_sound("sound effect_menu_page_trun_backward.wav")
+            #SOUNDS.play_sound("sound effect_menu_page_trun_backward.wav")
         elif args.Key == Input.Key.Down:
             self._result_index += 1
             self.update_results_display()
             self.search_textbox.Focus()
-            #EnneadTab.SOUNDS.play_sound("sound effect_menu_page_trun_forward.wav")
+            #SOUNDS.play_sound("sound effect_menu_page_trun_forward.wav")
 
         self.debug_textbox.Text = "Index = {}".format(self._result_index + 1)
 
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def _setup_response(self):
         if self.search_guess_textbox.Text == '':
             return
@@ -474,7 +480,7 @@ class EA_search_UI(forms.WPFWindow):
 
 
 
-    #@EnneadTab.TIME.timer
+    #@TIME.timer
     def set_search_results(self, *collections):
         """Set search results for returning."""
         self._result_index = 0
@@ -498,7 +504,7 @@ class EA_search_UI(forms.WPFWindow):
             self.set_visibility_collapse(self.doc_display_panel)
 
 
-    #@EnneadTab.TIME.timer
+    #@TIME.timer
     def find_direct_match(self, input_text):
         """Find direct text matches in search term."""
         results = []
@@ -509,7 +515,7 @@ class EA_search_UI(forms.WPFWindow):
 
         return results
 
-    #@EnneadTab.TIME.timer
+    #@TIME.timer
     def find_word_match(self, input_text):
         """Find direct word matches in search term."""
         results = []
@@ -521,7 +527,7 @@ class EA_search_UI(forms.WPFWindow):
 
         return results
 
-    #@EnneadTab.TIME.timer
+    #@TIME.timer
     def find_in_doc_match(self, input_text):
         """Find direct word matches in search term."""
         def has_keyword_in_doc(command_name, keywords):
@@ -548,7 +554,7 @@ class EA_search_UI(forms.WPFWindow):
         return results
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def search_box_value_changed(self, sender, args):
         """Handle text changed event."""
 
@@ -598,7 +604,7 @@ class EA_search_UI(forms.WPFWindow):
         except:
             print("Cannot play video.")
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def main_expander_changed(self, sender, args):
         if self.main_expander.IsExpanded:
             self.main_expander.Header = "Minimize"
@@ -639,7 +645,7 @@ class EA_search_UI(forms.WPFWindow):
         print("--------------<{}> is NOT imported at line {}".format(x, mark))
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     #print_dir(__file__)
 
@@ -666,7 +672,7 @@ output.close_others()
 
 
 if __name__ == "__main__":
-    # if not EnneadTab.USER.is_SZ():
-    #     EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This is a work in progress tool.")
+    # if not USER.is_SZ():
+    #     REVIT_FORMS.notification(main_text = "This is a work in progress tool.")
     main()
     ENNEAD_LOG.use_enneadtab(coin_change = 20, tool_used = __title__.replace("\n", " "), show_toast = True)

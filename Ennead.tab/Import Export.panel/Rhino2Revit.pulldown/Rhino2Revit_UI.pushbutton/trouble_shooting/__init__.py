@@ -1,8 +1,9 @@
 from pyrevit import  script
 import os
-import EnneadTab
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+from EnneadTab import EXE, FOLDER, ERROR_HANDLE
+
+@ERROR_HANDLE.try_catch_error
 def show_instruction(output):
     #output = script.get_output()
     #output.close_others()
@@ -62,9 +63,9 @@ def show_instruction(output):
     output.set_width(1000)
     output.set_height(800)
     output.center()
-    temp_file = EnneadTab.FOLDER.get_EA_dump_folder_file("Rhino2Revit_instruction.html")
+    temp_file = FOLDER.get_EA_dump_folder_file("Rhino2Revit_instruction.html")
     output.save_contents(temp_file)
-    EnneadTab.EXE.open_file_in_default_application(temp_file)
+    EXE.open_file_in_default_application(temp_file)
 
 
 # print "Final note: use Revit-->Rhino-->Revit workflow and reconstruct your geometry with much more care, limit the amount of external geometry because even after conversion their parametric ability is in no way native Revit element. This is true for both EnneadTab converter and Rhino. Inside. It will relate to the Revit file performance."

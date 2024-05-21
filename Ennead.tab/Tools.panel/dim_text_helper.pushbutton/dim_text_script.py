@@ -14,19 +14,21 @@ from pyrevit.forms import WPFWindow
 # from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def mark_dim_text(target_text, position):
 
 
@@ -132,7 +134,7 @@ class dim_text_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab DimText Helper"
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
         self.radial_button_below.IsChecked = True
 
         self.Show()
@@ -199,7 +201,7 @@ class dim_text_ModelessForm(WPFWindow):
         if self.radial_button_suffix.IsChecked:
             return "Suffix"
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def generic_click(self, keyword):
         #print "Clicking " + keyword
         self.simple_event_handler.kwargs = keyword, self.text_position

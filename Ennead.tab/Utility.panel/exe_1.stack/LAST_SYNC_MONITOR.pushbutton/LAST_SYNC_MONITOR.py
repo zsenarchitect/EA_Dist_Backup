@@ -4,7 +4,8 @@
 
 import sys
 sys.path.append(r'L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published_Beta_Version\ENNEAD.extension\lib')
-import EnneadTab
+
+from EnneadTab import DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
 import pygame
 import pyautogui
 import random
@@ -56,11 +57,11 @@ def is_another_LAST_SYNC_MONITOR_running():
 
 
 def get_wait_time():
-    return int(EnneadTab.DATA_FILE.get_revit_ui_setting_data(("textbox_sync_monitor_interval", 45))) 
+    return int(DATA_FILE.get_revit_ui_setting_data(("textbox_sync_monitor_interval", 45))) 
 
     """
     file_name = 'revit_ui_setting.json'
-    if not EnneadTab.FOLDER.is_file_exist_in_dump_folder(file_name):
+    if not FOLDER.is_file_exist_in_dump_folder(file_name):
         return 45
 
 
@@ -70,7 +71,7 @@ def get_wait_time():
     """
 
     
-@EnneadTab.ERROR_HANDLE.try_catch_error_silently
+@ERROR_HANDLE.try_catch_error_silently
 def main():
     if is_another_LAST_SYNC_MONITOR_running():
         #speak("there is another 'EnneadTab Talkie' opened. Now quiting")
@@ -151,7 +152,7 @@ def main():
 
 
     def unpack_record():
-        dump_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+        dump_folder = FOLDER.get_EA_local_dump_folder()
 
         records = [file_name for file_name in os.listdir(dump_folder) if "last_sync" in file_name.lower()]
         if len(records) == 0:
@@ -159,7 +160,7 @@ def main():
 
         # add this try catch in case reading file when json file is updating
         try:
-            record = EnneadTab.DATA_FILE.read_json_as_dict("{}\{}".format(dump_folder, records[0]))
+            record = DATA_FILE.read_json_as_dict("{}\{}".format(dump_folder, records[0]))
             return record
         except:
             return None
@@ -219,8 +220,8 @@ def main():
                         bad_docs += ", and {}".format(key)
 
                     if int(now -value)%(60*5)==0:
-                        EnneadTab.SPEAK.speak("Document {} has not been synced for too long.".format(key))
-                        EnneadTab.NOTIFICATION.toast(main_text = "Document {} has not been synced for too long.".format(key), importance_level = 0)
+                        SPEAK.speak("Document {} has not been synced for too long.".format(key))
+                        NOTIFICATION.toast(main_text = "Document {} has not been synced for too long.".format(key), importance_level = 0)
             else:
                 draw_text(text, font_body, TEXT_COL, 50, pointer_H)
             pointer_H += 20
@@ -271,7 +272,7 @@ def main():
 
                 #resume alert later
                 """
-                EnneadTab.SPEAK.speak("Document {} has not been synced for too long.".format(bad_docs))
+                SPEAK.speak("Document {} has not been synced for too long.".format(bad_docs))
                 if not is_hate_toast():
                     EA_TOASTER.toast(message = bad_docs, title = "You have documents not synced in a while.", app_name = "EnneadTab Monitor", icon = None, click = None, actions = None)
                 """

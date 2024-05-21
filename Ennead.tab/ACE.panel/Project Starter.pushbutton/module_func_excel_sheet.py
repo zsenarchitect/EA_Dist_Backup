@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from pyrevit import forms #
-from pyrevit import script #
 
-import EnneadTab
+from EnneadTab import EXE, EXCEL, FOLDER, ERROR_HANDLE
 from Autodesk.Revit import DB 
 
 def is_new_sheet_number_ok(doc, new_sheet_numbers):       
@@ -23,11 +22,11 @@ def is_new_sheet_number_ok(doc, new_sheet_numbers):
     
 
      
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def excel_sheet_creator(doc, excel_path, worksheet_name , data_map):
 
     
-    data = EnneadTab.EXCEL.read_data_from_excel(excel_path, worksheet = worksheet_name, by_line = True)
+    data = EXCEL.read_data_from_excel(excel_path, worksheet = worksheet_name, by_line = True)
     data = [x for x in data if x[0] == "YES"]
     # print (data)
     new_sheet_numbers = [x[4] for x in data]
@@ -69,12 +68,12 @@ def excel_sheet_creator(doc, excel_path, worksheet_name , data_map):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def open_sample_excel():
     excel_path = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\Ennead.tab\ACE.panel\Project Starter.pushbutton\Make Sheet With Excel.xlsx"
-    copy = EnneadTab.FOLDER.copy_file_to_local_dump_folder(excel_path,
+    copy = FOLDER.copy_file_to_local_dump_folder(excel_path,
                                                            "Sample Sheet Creation Data.xlsx")
-    EnneadTab.EXE.open_file_in_default_application(copy)
+    EXE.open_file_in_default_application(copy)
     
 
 

@@ -1,10 +1,11 @@
 
 from Autodesk.Revit import DB 
 from pyrevit import forms
-import EnneadTab
+
+from EnneadTab import NOTIFICATION, ERROR_HANDLE
 import os
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def set_proj_info(doc, data):
 
     t = DB.Transaction(doc, "Set Project Info")
@@ -24,10 +25,10 @@ def set_proj_info(doc, data):
                                default_name=data["FileName"],
                                title = "Where the file is saved?")
         if not path:
-            EnneadTab.NOTIFICATION.messenger (main_text =  "No filepath set.")
+            NOTIFICATION.messenger (main_text =  "No filepath set.")
         else:
             if os.path.exists(path):
-                EnneadTab.NOTIFICATION.messenger (main_text =  "There is a same name file in the location. Will cancel saving.")
+                NOTIFICATION.messenger (main_text =  "There is a same name file in the location. Will cancel saving.")
             else:
                 option = DB.SaveAsOptions ()
                 if not doc.IsWorkshared:
@@ -39,7 +40,7 @@ def set_proj_info(doc, data):
                 doc.SaveAs(path, option)
                 # doc.SaveAs("{}\{}.rvt".format(folder, data["FileName"]))
 
-    EnneadTab.NOTIFICATION.messenger (main_text =  "Project Parameter Set")
+    NOTIFICATION.messenger (main_text =  "Project Parameter Set")
 
 if __name__== "__main__":
     pass

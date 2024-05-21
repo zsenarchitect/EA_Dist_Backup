@@ -4,10 +4,10 @@
 import time
 import pygame
 import button
-import traceback
+
 import os
 import math
-import playsound
+
 from gtts import gTTS
 import random
 import pyautogui
@@ -15,7 +15,7 @@ import math
 import sys
 sys.path.append(r'L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published_Beta_Version\ENNEAD.extension\lib')
 sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Dependency Modules')
-import EnneadTab
+from EnneadTab import DATA_FILE, FOLDER, ERROR_HANDLE
 
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
@@ -36,7 +36,7 @@ class TTS:
     def speak(self, text, lang = 'en', accent = 'com'):
 
         tts = gTTS(text = text, lang = lang, tld = accent)
-        filename = "{}\TTS_{}.mp3".format(EnneadTab.FOLDER.get_EA_local_dump_folder(), random.random())#the save address should be in user desktop for folder access reason
+        filename = "{}\TTS_{}.mp3".format(FOLDER.get_EA_local_dump_folder(), random.random())#the save address should be in user desktop for folder access reason
         tts.save(filename)
 
         """
@@ -67,11 +67,11 @@ class TTS:
     def read_from_file(self):
 
         file_name = "EA_Text2Speech.json"
-        dump_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+        dump_folder = FOLDER.get_EA_local_dump_folder()
         file_path = "{}\{}".format(dump_folder, file_name)
 
 
-        if not EnneadTab.FOLDER.is_file_exist_in_folder(file_name, dump_folder):
+        if not FOLDER.is_file_exist_in_folder(file_name, dump_folder):
             return False
 
         #dont speak for file too old
@@ -81,13 +81,13 @@ class TTS:
             print (now)
             print (now - os.path.getctime( file_path))
             print( now - os.path.getmtime( file_path))
-            EnneadTab.FOLDER.remove_exisitng_file_in_folder(dump_folder, file_name)
+            FOLDER.remove_exisitng_file_in_folder(dump_folder, file_name)
             return False
 
 
 
         try:
-            data = EnneadTab.DATA_FILE.read_json_as_dict(file_path)
+            data = DATA_FILE.read_json_as_dict(file_path)
         except:
             return False
         if not data:
@@ -100,7 +100,7 @@ class TTS:
         if res:
             print("speak finish")
 
-            EnneadTab.FOLDER.remove_exisitng_file_in_folder(dump_folder, file_name)
+            FOLDER.remove_exisitng_file_in_folder(dump_folder, file_name)
             return True
         
         return False
@@ -134,43 +134,43 @@ class TTS:
         return False
 
     def is_lady_killed(self):
-        return not EnneadTab.DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_talkie", True))
+        return not DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_talkie", True))
         """
         file_name = 'revit_ui_setting.json'
-        if not EnneadTab.FOLDER.is_file_exist_in_dump_folder(file_name):
+        if not FOLDER.is_file_exist_in_dump_folder(file_name):
             return False
 
 
-        setting_file = EnneadTab.FOLDER.get_EA_dump_folder_file(file_name)
-        data = EnneadTab.DATA_FILE.read_json_as_dict(setting_file)
+        setting_file = FOLDER.get_EA_dump_folder_file(file_name)
+        data = DATA_FILE.read_json_as_dict(setting_file)
         return not data.get("toggle_bt_is_talkie", True)
         """
 
     """
-        dump_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+        dump_folder = FOLDER.get_EA_local_dump_folder()
         file_name = "EA_TALKIE_KILL.kill"
-        if EnneadTab.FOLDER.is_file_exist_in_folder(file_name, dump_folder):
+        if FOLDER.is_file_exist_in_folder(file_name, dump_folder):
             print("Lets the murder begin...")
             return True
         return False
     """
 
     def mark_kill_file(self):
-        EnneadTab.DATA_FILE.set_revit_ui_setting_data("toggle_bt_is_talkie", False)
+        DATA_FILE.set_revit_ui_setting_data("toggle_bt_is_talkie", False)
         """
         file_name = 'revit_ui_setting.json'
-        if not EnneadTab.FOLDER.is_file_exist_in_dump_folder(file_name):
+        if not FOLDER.is_file_exist_in_dump_folder(file_name):
             return 
 
 
-        setting_file = EnneadTab.FOLDER.get_EA_dump_folder_file(file_name)
-        data = EnneadTab.DATA_FILE.read_json_as_dict(setting_file)
+        setting_file = FOLDER.get_EA_dump_folder_file(file_name)
+        data = DATA_FILE.read_json_as_dict(setting_file)
         data["toggle_bt_is_talkie"] = False
-        EnneadTab.DATA_FILE.save_dict_to_json(data, setting_file)
+        DATA_FILE.save_dict_to_json(data, setting_file)
         """
 
         """
-        dump_folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+        dump_folder = FOLDER.get_EA_local_dump_folder()
         file_name = "EA_TALKIE_KILL.kill"
         filepath = "{}\{}".format(dump_folder, file_name)
 
@@ -183,7 +183,7 @@ class TTS:
         img = font.render(text, True, text_col)
         self.screen.blit(img, (x, y))
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error_silently
+    @ERROR_HANDLE.try_catch_error_silently
     def main(self):
         if self.is_another_TTS_running():
             #speak("there is another 'EnneadTab Talkie' opened. Now quiting")

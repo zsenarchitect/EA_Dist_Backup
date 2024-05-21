@@ -12,7 +12,8 @@ from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EnneadTab
+
+from EnneadTab import DATA_CONVERSION, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 import random
@@ -21,7 +22,7 @@ uidoc = __revit__.ActiveUIDocument
 doc = __revit__.ActiveUIDocument.Document
 __persistentengine__ = True
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def make_3D_views_for_warning_cleaning():
     t = DB.Transaction(doc, "preaction view setting")
     t.Start()
@@ -34,7 +35,7 @@ def make_3D_views_for_warning_cleaning():
         
     except:
 
-        EnneadTab.ERROR_HANDLE.print_note( traceback.format_exc())
+        ERROR_HANDLE.print_note( traceback.format_exc())
 
     t.Commit()
 
@@ -68,7 +69,7 @@ def get_threeD_view_type():
 def get_current_warning_count():
     return len(doc.GetWarnings())
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def random_pick(error_element_ids):
 
     try:
@@ -95,7 +96,7 @@ def random_pick(error_element_ids):
 
 
 
-    uidoc.Selection.SetElementIds(EnneadTab.DATA_CONVERSION.list_to_system_list(error_element_ids))
+    uidoc.Selection.SetElementIds(DATA_CONVERSION.list_to_system_list(error_element_ids))
 
 
     if bbox:
@@ -115,7 +116,7 @@ def random_pick(error_element_ids):
             print (traceback.format_exc())
         return
     #print error_element_ids
-    uidoc.ShowElements(EnneadTab.DATA_CONVERSION.list_to_system_list(error_element_ids))
+    uidoc.ShowElements(DATA_CONVERSION.list_to_system_list(error_element_ids))
 
 
 # Create a subclass of IExternalEventHandler
@@ -156,7 +157,7 @@ class generic_warning_fixer_ModelessForm(WPFWindow):
     """
     Simple modeless form sample
     """
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pre_actions(self):
 
         #print "doing preaction"
@@ -197,7 +198,7 @@ class generic_warning_fixer_ModelessForm(WPFWindow):
         self.Show()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def primary_button_click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         #print "primary button clicked"
@@ -226,7 +227,7 @@ class generic_warning_fixer_ModelessForm(WPFWindow):
         # default_run_event.Raise()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_button_click(self, sender, e):
 
         #print "close button clicked"
@@ -236,7 +237,7 @@ class generic_warning_fixer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_warning_category(self, sender, e):
         all_warnings = doc.GetWarnings()
 

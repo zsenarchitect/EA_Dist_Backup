@@ -348,7 +348,8 @@ def register_auto_update():
     user_config.check_updates = True
     user_config.save_changes()
 
-    return # disable autoupdater for now for better performace.
+
+    return # disable autoupdater for now for better performace.--> do this after doc closing is better
     
     from pyrevit.versionmgr import updater
     if updater.check_for_updates():

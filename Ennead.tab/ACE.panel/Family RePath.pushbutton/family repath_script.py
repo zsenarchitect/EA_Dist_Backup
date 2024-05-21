@@ -4,7 +4,8 @@ from pyrevit import forms,  script
 from pyrevit.revit import ErrorSwallower
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
-import EnneadTab
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_FORMS
+from EnneadTab import OUTPUT, ERROR_HANDLE, NOTIFICATION
 
 __doc__ = """Find family file path. And remap the path to a folder you picked. In this folder, families will be organised based on their category.
 This will also load the repathed families back to central model.
@@ -14,8 +15,8 @@ You also have the option to dig inside the nesting family and save them.
 """
 __title__ = "Family\nRePath"
 __tip__ = True
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 uiapp = UI.UIApplication
 
 
@@ -57,7 +58,7 @@ class FamilyRePath:
         self.log = ""
         
         opts = [["Yes","Recursively looking for nesting family so it will take longer."], ["No","Just remap the project level family."]]
-        res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Do you want to process nesting families?", 
+        res = REVIT_FORMS.dialogue(main_text = "Do you want to process nesting families?", 
                                                     options = opts)
         self.process_nesting = False
         if res == opts[0][0]:
@@ -66,7 +67,7 @@ class FamilyRePath:
         
         
         opts = ["Yes", "No"]
-        res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Do you want to sync Revit after families are repathed?", 
+        res = REVIT_FORMS.dialogue(main_text = "Do you want to sync Revit after families are repathed?", 
                                                     options = opts)
         self.sync_and_close = False
         if res == opts[0]:
@@ -146,7 +147,7 @@ class FamilyRePath:
                 #  since 2023, ParameterType property is no longer valid.
                 except:
                     para_group = DB.GroupTypeId.AdskModelProperties 
-                    para_type = EnneadTab.REVIT.REVIT_UNIT.lookup_unit_spec_id("length")
+                    para_type = REVIT_UNIT.lookup_unit_spec_id("length")
 
                 is_instance = True
 
@@ -178,14 +179,14 @@ class FamilyRePath:
 
 
                 """
-                ui_famDoc = EnneadTab.REVIT.REVIT_APPLICATION.open_and_active_project (new_file_path)
+                ui_famDoc = REVIT_APPLICATION.open_and_active_project (new_file_path)
                 famDoc = ui_famDoc.Document
                 #out_family = clr.StrongBox[DB.Family](family)
                 #famDoc.LoadFamily(doc, FamilyOption(), out_family)
                 famDoc.LoadFamily(doc, FamilyOption())
-                EnneadTab.REVIT.REVIT_APPLICATION.set_active_doc_as_new_family()
+                REVIT_APPLICATION.set_active_doc_as_new_family()
                 famDoc.Close(False)
-                #EnneadTab.REVIT.REVIT_APPLICATION.close_docs_by_name([family_name])
+                #REVIT_APPLICATION.close_docs_by_name([family_name])
                 #doc.LoadFamily(new_file_path)
                 """
             except Exception as e:
@@ -202,7 +203,7 @@ class FamilyRePath:
                 nesting_families = DB.FilteredElementCollector(family.Document).OfClass(DB.Family).ToElements()
                 for nesting_family in nesting_families:
                     indentation_title += "-->[{}]".format(nesting_family.Name)
-                    EnneadTab.NOTIFICATION.messenger(main_text = "Discovering nesting family: {}".format(indentation_title))
+                    NOTIFICATION.messenger(main_text = "Discovering nesting family: {}".format(indentation_title))
                     # script.get_output().self_destruct(5)
                     self.repath(nesting_family)
             except:
@@ -211,7 +212,7 @@ class FamilyRePath:
         famDoc.Close(False)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error_silently
+    @ERROR_HANDLE.try_catch_error_silently
     def display_results(self):
         if not self.is_valid_input():
             return
@@ -247,9 +248,9 @@ class FamilyRePath:
         print (self.log)
 
         print ("\n\nEnd of Tool")
-        EnneadTab.NOTIFICATION.messenger(main_text = "All families have beeen remapped.")
+        NOTIFICATION.messenger(main_text = "All families have beeen remapped.")
         
-        EnneadTab.OUTPUT.display_output_on_browser()
+        OUTPUT.display_output_on_browser()
 
     def print_collection(self,collection):
         # table_data = []
@@ -276,7 +277,7 @@ def main():
         family_repath.process_families()
     family_repath.display_results()
     if family_repath.sync_and_close:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        REVIT_APPLICATION.sync_and_close()
 
         
         

@@ -12,14 +12,16 @@ from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import DATA_FILE, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import time
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 import traceback
 import sys
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 def update_view_name():
     current_name = doc.ActiveView.Name
@@ -46,7 +48,7 @@ def update_view_name():
         print (current_name)
         print (new_name)
         print (e)
-        EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
+        REVIT_FORMS.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
 
 
 def isolate_elements_temporarily(element_ids):
@@ -56,7 +58,7 @@ def isolate_elements_temporarily(element_ids):
         for e in everythings:
             if isinstance(e, DB.RevitLinkInstance ):
                 if e.GetLinkDocument().Title == export_doc.Title:
-                    doc.ActiveView.IsolateElementsTemporary(EnneadTab.DATA_CONVERSION.list_to_system_list([e.Id]))
+                    doc.ActiveView.IsolateElementsTemporary(DATA_CONVERSION.list_to_system_list([e.Id]))
                     # now that the link instance is here, i am going to hide everything tht is not in keeping lst
                     break
 
@@ -68,7 +70,7 @@ def isolate_elements_temporarily(element_ids):
             if e.Id not in element_ids:
                 try:
                     # bad performance......i am not using batch hide becasue there are som etype cannot be hidden, and there is no( yet) easy way to find which can hide or not... so just treat them individually
-                    doc.ActiveView.HideElements (EnneadTab.DATA_CONVERSION.list_to_system_list([e.Id]))
+                    doc.ActiveView.HideElements (DATA_CONVERSION.list_to_system_list([e.Id]))
                 except:
                     # print ("cannot hide {}".format(type(e)))
                     bad_types.add(type(e))
@@ -76,7 +78,7 @@ def isolate_elements_temporarily(element_ids):
         for bad_type in bad_types:
             print ("cannot hide {}".format(bad_type))
         return
-    doc.ActiveView.IsolateElementsTemporary(EnneadTab.DATA_CONVERSION.list_to_system_list(element_ids))
+    doc.ActiveView.IsolateElementsTemporary(DATA_CONVERSION.list_to_system_list(element_ids))
     pass
 
 
@@ -196,7 +198,7 @@ def get_wall_elements_ids(wall_type):
 
     wall_ids = [x.Id for x in my_walls]
 
-    #uidoc.Selection.SetElementIds (EnneadTab.DATA_CONVERSION.list_to_system_list(wall_ids))
+    #uidoc.Selection.SetElementIds (DATA_CONVERSION.list_to_system_list(wall_ids))
     for wall in my_walls:
         wall_ids.extend(get_element_ids_on_wall(wall))
 
@@ -265,17 +267,17 @@ def get_stair_elements_ids(stair_type):
         if isinstance(stair, DB.FamilyInstance):
             if stair.Symbol.Family.IsInPlace:
                 print ("!!!!! stairtype [{}] is a in-place family.".format(stair_type_name))
-                EnneadTab.NOTIFICATION.messenger(main_text = "<{}> is a in-place family".format(stair_type_name))
+                NOTIFICATION.messenger(main_text = "<{}> is a in-place family".format(stair_type_name))
                 
         try:
             stair_ids.extend(stair.GetAssociatedRailings ())
         except:
-            EnneadTab.NOTIFICATION.messenger(main_text = "<{}> has no associated railings".format(stair_type_name))
+            NOTIFICATION.messenger(main_text = "<{}> has no associated railings".format(stair_type_name))
             
         try:
             stair_ids.extend(stair.GetDependentElements(None))
         except:
-            EnneadTab.NOTIFICATION.messenger(main_text = "<{}> has no dependent elements".format(stair_type_name))
+            NOTIFICATION.messenger(main_text = "<{}> has no dependent elements".format(stair_type_name))
 
     return stair_ids
 
@@ -297,7 +299,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                                                     button_name='use setting with this name for this export job', \
                                                     title = "Select existing Export Setting.")
             if sel_setting == None:
-                EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "You didn't select any export setting. Try again.")
+                REVIT_FORMS.dialogue(main_text = "You didn't select any export setting. Try again.")
                 attempt += 1
             else:
                 break
@@ -316,7 +318,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                 sel_setting = setting
                 break
         if sel_setting == None:
-            EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
+            REVIT_FORMS.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
             sel_setting = pick_from_setting()
 
 
@@ -341,7 +343,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
     print ("preparing [{}].dwg".format(file_name))
     EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
     
-    view_as_collection = EnneadTab.DATA_CONVERSION.list_to_system_list([view_or_sheet.Id])
+    view_as_collection = DATA_CONVERSION.list_to_system_list([view_or_sheet.Id])
     max_attempt = 10
     attempt = 0
     #print view_as_collection
@@ -397,14 +399,14 @@ def get_elements_by_OST(OST):
     return all_els
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     if any([doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .RevealHiddenElements),
             doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .TemporaryHideIsolate),
             doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .WorksharingDisplay),
             doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .TemporaryViewProperties),
             doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .RevealConstraints)]):
-        EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Cannot use temporary view mode for this tool. You can apply changes to make it permanent before proceeding.")
+        REVIT_FORMS.dialogue(main_text = "Cannot use temporary view mode for this tool. You can apply changes to make it permanent before proceeding.")
         return
     #ideas:
 
@@ -527,7 +529,7 @@ def main():
     
     export_ost_material_map()
     print ("\n\nTool Finished!")
-    EnneadTab.NOTIFICATION.duck_pop("All exported!")
+    NOTIFICATION.duck_pop("All exported!")
     
     
 def export_ost_material_map():
@@ -546,15 +548,15 @@ def export_ost_material_map():
                                        "transparency": int(material.Transparency),
                                        "shininess": int(material.Shininess)}
             material_map[sub_c.Name] = material_data
-    EnneadTab.DATA_FILE.save_dict_to_json_in_dump_folder(material_map, "EA_OST_MATERIAL_MAP.json", True)
+    DATA_FILE.save_dict_to_json_in_dump_folder(material_map, "EA_OST_MATERIAL_MAP.json", True)
     
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
 if __name__ == "__main__":
-    links = EnneadTab.REVIT.REVIT_APPLICATION.get_revit_link_docs(link_only=True)
+    links = REVIT_APPLICATION.get_revit_link_docs(link_only=True)
     if False and len(links) > 0: # giveup on exprt from link becasue you cannot isolate the elelments from links...unless use dynamic view filter, but that is too painful and bring little benifit.
-        export_doc = EnneadTab.REVIT.REVIT_APPLICATION.select_revit_link_docs(select_multiple = False, including_current_doc = True, link_only = False)
+        export_doc = REVIT_APPLICATION.select_revit_link_docs(select_multiple = False, including_current_doc = True, link_only = False)
         IS_FROM_LINK = True
     else:
         export_doc = doc

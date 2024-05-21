@@ -3,10 +3,12 @@ __title__ = "Load Multiple Families\nTo Multiple Docs"
 __tip__ = True
 from pyrevit import forms, DB, UI, script
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab import SOUNDS, ERROR_HANDLE
 import ENNEAD_LOG
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 class FamilyOption(DB.IFamilyLoadOptions):
@@ -89,13 +91,13 @@ def pick_family_from_folder():
         return None
     opened_docs = []
     for source_file in source_files:
-        uidoc = UI.UIApplication(EnneadTab.REVIT.REVIT_APPLICATION.get_application()).OpenAndActivateDocument (source_file)
+        uidoc = UI.UIApplication(REVIT_APPLICATION.get_application()).OpenAndActivateDocument (source_file)
         opened_docs.append(uidoc.Document)
         
     return opened_docs
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def process_family():
 
     
@@ -123,7 +125,7 @@ def process_family():
 
 
     opts = ["Pick From Opened Families", "Pick Families From A Folder."]
-    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text = "Where to search for family?",
+    res = REVIT_FORMS.dialogue(main_text = "Where to search for family?",
                                             options = opts)
     if res == opts[0]:
         selected_family_docs = pick_open_family_docs()
@@ -161,7 +163,7 @@ def process_family():
             doc_list += "\n" + doc.Title
 
         try:
-            print(EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3))
+            print(REVIT_FORMS.notification(main_text = "Family [{}] has been loaded to following docs:".format(selected_family_doc.Title), sub_text = doc_list, self_destruct = 3))
         except:
             pass
         #close_family(selected_family_doc)
@@ -171,7 +173,7 @@ def process_family():
         print(line)
 
     if will_sync_and_close:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        REVIT_APPLICATION.sync_and_close()
     """
     options = ["Yes", "No"]
     res = EA_UTILITY.dialogue(main_text = "Loading finish, you want to close family doc?", options = options)
@@ -203,7 +205,7 @@ def close_family(family_doc):
 def main():
     process_family()
     # action finished
-    EnneadTab.SOUNDS.play_sound("sound effect_notification position.wav")
+    SOUNDS.play_sound("sound effect_notification position.wav")
     ENNEAD_LOG.use_enneadtab(coin_change = 100, tool_used = __title__.replace("\n", " "), show_toast = True)
 ################## main code below #####################
 

@@ -16,23 +16,25 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_HISTORY
+from EnneadTab import ENVIRONMENT, OUTPUT, NOTIFICATION, ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+# uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def display_warning_history(using_current = True):
 
     if using_current and doc.IsFamilyDocument:
-        EnneadTab.NOTIFICATION.messenger(main_text="You cannot check current history on a family document.\nBut you can check others. Try Shift Click this button again.")
+        NOTIFICATION.messenger(main_text="You cannot check current history on a family document.\nBut you can check others. Try Shift Click this button again.")
         
         return
 
     show_detail = True
     opts= ["Yes, show details", "No details, just graph"]
-    res = EnneadTab.REVIT.REVIT_FORMS.dialogue(main_text="Would you like to see the details of the warnings?",options = opts)
+    res = REVIT_FORMS.dialogue(main_text="Would you like to see the details of the warnings?",options = opts)
     if not res:
         return
     if res == opts[1]:
@@ -40,14 +42,14 @@ def display_warning_history(using_current = True):
     
     if using_current:
         hint_chart_js()
-        EnneadTab.REVIT.REVIT_HISTORY.display_warning(doc.Title, show_detail=show_detail)
+        REVIT_HISTORY.display_warning(doc.Title, show_detail=show_detail)
         return
     
     class MyOption(forms.TemplateListItem):
         @property
         def name(self):
             return self.item.replace("REVIT_WARNING_HISTORY_", "").replace(".json", "")
-    folder = EnneadTab.ENVIRONMENT_CONSTANTS.SHARED_DATA_DUMP_FOLDER
+    folder = ENVIRONMENT_CONSTANTS.SHARED_DATA_DUMP_FOLDER
 
     file_list = [MyOption(x) for x in os.listdir(folder) if x.startswith("REVIT_WARNING_HISTORY_")]
     file_list.sort(key=lambda x: x.name)
@@ -60,16 +62,16 @@ def display_warning_history(using_current = True):
 
     hint_chart_js()
     for item in res:
-        EnneadTab.REVIT.REVIT_HISTORY.display_warning(item.replace("REVIT_WARNING_HISTORY_", "").replace(".json", ""),
+        REVIT_HISTORY.display_warning(item.replace("REVIT_WARNING_HISTORY_", "").replace(".json", ""),
                                                       show_detail=show_detail)
     
-    # EnneadTab.OUTPUT.display_output_on_browser()
+    # OUTPUT.display_output_on_browser()
     print("Done")
 
 def hint_chart_js():
     hint_image = script.get_bundle_file("chart js hint.png")
 
-    EnneadTab.NOTIFICATION.messenger(main_text="When asked about loading java script, click 'yes'",
+    NOTIFICATION.messenger(main_text="When asked about loading java script, click 'yes'",
                                      image = hint_image)
 ################## main code below #####################
 

@@ -6,12 +6,14 @@ from pyrevit import forms
 from pyrevit import script
 from EA_UTILITY import dialogue
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_UNIT, REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from EnneadTab import NOTIFICATION 
 #forms.alert( "Work in progress. Coming in the next version")
 from Autodesk.Revit import DB
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 class Solution:
@@ -78,7 +80,7 @@ class Solution:
         class MyOption(forms.TemplateListItem):
             @property
             def name(self):
-                return "{}: {}ft = {}mm".format(self.Name, self.Elevation, EnneadTab.REVIT.REVIT_UNIT.internal_to_mm(self.Elevation))
+                return "{}: {}ft = {}mm".format(self.Name, self.Elevation, REVIT_UNIT.internal_to_mm(self.Elevation))
         levels = [MyOption(x) for x in levels]
         level = forms.SelectFromList.show(levels,
                                             multiselect = False,
@@ -115,7 +117,7 @@ class Solution:
         t.Commit()
         return instance
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def move_to_origin(self):
         selection = [doc.GetElement(x) for x in uidoc.Selection.GetElementIds()]
         if len(selection) < 1:

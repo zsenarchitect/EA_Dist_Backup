@@ -13,13 +13,15 @@ from EnneadTab import NOTIFICATION
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY
 from Autodesk.Revit import DB
 from rpw.db import family 
 # from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 LIST_VIEW = "EA_DETAIL_DUMP"
 
@@ -135,7 +137,7 @@ class Deployer:
         
 
     
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def list_detail_items():
     detail_families = REVIT_SELECTION.pick_detail_componenet(multi_select=True)
 

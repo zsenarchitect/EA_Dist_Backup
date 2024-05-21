@@ -23,11 +23,13 @@ from pyrevit import script #
 # from pyrevit import _HostApplication
 from pyrevit import HOST_APP
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, SOUNDS, USER, ERROR_HANDLE
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
@@ -54,7 +56,7 @@ def change_workset(element, target_workset) :
 
     #print "{}, {},{}".format(output.linkify(element.Id, title = "Go To Element"), element.GroupId, element.DesignOption)
     ownership = DB.WorksharingUtils.GetWorksharingTooltipInfo(doc,element.Id).Owner
-    if ownership and (ownership != EnneadTab.USER.get_autodesk_user_name()):
+    if ownership and (ownership != USER.get_autodesk_user_name()):
         log = "[Owndership] Cannot edit {0} due to ownership by {2}---> {1}".format(element.Id,output.linkify(element.Id, title = "Go To Element"),ownership)
         return True, True, log
 
@@ -144,7 +146,7 @@ def get_all_of_this(claimer):
     return list(all_elements)
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def update_worksets(changed_cates):
 
     t = DB.Transaction(doc, "Update Worksets")
@@ -167,7 +169,7 @@ def update_worksets(changed_cates):
         if obj.selected_workset == "By Host":
             target_workset = "By Host"
         else:
-            target_workset = EnneadTab.REVIT.REVIT_SELECTION.get_workset_by_name(doc, obj.selected_workset)
+            target_workset = REVIT_SELECTION.get_workset_by_name(doc, obj.selected_workset)
         res = [change_workset(element, target_workset) for element in all_elements]
         in_wrong_workset_count = len([x for x in res if x[0] == True])
         is_fail_convert_count = len([x for x in res if x[1] == True])
@@ -197,8 +199,8 @@ def update_worksets(changed_cates):
 
         
 
-        EnneadTab.SOUNDS.play_sound("sound effect_happy bell.wav")
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "For {}, {} elements found.\n{} of them in wrong workset.".format(obj.format_name, len(all_elements),in_wrong_workset_count, is_fail_convert_count ),
+        SOUNDS.play_sound("sound effect_happy bell.wav")
+        REVIT_FORMS.notification(main_text = "For {}, {} elements found.\n{} of them in wrong workset.".format(obj.format_name, len(all_elements),in_wrong_workset_count, is_fail_convert_count ),
                                                   sub_text = note) #self_destruct = 10
 
     
@@ -281,7 +283,7 @@ class workset_manage_ModelessForm(WPFWindow):
         return
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def __init__(self):
         self.pre_actions()
 
@@ -295,7 +297,7 @@ class workset_manage_ModelessForm(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
 
 
         
@@ -310,10 +312,10 @@ class workset_manage_ModelessForm(WPFWindow):
         if self.radio_bt_by_host.IsChecked:
              self.workset_combos.ItemsSource = ["...Unchange..."] + ['By Host']
         else:
-            self.workset_combos.ItemsSource = ["...Unchange..."] + [x.Name for x in EnneadTab.REVIT.REVIT_SELECTION.get_all_userworkset(doc)]
+            self.workset_combos.ItemsSource = ["...Unchange..."] + [x.Name for x in REVIT_SELECTION.get_all_userworkset(doc)]
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def init_data_grid(self):
         if self.radio_bt_by_cate.IsChecked:
 
@@ -351,7 +353,7 @@ class workset_manage_ModelessForm(WPFWindow):
             self.main_data_grid.ItemsSource = [data_grid_obj(type) for type in type_list]
         
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def preview_selection_changed(self, sender, args):
         obj = self.main_data_grid.SelectedItem
         if not obj:
@@ -362,7 +364,7 @@ class workset_manage_ModelessForm(WPFWindow):
         self.textblock_workset_detail.Text = "{} of {} in this project.".format(len(get_all_of_this(obj.claimer)), obj.format_name)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def setting_changed(self, sender, args):
         self.update_UI()
 
@@ -378,7 +380,7 @@ class workset_manage_ModelessForm(WPFWindow):
         self.init_data_grid()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def update_worksets_click(self, sender, args):
         cates = self.main_data_grid.ItemsSource
         changed_cates = [obj for obj in cates if obj.selected_workset != "...Unchange..."]
@@ -396,7 +398,7 @@ class workset_manage_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def close_Click(self, sender, e):
         # This Raise() method launch a signal to Revit to tell him you want to do something in the API context
         self.Close()

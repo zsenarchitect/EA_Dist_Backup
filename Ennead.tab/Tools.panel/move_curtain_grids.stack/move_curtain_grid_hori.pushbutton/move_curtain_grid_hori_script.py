@@ -10,14 +10,16 @@ __tip__ = True
 # from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
 from EnneadTab import NOTIFICATION
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
 import clr
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 def project_crv(crv):
 
@@ -110,7 +112,7 @@ def process_wall(wall, crvs):
         #DB.Transform.CreateTranslation (vecter)
         DB.ElementTransformUtils.MoveElement(doc, grid.Id,vecter)
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def move_curtain_grid():
 
     walls = uidoc.Selection.PickObjects(UI.Selection.ObjectType.Element, "Pick walls")

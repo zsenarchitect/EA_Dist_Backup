@@ -4,7 +4,9 @@
 from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_UNIT
+from EnneadTab import NOTIFICATION, ERROR_HANDLE
 
 from Autodesk.Revit import DB 
 
@@ -67,12 +69,12 @@ def get_level_data(raw_data):
         
     return level_data
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def create_levels(doc, level_data, prefix):
 
-    is_mm = EnneadTab.REVIT.REVIT_UNIT.is_doc_unit_mm(doc)
-    is_ft = EnneadTab.REVIT.REVIT_UNIT.is_doc_unit_feet(doc)
-    is_inch = EnneadTab.REVIT.REVIT_UNIT.is_doc_unit_inches(doc)
+    is_mm = REVIT_UNIT.is_doc_unit_mm(doc)
+    is_ft = REVIT_UNIT.is_doc_unit_feet(doc)
+    is_inch = REVIT_UNIT.is_doc_unit_inches(doc)
     
     success_count = 0
     # print titleblock_type_id
@@ -85,7 +87,7 @@ def create_levels(doc, level_data, prefix):
             
            
             if is_mm:
-                level = DB.Level.Create(doc, EnneadTab.REVIT.REVIT_UNIT.mm_to_internal(creation_data.level_elevation))
+                level = DB.Level.Create(doc, REVIT_UNIT.mm_to_internal(creation_data.level_elevation))
             if is_ft:
                 level = DB.Level.Create(doc, creation_data.level_elevation)
             if is_inch:
@@ -108,7 +110,7 @@ def create_levels(doc, level_data, prefix):
             
             
     t.Commit()
-    EnneadTab.NOTIFICATION.messenger (main_text =  "Successfully created {} levels.".format(success_count))
+    NOTIFICATION.messenger (main_text =  "Successfully created {} levels.".format(success_count))
     
 
 

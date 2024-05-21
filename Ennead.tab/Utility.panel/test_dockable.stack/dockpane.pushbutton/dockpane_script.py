@@ -8,7 +8,8 @@ from pyrevit import DB
 from pyrevit import forms
 
 from pyrevit.framework import wpf, ObservableCollection
-import EnneadTab
+
+from EnneadTab import ERROR_HANDLE
 
 def docopened_eventhandler(sender, args):
     print (args.Document)
@@ -44,7 +45,7 @@ class DockableExample(forms.WPFPanel):
         print (e.message)
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
   forms.register_dockable_panel(DockableExample)
   

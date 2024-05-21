@@ -13,14 +13,16 @@ from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
 
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab import ENVIRONMENT, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE
 import traceback
 from Autodesk.Revit import DB 
 import random
 from Autodesk.Revit import UI
 import System
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 import ENNEAD_LOG
@@ -42,7 +44,7 @@ class CopyUseDestination(DB.IDuplicateTypeNamesHandler):
 
 
 #############universal transfer between files by id
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def copy_elements(element_ids, src_doc, dest_doc, is_strict):
     cp_options = DB.CopyPasteOptions()
     cp_options.SetDuplicateTypeNamesHandler(CopyUseDestination(is_strict = is_strict))
@@ -52,7 +54,7 @@ def copy_elements(element_ids, src_doc, dest_doc, is_strict):
     for id in element_ids:
         try:
             new_item_id = DB.ElementTransformUtils.CopyElements(src_doc,
-                                                    EnneadTab.DATA_CONVERSION.list_to_system_list([id]),
+                                                    DATA_CONVERSION.list_to_system_list([id]),
                                                     dest_doc, None, cp_options)
             success.append(new_item_id)
         except Exception as e:
@@ -66,7 +68,7 @@ def copy_elements(element_ids, src_doc, dest_doc, is_strict):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_templates(templates, src_doc, dest_docs, use_prefix):
 
         
@@ -87,7 +89,7 @@ def transfer_templates(templates, src_doc, dest_docs, use_prefix):
         t.Commit()
 
     T.RollBack()
-    EnneadTab.NOTIFICATION.messenger(main_text = "Transfer template finished.")
+    NOTIFICATION.messenger(main_text = "Transfer template finished.")
 
 
 def get_elevation_marker(doc, elevation_view):
@@ -96,7 +98,7 @@ def get_elevation_marker(doc, elevation_view):
         if marker.GetViewId() == elevation_view.Id.IntegerValue:
             return marker
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_views(views, src_doc, dest_docs):
 
         
@@ -127,7 +129,7 @@ def transfer_views(views, src_doc, dest_docs):
 
 
     T.RollBack()
-    EnneadTab.NOTIFICATION.messenger(main_text = "Transfer views finished.")
+    NOTIFICATION.messenger(main_text = "Transfer views finished.")
 
 
     
@@ -136,7 +138,7 @@ def transfer_views(views, src_doc, dest_docs):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_OSTs(subCs, src_doc, dest_docs, update_OST_definition):
 
         
@@ -166,14 +168,14 @@ def transfer_OSTs(subCs, src_doc, dest_docs, update_OST_definition):
         if update_OST_definition:
             overlap_names = [src_doc.GetElement(x).Name for x in failed_ids if src_doc.GetElement(x)]
             for name in overlap_names:
-                src_subc = EnneadTab.REVIT.REVIT_SELECTION.get_subc(src_doc, name)
-                dest_subc = EnneadTab.REVIT.REVIT_SELECTION.get_subc(dest_doc, name)
+                src_subc = REVIT_SELECTION.get_subc(src_doc, name)
+                dest_subc = REVIT_SELECTION.get_subc(dest_doc, name)
                 match_OST_definition(src_subc, dest_subc)
 
         t.Commit()
 
     T.RollBack()
-    EnneadTab.NOTIFICATION.messenger(main_text = "Transfer object style finished.")
+    NOTIFICATION.messenger(main_text = "Transfer object style finished.")
 
 
 def match_OST_definition(src_subc, dest_subc):
@@ -206,7 +208,7 @@ def get_material_by_name(doc, name):
     else:
         return material[0]
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_materials(materials, src_doc, dest_docs, preserve_keynote):
 
         
@@ -246,10 +248,10 @@ def transfer_materials(materials, src_doc, dest_docs, preserve_keynote):
 
     T.RollBack()
     
-    EnneadTab.NOTIFICATION.messenger(main_text = "Transfer material finished.")
+    NOTIFICATION.messenger(main_text = "Transfer material finished.")
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def transfer_family(families, src_doc, dest_docs, shared_using_project):
     LOG = ""
     for family in families:
@@ -264,7 +266,7 @@ def transfer_family(families, src_doc, dest_docs, shared_using_project):
         
     print(LOG)
     print("\n\nDone!")
-    EnneadTab.NOTIFICATION.messenger(main_text = "Transfer family finished.")
+    NOTIFICATION.messenger(main_text = "Transfer family finished.")
     
 
 class FamilyOption(DB.IFamilyLoadOptions):
@@ -366,7 +368,7 @@ class content_transfer_ModelessForm(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
 
 
         self.source_doc = None
@@ -381,12 +383,12 @@ class content_transfer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_source_doc_click(self, sender, e):
         """self doc + opened docs + links docs"""
-        all_top_docs = EnneadTab.REVIT.REVIT_APPLICATION.get_top_revit_docs()
-        all_links_docs = EnneadTab.REVIT.REVIT_APPLICATION.get_revit_link_docs(link_only = True)
-        all_family_docs = EnneadTab.REVIT.REVIT_APPLICATION.get_all_family_docs(including_current_doc = True)
+        all_top_docs = REVIT_APPLICATION.get_top_revit_docs()
+        all_links_docs = REVIT_APPLICATION.get_revit_link_docs(link_only = True)
+        all_family_docs = REVIT_APPLICATION.get_all_family_docs(including_current_doc = True)
 
 
         
@@ -402,11 +404,11 @@ class content_transfer_ModelessForm(WPFWindow):
         self.varify_UI()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_target_docs_click(self, sender, e):
         """self doc + opened doc """
-        all_top_docs = EnneadTab.REVIT.REVIT_APPLICATION.get_top_revit_docs()
-        all_family_docs = EnneadTab.REVIT.REVIT_APPLICATION.get_all_family_docs(including_current_doc = True)
+        all_top_docs = REVIT_APPLICATION.get_top_revit_docs()
+        all_family_docs = REVIT_APPLICATION.get_all_family_docs(including_current_doc = True)
         self.target_docs = forms.SelectFromList.show([MyOptionPickDoc(x) for x in all_top_docs + all_family_docs],
                                                     title = "Pick a target document",
                                                     multiselect = True)
@@ -418,7 +420,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.varify_UI()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_template_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -433,7 +435,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.textbox_template_name.Text = note +"\n".join([x.Name for x in self.selected_templates])
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_template_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -446,7 +448,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.ext_event_transfer_templates.Raise()
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_OST_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -478,7 +480,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.textbox_OST_name.Text = note +"\n".join(["[{}]{}".format(x.Parent.Name, x.Name) for x in self.selected_categories])
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_OST_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -504,7 +506,7 @@ class content_transfer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_material_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -527,7 +529,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.textbox_material_name.Text = note +"\n".join(x.Name for x in self.selected_materials)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_material_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -552,7 +554,7 @@ class content_transfer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_view_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -578,7 +580,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.textbox_views_name.Text = note +"\n".join(x.Name for x in self.selected_views)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_view_click(self, sender, e):
         if not self.varify_UI():
             return
@@ -598,13 +600,13 @@ class content_transfer_ModelessForm(WPFWindow):
 
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def pick_family_click(self, sender, e):
         if not self.varify_UI():
             return
 
 
-        #docs = EnneadTab.REVIT.REVIT_APPLICATION.get_application().Documents
+        #docs = REVIT_APPLICATION.get_application().Documents
         #family_docs = [doc for doc in docs if doc.IsFamilyDocument]
         all_families = DB.FilteredElementCollector(self.source_doc).OfClass(DB.Family).ToElements()
         class MyOption(forms.TemplateListItem):
@@ -636,7 +638,7 @@ class content_transfer_ModelessForm(WPFWindow):
         self.textbox_family_name.Text = note +"\n".join(x.Name for x in self.selected_family_docs)
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
+    @ERROR_HANDLE.try_catch_error
     def transfer_family_click(self, sender, e):
         if not self.varify_UI():
             return

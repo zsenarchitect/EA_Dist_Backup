@@ -7,9 +7,11 @@ __tip__ = True
 from pyrevit import forms,  script
 from EA_UTILITY import dialogue
 from Autodesk.Revit import DB
-import EnneadTab
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
 
 def get_all_phase():
     all_phase_ids = DB.FilteredElementCollector(doc).OfClass(DB.Phase).ToElementIds ()
@@ -94,7 +96,7 @@ def get_element_phase(element):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def main():
     phase = select_phase()
     if not phase:

@@ -10,7 +10,9 @@ from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
 import EA_UTILITY
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab import ERROR_HANDLE
 import ENNEAD_LOG
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
@@ -86,7 +88,7 @@ def import_camera_action(view_info):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def import_rhino_camera():
     #filepath = r"C:\Users\szhang\Desktop\temp1.3dm"
     filepath = EA_UTILITY.get_EA_dump_folder_file("EA_CAMERA_TRANSFER.3dm")
@@ -102,7 +104,7 @@ def import_rhino_camera():
     #table_type_filter =
     file3dm = file3dm.Read(filepath)
     if file3dm is None:
-        EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "Save as your rhino camera file as Rhino5 for direct import to work.\n\nEnneadtab for Rhino can help with that.",
+        REVIT_FORMS.notification(main_text = "Save as your rhino camera file as Rhino5 for direct import to work.\n\nEnneadtab for Rhino can help with that.",
                                         sub_text = "rpw Rhino module was last published in 2017. That is why direct support is limited.",
                                         window_height = 350,
                                         window_width = 550,

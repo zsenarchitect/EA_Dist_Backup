@@ -10,15 +10,17 @@ __tip__ = True
 from pyrevit import script #
 
 import ENNEAD_LOG
-import EnneadTab
+
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import USER, ERROR_HANDLE
 from Autodesk.Revit import DB 
 # from Autodesk.Revit import UI
-uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+uidoc = REVIT_APPLICATION.get_uidoc()
+doc = REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error
+@ERROR_HANDLE.try_catch_error
 def generic_healthcare_tool(doc, show_log):
-    if not EnneadTab.USER.is_SZ():
+    if not USER.is_SZ():
         return
     
     note = """TO-DO:
