@@ -14,9 +14,9 @@ except:
 
 import ENVIRONMENT_CONSTANTS
 if ENVIRONMENT_CONSTANTS.is_Revit_environment():
-    from Autodesk.Revit.DB import Color as DB_Color
+    from Autodesk.Revit.DB import Color as DB_Color # pyright: ignore
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-    import Eto
+    import Eto # pyright: ignore
 import NOTIFICATION
 import FOLDER
 

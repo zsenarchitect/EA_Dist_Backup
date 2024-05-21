@@ -582,7 +582,7 @@ def get_panel_location_map(panels):
     Return:
         dict of panel location index: key:panel.Id, value: (U_index, V_index))
     """
-    import clr
+    import clr # pyright: ignore
     
     wall_dict = dict()
     walls = list(set([x.Host for x in panels]))

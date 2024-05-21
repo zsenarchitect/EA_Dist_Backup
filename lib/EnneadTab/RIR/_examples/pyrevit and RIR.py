@@ -1,4 +1,4 @@
-from pyrevit import clr, revit, DB
+from pyrevit import clr, revit, DB  # pyright: ignore
 from pyrevit.framework import Enumerable
 from pyrevit import script
 

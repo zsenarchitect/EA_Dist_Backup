@@ -5,8 +5,8 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
 if ENVIRONMENT_CONSTANTS.is_Grasshopper_environment():
-    import Rhino
-    import Grasshopper
+    import Rhino # pyright: ignore
+    import Grasshopper # pyright: ignore
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
 

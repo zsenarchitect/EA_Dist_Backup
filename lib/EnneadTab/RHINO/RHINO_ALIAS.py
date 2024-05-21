@@ -1,7 +1,7 @@
 
 import ENVIRONMENT_CONSTANTS
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-    import Rhino
+    import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
 
 import os

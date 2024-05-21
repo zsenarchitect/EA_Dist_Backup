@@ -1,9 +1,9 @@
 try:
-    import System
-    import Rhino
+    import System # pyright: ignore
+    import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
 
-    import Eto
+    import Eto # pyright: ignore
 
 
     import scriptcontext as sc

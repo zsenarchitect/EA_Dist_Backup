@@ -3,7 +3,7 @@
 import os
 import zipfile
 try:
-    import System
+    import System # pyright: ignore
 except:
     pass
 

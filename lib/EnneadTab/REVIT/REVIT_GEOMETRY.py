@@ -76,7 +76,7 @@ def get_intersect_pt_from_crvs(crv1, crv2, project_to_ground = True):
     Returns:
         DB.XYZ: the intersection point if any, return None if no intersection
     """
-    import clr
+    import clr # pyright: ignore
     if project_to_ground:
         crv1 = project_crv_to_ground(crv1)
         crv2 = project_crv_to_ground(crv2)

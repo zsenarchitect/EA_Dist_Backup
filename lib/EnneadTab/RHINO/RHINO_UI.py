@@ -13,7 +13,7 @@ import COLOR
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
-    import Eto
+    import Eto # pyright: ignore
 
 
 

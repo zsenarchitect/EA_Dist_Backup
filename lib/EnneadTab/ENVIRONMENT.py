@@ -143,7 +143,7 @@ def is_Grasshopper_environment():
         bool: True if current environment is Grasshopper.
     """
     try:
-        import Grasshopper
+        import Grasshopper # pyright: ignore
         return True
     except:
         return False
@@ -185,8 +185,8 @@ def set_environment_variable_from_iron_python(key_name, value):
         key_name (str): The environment variable name.
         value (str): The environment variable value.
     """
-    import System
-    from System import Environment
+    import System # pyright: ignore
+    from System import Environment # pyright: ignore
 
     # Set the environment variable
     Environment.SetEnvironmentVariable(key_name, value, System.EnvironmentVariableTarget.User)
@@ -216,7 +216,7 @@ def get_environment_variable(key_name, default_value = None):
 
 
 if is_exclusive_Rhino_environment():
-    import Rhino
+    import Rhino # pyright: ignore
     import scriptcontext as sc
     sc.doc = Rhino.RhinoDoc.ActiveDoc
 

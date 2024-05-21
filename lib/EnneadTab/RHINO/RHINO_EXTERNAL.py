@@ -6,7 +6,7 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-    import Rhino
+    import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
 

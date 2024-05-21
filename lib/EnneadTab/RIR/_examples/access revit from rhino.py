@@ -1,6 +1,6 @@
-import clr
+import clr # pyright: ignore
 clr.AddReference("RhinoInside.Revit")
-from RhinoInside.Revit import Revit
+from RhinoInside.Revit import Revit  # pyright: ignore
 
 # application
 uiapp = Revit.ActiveUIApplication
@@ -13,7 +13,7 @@ doc = Revit.ActiveDBDocument
 
 
 # adding references to the System, RhinoInside
-import clr
+import clr # pyright: ignore
 clr.AddReference('System.Core')
 clr.AddReference('RevitAPI') 
 clr.AddReference('RevitAPIUI')
@@ -26,10 +26,10 @@ from System import Enum
 import rhinoscriptsyntax as rs
 
 # rhino API
-import Rhino
+import Rhino # pyright: ignore
 
 # grasshopper API
-import Grasshopper
+import Grasshopper # pyright: ignore
 
 # revit API
 from Autodesk.Revit import DB # pyright: ignore

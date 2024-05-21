@@ -2,9 +2,9 @@
 
 
 try:
-    import Rhino
+    import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
-    import System
+    import System # pyright: ignore
     import traceback
     
     REF_CLASS = Rhino.Display.DisplayConduit

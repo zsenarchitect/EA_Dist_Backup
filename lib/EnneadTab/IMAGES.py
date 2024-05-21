@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 try:
-    import System.Drawing as SD
+    import System.Drawing as SD # pyright: ignore
 except Exception as e:
     pass
 

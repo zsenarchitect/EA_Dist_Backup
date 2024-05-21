@@ -23,7 +23,7 @@ from rpw.db import family
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
-LIST_VIEW = "EA_DETAIL_DUMP"
+LIST_VIEW = "EnneadTab_Detail Item Dump"
 
 
 class Deployer:
@@ -164,6 +164,12 @@ def list_detail_items():
     t = DB.Transaction(doc, __title__)
     t.Start()
 
+    try:
+        view.LookupParameter("Views_$Group").Set("Ennead")
+        view.LookupParameter("Views_$Series").Set("List Item (´･ᆺ･`)")
+    except:
+        pass
+    
     family_name = "EA_DetailItem_Tag"
 
     tag_family = REVIT_FAMILY.get_family_by_name(family_name,

@@ -68,7 +68,7 @@ def is_Rhino_environment():
 
 def is_Grasshopper_environment():
     try:
-        import Grasshopper
+        import Grasshopper # pyright: ignore
         return True
     except:
         return False
@@ -86,7 +86,7 @@ def is_Revit_environment():
         return False
 
 def is_RhinoInsideRevit_environment():
-    import clr
+    import clr # pyright: ignore
     try:
         clr.AddReference('RhinoCommon')
         clr.AddReference('RhinoInside.Revit')

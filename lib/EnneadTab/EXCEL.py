@@ -99,7 +99,7 @@ def read_data_from_excel(filepath, worksheet = "Sheet1", by_line = True, return_
     # return OUT
     
     
-    import clr
+    import clr # pyright: ignore
     clr.AddReference("Microsoft.Office.Interop.Excel")
     from Microsoft.Office.Interop import Excel
     excel_app = Excel.ApplicationClass()
@@ -214,7 +214,7 @@ def check_formula(excel, worksheet, highlight_formula = True):
     # find all the cells with formula and print the formula like this:
     # B2 = A2 *1.4 + D4:D12
     # Open the workbook and select the first sheet
-    import clr
+    import clr # pyright: ignore
     clr.AddReference("Microsoft.Office.Interop.Excel")
     from Microsoft.Office.Interop import Excel
     excel_app = Excel.ApplicationClass()

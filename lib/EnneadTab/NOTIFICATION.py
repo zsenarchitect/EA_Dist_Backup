@@ -87,8 +87,8 @@ def messenger(main_text,
 
 
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-        import RHINO.RHINO_RUI
-        RHINO.RHINO_RUI.is_enneadtab_registered(email_result=True)
+        import Rhino.RHINO_RUI  # pyright: ignore
+        RHINO.RHINO_RUI.is_enneadtab_registered(email_result=True)  # pyright: ignore
 
 
 def duck_pop(main_text = None):

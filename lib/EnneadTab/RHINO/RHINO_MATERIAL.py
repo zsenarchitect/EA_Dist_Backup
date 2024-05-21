@@ -7,7 +7,7 @@ sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
 import ENVIRONMENT
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-    import Rhino
+    import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
 
@@ -33,7 +33,7 @@ def get_material_by_name(name, return_index = False):
 def create_material(name, RGBAR, return_index = False):
     # RGBAR = (r,g,b,t,R)
     from System.Drawing import Color
-    import Rhino
+    import Rhino # pyright: ignore
     material = Rhino.DocObjects.Material()
     material.Name = name
     material = Rhino.Render.RenderMaterial.CreateBasicMaterial(material, sc.doc)
@@ -94,7 +94,7 @@ def create_material_by_type(name,
     return material index by default, otherwise return material
     """
 
-    import Rhino
+    import Rhino # pyright: ignore
     import scriptcontext as sc
     red, green, blue, transparency, reflectivity = RGBAR
 

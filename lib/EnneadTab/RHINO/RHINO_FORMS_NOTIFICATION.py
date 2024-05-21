@@ -5,12 +5,12 @@ sys.path.append(root_folder)
 import ENVIRONMENT_CONSTANTS
 import ENVIRONMENT
 if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-    import Rhino
-    import System
+    import Rhino # pyright: ignore
+    import System # pyright: ignore
 
     import rhinoscriptsyntax as rs
 
-    import Eto
+    import Eto # pyright: ignore
 
 
     import scriptcontext as sc

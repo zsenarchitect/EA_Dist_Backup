@@ -1,6 +1,6 @@
 """example on overload handling
 
-import System.Collections.Generic.IEnumerable as IEnumerable
+import System # pyright: ignore.Collections.Generic.IEnumerable as IEnumerable
 
 
 for srf in srfs:

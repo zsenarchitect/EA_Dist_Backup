@@ -1,4 +1,4 @@
-import clr
+import clr # pyright: ignore
 clr.AddReference('RevitAPI') 
 
 

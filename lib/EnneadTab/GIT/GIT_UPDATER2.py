@@ -8,9 +8,9 @@ import os.path as op
 from collections import OrderedDict
 
 try:
-    import clr
-    import DateTime
-    import DateTimeOffset
+    import clr # pyright: ignore
+    import DateTime # pyright: ignore
+    import DateTimeOffset # pyright: ignore
 except:
     pass
 

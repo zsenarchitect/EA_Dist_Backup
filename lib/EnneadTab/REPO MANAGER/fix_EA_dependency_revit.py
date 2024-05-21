@@ -11,7 +11,7 @@ import ENVIRONMENT
 
 
 
-# import System
+# import System # pyright: ignore
 # System.Windows.Forms.Clipboard.SetText(TRY_CATCH_DECOR)
 
 # set windows clipboard text

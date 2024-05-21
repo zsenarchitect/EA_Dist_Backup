@@ -26,11 +26,11 @@ def list_to_system_list(list, type = DataType.ElementId, use_IList = False):
         System.Collections.Generic.List: _description_
     """
 
-    import System
+    import System # pyright: ignore
     if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         from Autodesk.Revit import DB # pyright: ignore
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
-        import Rhino
+        import Rhino # pyright: ignore
 
     if use_IList:
         if type == DataType.CurveLoop:
