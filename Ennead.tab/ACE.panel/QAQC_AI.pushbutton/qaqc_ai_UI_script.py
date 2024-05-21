@@ -24,6 +24,7 @@ from pyrevit.forms import WPFWindow
 
 
 from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab.FUN import JOKES
 from EnneadTab import EXE, DATA_FILE, SOUNDS, TIME, ERROR_HANDLE, FOLDER, ENVIRONMENT_CONSTANTS
 import traceback
 
@@ -193,7 +194,7 @@ class AI_Report_modelessForm(WPFWindow):
 
 
             if attempt%3 == 0:
-                self.debug_textbox.Text = EnneadTab.FUN.JOKES.random_loading_message()
+                self.debug_textbox.Text = JOKES.random_loading_message()
             
             time.sleep(1)
             temp_data = DATA_FILE.read_json_file_safely(self.data_file)

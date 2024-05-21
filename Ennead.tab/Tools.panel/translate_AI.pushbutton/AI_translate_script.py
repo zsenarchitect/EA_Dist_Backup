@@ -19,6 +19,7 @@ from pyrevit import script, forms
 
 import traceback
 import EnneadTab
+from EnneadTab.FUN import JOKES
 import System
 import time
 import difflib
@@ -596,7 +597,7 @@ class AI_translate_ModelessForm(WPFWindow):
             print (attempt)
             if attempt % 5 == 0:
                 try:
-                    loading_message = "\n{}".format(EnneadTab.FUN.JOKES.random_loading_message())
+                    loading_message = "\n{}".format(JOKES.random_loading_message())
                 except Exception as e:
                     print (e)
                     loading_message = ""

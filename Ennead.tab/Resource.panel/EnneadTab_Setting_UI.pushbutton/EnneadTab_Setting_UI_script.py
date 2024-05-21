@@ -22,7 +22,7 @@ from Autodesk.Revit.Exceptions import InvalidOperationException
 
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT_CONSTANTS, SPEAK, ERROR_HANDLE, FOLDER
-
+from EnneadTab.FUN import EnneaDuck
 
 from pyrevit import script, forms
 from pyrevit.coreutils import ribbon
@@ -249,7 +249,7 @@ class main_setting_UI(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error
     def send_duck_click(self, sender, args):
-        EnneadTab.FUN.EnneaDuck.quack()
+        EnneaDuck.quack()
  
 
     @ERROR_HANDLE.try_catch_error

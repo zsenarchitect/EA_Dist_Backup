@@ -16,6 +16,7 @@ from pyrevit import versionmgr
 
 import EA_UTILITY
 import EnneadTab
+from EnneadTab.FUN import JOKES, EMOJI, ENCOURAGING, HOLIDAY
 import ENNEAD_LOG
 
 
@@ -286,8 +287,8 @@ def starter_quote():
 
 
 def joke_quote():
-    emoji = EnneadTab.FUN.EMOJI.random_emoji()
-    quote = EnneadTab.FUN.JOKES.random_loading_message()
+    emoji = EMOJI.random_emoji()
+    quote = JOKES.random_loading_message()
     
 
     import textwrap
@@ -300,7 +301,7 @@ def joke_quote():
 
 
 def warming_quote():
-    quote = EnneadTab.FUN.ENCOURAGING.random_warming_quote()
+    quote = ENCOURAGING.random_warming_quote()
     
 
     import textwrap
@@ -365,7 +366,7 @@ def main():
 
     check_minimal_version_for_enneadtab()
 
-    EnneadTab.FUN.HOLIDAY.festival_greeting()
+    HOLIDAY.festival_greeting()
     
     # this need to be up front becasue some of the file during 
     # import module will clear out all the output window.
@@ -380,16 +381,7 @@ def main():
         EnneadTab.DOCUMENTATION.tip_of_day()
     else:
         pass
-        ##############   EnneadTab.FUN.joke_of_day()   #######################
-        ################
-        ################
-        ################
-        ################
-        ################
-        ################
-        ################
-        ################
-    
+  
         
     
     

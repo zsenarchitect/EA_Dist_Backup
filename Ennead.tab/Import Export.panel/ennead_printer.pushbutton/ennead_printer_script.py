@@ -16,6 +16,7 @@ import EA_UTILITY
 import ENNEAD_LOG
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab.FUN import JOKES
 from EnneadTab import EXE, DATA_FILE, NOTIFICATION, ENVIRONMENT_CONSTANTS, SOUNDS, SPEAK, ERROR_HANDLE, FOLDER
 from Autodesk.Revit import DB 
 from Autodesk.Revit import UI
@@ -1476,7 +1477,7 @@ class EA_Printer_UI(WPFWindow):
 
     def update_loading_message(self, preview_obj):
         self.textblock_export_status.Text = "{}\nEstimated time = {}".format( preview_obj.format_name, preview_obj.time_estimate_format)
-        self.textblock_load_screen.Text = EnneadTab.FUN.JOKES.random_loading_message()
+        self.textblock_load_screen.Text = JOKES.random_loading_message()
     """
     !! store time 3sitmate  dict[(ID, extension)] = time
 

@@ -6,7 +6,7 @@ import ENNEAD_LOG
 doc = EXEC_PARAMS.event_args.Document
 from pyrevit.coreutils import envvars
 
-
+from EnneadTab.FUN import EnneaDuck
 
 
 
@@ -94,7 +94,7 @@ def check_sync_queue():
 
     
     if EnneadTab.DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_duck_allowed", True)):
-        EnneadTab.FUN.EnneaDuck.quack()
+        EnneaDuck.quack()
  
     try:
         doc.Save()
