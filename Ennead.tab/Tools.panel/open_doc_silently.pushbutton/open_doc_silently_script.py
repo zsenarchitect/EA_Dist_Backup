@@ -107,7 +107,9 @@ class Solution:
                     warnings += "\n\n{}".format(errors)
         print ("silent mode finish")
         for doc_name in docs_to_be_opened_by_API:
-            model_path = self.tuple_to_model_path(self.data[doc_name])
+            model_path = self.tuple_to_model_path(self.data.get(doc_name, None))
+            if not model_path:
+                continue
             REVIT_APPLICATION.open_and_active_project(model_path)
 
 
