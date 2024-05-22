@@ -2,6 +2,8 @@
 
 import os
 import zipfile
+
+import FOLDER
 try:
     import System # pyright: ignore
 except:
@@ -20,6 +22,8 @@ def download_file_by_name(url, target_folder, file_name):
         file_name: File name (e.g. testPts.zip).
     """
     # create the target file path.
+    if not os.path.exists(target_folder):
+        os.makedirs(target_folder)
     file_path = os.path.join(target_folder, file_name)
 
     # set the security protocol to the most recent version
@@ -141,7 +145,7 @@ def download_repo_github(repo_url, target_directory):
   
   
   
-def test_web_client():
+def unit_test():
     client = System.Net.WebClient()
     for i,x in enumerate(dir(client)):
         print ("{}:{}".format(i,x))
@@ -158,7 +162,7 @@ def test_web_client():
     
     print ("\n\n\n#############################")
     url = "https://via.placeholder.com/300/09f/fff.png"
-    download_file_by_name(url, "C:\\Users\\sen.zhang\\temp", "test.png")
+    download_file_by_name(url, "{}\\Unit Test".format(FOLDER.get_download_folder()), "test.png")
     return
 
 
@@ -173,4 +177,4 @@ def test_web_client():
   
 ###############################
 if __name__ == "__main__":
-    test_web_client()
+    unit_test()

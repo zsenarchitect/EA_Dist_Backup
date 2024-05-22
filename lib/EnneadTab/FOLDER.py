@@ -265,7 +265,7 @@ def get_appdata_folder():
 def get_desktop_folder():
     return os.path.expandvars('%userprofile%\\desktop')
 
-def download_folder():
+def get_download_folder():
     return os.path.expandvars('%userprofile%\\downloads')
 
 def get_EA_setting_folder():

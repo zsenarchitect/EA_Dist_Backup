@@ -3,8 +3,9 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "detail_line_from_excel"
+__doc__ = "Generate detail line from the Excel survey pt data. Best used for property line geneation."
+__title__ = "Detail Line By Excel"
+__tip__ = True
 
 from pyrevit import forms #
 from pyrevit import script #

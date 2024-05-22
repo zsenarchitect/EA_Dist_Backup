@@ -7,8 +7,8 @@ try:
     from Autodesk.Revit import UI # pyright: ignore
 
 
-    from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-    from Autodesk.Revit.Exceptions import InvalidOperationException
+    from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+    from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
     REF_CLASS_IExternalEventHandler = IExternalEventHandler
 except:
     REF_CLASS_IExternalEventHandler = object
