@@ -10,7 +10,7 @@ from pyrevit import forms #
 from pyrevit import script #
 
 import ENNEAD_LOG
-from EnneadTab import ERROR_HANDLE, EXCEL, NOTIFICATION
+from EnneadTab import ERROR_HANDLE, EXCEL, NOTIFICATION, DATA_CONVERSION, TIME
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_GEOMETRY, REVIT_UNIT
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
@@ -45,6 +45,7 @@ def detail_line_from_excel():
 
     # pts.append(pts[0]) # the excel alloready make a seconda record of pt for the loop
 
+    detail_line_ids = []
     for i in range(len(pts)-1):
         # print (pts[i].DistanceTo (pts[i+1]))
         if pts[i].DistanceTo (pts[i+1]) < 0.0001:
@@ -52,7 +53,12 @@ def detail_line_from_excel():
             continue
         # print ("Making")
         line = DB.Line.CreateBound(pts[i], pts[i+1])
-        doc.Create.NewDetailCurve(doc.ActiveView, line)
+        detail_line_ids.append(doc.Create.NewDetailCurve(doc.ActiveView, line).Id)
+
+    group = doc.Create.NewGroup(DATA_CONVERSION.list_to_system_list(detail_line_ids))
+
+    group.GroupType.Name = "EA_PropertyLineMaker_({}_{})".format(doc.ActiveView.Name,
+                                                                        TIME.get_formatted_current_time())
     t.Commit()
 
 
