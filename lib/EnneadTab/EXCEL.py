@@ -52,11 +52,13 @@ def get_all_worksheets(filepath):
     wb = xlrd.open_workbook(filepath, on_demand=True)
     return wb.sheet_names()
 
-def read_data_from_excel(filepath, worksheet = "Sheet1", by_line = True, return_dict=False):
+def read_data_from_excel(filepath, worksheet = None, by_line = True, return_dict=False):
 
 
     wb = xlrd.open_workbook(filepath,formatting_info=return_dict)#, encoding_override = "cp1252")#""big5")#"iso2022_jp_2")#"gb18030")#"gbk")#"hz")  #"gb2312")   #"utf8"
     try:
+        if not worksheet:
+            worksheet = wb.sheet_names()[0]
         sheet = wb.sheet_by_name(worksheet)
     except:
         

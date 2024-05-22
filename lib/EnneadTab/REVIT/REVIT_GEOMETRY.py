@@ -115,3 +115,43 @@ def nearest_pt_from_pts(my_pt, pts):
 
 # https://mp.weixin.qq.com/s/h89ChVFg-mHM4NLStCjNuQ
 # good ref on how to convert get revit geo
+
+
+
+
+"""special thanks to https://danimosite.wordpress.com/2021/09/07/transforms-transformed/
+for converting between inrernal and surbey/project point"""
+def get_survey_transform(doc):
+    # Gets the Active Project Locations (survey points) Transform. 
+    return doc.ActiveProjectLocation.GetTotalTransform()
+ 
+
+
+def get_project_transform(doc):
+    # Get the Project Base Points Transform.
+    project_base_pt_location = next((l for l in DB.FilteredElementCollector(doc).OfClass(DB.ProjectLocation).WhereElementIsNotElementType().ToElements() if l.Name == "Project"), None)
+     
+    return project_base_pt_location.GetTotalTransform()
+ 
+
+
+def apply_inverse_transform(t, pt):
+    # Applies the inverse transformation of the given Transform to the given point.
+    return t.Inverse.OfPoint(pt)
+
+
+def transform_internal_pt_to_project_coordinate(doc, pt):
+    # Transforms the given point from the internal coordinate system to the project coordinate system.
+    return apply_inverse_transform(get_project_transform(doc), pt)
+
+def transform_internal_pt_to_survey_coordinate(doc, pt):
+    # Transforms the given point from the project coordinate system to the internal coordinate system.
+    return apply_inverse_transform(get_survey_transform(doc), pt)
+
+def transform_project_pt_to_internal_pt(doc, pt):
+    # Transforms the given point from the project coordinate system to the internal coordinate system.
+    return get_project_transform(doc).OfPoint(pt)
+
+def transform_survey_pt_to_internal_pt(doc, pt):
+    # Transforms the given point from the project coordinate system to the internal coordinate system.
+    return get_survey_transform(doc).OfPoint(pt)

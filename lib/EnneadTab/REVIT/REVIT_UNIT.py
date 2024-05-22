@@ -66,6 +66,12 @@ def mm_to_internal(x):
     except:
         return DB.UnitUtils.ConvertToInternalUnits (x,DB.DisplayUnitType.DUT_MILLIMETERS)
 
+def m_to_internal(x):
+    try:
+        return DB.UnitUtils.ConvertToInternalUnits(x, lookup_unit_id("meters"))
+    except:
+        return DB.UnitUtils.ConvertToInternalUnits(x, DB.DisplayUnitType.DUT_METERS)
+
 def radian_to_degree(radian):
     try:
         return DB.UnitUtils.Convert(radian,
