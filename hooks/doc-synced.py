@@ -86,12 +86,17 @@ def update_new():
     if "1643_lhh bod-a_new" not in doc.Title.lower():
         return
 
-    from EnneadTab import USER
-    if not USER.is_SZ():
-        return
+
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
-    func_name = "grid_magic_name"
-    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    func_name = "update_level_relative_value"
+    try:# temp add this try becasue just add rthe new button while user using
+        EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    except:
+        pass
+    
+
+
+    
 
 def update_existing():
     if "1643_lhh bod-a_existing" not in doc.Title.lower():
@@ -102,6 +107,12 @@ def update_existing():
     func_name = "update_grid_bldgId"
     EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
+    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    func_name = "update_level_relative_value"
+    try:# temp add this try becasue just add rthe new button while user using
+        EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    except:
+        pass
     
 def update_with_generic_healthcare_tool():
     if not EnneadTab.USER.is_SZ():
