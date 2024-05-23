@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RhinoUI major_ver="3" minor_ver="0" guid="502dd9f1-3d89-4bd7-96a6-c9d70b1e2811" localize="False" default_language_id="1033" dpi_scale="100">
+  <extend_rhino_menus>
+    <menu guid="d58ceae7-fdb0-4104-80da-274b94ad44a9">
+      <text>
+        <locale_1033>Extend Rhino Menus</locale_1033>
+      </text>
+    </menu>
+  </extend_rhino_menus>
+  <menus />
+  <tool_bar_groups>
+    <tool_bar_group guid="8bae774b-44bb-48b6-8e87-3d68929c4cb0" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="927b4c7a-2fa9-46e9-a4f9-8fc94faf19d3" active_tool_bar_group="0e19df7a-8017-4bb7-a6c0-81e3fa0dc3fd" single_file="False" hide_single_tab="False" point_floating="-87,565">
+      <text>
+        <locale_1033>demo toolbar group</locale_1033>
+      </text>
+      <tool_bar_group_item guid="0e19df7a-8017-4bb7-a6c0-81e3fa0dc3fd" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>demo toolbar#1</locale_1033>
+        </text>
+        <tool_bar_id>9f39c8ad-53ff-495f-9ddc-8872dfb38c7f</tool_bar_id>
+      </tool_bar_group_item>
+      <tool_bar_group_item guid="bc4a48a1-fb2b-400a-b45a-adb084c20fc1" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>Toolbar number 2</locale_1033>
+        </text>
+        <tool_bar_id>4b148a02-d02e-4fc2-8f40-1f15e647d3ab</tool_bar_id>
+      </tool_bar_group_item>
+      <dock_bar_info dpi_scale="100" dock_bar="False" docking="True" horz="False" visible="True" floating="False" mru_float_style="8192" bar_id="59445" mru_width="868" point_pos="84,0" float_point="-87,565" rect_mru_dock_pos="84,0,169,1005" dock_location_u="59420" dock_location="left" float_size="132,112" />
+    </tool_bar_group>
+  </tool_bar_groups>
+  <tool_bars>
+    <tool_bar guid="9f39c8ad-53ff-495f-9ddc-8872dfb38c7f" bitmap_id="6519f6ca-190c-4a3b-a2d4-0627a71b4f7c" item_display_style="control_and_text">
+      <text>
+        <locale_1033>demo toolbar#1</locale_1033>
+      </text>
+      <tool_bar_item guid="249d68cc-c3fb-4ac9-9419-e10d733a3d7c" button_display_mode="control_and_text" display_style_from_parent="False">
+        <text>
+          <locale_1033>Toolbar item</locale_1033>
+        </text>
+        <left_macro_id>0c964ab3-eeb7-4067-ad68-217a3a3e4b31</left_macro_id>
+        <right_macro_id>5f7dd375-a9ef-4b7c-b367-12c04d4a7953</right_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="3bb874f5-0ea9-4c8b-a8de-1ba752dfa887" button_display_mode="control_and_text" display_style_from_parent="False">
+        <left_macro_id>fee1ea02-6fc1-4156-a5c9-c3633051f172</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="7432ad4c-1381-455c-80fc-e71844aaecd1" display_style_from_parent="False">
+        <left_macro_id>39c07afd-a74b-45a6-b867-f1e51a18f2bf</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+    <tool_bar guid="4b148a02-d02e-4fc2-8f40-1f15e647d3ab" item_display_style="control_and_text">
+      <text>
+        <locale_1033>Toolbar number 2</locale_1033>
+      </text>
+      <tool_bar_item guid="8e891496-89a8-4b5e-93e8-b10f0031c7c8">
+        <text>
+          <locale_1033>Toolbar item</locale_1033>
+        </text>
+        <left_macro_id>e5880b5a-abf6-4537-89ca-b93b475218c2</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+  </tool_bars>
+  <macros>
+    <macro_item guid="0c964ab3-eeb7-4067-ad68-217a3a3e4b31" bitmap_id="63dc5647-d881-41dc-a0c7-11e307c5a105">
+      <text>
+        <locale_1033>Macro</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>tooltipper for left click</locale_1033>
+      </tooltip>
+      <button_text>
+        <locale_1033>tester</locale_1033>
+      </button_text>
+      <script>! _-RunPythonScript "L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\Blocks\random transform.py"</script>
+    </macro_item>
+    <macro_item guid="fee1ea02-6fc1-4156-a5c9-c3633051f172" bitmap_id="5600dbcf-4215-49b6-8aeb-ce1a43befe35">
+      <text>
+        <locale_1033>Macro 00</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>tool tipper 2</locale_1033>
+      </tooltip>
+      <button_text>
+        <locale_1033>tester 2</locale_1033>
+      </button_text>
+      <script>! _-RunPythonScript (
+import sys
+sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\lib')
+from EnneadTab.MODULE_HELPER import run_Rhino_button
+
+##################################################
+folder = "Blocks"
+file_name = "uniform_transform_blocks"
+func_name = file_name
+##################################################
+
+run_Rhino_button(folder, file_name, func_name )
+)
+</script>
+    </macro_item>
+    <macro_item guid="5f7dd375-a9ef-4b7c-b367-12c04d4a7953" bitmap_id="8f8a771e-08d0-42fc-8ce5-ab2ae38a9f31">
+      <text>
+        <locale_1033>Macro 01</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>tool tipper for right clcik</locale_1033>
+      </tooltip>
+      <button_text>
+        <locale_1033>tester</locale_1033>
+      </button_text>
+      <script>_Show
+_Show</script>
+    </macro_item>
+    <macro_item guid="39c07afd-a74b-45a6-b867-f1e51a18f2bf" bitmap_id="5ec8d363-f346-4ebd-9f0e-c5c9fc6c3c22">
+      <text>
+        <locale_1033>Macro 02</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>new bady</locale_1033>
+      </tooltip>
+      <button_text>
+        <locale_1033>tester 3</locale_1033>
+      </button_text>
+      <script>_SelAll</script>
+    </macro_item>
+    <macro_item guid="e5880b5a-abf6-4537-89ca-b93b475218c2" bitmap_id="6ca74aec-1834-43ed-ad19-a17469922a95">
+      <text>
+        <locale_1033>Macro 03</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>second tab bt 1 tool tip</locale_1033>
+      </tooltip>
+      <button_text>
+        <locale_1033>second tab button 1</locale_1033>
+      </button_text>
+      <script>_show</script>
+    </macro_item>
+  </macros>
+  <bitmaps>
+    <small_bitmap item_width="16" item_height="16">
+      <bitmap_item guid="63dc5647-d881-41dc-a0c7-11e307c5a105" index="0" />
+      <bitmap_item guid="5600dbcf-4215-49b6-8aeb-ce1a43befe35" index="1" />
+      <bitmap_item guid="8f8a771e-08d0-42fc-8ce5-ab2ae38a9f31" index="2" />
+      <bitmap_item guid="5ec8d363-f346-4ebd-9f0e-c5c9fc6c3c22" index="3" />
+      <bitmap_item guid="6519f6ca-190c-4a3b-a2d4-0627a71b4f7c" index="4" />
+      <bitmap_item guid="6ca74aec-1834-43ed-ad19-a17469922a95" index="5" />
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAABAAAABgCAYAAAAU0fKgAAAABGdBTUEAALGPC/xhBQAAAAlwSFlz
+AAAOvAAADrwBlbxySQAAAt9JREFUWEftk0toE1EUhq9S2wpatA+QJNMUTTNp0mBRkGqVtmJFFKSC
+iK+F4HvhC6R10Vda04eaphaliFDBhV1JwWRaN1pEoagVFyq6a6F56KaKGxdObjxnvNNkJjeKdCHK
+/eHL3Jw5/7n3npMQcvdjckFwgwghi7lxM6kFyQU2Aw1ANdC3bc3SD+GDtqPU56wxmNJJLUgt8AJo
+2edZ/vRts+Px11bHy+9tco/a4XyVaJODBuO8T/sgpUAHkEfvb6hWA5539Obaw/S6owBihLa7C2mn
+7IXlEuAWUGYu0A1spMPedWp7+Rz1uXbBd4Noq1zPlsPAoLlA5+qVOTWJvoqRZLvrhJbGBDvLdKBy
+p+qTn7DQPeCiuUBz06airoTf9YhecBdqaRCnQW+L6it/8+WyHJhrdpyD6B5gCkhNSC/QWV8UoIGK
+s7Am9IwjL+mXex8eKz3uLcmZgdBVoB94BuyeN6cVaOrbWtxDr7hbYa0pMegJwKMXQOMiIF97ppvT
+CnQ3upZdU/s9z6lf3kv9FVsSXc5QVXFuObwbAkozjDo/P8h2YKalvsivDlRG1W73JG1znoYY6jaQ
+6rqZ1IIcAIKH1hecDNSWONDJNAakum7G+IXUATeACaALwB5g97P/L/hB7T+B12rgvk+HG/wTkguU
+KCAKoESB/6OAkJCQkJCQkNC/JSVqa1Si1jtKVJpQYtJIOCIdYa9+rYlpe344bhsKx6RRNIXi1rpQ
+xLZfKxaRxken7StYKl+aOSpdqt0xlTSDpwpFpUmWmincDY/MM+vgSbJeB++Kx+UZdcZmrdVZTwEF
+XocjliqeUQd7oMQsn5nFqNCsdXo8bi/jGXWwyQ9ilm/MYhR2HhvFM+rgCfGkzGIUjOkUToFn1MEJ
+KTFbD7NkCqeA0+CZ8Xp4TbwGS8+UlgRdBs7r/Qh/sq/C0cHO7/EKLDW7cAdIDuJucN+kErHEcf6/
+/RUKCQkJ/SUR8gNNi74AfIFLhAAAAABJRU5ErkJggg==</bitmap>
+    </small_bitmap>
+    <normal_bitmap item_width="24" item_height="24">
+      <bitmap_item guid="63dc5647-d881-41dc-a0c7-11e307c5a105" index="0" />
+      <bitmap_item guid="5600dbcf-4215-49b6-8aeb-ce1a43befe35" index="1" />
+      <bitmap_item guid="8f8a771e-08d0-42fc-8ce5-ab2ae38a9f31" index="2" />
+      <bitmap_item guid="5ec8d363-f346-4ebd-9f0e-c5c9fc6c3c22" index="3" />
+      <bitmap_item guid="6519f6ca-190c-4a3b-a2d4-0627a71b4f7c" index="4" />
+      <bitmap_item guid="6ca74aec-1834-43ed-ad19-a17469922a95" index="5" />
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAABgAAACQCAYAAAASlKtNAAAABGdBTUEAALGPC/xhBQAAAAlwSFlz
+AAAOvAAADrwBlbxySQAAAUJJREFUaEPtmG2OwjAMRHsbzsKp9jBwz6xcxVHwDnU2GRAf86QntVPH
+E/GTTbAoncv0y9rS8nMqUctnuDl4b+FsycqSdG71hjZ7ON8+ji4HM+MF9fGQMGfPeUF2e/8O5g6X
+G61gfwvcWepYNl8QMl8WTdmHkoLhZYjRgmlaQSwJ79MldvCmpNfySpub4U+JPQOmC4zscLvECr4E
+LVpe3tMXuYJMeTAqSFFBigpSVJCighQVpKgg5QMKhBBCCCFEI/4nxxaGTGHIFIZMYcgUhkxhyBSG
+TGHIFIZMYcgUhkxhyBSGTGHIFIZMYcgUhkxhyBSGTGHIFIZMYcgUhkyFEEIIIYR4KJfztbg14uKL
+36fAFkU93wdW6Rd9ToFb4zViQX3k8ZSC3hq/EPGGo9bj3wr6SZB1/P+MHH79ghHruJhh234Bmomd
+SEawnVwAAAAASUVORK5CYII=</bitmap>
+    </normal_bitmap>
+    <large_bitmap item_width="32" item_height="32">
+      <bitmap_item guid="63dc5647-d881-41dc-a0c7-11e307c5a105" index="0" />
+      <bitmap_item guid="5600dbcf-4215-49b6-8aeb-ce1a43befe35" index="1" />
+      <bitmap_item guid="8f8a771e-08d0-42fc-8ce5-ab2ae38a9f31" index="2" />
+      <bitmap_item guid="5ec8d363-f346-4ebd-9f0e-c5c9fc6c3c22" index="3" />
+      <bitmap_item guid="6519f6ca-190c-4a3b-a2d4-0627a71b4f7c" index="4" />
+      <bitmap_item guid="6ca74aec-1834-43ed-ad19-a17469922a95" index="5" />
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAACAAAADACAYAAABlPmF2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlz
+AAAOvAAADrwBlbxySQAABN9JREFUeF7tlm1sU1UYxxtwMAGDso2ZmbBB2ntvb7c6k6HxwxRNmC8g
+EcgILEFJFGKI+2BIQLp1t2yu29oxZa+KghBjDEQFTTDZlpGMzTin4JeJMb5gFE32QUSjEtt7z/F/
+bk9d2dZ2XSQz8fklv2R9ztNz/z0956wO4j8H/83Bb6TyMcmRTUtgDsxPMBc+AEezsub9lJc9/2rh
+rVn93RsKVNZYnM9blVy2x7sY40nJJEAInoMjCYrX7VmOedt7NuV/NrS7iI/sLOTXfMoF01BHzJA2
+ZPmVED9ZOR9905JJgK/gz7AbdsLgmhULR9seyf/RavN0RNr1y2ZnySf4O2gdUDstQ+2ONrgv8Rad
+W3XKK6xWVfGeKcwkwC2y6T34rF0B/EjZKuuQ/gZv0rkZdJ83G9VBFtC2yWEbVuusMls950y/Msj8
+ympZXg7vgfZXky7AIrhZNm2BN4kif3317Vaj+/3IIe8V64DSy1pUlRtKLjf0BWI8Dq/UF7CD+jJm
+6Mu4cb/9XrAejsEqmJ0uQDU8JZuWioJYSixpH2/1cKtZP80MxSvqGfAYFPN9CbenC3AMjsWbmN9V
+brXqJ+yHh9zvsL2uu0U9FVgZjQXUalbrcstSAdwLxX7qSRegC34ab7JqlBciISVqGa6zCRNOQfTP
+VjnFP4jd/rEYYGHvYl6vHIsG1C/Ep4oNT4/d3+jME3cBC7h2RgLqOK9TK+WwWLWv4S/Ql/jQZAHO
+2hOGdCPykjZu+pQRVu1cGBueCqvHhkS/2eweNgPKR9EG7ZuIsep31qA8LFsegldhIyyaSYBee8IW
+fdAMe8ZYnetJbhRmx4Yn4Ia2y2pxd1oh/Yzot7qK3+JdJQF2tNTHXi15mrE94tiVwXfhX/BBeN1D
+kwXosycM6X241dpj5QnYfix1jVbBDfWk2eYZutbgtvfMNn3JPgxXJLgBnoHiIQOwFGYQoNndi+PX
+EStPgJOxDtfuBWZoT5zfXVRYXrhoh5zoe3gxQXGTjsN+uBLG7pSMAuB6jZUnYLXKloihXWbtXrGk
+5XBYTtQAN09yHbzu3ph5gBZ8BbXOg7HyBFiBjdF69XPWU7oWL5tESU6U8r9gnHQBxD3wgR2g1TNg
+Bd19uAlLYkMxWI2zImpoF1m4WHy6HfCEnCjpSUkkXQCx5EN2gLB+HMfwiuVX+1mNspI/v+I2cf+z
+gPIUzvkP2AOb0Hsz3Con2gqnnJbJpAsQhn+Kge7HC9ZbR+7s4UE3N+u1YQQZMP3qUDSofRvxKX8w
+w/Vo7C2ONXIi+663KylIF+A++LYc6HquIqcKZ/1N3l7C+WulPGK4vrOa3C/ittuPY1hkvwN3vey3
+73q7koJ0AQSaHBDu43zXUqut+Lh12HuKhTxiZ08m/vvhEjxsV1IwkwDxgWEoNuXyZ8pyVKMizxle
+mz/dTr9X9v8KfXYlBZkEuAu2wQ9hLzwNN8LJrJf9zTD+tSQlkwACsSfEyRC/E0RNLLO4KxJ9Wfbf
+AdOSaYA44leu+JUsvpbRSXYknWgaZhzgRiofkzxApsx2on81wGyVU8wxfI6hABSAAlAACkABKAAF
+oAAUgAJQAApAASjA3AcgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIg
+CIIgCOJ/jsPxNwlwa+Apw1ZvAAAAAElFTkSuQmCC</bitmap>
+    </large_bitmap>
+  </bitmaps>
+  <scripts />
+</RhinoUI>

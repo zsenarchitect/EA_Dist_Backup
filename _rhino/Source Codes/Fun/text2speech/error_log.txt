@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "EA_TEXT2SPEECH.py", line 213, in <module>
+  File "EA_TEXT2SPEECH.py", line 135, in main
+IOError: No such file or directory.
