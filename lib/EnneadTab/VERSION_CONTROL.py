@@ -263,6 +263,30 @@ def publish_Rhino_source_code(deep_copy = False):
     NOTIFICATION.duck_pop("Deep Copy Finish!")
 
 
+    #allow copy to distribution folder
+    if not os.path.exists(ENVIRONMENT.DISTIBUTION_FOLDER):
+        return
+    time_start = time.time()
+    print ("Publishing dist version...")
+    dist_dst = ENVIRONMENT.DISTIBUTION_FOLDER
+    for folder_or_file in os.listdir(dist_dst):
+        if folder_or_file == "_rhino":
+            try:
+                shutil.rmtree(os.path.join(dist_dst, folder_or_file))
+            except:
+                os.remove(os.path.join(dist_dst, folder_or_file))
+
+    target = "{}\\_rhino".format(dist_dst)
+    if not os.path.exists(target):
+        os.makedirs(target)
+    FOLDER.copy_dir(ENVIRONMENT.WORKING_FOLDER_FOR_RHINO,
+                    target,
+                    allow_print_log=allow_print_log)
+    used_time = time.time() - time_start
+    used_time = TIME.get_readable_time(used_time)
+    NOTIFICATION.duck_pop(main_text = "dist version created in {}".format(used_time))
+
+    # GIT.push_changes_to_main(dist_dst)
 
 #############
 if __name__ == "__main__":

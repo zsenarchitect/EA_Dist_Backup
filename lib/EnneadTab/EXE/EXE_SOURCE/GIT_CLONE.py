@@ -1,4 +1,8 @@
-"""This should be compiled to exe from python 3 and make exe"""
+"""This should be compiled to exe from python 3 and make exe so it not holding up CPU
+well i could use WEB module to make it work in production framework but it is better to try to 
+fetch update before the actual hosting software because things like rui, layout yaml .etc need to need ready before the excuation of an EnneadTab.
+
+Especially rhino .rui have a fallback saving mechinique that if i try to download rui during rhin ooopening, the new rui will be overrideen by session rui when closed...."""
 import requests
 import zipfile
 import os
