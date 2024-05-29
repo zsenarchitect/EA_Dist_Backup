@@ -87,6 +87,8 @@ def update_last_sync_data_file(doc):
         doc.Title
     except:
         return
+    if not data:
+        data = dict()
     data[doc.Title] = time.time()
     DATA_FILE.save_dict_to_json(data, get_record_file_path())
 
