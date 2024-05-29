@@ -129,10 +129,14 @@ def get_survey_transform(doc):
 
 def get_project_transform(doc):
     # Get the Project Base Points Transform.
-    project_base_pt_location = next((l for l in DB.FilteredElementCollector(doc).OfClass(DB.ProjectLocation).WhereElementIsNotElementType().ToElements() if l.Name == "Project"), None)
+    project_location_info = get_project_location_info(doc)
      
-    return project_base_pt_location.GetTotalTransform()
+    return project_location_info.GetTotalTransform()
  
+def get_project_location_info(doc):
+    # Get the Project Base Points Transform.
+    project_location_info = next((l for l in DB.FilteredElementCollector(doc).OfClass(DB.ProjectLocation).WhereElementIsNotElementType().ToElements() if l.Name == "Project"), None)
+    return project_location_info
 
 
 def apply_inverse_transform(t, pt):
