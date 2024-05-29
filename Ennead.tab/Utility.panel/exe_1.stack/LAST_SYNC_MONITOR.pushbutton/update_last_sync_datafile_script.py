@@ -71,12 +71,10 @@ def update_last_sync_data_file(doc):
         return
 
     data = get_data_from_record_file()
-    # if not data:
-    #     NOTIFICATION.messenger(main_text = "No Active Record Found...")
-    #     return
-    for key, value in data.items():
-        if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
-            del data[key]
+    if  data:
+        for key, value in data.items():
+            if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
+                del data[key]
 
     try:
         if doc.IsModified:
@@ -84,9 +82,6 @@ def update_last_sync_data_file(doc):
     except Exception as e:
         print (e)
 
-    for key, value in data.items():
-        if time.time() - value  > 60*60*10:#record older than 10 hour should be removed
-            del data[key]
 
 
     data[doc.Title] = time.time()
