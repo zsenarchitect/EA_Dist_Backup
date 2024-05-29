@@ -39,7 +39,7 @@ def kill_record():
     from pyrevit import forms
     data = get_data_from_record_file()
     if not data:
-        NOTIFICATION.messenger(main_text = "No Active Record Found.")
+        NOTIFICATION.messenger(main_text = "No Active Record Found!!!")
 
         
         return
@@ -71,9 +71,9 @@ def update_last_sync_data_file(doc):
         return
 
     data = get_data_from_record_file()
-    if not data:
-        NOTIFICATION.messenger(main_text = "No Active Record Found.")
-        return
+    # if not data:
+    #     NOTIFICATION.messenger(main_text = "No Active Record Found...")
+    #     return
     for key, value in data.items():
         if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
             del data[key]

@@ -89,11 +89,12 @@ def update_new():
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
-    try:# temp add this try becasue just add rthe new button while user using
-        EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
-    except:
-        pass
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+
     
+    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    func_name = "update_keyplan"
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
 
     
@@ -109,10 +110,12 @@ def update_existing():
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
-    try:# temp add this try becasue just add rthe new button while user using
-        EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
-    except:
-        pass
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+
+    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    func_name = "update_keyplan"
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc)
+
     
 def update_with_generic_healthcare_tool():
     if not EnneadTab.USER.is_SZ():
