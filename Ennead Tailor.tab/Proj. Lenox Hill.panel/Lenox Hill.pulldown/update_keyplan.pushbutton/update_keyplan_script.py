@@ -20,6 +20,7 @@ doc = REVIT_APPLICATION.get_doc()
 @ERROR_HANDLE.try_catch_error
 def update_keyplan(doc):
     titleblocks = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_TitleBlocks).WhereElementIsNotElementType().ToElements()
+    titleblocks = REVIT_SELECTION.filter_elements_changable(titleblocks)
     titleblock_dict = {titleblock.LookupParameter("Sheet Number").AsString(): titleblock for titleblock in titleblocks}
 
     all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()
