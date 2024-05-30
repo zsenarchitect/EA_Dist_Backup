@@ -103,7 +103,7 @@ def read_data_from_excel(filepath, worksheet = None, by_line = True, return_dict
     
     import clr # pyright: ignore
     clr.AddReference("Microsoft.Office.Interop.Excel")
-    from Microsoft.Office.Interop import Excel
+    from Microsoft.Office.Interop import Excel # pyright: ignore
     excel_app = Excel.ApplicationClass()
     excel_app.Visible = False
 
@@ -154,6 +154,14 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
                             data.column,
                             data.item,
                             format)
+        elif data.text_color:
+            hex_color = COLOR.rgb_to_hex(data.text_color)
+            format = workbook.add_format({'color' : hex_color})
+            worksheet.write(data.row,
+                            data.column,
+                            data.item,
+                            format)
+
         else:
             worksheet.write(data.row,
                             data.column,
@@ -218,7 +226,7 @@ def check_formula(excel, worksheet, highlight_formula = True):
     # Open the workbook and select the first sheet
     import clr # pyright: ignore
     clr.AddReference("Microsoft.Office.Interop.Excel")
-    from Microsoft.Office.Interop import Excel
+    from Microsoft.Office.Interop import Excel # pyright: ignore
     excel_app = Excel.ApplicationClass()
     excel_app.Visible = False
 

@@ -19,7 +19,7 @@ from Autodesk.Revit import DB # pyright: ignore
 doc = REVIT_APPLICATION.get_doc()
 
 
-from EXCEL import ExcelDataItem
+from EXCEL import ExcelDataItem # pyright: ignore 
 
 
 @ERROR_HANDLE.try_catch_error
@@ -31,20 +31,20 @@ def export_filled_region_types():
 
     data = []
     for i, filled_region_type in enumerate(all_filled_region_types):
-
+        row = i + 1
         masker_color = (255,255, 255) if filled_region_type.IsMasking else (200, 200, 200)
         type_name = filled_region_type.LookupParameter("Type Name").AsString()
-        data.append(ExcelDataItem(type_name, i+1, "A", masker_color))
+        data.append(ExcelDataItem(type_name, row, "A", masker_color))
 
         is_mask = "Yes" if filled_region_type.IsMasking else "No"
-        data.append(ExcelDataItem(is_mask, i+1, "B", masker_color))
+        data.append(ExcelDataItem(is_mask, row, "B", masker_color))
 
         # foregrtound
         foreground_color = filled_region_type.ForegroundPatternColor
         if solid_pattern_id == filled_region_type.ForegroundPatternId:
             foreground_pattern = "Solid"
         else:
-            pattern = doc.GetElement(filled_region_type.BackgroundPatternId)
+            pattern = doc.GetElement(filled_region_type.ForegroundPatternId)
             if pattern:
                 foreground_pattern = pattern.Name
             else:
@@ -54,13 +54,13 @@ def export_filled_region_types():
                     foreground_color.Green,
                     foreground_color.Blue)
         color_text = "{}-{}-{}".format(*color_pack)
-        data.append(ExcelDataItem(color_text, i+1, "D"))
+        data.append(ExcelDataItem(color_text, row, "D"))
         if not foreground_pattern:
-            data.append(ExcelDataItem("Void", i+1, "C", text_color = color_pack))
-            data.append(ExcelDataItem("Void", i+1, "E"))
+            data.append(ExcelDataItem("Void", row, "C", text_color = color_pack))
+            data.append(ExcelDataItem("Void", row, "E"))
         else:
-            data.append(ExcelDataItem("", i+1, "C", cell_color = color_pack))
-            data.append(ExcelDataItem(foreground_pattern, i+1, "E"))
+            data.append(ExcelDataItem("", row, "C", cell_color = color_pack))
+            data.append(ExcelDataItem(foreground_pattern, row, "E"))
 
 
         #background
@@ -85,7 +85,7 @@ def export_filled_region_types():
             data.append(ExcelDataItem(background_pattern, i+1, 'H'))
         else:
             data.append(ExcelDataItem("", i+1, "F", cell_color = color_pack))
-            data.append(ExcelDataItem("Void", i+1, 'H'))
+            data.append(ExcelDataItem(background_pattern, i+1, 'H'))
 
 
 
