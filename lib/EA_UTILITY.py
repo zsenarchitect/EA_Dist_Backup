@@ -20,18 +20,19 @@ try:
     
     
     # import EnneadTab
-    # EnneadTab.EMAIL.email(sender_email=None,
-    #                     receiver_email_list=["szhang@ennead.com"],
-    #                     subject="EnneadTab Auto Email: EA_UTILITY Detected",
-    #                     body="EA_UTILITY is called from {}".format(get_caller_file_path()),
-    #                     body_folder_link_list=None,
-    #                     body_image_link_list=None,
-    #                     attachment_list=None,
-    #                     schedule_time=None)
+    # if EnneadTab.USER.is_SZ():
+    #     EnneadTab.EMAIL.email(sender_email=None,
+    #                         receiver_email_list=["szhang@ennead.com"],
+    #                         subject="EnneadTab Auto Email: EA_UTILITY Detected",
+    #                         body="EA_UTILITY is called from {}".format(get_caller_file_path()),
+    #                         body_folder_link_list=None,
+    #                         body_image_link_list=None,
+    #                         attachment_list=None,
+    #                         schedule_time=None)
 except Exception as e:
     from os import environ
     if environ["USERPROFILE"] == r"C:\Users\szhang":
-        print ("EA_UTITLITY detected")
+        print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!EA_UTITLITY detected")
         print( traceback.format_exc())
 finally:
     pass

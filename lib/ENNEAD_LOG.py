@@ -902,4 +902,4 @@ def warn_revit_session_too_long(non_interuptive = True):
         if non_interuptive:
             EnneadTab.NOTIFICATION.messenger(main_text = "Your Revit seesion has been running for more than 24Hours.")
         else:
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This Revit session has been running for more than 24Hours.\nPaying $300 EA Coins.", sub_text = "Please consider restarting Revit to release memory and improve performance.", window_width = 500, window_height = 300, self_destruct = 60)
+            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This Revit session has been running for more than 24Hours.\nPaying $300 EA Coins.", sub_text = "Please consider restarting Revit to release memory and improve performance.", window_width = 500, window_height = 300, self_destruct = 20)
