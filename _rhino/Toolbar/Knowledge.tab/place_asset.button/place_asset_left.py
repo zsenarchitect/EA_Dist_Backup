@@ -1,13 +1,14 @@
-import Rhino # pyright: ignore
-import rhinoscriptsyntax as rs
-import scriptcontext as sc
+
+__alias__ = "PlaceAsset"
+__doc__ = "This button does PlaceAsset when left click"
+
 
 import sys
-sys.path.append("..\lib")
-import EA_UTILITY as EA
-import EnneadTab
-import place_new_asset_ETO_forms as NEW_ASSET_ETO_FORMS
-reload(NEW_ASSET_ETO_FORMS)
+import Rhino # pyright: ignore
+import rhinoscriptsyntax as rs
+
+from EnneadTab import FOLDER
+import asset_UI as ui
 
 
 def insert_ref_block(block_name, is_ref_block_method):
@@ -41,38 +42,37 @@ def insert_ref_block(block_name, is_ref_block_method):
     obj = Rhino.RhinoDoc.ActiveDoc.Objects.AddInstanceObject(indexOfAddedBlock,Rhino.Geometry.Transform.Identity)
 
     if not is_ref_block_method:
-        sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\Blocks')
+        sys.path.append('L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Source Codes\\Blocks')
         import block_layer_packaging
         block_layer_packaging.pack_block_layers(blocks = [obj], flatten_layer = True)
 
 
 
         import imp
-        MAKE_BLOCK_UNIQUE = imp.load_source('make block unique', r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\Blocks\make block unique.py')
-        #reload(MAKE_BLOCK_UNIQUE)
+        MAKE_BLOCK_UNIQUE = imp.load_source('make block unique', 
+                                            'L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Source Codes\\Blocks\\make block unique.py')
+
         MAKE_BLOCK_UNIQUE.make_block_unique(add_name_tag = False, original_blocks = [obj], treat_nesting = True)
         rs.DeleteBlock(block_name)
         rs.RenameBlock( "{}_new".format(block_name), block_name )
 
 
+
 def get_external_filepath(block_name):
 
-    folder = r"L:\4b_Applied Computing\00_Asset Library"
+    folder = "L:\\4b_Applied Computing\\00_Asset Library"
     if folder in block_name:
         return block_name
 
 
-    files = EnneadTab.FOLDER.get_filenames_in_folder(folder)
+    files = FOLDER.get_filenames_in_folder(folder)
     for file_name in files:
         if block_name in  file_name:
             return "{}\{}".format(folder, file_name)
 
-
-@EnneadTab.ERROR_HANDLE.try_catch_error
-def place_new_asset():
-
-    folder = r"L:\4b_Applied Computing\00_Asset Library"
-    files = EnneadTab.FOLDER.get_filenames_in_folder(folder)
+def place_asset():
+    folder = "L:\\4b_Applied Computing\\00_Asset Library"
+    files = FOLDER.get_filenames_in_folder(folder)
 
     def is_good_file(name):
         if name.endswith(".3dm"):
@@ -83,26 +83,11 @@ def place_new_asset():
 
 
     block_names =  [("{}\{}".format(folder, file), file) for file in files]
-    #print block_names
-    import traceback
-    try:
-        block_name, is_ref_block_method = NEW_ASSET_ETO_FORMS.ShowImageSelectionDialog(block_names)
-        #print block_name
-        if block_name is None or is_ref_block_method is None or block_name == []:
-            return
-        block_name = block_name[0]
-        print("########", is_ref_block_method)
-        insert_ref_block(block_name, is_ref_block_method)
-    except:
-        print(traceback.format_exc())
+
+    block_name, is_ref_block_method = ui.ShowImageSelectionDialog(block_names)
+
+    if block_name is None or is_ref_block_method is None or block_name == []:
         return
-
-
-
-
-######################  main code below   #########
-if __name__ == "__main__":
-    rs.EnableRedraw(False)
-    #EnneadTab.NOTIFICATION.toast(main_text = "V11 main")
-    place_new_asset()
-
+    block_name = block_name[0]
+    print("########", is_ref_block_method)
+    insert_ref_block(block_name, is_ref_block_method)

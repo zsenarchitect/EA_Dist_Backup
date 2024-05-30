@@ -1,21 +1,20 @@
-import System # pyright: ignore
-import Rhino # pyright: ignore
-import Rhino # pyright: ignore.UI
-import rhinoscriptsyntax as rs
-import scriptcontext as sc
-import Eto # pyright: ignore
 import os
-import fnmatch
-import sys
-import textwrap
-sys.path.append("..\lib")
-import EA_UTILITY as EA
-import EnneadTab
-#EnneadTab.NOTIFICATION.toast(main_text = "V11 eto")
 
+import Rhino # pyright: ignore
+import Eto # pyright: ignore
+
+
+
+import fnmatch
+import textwrap
 import itertools
 flatten = itertools.chain.from_iterable
 graft = itertools.combinations
+
+
+
+from EnneadTab import  NOTIFICATION, DATA_FILE
+from EnneadTab.RHINO import RHINO_UI
 
 # make modal dialog
 class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
@@ -165,7 +164,7 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
         # set content
         self.Content = layout
         
-        EnneadTab.RHINO.RHINO_UI.apply_dark_style(self)
+        RHINO_UI.apply_dark_style(self)
 
     """
     ##  create content ############################################################################################################################
@@ -635,8 +634,8 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
             # assign a default no tag dict
             self.ITEM_DOWNLOADS[rhino_file_name] = 0
             self.default_tag_data_reset(item_name = rhino_file_name)
-            EnneadTab.DATA_FILE.save_dict_to_txt(self.META_DATA, meta_data_file, end_with_new_line = False)
-            temp_dict = EA.read_txt_as_dict(filepath = meta_data_file, use_encode = False)
+            DATA_FILE.save_dict_to_txt(self.META_DATA, meta_data_file, end_with_new_line = False)
+            temp_dict = DATA_FILE.read_txt_as_dict(filepath = meta_data_file, use_encode = False)
 
 
 
@@ -651,9 +650,9 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
     def force_update_tags_by_name(self):
         for item in self.ScriptList:
             rhino_file_name = item[0]
-            meta_data_file = r"{}\{}".format(self.FOLDER_DATA, rhino_file_name.replace("3dm", "meta"))
+            meta_data_file = "{}\\{}".format(self.FOLDER_DATA, rhino_file_name.replace("3dm", "meta"))
 
-            temp_dict = EA.read_txt_as_dict(filepath = meta_data_file, use_encode = False)
+            temp_dict = DATA_FILE.read_txt_as_dict(filepath = meta_data_file, use_encode = False)
             mistake_found = False
             for tag_name in self.TAG_DEFAULT_LIST:
                 if tag_name.lower() not in rhino_file_name and temp_dict[tag_name.lower()] == False:
@@ -661,7 +660,7 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
                     mistake_found = True
                     temp_dict[tag_name.lower()] == True
             if mistake_found:
-                EnneadTab.DATA_FILE.save_dict_to_txt(temp_dict, meta_data_file, end_with_new_line = False)
+                DATA_FILE.save_dict_to_txt(temp_dict, meta_data_file, end_with_new_line = False)
 
 
     def get_item_tags(self, rhino_file_name):
@@ -703,12 +702,12 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
             if self.is_nothing_selected() or datas is None or datas == []:
                 image = "checked_toggle_inactive.png"
 
-            button.Image = Eto.Drawing.Bitmap(r"{}\{}".format(self.FOLDER_APP_IMAGES, image))
+            button.Image = Eto.Drawing.Bitmap("{}\\{}".format(self.FOLDER_APP_IMAGES, image))
 
 
     def get_file_from_current_selection(self, extension):
         current_item = self.get_listbox_selected_items_column0()
-        meta_data_file = r"{}\{}".format(self.FOLDER_DATA, current_item.replace("3dm", extension))
+        meta_data_file = "{}\\{}".format(self.FOLDER_DATA, current_item.replace("3dm", extension))
         return meta_data_file
 
 
@@ -726,9 +725,9 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
         meta_data_file = self.get_meta_file_from_current_selection()
 
         try:
-            EnneadTab.DATA_FILE.save_dict_to_txt(self.META_DATA, meta_data_file, end_with_new_line = False)
+            DATA_FILE.save_dict_to_txt(self.META_DATA, meta_data_file, end_with_new_line = False)
         except Exception as e:
-            EnneadTab.NOTIFICATION.toast(main_text = str(e))
+            NOTIFICATION.toast(main_text = str(e))
 
 
     def meta_data_read(self):
@@ -760,7 +759,7 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
             print(next_item)
             self.lb.SelectedRow = i + increment
         except IndexError:
-            EnneadTab.NOTIFICATION.toast(main_text = "End of list.")
+            NOTIFICATION.toast(main_text = "End of list.")
             self.lb.SelectedRow = 0
     """
     ####  event call ##############################################################################################################################
@@ -898,25 +897,25 @@ class ImageSelectionDialog(Eto.Forms.Dialog[bool]):
         if self.SOUND_MUTE:
             return
         file = "sound effect_menu_page_trun_backward.wav"
-        EnneadTab.SOUNDS.play_sound(file)
+        SOUNDS.play_sound(file)
 
     def sound_page_next(self):
         if self.SOUND_MUTE:
             return
         file = "sound effect_menu_page_trun_forward.wav"
-        EnneadTab.SOUNDS.play_sound(file)
+        SOUNDS.play_sound(file)
 
     def sound_tag_button(self):
         if self.SOUND_MUTE:
             return
         file = "sound effect_menu_tap.wav"
-        EnneadTab.SOUNDS.play_sound(file)
+        SOUNDS.play_sound(file)
 
     def sound_selected_item_changed(self):
         if self.SOUND_MUTE:
             return
         file = "sound effect_menu_flip.wav"
-        EnneadTab.SOUNDS.play_sound(file)
+        SOUNDS.play_sound(file)
 """
 ####  outside dialog ################################################################################################################################
 #####################################################################################################################################################
@@ -932,12 +931,7 @@ def ShowImageSelectionDialog(image_list):
 
     # for reason not understood yet, value is not displayed in grid view if not contained by list, must convert list format: [1,2,3,"abc"] ----> [[1],[2],[3],["abd"]]
     formated_list = [[x[1]] for x in image_list]
-    """
-    i = 0
-    while i < len(docLayers):
-        to_do.append(docLayers[i:i+1])
-        i += 1
-    """
+
 
     dlg = ImageSelectionDialog(formated_list)
     rc = Rhino.UI.EtoExtensions.ShowSemiModal(dlg, Rhino.RhinoDoc.ActiveDoc, Rhino.UI.RhinoEtoApp.MainWindow)
@@ -960,13 +954,3 @@ def ShowImageSelectionDialog(image_list):
         print("Dialog did not run")
         return None, None
 
-@EnneadTab.ERROR_HANDLE.try_catch_error
-def main():
-    image_list = [(r'L:\\4b_Applied Computing\\00_Asset Library\\Setting-Meet-5-54.3dm', 'Setting-Meet-5-54.3dm'),
-                    (r'L:\\4b_Applied Computing\\00_Asset Library\\Setting-Meet-5-72x30.3dm', 'Setting-Meet-5-72x30.3dm'),
-                    (r'L:\\4b_Applied Computing\\00_Asset Library\\Setting-Meet-6-63x27.3dm', 'Setting-Meet-6-63x27.3dm')]
-    print (ShowImageSelectionDialog(image_list))
-    
-if __name__ == "__main__":
-    main()
-    

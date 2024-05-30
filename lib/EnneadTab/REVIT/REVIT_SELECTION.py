@@ -112,7 +112,7 @@ def get_all_linestyles(doc, return_name=True):
     line_subcs.sort(key=lambda x: x.Name)
     return line_subcs
 
-def get_solid_fill_pattern(doc, return_id = False):
+def get_solid_fill_pattern(doc = DOC, return_id = False):
     fill_patterns = DB.FilteredElementCollector(doc).OfClass(DB.FillPatternElement).WhereElementIsNotElementType().ToElements()
     for fill_pattern in fill_patterns:
         if fill_pattern.GetFillPattern().IsSolidFill:
@@ -121,7 +121,7 @@ def get_solid_fill_pattern(doc, return_id = False):
             return fill_pattern
     return None
 
-def get_solid_fill_pattern_id(doc):
+def get_solid_fill_pattern_id(doc = DOC):
     return get_solid_fill_pattern(doc, return_id = True)
 
 def get_filledregion_type(doc, type_name):
