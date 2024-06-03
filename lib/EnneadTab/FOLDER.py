@@ -6,6 +6,7 @@ import os
 import ENVIRONMENT_CONSTANTS
 import ERROR_HANDLE
 import ENVIRONMENT
+from EnneadTab import NOTIFICATION
 import USER
 
 
@@ -178,13 +179,15 @@ def copy_file_to_local_dump_folder(original_path, file_name = None, ignore_warni
     local_folder = secure_folder(local_folder)
     local_path = "{}\{}".format(local_folder, file_name)
     
-    if ignore_warning:
-        try:
-            shutil.copyfile(original_path, local_path)
-        except:
-            pass
-    else:
+
+    try:
         shutil.copyfile(original_path, local_path)
+    except Exception as e:
+        if not ignore_warning:
+            if "being used by another process" in str(e):
+                NOTIFICATION.messenger("Please close opened file first.")
+            else:
+                raise e
 
     return local_path
 
