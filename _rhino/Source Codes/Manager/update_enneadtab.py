@@ -2,7 +2,6 @@ import traceback
 import os
 import json
 import rhinoscriptsyntax as rs
-import scriptcontext as sc
 import shutil
 import sys
 sys.path.append("..\lib")

@@ -29,9 +29,11 @@ except:
     pass
 
 if USER.is_enneadtab_developer():
-    EDITOR_VERSION = "{}\\Working\\EnneadTab.rui".format(ENVIRONMENT.WORKING_FOLDER_FOR_RHINO)
+    EDITOR_VERSION_OLD = "{}\\Working\\EnneadTab.rui".format(ENVIRONMENT.WORKING_FOLDER_FOR_RHINO)
+    EDITOR_VERSION = "{}\\Working\\Ennead-For-Rhino.rui".format(ENVIRONMENT.WORKING_FOLDER_FOR_RHINO)
 else:
-    EDITOR_VERSION = "{}\\EnneadTab for Rhino\\EnneadTab.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
+    EDITOR_VERSION_OLD = "{}\\EnneadTab for Rhino\\EnneadTab.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
+    EDITOR_VERSION = "{}\\EnneadTab for Rhino\\Ennead-For-Rhino.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
 
 
 
@@ -119,14 +121,14 @@ def update_my_rui():
     my_user_folder_version = folder + "\\EnneadTab.rui"
 
     try:
-        shutil.copyfile(EDITOR_VERSION, my_user_folder_version)
+        shutil.copyfile(EDITOR_VERSION_OLD, my_user_folder_version)
         if not USER.is_enneadtab_developer():
             rs.OpenToolbarCollection(my_user_folder_version)
         else:
             rs.OpenToolbarCollection(my_local_version)
         return
     except:
-        shutil.copyfile(EDITOR_VERSION, my_local_version)
+        shutil.copyfile(EDITOR_VERSION_OLD, my_local_version)
         rs.OpenToolbarCollection(my_local_version)
     
 
@@ -134,6 +136,8 @@ def publish_rui_to_server():
 
     # copy over
     tartget_version = "{}\\EnneadTab for Rhino\\EnneadTab.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
+    shutil.copyfile(EDITOR_VERSION_OLD, tartget_version)
+    tartget_version = "{}\\EnneadTab for Rhino\\Ennead-For-Rhino.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
     shutil.copyfile(EDITOR_VERSION, tartget_version)
 
     # clean up all rui_bak file in folder and nesting folder
@@ -157,9 +161,11 @@ def publish_rui_to_users():
                 except:
                     pass
         
-        target = "{}\\{}\\EnneadTab.rui".format(folder, user_folder)
+        target_old = "{}\\{}\\EnneadTab.rui".format(folder, user_folder)
+        target = "{}\\{}\\Ennead-For-Rhino.rui".format(folder, user_folder)
         
         try:
+            shutil.copyfile(EDITOR_VERSION_OLD, target_old)
             shutil.copyfile(EDITOR_VERSION, target)
         except:
             pass
@@ -171,7 +177,7 @@ def unit_test():
 
     
 if __name__ == "__main__":
-    print (EDITOR_VERSION)
+    print (EDITOR_VERSION_OLD)
     tartget_version = "{}\\EnneadTab for Rhino\\EnneadTab.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
     print (tartget_version)
     update_my_rui()

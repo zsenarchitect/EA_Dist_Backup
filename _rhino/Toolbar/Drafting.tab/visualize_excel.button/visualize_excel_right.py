@@ -8,7 +8,7 @@ from EnneadTab import FOLDER
 from EnneadTab import ENVIRONMENT_CONSTANTS
 
 
-def open_sample_excel():
+def visualize_excel():
     original = "{}\\Demo Files\\Progam Spreadsheet.xlsx".format(ENVIRONMENT_CONSTANTS.PUBLISH_FOLDER_FOR_RHINO)
     copy = FOLDER.copy_file_to_local_dump_folder(original)
     EXE.open_file_in_default_application(copy)

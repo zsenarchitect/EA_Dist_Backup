@@ -402,5 +402,7 @@
     "Toolbar\\_RuiWriter\\.\\default_icon.pngremove_string_in_material_name_left": "49b59316-fe52-4eca-ac4f-1dfb6adfeb52",
     "Toolbar\\Revit.tab\\floor_drafter.button": "f7f4dc8c-ddd3-4a2b-92a9-cd416218dc19",
     "Toolbar\\Revit.tab\\floor_drafter.button\\floor_drafter_left.py": "4b3e50f0-2c6a-454c-8722-e4003986975f",
-    "Toolbar\\_RuiWriter\\.\\default_icon.pngfloor_drafter_left": "1f20d040-27a8-4bae-8c23-5495726d0a14"
+    "Toolbar\\_RuiWriter\\.\\default_icon.pngfloor_drafter_left": "1f20d040-27a8-4bae-8c23-5495726d0a14",
+    "Toolbar\\Drafting.tab\\visualize_excel.button\\visualize_excel_right.py": "460fe225-770f-4e76-8791-7aa85e60c0f0",
+    "Toolbar\\Drafting.tab\\visualize_excel.button\\icon.pngvisualize_excel_right": "df38ab9d-1751-45ae-8109-4cb3d65543c5"
 }

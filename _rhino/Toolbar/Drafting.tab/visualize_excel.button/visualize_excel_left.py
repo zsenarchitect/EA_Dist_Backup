@@ -6,7 +6,7 @@ __doc__ = "Convert excel data to shape diagrams."
 import rhinoscriptsyntax as rs
 
 import math
-import sys
+
 import textwrap
 
 
@@ -18,6 +18,7 @@ def visualize_excel():
     ShapeWriter().write_shape()
 
 class ShapeWriter:
+
     @staticmethod
     def get_edge_L_from_area(area):
         return math.sqrt(area)
@@ -104,11 +105,12 @@ class ShapeWriter:
         #     text = EnneadTab.DATA_FILE.read_txt_as_list(filepath, use_encode = True)
         #     self.datas[i] = text + num
         
-        opt = rs.ListBox(["Circle", "Square"], "What shape to use?",  title="EnneadTab Visualize Excel")
-        if opt == "Circle":
-            self.shape_is_square = False
-        else:
-            self.shape_is_square = True
+        opt = rs.ListBox(["Circle", "Square", "Bar"], "What shape to use?",  title="EnneadTab Visualize Excel")
+        self.basic_shape = opt
+        if opt == "Bar":
+            self.fix_bar_width = rs.RealBox("What is the width of the bar?")
+
+
 
     
         self.pointer = [0,0,0]
@@ -171,7 +173,7 @@ class ShapeWriter:
             if self.use_hori and count > 25:
                 x, y = y, x
             
-            if self.shape_is_square:
+            if self.basic_shape == "Square":
                 L = ShapeWriter.get_edge_L_from_area(area)
                 pts = [[L/2, L/2, 0],
                         [-L/2, L/2, 0],
@@ -182,13 +184,24 @@ class ShapeWriter:
                 abstract_gap = L/2 
                 
                 
-            else:
+            elif self.basic_shape == "Circle":
                 r = ShapeWriter.get_r_from_area(area)
                 center = rs.PointAdd([0,0,0], [x * r * 2 , y * r * 2, 0])
                 circle = rs.AddCircle(center, r)
                 srfs.append( rs.AddPlanarSrf(circle))
                 rs.DeleteObject(circle)
                 abstract_gap = r 
+
+            elif self.basic_shape == "Bar":
+                W = self.fix_bar_width
+                L = area/W
+                pts = [[W/2, L/2, 0],
+                        [-W/2, L/2, 0],
+                        [-W/2, -L/2, 0],
+                        [W/2, -L/2, 0]]
+                pts = [rs.PointAdd(pt, [x * W, y * L, 0]) for pt in pts]
+                srfs.append(rs.AddSrfPt(pts))
+                abstract_gap = W/2
         
         
         caption_text_drop = max(self.caption_text_drop, abstract_gap + 5)

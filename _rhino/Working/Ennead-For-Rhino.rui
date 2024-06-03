@@ -508,7 +508,7 @@
           <locale_1033>visualize_excel</locale_1033>
         </text>
         <left_macro_id>7e3adf5e-536e-46b3-92b2-d9ad2bd10be6</left_macro_id>
-        <right_macro_id>2ec2b28c-faf1-4004-aba1-d681e3e47a38</right_macro_id>
+        <right_macro_id>460fe225-770f-4e76-8791-7aa85e60c0f0</right_macro_id>
       </tool_bar_item>
     </tool_bar>
     <tool_bar guid="b72d3655-5737-457d-ad65-c452e88b8555" bitmap_id="2c420ade-40c0-4ed7-82a1-dd1d64b5e6d1" item_display_style="control_and_text">
@@ -2261,7 +2261,7 @@ RHINO_MODULE_HELPER.run_Rhino_button(locator)
 )
 </script>
     </macro_item>
-    <macro_item guid="2ec2b28c-faf1-4004-aba1-d681e3e47a38" bitmap_id="f8e6db6e-3150-44f4-a031-b4713d0db08e">
+    <macro_item guid="460fe225-770f-4e76-8791-7aa85e60c0f0" bitmap_id="df38ab9d-1751-45ae-8109-4cb3d65543c5">
       <text>
         <locale_1033>OpenSampleExcel</locale_1033>
       </text>
@@ -2281,7 +2281,7 @@ RHINO_MODULE_HELPER.run_Rhino_button(locator)
 import sys
 sys.path.append('L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Toolbar')
 import RHINO_MODULE_HELPER
-locator = 'Drafting.tab\\visualize_excel.button\\open_smaple_excel_right.py'
+locator = 'Drafting.tab\\visualize_excel.button\\visualize_excel_right.py'
 RHINO_MODULE_HELPER.run_Rhino_button(locator)
 )
 </script>
@@ -3333,7 +3333,7 @@ RHINO_MODULE_HELPER.run_Rhino_button(locator)
       <bitmap_item guid="0d726bcf-62de-4b34-a5c6-b5c59abb9abb" index="66"/>
       <bitmap_item guid="49b6bddd-4a30-41fb-9a22-785a1ed62805" index="67"/>
       <bitmap_item guid="5feda537-f150-4ece-96bd-f5020d42f517" index="68"/>
-      <bitmap_item guid="f8e6db6e-3150-44f4-a031-b4713d0db08e" index="69"/>
+      <bitmap_item guid="df38ab9d-1751-45ae-8109-4cb3d65543c5" index="69"/>
       <bitmap_item guid="2c420ade-40c0-4ed7-82a1-dd1d64b5e6d1" index="70"/>
       <bitmap_item guid="c8ca9ec7-bdef-49fb-a3ce-f408cbdef80d" index="71"/>
       <bitmap_item guid="4897b85e-8c90-4b08-9e7a-a21ba088ae3b" index="72"/>
@@ -4479,7 +4479,7 @@ LyuS9mEXRpsWAAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="0d726bcf-62de-4b34-a5c6-b5c59abb9abb" index="66"/>
       <bitmap_item guid="49b6bddd-4a30-41fb-9a22-785a1ed62805" index="67"/>
       <bitmap_item guid="5feda537-f150-4ece-96bd-f5020d42f517" index="68"/>
-      <bitmap_item guid="f8e6db6e-3150-44f4-a031-b4713d0db08e" index="69"/>
+      <bitmap_item guid="df38ab9d-1751-45ae-8109-4cb3d65543c5" index="69"/>
       <bitmap_item guid="2c420ade-40c0-4ed7-82a1-dd1d64b5e6d1" index="70"/>
       <bitmap_item guid="c8ca9ec7-bdef-49fb-a3ce-f408cbdef80d" index="71"/>
       <bitmap_item guid="4897b85e-8c90-4b08-9e7a-a21ba088ae3b" index="72"/>
@@ -6549,7 +6549,7 @@ h8D+biv8j8D/Af/HL4ZEE3ZeAAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="0d726bcf-62de-4b34-a5c6-b5c59abb9abb" index="66"/>
       <bitmap_item guid="49b6bddd-4a30-41fb-9a22-785a1ed62805" index="67"/>
       <bitmap_item guid="5feda537-f150-4ece-96bd-f5020d42f517" index="68"/>
-      <bitmap_item guid="f8e6db6e-3150-44f4-a031-b4713d0db08e" index="69"/>
+      <bitmap_item guid="df38ab9d-1751-45ae-8109-4cb3d65543c5" index="69"/>
       <bitmap_item guid="2c420ade-40c0-4ed7-82a1-dd1d64b5e6d1" index="70"/>
       <bitmap_item guid="c8ca9ec7-bdef-49fb-a3ce-f408cbdef80d" index="71"/>
       <bitmap_item guid="4897b85e-8c90-4b08-9e7a-a21ba088ae3b" index="72"/>
