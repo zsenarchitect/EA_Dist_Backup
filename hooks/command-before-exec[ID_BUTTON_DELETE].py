@@ -69,6 +69,8 @@ def check_level_grid():
             return False
         if not hasattr(x.Category, 'Name'):
             return False
+        if not x.Category:
+            return False
         return x.Category.Name in ["Grids", "Levels"]
 
     
