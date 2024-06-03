@@ -6,7 +6,7 @@ import os
 import ENVIRONMENT_CONSTANTS
 import ERROR_HANDLE
 import ENVIRONMENT
-from EnneadTab import NOTIFICATION
+import NOTIFICATION
 import USER
 
 

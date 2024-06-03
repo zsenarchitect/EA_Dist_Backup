@@ -11,48 +11,64 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SHEET, REVIT_VIEW
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION, REVIT_SHEET, REVIT_VIEW
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
 
-REF_VIEW = "PS 1_A115_1_L14 LACHMAN PENT ROOF"
+KEY_PLAN_REF = "PS 1_A115_1_L14 LACHMAN PENT ROOF"
+MAIN_PLAN_REF = "PS 1_A115_10_L14 LACHMAN PENT ROOF"
+WORK_SHEET = REVIT_SHEET.get_sheet_by_sheet_num("PS 1_A115")
 
 
 @ERROR_HANDLE.try_catch_error
 def align_key_plans():
+    align_plan(KEY_PLAN_REF, WORK_SHEET)
+    print ("#######################################")
+    align_plan(MAIN_PLAN_REF, WORK_SHEET)
 
+
+def align_plan(ref_view, work_sheet):
     t = DB.Transaction(doc, __title__)
     t.Start()
     
 
-    WORK_SHEET = REVIT_SHEET.get_sheet_by_sheet_num("PS 1_A115")
 
 
 
     # get the first first viewport as all data source
-    for viewport_id in WORK_SHEET.GetAllViewports():
+    for viewport_id in work_sheet.GetAllViewports():
         viewport = doc.GetElement(viewport_id)
         view = doc.GetElement(viewport.ViewId)
-        if view.Name == REF_VIEW:
+        if view.Name == ref_view:
+            viewport.ViewportPositioning = DB.ViewportPositioning.ViewOrigin
             position = viewport.GetBoxCenter()
+            scale = view.Scale
+
             break
 
 
 
-    all_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()
+    all_raw_sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).ToElements()
+    all_sheets = REVIT_SELECTION.filter_elements_changable(all_raw_sheets)
+    for sheet in sorted(list(set(all_raw_sheets)-set(all_sheets)), key = lambda x: x.SheetNumber):
+        print ("skip: " + sheet.SheetNumber)
         
     for i, sheet in enumerate(all_sheets):
+
         
         for j, viewport_id in enumerate(sheet.GetAllViewports()):
             viewport = doc.GetElement(viewport_id)
             view = doc.GetElement(viewport.ViewId)
+            if view.Name == ref_view:
+                continue
 
-            if view.Scale == 1200:
+            if view.Scale == scale:
                 viewport.ViewportPositioning = DB.ViewportPositioning.ViewOrigin
                 viewport.SetBoxCenter(position)
+                print ("align: " + sheet.SheetNumber)
 
     t.Commit()
 
