@@ -1,14 +1,14 @@
 import re
 import Rhino # pyright: ignore
-import System # pyright: ignore.Drawing
+import System # pyright: ignore
 import scriptcontext as sc
 import rhinoscriptsyntax as rs
 import sys
 sys.path.append("..\lib")
-import EA_UTILITY as EA
+
 import EnneadTab
 
-import traceback
+
 ####################### below are new thing#######
 def try_catch_error(func):
     import traceback

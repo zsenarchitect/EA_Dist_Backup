@@ -1,6 +1,6 @@
 
 import Rhino # pyright: ignore
-import System # pyright: ignore.Drawing
+import System # pyright: ignore
 import scriptcontext as sc
 import rhinoscriptsyntax as rs
 import sys

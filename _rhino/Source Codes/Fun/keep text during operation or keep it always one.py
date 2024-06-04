@@ -3,7 +3,7 @@ import sys
 sys.path.append("..\lib")
 import EnneadTab
 import Rhino # pyright: ignore
-import System # pyright: ignore.Drawing
+import System # pyright: ignore
 import scriptcontext
 import rhinoscriptsyntax as rs
  
