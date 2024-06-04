@@ -147,25 +147,45 @@ def save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = Tru
     # see doc here: https://xlsxwriter.readthedocs.io/format.html#format-set-border
     def write_data_item(worksheet, data):
 
-        if data.cell_color:
-            hex_color = COLOR.rgb_to_hex(data.cell_color)
-            format = workbook.add_format({'bg_color' : hex_color})
+        if any(data.cell_color, data.text_color, data.border_style, data.border_color):
+            format_dict = {}
+            if data.cell_color:
+                format_dict['bg_color'] = COLOR.rgb_to_hex(data.cell_color)
+            if data.text_color:
+                format_dict['color'] = COLOR.rgb_to_hex(data.text_color)
+            if data.border_style:
+                format_dict['border'] = data.border_style
+            if data.border_color:
+                format_dict['border_color'] = COLOR.rgb_to_hex(data.border_color)
+            format = workbook.add_format(format_dict)
             worksheet.write(data.row,
                             data.column,
                             data.item,
                             format)
-        elif data.text_color:
-            hex_color = COLOR.rgb_to_hex(data.text_color)
-            format = workbook.add_format({'color' : hex_color})
-            worksheet.write(data.row,
-                            data.column,
-                            data.item,
-                            format)
-
         else:
             worksheet.write(data.row,
                             data.column,
                             data.item)
+
+        # if data.cell_color:
+        #     hex_color = COLOR.rgb_to_hex(data.cell_color)
+        #     format = workbook.add_format({'bg_color' : hex_color})
+        #     worksheet.write(data.row,
+        #                     data.column,
+        #                     data.item,
+        #                     format)
+        # elif data.text_color:
+        #     hex_color = COLOR.rgb_to_hex(data.text_color)
+        #     format = workbook.add_format({'color' : hex_color})
+        #     worksheet.write(data.row,
+        #                     data.column,
+        #                     data.item,
+        #                     format)
+
+        # else:
+        #     worksheet.write(data.row,
+        #                     data.column,
+        #                     data.item)
 
     workbook = xlsxwriter.Workbook(filepath)
 
