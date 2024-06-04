@@ -22,11 +22,12 @@ doc = REVIT_APPLICATION.get_doc()
 def test_temp_graphic():
     manager = DB.TemporaryGraphicsManager  .GetTemporaryGraphicsManager(doc)
     manager.Clear()
+    
 
-    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\surprised_face.bmp"
+    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\ennead-e-logo.bmp"
     if os.path.exists(path):
-        pass
-        data = DB.InCanvasControlData (path, DB.XYZ(0,0,0))
+    
+        data = DB.InCanvasControlData (path, DB.XYZ(0,0,300))
         manager.AddControl(data, doc.ActiveView.Id)
 
     """

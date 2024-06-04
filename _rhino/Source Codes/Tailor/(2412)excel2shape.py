@@ -69,13 +69,6 @@ def excel2shape():
     width = 150
 
     # stack 1
-    # for department in data.keys():
-    #     color = data[department]["color"]
-    #     print (color)
-    #     for header, area in data[department]["value"].items():
-    #         if area != "":
-    #             print (department, header, area)
-
     collection = [] 
     pointer_x = 0
     pointer_y = 0
@@ -106,8 +99,71 @@ def excel2shape():
 
     rs.MoveObjects(collection, (0, 1500, 0))
 
+    # stack 2
+    collection = [] 
+    pointer_x = 0
+    pointer_y = 0
+    for department in data.keys():
+        total = 0
+        
+ 
+        for header, area in data[department]["value"].items():
+            if area != 0:
+                color = headers[header]["color"]
+                total += area
+                print (department, header, area)
+                height = area/width
+                
+                border = rs.AddRectangle(rs.CreatePlane((pointer_x, pointer_y, 0)), width, height)
+                shape = rs.AddPlanarSrf(border)
+                text = rs.AddText("{}: {}".format(header, int(area)), (pointer_x, pointer_y+15, 0))
+                rs.DeleteObject(border)
+                collection.append(shape)
+                collection.append(text)
+                rs.ObjectColor(shape, color)
+                pointer_y += height
 
-    #  stack 2
+        pointer_y = 0
+        title = rs.AddText("{}: {}".format(department, int(total)), (pointer_x, pointer_y-20, 0), height=2)
+        collection.append(title)
+        pointer_x += width*1.5
+
+    rs.MoveObjects(collection, (3000, 1500, 0))
+
+
+    #  stack 3
+    collection = [] 
+    pointer_x = 0
+    pointer_y = 0
+    for working_header in headers.keys():
+        total = 0
+        for department in data.keys():
+            color = data[department]["color"]
+            for header, area in data[department]["value"].items():
+                if header == working_header:
+                    break
+            if area != 0:
+                total += area
+      
+                print (department, header, area)
+                height = area/width
+                
+                border = rs.AddRectangle(rs.CreatePlane((pointer_x, pointer_y, 0)), width, height)
+                shape = rs.AddPlanarSrf(border)
+                text = rs.AddText("{}: {}".format(department, int(area)), (pointer_x, pointer_y+15, 0))
+                rs.DeleteObject(border)
+                collection.append(shape)
+                collection.append(text)
+                rs.ObjectColor(shape, color)
+                pointer_y += height
+
+        pointer_y = 0
+        title = rs.AddText("{}: {}".format(header, int(total)), (pointer_x, pointer_y-20, 0), height=2)
+        collection.append(title)
+        pointer_x += width*1.5
+    rs.MoveObjects(collection, (0, 0, 0))
+ 
+    #  stack 4
     collection = [] 
     pointer_x = 0
     pointer_y = 0
@@ -137,6 +193,7 @@ def excel2shape():
         title = rs.AddText("{}: {}".format(header, int(total)), (pointer_x, pointer_y-20, 0), height=2)
         collection.append(title)
         pointer_x += width*1.5
+    rs.MoveObjects(collection, (3000, 0, 0))
 ######################  main code below   #########
 if __name__ == "__main__":
     excel2shape()
