@@ -137,8 +137,8 @@ def publish_rui_to_server():
     # copy over
     tartget_version = "{}\\EnneadTab for Rhino\\EnneadTab.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
     shutil.copyfile(EDITOR_VERSION_OLD, tartget_version)
-    tartget_version = "{}\\EnneadTab for Rhino\\Ennead-For-Rhino.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
-    shutil.copyfile(EDITOR_VERSION, tartget_version)
+    # tartget_version = "{}\\EnneadTab for Rhino\\Ennead-For-Rhino.rui".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
+    # shutil.copyfile(EDITOR_VERSION, tartget_version)
 
     # clean up all rui_bak file in folder and nesting folder
     folder = "{}\\EnneadTab for Rhino".format(ENVIRONMENT.PUBLISH_FOLDER_FOR_RHINO)
@@ -166,7 +166,7 @@ def publish_rui_to_users():
         
         try:
             shutil.copyfile(EDITOR_VERSION_OLD, target_old)
-            shutil.copyfile(EDITOR_VERSION, target)
+            # shutil.copyfile(EDITOR_VERSION, target)
         except:
             pass
 

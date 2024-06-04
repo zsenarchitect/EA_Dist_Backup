@@ -57,15 +57,16 @@ PHASE_MAP = {phase.Name:i for i, phase in enumerate(get_all_phase(), 1)}
 @ERROR_HANDLE.try_catch_error
 def match_phase_sheet_layout():
 
+    sheet = REVIT_SHEET.get_sheet_by_sheet_num(REF_SHEET)
+        
     t = DB.Transaction(doc, __title__)
     t.Start()
-    
-    sheet = REVIT_SHEET.get_sheet_by_sheet_num(REF_SHEET)
+
     for j, viewport_id in enumerate(sheet.GetAllViewports()):
         viewport = doc.GetElement(viewport_id)
         view = doc.GetElement(viewport.ViewId)
-        REVIT_VIEW.set_detail_number(view, "temp{}".format(j))
-        
+        REVIT_VIEW.set_detail_number(view, "____temp{}".format(j))
+
     for j, viewport_id in enumerate(sheet.GetAllViewports()):
         viewport = doc.GetElement(viewport_id)
         view = doc.GetElement(viewport.ViewId)
@@ -80,7 +81,7 @@ def match_phase_sheet_layout():
 
 
         row, column = LEVLE_MAP[view.GenLevel.Name], PHASE_MAP[doc.GetElement(view.LookupParameter("Phase").AsElementId()).Name]
-        detail_num = "{}@{}".format(str(row).zfill(2), column)
+        detail_num = "{}@{}".format(str(row).zfill(3), column)
 
         REVIT_VIEW.set_detail_number(view, detail_num)
         REVIT_VIEW.set_view_title(view, "{}_{}".format(view.GenLevel.Name, doc.GetElement(view.LookupParameter("Phase").AsElementId()).Name))
