@@ -15,7 +15,7 @@ except Exception as e:
 
 def pick_emoji_text():
     import io
-    with io.open('{}\FUN\EMOJI_TEXT.txt'.format(FOLDER.get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
+    with io.open('{}\\FUN\\EMOJI_TEXT.txt'.format(FOLDER.get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
         lines = f.readlines()
     lines = [x.replace("\n", "") for x  in lines if x != "\n"]
     from pyrevit import forms
@@ -30,7 +30,7 @@ def pick_emoji_text():
 
 def random_emoji():
     import io
-    with io.open('{}\FUN\EMOJI_TEXT.txt'.format(FOLDER.get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
+    with io.open('{}\\FUN\\EMOJI_TEXT.txt'.format(FOLDER.get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
         lines = f.readlines()
     lines = [x.replace("\n", "") for x  in lines if x != "\n"]
     import random

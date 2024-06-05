@@ -81,7 +81,7 @@ def match_phase_sheet_layout():
 
 
         row, column = LEVLE_MAP[view.GenLevel.Name], PHASE_MAP[doc.GetElement(view.LookupParameter("Phase").AsElementId()).Name]
-        detail_num = "{}@{}".format(str(row).zfill(3), column)
+        detail_num = "{}@{}".format(str(row).zfill(2), column)
 
         REVIT_VIEW.set_detail_number(view, detail_num)
         REVIT_VIEW.set_view_title(view, "{}_{}".format(view.GenLevel.Name, doc.GetElement(view.LookupParameter("Phase").AsElementId()).Name))

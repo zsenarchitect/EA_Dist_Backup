@@ -6,8 +6,8 @@ import os
 import sys
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
-import DATA_CONVERSION
-import NOTIFICATION
+import DATA_CONVERSION #pyright: ignore
+import NOTIFICATION #pyright: ignore
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
@@ -21,7 +21,7 @@ except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
 try:
-    import REVIT_APPLICATION
+    import REVIT_APPLICATION #pyright: ignore
 except:
     pass
 
@@ -346,7 +346,7 @@ def pick_shared_para_definition(doc, select_multiple = False):
                                             self.item[1].Name, \
                                             self.item[1].ParameterType) 
             except:
-                import REVIT_UNIT
+                import REVIT_UNIT #pyright: ignore
                 return "{} : {} ({})".format(self.item[0], \
                             self.item[1].Name, \
                             REVIT_UNIT.get_unit_spec_name(self.item[1].GetDataType()))
@@ -613,5 +613,14 @@ def get_panel_location_map(panels):
     return panel_location_map
 
 def get_color_scheme_by_name(scheme_name, doc = DOC):
-    import REVIT_COLOR_SCHEME
+    import REVIT_COLOR_SCHEME #pyright: ignore
     return REVIT_COLOR_SCHEME.get_color_scheme_by_name(scheme_name, doc)
+
+
+
+def get_revit_link_instance_by_name(link_doc_name):
+    link_instances = DB.FilteredElementCollector(DOC).OfClass(DB.RevitLinkInstance).ToElements()
+    for link_instance in link_instances:
+        if link_instance.GetLinkDocument().Title == link_doc_name:
+            return link_instance
+    return None
