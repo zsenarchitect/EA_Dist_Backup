@@ -304,7 +304,7 @@ def random_loading_message():
 """"""
 def pick_emoji_text():
     import io
-    with io.open('{}\FUN\EMOJI_TEXT.txt'.format(get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
+    with io.open('{}\FUN\_emoji_text.txt'.format(get_folder_path_from_path(__file__)), "r", encoding = "utf8") as f:
         lines = f.readlines()
     lines = [x.replace("\n", "") for x  in lines if x != "\n"]
     from pyrevit import forms

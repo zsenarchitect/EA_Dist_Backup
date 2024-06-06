@@ -372,15 +372,16 @@ class TempGraphicServer(UI.ITemporaryGraphicsHandler):
 
         manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(data.Document)
         manager.RemoveControl(data.Index)
-        # ideas: maybe store a info dict so it know more data associated from this (doc,index) pair as key, like who created it, why need it...
-        # like the acc pin
-        NOTIFICATION.messenger("Clicked on {}".format(data.Index)) 
-        temp_graphic_data = DATA_FILE.read_json_as_dict_in_shared_dump_folder("CANVAS_TEMP_GRAPHIC_DATA_{}.json".format(data.Document.Title),
-                                                                                 create_if_not_exist=True)
+        SOUNDS.play_sound("sound effect_duck.wav")
 
-        record = temp_graphic_data.get(data.Index, {})
-        if record and record.get("additional_info"):
-            NOTIFICATION.messenger(record["additional_info"])
+
+
+
+        temp_graphic_data = DATA_FILE.read_json_as_dict_in_dump_folder("CANVAS_TEMP_GRAPHIC_DATA_{}.json".format(data.Document.Title),
+                                                                                 create_if_not_exist=True)
+        record = temp_graphic_data.get(str(data.Index))
+        if record and record.get("additional_info").get("description"):
+            NOTIFICATION.messenger(record["additional_info"]["description"])
         
     def GetName(self):
         return "My Graphics Service"
@@ -403,6 +404,9 @@ def register_temp_graphic_server():
         DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
     )
     my_graphics_service = TempGraphicServer()
+    if external_service.IsRegisteredServerId (my_graphics_service.GetServerId()):
+        external_service.RemoveServer(my_graphics_service.GetServerId())
+        NOTIFICATION.messenger("Remove old graphical server...")
     external_service.AddServer(my_graphics_service)
     external_service.SetActiveServers(System.Collections.Generic.List[System.Guid]([my_graphics_service.GetServerId()]))
 
@@ -475,10 +479,8 @@ def main():
     REVIT_REPO.update_pyrevit_extension_json()
     register_auto_update()
 
-    try:
-        register_temp_graphic_server()
-    except:
-        pass
+    register_temp_graphic_server()
+
     
     if not USER.is_SZ(pop_toast = True):
         return
