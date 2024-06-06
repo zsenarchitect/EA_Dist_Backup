@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from EnneadTab import NOTIFICATION
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION, DATA_FILE
 
-import os
-import System # pyright: ignore
+
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument
+    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
     DOC = UIDOC.Document
     
     import REVIT_APPLICATION
@@ -118,52 +117,39 @@ def set_detail_number(view, detail_number):
     view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].Set(detail_number)
 
 
-class TempGraphicServer(UI.ITemporaryGraphicsHandler):
-    def __init__(self, doc):
-        self.doc = doc
-    
-    def OnClick(self, data):
-        NOTIFICATION.messenger("Clicked on " + data.Id.ToString())
-        mgr = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(self.doc)
-        mgr.RemoveControl(data.Id)
-        
-    def GetName(self):
-        return "My Graphics Service"
-        
-    def GetDescription(self):
-        return "This is a graphics service"
-        
-    def GetVendorId(self):
-        return "EnneadTab"
-        
-    def GetServiceId(self):
-        return DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
-        
-    def GetServerId(self):
-        return System.Guid("a8debc37-19fe-4198-1198-01a891ff1a7f")
 
 
+
+"""the resiter of the server happen during startup"""
+
+def show_in_convas_graphic(location, doc = DOC, view = None, additional_info = {}):
     
-def show_in_convas_graphic(location, doc = DOC):
     """note: make it 64x64
     open in MS paint and save as 16 bit color bmp
     background 0,128,128
+
+    if view is not provided, it will show in all views
     """
-    external_service = DB.ExternalService.ExternalServiceRegistry.GetService(
-        DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
-    )
-    my_graphics_service = TempGraphicServer(doc)
-    external_service.AddServer(my_graphics_service)
-    external_service.SetActiveServers(
-        System.Collections.Generic.List[System.Guid]([my_graphics_service.GetServerId()])
-    )
+
+
 
     manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
     
     manager.Clear()
 
-    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\warning_duck.bmp"
-    if os.path.exists(path):
-    
-        data = DB.InCanvasControlData (path, location)
-        manager.AddControl(data, doc.ActiveView.Id)
+    path = "{}\\warning_duck.bmp".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+
+    data = DB.InCanvasControlData (path, location)
+
+    if not view:
+        index = manager.AddControl(data, DB.ElementId.InvalidElementId)
+    else:
+        index = manager.AddControl(data, view.Id)
+
+    # should not use shared data record because the index is locally created persession.
+    with DATA_FILE.update_data("CANVAS_TEMP_GRAPHIC_DATA_{}.json".format(doc.Title), is_local=True) as temp_graphic_data:
+
+        temp_graphic_data.update( {"index":index,
+                                    "location":[location.X, location.Y, location.Z], 
+                                    "view":view.UniqueId if view else None, 
+                                    "additional_info":additional_info})

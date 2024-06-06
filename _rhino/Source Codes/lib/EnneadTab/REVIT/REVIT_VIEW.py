@@ -2,7 +2,8 @@
 
 from EnneadTab import NOTIFICATION
 
-
+import os
+import System # pyright: ignore
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
@@ -13,6 +14,7 @@ try:
     import REVIT_APPLICATION
     import REVIT_SELECTION
     from pyrevit.coreutils import envvars
+    
 except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
@@ -114,3 +116,54 @@ def get_detail_number(view):
 
 def set_detail_number(view, detail_number):
     view.Parameter[DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER].Set(detail_number)
+
+
+class TempGraphicServer(UI.ITemporaryGraphicsHandler):
+    def __init__(self, doc):
+        self.doc = doc
+    
+    def OnClick(self, data):
+        NOTIFICATION.messenger("Clicked on " + data.Id.ToString())
+        mgr = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(self.doc)
+        mgr.RemoveControl(data.Id)
+        
+    def GetName(self):
+        return "My Graphics Service"
+        
+    def GetDescription(self):
+        return "This is a graphics service"
+        
+    def GetVendorId(self):
+        return "EnneadTab"
+        
+    def GetServiceId(self):
+        return DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
+        
+    def GetServerId(self):
+        return System.Guid("a8debc37-19fe-4198-1198-01a891ff1a7f")
+
+
+    
+def show_in_convas_graphic(location, doc = DOC):
+    """note: make it 64x64
+    open in MS paint and save as 16 bit color bmp
+    background 0,128,128
+    """
+    external_service = DB.ExternalService.ExternalServiceRegistry.GetService(
+        DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
+    )
+    my_graphics_service = TempGraphicServer(doc)
+    external_service.AddServer(my_graphics_service)
+    external_service.SetActiveServers(
+        System.Collections.Generic.List[System.Guid]([my_graphics_service.GetServerId()])
+    )
+
+    manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
+    
+    manager.Clear()
+
+    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\warning_duck.bmp"
+    if os.path.exists(path):
+    
+        data = DB.InCanvasControlData (path, location)
+        manager.AddControl(data, doc.ActiveView.Id)

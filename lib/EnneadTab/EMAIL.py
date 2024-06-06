@@ -13,6 +13,7 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(time.time())))
     try:
         if ENVIRONMENT_CONSTANTS.is_Revit_environment():
+            app_uptime = TIME.get_revit_uptime()
             import REVIT
             
             app = __revit__
@@ -21,7 +22,6 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
                 
             
             
-            app_uptime = TIME.get_revit_uptime()
             try:
                 doc_name = app.ActiveUIDocument.Document.Title
             except:
