@@ -331,6 +331,9 @@ def select_top_level_docs(select_multiple = True):
 
 
 
+
+
+
 def get_revit_link_docs(including_current_doc = False, link_only = False):
 
     docs = get_application().Documents

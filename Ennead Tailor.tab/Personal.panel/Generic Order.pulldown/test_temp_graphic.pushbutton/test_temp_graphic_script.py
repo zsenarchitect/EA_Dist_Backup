@@ -11,23 +11,36 @@ from pyrevit import script #
 
 import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_VIEW
 from Autodesk.Revit import DB # pyright: ignore 
 import os
+"""note: make it 64x64
+open in MS paint and save as 16 bit color bmp
+background 0,128,128
+"""
+
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
 @ERROR_HANDLE.try_catch_error
 def test_temp_graphic():
-    manager = DB.TemporaryGraphicsManager  .GetTemporaryGraphicsManager(doc)
+
+    REVIT_VIEW.show_in_convas_graphic(DB.XYZ(0,0,100))
+
+
+    return
+    manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
+    
     manager.Clear()
+
     
 
-    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\ennead-e-logo.bmp"
+    # path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\ennead-e-logo.bmp"
+    path = "C:\\Users\\szhang\\github\\EnneadTab-for-Revit\\ENNEAD.extension\\lib\\EnneadTab\\images\\warning_duck.bmp"
     if os.path.exists(path):
     
-        data = DB.InCanvasControlData (path, DB.XYZ(0,0,300))
+        data = DB.InCanvasControlData (path, DB.XYZ(0,0,0))
         manager.AddControl(data, doc.ActiveView.Id)
 
     """
