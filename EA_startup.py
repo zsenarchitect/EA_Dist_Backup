@@ -152,10 +152,10 @@ def register_dimension_note_dockpane():
 
 
 def annouce_hibration_mode():
-    if random.random() > 10.001:
+    if random.random() > 0.1:
         return
     output = OUTPUT.get_output()
-    if random.random() > 0.5:
+    if random.random() > 0.7:
         output.write("EnneadTab in hibernation mode.", OUTPUT.Style.Title) 
         output.write("Due to staffing plan change, Sen Zhang is no longer maintaining ")
         output.write("Bug-fix and feature-build are suspended.")
