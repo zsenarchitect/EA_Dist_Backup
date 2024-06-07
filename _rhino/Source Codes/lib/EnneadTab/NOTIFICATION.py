@@ -76,7 +76,7 @@ def messenger(main_text,
     data["animation_stay_duration"] = animation_stay_duration
     data["animation_fade_duration"] = 2
     data["width"] = width
-    data["height"] = height or 150 + main_text.count("\n") * 40
+    data["height"] = height or 150 + str(main_text).count("\n") * 40
     data["image"] = image
     data["x_offset"] = x_offset
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")

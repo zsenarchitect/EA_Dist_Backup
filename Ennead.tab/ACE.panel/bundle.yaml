@@ -5,7 +5,7 @@
 
 # this entire panel is commented out from the overall yaml tab layout for the basic user
 layout:
-  - create 3D view of workset
+  - workset
   - Family RePath
   - Project Starter
   - export_color_scheme
@@ -13,7 +13,6 @@ layout:
   - ">>>"
   - List_Legend and Schedule
   - QAQC_AI
-  - create_worksets
   - excel_sheet_creator
   - CollectTextures
   - family_tree
@@ -21,4 +20,3 @@ layout:
   - list_detail_items
   - transfer_parameter_data
   - check_formula
-  - links_to_worksets

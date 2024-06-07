@@ -26,7 +26,7 @@ doc = REVIT_APPLICATION.get_doc()
 @ERROR_HANDLE.try_catch_error
 def test_temp_graphic():
 
-    REVIT_VIEW.show_in_convas_graphic(DB.XYZ(0,0,50), additional_info={"description":"Hello"})
+    REVIT_VIEW.show_in_convas_graphic(DB.XYZ(400,150,50), additional_info={"description":"Hello"})
 
 
     return

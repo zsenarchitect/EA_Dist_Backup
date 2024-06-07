@@ -149,7 +149,8 @@ def show_in_convas_graphic(location, doc = DOC, view = None, additional_info = {
     # should not use shared data record because the index is locally created persession.
     with DATA_FILE.update_data("CANVAS_TEMP_GRAPHIC_DATA_{}.json".format(doc.Title), is_local=True) as temp_graphic_data:
 
-        temp_graphic_data.update( {"index":index,
-                                    "location":[location.X, location.Y, location.Z], 
-                                    "view":view.UniqueId if view else None, 
-                                    "additional_info":additional_info})
+        temp_graphic_data[index]={
+            "location":[location.X, location.Y, location.Z], 
+             "view":view.UniqueId if view else None, 
+             "additional_info":additional_info
+             }
