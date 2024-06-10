@@ -121,8 +121,14 @@ def set_detail_number(view, detail_number):
 
 
 """the resiter of the server happen during startup"""
+class GraphicDataItem:
 
-def show_in_convas_graphic(location, doc = DOC, view = None, additional_info = {}):
+    def __init__(self, location, additional_info = {}):
+        self.location = location
+        self.additional_info = additional_info
+
+        
+def show_in_convas_graphic(graphic_datas, doc = DOC, view = None):
     
     """note: make it 64x64
     open in MS paint and save as 16 bit color bmp
@@ -139,18 +145,59 @@ def show_in_convas_graphic(location, doc = DOC, view = None, additional_info = {
 
     path = "{}\\warning_duck.bmp".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
 
-    data = DB.InCanvasControlData (path, location)
+    temp_data = {}
+    for graphic_data_item in graphic_datas:
+        location = graphic_data_item.location
+        data = DB.InCanvasControlData (path, location)
 
-    if not view:
-        index = manager.AddControl(data, DB.ElementId.InvalidElementId)
-    else:
-        index = manager.AddControl(data, view.Id)
+        if not view:
+            index = manager.AddControl(data, DB.ElementId.InvalidElementId)
+        else:
+            index = manager.AddControl(data, view.Id)
+
+        temp_data[index] = {
+            "location":[location.X, location.Y, location.Z], 
+             "view":view.UniqueId if view else None, 
+             "additional_info": graphic_data_item.additional_info
+             }
 
     # should not use shared data record because the index is locally created persession.
     with DATA_FILE.update_data("CANVAS_TEMP_GRAPHIC_DATA_{}.json".format(doc.Title), is_local=True) as temp_graphic_data:
+        temp_graphic_data.update(temp_data)
 
-        temp_graphic_data[index]={
-            "location":[location.X, location.Y, location.Z], 
-             "view":view.UniqueId if view else None, 
-             "additional_info":additional_info
-             }
+
+
+def show_warnings_in_view(view, doc):
+    # redo inmport becasue the isolated func need structure.....
+    # from EnneadTab import NOTIFICATION
+    # from EnneadTab.REVIT import REVIT_VIEW
+    # from Autodesk.Revit import DB # pyright: ignore 
+
+
+    all_warnings = doc.GetWarnings()
+    all_view_element_ids = DB.FilteredElementCollector(doc, view.Id).ToElementIds()
+
+
+    description_dict = {}
+    for warning in all_warnings:
+        for id in warning.GetFailingElements():
+
+            description_dict[id] = warning.GetDescriptionText()
+    in_view_bad_element_ids = set(description_dict.keys()).intersection(set(all_view_element_ids))
+
+    if not in_view_bad_element_ids:
+        NOTIFICATION.messenger("No warnings in this view!")
+        return
+
+    graphic_datas = []
+    for element_id in in_view_bad_element_ids:
+        element = doc.GetElement(element_id)
+        bbox_source_element = element.get_BoundingBox(view)
+        bbox_source_center = bbox_source_element.Max - bbox_source_element.Min
+        description = description_dict[element_id]
+        graphic_datas.append(GraphicDataItem(bbox_source_center, additional_info = {"description": description}))
+
+        
+    show_in_convas_graphic(graphic_datas, view = view)
+    NOTIFICATION.messenger("Warnings marked!")
+    

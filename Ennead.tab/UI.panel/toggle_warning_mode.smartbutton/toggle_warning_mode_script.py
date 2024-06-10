@@ -33,35 +33,20 @@ def __selfinit__(script_cmp, ui_button_cmp, __rvt__):
     return True
 
 
+
+
+
 @ERROR_HANDLE.try_catch_error_silently
 def show_warnings(sender, args):
     active_view = args.CurrentActiveView
     doc = args.Document
-
-    # redo inmport becasue the isolated func need structure.....
-    from EnneadTab import NOTIFICATION
     from EnneadTab.REVIT import REVIT_VIEW
-    from Autodesk.Revit import DB # pyright: ignore 
+    REVIT_VIEW.show_warnings_in_view(active_view, doc)
 
 
-    all_warnings = doc.GetWarnings()
-    all_view_element_ids = DB.FilteredElementCollector(doc, active_view.Id).ToElementIds()
-
-    bad_element_ids = set()
-    for warning in all_warnings:
-        bad_element_ids.add( warning.GetFailingElements())
-    in_view_bad_element_ids = bad_element_ids.intersection(all_view_element_ids)
-
-    if not in_view_bad_element_ids:
-        return
-    for element_id in in_view_bad_element_ids:
-        element = doc.GetElement(element_id)
-        print (element)
-    # REVIT_VIEW.show_in_convas_graphic(DB.XYZ(400,150,0), additional_info={"description":"Hello"})
 
 
-    
-    # if active view is a sheet view, show warning for all placed view
+
     
 
 @ERROR_HANDLE.try_catch_error
@@ -76,9 +61,13 @@ def toggle_warning_mode():
     if new_state:
         __revit__.ViewActivated += EventHandler[ViewActivatedEventArgs](show_warnings) # pyright: ignore
         NOTIFICATION.messenger("Warning mode activated!")
+        REVIT_VIEW.show_warnings_in_view(doc.ActiveView, doc)
     else:
         __revit__.ViewActivated -= EventHandler[ViewActivatedEventArgs](show_warnings) # pyright: ignore
         NOTIFICATION.messenger("Warning mode De-activated!")
+        manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
+    
+        manager.Clear()
 
     script.set_envvar(KEY_NAME, new_state)
     script.toggle_icon(new_state)
