@@ -130,7 +130,7 @@ def update_time_sheet_by_software(doc_name, software):
     
     data = get_time_sheet_data()
     if not data:
-        NOTIFICATION.messenger("Timesheet Data Is Empty")
+        # NOTIFICATION.messenger("Timesheet Data Is Empty")
         
         return
     software_data = data.get(software, {})

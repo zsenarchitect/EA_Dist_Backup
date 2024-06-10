@@ -51,6 +51,9 @@ def excel_sheet_creator():
     if not data:
         NOTIFICATION.messenger(main_text = "Cannot open this excel")
         return
+    if not data.endswith(".xlsx"):
+        NOTIFICATION.messenger(main_text = "need .xlsx file")
+        return
     data = [x for x in data if x[0] == "YES"]
     # print (data)
     new_sheet_numbers = [x[4] for x in data]

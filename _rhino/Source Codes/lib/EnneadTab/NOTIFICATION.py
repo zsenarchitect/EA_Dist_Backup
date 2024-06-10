@@ -71,6 +71,8 @@ def messenger(main_text,
         return
     
     data = {}
+    if not isinstance(main_text, str):
+        main_text = str(main_text)
     data["main_text"] = main_text
     data["animation_in_duration"] = 0.5
     data["animation_stay_duration"] = animation_stay_duration
