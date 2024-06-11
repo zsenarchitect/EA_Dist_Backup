@@ -1,5 +1,0 @@
-min_revit_version: 2023
-tooltip: "Use this tool to find and change the view name of views that is not on a sheet.\nThis is helpful after reformat the view names from above.\n\n Revit user 3D views( those with {} in their name), will be ignored by this tool.\n\nSince Revit 2023, project browser will display icon for no sheet view, so from this version on there will be no 'NoSheet' prefix."
-
-
-title: "Mark\nNoSheet Views"

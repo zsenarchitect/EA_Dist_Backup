@@ -1,3 +1,0 @@
-max_revit_version: 2021
-title: "Mark/Clear\nTitle Corner"
-tooltip: "Mark or clear multiple viewports view title corner.\n\nNote: Since revit 2022, the new API allows for seeting position of the view title, and Ideate update their view align tool to allow title alignment, this tool is no longer needed. It is only kept for working with old revit project."

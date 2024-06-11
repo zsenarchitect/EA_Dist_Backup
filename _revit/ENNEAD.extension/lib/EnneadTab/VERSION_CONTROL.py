@@ -311,7 +311,8 @@ def copy_to_dist_folder():
         source_folder = getattr(ENVIRONMENT, "WORKING_FOLDER_FOR_{}".format(software.upper().replace("_", "")))
         FOLDER.copy_dir(source_folder,
                         target,
-                        allow_print_log=False)
+                        allow_print_log=False,
+                        ignore_keywords=["EnneadTab Developer.extension"])
     used_time = time.time() - time_start
     used_time = TIME.get_readable_time(used_time)
     NOTIFICATION.duck_pop(main_text = "dist version created in {}".format(used_time))
