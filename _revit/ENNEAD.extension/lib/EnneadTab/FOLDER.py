@@ -97,7 +97,7 @@ def copy_dir(source, dest, show_progress = False, progress_bar_note = "", ignore
                 rs.StatusBarProgressMeterUpdate(position = count, absolute = True)
 
             rel_path = root.replace(source, '').lstrip(os.sep)
-            if ".git" in root or ".vs" in root or ".pyc" in file or ".pytest_cache" in root:
+            if ".git" in root or ".vs" in root or ".pyc" in file or ".pytest_cache" in root or ".venv" in file:
                 if allow_print_log:
                     ERROR_HANDLE.print_note( "####Skip .git and .vs folder and skip .pyc file and skip .pytest_cache: {}".format(count))
                 continue
