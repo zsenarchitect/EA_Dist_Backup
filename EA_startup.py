@@ -17,7 +17,7 @@ from pyrevit import versionmgr
 
 import EA_UTILITY
 import System # pyright: ignore
-from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, ENVIRONMENT_CONSTANTS, OUTPUT, TIME
+from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, ENVIRONMENT_CONSTANTS, OUTPUT, TIME, VERSION_CONTROL
 from EnneadTab import MODULE_HELPER, ERROR_HANDLE, USER, KEYBOARD, ENVIRONMENT, SOUNDS, DOCUMENTATION
 from EnneadTab.FUN import JOKES, EMOJI, ENCOURAGING, HOLIDAY
 from EnneadTab.REVIT import REVIT_REPO, REVIT_FORMS
@@ -486,7 +486,8 @@ def main():
 
     register_temp_graphic_server()
 
-    
+    VERSION_CONTROL.install_EA_dist()
+
     if not USER.is_SZ(pop_toast = True):
         return
     
