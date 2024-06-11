@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RhinoUI major_ver="3" minor_ver="0" guid="43904607-a0fb-48e3-bfef-99afbf9d6a4c" localize="False" default_language_id="1033" dpi_scale="100">
+<RhinoUI major_ver="3" minor_ver="0" guid="43904607-a0fb-48e3-bfef-99afbf9d6a4c" localize="False" default_language_id="1033" dpi_scale="125">
   <extend_rhino_menus>
     <menu guid="d58ceae7-fdb0-4104-80da-274b94ad44a9">
       <text>
@@ -9,7 +9,7 @@
   </extend_rhino_menus>
   <menus />
   <tool_bar_groups>
-    <tool_bar_group guid="178808b5-d5c4-49e3-83ea-debbc4d62cd6" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="7cc39f6a-db20-43fb-8d1e-b0f089f475be" active_tool_bar_group="826f307c-b0d4-41c2-b4e6-d6fc0fb07c0c" single_file="False" hide_single_tab="False" point_floating="118,425">
+    <tool_bar_group guid="178808b5-d5c4-49e3-83ea-debbc4d62cd6" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="7cc39f6a-db20-43fb-8d1e-b0f089f475be" active_tool_bar_group="826f307c-b0d4-41c2-b4e6-d6fc0fb07c0c" single_file="False" hide_single_tab="False" point_floating="118,383">
       <text>
         <locale_1033>Toolbar group</locale_1033>
       </text>
@@ -19,7 +19,7 @@
         </text>
         <tool_bar_id>9d3b71f4-ac0a-4f61-be94-af39357f948b</tool_bar_id>
       </tool_bar_group_item>
-      <dock_bar_info dpi_scale="100" dock_bar="False" docking="True" horz="False" visible="False" floating="True" mru_float_style="8192" bar_id="59443" mru_width="868" point_pos="-2,-2" float_point="118,425" rect_mru_dock_pos="0,266,1920,331" dock_location_u="59419" dock_location="top" float_size="223,87" />
+      <dock_bar_info dpi_scale="125" dock_bar="False" docking="True" horz="False" visible="False" floating="True" mru_float_style="8192" bar_id="59443" mru_width="868" point_pos="-2,-2" float_point="118,383" rect_mru_dock_pos="0,239,1920,304" dock_location_u="59419" dock_location="top" float_size="223,87" />
     </tool_bar_group>
   </tool_bar_groups>
   <tool_bars>

@@ -8,6 +8,7 @@ import ENVIRONMENT_CONSTANTS
 import TIME
 import OUTPUT
 import FOLDER
+import USER
 
 
 from contextlib import contextmanager
@@ -130,7 +131,9 @@ def update_time_sheet_by_software(doc_name, software):
     
     data = get_time_sheet_data()
     if not data:
-        # NOTIFICATION.messenger("Timesheet Data Is Empty")
+
+        if USER.is_SZ():
+            NOTIFICATION.messenger("Timesheet Data Is Empty")
         
         return
     software_data = data.get(software, {})
