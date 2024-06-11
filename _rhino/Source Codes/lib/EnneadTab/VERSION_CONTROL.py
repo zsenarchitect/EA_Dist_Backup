@@ -13,6 +13,7 @@ import NOTIFICATION
 import SOUNDS
 import ENVIRONMENT
 import GIT
+import EXE
 
 def publish_ENNEAD_module():
     #working_root = ENVIRONMENT.get_EnneadTab_WORKING_root()
@@ -288,7 +289,13 @@ def publish_Rhino_source_code(deep_copy = False):
 
     # GIT.push_changes_to_main(dist_dst)
 
+
+
+def install_EA_dist():
+    exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+    EXE.open_file_in_default_application(exe)
 #############
 if __name__ == "__main__":
     # publish_Rhino_source_code(deep_copy = False)
     print(__file__ + "   -----OK!")
+    install_EA_dist()

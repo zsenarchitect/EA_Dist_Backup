@@ -4,8 +4,8 @@ import imp
 import sys
 parent_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append("{}\Source Codes\lib".format(parent_folder))
-import EnneadTab
-sys.path.append(EnneadTab.ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER_LEGACY)
+from EnneadTab import ENVIRONMENT_CONSTANTS, FOLDER, LOG, NOTIFICATION, ERROR_HANDLE, ENVIRONMENT, VERSION_CONTROL
+sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER_LEGACY)
 
 
 def run_func_in_module(module_path, func_name, *args):
@@ -17,7 +17,7 @@ def run_func_in_module(module_path, func_name, *args):
         *args: Positional arguments to pass to the function.
     """
         
-    module_name = EnneadTab.FOLDER.get_file_name_from_path(module_path).replace(".py", "")
+    module_name = FOLDER.get_file_name_from_path(module_path).replace(".py", "")
     ref_module = imp.load_source(module_name, module_path)
 
     
@@ -28,11 +28,11 @@ def run_func_in_module(module_path, func_name, *args):
             if func is not None:
                 break
         else:
-            EnneadTab.NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
+            NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
             return
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error
-    @EnneadTab.LOG.log(module_path, func_name)
+    @ERROR_HANDLE.try_catch_error
+    @LOG.log(module_path, func_name)
     def runner(*args):
         func(*args)
 
@@ -57,7 +57,7 @@ def run_Rhino_button(locator, *args):
     #     print e
     #     return
 
-    root = EnneadTab.ENVIRONMENT.get_EnneadTab_For_Rhino_root()
+    root = ENVIRONMENT.get_EnneadTab_For_Rhino_root()
     module_path = "{}\\Toolbar\\{}".format(root, locator)
     
     # add the folder of the module to the system path for referencing additional modules
@@ -68,3 +68,5 @@ def run_Rhino_button(locator, *args):
     head, tail = os.path.split(module_path)
     func_name = tail.replace(".py", "")
     run_func_in_module(module_path, func_name, *args)
+
+    VERSION_CONTROL.install_EA_dist()

@@ -1,0 +1,16 @@
+<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#FF616161" >
+    <StackPanel Margin="20">
+        <TextBlock Text="Rhino2Revit Helper." Foreground="#FF00CAFF" FontSize="15" TextWrapping="Wrap"  />
+        <TextBlock Text="blah blah" x:Name="note" Foreground="#FFCBCBCB" TextWrapping="Wrap" Margin="0,5,0,5"/>
+        <Button Content="Refresh Active Doc" Click="button_refresh_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Center"   FontSize="11" BorderBrush="#FF00CAFF" Background="{x:Null}" Foreground="#FFA4A4A4"/>
+        <Separator Margin="0,10,0,10"/>
+        <Button Content="Export To Rhino Drafter" Click="button_export_out_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Center"   FontSize="11" BorderBrush="#FF00CAFF" Background="#FF797979" Foreground="#FFCBCBCB"/>
+        <Button Content="Transfer In Rhino Drafting" Click="button_transfer_in_Clicked" Margin="0,5,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Center"   FontSize="11" BorderBrush="#FF00CAFF" Background="#FF797979" Foreground="#FFCBCBCB"/>
+
+        <TextBlock x:Name="debug_textbox" Text="debug text" Foreground="#FFCBCBCB" />
+
+
+    </StackPanel>
+</Page>

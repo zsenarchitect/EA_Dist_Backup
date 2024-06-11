@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "c:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/Ennead.tab/Utility.panel/misc2.stack/general_auto_clicker/GENERAL_AUTO_CLICKER.py", line 242, in <module>
+    main()
+  File "c:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/Ennead.tab/Utility.panel/misc2.stack/general_auto_clicker/GENERAL_AUTO_CLICKER.py", line 133, in main
+    icons = [icon_folder + "\\" + x for x in EnneadTab.FOLDER.get_filenames_in_folder(icons_folder)]
+NameError: global name 'icon_folder' is not defined

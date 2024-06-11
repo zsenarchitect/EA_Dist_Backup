@@ -1,0 +1,17 @@
+# background:
+#   panel: '#dcffe4'
+#   title: '#c7c7c7'
+#   slideout: '#c7c7c7'
+
+# collapsed: true
+
+
+layout:
+  - misc1
+  - ">>>"
+  - misc2
+  - misc3
+  - exe_1
+  - exe_2
+  - demo
+  - test_dockable

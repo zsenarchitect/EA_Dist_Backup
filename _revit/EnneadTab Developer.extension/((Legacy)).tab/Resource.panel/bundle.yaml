@@ -1,0 +1,28 @@
+background:
+  panel: 'b4e4e5'
+  title: 'b4e4e5'
+  slideout: 'b4e4e5'
+
+collapsed: true
+
+
+layout:
+  - website_EA
+  - websites_external
+  - Youtube
+  - sample_projects
+  - reference
+  - ">>>"
+  - how to
+  - enneadtab_setting
+  - Report Bugs
+  - reload enneadtab
+  - mini_bank
+  - mini_bank2
+  - kill_TTS
+  - kill_toaster
+  - ChatGPT
+  - show_goose
+  - revit_setting
+  - open_many_docs
+  - EnneadTab_Setting_UI
