@@ -291,7 +291,7 @@ def publish_Rhino_source_code(deep_copy = False):
 
 def copy_to_dist_folder():
 
-    softwares = [ "_rhino", "_revit"]
+    softwares = [  "_revit","_rhino"]
     if not os.path.exists(ENVIRONMENT.DISTIBUTION_FOLDER):
         return
     time_start = time.time()
