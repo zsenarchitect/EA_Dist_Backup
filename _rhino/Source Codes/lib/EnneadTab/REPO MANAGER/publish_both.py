@@ -2,10 +2,12 @@ import publish_revit
 import publish_rhino
 import sync_core_module
 import time
+import VERSION_CONTROL
 
 def publish_both():
     start = time.time()
     sync_core_module.sync_core()
+    VERSION_CONTROL.copy_to_dist_folder()
     publish_revit.publish_revit()
     publish_rhino.publish_rhino()
 
