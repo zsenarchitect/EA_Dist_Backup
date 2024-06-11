@@ -29,7 +29,10 @@ class RepositoryUpdater:
         self.download_zip()
         self.extract_zip()
         self.update_files()
-        self.cleanup()
+        try:
+            self.cleanup()
+        except:
+            pass
     
     def download_zip(self):
         response = requests.get(self.repo_url, stream=True)

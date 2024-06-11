@@ -146,7 +146,6 @@ def read_data(data):
 
 
     transform_string_and_ZYZ_string_and_reflection_string = data.split(",", 1)[1]
-    transform_string_and_ZYZ_string_and_reflection_string
     transform_string_and_ZYZ_string = transform_string_and_ZYZ_string_and_reflection_string[0:-4]
     reflection_string = transform_string_and_ZYZ_string_and_reflection_string[-2:-1]
     #print transform_string_and_ZYZ_string

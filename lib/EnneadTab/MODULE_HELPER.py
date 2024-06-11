@@ -3,6 +3,7 @@
 
 import os
 import imp
+import random
 
 import sys
 import FOLDER
@@ -52,7 +53,9 @@ def run_Rhino_button(folder, file_name, func_name, *args):
 
     run_func_in_module(module_path, func_name, *args)
 
-    VERSION_CONTROL.install_EA_dist()
+    if random.random() < 0.3:
+        VERSION_CONTROL.install_EA_dist()
+    
 
 @ERROR_HANDLE.try_catch_error_silently
 def run_revit_script(script_subfolder_or_fullpath, func_name,*args,**kwargs):
