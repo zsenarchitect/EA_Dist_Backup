@@ -265,7 +265,7 @@ def publish_Rhino_source_code(deep_copy = False):
 
 
 
-def copy_to_dist_folder():
+def publish_dist_folder():
 
     softwares = [  "_revit","_rhino"]
     if not os.path.exists(ENVIRONMENT.DISTIBUTION_FOLDER):
@@ -302,5 +302,5 @@ def install_EA_dist():
 if __name__ == "__main__":
     # publish_Rhino_source_code(deep_copy = False)
     print(__file__ + "   -----OK!")
-    copy_to_dist_folder()
+    publish_dist_folder()
     install_EA_dist()
