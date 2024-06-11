@@ -287,9 +287,37 @@ def publish_Rhino_source_code(deep_copy = False):
     used_time = TIME.get_readable_time(used_time)
     NOTIFICATION.duck_pop(main_text = "dist version created in {}".format(used_time))
 
-    # GIT.push_changes_to_main(dist_dst)
+    GIT.push_changes_to_main(dist_dst)
 
+def copy_to_dist_folder():
 
+    softwares = [ "_rhino", "_revit"]
+    if not os.path.exists(ENVIRONMENT.DISTIBUTION_FOLDER):
+        return
+    time_start = time.time()
+    print ("Publishing dist version...")
+    dist_dst = ENVIRONMENT.DISTIBUTION_FOLDER
+    for folder_or_file in os.listdir(dist_dst):
+        if folder_or_file in softwares:
+            try:
+                shutil.rmtree(os.path.join(dist_dst, folder_or_file))
+            except:
+                os.remove(os.path.join(dist_dst, folder_or_file))
+
+    for software in softwares:
+        target = "{}\\{}".format(dist_dst, software)
+        if not os.path.exists(target):
+            os.makedirs(target)
+        source_folder = getattr(ENVIRONMENT, "WORKING_FOLDER_FOR_{}".format(software.upper().replace("_", "")))
+        FOLDER.copy_dir(source_folder,
+                        target,
+                        allow_print_log=False,
+                        ignore_keywords=["EnneadTab Developer.extension"])
+    used_time = time.time() - time_start
+    used_time = TIME.get_readable_time(used_time)
+    NOTIFICATION.duck_pop(main_text = "dist version created in {}".format(used_time))
+
+    GIT.push_changes_to_main(dist_dst)
 
 def install_EA_dist():
     exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
@@ -298,4 +326,5 @@ def install_EA_dist():
 if __name__ == "__main__":
     # publish_Rhino_source_code(deep_copy = False)
     print(__file__ + "   -----OK!")
+    copy_to_dist_folder()
     install_EA_dist()
