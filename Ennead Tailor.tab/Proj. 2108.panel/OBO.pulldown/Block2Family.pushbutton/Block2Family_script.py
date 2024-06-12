@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "After getting all the block data from Rhino side, create/update family in Revit.If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id."
 __title__ = "Block2Family"
 
 import os
@@ -34,7 +34,7 @@ def Block2Family():
             pass
     working_files = [file for file in os.listdir(FOLDER.get_EA_local_dump_folder()) if file.startswith(KEY_PREFIX) and file.endswith(".json")]
     for i, file in enumerate(working_files):
-        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "")))
+        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "").replace(KEY_PREFIX + "_", "")))
         process_file(file)
            
     NOTIFICATION.duck_pop("All Rhino blocks have been loaded to Revit! Hooray!!")
