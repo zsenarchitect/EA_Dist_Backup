@@ -117,7 +117,7 @@ def DWG_convert(doc, geo_file):
 
     solids = []
 
-    layer_name = FOLDER.get_file_name_from_path(geo_file)
+    layer_name = FOLDER.get_file_name_from_path(geo_file, include_extension=False)
     for gel in geo_elements:
 
         if isinstance(gel, DB.Solid):
@@ -164,7 +164,7 @@ def get_current_import_object_styles(doc):
         
 def free_form_convert( doc, geo_file):
 
-    layer_name = FOLDER.get_file_name_from_path(geo_file)
+    layer_name = FOLDER.get_file_name_from_path(geo_file, include_extension=False)
 
     converted_els = []
     geos = DB.ShapeImporter().Convert(doc, geo_file)

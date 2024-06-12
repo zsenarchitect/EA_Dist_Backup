@@ -197,9 +197,11 @@ def copy_file_to_local_dump_folder(original_path, file_name = None, ignore_warni
 def get_file_extension_from_path(file_path):
     return os.path.splitext(file_path)[1]
 
-def get_file_name_from_path(file_path):
+def get_file_name_from_path(file_path, include_extension=True):
 
     head, tail = os.path.split(file_path)
+    if not include_extension:
+        tail = tail.split(".")[0]
     return tail
 
 
