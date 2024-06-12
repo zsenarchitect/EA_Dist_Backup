@@ -8,7 +8,7 @@ __title__ = "Block2Family"
 
 import os
 import math
-import clr
+import clr # pyright: ignore 
 # from pyrevit import forms #
 from pyrevit.revit import ErrorSwallower
 from pyrevit import script #
@@ -16,7 +16,7 @@ import ENNEAD_LOG
 from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_UNIT
 from Autodesk.Revit import DB # pyright: ignore 
-from Autodesk.Revit import ApplicationServices
+from Autodesk.Revit import ApplicationServices # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
@@ -71,7 +71,7 @@ def load_family(file):
     # load to project
     option = DB.SaveAsOptions()
     option.OverwriteExistingFile = True
-    family_doc.SaveAs(FOLDER.get_EA_dump_folder_file( block_name + ".rfa"),
+    family_doc.SaveAs(FOLDER.get_desktop_folder() + "\\" + block_name + ".rfa",
                       option)
 
     REVIT_FAMILY.load_family(family_doc, doc)
@@ -119,9 +119,7 @@ def DWG_convert(doc, geo_file):
 
         if isinstance(gel, DB.Solid):
             solids.append(gel)
-        elif isinstance(gel, DB.Mesh):
-            print("found mesh, trying to convert: {}".format(gel))
-            mesh_convert(gel, cad_trans, family_cat, layer_name)
+
 
 
     # create freeform from solids
@@ -158,35 +156,7 @@ def get_current_import_object_styles(doc):
     import_OSTs = list(import_OSTs[0].SubCategories)
     return import_OSTs
         
-def mesh_convert(geo,cad_trans,family_cat,cad_name):#geo element
 
-    builder = DB.TessellatedShapeBuilder()
-    builder.OpenConnectedFaceSet(False)
-
-    triangles = [geo.Triangle[x] for x in range(0, geo.NumTriangles)]
-    for t in triangles:
-        p1 = cad_trans.OfPoint(t.Vertex[0])
-        p2 = cad_trans.OfPoint(t.Vertex[1])
-        p3 = cad_trans.OfPoint(t.Vertex[2])
-        tface = DB.TessellatedFace(List[DB.XYZ]([p1, p2, p3]),
-                                   DB.ElementId.InvalidElementId)
-        builder.AddFace(tface)
-
-    builder.CloseConnectedFaceSet()
-    builder.Target = DB.TessellatedShapeBuilderTarget.AnyGeometry
-    builder.Fallback = DB.TessellatedShapeBuilderFallback.Mesh
-    builder.Build()
-
-    with revit.Transaction("Convert CAD Import to DirectShape"):
-        ds = DB.DirectShape.CreateElement(
-            revit.doc,
-            family_cat.Id
-            # DB.ElementId(DB.BuiltInCategory.OST_DataDevices)
-            )
-        ds.ApplicationId = 'B39107C3-A1D7-47F4-A5A1-532DDF6EDB5D'
-        ds.ApplicationDataId = ''
-        ds.SetShape(builder.GetBuildResult().GetGeometricalObjects())
-        ds.Name = cad_name    
 
         
 def free_form_convert( doc, geo_file):
@@ -241,7 +211,11 @@ def update_instances(file):
         for key, value in user_data.items():
             if instance.LookupParameter(key) is None:
                 continue
+
+            if key == "Projected_Area":
+                value = REVIT_UNIT.sqm_to_internal(value)
             instance.LookupParameter(key).Set(value)
+            
         instance.LookupParameter("Rhino_Id").Set(id)
     t.Commit()
 
@@ -268,33 +242,33 @@ def place_new_instance(type, transform_data):
     pt = DB.XYZ(0, 0, 0)
     rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
 
+
+    axis = rotation.BasisY
+    angle = rotate_angle_y
+    pt = DB.XYZ(0, 0, 0)
+    rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
     if reflection:
         DB.AdaptiveComponentInstanceUtils.SetInstanceFlipped (temp_instance, True)
         rotation = DB.Transform.CreateRotationAtPoint (axis, math.pi, pt) * rotation
 
 
-    axis = rotation.BasisY
-
-    angle = rotate_angle_y
-    pt = DB.XYZ(0, 0, 0)
-    rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
-
     axis = rotation.BasisX
     angle = rotate_angle_x
     pt = DB.XYZ(0, 0, 0)
     rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
+        
 
 
     translation = DB.Transform.CreateTranslation(DB.XYZ(X, Y, Z))
     total_transform = translation * rotation
     DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
 
-
-    actual_Z = doc.GetElement(DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]).Position.Z
-    z_diff = Z - actual_Z
- 
-    additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, z_diff))
-    total_transform = additional_translation * total_transform
+    # if use non- adaptive generic model then modify this.
+    # actual_Z = doc.GetElement(insert_pt).Position.Z
+    # z_diff = Z - actual_Z
+    # additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, z_diff))
+    # total_transform = additional_translation * total_transform
+    
     DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
 
     return temp_instance
