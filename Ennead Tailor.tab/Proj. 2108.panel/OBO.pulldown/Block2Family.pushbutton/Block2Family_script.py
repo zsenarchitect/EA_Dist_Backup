@@ -71,7 +71,10 @@ def load_family(file):
     # load to project
     option = DB.SaveAsOptions()
     option.OverwriteExistingFile = True
-    family_doc.SaveAs(FOLDER.get_desktop_folder() + "\\" + block_name + ".rfa",
+    family_container_folder = FOLDER.get_desktop_folder() + "\\EnneadTab Temp Family Folder"
+    if not os.path.exists(family_container_folder):
+        os.mkdir(family_container_folder)
+    family_doc.SaveAs(family_container_folder + "\\" + block_name + ".rfa",
                       option)
 
     REVIT_FAMILY.load_family(family_doc, doc)
