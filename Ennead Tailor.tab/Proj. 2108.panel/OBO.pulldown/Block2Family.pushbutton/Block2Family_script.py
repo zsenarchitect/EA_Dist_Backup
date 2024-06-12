@@ -213,7 +213,7 @@ def update_instances(file):
                 continue
 
             if key == "Projected_Area":
-                value = REVIT_UNIT.sqm_to_internal(value)
+                value = REVIT_UNIT.sqm_to_internal(float(value))
             instance.LookupParameter(key).Set(value)
             
         instance.LookupParameter("Rhino_Id").Set(id)
