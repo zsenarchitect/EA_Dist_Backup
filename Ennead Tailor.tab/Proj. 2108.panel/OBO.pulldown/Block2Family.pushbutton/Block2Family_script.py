@@ -201,6 +201,8 @@ def update_instances(file):
     data = DATA_FILE.read_json_as_dict_in_dump_folder(file)
 
     type = REVIT_FAMILY.get_family_type_by_name(family_name=block_name, type_name=block_name)
+    type.LookupParameter("Description").Set("OBO Block Convert")
+
     for id, info in data.items():
         if id in exisitng_instances_map:
             instance = exisitng_instances_map[id]
@@ -214,6 +216,8 @@ def update_instances(file):
 
             if key == "Projected_Area":
                 value = REVIT_UNIT.sqm_to_internal(float(value))
+            if key in ["Panel_Width", "Panel_Height"]:
+                value = REVIT_UNIT.mm_to_internal(float(value))
             instance.LookupParameter(key).Set(value)
             
         instance.LookupParameter("Rhino_Id").Set(id)
@@ -229,7 +233,6 @@ def place_new_instance(type, transform_data):
     Z = REVIT_UNIT.mm_to_internal(transform[2][-1])
 
     temp_instance = DB.AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance(doc, type)
-    insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
 
     rotation = DB.Transform.CreateTranslation(DB.XYZ(0,0,0))# this is a empty move, just to create a transofmrm
 
@@ -264,6 +267,7 @@ def place_new_instance(type, transform_data):
     DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
 
     # if use non- adaptive generic model then modify this.
+    # insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
     # actual_Z = doc.GetElement(insert_pt).Position.Z
     # z_diff = Z - actual_Z
     # additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, z_diff))

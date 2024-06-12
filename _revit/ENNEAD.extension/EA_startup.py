@@ -152,7 +152,7 @@ def register_dimension_note_dockpane():
 
 
 def annouce_hibration_mode():
-    if random.random() > 0.1:
+    if random.random() > 0.01:
         return
     output = OUTPUT.get_output()
     if random.random() > 0.7:
@@ -163,7 +163,7 @@ def annouce_hibration_mode():
         """https://www.fontspace.com/cobemat-cartoon-font-f104361
         this is the font webpage"""
     else:
-        output.write("EnneaDuck is on vacation.", OUTPUT.Style.Title) 
+        output.write("EnneaDuck is on vacation to get a tan.", OUTPUT.Style.Title) 
         output.write("He is not available at the moment, check back later.")
         output.write("{}\\beijing duck.jpg".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
     output.plot()

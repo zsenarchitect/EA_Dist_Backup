@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "After getting all the block data from Rhino side, create/update family in Revit.If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id."
 __title__ = "Block2Family"
 
 import os
@@ -34,7 +34,7 @@ def Block2Family():
             pass
     working_files = [file for file in os.listdir(FOLDER.get_EA_local_dump_folder()) if file.startswith(KEY_PREFIX) and file.endswith(".json")]
     for i, file in enumerate(working_files):
-        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "")))
+        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "").replace(KEY_PREFIX + "_", "")))
         process_file(file)
            
     NOTIFICATION.duck_pop("All Rhino blocks have been loaded to Revit! Hooray!!")
@@ -201,6 +201,8 @@ def update_instances(file):
     data = DATA_FILE.read_json_as_dict_in_dump_folder(file)
 
     type = REVIT_FAMILY.get_family_type_by_name(family_name=block_name, type_name=block_name)
+    type.LookupParameter("Description").Set("OBO Block Convert")
+
     for id, info in data.items():
         if id in exisitng_instances_map:
             instance = exisitng_instances_map[id]
@@ -214,6 +216,8 @@ def update_instances(file):
 
             if key == "Projected_Area":
                 value = REVIT_UNIT.sqm_to_internal(float(value))
+            if key in ["Panel_Width", "Panel_Height"]:
+                value = REVIT_UNIT.mm_to_internal(float(value))
             instance.LookupParameter(key).Set(value)
             
         instance.LookupParameter("Rhino_Id").Set(id)

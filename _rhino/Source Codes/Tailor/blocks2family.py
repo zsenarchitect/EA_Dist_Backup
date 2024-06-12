@@ -1,3 +1,4 @@
+
 import Rhino # pyright: ignore
 from rhinoscript.block import IsBlockInstance
 import rhinoscriptsyntax as rs
@@ -83,7 +84,7 @@ def process_block_name(block_name,block_ids):
 
 
     
-    area = export_sample_block(block_name, working_folder)
+    area, width, height = export_sample_block(block_name, working_folder)
 
     # the json dict looks like this:
     # key = block id
@@ -105,6 +106,8 @@ def process_block_name(block_name,block_ids):
 
         for block_id in block_ids:
             rs.SetUserText(block_id, "Projected_Area", area)
+            rs.SetUserText(block_id, "Panel_Width", width)
+            rs.SetUserText(block_id, "Panel_Height", height)
             rs.SetUserText(block_id, "Nest_Tiles", ",".join(children_block))
             
             data_file[str(block_id)] = {
@@ -169,6 +172,8 @@ def export_sample_block(block_name, output_folder):
     max = bbox[6]
     area = (max[0] - min[0]) * (max[1] - min[1])
     area = abs(area) / 1000000# convert from sqmm to sqm
+    width = max[0] - min[0]
+    height = max[1] - min[1]
 
 
     layer_dict = {}
@@ -198,7 +203,7 @@ def export_sample_block(block_name, output_folder):
         except:
             pass
 
-    return area
+    return area, width, height
 
 ######################  main code below   #########
 if __name__ == "__main__":
