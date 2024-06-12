@@ -37,7 +37,7 @@ def Block2Family():
         NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "")))
         process_file(file)
            
-    NOTIFICATION.messenger("All loaded")
+    NOTIFICATION.duck_pop("All Rhino blocks have been loaded to Revit! Hooray!!")
 
 
 

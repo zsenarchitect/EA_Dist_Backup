@@ -1,4 +1,5 @@
 import Rhino # pyright: ignore
+from rhinoscript.block import IsBlockInstance
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import os
@@ -69,7 +70,7 @@ def blocks2family():
 
 
 
-    NOTIFICATION.messenger("Done exporting, now go to Revit.")
+    NOTIFICATION.messenger("Done exporting, now go to Revit and get in blocks as family.")
 
 
 
@@ -84,14 +85,27 @@ def process_block_name(block_name,block_ids):
     
     area = export_sample_block(block_name, working_folder)
 
-    
     # the json dict looks like this:
     # key = block id
     # info = dict of  () transform, other user data dict)
+    temp_block = rs.InsertBlock(block_name, [0,0,0])
+    contents = rs.ExplodeBlockInstance(temp_block)
+    children_block = []
+    for content in contents:
+        if rs.IsBlockInstance(content):
+            children_block.append(rs.BlockInstanceName(content))
+        rs.DeleteObject(content)
+
+    children_block.sort()
+    
+
+
+    
     with DATA_FILE.update_data("{}_{}.json".format(KEY_PREFIX, block_name)) as data_file:
 
         for block_id in block_ids:
             rs.SetUserText(block_id, "Projected_Area", area)
+            rs.SetUserText(block_id, "Nest_Tiles", ",".join(children_block))
             
             data_file[str(block_id)] = {
                 "transform_data": get_transform(block_id),
