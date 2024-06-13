@@ -44,6 +44,7 @@ def shift_phase():
             if element.CreatedPhaseId == phase_7.Id:
                 try:
                     element.CreatedPhaseId = phase_6.Id
+    
                 except:
                     # print (output.linkify(element.Id))
                     pass
