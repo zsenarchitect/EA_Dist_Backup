@@ -55,18 +55,24 @@ try {{
 def create_extendscript(pdf_path, page_count, indd_path):
     return extendscript.format(pdf_path=pdf_path.replace("\\", "\\\\"), page_count=page_count, indd_path=indd_path.replace("\\", "\\\\"))
 
+# Function to get the desktop path
+def get_desktop_path():
+    return os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
 # Function to run ExtendScript from Python on Windows using VBScript
 def run_extendscript(script, close_indesign, version):
-    script_path = os.path.abspath("script.jsx")
+    desktop_path = get_desktop_path()
+    script_path = os.path.join(desktop_path, "script.jsx")
     with open(script_path, "w") as f:
         f.write(script)
     
-    vbs_content = f"""
+    vbs_content = """
 Set app = CreateObject("InDesign.Application.{version}")
 app.DoScript "{script_path}", 1246973031
 {close_indesign}
-"""
-    vbs_path = os.path.abspath("run_script.vbs")
+""".format(version=version, script_path=script_path, close_indesign=close_indesign)
+
+    vbs_path = os.path.join(desktop_path, "run_script.vbs")
     with open(vbs_path, "w") as f:
         f.write(vbs_content)
     

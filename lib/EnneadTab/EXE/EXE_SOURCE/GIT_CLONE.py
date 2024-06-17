@@ -42,6 +42,12 @@ class RepositoryUpdater:
         response = requests.get(self.repo_url, stream=True)
         if response.status_code == 200:
             self.zip_path = os.path.join(self.extract_to, "repo.zip")
+            wait = 0
+            while wait < 10:
+                if os.path.exists(self.zip_path):
+                    break
+                time.sleep(1)
+                wait+= 1
             with open(self.zip_path, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
