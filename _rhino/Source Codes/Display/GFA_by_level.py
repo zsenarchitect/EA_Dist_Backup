@@ -1,3 +1,4 @@
+from EnneadTab import NOTIFICATION
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
@@ -466,6 +467,8 @@ def bake_action(data):
 
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def main():
+    NOTIFICATION.messenger("are you sure???")
+    return
     rs.EnableRedraw(False)
     if sc.sticky.has_key(FORM_KEY):
         return
