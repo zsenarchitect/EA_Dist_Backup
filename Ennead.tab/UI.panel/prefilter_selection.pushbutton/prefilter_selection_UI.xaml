@@ -191,6 +191,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
 
                     </Grid.RowDefinitions>
 
@@ -296,6 +297,30 @@
                         <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                       Height="18"  IsChecked="False" 
                                       x:Name="toggle_bt_detailitems"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="3"
+                               Grid.Row="3"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="Walls " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_walls"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="2"
+                               Grid.Row="3"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="Doors " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_doors"/>
+                    </WrapPanel>
+                    <WrapPanel Grid.Column="1"
+                               Grid.Row="3"
+                               HorizontalAlignment="Right">
+                        <TextBlock Text="Columns " FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Height="18"  IsChecked="False" 
+                                      x:Name="toggle_bt_columns"/>
                     </WrapPanel>
                 </Grid>
 
