@@ -14,13 +14,13 @@ from pyrevit.forms import WPFWindow
 from pyrevit import script #
 # from pyrevit import revit #
 import os
-import pprint
-import time
+
 import System
 import EnneadTab
+from EnneadTab import ENVIRONMENT_CONSTANTS
 import traceback
 from Autodesk.Revit import DB # pyright: ignore 
-import random
+
 from Autodesk.Revit import UI # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
@@ -148,7 +148,7 @@ class family_browser_ModelessForm(WPFWindow):
         self.set_image_source(self.status_icon, "update_icon.png")
 
 
-        self.meta_data_folder = r"L:\4b_Applied Computing\01_Revit\06_DB\Family Browser"
+        self.meta_data_folder = "{}\\01_Revit\\06_DB\\Family Browser".format(ENVIRONMENT_CONSTANTS.HOSTER_FOLDER)
 
 
 

@@ -216,7 +216,7 @@ class EA_Printer_UI(WPFWindow):
         self.setting_file_path = "{}\{}".format(EA_UTILITY.get_EA_local_dump_folder(), setting_file)
         self.output_folder = "{}\EnneadTab Exporter".format(EA_UTILITY.get_user_folder())
         EA_UTILITY.secure_folder(self.output_folder)
-        self.record_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exporter_Record"
+        self.record_folder = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exporter_Record".format(ENVIRONMENT_CONSTANTS.HOSTER_FOLDER)
         try:
             DATA_FILE.save_dict_to_json(dict(), self.record_folder + "\\SH_Access_test.json")
         except:
