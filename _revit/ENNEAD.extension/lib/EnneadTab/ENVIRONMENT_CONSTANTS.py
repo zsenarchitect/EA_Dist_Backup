@@ -8,6 +8,21 @@ IS_PY3 = sys.version.startswith("3")
 IS_PY2 = not IS_PY3
 
 
+# this is prepared for future where each user can pull git to local computer, this can make thing run faster, as well version control.
+ECOSYSTEM_FOLDER = "{}\\EnneadTab Ecosystem".format("{}\Documents".format(os.environ["USERPROFILE"]))
+if not os.path.exists(ECOSYSTEM_FOLDER):
+    os.makedirs(ECOSYSTEM_FOLDER)
+
+OS_DIST = "{}\\EA_Dist".format(ECOSYSTEM_FOLDER)
+OS_RHINO = "{}\\_rhino".format(OS_DIST)
+OS_REVIT = "{}\\_revit".format(OS_DIST)
+OS_LIB = "{}\\ENNEAD.extension\\lib".format(OS_DIST)
+
+
+
+
+# the big gfolder below are being phased out as to transition to local folder.
+
 HOSTER_FOLDER = "L:\\4b_Applied Computing" # if in future the entire roject is reloacated, change this HOSTER FOLDER
 
 
@@ -15,10 +30,6 @@ HOSTER_FOLDER = "L:\\4b_Applied Computing" # if in future the entire roject is r
 GITHUB_FOLDER = "C:\\Users\\szhang\\github" 
 
 
-# this is prepared for future where each user can pull git to local computer, this can make thing run faster, as well version control.
-ECOSYSTEM_FOLDER = "{}\\EnneadTab Ecosystem".format("{}\Documents".format(os.environ["USERPROFILE"]))
-if not os.path.exists(ECOSYSTEM_FOLDER):
-    os.makedirs(ECOSYSTEM_FOLDER)
 
 ARCHIVE_FOLDER_FOR_RHINO = "{}\\03_Rhino\\xx_EnneadTab for Rhino_Archives".format(HOSTER_FOLDER)
 EXE_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe".format(HOSTER_FOLDER)

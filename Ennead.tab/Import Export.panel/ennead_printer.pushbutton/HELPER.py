@@ -1,5 +1,5 @@
 
-from EnneadTab import NOTIFICATION
+from EnneadTab import ENVIRONMENT_CONSTANTS, NOTIFICATION
 from Autodesk.Revit import DB # pyright: ignore
 
 
@@ -22,7 +22,7 @@ def create_color_setting_to_sheet(doc):
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
         NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
-        filepath = r"L:\4b_Applied Computing\01_Revit\03_Library\EA_SharedParam.txt"
+        filepath = "{}\\01_Revit\\03_Library\\EA_SharedParam.txt".format(ENVIRONMENT_CONSTANTS.HOSTER_FOLDER)
         doc.Application.SharedParametersFilename = filepath
 
     definition = find_definition_by_name(doc, "Print_In_Color")

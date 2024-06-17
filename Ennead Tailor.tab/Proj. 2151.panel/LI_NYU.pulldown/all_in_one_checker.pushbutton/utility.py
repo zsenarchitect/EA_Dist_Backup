@@ -1,5 +1,6 @@
 
-import EnneadTab
+from EnneadTab import ENVIRONMENT_CONSTANTS
+from EnneadTab.REVIT import REVIT_FAMILY
 from Autodesk.Revit import DB # pyright: ignore
 
 from constants import CALCULATOR_FAMILY_NAME
@@ -44,8 +45,8 @@ def get_family(doc):
     if len(families) == 0:
         print ("Cannot find this family, loading family from L drive.")
         # if it does not exist, load it from L drive and get_family again
-        sample_family_path = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\Ennead Library.tab\\Contents.panel\\2D Contents.pulldown\\HealthCare Data Calculator.content\\EnneadTab AreaData Calculator_content.rfa"
-        EnneadTab.REVIT.REVIT_FAMILY.load_family_by_path(sample_family_path)
+        sample_family_path = "{}\\ENNEAD.extension\\Ennead Library.tab\\Contents.panel\\2D Contents.pulldown\\HealthCare Data Calculator.content\\EnneadTab AreaData Calculator_content.rfa".format(ENVIRONMENT_CONSTANTS.PUBLISH_BETA_FOLDER_FOR_REVIT)
+        REVIT_FAMILY.load_family_by_path(sample_family_path)
         
         return get_family(doc)
     
