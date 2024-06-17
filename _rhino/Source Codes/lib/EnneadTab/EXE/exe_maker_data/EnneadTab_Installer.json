@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "C:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/lib/EnneadTab/EXE/EXE_SOURCE/GIT_CLONE.py"
+   "value": "C:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/lib/EnneadTab/EXE/EXE_SOURCE/EnneadTab_Installer.py"
   },
   {
    "optionDest": "onefile",
@@ -16,6 +16,10 @@
   {
    "optionDest": "console",
    "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/lib/EnneadTab/images/duck_icon.ico"
   },
   {
    "optionDest": "clean_build",

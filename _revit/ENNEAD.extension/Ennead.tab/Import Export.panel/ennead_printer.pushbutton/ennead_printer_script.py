@@ -25,9 +25,9 @@ import traceback
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
-import clr
+import clr # pyright: ignore
 clr.AddReference('System.Windows.Forms')
-clr.AddReference('IronPython.Wpf')
+# clr.AddReference('IronPython.Wpf')
 
 # find the path of ui.xaml
 
