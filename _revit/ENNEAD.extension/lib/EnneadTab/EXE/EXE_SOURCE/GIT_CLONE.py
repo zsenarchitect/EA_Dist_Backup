@@ -15,6 +15,10 @@ class RepositoryUpdater:
     def __init__(self, repo_url, extract_to):
         self.repo_url = repo_url
         self.extract_to = os.path.expanduser(extract_to)
+
+        if not os.path.exists(self.extract_to):
+            os.makedirs(self.extract_to)
+            
         self.final_folder_name = self.extract_repo_name(repo_url)
         self.final_dir = os.path.join(self.extract_to, self.final_folder_name)
     

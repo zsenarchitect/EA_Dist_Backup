@@ -404,5 +404,8 @@
     "Toolbar\\Revit.tab\\floor_drafter.button\\floor_drafter_left.py": "4b3e50f0-2c6a-454c-8722-e4003986975f",
     "Toolbar\\_RuiWriter\\.\\default_icon.pngfloor_drafter_left": "1f20d040-27a8-4bae-8c23-5495726d0a14",
     "Toolbar\\Drafting.tab\\visualize_excel.button\\visualize_excel_right.py": "460fe225-770f-4e76-8791-7aa85e60c0f0",
-    "Toolbar\\Drafting.tab\\visualize_excel.button\\icon.pngvisualize_excel_right": "df38ab9d-1751-45ae-8109-4cb3d65543c5"
+    "Toolbar\\Drafting.tab\\visualize_excel.button\\icon.pngvisualize_excel_right": "df38ab9d-1751-45ae-8109-4cb3d65543c5",
+    "Toolbar\\Ennead2.menu\\get_latest.button": "64b07750-a273-4054-a4c2-bfc46cde8230",
+    "Toolbar\\Ennead2.menu\\get_latest.button\\get_latest_left.py": "2d650557-0a28-4955-a1bb-aa1ec4f17560",
+    "Toolbar\\_RuiWriter\\.\\default_icon.pngget_latest_left": "b2fcdaf9-16e6-4c1a-8a5b-d89e215eb83a"
 }
