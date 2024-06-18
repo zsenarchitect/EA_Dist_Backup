@@ -1,0 +1,13 @@
+! _-RunPythonScript (
+import sys
+sys.path.append(r'L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\lib')
+from EnneadTab.MODULE_HELPER import run_Rhino_button
+
+##################################################
+folder = "Tailor"
+file_name = "blocks2family"
+func_name = file_name
+##################################################
+
+run_Rhino_button(folder, file_name, func_name )
+)

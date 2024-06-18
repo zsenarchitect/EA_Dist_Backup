@@ -1,0 +1,13 @@
+*.pyc
+*.dll
+*.exe
+
+output/
+temp/
+
+SHORTCUT/
+
+*.rui_bak
+/Toolbar/WIP_auto_write.rui
+
+.pytest_cache
