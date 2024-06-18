@@ -140,7 +140,11 @@ class EA_search_UI(forms.WPFWindow):
         except:
             return
         
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        import os
+        if not os.path.exists(logo_file):
+            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        self.set_image_source(self.logo_img, logo_file)
         self.load_commands()
         self._result_index = 0
         self._search_results = []

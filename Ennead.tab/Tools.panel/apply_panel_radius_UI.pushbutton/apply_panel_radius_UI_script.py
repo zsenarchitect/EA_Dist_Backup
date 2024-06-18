@@ -187,7 +187,10 @@ class apply_panel_radius_UI(forms.WPFWindow):
         xaml_file_name = 'apply_panel_radius_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        if not os.path.exists(logo_file):
+            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        self.set_image_source(self.logo_img, logo_file)
         self.Height = 800
         self.family_bad = None
         self.Show()

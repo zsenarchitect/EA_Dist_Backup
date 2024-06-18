@@ -125,7 +125,10 @@ class AI_Report_modelessForm(WPFWindow):
         self.Title = "EnneadTab QAQC Reporter"
         #self.Width = 800
         self.Height = 1000
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        if not os.path.exists(logo_file):
+            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        self.set_image_source(self.logo_img, logo_file)
         self.set_image_source(self.pop_warning_img, "pop_warning.png")
     
         self.initiate_form()

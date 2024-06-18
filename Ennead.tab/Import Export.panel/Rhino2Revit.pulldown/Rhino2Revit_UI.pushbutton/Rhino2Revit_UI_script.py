@@ -70,7 +70,11 @@ class Rhino2Revit_UI(forms.WPFWindow):
         xaml_file_name = 'Rhino2Revit_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+
+        logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        if not os.path.exists(logo_file):
+            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        self.set_image_source(self.logo_img, logo_file)
         self.button_convert.Visibility = System.Windows.Visibility.Collapsed
         self.Height = 800
 
