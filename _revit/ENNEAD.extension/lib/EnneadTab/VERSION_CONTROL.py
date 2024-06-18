@@ -296,8 +296,14 @@ def publish_dist_folder():
     GIT.push_changes_to_main(dist_dst)
 
 def install_EA_dist():
-    exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+    #exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+
+    exe = ENVIRONMENT_CONSTANTS.OS_EXE_FOLDER + "\\EnneadTab Installer.exe"
+    
     EXE.open_file_in_default_application(exe)
+
+def update_EA_dist():
+    install_EA_dist()
 #############
 if __name__ == "__main__":
     # publish_Rhino_source_code(deep_copy = False)

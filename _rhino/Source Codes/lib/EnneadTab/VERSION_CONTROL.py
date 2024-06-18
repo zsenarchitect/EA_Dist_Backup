@@ -296,7 +296,10 @@ def publish_dist_folder():
     GIT.push_changes_to_main(dist_dst)
 
 def install_EA_dist():
-    exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+    #exe = "{}\\GIT_CLONE.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+
+    exe = ENVIRONMENT_CONSTANTS.OS_REVIT + "\\output\\EnneadTab Installer.exe"
+    
     EXE.open_file_in_default_application(exe)
 #############
 if __name__ == "__main__":

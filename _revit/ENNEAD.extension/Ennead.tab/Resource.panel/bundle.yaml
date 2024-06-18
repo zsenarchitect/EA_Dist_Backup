@@ -9,7 +9,7 @@
 layout:
   - EnneadTab_Setting_UI
   - ">>>"
-  - reload enneadtab
+  - reload
   - external_links_UI
   - print_all_documentation
   - display_warning_history
