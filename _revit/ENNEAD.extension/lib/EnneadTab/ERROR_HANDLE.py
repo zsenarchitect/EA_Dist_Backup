@@ -62,9 +62,8 @@ def try_pass(func):
 
 def print_note(string):
     # show_note = USER.is_enneadtab_developer() # wait until Colin fix the bug
-    show_note = USER.is_SZ()
 
-    if show_note:
+    if USER.is_SZ():
         try:
             from pyrevit import script
             string = str(string)

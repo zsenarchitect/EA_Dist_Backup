@@ -4,8 +4,8 @@
 
 
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "soft_reload"
-
+__title__ = "Soft Roload"
+__context__ = "zero-doc"
 # from pyrevit import forms #
 from pyrevit import script #
 
@@ -19,7 +19,7 @@ doc = REVIT_APPLICATION.get_doc()
 
 @ERROR_HANDLE.try_catch_error
 def soft_reload():
-    VERSION_CONTROL.install_EA_dist()
+    VERSION_CONTROL.update_EA_dist()
 
 
 

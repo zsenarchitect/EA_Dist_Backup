@@ -54,7 +54,7 @@ def run_Rhino_button(folder, file_name, func_name, *args):
     run_func_in_module(module_path, func_name, *args)
 
     if random.random() < 0.3:
-        VERSION_CONTROL.install_EA_dist()
+        VERSION_CONTROL.update_EA_dist()
     
 
 @ERROR_HANDLE.try_catch_error_silently

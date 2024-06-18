@@ -19,7 +19,7 @@ doc = REVIT_APPLICATION.get_doc()
 
 @ERROR_HANDLE.try_catch_error
 def soft_reload():
-    VERSION_CONTROL.install_EA_dist()
+    VERSION_CONTROL.update_EA_dist()
 
 
 
