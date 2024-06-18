@@ -1,6 +1,6 @@
 *.pyc
 *.dll
-
+*.exe
 
 output/
 temp/

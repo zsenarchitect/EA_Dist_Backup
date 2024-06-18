@@ -3,7 +3,8 @@ import EA_UTILITY
 import time
 import os
 import traceback
-import EnneadTab
+from EnneadTab import EMAIL, DATA_FILE, USER, FOLDER, SPEAK, NOTIFICATION, TIME
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
 
 
 def try_catch_error(func):
@@ -26,13 +27,13 @@ def try_catch_error(func):
             update_error_log(traceback.format_exc())
             try:
                 data_file = "{}\{}.json".format(get_user_root_folder(), get_current_user_name())
-                EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com"],
+                EMAIL.email(receiver_email_list=["szhang@ennead.com"],
                                       subject="EnneadTab Auto Email: EnneadLog feels sick",
                                       body=traceback.format_exc(),
                                       attachment_list = [data_file])
                 
             except Exception as e:
-                EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com"],
+                EMAIL.email(receiver_email_list=["szhang@ennead.com"],
                                       subject="EnneadTab Auto Email: EnneadLog feels sick",
                                       body=traceback.format_exc())
             return
@@ -45,11 +46,11 @@ def create_user_data(name):
     data["money"] = 500
     data["history"] = ["User profile created"]
     data["time_stamp"] = [time.time()]
-    data["Autodesk_ID"] = EnneadTab.USER.get_autodesk_user_name()
+    data["Autodesk_ID"] = USER.get_autodesk_user_name()
     data["recent_projects"] = []
     file = "{}\{}.json".format(get_user_root_folder(), name)
     # try:
-    EnneadTab.DATA_FILE.save_dict_to_json(data, file)
+    DATA_FILE.save_dict_to_json(data, file)
     return data
 
     # except:
@@ -67,7 +68,7 @@ def clear_user_data():
     
     file = "{}\{}.json".format(get_user_root_folder(), get_current_user_name())
     # try:
-    if EnneadTab.FOLDER.is_path_exist(file):
+    if FOLDER.is_path_exist(file):
         os.remove(file)
         
         
@@ -77,7 +78,7 @@ def get_all_user_datas():
 
 
 def get_user_name_from_meta_file(file):
-    name = EnneadTab.FOLDER.get_file_name_from_path(file).split(".json")[0]
+    name = FOLDER.get_file_name_from_path(file).split(".json")[0]
     return name
 
 
@@ -97,7 +98,7 @@ def get_all_user_meta_files():
     folder = get_user_root_folder()
     if not os.path.exists(folder):
         return []
-    file_names = EnneadTab.FOLDER.get_filenames_in_folder(folder)
+    file_names = FOLDER.get_filenames_in_folder(folder)
     if "Error_Log.json" in file_names:
         file_names.remove("Error_Log.json")
 
@@ -133,7 +134,7 @@ def get_absolute_path(file_name):
 
 def get_data_by_name(user_name=get_current_user_name()):
     file_name = get_user_data_file_by_name(user_name)
-    data = EnneadTab.DATA_FILE.read_json_as_dict(get_absolute_path(file_name))
+    data = DATA_FILE.read_json_as_dict(get_absolute_path(file_name))
 
     # uncomment below to find out which file has format issue in json
     # print "\n"
@@ -143,7 +144,7 @@ def get_data_by_name(user_name=get_current_user_name()):
 
 def set_data_by_name(user_name, data):
     file_name = get_user_data_file_by_name(user_name)
-    EnneadTab.DATA_FILE.save_dict_to_json(
+    DATA_FILE.save_dict_to_json(
         data, get_absolute_path(file_name), use_encode=True)
 
 
@@ -307,7 +308,7 @@ def update_account_by_local_warning_diff(doc):
         if len(local_warning_diff_list) > 0:
 
             additional_note += "\n".join(local_warning_diff_list)
-            EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
+            EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
                                   subject="EnneadTab Auto Email: Warning Change Log",
                                   body="Q: What is this email?\nA: This is a warning change log for your record.\n\nUser: {}\nProject File: {}\nWarning Change Since Last Record:{}\n\n\n\n{}".format(get_current_user_name(),
                                                                                                                                                                                                       get_central_name(
@@ -317,10 +318,10 @@ def update_account_by_local_warning_diff(doc):
 
     # print additional_note
 
-    if abs(coin_change) > 2500 and EnneadTab.DATA_FILE.get_revit_ui_setting_data(("checkbox_email_local_warning_diff", True)):
-        EnneadTab.SPEAK.speak(
+    if abs(coin_change) > 2500 and DATA_FILE.get_revit_ui_setting_data(("checkbox_email_local_warning_diff", True)):
+        SPEAK.speak(
             "hmm.. Something is fishy here. How did you have a change of {} coins? Let me write an email. Hold my beer.".format(coin_change))
-        EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
+        EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
                               subject="EnneadTab Auto Email: Local warning too Many Coins change!",
                               body="Q: What is this email?\nA: This means the YOU have introduced or removed warnings for the project in YOUR session.\n\nQ: How does it know it is me not others?\nA: The record looks for the warnings at the openning of the file, and compare it to the number of warnings when you are about to sync. The difference of the two are all warnings added or removed by you in this session. After the sync, warnings from other people might come in, so the record is reset to that status, and wait to be compared before your next sync.\n\nUser: {}\nProject File: {}\nWarning Change Since Last Record:{}\nUnit Price:{}\nCoin Change:{} {}".format(get_current_user_name(),
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             get_central_name(
@@ -350,7 +351,7 @@ def update_account_by_local_warning_diff(doc):
                  "There is no shame in getting more warning than before, I repeat, no shame, shame , shame, shame. Did you hear echo?",
                  "Knock knock. Who is there? {} warnings".format(local_diff),
                  "{} warnings walks into a bar...".format(local_diff)]
-        EnneadTab.SPEAK.random_speak(lines)
+        SPEAK.random_speak(lines)
 
     else:
         log_money_change_toast(title="In Session {} Warnings Resolved By You: Gain {} EA Coins.".format(abs(local_diff), abs(coin_change)),
@@ -361,11 +362,11 @@ def update_account_by_local_warning_diff(doc):
         lines = ["A clean revit is a happy revit.",
                  "It is always nice to see less warning.",
                  "Let's go! Keep the warning down!"]
-        EnneadTab.SPEAK.random_speak(lines)
+        SPEAK.random_speak(lines)
 
 
 def is_TTS_killed():
-    return not EnneadTab.DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_talkie", True))
+    return not DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_talkie", True))
     """
     dump_folder = EA_UTILITY.get_EA_local_dump_folder()
     file_name = "EA_TALKIE_KILL.kill"
@@ -379,7 +380,7 @@ def is_TTS_killed():
 def get_central_name(doc=None):
     if not doc:
         try:
-            doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+            doc = REVIT_APPLICATION.get_doc()
         except Exception as e:
             print("Default doc getter error")
             print(traceback.format_exc())
@@ -391,11 +392,11 @@ def get_central_name(doc=None):
         return "Zero Doc"
 
     try:
-        return doc.Title.replace("_{}".format(EnneadTab.USER.get_autodesk_user_name()), "")
+        return doc.Title.replace("_{}".format(USER.get_autodesk_user_name()), "")
     except Exception as e:
         # print str(e)
         # print "LOG get central name error"
-        EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com"],
+        EMAIL.email(receiver_email_list=["szhang@ennead.com"],
                               subject="EnneadTab Auto Email: Title error",
                               body=traceback.format_exc())
         try:
@@ -406,15 +407,16 @@ def get_central_name(doc=None):
 
 
 def get_user_root_folder():
+    """ wait for the new home in AVD"""
     folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Users"
-    folder = EnneadTab.FOLDER.secure_folder(folder)
+    folder = FOLDER.secure_folder(folder)
     try:
-        res = EnneadTab.DATA_FILE.save_dict_to_json(
+        res = DATA_FILE.save_dict_to_json(
             dict(), folder + "\\SH_tester_account.json")
         if not res:
-            folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+            folder = FOLDER.get_EA_local_dump_folder()
     except:
-        folder = EnneadTab.FOLDER.get_EA_local_dump_folder()
+        folder = FOLDER.get_EA_local_dump_folder()
     finally:
         return folder
 
@@ -428,12 +430,12 @@ def is_money_negative(user_name=get_current_user_name()):
         if is_recently_recorded(tool_used="Bankrupt", search_length=10):
             return False
 
-        EnneadTab.SPEAK.speak(
+        SPEAK.speak(
             "You are bankrupt. Don't worry, you are not the only one.")
         folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Misc"
         image = "LOG_BANKRUPT.png"
 
-        EnneadTab.NOTIFICATION.toast(main_text="Woahaha! You don't have enough EA Coins...",
+        NOTIFICATION.toast(main_text="Woahaha! You don't have enough EA Coins...",
                                      sub_text="Current Balance = {} EA Coins".format(
                                          get_current_money()),
                                      icon="{}\{}".format(folder, image),
@@ -464,7 +466,7 @@ def log_money_change_toast(title, message, gain_money=True):
     else:
         image = "LOG_TOAST_MONEY_LOST.png"
 
-    EnneadTab.NOTIFICATION.toast(main_text=title,
+    NOTIFICATION.toast(main_text=title,
                                  sub_text=message,
                                  icon="{}\{}".format(folder, image),
                                  app_name="Current Balance = ${} @EnneadTab Mini Bank".format(
@@ -662,13 +664,13 @@ def update_error_log(error, user_name=get_current_user_name()):
 
 
 def get_data_from_error_log():
-    data = EnneadTab.DATA_FILE.read_json_as_dict(
+    data = DATA_FILE.read_json_as_dict(
         r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Users\Error_Log.json")
     return data
 
 
 def set_data_to_error_loge(data):
-    EnneadTab.DATA_FILE.save_dict_to_json(
+    DATA_FILE.save_dict_to_json(
         data, r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Users\Error_Log.json")
 
 
@@ -703,7 +705,7 @@ def open_revit_successful():
              "Look at how many coins you have!",
              "Happy you, happy revit. And happy revit, happy project."]
 
-    EnneadTab.SPEAK.random_speak(lines)
+    SPEAK.random_speak(lines)
 
     if is_money_negative():
         financial_aids = int(abs(get_current_money()) * 0.2)
@@ -741,10 +743,10 @@ def open_doc_with_warning_count(warning_count, doc):
     # if increase warning, reduce coins---> always opposite
     coin_change = - int(warning_count * price)
 
-    if abs(coin_change) > 2000 and EnneadTab.DATA_FILE.get_revit_ui_setting_data(("checkbox_email_opening_warning_diff", True)):
-        EnneadTab.SPEAK.speak(
+    if abs(coin_change) > 2000 and DATA_FILE.get_revit_ui_setting_data(("checkbox_email_opening_warning_diff", True)):
+        SPEAK.speak(
             "hmm.. Something is fishy here. How did you have a change of {} coins? Let me write an email. Hold my beer.".format(coin_change))
-        EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
+        EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
                               subject="EnneadTab Auto Email: Too Many Coins change!",
                               body="Q: Why am I getting this email?\nA: The coins ware rewarded/deducted based on the relative warnings changes since your previous record. It is NOT based on the absolute warning counts. The mini bank feels there might be something fishy about this project file's recent action becasue the coin changes is exceeding $2000. Talk with the bank representative(Sen Z.) to see if everything is alright and he can continue the coins transaction to your account.\nRemember, it might not be you, maybe just something your team did, so don't feel bad talking about it!\n\nUser: {}\nProject File: {}\nWarning Change Since Last Record:{}\nUnit Price:{}\nCoin Change:{}".format(get_current_user_name(),
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            get_central_name(
@@ -801,7 +803,7 @@ def sync_queue_wait_in_line():
              "Get some coffee, take a walk. That is good for your health.",
              "You can keep on working on your locals and come back later. "]
 
-    EnneadTab.SPEAK.random_speak(lines)
+    SPEAK.random_speak(lines)
 
 
 @try_catch_error
@@ -816,7 +818,7 @@ def sync_queue_cut_in_line(position_jumped):
              "How dare you?!",
              "I am telling somebody, oh you bet, I am telling somebody. I saw the whole thing!"]
 
-    EnneadTab.SPEAK.random_speak(lines)
+    SPEAK.random_speak(lines)
 
 
 @try_catch_error
@@ -829,7 +831,7 @@ def session_too_long():
     update_account(coins_added=coin_change, history_added=tool_used)
     log_money_change_toast(title="Not good to leave Revit open overnight...",
                            message="Penalty...pay {} EA Coins.".format(abs(coin_change)), gain_money=False)
-    EnneadTab.SPEAK.speak(
+    SPEAK.speak(
         "Your pour Revit has been open for more than 24 hours, give it a rest!")
 
 
@@ -862,8 +864,8 @@ def sync_gap_too_long(mins_exceeded, doc_name=None):
 
         no_email_list = ["achi"]
         # if  get_current_user_name() not in no_email_list or
-        if EnneadTab.DATA_FILE.get_revit_ui_setting_data(("checkbox_email_sync_gap", True)):
-            EnneadTab.EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
+        if DATA_FILE.get_revit_ui_setting_data(("checkbox_email_sync_gap", True)):
+            EMAIL.email(receiver_email_list=["szhang@ennead.com", "{}@ennead.com".format(get_current_user_name())],
                                   subject="EnneadTab Auto Email: Sync Gap Way Too Long!",
                                   body_image_link_list=[
                                       r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\lib\EnneadTab\images\revit_wait_too_long.jpg"],
@@ -886,7 +888,7 @@ def sync_gap_too_long(mins_exceeded, doc_name=None):
              "The longer you wait till synchronize, the more dangerous to lose work.",
              "It sucks to wait for sync, but trust me, it feels worse to lose work becasue you didn't synchronize often enough."]
 
-    EnneadTab.SPEAK.random_speak(lines)
+    SPEAK.random_speak(lines)
 
 
 
@@ -896,10 +898,13 @@ def warn_revit_session_too_long(non_interuptive = True):
     from pyrevit.coreutils import envvars
 
 
-    if EnneadTab.TIME.time_has_passed_too_long(envvars.get_pyrevit_env_var("APP_UPTIME"), tolerence = 60 * 60 * 24):
+    if TIME.time_has_passed_too_long(envvars.get_pyrevit_env_var("APP_UPTIME"), tolerence = 60 * 60 * 24):
         #EA_UTILITY.dialogue(main_text = "This Revit session has been running for more than 24Hours.\n\nPlease consider restarting Revit to release memory and improve performance.")
         session_too_long()
         if non_interuptive:
-            EnneadTab.NOTIFICATION.messenger(main_text = "Your Revit seesion has been running for more than 24Hours.")
+            NOTIFICATION.messenger(main_text = "Your Revit seesion has been running for more than 24Hours.")
         else:
-            EnneadTab.REVIT.REVIT_FORMS.notification(main_text = "This Revit session has been running for more than 24Hours.\nPaying $300 EA Coins.", sub_text = "Please consider restarting Revit to release memory and improve performance.", window_width = 500, window_height = 300, self_destruct = 20)
+            REVIT_FORMS.notification(main_text = "This Revit session has been running for more than 24Hours.\nPaying $300 EA Coins.", 
+                                     sub_text = "Please consider restarting Revit to release memory and improve performance.", 
+                                     window_width = 500, window_height = 300, 
+                                     self_destruct = 10)
