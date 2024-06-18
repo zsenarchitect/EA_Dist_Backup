@@ -439,6 +439,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         self.subtitle.Text = "A helper window that transfer draft content between Rhino and Revit. You might do any combination of lines, polylines, arcs and freeform nurbs for detail lines, area boundary lines, room seperation lines and edges of filled regions."
 
         logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        import os
         if not os.path.exists(logo_file):
             logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
         self.set_image_source(self.logo_img, logo_file)

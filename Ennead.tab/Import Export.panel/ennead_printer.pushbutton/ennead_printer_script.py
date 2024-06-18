@@ -264,6 +264,7 @@ class EA_Printer_UI(WPFWindow):
         self.copy_folder_note_B.Text = "For example above, the final selection folder should say '2022-09-30 50% DD', not '2022-09-30 50% DD/FileId'"
         self.button_main.Content = "Setting Incomplete"
         logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        import os
         if not os.path.exists(logo_file):
             logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
         self.set_image_source(self.logo_img, logo_file)
