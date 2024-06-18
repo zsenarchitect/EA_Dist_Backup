@@ -248,6 +248,7 @@ def get_folder_path_from_path(file_path):
 
 
 def get_revit_user_folder():
+    
     folder =  "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Users"
     try:
         import DATA_FILE

@@ -5,7 +5,7 @@
 
 # this entire panel is commented out from the overall yaml tab layout for the basic user
 layout:
-  - workset
+  - Workset
   - Family RePath
   - Project Starter
   - export_color_scheme

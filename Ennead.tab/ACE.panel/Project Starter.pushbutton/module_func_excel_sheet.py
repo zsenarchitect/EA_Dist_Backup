@@ -3,7 +3,7 @@
 
 from pyrevit import forms #
 
-from EnneadTab import EXE, EXCEL, FOLDER, ERROR_HANDLE
+from EnneadTab import EXE, EXCEL, FOLDER, ERROR_HANDLE, ENVIRONMENT_CONSTANTS
 from Autodesk.Revit import DB # pyright: ignore 
 
 def is_new_sheet_number_ok(doc, new_sheet_numbers):       
@@ -70,9 +70,9 @@ def excel_sheet_creator(doc, excel_path, worksheet_name , data_map):
 
 @ERROR_HANDLE.try_catch_error
 def open_sample_excel():
-    excel_path = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published\ENNEAD.extension\Ennead.tab\ACE.panel\Project Starter.pushbutton\Make Sheet With Excel.xlsx"
+    excel_path = "{}\ENNEAD.extension\Ennead.tab\ACE.panel\Project Starter.pushbutton\Make Sheet With Excel.xls".format(ENVIRONMENT_CONSTANTS.REVIT_HOST_FOLDER)
     copy = FOLDER.copy_file_to_local_dump_folder(excel_path,
-                                                           "Sample Sheet Creation Data.xlsx")
+                                                           "Sample Sheet Creation Data.xls")
     EXE.open_file_in_default_application(copy)
     
 

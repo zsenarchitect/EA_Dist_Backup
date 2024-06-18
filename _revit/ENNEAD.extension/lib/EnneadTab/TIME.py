@@ -164,6 +164,8 @@ def get_revit_uptime():
     import ENVIRONMENT_CONSTANTS
     if ENVIRONMENT_CONSTANTS.is_Revit_environment():
         from pyrevit.coreutils import envvars
+        if not envvars.get_pyrevit_env_var("APP_UPTIME"):
+            set_revit_uptime()
         uptime = time.time() - envvars.get_pyrevit_env_var("APP_UPTIME")
         uptime = get_readable_time(uptime)
         return uptime

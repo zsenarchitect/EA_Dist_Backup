@@ -30,6 +30,8 @@ class Solution:
             self.views = [doc.ActiveView]
 
 
+
+
         design_options = DB.FilteredElementCollector(doc).OfClass(DB.DesignOption).ToElements()
 
 

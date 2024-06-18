@@ -21,7 +21,7 @@ from pyrevit import script #
 
 
 from EnneadTab.REVIT import REVIT_APPLICATION
-from EnneadTab import USER, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, EXCEL, FOLDER
+from EnneadTab import ENVIRONMENT, USER, NOTIFICATION, ENVIRONMENT_CONSTANTS, ERROR_HANDLE, EXCEL, FOLDER
 import traceback
 from Autodesk.Revit import DB # pyright: ignore 
 import random
@@ -131,11 +131,14 @@ class project_starter_ModelessForm(WPFWindow):
 
         self.Title = "EnneadTab Project Initiator UI"
 
-
-        logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+        if ENVIRONMENT_CONSTANTS.IS_LOCAL_OS:
+            logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.OS_CORE_IMAGES_FOLDER)
+        else:
+           
+            logo_file = "{}\logo_vertical_light.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
         import os
         if not os.path.exists(logo_file):
-            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+            logo_file = "{}\logo_vertical_light_temp.png".format(ENVIRONMENT_CONSTANTS.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT) # note to self, remove this line so not to confuse later after IT fix peer link
         self.set_image_source(self.logo_img, logo_file)
        
    

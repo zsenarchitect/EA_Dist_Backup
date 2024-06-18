@@ -29,26 +29,23 @@ def download_file_by_name(url, target_folder, file_name):
     # set the security protocol to the most recent version
     try:
         # TLS 1.2 is needed to download over https
-        System.Net.ServicePointManager.SecurityProtocol = \
-            System.Net.SecurityProtocolType.Tls12
+        if System:
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12
+        else:
+            raise ImportError("System module is not available.")
     except AttributeError:
         # TLS 1.2 is not provided by MacOS .NET in Rhino 5
         if url.lower().startswith('https'):
-            print ('This system lacks the necessary security'
-                   ' libraries to download over https.')
+            print('This system lacks the necessary security libraries to download over https.')
 
     # attempt to download the file
-    print (url)
-    print (file_path)
+    print("Downloading {} to {}".format(url, file_path))
     client = System.Net.WebClient()
     try:
         client.DownloadFile(url, file_path)
     except Exception as e:
-        raise Exception(' Download failed with the error:\n{}'.format(e))
+        raise Exception('Download failed with the error:\n{}'.format(e))
     return file_path
-
-
-
     
 def get_request(url):
     client = System.Net.WebClient()
@@ -105,7 +102,6 @@ def unzip_file(source_file, dest_dir=None):
                     continue
                 dest_dir = os.path.join(dest_dir, word)
             zf.extract(member, dest_dir)
-
 
 def remove_zip_file(zip_file):
     """Try to remove a zip file."""

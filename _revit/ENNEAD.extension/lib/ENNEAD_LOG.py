@@ -3,7 +3,7 @@ import EA_UTILITY
 import time
 import os
 import traceback
-from EnneadTab import EMAIL, DATA_FILE, USER, FOLDER, SPEAK, NOTIFICATION, TIME
+from EnneadTab import EMAIL, DATA_FILE, USER, FOLDER, SPEAK, NOTIFICATION, TIME, ENVIRONMENT_CONSTANTS, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
 
 
@@ -408,6 +408,9 @@ def get_central_name(doc=None):
 
 def get_user_root_folder():
     """ wait for the new home in AVD"""
+    if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
+        return FOLDER.get_EA_local_dump_folder()
+    
     folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Users"
     folder = FOLDER.secure_folder(folder)
     try:

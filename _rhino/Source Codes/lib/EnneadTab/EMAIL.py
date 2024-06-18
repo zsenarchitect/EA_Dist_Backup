@@ -5,6 +5,7 @@ import USER
 import ENVIRONMENT_CONSTANTS
 import TIME
 import NOTIFICATION
+import SPEAK
 
 
 def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab Auto Email Error Log"):
@@ -125,24 +126,26 @@ def email(sender_email=None,
     data["body_image_link_list"] = body_image_link_list
     data["attachment_list"] = attachment_list
     data["schedule_time"] = schedule_time
+    data["logo_image_path"] = r"L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\lib\EnneadTab_Logo.png"
 
     file_name = "EA_EMAIL.json"
     dump_folder = FOLDER.get_EA_local_dump_folder()
     file_path = "{}\{}".format(dump_folder, file_name)
     DATA_FILE.save_dict_to_json(data, file_path)
 
-    if USER.is_SZ() and False:
-        exe_location = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EMAIL_1.4\\EMAIL.exe"
-    else:
-        exe_location = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe"
+
+    exe_location = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe"
 
     try:
         EXE.open_file_in_default_application(exe_location)
+        SPEAK.speak("enni-ed tab email is sent out. Subject line: {}".format(
+        subject.lower().replace("ennead", "enni-ed ")))
     except Exception as e:
         print(exe_location)
         print(str(e))
 
 
+# keep this main for reference only. The actual source edit is in th EXE SOURCE folder.
 def send_email_main():
 
     import traceback

@@ -4,6 +4,8 @@ everything here should have ZERO dependency becasue this is the foundation of ma
 
 import os
 import sys
+
+
 IS_PY3 = sys.version.startswith("3")
 IS_PY2 = not IS_PY3
 
@@ -14,16 +16,19 @@ if not os.path.exists(ECOSYSTEM_FOLDER):
     os.makedirs(ECOSYSTEM_FOLDER)
 
 OS_DIST = "{}\\EA_Dist".format(ECOSYSTEM_FOLDER)
+IS_LOCAL_OS = os.path.exists(OS_DIST)
 OS_RHINO = "{}\\_rhino".format(OS_DIST)
 OS_REVIT = "{}\\_revit".format(OS_DIST)
 OS_LIB = "{}\\ENNEAD.extension\\lib".format(OS_REVIT)
-OS_EXE_FOLDER = "{}\\EnneadTab\\EXE\\EXE_PRODUCTS".format(OS_LIB)
-
+OS_CORE_FOLDER = "{}\\EnneadTab".format(OS_LIB)
+OS_EXE_FOLDER = "{}\\EXE\\EXE_PRODUCTS".format(OS_CORE_FOLDER)
+OS_CORE_IMAGES_FOLDER = "{}\\images".format(OS_CORE_FOLDER)
 
 
 # the big gfolder below are being phased out as to transition to local folder.
 
 HOSTER_FOLDER = "L:\\4b_Applied Computing" # if in future the entire roject is reloacated, change this HOSTER FOLDER
+IS_L_DRIVE_ACCESSIBLE = os.path.exists(HOSTER_FOLDER)
 
 
 # this is needed becasue some remapper function cannot take None to remap, so lets assume this is the starting point
@@ -64,6 +69,19 @@ DEPENDENCY_FOLDER_PY3 = "{}\Dependency\PY3".format(PUBLISH_FOLDER_FOR_RHINO)
 
 
 LIMITED_REVIT_PROJECTS = ["some gov project name that want to limit enenadtab access"]
+
+REVIT_HOST_FOLDER = PUBLISH_FOLDER_FOR_REVIT # the direct subfolder has .extension folders
+RHINO_HOST_FOLDER = PUBLISH_FOLDER_FOR_RHINO
+if IS_LOCAL_OS:
+    REVIT_HOST_FOLDER = OS_REVIT
+    RHINO_HOST_FOLDER = OS_RHINO
+if os.path.exists("{}\\EnneadTab-for-Revit".format(GITHUB_FOLDER)):
+    REVIT_HOST_FOLDER = "{}\\EnneadTab-for-Revit".format(GITHUB_FOLDER)
+if os.path.exists("{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)):
+    RHINO_HOST_FOLDER = "{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)
+
+
+
 
 def is_Rhino_environment():
     """Check if current environment is Rhino.
