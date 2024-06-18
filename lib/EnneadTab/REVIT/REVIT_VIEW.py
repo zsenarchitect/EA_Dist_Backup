@@ -97,8 +97,7 @@ def switch_from_sync_draft_view():
 
     for open_ui_view in REVIT_APPLICATION.get_uidoc().GetOpenUIViews():
         open_view = DOC.GetElement(open_ui_view.ViewId)
-
-        if open_view.Name == "EnneadTab Quick Sync":
+        if open_view and open_view.Name == "EnneadTab Quick Sync":
             open_ui_view.Close()
 
 

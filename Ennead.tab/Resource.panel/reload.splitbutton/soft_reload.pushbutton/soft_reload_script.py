@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Just download lastest version without reload. Great if there are no layout change."
 __title__ = "Soft Roload"
 __context__ = "zero-doc"
 # from pyrevit import forms #

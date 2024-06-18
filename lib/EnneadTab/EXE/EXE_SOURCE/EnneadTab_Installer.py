@@ -9,7 +9,7 @@ import os
 import shutil
 import time
 import traceback
-import getpass
+
 
 class RepositoryUpdater:
     def __init__(self, repo_url, extract_to):
@@ -113,6 +113,6 @@ if __name__ == '__main__':
         main()
     except Exception as e:
         error_info = traceback.format_exc()
-        username = getpass.getuser()
+        username = os.environ["USERPROFILE"].split("\\")[-1]
         save_traceback_and_open(username, error_info)
 

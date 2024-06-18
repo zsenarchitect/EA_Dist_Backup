@@ -16,7 +16,7 @@ if not os.path.exists(ECOSYSTEM_FOLDER):
 OS_DIST = "{}\\EA_Dist".format(ECOSYSTEM_FOLDER)
 OS_RHINO = "{}\\_rhino".format(OS_DIST)
 OS_REVIT = "{}\\_revit".format(OS_DIST)
-OS_LIB = "{}\\ENNEAD.extension\\lib".format(OS_DIST)
+OS_LIB = "{}\\ENNEAD.extension\\lib".format(OS_REVIT)
 OS_EXE_FOLDER = "{}\\EnneadTab\\EXE\\EXE_PRODUCTS".format(OS_LIB)
 
 

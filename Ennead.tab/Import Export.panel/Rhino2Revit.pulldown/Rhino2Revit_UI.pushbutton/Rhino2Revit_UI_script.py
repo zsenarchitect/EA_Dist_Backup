@@ -172,13 +172,14 @@ class Rhino2Revit_UI(forms.WPFWindow):
 
         current_cad_imports = DB.FilteredElementCollector(
             doc).OfClass(DB.ImportInstance).ToElements()
+        cad_import = None
         for cad_import in current_cad_imports:
             if cad_import not in exisiting_cads:
                 break
 
         # in rare condition there is no cad import at this step, need investigation..
         if not cad_import:
-            print("No CAD import found in the family document.")
+            print("No CAD good import found in the family document.<{}>".format(data_item.display_name))
             return
 
         cad_trans = cad_import.GetTransform()
