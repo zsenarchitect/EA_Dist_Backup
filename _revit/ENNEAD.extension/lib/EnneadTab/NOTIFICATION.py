@@ -84,7 +84,7 @@ def messenger(main_text,
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
-    exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+    exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER) ####### change to CORE EXE PRODUCTS
     EXE.open_file_in_default_application(exe_location)
 
 
@@ -98,13 +98,16 @@ def duck_pop(main_text = None):
         main_text = "Quack!"
 
 
-    data = {"main_text":main_text,"image":None}
+    data = {"main_text":main_text,
+            "image":None, 
+            "duck_image":None, 
+            "audio_folder": None}############# change duck image and audio folder here
     
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "DUCK_POP.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
 
-    exe_location = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\DUCK_POP_1.3\DUCK_POP.exe"
+    exe_location = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\DUCK_POP_1.3\DUCK_POP.exe" ####### change to CORE EXE PRODUCTS
     
     
     EXE.open_file_in_default_application(exe_location)
