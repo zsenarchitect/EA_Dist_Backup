@@ -5,7 +5,7 @@
 
 # this entire panel is commented out from the overall yaml tab layout for the basic user
 layout:
-  - Workset
+  - Worksets
   - Family RePath
   - Project Starter
   - export_color_scheme
@@ -19,4 +19,5 @@ layout:
   - inspect_local_graphic_override
   - list_detail_items
   - transfer_parameter_data
+  - update_DOB_page
   - check_formula

@@ -128,7 +128,17 @@ def update_with_generic_healthcare_tool():
     folder = "Ennead.tab\\Tools.panel"
     func_name = "generic_healthcare_tool"
     EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
-    return
+
+
+    
+def update_DOB_numbering():
+
+
+    
+    folder = "Ennead.tab\\ACE.panel"
+    func_name = "update_DOB_page"
+    EnneadTab.MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+
 
 def update_sheet_name():
 
@@ -390,6 +400,8 @@ def main():
     update_project_1643()
 
     update_with_generic_healthcare_tool()
+
+    update_DOB_numbering()
 
 
     update_sync_queue()
