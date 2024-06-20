@@ -67,8 +67,8 @@ def messenger(main_text,
 
     import random
     if random.random() < 0.0001:
-        duck_pop(main_text) 
-        return
+        if duck_pop(main_text):
+            return
     
     data = {}
     if not isinstance(main_text, str):
@@ -118,7 +118,7 @@ def duck_pop(main_text = None):
     exe_location = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\DUCK_POP_1.3\DUCK_POP.exe" ####### change to CORE EXE PRODUCTS
     
     
-    EXE.open_file_in_default_application(exe_location)
+    return EXE.open_file_in_default_application(exe_location)
 
 
 def toast(sub_text="",
