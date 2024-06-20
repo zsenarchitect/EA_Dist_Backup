@@ -300,12 +300,9 @@ def install_EA_dist():
 
     exes = [ENVIRONMENT_CONSTANTS.EXE_FOLDER + "\\EnneadTab Installer.exe",
             ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER + "\\EnneadTab Installer.exe"]
-    for exe in exes:
-        if os.path.exists(exe):
-            break
+    EXE.try_open_app_from_list(exes)
        
-    
-    EXE.open_file_in_default_application(exe)
+
 
 def update_EA_dist():
     install_EA_dist()

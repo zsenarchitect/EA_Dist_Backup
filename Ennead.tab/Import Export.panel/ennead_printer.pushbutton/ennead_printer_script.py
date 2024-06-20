@@ -340,23 +340,18 @@ class EA_Printer_UI(WPFWindow):
                 print ("Cannot find any good sheets in {}. Check your Issue parameter name if you are using locally defined parameter.".format(doc.Title))
                 continue
 
-            use_full =  "universal hydrogen" in doc.Title.lower()
-            # print use_full
-            
-            #print "use_full = {}".format(use_full)
-            #print "doc.Title = {}".format(doc.Title)
-            if doc_sheets[0].LookupParameter("Sheet_$Order"):
-                if use_full:
-                    # print "using full"
-                    doc_sheets.sort(key = lambda x: (lookup_value(x,"Sheet_$Group"),
-                                                     lookup_value(x,"Sheet_$Series"),
-                                                     x.SheetNumber),
-                                                     reverse = False)
-                else:
+            if self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked:
+
+                doc_sheets.sort(key = lambda x: (lookup_value(x,"Sheet_$Group"),
+                                                    lookup_value(x,"Sheet_$Series"),
+                                                    x.SheetNumber),
+                                                    reverse = False)
+            else:
+                if doc_sheets[0].LookupParameter("Sheet_$Order"):
                     doc_sheets.sort(key = lambda x: (lookup_value(x,"Sheet_$Order"),
                                                 x.SheetNumber), reverse = False)
-            else:
-                doc_sheets.sort(key = lambda x: x.SheetNumber, reverse = False)
+                else:
+                    doc_sheets.sort(key = lambda x: x.SheetNumber, reverse = False)
 
 
             for i, sheet in enumerate(doc_sheets):
@@ -727,6 +722,7 @@ class EA_Printer_UI(WPFWindow):
 
         estimated_total = 0
         for sheet in self.export_queue:
+
 
             index = self.index_dict[sheet.UniqueId]
             if self.is_name_format_with_plotId:
