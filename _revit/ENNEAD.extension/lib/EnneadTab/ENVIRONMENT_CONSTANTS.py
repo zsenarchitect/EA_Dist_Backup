@@ -83,7 +83,9 @@ if os.path.exists("{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)):
 EXE_FOLDER = PUBLIC_L_EXE_FOLDER
 if os.path.exists(OS_EXE_FOLDER):
     EXE_FOLDER = OS_EXE_FOLDER
-
+IMAGE_FOLDER = CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT
+if os.path.exists(OS_CORE_IMAGES_FOLDER):
+    IMAGE_FOLDER = OS_CORE_IMAGES_FOLDER
 
 def is_Rhino_environment():
     """Check if current environment is Rhino.

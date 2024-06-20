@@ -298,7 +298,7 @@ def publish_dist_folder():
 
 def install_EA_dist():
 
-    exes = [ENVIRONMENT_CONSTANTS.OS_PUBLIC_L_EXE_FOLDER + "\\EnneadTab Installer.exe",
+    exes = [ENVIRONMENT_CONSTANTS.EXE_FOLDER + "\\EnneadTab Installer.exe",
             ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER + "\\EnneadTab Installer.exe"]
     for exe in exes:
         if os.path.exists(exe):
