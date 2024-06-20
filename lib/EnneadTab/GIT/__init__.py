@@ -27,7 +27,7 @@ def run_updater(show_progress=False):
     return False
 
     version = 0.3
-    exe_location = "{}\\GIT_UPDATER_{}\\GIT_UPDATER.exe".format(ENVIRONMENT.EXE_FOLDER, version)
+    exe_location = "{}\\GIT_UPDATER_{}\\GIT_UPDATER.exe".format(ENVIRONMENT.PUBLIC_L_EXE_FOLDER, version)
     EXE.open_file_in_default_application(exe_location)
     os.environ[GIT_HOLDING_KEY] = "True"
     DATA_FILE.save_dict_to_json_in_dump_folder({}, "{}.json".format(GIT_HOLDING_KEY))

@@ -37,7 +37,7 @@ GITHUB_FOLDER = "C:\\Users\\szhang\\github"
 
 
 ARCHIVE_FOLDER_FOR_RHINO = "{}\\03_Rhino\\xx_EnneadTab for Rhino_Archives".format(HOSTER_FOLDER)
-EXE_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe".format(HOSTER_FOLDER)
+PUBLIC_L_EXE_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe".format(HOSTER_FOLDER)
 MISC_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc".format(HOSTER_FOLDER)
 SHARED_DATA_DUMP_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Shared Data Dump".format(HOSTER_FOLDER)
 
@@ -80,7 +80,9 @@ if os.path.exists("{}\\EnneadTab-for-Revit".format(GITHUB_FOLDER)):
 if os.path.exists("{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)):
     RHINO_HOST_FOLDER = "{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)
 
-
+EXE_FOLDER = PUBLIC_L_EXE_FOLDER
+if os.path.exists(OS_EXE_FOLDER):
+    EXE_FOLDER = OS_EXE_FOLDER
 
 
 def is_Rhino_environment():

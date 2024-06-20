@@ -109,7 +109,7 @@ def make_exe_from_json(json_file):
     is_one_file = False
     is_console = False
     other_files = []
-    final_folder = ENVIRONMENT_CONSTANTS.EXE_FOLDER
+    final_folder = ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER
     version = get_availible_version_num("temp")
     
     for item in data_list:

@@ -66,10 +66,21 @@ def open_file_in_default_application(filepath):
     if not os.path.exists(filepath):
         if os.environ["USERPROFILE"].split("\\")[-1] == "szhang":
             print ("[SZ only log]File not found: {}".format(filepath))
-        return
+        return False
     os.startfile(filepath)
+    return True
 
-
+def try_open_app_from_list(exes):
+    for exe in exes:
+        if os.path.exists(exe):
+            os.startfile(exe)
+            return True
+    if os.environ["USERPROFILE"].split("\\")[-1] == "szhang":
+        print ("[SZ only log]No exe found in any of the location.")
+        for exe in exes:
+            print (exe)
+    return False
+    
 
 def call_py_machine(script_path, func_name, version = 2):
     #import os, sys

@@ -1,4 +1,6 @@
 import sys
+
+from EnneadTab import NOTIFICATION
 sys.path.append("..\lib")
 import EnneadTab
 ###calculate curve(Lines&Arcs) control point parameter
@@ -72,6 +74,9 @@ def pull_up_crv_by_ratio(polyline, ratio):
 @EnneadTab.ERROR_HANDLE.try_catch_error
 def main():
     polyline = rs.GetObjects("pick polyline", 4)
+    if not polyline:
+        NOTIFICATION.messenger("Not polyline input..")
+        return
     ratio = rs.GetReal("Input Slope Ratio For New Curve", 0.125)
     segment_length = split_polyline_by_closest_control_pts(polyline)
     print(segment_length)

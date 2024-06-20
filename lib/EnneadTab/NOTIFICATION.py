@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import subprocess
+import os
 import FOLDER
 import DATA_FILE
 import USER
 import EXE
 import ENVIRONMENT_CONSTANTS
 import ENVIRONMENT
-
 
 
 def get_toaster_level_setting():
@@ -84,8 +84,16 @@ def messenger(main_text,
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
-    exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER) ####### change to CORE EXE PRODUCTS
-    EXE.open_file_in_default_application(exe_location)
+
+
+    exes = ["{}\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER),
+            "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER)
+            ]
+    try:
+        EXE.try_open_app_from_list(exes)
+    except:
+        exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER) ####### change to CORE EXE PRODUCTS
+        EXE.open_file_in_default_application(exe_location)
 
 
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
