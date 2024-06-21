@@ -111,7 +111,7 @@ def duck_pop(main_text = None):
             "duck_image":IMAGES.get_image_path_by_name("duck_green_bg.png"), 
             "explosion_gif": IMAGES.get_image_path_by_name("explosion.gif"), 
             "audios": [SOUNDS.get_aduio_path_by_name(x) for x in os.listdir(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER) if x.startswith("duck")]}
-    print (data)
+    # print (data)
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "DUCK_POP.json")
 
 
