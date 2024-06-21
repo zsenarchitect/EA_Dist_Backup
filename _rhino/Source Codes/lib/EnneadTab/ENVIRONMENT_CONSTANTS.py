@@ -23,7 +23,7 @@ OS_LIB = "{}\\ENNEAD.extension\\lib".format(OS_REVIT)
 OS_CORE_FOLDER = "{}\\EnneadTab".format(OS_LIB)
 OS_EXE_FOLDER = "{}\\EXE\\EXE_PRODUCTS".format(OS_CORE_FOLDER)
 OS_CORE_IMAGES_FOLDER = "{}\\images".format(OS_CORE_FOLDER)
-
+OS_CORE_AUDIOS_FOLDER = "{}\\audios".format(OS_CORE_FOLDER)
 
 # the big gfolder below are being phased out as to transition to local folder.
 
@@ -37,7 +37,7 @@ GITHUB_FOLDER = "C:\\Users\\szhang\\github"
 
 
 ARCHIVE_FOLDER_FOR_RHINO = "{}\\03_Rhino\\xx_EnneadTab for Rhino_Archives".format(HOSTER_FOLDER)
-EXE_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe".format(HOSTER_FOLDER)
+PUBLIC_L_EXE_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe".format(HOSTER_FOLDER)
 MISC_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc".format(HOSTER_FOLDER)
 SHARED_DATA_DUMP_FOLDER = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Shared Data Dump".format(HOSTER_FOLDER)
 
@@ -80,9 +80,18 @@ if os.path.exists("{}\\EnneadTab-for-Revit".format(GITHUB_FOLDER)):
 if os.path.exists("{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)):
     RHINO_HOST_FOLDER = "{}\\EnneadTab-for-Rhino".format(GITHUB_FOLDER)
 
+EXE_FOLDER = PUBLIC_L_EXE_FOLDER
+if os.path.exists(OS_EXE_FOLDER):
+    EXE_FOLDER = OS_EXE_FOLDER
+IMAGE_FOLDER = CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT
+if os.path.exists(OS_CORE_IMAGES_FOLDER):
+    IMAGE_FOLDER = OS_CORE_IMAGES_FOLDER
+AUDIO_FOLDER = CORE_AUDIOS_FOLDER_FOR_PUBLISHED_REVIT
+if os.path.exists(OS_CORE_AUDIOS_FOLDER):
+    AUDIO_FOLDER = OS_CORE_AUDIOS_FOLDER
 
 
-
+    
 def is_Rhino_environment():
     """Check if current environment is Rhino.
 

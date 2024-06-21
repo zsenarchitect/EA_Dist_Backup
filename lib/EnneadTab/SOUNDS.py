@@ -7,6 +7,12 @@ import threading
 import ENVIRONMENT
 import ENVIRONMENT_CONSTANTS
 
+def get_aduio_path_by_name(file_name):
+    if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)):
+        return "{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)
+    print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name))
+
+
 def play_sound(file = "sound effect_popup msg3.wav"):
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
@@ -26,7 +32,7 @@ def play_sound(file = "sound effect_popup msg3.wav"):
 
     #print "final path = " + path
     try:
-        from System.Media import SoundPlayer
+        from System.Media import SoundPlayer # pyright : ignore
         sp = SoundPlayer()
         sp.SoundLocation = path
         sp.Play()
@@ -38,7 +44,7 @@ def play_sound(file = "sound effect_popup msg3.wav"):
     try:
         import sys
         sys.path.append(ENVIRONMENT_CONSTANTS.DEPENDENCY_FOLDER_LEGACY)
-        import playsound
+        import playsound # pyright : ignore
         playsound.playsound(path)
     except Exception as e:
         # print ("cannot use playsound module becasue: " + str(e))
