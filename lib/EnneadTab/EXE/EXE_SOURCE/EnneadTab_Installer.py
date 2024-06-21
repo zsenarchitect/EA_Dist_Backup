@@ -74,13 +74,13 @@ class RepositoryUpdater:
             shutil.copy2(src_path, tgt_path)
 
             
-        # Delete files older than 3 days
+        # Delete files older than 1 days
         now = time.time()
-        three_days_ago = now - 3 * 24 * 60 * 60
+        file_age_threshold = now - 1 * 24 * 60 * 60
         for dp, dn, filenames in os.walk(self.final_dir):
             for f in filenames:
                 file_path = os.path.join(dp, f)
-                if os.stat(file_path).st_mtime < three_days_ago:
+                if os.stat(file_path).st_mtime < file_age_threshold:
                     os.remove(file_path)
                     try:
                         os.rmdir(dp)  # Attempt to remove the directory if empty

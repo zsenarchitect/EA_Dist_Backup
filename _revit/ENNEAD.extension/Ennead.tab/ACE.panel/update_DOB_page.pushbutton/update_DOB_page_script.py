@@ -4,7 +4,7 @@
 
 
 __doc__ = "For DOB submission in NYC there reuqires a page number on the titleblock."
-__title__ = "Update DOB Page Number"
+__title__ = "Update DOB\nPage Number"
 
 # from pyrevit import forms #
 from pyrevit import script #
@@ -38,12 +38,12 @@ def update_DOB_page(doc, show_log = True):
 
         all_sheets.extend(all_working_sheets)
 
-    good_sheets = [s for s in all_sheets if s.LookupParameter("Sheet_$Issue_DOB").AsString() != ""]
+    good_sheets = [s for s in all_sheets if s.LookupParameter("Sheet_$Issue_DOB").AsString() != ""  and s.LookupParameter("Sheet_$Issue_DOB").HasValue]
     bad_sheets = [s for s in all_sheets if s not in good_sheets]
     good_sheets.sort(key = lambda x: "{}_{}_{}".format(x.LookupParameter("Sheet_$Group").AsString(),
                                                        x.LookupParameter("Sheet_$Series").AsString(),
                                                        x.SheetNumber))
-
+    print( good_sheets)
     t = DB.Transaction(doc, __title__)
     t.Start()
     for i, sheet in enumerate(good_sheets):
