@@ -12,7 +12,7 @@ import ENVIRONMENT_CONSTANTS
 def get_image_path_by_name(file_name):
     if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.IMAGE_FOLDER, file_name)):
         return "{}\\{}".format(ENVIRONMENT_CONSTANTS.IMAGE_FOLDER, file_name)
-    print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.IMAGE_FOLDER, file_name))
+    #print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.IMAGE_FOLDER, file_name))
 
 def get_image_from_file (file):
     return SD.Image.FromFile(file)

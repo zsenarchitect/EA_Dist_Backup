@@ -91,8 +91,7 @@ def DWG_convert(doc, geo_file):
         doc.Import(geo_file, options,
                     doc.ActiveView, cad_import_id)
 
-    current_cad_imports = DB.FilteredElementCollector(
-        doc).OfClass(DB.ImportInstance).ToElements()
+    current_cad_imports = DB.FilteredElementCollector(doc).OfClass(DB.ImportInstance).ToElements()
     for cad_import in current_cad_imports:
         if cad_import not in exisiting_cads:
             break
