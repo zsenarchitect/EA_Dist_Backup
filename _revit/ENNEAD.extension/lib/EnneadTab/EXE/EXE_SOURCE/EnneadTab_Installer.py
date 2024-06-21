@@ -33,10 +33,8 @@ class RepositoryUpdater:
         self.download_zip()
         self.extract_zip()
         self.update_files()
-        try:
-            self.cleanup()
-        except:
-            pass
+        self.cleanup()
+
     
     def download_zip(self):
         response = requests.get(self.repo_url, stream=True)
@@ -72,10 +70,8 @@ class RepositoryUpdater:
         for src_path, rel_path in source_files.items():
             tgt_path = os.path.join(self.final_dir, rel_path)
             os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
-            try:
-                shutil.copy2(src_path, tgt_path)
-            except:
-                return
+            shutil.copy2(src_path, tgt_path)
+
 
             
         # Delete files older than 1 days
