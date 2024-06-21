@@ -33,10 +33,8 @@ class RepositoryUpdater:
         self.download_zip()
         self.extract_zip()
         self.update_files()
-        try:
-            self.cleanup()
-        except:
-            pass
+        self.cleanup()
+
     
     def download_zip(self):
         response = requests.get(self.repo_url, stream=True)
@@ -57,6 +55,7 @@ class RepositoryUpdater:
     
     def extract_zip(self):
         self.temp_dir = os.path.join(self.extract_to, "temp_extract")
+        
         with zipfile.ZipFile(self.zip_path, 'r') as zip_ref:
             zip_ref.extractall(self.temp_dir)
         self.source_dir = os.path.join(self.temp_dir, os.listdir(self.temp_dir)[0])
@@ -72,6 +71,7 @@ class RepositoryUpdater:
             tgt_path = os.path.join(self.final_dir, rel_path)
             os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
             shutil.copy2(src_path, tgt_path)
+
 
             
         # Delete files older than 1 days
@@ -94,10 +94,11 @@ class RepositoryUpdater:
         print("Cleanup completed.")
 
 def save_traceback_and_open(user, error_message):
-    error_path = os.path.expanduser("~/Desktop/GIT_CLONE_error.txt")  
+    error_path = os.path.expanduser("~/Desktop/EnneadTab_Installer_error.txt")  
 
     with open(error_path, 'w') as f:
         f.write(error_message)
+    return
     if user in ["szhang", "Sen Zhang"]:
         os.startfile(error_path)
 

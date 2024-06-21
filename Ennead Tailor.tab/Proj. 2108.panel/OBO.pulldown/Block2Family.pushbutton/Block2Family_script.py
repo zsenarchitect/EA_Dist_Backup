@@ -22,6 +22,7 @@ from Autodesk.Revit import ApplicationServices # pyright: ignore
 doc = REVIT_APPLICATION.get_doc()
 
 
+
 KEY_PREFIX = "BLOCKS2FAMILY"
 
 
@@ -81,8 +82,7 @@ def load_family(file):
     
 def DWG_convert(doc, geo_file):
 
-    exisiting_cads = DB.FilteredElementCollector(
-        doc).OfClass(DB.ImportInstance).ToElements()
+    exisiting_cads = DB.FilteredElementCollector(doc).OfClass(DB.ImportInstance).ToElements()
     exisiting_import_OSTs = get_current_import_object_styles(doc)
 
     options = DB.DWGImportOptions()
@@ -91,8 +91,7 @@ def DWG_convert(doc, geo_file):
         doc.Import(geo_file, options,
                     doc.ActiveView, cad_import_id)
 
-    current_cad_imports = DB.FilteredElementCollector(
-        doc).OfClass(DB.ImportInstance).ToElements()
+    current_cad_imports = DB.FilteredElementCollector(doc).OfClass(DB.ImportInstance).ToElements()
     for cad_import in current_cad_imports:
         if cad_import not in exisiting_cads:
             break

@@ -71,7 +71,10 @@ class RepositoryUpdater:
         for src_path, rel_path in source_files.items():
             tgt_path = os.path.join(self.final_dir, rel_path)
             os.makedirs(os.path.dirname(tgt_path), exist_ok=True)
-            shutil.copy2(src_path, tgt_path)
+            try:
+                shutil.copy2(src_path, tgt_path)
+            except:
+                return
 
             
         # Delete files older than 1 days
