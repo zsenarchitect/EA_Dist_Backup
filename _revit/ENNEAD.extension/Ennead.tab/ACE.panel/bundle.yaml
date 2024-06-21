@@ -13,7 +13,7 @@ layout:
   - ">>>"
   - List_Legend and Schedule
   - QAQC_AI
-  - excel_sheet_creator
+  - Excel Sheet Creator
   - CollectTextures
   - family_tree
   - inspect_local_graphic_override

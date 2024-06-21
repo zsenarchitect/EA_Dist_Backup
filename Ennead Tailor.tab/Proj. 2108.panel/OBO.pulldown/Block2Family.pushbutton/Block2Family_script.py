@@ -28,7 +28,7 @@ KEY_PREFIX = "BLOCKS2FAMILY"
 @ERROR_HANDLE.try_catch_error
 def Block2Family():
     for _doc in REVIT_APPLICATION.get_application().Documents:
-        if doc.IsFamilyDocument:
+        if _doc.IsFamilyDocument:
             _doc.Close()
 
     working_files = [file for file in os.listdir(FOLDER.get_EA_local_dump_folder()) if file.startswith(KEY_PREFIX) and file.endswith(".json")]

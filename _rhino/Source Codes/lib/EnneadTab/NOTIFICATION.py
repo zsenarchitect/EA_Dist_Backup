@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import subprocess
+import os
+import SOUNDS
 import FOLDER
 import DATA_FILE
 import USER
 import EXE
 import ENVIRONMENT_CONSTANTS
 import ENVIRONMENT
-
+import IMAGES
 
 
 def get_toaster_level_setting():
@@ -67,8 +69,8 @@ def messenger(main_text,
 
     import random
     if random.random() < 0.0001:
-        duck_pop(main_text) 
-        return
+        if duck_pop(main_text):
+            return
     
     data = {}
     if not isinstance(main_text, str):
@@ -84,8 +86,16 @@ def messenger(main_text,
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
-    exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
-    EXE.open_file_in_default_application(exe_location)
+
+
+    exes = [EXE.get_exe_path_by_name("MESSENGER.exe"),
+            "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER)
+            ]
+    try:
+        EXE.try_open_app_from_list(exes)
+    except:
+        exe_location = "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER) ####### change to CORE EXE PRODUCTS
+        EXE.open_file_in_default_application(exe_location)
 
 
     if ENVIRONMENT_CONSTANTS.is_Rhino_environment():
@@ -98,16 +108,18 @@ def duck_pop(main_text = None):
         main_text = "Quack!"
 
 
-    data = {"main_text":main_text,"image":None}
+    data = {"main_text":main_text,
+            "duck_image":IMAGES.get_image_path_by_name("duck_green_bg.png"), 
+            "audios": [SOUNDS.get_aduio_path_by_name(x) for x in os.listdir(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER) if x.startswith("duck")]}
     
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "DUCK_POP.json")
     if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
 
-    exe_location = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Project Settings\Exe\DUCK_POP_1.3\DUCK_POP.exe"
+    exes = [EXE.get_exe_path_by_name("DUCK_POP.exe"),
+            "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\DUCK_POP_1.3\\DUCK_POP.exe"]
     
-    
-    EXE.open_file_in_default_application(exe_location)
+    return EXE.try_open_app_from_list(exes)
 
 
 def toast(sub_text="",
@@ -265,7 +277,7 @@ def show_loading_screen_bar(display_text, time = 2):
         time (int, optional): _description_. Defaults to 2.
     """
     text_source_file = "EA_LOADING_SCREEN_TEXT.json"
-    file = "{}\{}".format(FOLDER.get_EA_local_dump_folder(), text_source_file)
+    file = "{}\\{}".format(FOLDER.get_EA_local_dump_folder(), text_source_file)
     data = dict()
     data["text"] = display_text
     data["time"] = time# in seconds
@@ -283,5 +295,5 @@ def show_loading_screen_bar(display_text, time = 2):
 
 if __name__ == "__main__":
     # toast("123")
-    # duck_pop(main_text= "test")
+    duck_pop(main_text= "test")
     messenger(main_text = "test")

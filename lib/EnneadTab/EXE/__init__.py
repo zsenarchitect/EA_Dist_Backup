@@ -35,6 +35,14 @@ del module# delete this varible becaue it is refering to last item on the for lo
 # import USER
 # this is abadoned becasue a circular reference
 
+import ENVIRONMENT_CONSTANTS
+
+def get_exe_path_by_name(file_name):
+    if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER, file_name)):
+        return "{}\\{}".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER, file_name)
+    print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER, file_name))
+
+
 
 def open_exe(exe_name, use_shortcut = False):
     """direct run exe from L drive
@@ -72,6 +80,8 @@ def open_file_in_default_application(filepath):
 
 def try_open_app_from_list(exes):
     for exe in exes:
+        if not exe:
+            continue
         if os.path.exists(exe):
             os.startfile(exe)
             return True
