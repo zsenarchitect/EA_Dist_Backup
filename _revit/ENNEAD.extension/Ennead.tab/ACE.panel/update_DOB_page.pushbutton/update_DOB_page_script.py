@@ -54,8 +54,8 @@ def update_DOB_page(doc, show_log = True):
         sheet.LookupParameter("Total Sheets").Set(len(good_sheets))
 
     for sheet in bad_sheets:
-        sheet.LookupParameter("Sheet No.").Set("")
-        sheet.LookupParameter("Total Sheets").Set("")
+        sheet.LookupParameter("Sheet No.").Set(-1)
+        sheet.LookupParameter("Total Sheets").Set(-1)
     t.Commit()
 
     if show_log:
