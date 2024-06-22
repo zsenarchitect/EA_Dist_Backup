@@ -13,11 +13,11 @@ def time_it(func):
         end_time = time.time()
         elapsed_time = end_time - start_time
         # ANSI escape codes for blue text with a white background
-        blue_text_white_bg = "\033[34;47m"
+        blue_text = "\033[34m"
         reset_color = "\033[0m"
         
         # Print the formatted message with color
-        print("{}Publish {} took {:.4f} seconds to complete.{}".format(blue_text_white_bg, func.__name__, elapsed_time, reset_color))
+        print("{}Publish {} took {:.4f} seconds to complete.{}".format(blue_text, func.__name__, elapsed_time, reset_color))
         return result
     return wrapper
 
