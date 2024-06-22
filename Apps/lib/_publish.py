@@ -4,6 +4,7 @@ import shutil
 import datetime
 import subprocess
 import time
+import winsound
 
 def time_it(func):
     def wrapper(*args, **kwargs):
@@ -43,6 +44,9 @@ def publish():
     push_changes_to_main(EA_dist_repo_folder)
 
 
+
+    # Play Windows built-in notification sound
+    winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 
 
 def get_nth_commit_number():
