@@ -47,6 +47,7 @@ def publish():
 
     # Play Windows built-in notification sound
     winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+    winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 
 
 def get_nth_commit_number():
