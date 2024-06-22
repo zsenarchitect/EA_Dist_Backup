@@ -17,7 +17,7 @@ def time_it(func):
         reset_color = "\033[0m"
         
         # Print the formatted message with color
-        print("{}Publish {} took {:.4f} seconds to complete.{}".format(blue_text, func.__name__, elapsed_time, reset_color))
+        print("{}Publish took {:.1f} seconds to complete.{}".format(blue_text, elapsed_time, reset_color))
         return result
     return wrapper
 
