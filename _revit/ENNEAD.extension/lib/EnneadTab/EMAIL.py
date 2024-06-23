@@ -133,9 +133,9 @@ def email(sender_email=None,
     DATA_FILE.save_dict_to_json(data, file_path)
 
 
-    exes = [
-        "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe",
-        "{}\\EMAILER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER)
+    exes = ["{}\\EMAILER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER,
+        "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe"
+        )
     ]
 
     try:

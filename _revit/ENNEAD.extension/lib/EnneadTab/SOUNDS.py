@@ -6,6 +6,13 @@ import time
 import threading
 import ENVIRONMENT
 import ENVIRONMENT_CONSTANTS
+import USER
+
+def get_aduio_path_by_name(file_name):
+    if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)):
+        return "{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)
+    #print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name))
+
 
 def get_aduio_path_by_name(file_name):
     if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)):
@@ -14,21 +21,28 @@ def get_aduio_path_by_name(file_name):
 
 
 def play_sound(file = "sound effect_popup msg3.wav"):
-    if not ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
-        return
+    
+
     #print "in = " + file
     #case 1: come in as wav file only----> add fun folder in front
     #case 2: come in any format of path
     if not os.path.exists(file):
-        folder = '{}\\Source Codes\\Fun\\sound effects'.format(ENVIRONMENT_CONSTANTS.PUBLISH_FOLDER_FOR_RHINO)
-        path = folder + "\\" + file
-        if not os.path.exists(path):
-            path = "{}\\{}".format(ENVIRONMENT_CONSTANTS.CORE_AUDIOS_FOLDER_FOR_PUBLISHED_REVIT,
-                                  file)
+        # print (get_aduio_path_by_name(file))
+        if get_aduio_path_by_name(file):
+            path = get_aduio_path_by_name(file)
+        else:  
+            # if USER.is_SZ():
+            #     print ("SZ only: cannot find {} in default method".format(file))     
+            folder = '{}\\Source Codes\\Fun\\sound effects'.format(ENVIRONMENT_CONSTANTS.PUBLISH_FOLDER_FOR_RHINO)
+            path = folder + "\\" + file
+            if not os.path.exists(path):
+                path = "{}\\{}".format(ENVIRONMENT_CONSTANTS.CORE_AUDIOS_FOLDER_FOR_PUBLISHED_REVIT,
+                                        file)
     else:
         path = file
         
-    # print (path)
+    # if USER.is_SZ():    
+    #     print (path)
 
     #print "final path = " + path
     try:
@@ -38,8 +52,9 @@ def play_sound(file = "sound effect_popup msg3.wav"):
         sp.Play()
         return
     except Exception as e:
-        # print ("Cannot use system media becasue: " + str(e))
-        pass
+        if USER.is_SZ():
+            print ("Cannot use system media becasue: " + str(e))
+        
 
     try:
         import sys
@@ -47,8 +62,9 @@ def play_sound(file = "sound effect_popup msg3.wav"):
         import playsound # pyright : ignore
         playsound.playsound(path)
     except Exception as e:
-        # print ("cannot use playsound module becasue: " + str(e))
-        pass
+        if USER.is_SZ():
+            print ("cannot use playsound module becasue: " + str(e))
+        
 
 
 

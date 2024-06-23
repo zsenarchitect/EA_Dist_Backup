@@ -4,6 +4,7 @@ import os
 import random
 
     
+<<<<<<< HEAD
 try:
 
     import tkinter as tk
@@ -24,6 +25,17 @@ except:
     with open(error_file, "w") as f:
         f.write(error)
     os.startfile(error_file)
+=======
+
+
+import tkinter as tk
+import time
+import math
+from tkinter import ttk
+from PIL import Image as pim
+import playsound
+    
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
 
 
@@ -70,6 +82,7 @@ def read_json_as_dict_in_dump_folder(file):
       dict = json.load(f)
     return dict
 
+<<<<<<< HEAD
 def fake_test_data():
     filepath = get_file_in_dump_folder("DUCK_POP.json")
     
@@ -81,6 +94,8 @@ def fake_test_data():
     with open(filepath,"w") as f:
       json.dump(dict, f)
 
+=======
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
 
 class DuckPopApp:
@@ -91,7 +106,13 @@ class DuckPopApp:
                  animation_fade_duration,
                  width,
                  height,
+<<<<<<< HEAD
                  duck_image):
+=======
+                 duck_image,
+                 audios,
+                 explosion_gif):
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
         self.window = tk.Tk()
         self.window.iconify()
@@ -136,7 +157,12 @@ class DuckPopApp:
         self.talk_bubble.pack(pady=5)
 
         
+<<<<<<< HEAD
 
+=======
+        self.audios = audios
+        self.explosion_gif = explosion_gif
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
         # print (image)
         # from PIL import Image
  
@@ -185,10 +211,17 @@ class DuckPopApp:
         return frame_count
     
     def click_image(self, event):
+<<<<<<< HEAD
         explosion_gif = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\Ennead.tab\\Utility.panel\\exe_2.stack\\duck_pop\\explosion.gif"
         self.max_frame = self.count_frames_in_gif(explosion_gif)
         print (self.max_frame)
         self.frames = [tk.PhotoImage(file = explosion_gif, 
+=======
+
+        self.max_frame = self.count_frames_in_gif(self.explosion_gif)
+        print (self.max_frame)
+        self.frames = [tk.PhotoImage(file = self.explosion_gif, 
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
                                      format = 'gif -index %i' % (i)) for i in range(self.max_frame)]
         self.cycle_animation_frame_index = 0
         
@@ -226,11 +259,18 @@ class DuckPopApp:
         self.window.after(50, self.update_explosion)
 
     def quack(self):
+<<<<<<< HEAD
         audio_folder = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Published\\ENNEAD.extension\\Ennead.tab\\Utility.panel\\exe_2.stack\\duck_pop\\audio"
 
         # pick a random duck sound from the folder
         duck_sound_list = os.listdir(audio_folder)
         audio = os.path.join(audio_folder,random.choice(duck_sound_list))
+=======
+
+        # pick a random duck sound from the folder
+        audio = random.choice(self.audios)
+        print (audio)
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
         playsound.playsound(audio)
 
@@ -297,11 +337,15 @@ class DuckPopApp:
 
 @try_catch_error
 def pop_message():
+<<<<<<< HEAD
     print ("working")
     INTERNAL_TEST = True
     if INTERNAL_TEST:
         fake_test_data()
     
+=======
+
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     
     data = read_json_as_dict_in_dump_folder("DUCK_POP.json")
     if data is None or "main_text" not in data.keys():
@@ -314,7 +358,13 @@ def pop_message():
                      animation_fade_duration = data.get("animation_fade_duration", 5),
                      width = data.get("width", 1200),
                      height = data.get("height", 700),
+<<<<<<< HEAD
                      duck_image= data.get("duck_image", None))
+=======
+                     duck_image= data.get("duck_image", None),
+                     audios = data.get("audios", None),
+                     explosion_gif = data.get("explosion_gif", None))
+>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     app.run()
     
     if os.path.exists(get_file_in_dump_folder("DUCK_POP.json")):

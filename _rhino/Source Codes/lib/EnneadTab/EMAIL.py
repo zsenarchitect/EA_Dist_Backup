@@ -4,7 +4,6 @@ import DATA_FILE
 import USER
 import ENVIRONMENT_CONSTANTS
 import TIME
-import NOTIFICATION
 import SPEAK
 
 
@@ -17,7 +16,7 @@ def email_error(traceback, tool_name, error_from_user, subject_line="EnneadTab A
             app_uptime = TIME.get_revit_uptime()
             import REVIT
             
-            app = __revit__
+            app = __revit__ #pyright: ignore
             if hasattr(app, "Application"):
                 app = app.Application
                 
@@ -126,7 +125,7 @@ def email(sender_email=None,
     data["body_image_link_list"] = body_image_link_list
     data["attachment_list"] = attachment_list
     data["schedule_time"] = schedule_time
-    data["logo_image_path"] = r"L:\4b_Applied Computing\03_Rhino\12_EnneadTab for Rhino\Source Codes\lib\EnneadTab_Logo.png"
+    data["logo_image_path"] = "{}\EnneadTab_Logo.png".format(ENVIRONMENT_CONSTANTS.IMAGE_FOLDER)
 
     file_name = "EA_EMAIL.json"
     dump_folder = FOLDER.get_EA_local_dump_folder()
@@ -134,18 +133,20 @@ def email(sender_email=None,
     DATA_FILE.save_dict_to_json(data, file_path)
 
 
-    exe_location = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe"
+    exes = ["{}\\EMAILER.exe".format(ENVIRONMENT_CONSTANTS.EXE_FOLDER,
+        "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\EA_EMAIL\\EA_EMAIL.exe"
+        )
+    ]
 
     try:
-        EXE.open_file_in_default_application(exe_location)
+        EXE.try_open_app_from_list(exes)
         SPEAK.speak("enni-ed tab email is sent out. Subject line: {}".format(
         subject.lower().replace("ennead", "enni-ed ")))
     except Exception as e:
-        print(exe_location)
         print(str(e))
 
 
-# keep this main for reference only. The actual source edit is in th EXE SOURCE folder.
+# keep this main for historical reference only. The actual source edit is in th EXE SOURCE folder.
 def send_email_main():
 
     import traceback

@@ -38,8 +38,11 @@ class EnneadTabFamilyLoadingOption(REF_CLASS):
 
 
 def load_family(family_doc, project_doc):
-    
-    family_doc.LoadFamily(project_doc, EnneadTabFamilyLoadingOption())
+    try:
+        family_doc.LoadFamily.Overloads[DB.Document, DB.IFamilyLoadOptions](project_doc, EnneadTabFamilyLoadingOption())
+    except Exception as e:
+        print (e)
+        family_doc.LoadFamily(project_doc, EnneadTabFamilyLoadingOption())
     
     
 def load_family_by_path(family_path, project_doc=None, ):

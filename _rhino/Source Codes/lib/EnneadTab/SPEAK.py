@@ -102,7 +102,7 @@ def run_exe():
 
 
     version = 2.5
-    exe_location = "{}\\EA_TEXT2SPEECH_{}\\EA_TEXT2SPEECH.exe".format(ENVIRONMENT.EXE_FOLDER, version)
+    exe_location = "{}\\EA_TEXT2SPEECH_{}\\EA_TEXT2SPEECH.exe".format(ENVIRONMENT.PUBLIC_L_EXE_FOLDER, version)
     EXE.open_file_in_default_application(exe_location)
 
 
