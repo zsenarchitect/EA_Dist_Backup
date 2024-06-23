@@ -46,8 +46,8 @@ def publish():
 
 
         # delete folder called "DuckMaker.extension"
-        if os.path.exists(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension")):
-            shutil.rmtree(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension"))
+        # if os.path.exists(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension")):
+        #     shutil.rmtree(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension"))
 
 
     # push EA_dist to update branch
