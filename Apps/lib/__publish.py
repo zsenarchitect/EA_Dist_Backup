@@ -59,6 +59,7 @@ def copy_to_EA_dist():
 
 
     # push EA_dist to update branch
+    pull_changes_from_main(EA_dist_repo_folder)
     push_changes_to_main(EA_dist_repo_folder)
 
 
@@ -79,6 +80,12 @@ def get_nth_commit_number():
     commits = result.stdout.readlines()
     return len(commits) + 1
 
+def pull_changes_from_main(repository_path):
+    # Change to the Git repository directory
+    os.chdir(repository_path)
+
+    # Pull the latest changes from the main branch
+    subprocess.call(["git", "pull", "origin", "main"])
     
 def push_changes_to_main(repository_path):
 
