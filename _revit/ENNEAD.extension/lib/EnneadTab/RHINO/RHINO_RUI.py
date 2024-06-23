@@ -65,7 +65,7 @@ def is_enneadtab_registered(email_result = False):
     if not is_enneadtab_registered and email_result and not is_using_local_dump_rui:
         user_name = USER.get_user_name()
         user_name = user_name.replace(".EA","")
-        # TO-DO: depreciate this, use USER_CONSTSNATS func "get_EA_email()"
+        # TO-DO: depreciate this, use USER_CONSTSNATS func "get_email()"
         if user_name not in SH_USER_NAMES:
             instructions = "Step 1: Have only ONE rhino left open.\nStep 2: Click register from the menu.\nStep 3: Restart Rhino to confirm the setting."
             instructions += "\n\n\nYou might receive multiple emails about the same instruction until above step is finished."
