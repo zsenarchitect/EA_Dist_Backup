@@ -9,10 +9,12 @@ __context__ = "zero-doc"
 
 from pyrevit import script #
 import proDUCKtion
-import DUCK
+
+from Duck import Egg
 
 def beer_tab():
-    DUCK.duck()
+
+    Egg.egg()
     print ("ok")
 
 ################## main code below #####################
