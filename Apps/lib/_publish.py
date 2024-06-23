@@ -38,16 +38,14 @@ def publish():
     # in EA_Dist folder, delete folder, then copy folder from current repo to EA_dist repo
     for folder in ["Apps", "Installation"]:
         # delete folder in EA_dist repo if exist
-        if os.path.exists(os.path.join(EA_dist_repo_folder, folder)):
-            shutil.rmtree(os.path.join(EA_dist_repo_folder, folder))
+        try_remove_folder(os.path.join(EA_dist_repo_folder, folder))
    
         # copy folder from current repo to EA_dist repo
         shutil.copytree(os.path.join(current_repo_folder, folder), os.path.join(EA_dist_repo_folder, folder))
 
 
         # delete folder called "DuckMaker.extension"
-        if os.path.exists(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension")):
-            shutil.rmtree(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension"))
+        try_remove_folder(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension"))
 
 
     # push EA_dist to update branch
@@ -58,6 +56,11 @@ def publish():
     # Play Windows built-in notification sound
     winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 
+
+def try_remove_folder(folder_path):
+
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path)
 
 
 def get_nth_commit_number():
