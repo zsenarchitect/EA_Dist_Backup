@@ -45,6 +45,11 @@ def publish():
         shutil.copytree(os.path.join(current_repo_folder, folder), os.path.join(EA_dist_repo_folder, folder))
 
 
+        # delete folder called "DuckMaker.extension"
+        if os.path.exists(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension")):
+            shutil.rmtree(os.path.join(EA_dist_repo_folder, folder, "_revit", "DuckMaker.extension"))
+
+
     # push EA_dist to update branch
     push_changes_to_main(EA_dist_repo_folder)
 
@@ -63,7 +68,6 @@ def get_nth_commit_number():
 
     
 def push_changes_to_main(repository_path):
-    """this is importatnt and should keep. It push the change of Distrubuter Folder to git repo"""
 
     # Change to the Git repository directory
     os.chdir(repository_path)
