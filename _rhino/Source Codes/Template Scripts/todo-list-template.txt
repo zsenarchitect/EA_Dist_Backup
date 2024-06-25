@@ -1,6 +1,0 @@
-"""
-### TO-DO:
-- Main task
-    - Sub-task
-#### Assigned to: **{}**
-"""

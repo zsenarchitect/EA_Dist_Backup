@@ -86,10 +86,7 @@ def messenger(main_text,
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "MESSENGER.json")
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     exes = [EXE.get_exe_path_by_name("MESSENGER.exe"),
             "{}\\MESSENGER\\MESSENGER.exe".format(ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER)
             ]
@@ -112,20 +109,12 @@ def duck_pop(main_text = None):
 
     data = {"main_text":main_text,
             "duck_image":IMAGES.get_image_path_by_name("duck_green_bg.png"), 
-<<<<<<< HEAD
-            "audios": [SOUNDS.get_aduio_path_by_name(x) for x in os.listdir(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER) if x.startswith("duck")]}
-    
-=======
             "explosion_gif": IMAGES.get_image_path_by_name("explosion.gif"), 
             "audios": [SOUNDS.get_aduio_path_by_name(x) for x in os.listdir(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER) if x.startswith("duck")]}
     # print (data)
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     DATA_FILE.save_dict_to_json_in_dump_folder(data, "DUCK_POP.json")
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     exes = [EXE.get_exe_path_by_name("DUCK_POP.exe"),
             "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe\\DUCK_POP_1.3\\DUCK_POP.exe"]
     

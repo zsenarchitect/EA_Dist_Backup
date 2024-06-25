@@ -52,7 +52,7 @@ def is_SH_account():
                 "zhuang"]
     return USER_NAME.lower() in  [x.lower() for x in SH_names]
 
-def get_email(user_name = USER_NAME):
+def get_EA_email(user_name = USER_NAME):
     return "{}@ennead.com".format(user_name.replace(".EA",""))
 
 def get_usernames_from_developers():

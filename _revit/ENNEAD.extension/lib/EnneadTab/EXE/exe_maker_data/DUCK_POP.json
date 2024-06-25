@@ -7,11 +7,7 @@
   },
   {
    "optionDest": "filenames",
-<<<<<<<< HEAD:Apps/lib/exes/maker data/sample_exe.json
-   "value": "C:\\Users\\szhang\\github\\EnneadTab-OS\\Apps\\lib\\exes\\source code\\sample_exe\\MyApp.py"
-========
    "value": "C:/Users/szhang/github/EnneadTab-for-Revit/ENNEAD.extension/lib/EnneadTab/EXE/EXE_SOURCE/DUCK_POP.py"
->>>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030:_revit/ENNEAD.extension/lib/EnneadTab/EXE/exe_maker_data/DUCK_POP.json
   },
   {
    "optionDest": "onefile",
@@ -19,7 +15,7 @@
   },
   {
    "optionDest": "console",
-   "value": true
+   "value": false
   },
   {
    "optionDest": "clean_build",

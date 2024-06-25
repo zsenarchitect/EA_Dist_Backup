@@ -14,12 +14,6 @@ def get_aduio_path_by_name(file_name):
     #print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name))
 
 
-def get_aduio_path_by_name(file_name):
-    if os.path.exists("{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)):
-        return "{}\\{}".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name)
-    print ("A ha! {}\\{} is not valid or accessibile. Better luck next time.".format(ENVIRONMENT_CONSTANTS.AUDIO_FOLDER, file_name))
-
-
 def play_sound(file = "sound effect_popup msg3.wav"):
     
 

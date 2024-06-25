@@ -286,6 +286,9 @@ def publish_dist_folder():
         if not os.path.exists(target):
             os.makedirs(target)
         source_folder = getattr(ENVIRONMENT, "WORKING_FOLDER_FOR_{}".format(software.upper().replace("_", "")))
+        if not os.path.exists(source_folder):
+            print ("{} do not exist, no soucre".format(source_folder))
+            continue
         FOLDER.copy_dir(source_folder,
                         target,
                         allow_print_log=False,
@@ -311,4 +314,4 @@ if __name__ == "__main__":
     # publish_Rhino_source_code(deep_copy = False)
     print(__file__ + "   -----OK!")
     publish_dist_folder()
-    install_EA_dist()
+    # install_EA_dist()

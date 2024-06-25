@@ -59,20 +59,6 @@ def read_json_as_dict_in_dump_folder(file):
       dict = json.load(f)
     return dict
 
-<<<<<<< HEAD
-def fake_test_data():
-    filepath = get_file_in_dump_folder("DUCK_POP.json")
-    
-
-    import json
-    
-    dict = {"main_text":"Hello Human!!"}
-    
-    with open(filepath,"w") as f:
-      json.dump(dict, f)
-
-=======
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
 
 class DuckPopApp:
@@ -83,13 +69,9 @@ class DuckPopApp:
                  animation_fade_duration,
                  width,
                  height,
-<<<<<<< HEAD
-                 duck_image):
-=======
                  duck_image,
                  audios,
                  explosion_gif):
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
 
         self.window = tk.Tk()
         self.window.iconify()
@@ -134,12 +116,8 @@ class DuckPopApp:
         self.talk_bubble.pack(pady=5)
 
         
-<<<<<<< HEAD
-
-=======
         self.audios = audios
         self.explosion_gif = explosion_gif
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
         # print (image)
         # from PIL import Image
  
@@ -299,15 +277,7 @@ class DuckPopApp:
 
 @try_catch_error
 def pop_message():
-<<<<<<< HEAD
-    print ("working")
-    INTERNAL_TEST = True
-    if INTERNAL_TEST:
-        fake_test_data()
-    
-=======
 
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     
     data = read_json_as_dict_in_dump_folder("DUCK_POP.json")
     if data is None or "main_text" not in data.keys():
@@ -320,13 +290,9 @@ def pop_message():
                      animation_fade_duration = data.get("animation_fade_duration", 5),
                      width = data.get("width", 1200),
                      height = data.get("height", 700),
-<<<<<<< HEAD
-                     duck_image= data.get("duck_image", None))
-=======
                      duck_image= data.get("duck_image", None),
                      audios = data.get("audios", None),
                      explosion_gif = data.get("explosion_gif", None))
->>>>>>> 76e3fd102b014b1662a1e1b3ba697ce7e40c1030
     app.run()
     
     if os.path.exists(get_file_in_dump_folder("DUCK_POP.json")):
