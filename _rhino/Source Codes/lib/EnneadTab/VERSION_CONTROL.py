@@ -302,9 +302,7 @@ def publish_dist_folder():
 def install_EA_dist():
 
     exes = [ENVIRONMENT_CONSTANTS.EXE_FOLDER + "\\EnneadTab_OS_Installer.exe",
-            ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER + "\\EnneadTab_OS_Installer.exe",
-            ENVIRONMENT_CONSTANTS.EXE_FOLDER + "\\EnneadTab_Installer.exe",
-            ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER + "\\EnneadTab_Installer.exe"]
+            ENVIRONMENT_CONSTANTS.PUBLIC_L_EXE_FOLDER + "\\EnneadTab_OS_Installer.exe"]
     EXE.try_open_app_from_list(exes)
        
 
