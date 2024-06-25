@@ -7,6 +7,7 @@ doc = EXEC_PARAMS.event_args.Document
 from pyrevit.coreutils import envvars
 
 from EnneadTab.FUN import EnneaDuck
+from EnneadTab import VERSION_CONTROL
 
 
 
@@ -135,6 +136,8 @@ def main():
 
     if not EnneadTab.ENVIRONMENT.IS_L_DRIVE_ACCESSIBLE:
         return
+
+    VERSION_CONTROL.update_EA_dist()
     
     EnneadTab.LOG.update_time_sheet_revit(doc.Title)
 

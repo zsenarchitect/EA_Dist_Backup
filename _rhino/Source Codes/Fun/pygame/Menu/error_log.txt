@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "l:/4b_Applied Computing/03_Rhino/12_EnneadTab for Rhino/Source Codes/Fun/pygame/Menu/main.py", line 150, in <module>
+    main()
+  File "l:/4b_Applied Computing/03_Rhino/12_EnneadTab for Rhino/Source Codes/Fun/pygame/Menu/main.py", line 104, in main
+    angle =  get_pointer_angle(*logo_rect.center)# this is to keep it facing mouse
+  File "l:/4b_Applied Computing/03_Rhino/12_EnneadTab for Rhino/Source Codes/Fun/pygame/Menu/main.py", line 22, in get_pointer_angle
+    angle = math.atan(-(mouse_y - pt_y) / (mouse_x - pt_x))* 180 / math.pi
+ZeroDivisionError: integer division or modulo by zero

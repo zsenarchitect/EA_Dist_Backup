@@ -1,0 +1,134 @@
+Option Explicit
+'Script written by Pascal
+' RMA
+'Script version Thursday, June 07, 2012
+'Sprinles copies of an object randomly on a target object
+'optionally scales and rotates the objects randomly
+'rotation in World xy, sprinkling from the world xy plane.
+Rhino.AddStartUpScript Rhino.LastLoadedScriptFile
+Rhino.AddAlias "Sprinkler", "_NoEcho _-Runscript (Sprinkler)"
+
+Private oldInt, oldaState, oldSmall, Oldlarge, oldMin, OldMax
+If isEmpty(oldInt) Then
+	oldint = 10
+End If
+
+If isEmpty(oldaState) Then
+	oldAState = array(False, False)
+End If
+If isEmpty(oldSmall) Then
+	oldSmall = 0.9
+End If
+
+If isEmpty(oldLarge) Then
+	oldLarge = 1.1
+End If
+
+
+If isEmpty(oldMin) Then
+	oldMin = -20
+End If
+
+If isEmpty(oldMax) Then
+	oldMax = 20
+End If
+
+'Call Sprinkler()
+
+
+Sub Sprinkler()
+
+	Dim sObj: sObj = Rhino.getObject("Select the object to sprinkle.",, True)
+	If isNull(sObj) Then Exit Sub
+	Dim aBase: aBase = Rhino.GetPoint("Base point on object.")
+	If Not isArray(abase) Then Exit Sub
+
+	Dim starg: starg = Rhino.GetObject("Select target object.", 8 + 16 + 32, False)
+	If isNull(starg) Then Exit Sub
+
+	Dim intCopy: IntCopy = Rhino.GetInteger("How many?", oldInt, 1)
+	If isNull(intCopy) Then Exit Sub
+	OldInt = intCopy
+
+	Dim arand: arand = Rhino.GetBoolean("Randomize?", array("Rotation", "No", "Yes", "Scale", "No", "Yes"), OldaState)
+	If Not isArray(aRand) Then Exit Sub
+	OldaState = aRand
+
+
+	Dim aBB: aBB = Rhino.BoundingBox(starg)
+
+	Dim Plane: plane = Rhino.PlaneFromPoints(aBB(4), aBB(5), aBB(7))
+
+	Dim d1, d2, sSrf
+	Rhino.EnableRedraw False
+	sSrf = Rhino.AddPlaneSurface(Plane, Rhino.Distance(aBB(0), aBB(1)), Rhino.Distance(aBb(0), aBB(3)))
+
+	Dim aDomU, aDomV
+	aDomU = Rhino.SurfaceDomain(sSrf, 0)
+	aDomV = Rhino.SurfaceDomain(sSrf, 1)
+	'Dim intCopy: IntCopy = 50
+
+	If aRand(0) Then
+
+		Dim a1, a2
+
+		a1 = Rhino.GetReal("Set one end of the rotation range in degrees. Choose a number between -180 and 180.", oldMin, -180, 180)
+		If isNull(a1) Then Exit Sub
+
+		a2 = Rhino.GetReal("Set the other end of the rotation rangein degrees. Choose a number between -180 and 180.", oldMax, -180, 180)
+		If isNull(a1) Then Exit Sub
+
+		OldMin = a1
+		oldMax = a2
+
+	End If
+
+	If aRand(1) Then
+		Dim f1, f2
+		f1 = Rhino.GetReal("Smallest scale factor .", oldSmall, 0.001)
+		If isNull(f2) Then Exit  Sub
+
+		f2 = Rhino.GetReal("Largest scale factor.", oldLarge, f1 + 0.001)
+		If isNull(f2) Then Exit  Sub
+
+		OldSmall = f1
+		Oldlarge = f2
+	End If
+
+
+	Dim par, i, x, apt, test, factor, dblAng
+	i = 0
+	'For i = 0 To intCopy
+	Do
+		par = array(rnd * aDomU(1), rnd * aDomv(1))
+
+		If Not Rhino.IsMesh(starg) Then
+			test = Rhino.ProjectPointToSurface(Rhino.EvaluateSurface(sSrf, par), sTarg, array(0, 0, -1))
+		Else
+			test = Rhino.ProjectPointToMesh(Rhino.EvaluateSurface(sSrf, par), sTarg, array(0, 0, -1))
+
+		End If
+
+		If isArray(test) Then
+			apt = test(0)
+			x = Rhino.CopyObject(sObj, aBase, aPt)
+			If aRand(0) Then
+				dblAng = a1 + rnd * (a2 - a1)
+				Rhino.RotateObject x, aPt, dblAng, array(0, 0, 1), False
+			End If
+
+			If aRand(1) Then
+				factor = f1 + (rnd * (f2 - f1))
+				Rhino.ScaleObject x, aPt, array(factor, factor, factor), False
+			End If
+
+			i = i + 1
+		End If
+	Loop Until i = intCopy
+	'	Next
+	Rhino.DeleteObject sSrf
+
+
+	Rhino.EnableRedraw True
+
+End Sub
