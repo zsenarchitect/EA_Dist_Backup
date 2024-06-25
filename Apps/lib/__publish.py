@@ -24,7 +24,7 @@ def time_it(func):
 
 def update_exes():
     sys.path.append(os.path.dirname(__file__) + "\\exes")
-    from ExeMaker import update_all_exes
+    from ExeMaker import update_all_exes # pyright: ignore
     update_all_exes()
 
 def copy_to_EA_dist():
