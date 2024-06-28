@@ -11,8 +11,8 @@ __doc__ = """A floating window that give you quick access to all kinds of rename
 __title__ = "Super\nRenamer"
 __tip__ = True
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
@@ -24,7 +24,7 @@ import traceback
 from Autodesk.Revit import DB # pyright: ignore 
 import random
 from Autodesk.Revit import UI # pyright: ignore
-import System
+import System # pyright: ignore 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
@@ -130,6 +130,10 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
         #for view on current sheet
         for view_id in sheet.GetAllPlacedViews():
             view = doc.GetElement(view_id)
+
+            para = view.LookupParameter("Exclude Renaming")
+            if para and para.AsInteger() == 1:
+                continue
 
             if doc.IsWorkshared:
                 current_owner = view.LookupParameter("Edited by").AsString()
