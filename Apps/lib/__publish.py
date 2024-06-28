@@ -8,6 +8,9 @@ import winsound
 import sys
 sys.path.append(os.path.dirname(__file__) + "\\EnneadTab")
 
+# Specify the absolute path to the git executable
+GIT_LOCATION = "C:\\Users\\szhang\\AppData\\Local\\Programs\\Git\\cmd\\git.exe"
+
 import UNIT_TEST #pyright: ignore
 import NOTIFICATION #pyright: ignore
 
@@ -81,39 +84,76 @@ def try_remove_content(folder_path):
 
 def get_nth_commit_number():
     # Count the number of commits made today
-    result = subprocess.Popen(["git", "log", "--since=midnight", "--oneline"], stdout=subprocess.PIPE)
+    result = subprocess.Popen([GIT_LOCATION, "log", "--since=midnight", "--oneline"], stdout=subprocess.PIPE)
     commits = result.stdout.readlines()
     return len(commits) + 1
 
 def pull_changes_from_main(repository_path):
-    # Change to the Git repository directory
-    os.chdir(repository_path)
+    try:
+        # # Print the current PATH environment variable
+        # print("Current PATH:", os.environ['PATH'])
+        
 
-    # Stash local changes
-    subprocess.call(["git", "stash"])
 
-    # Pull the latest changes from the main branch
-    subprocess.call(["git", "pull", "origin", "main"])
+        # Change to the Git repository directory
+        print("Changing directory to:", repository_path)
+        os.chdir(repository_path)
 
-    # Apply stashed changes
-    subprocess.call(["git", "stash", "pop"])
+        # Stash local changes
+        print("Running git stash")
+        stash_result = subprocess.call([GIT_LOCATION, "stash"])
+        if stash_result != 0:
+            raise Exception("Git stash command failed with return code {}".format(stash_result))
+
+        # Pull the latest changes from the main branch
+        print("Running git pull origin main")
+        pull_result = subprocess.call([GIT_LOCATION, "pull", "origin", "main"])
+        if pull_result != 0:
+            raise Exception("Git pull command failed with return code {}".format(pull_result))
+
+        # Apply stashed changes
+        print("Running git stash pop")
+        pop_result = subprocess.call([GIT_LOCATION, "stash", "pop"])
+        if pop_result != 0:
+            raise Exception("Git stash pop command failed with return code {}".format(pop_result))
+
+    except FileNotFoundError as e:
+        print("FileNotFoundError: Ensure Git is installed and available in PATH")
+        print(traceback.format_exc())
+        raise e
+    except Exception as e:
+        print("An error occurred while pulling changes from the main branch")
+        print(traceback.format_exc())
+        raise e
 
 def push_changes_to_main(repository_path):
+
+
     # Change to the Git repository directory
+    print("Changing directory to:", repository_path)
     os.chdir(repository_path)
 
     # Stage all changes
-    subprocess.call(["git", "add", "."])
+    print("Running git add .")
+    add_result = subprocess.call([GIT_LOCATION, "add", "."])
+    if add_result != 0:
+        raise Exception("Git add command failed with return code {}".format(add_result))
 
     commit_number = get_nth_commit_number()
 
     # Commit with today's date
     current_date = datetime.datetime.now().strftime('%Y-%m-%d')
     commit_message = "Auto push changes committed on {}...{}".format(current_date, commit_number)
-    subprocess.call(["git", "commit", "-m", commit_message])
+    print("Running git commit -m")
+    commit_result = subprocess.call([GIT_LOCATION, "commit", "-m", commit_message])
+    if commit_result != 0:
+        raise Exception("Git commit command failed with return code {}".format(commit_result))
 
     # Push to the main branch
-    subprocess.call(["git", "push", "origin", "main"])
+    print("Running git push origin main")
+    push_result = subprocess.call([GIT_LOCATION, "push", "origin", "main"])
+    if push_result != 0:
+        raise Exception("Git push command failed with return code {}".format(push_result))
 
 
 def update_installer_folder():
