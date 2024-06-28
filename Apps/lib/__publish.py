@@ -177,9 +177,14 @@ def update_installer_folder():
 
 @time_it
 def publish_duck():
+
+    print("Start testing all moudle.")
     UNIT_TEST.test_core_module()
+    print ("\n\nBegin compiling all exes...")
     update_exes()
+    print ("\n\nBegin updating install_folder...")
     update_installer_folder()
+    print ("\n\npush uptdate to EA dist folder")
     copy_to_EA_dist()
 
 
