@@ -8,6 +8,7 @@ import sys
 sys.path.append(os.path.dirname(__file__) + "\\EnneadTab")
 
 import UNIT_TEST #pyright: ignore
+import NOTIFICATION #pyright: ignore
 
 def time_it(func):
     def wrapper(*args, **kwargs):
@@ -21,6 +22,7 @@ def time_it(func):
         
         # Print the formatted message with color
         print("{}Publish took {:.1f} seconds to complete.{}".format(blue_text, elapsed_time, reset_color))
+        NOTIFICATION.messenger("Publish took {:.1f} seconds to complete.".format(elapsed_time))
         return result
     return wrapper
 
