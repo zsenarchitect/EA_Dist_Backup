@@ -178,16 +178,19 @@ def update_installer_folder():
 @time_it
 def publish_duck():
 
-    print("Start testing all moudle.")
+    print_title("Start testing all moudle.")
     UNIT_TEST.test_core_module()
-    print ("\n\nBegin compiling all exes...")
+    print_title ("\n\nBegin compiling all exes...")
     update_exes()
-    print ("\n\nBegin updating install_folder...")
+    print_title ("\n\nBegin updating install_folder...")
     update_installer_folder()
-    print ("\n\npush uptdate to EA dist folder")
+    print_title ("\n\npush uptdate to EA dist folder")
     copy_to_EA_dist()
 
-
+def print_title(text):
+    # ANSI escape code for larger text
+    large_text = "\033[1m" + text + "\033[0m"
+    print(large_text)
 
 
 if __name__ == '__main__':
