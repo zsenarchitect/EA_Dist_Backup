@@ -3,6 +3,7 @@ import shutil
 import datetime
 import subprocess
 import time
+import traceback
 import winsound
 import sys
 sys.path.append(os.path.dirname(__file__) + "\\EnneadTab")
@@ -35,7 +36,7 @@ def update_exes():
     except Exception as e:
         red_text = "\033[31m"
         reset_color = "\033[0m"
-        print("{}Error updating exes: {} seconds to complete.{}".format(red_text, e, reset_color))
+        print("{}Error updating exes: {} {}".format(red_text, traceback.format_exc(), reset_color))
         NOTIFICATION.messenger(f"Error updating exes: {e}")
 
 def copy_to_EA_dist():
