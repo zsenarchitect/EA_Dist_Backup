@@ -30,7 +30,11 @@ def time_it(func):
 def update_exes():
     sys.path.append(os.path.dirname(__file__) + "\\exes")
     from ExeMaker import update_all_exes # pyright: ignore
-    update_all_exes()
+    try:
+        update_all_exes()
+    except Exception as e:
+        print(f"Error updating exes: {e}")
+        NOTIFICATION.messenger(f"Error updating exes: {e}")
 
 def copy_to_EA_dist():
     # locate the EA_Dist repo folder and current repo folder
