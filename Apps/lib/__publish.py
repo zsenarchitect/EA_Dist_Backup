@@ -8,11 +8,14 @@ import winsound
 import sys
 sys.path.append(os.path.dirname(__file__) + "\\EnneadTab")
 
-# Specify the absolute path to the git executable
-GIT_LOCATION = "C:\\Users\\szhang\\AppData\\Local\\Programs\\Git\\cmd\\git.exe"
 
 import UNIT_TEST #pyright: ignore
 import NOTIFICATION #pyright: ignore
+import FOLDER #pyright: ignore
+
+
+# Specify the absolute path to the git executable
+GIT_LOCATION = "{}\\Local\\Programs\\Git\\cmd\\git.exe".format(FOLDER.get_appdata_folder())
 
 def time_it(func):
     def wrapper(*args, **kwargs):
