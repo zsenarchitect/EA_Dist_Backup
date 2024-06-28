@@ -33,7 +33,9 @@ def update_exes():
     try:
         update_all_exes()
     except Exception as e:
-        print(f"Error updating exes: {e}")
+        red_text = "\033[31m"
+        reset_color = "\033[0m"
+        print("{}Error updating exes: {} seconds to complete.{}".format(red_text, e, reset_color))
         NOTIFICATION.messenger(f"Error updating exes: {e}")
 
 def copy_to_EA_dist():
