@@ -31,7 +31,7 @@ def time_it(func):
         # Print the formatted message with color
         print("{}Publish took {:.1f} seconds to complete.{}".format(blue_text, elapsed_time, reset_color))
         NOTIFICATION.duck_pop("Publish took {:.1f} seconds to complete.".format(elapsed_time))
-        SOUND.play_sound("sound effect_mario powerup.wav")
+        SOUND.play_sound("sound effect_mario powerup")
 
         return result
     return wrapper
@@ -194,7 +194,7 @@ def publish_duck():
         print_title ("\n\nBegin compiling all exes...")
         NOTIFICATION.messenger("Recompiling all exes...kill VScode if you want to cancel..")
         update_exes()
-        print_title ("\n\nBegin updating install_folder...")
+        print_title ("\n\nBegin updating installation folder for public easy install...")
         update_installer_folder()
 
         
