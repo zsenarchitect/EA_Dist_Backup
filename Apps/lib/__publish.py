@@ -73,8 +73,8 @@ def copy_to_EA_Dist_and_commit():
     # pull the latest changes from remote
     pull_changes_from_main(EA_dist_repo_folder)
     
-    # push EA_dist to update branch, try max twice
-    for attemp in range(2):
+    # push EA_dist to update branch, try max 3 times
+    for attemp in range(3):
         if push_changes_to_main(EA_dist_repo_folder):
             break
 
