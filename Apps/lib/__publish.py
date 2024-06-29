@@ -178,14 +178,27 @@ def update_installer_folder():
 @time_it
 def publish_duck():
 
+
     print_title("Start testing all moudle.")
     UNIT_TEST.test_core_module()
-    print_title ("\n\nBegin compiling all exes...")
-    update_exes()
-    print_title ("\n\nBegin updating install_folder...")
-    update_installer_folder()
+
+    if manual_confirm_should_compile_exe():
+        print_title ("\n\nBegin compiling all exes...")
+        update_exes()
+        print_title ("\n\nBegin updating install_folder...")
+        update_installer_folder()
+
+        
     print_title ("\n\npush uptdate to EA dist folder")
     copy_to_EA_dist()
+
+
+def manual_confirm_should_compile_exe():
+    """manua change date to see if I should recompile exe
+    so each recompile is more intentional"""
+    import datetime
+    return datetime.date.today() == "2024-06-29"
+    
 
 def print_title(text):
     # ANSI escape code for larger text
