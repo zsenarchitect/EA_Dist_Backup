@@ -197,6 +197,7 @@ def manual_confirm_should_compile_exe():
     """manua change date to see if I should recompile exe
     so each recompile is more intentional"""
     import datetime
+    print (datetime.date.today())
     return datetime.date.today() == "2024-06-29"
     
 
