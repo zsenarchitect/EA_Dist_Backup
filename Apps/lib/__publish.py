@@ -39,7 +39,7 @@ def update_exes():
     from ExeMaker import update_all_exes # pyright: ignore
     update_all_exes()
  
-def copy_to_EA_dist():
+def copy_to_EA_Dist_and_commit():
     # locate the EA_Dist repo folder and current repo folder
     # the current repo folder is 3 parent folder up
     current_repo_folder = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -190,15 +190,14 @@ def publish_duck():
 
         
     print_title ("\n\npush uptdate to EA dist folder")
-    copy_to_EA_dist()
+    copy_to_EA_Dist_and_commit()
 
 
 def manual_confirm_should_compile_exe():
     """manua change date to see if I should recompile exe
     so each recompile is more intentional"""
     import datetime
-    print (datetime.date.today())
-    return datetime.date.today() == "2024-06-29"
+    return str(datetime.date.today()) == "2024-06-29"
     
 
 def print_title(text):
