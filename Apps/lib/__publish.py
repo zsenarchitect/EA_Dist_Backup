@@ -29,7 +29,7 @@ def time_it(func):
         
         # Print the formatted message with color
         print("{}Publish took {:.1f} seconds to complete.{}".format(blue_text, elapsed_time, reset_color))
-        NOTIFICATION.messenger("Publish took {:.1f} seconds to complete.".format(elapsed_time))
+        NOTIFICATION.duck_pop("Publish took {:.1f} seconds to complete.".format(elapsed_time))
         return result
     return wrapper
 
@@ -70,8 +70,10 @@ def copy_to_EA_Dist_and_commit():
     # pull the latest changes from remote
     pull_changes_from_main(EA_dist_repo_folder)
     
-    # push EA_dist to update branch
-    push_changes_to_main(EA_dist_repo_folder)
+    # push EA_dist to update branch, try max twice
+    for attemp in range(2):
+        if push_changes_to_main(EA_dist_repo_folder):
+            break
 
     # Play Windows built-in notification sound
     winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
@@ -158,6 +160,8 @@ def push_changes_to_main(repository_path):
     if push_result != 0:
         raise Exception("Git push command failed with return code {}".format(push_result))
 
+    return True
+
 
 def update_installer_folder():
     # locate the EA_Dist repo folder and current repo folder
@@ -184,6 +188,7 @@ def publish_duck():
 
     if manual_confirm_should_compile_exe():
         print_title ("\n\nBegin compiling all exes...")
+        NOTIFICATION.messenger("Recompiling all exes...kill VScode if you want to cancel..")
         update_exes()
         print_title ("\n\nBegin updating install_folder...")
         update_installer_folder()
