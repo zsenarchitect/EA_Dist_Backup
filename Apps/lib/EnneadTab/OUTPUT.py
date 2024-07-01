@@ -93,7 +93,7 @@ class Output:
 
     _instance = None
     _out = [] # the container for everything that is outputing
-    _report_path = FOLDER.get_EA_dump_folder_file("OUTPUT.html")
+    _report_path = FOLDER.get_EA_dump_folder_file("EnneadTab Output.html")
     _graphic_settings = {
             'background_color': 'rgb(50, 50, 50)',
             'font_family': 'Helvetica, Arial, sans-serif',
@@ -242,7 +242,7 @@ def unit_test():
 
 
 
-def display_pyrevit_output_on_browser():
+def display_output_on_browser():
     if not ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         NOTIFICATION.messenger("currently only support Revit Env")
         return

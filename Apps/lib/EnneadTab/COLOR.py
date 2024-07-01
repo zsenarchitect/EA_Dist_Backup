@@ -12,6 +12,20 @@ try:
 except:
     pass
 
+# define before other custome import to avoid circular reference break in ironpython. 
+# #cpython seem to be ok with this kind of circular ref
+class TextColorEnum:
+    Red = "red"
+    Green = "green"
+    Blue = "blue"
+    Yellow = "yellow"
+    Magenta = "magenta"
+    Cyan = "cyan"
+    White = "white"
+ACCENT_COLOR = 70,70,70
+PRIMARY_BACKGROUND = 100, 100, 100
+PRIMARY_TEXT = 218,232,253
+
 
 import ENVIRONMENT
 if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
@@ -22,20 +36,8 @@ import NOTIFICATION
 import FOLDER
 
 
-ACCENT_COLOR = 70,70,70
-PRIMARY_BACKGROUND = 100, 100, 100
-PRIMARY_TEXT = 218,232,253
 
 
-
-class TextColor:
-    Red = "red"
-    Green = "green"
-    Blue = "blue"
-    Yellow = "yellow"
-    Magenta = "magenta"
-    Cyan = "cyan"
-    White = "white"
 
 
 

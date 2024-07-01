@@ -1,16 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import subprocess
-import os
+
 import SOUND
-import FOLDER
 import DATA_FILE
-import USER
 import EXE
-import ENVIRONMENT
 import IMAGE
-
-
 
 
 
@@ -63,11 +57,9 @@ def duck_pop(main_text = None):
     if not main_text:
         main_text = "Quack!"
 
-
-
     data = {}
     data["main_text"] = main_text
-    data["duck_image"] = IMAGE.get_image_path_by_name("duck_green_bg.png")
+    data["duck_image"] = IMAGE.get_one_image_path_by_prefix("duck_pop")
     data["explosion_gif"] = IMAGE.get_image_path_by_name("duck_explosion.gif")
     data["audio"] = SOUND.get_one_audio_path_by_prefix("duck")
     DATA_FILE.set_data(data, "DUCK_POP.json") 

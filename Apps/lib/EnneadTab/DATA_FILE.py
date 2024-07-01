@@ -2,6 +2,7 @@ import shutil
 import json
 import io
 import os
+import traceback
 from contextlib import contextmanager
 
 
@@ -20,10 +21,9 @@ def _read_json_file_safely(filepath, use_encode=False, create_if_not_exist = Fal
     try:
         shutil.copyfile(filepath, local_path)
     except IOError:
-        local_path = FOLDER.get_EA_dump_folder_file("temp2.json")
+        local_path = FOLDER.get_EA_dump_folder_file("temp_additional.json")
         shutil.copyfile(filepath, local_path)
-    # print "###"
-    # print local_path
+
     content = _read_json_as_dict(local_path, use_encode, create_if_not_exist)
     return content
 
@@ -83,7 +83,7 @@ def _read_json_as_dict_in_shared_dump_folder(file_name, use_encode=False, create
         _type_: _description_
     """
     filepath = FOLDER.get_shared_dump_folder_file(file_name)
-    return _read_json_file_safely(filepath, use_encode, create_if_not_exist=create_if_not_exist)
+    return _read_json_file_safely(filepath, use_encode, create_if_not_exist)
 
 
 
@@ -120,37 +120,24 @@ def _save_dict_to_json(dict, filepath, use_encode=False):
 
 def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=False):
     """direct store dict to a file in dump folder
-
-    Args:
-        dict (_type_): _description_
-        file_name (_type_): _description_
-        use_encode (bool, optional): _description_. Defaults to False.
-
-    Returns:
-        _type_: _description_
     """
     filepath = FOLDER.get_EA_dump_folder_file(file_name)
     return _save_dict_to_json(dict, filepath, use_encode=use_encode)
 
 def _save_dict_to_json_in_shared_dump_folder(dict, file_name, use_encode=False):
     """direct store dict to a file in shared dump folder
-
-    Args:
-        dict (_type_): _description_
-        file_name (_type_): _description_
-        use_encode (bool, optional): _description_. Defaults to False.
-
-    Returns:
-        _type_: _description_
     """
     filepath = FOLDER.get_shared_dump_folder_file(file_name)
     return _save_dict_to_json(dict, filepath, use_encode=use_encode)
 
+
+
+#######################################################################################
+
+
+
 def pretty_print_dict(dict):
     """format print the content of dict or json
-
-    Args:
-        dict (_type_): _description_
     """
     string = json.dumps(dict, indent=4)
     print(string)
@@ -174,10 +161,15 @@ def set_data(data, file_name, is_local = True):
 @contextmanager
 def update_data(file_name, is_local = True):
     """
+    prefer just the file_name, but full path is ok
+    
     Usage example
     with DATA_FILE.update_data("abc.json") as data:
         data['new_key'] = 'new_value'  # Update data here
     """
+
+    if os.path.exists(file_name):
+        file_name = os.path.basename(file_name)
 
         
     try:
@@ -190,5 +182,5 @@ def update_data(file_name, is_local = True):
 
         set_data(data, file_name, is_local)
 
-    except Exception as e:
-        print("An error occurred when updating data: {}".format(e))
+    except Exception:
+        print("An error occurred when updating data:\n{}".format(traceback.format_exc()))

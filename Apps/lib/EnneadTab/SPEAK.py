@@ -3,7 +3,7 @@
 import random
 import DATA_FILE
 import EXE
-import CONFIGURE
+import CONFIG
 
 def random_speak(lines, chance=1.0):
     if random.random() <= chance:
@@ -12,17 +12,7 @@ def random_speak(lines, chance=1.0):
 
 
 def is_hate_talkie():
-    """
-    file_name = 'revit_ui_setting.json'
-    if not FOLDER.is_file_exist_in_dump_folder(file_name):
-        return False
-
-
-    setting_file = FOLDER.get_EA_dump_folder_file(file_name)
-    data = DATA_FILE.read_json_as_dict(setting_file)
-    return not data.get("toggle_bt_is_talkie", True)
-    """
-    return not CONFIGURE.get_setting_data("toggle_bt_is_talkie", False)
+    return not CONFIG.get_setting_data("toggle_bt_is_talkie", False)
 
 
 def speak(text, language='en', accent='com'):
