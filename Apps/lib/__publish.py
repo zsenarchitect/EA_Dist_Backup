@@ -39,8 +39,8 @@ def time_it(func):
 
 def update_exes():
     sys.path.append(os.path.dirname(__file__) + "\\exes")
-    from ExeMaker import update_all_exes # pyright: ignore
-    update_all_exes()
+    from ExeMaker import recompile_exe # pyright: ignore
+    recompile_exe()
  
 def copy_to_EA_Dist_and_commit():
     # locate the EA_Dist repo folder and current repo folder
