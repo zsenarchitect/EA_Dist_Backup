@@ -187,9 +187,6 @@ def update_installer_folder():
 def publish_duck():
 
 
-    print_title("Start testing all moudle.")
-    UNIT_TEST.test_core_module()
-
     if manual_confirm_should_compile_exe():
         print_title ("\n\nBegin compiling all exes...")
         NOTIFICATION.messenger("Recompiling all exes...kill VScode if you want to cancel..")
@@ -199,6 +196,9 @@ def publish_duck():
     else:
         NOTIFICATION.messenger("NOT compiling exes today...")
 
+
+    print_title("Start testing all moudle.")
+    UNIT_TEST.test_core_module()
         
     print_title ("\n\npush uptdate to EA dist folder")
     copy_to_EA_Dist_and_commit()
