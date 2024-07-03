@@ -212,6 +212,9 @@ def publish_duck():
         NOTIFICATION.messenger("NOT compiling exes today...")
 
 
+    import RuiWriter
+    RuiWriter.run()
+
     print_title("Start testing all moudle.")
     UNIT_TEST.test_core_module()
         
