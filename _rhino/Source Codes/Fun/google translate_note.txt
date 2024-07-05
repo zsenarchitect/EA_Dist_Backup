@@ -1,2 +1,0 @@
-use small laptop to compile a exe to translate to data and dump back.
-have to use python 3+ version for google translate to work

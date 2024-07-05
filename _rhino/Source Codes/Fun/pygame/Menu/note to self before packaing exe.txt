@@ -1,4 +1,0 @@
-"""
-note to self, when packaging to Exe, must include the image folder in the additional file section
-this is to ensure the graphics are not missing
-"""
