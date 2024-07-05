@@ -47,12 +47,11 @@
         <locale_1033>Install EnneadTab</locale_1033>
       </menu_text>
       <script>! _-RunPythonScript (
-import sys
 import os
-sys.path.append(os.path.join(os.environ['USERPROFILE'] + '\\Documents\\EnneadTab Ecosystem\\EA_Dist\\Apps\\lib\\EnneadTab'))
-import MODULE_HELPER
-locator = 'Enneaaaaaaaaaaaaaaaaaaaaaaaaaaad.menu\\Installation.button\\Installation_left.py'
-MODULE_HELPER.run_Rhino_button(locator)
+import sys
+sys.path.append(os.path.join(os.environ['USERPROFILE'] + '\\Documents\\EnneadTab Ecosystem\\EA_Dist\\Apps\\lib\\EnneadTab\\RHINO'))
+import RHINO_MODULE_HELPER
+RHINO_MODULE_HELPER.run_Rhino_button('Enneaaaaaaaaaaaaaaaaaaaaaaaaaaad.menu\\Installation.button\\Installation_left.py')
 )
 </script>
     </macro_item>
