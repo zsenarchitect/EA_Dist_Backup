@@ -94,7 +94,7 @@ def run_Rhino_button(locator, *args):
     module_path = "{}\\{}".format(root, locator)
 
 
-    # this is to handle only one senario---the speciall installer
+    # this is to handle only one senario---the speciall installer rui folder structure
     if not os.path.exists(module_path):
         module_path = "{}\\RHINO\\{}".format(ENVIRONMENT.CORE_FOLDER, locator)
     
@@ -119,8 +119,8 @@ def run_Rhino_button(locator, *args):
             NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
             return
 
-    @ERROR_HANDLE.try_catch_error()
     @LOG.log(module_path, func_name)
+    @ERROR_HANDLE.try_catch_error()
     def runner(*args):
         func(*args)
 
