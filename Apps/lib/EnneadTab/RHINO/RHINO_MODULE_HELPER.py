@@ -3,7 +3,6 @@
 
 import os
 import imp
-import random
 
 import sys
 sys.path.append(os.path.dirname(__file__))
@@ -61,5 +60,6 @@ def run_Rhino_button(locator, *args):
 
     runner()
 
-    
+
+
 
