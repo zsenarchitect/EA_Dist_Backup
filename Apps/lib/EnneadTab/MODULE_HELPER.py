@@ -119,8 +119,8 @@ def run_Rhino_button(locator, *args):
             NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
             return
 
-    @ERROR_HANDLE.try_catch_error()
-    @LOG.log(module_path, func_name)
+    # @ERROR_HANDLE.try_catch_error()
+    # @LOG.log(module_path, func_name)
     def runner(*args):
         func(*args)
 
