@@ -13,21 +13,21 @@ LOG_FILE_NAME = 'log_{}.json'.format(USER.USER_NAME)
 
 
 
-# from contextlib import contextmanager
+from contextlib import contextmanager
 
-# @contextmanager
-# def log_usage(func,*args):
-#     t_start = time.time()
-#     res = func(*args)
-#     yield res
-#     t_end = time.time()
-#     duration = TIME.get_readable_time(t_end - t_start)
-#     with open(FOLDER.get_EA_dump_folder_file(LOG_FILE_NAME), "a") as f:
-#         f.writelines('\nRun at {}'.format(TIME.get_formatted_time(t_start)))
-#         f.writelines('\nDuration: {}'.format(duration))
-#         f.writelines('\nFunction name: {}'.format(func.__name__))
-#         f.writelines('\nArguments: {}'.format(args))
-#         f.writelines('\nResult: {}'.format(res))
+@contextmanager
+def log_usage(func,*args):
+    t_start = time.time()
+    res = func(*args)
+    yield res
+    t_end = time.time()
+    duration = TIME.get_readable_time(t_end - t_start)
+    with open(FOLDER.get_EA_dump_folder_file(LOG_FILE_NAME), "a") as f:
+        f.writelines('\nRun at {}'.format(TIME.get_formatted_time(t_start)))
+        f.writelines('\nDuration: {}'.format(duration))
+        f.writelines('\nFunction name: {}'.format(func.__name__))
+        f.writelines('\nArguments: {}'.format(args))
+        f.writelines('\nResult: {}'.format(res))
 
 
 # with log_usage(LOG_FILE_NAME) as f:
@@ -38,7 +38,7 @@ LOG_FILE_NAME = 'log_{}.json'.format(USER.USER_NAME)
 whereas revit need to look at local func run"""
 
 
-# @FOLDER.backup_data(LOG_FILE_NAME , "log")
+@FOLDER.backup_data(LOG_FILE_NAME , "log")
 def log(script_path, func_name_as_record):
     def decorator(func):
         def wrapper(*args, **kwargs):
