@@ -9,7 +9,6 @@ import sys
 import FOLDER
 import ENVIRONMENT
 import ERROR_HANDLE
-import USER
 import NOTIFICATION
 import VERSION_CONTROL
 import LOG
@@ -91,8 +90,13 @@ def run_Rhino_button(locator, *args):
     """
 
 
-    root = ENVIRONMENT.get_EnneadTab_For_Rhino_root()
-    module_path = "{}\\Toolbar\\{}".format(root, locator)
+    root = ENVIRONMENT.RHINO_FOLDER
+    module_path = "{}\\{}".format(root, locator)
+
+
+    # this is to handle only one senario---the speciall installer
+    if not os.path.exists(module_path):
+        module_path = "{}\\RHINO\\{}".format(ENVIRONMENT.CORE_FOLDER, locator)
     
     # add the folder of the module to the system path for referencing additional modules
     module_folder = os.path.dirname(module_path)
