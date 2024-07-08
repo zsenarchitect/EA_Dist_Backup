@@ -1,5 +1,5 @@
 
-__alias__ = "Make A New Button"
+__title__ = "Make A New Button"
 from ui import UI
 """
 Use this button to create new button folder.

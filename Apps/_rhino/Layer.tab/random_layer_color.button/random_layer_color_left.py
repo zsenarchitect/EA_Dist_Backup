@@ -1,5 +1,5 @@
 
-__alias__ = "RandomLayerColor"
+__title__ = "RandomLayerColor"
 __doc__ = "Randomize the layer color."
 
 

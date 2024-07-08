@@ -1,5 +1,5 @@
 
-__alias__ = "NestLayer"
+__title__ = "NestLayer"
 __doc__ = "Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks."
 
 import rhinoscriptsyntax as rs

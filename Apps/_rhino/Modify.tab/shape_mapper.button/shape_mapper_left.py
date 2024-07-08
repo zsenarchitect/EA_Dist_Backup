@@ -1,5 +1,5 @@
 
-__alias__ = "ShapeMapper"
+__title__ = "ShapeMapper"
 __doc__ = "This button does ShapeMapper when left click"
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

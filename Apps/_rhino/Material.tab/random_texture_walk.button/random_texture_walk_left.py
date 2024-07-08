@@ -1,5 +1,5 @@
 
-__alias__ = "RandomTextureWalk"
+__title__ = "RandomTextureWalk"
 __doc__ = "Randomly walk the texture map a bit to avoid them lineup"
 
 import rhinoscriptsyntax as rs

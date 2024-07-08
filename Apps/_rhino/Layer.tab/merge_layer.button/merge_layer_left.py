@@ -1,4 +1,4 @@
-__alias__ = "MergeLayer"
+__title__ = "MergeLayer"
 __doc__ = "Merge multiple layer to single layer. This process include merging layers owned by blocks."
 
 import rhinoscriptsyntax as rs

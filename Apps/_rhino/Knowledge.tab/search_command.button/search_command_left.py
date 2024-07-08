@@ -1,4 +1,4 @@
-__alias__ = "SearchCommand"
+__title__ = "SearchCommand"
 __doc__ = "Learn all the buttons functions."
 
 
@@ -23,7 +23,7 @@ def get_all_data():
             file_path = os.path.join(root, file)
             script_data = PARSER.extract_global_variables(file_path)
 
-            alias = script_data.get('__alias__')
+            alias = script_data.get('__title__')
             if not alias:
                 continue
 
@@ -48,5 +48,5 @@ def get_all_data():
 
 def search_command():
     RHINO_ALIAS.register_alias_set()
-    print ("Placeholder func <{}> that does this:{}".format(__alias__, __doc__))
+    print ("Placeholder func <{}> that does this:{}".format(__title__, __doc__))
 

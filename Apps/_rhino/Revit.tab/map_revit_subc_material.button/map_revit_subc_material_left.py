@@ -1,5 +1,5 @@
 
-__alias__ = "MapRevitSubCategoryMaterial"
+__title__ = "MapRevitSubCategoryMaterial"
 __doc__ = "Work with ExportSubCategoryMaterialTable on revit side. After you export the OST mapping there, this button help you create and map layer material based on layer name, if found in the OST mapping"
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

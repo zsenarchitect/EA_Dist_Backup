@@ -1,4 +1,4 @@
-__alias__ = "RandomizeBlockTransformation"
+__title__ = "RandomizeBlockTransformation"
 __doc__ = "Randomly transform block transformation for rotation and scale."
 
 import rhinoscriptsyntax as rs

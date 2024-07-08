@@ -1,5 +1,5 @@
 
-__alias__ = "RandomLayerColorSetting"
+__title__ = "RandomLayerColorSetting"
 __doc__ = "Change the setting of color style."
 
 import rhinoscriptsyntax as rs

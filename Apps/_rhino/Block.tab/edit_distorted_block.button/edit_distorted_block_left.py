@@ -1,4 +1,4 @@
-__alias__ = "EditDistortedBlock"
+__title__ = "EditDistortedBlock"
 __doc__ = "Edit distorted block by editing a copy."
 
 

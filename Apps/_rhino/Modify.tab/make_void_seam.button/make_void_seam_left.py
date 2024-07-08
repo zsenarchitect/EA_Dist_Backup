@@ -1,5 +1,5 @@
 
-__alias__ = "MakeVoidSeam"
+__title__ = "MakeVoidSeam"
 __doc__ = "Make the void cut polysurface based on layer name."
 
 

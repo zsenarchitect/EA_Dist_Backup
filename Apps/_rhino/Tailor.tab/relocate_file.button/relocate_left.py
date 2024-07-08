@@ -1,4 +1,4 @@
-__alias__ = "(1634)RelocateAll"
+__title__ = "(1634)RelocateAll"
 __doc__ = "Relocate all the cameras and models to new Revit location."
 
 import rhinoscriptsyntax as rs

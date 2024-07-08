@@ -13,7 +13,7 @@ from pyrevit.loader import sessionmgr
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
-def reload_enneadtab():
+def reload_EnneadTab():
 
     sessionmgr.reload_pyrevit()
 
@@ -21,7 +21,7 @@ def reload_enneadtab():
 
 ################## main code below #####################
 if __name__ == "__main__":
-    reload_enneadtab()
+    reload_EnneadTab()
 
 
 

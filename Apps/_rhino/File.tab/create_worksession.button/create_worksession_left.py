@@ -1,5 +1,5 @@
 
-__alias__ = "CreateWorksession"
+__title__ = "CreateWorksession"
 __doc__ = "Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files."
 
 

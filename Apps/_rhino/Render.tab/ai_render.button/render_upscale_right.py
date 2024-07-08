@@ -1,5 +1,5 @@
 
-__alias__ = "AiRenderUpscale"
+__title__ = "AiRenderUpscale"
 __doc__ = "Upscale AI generated images."
 
 import time

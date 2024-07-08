@@ -10,7 +10,7 @@ import FOLDER
 import ENVIRONMENT
 import ERROR_HANDLE
 import NOTIFICATION
-import LOG
+
 
 
 def run_func_in_module(module_path, func_name, *args):
@@ -70,7 +70,7 @@ def run_revit_script(script_subfolder_or_fullpath, func_name,*args,**kwargs):
 
 
 
-def run_Rhino_button(locator, *args):
+def run_Rhino_button(locator, *args,**kwargs):
     """Run a specified function in a specified file, for use with Rhino buttons.
 
     Args:
@@ -110,11 +110,9 @@ def run_Rhino_button(locator, *args):
             NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
             return
 
-    @LOG.log(module_path, func_name)
-    @ERROR_HANDLE.try_catch_error()
-    def runner(*args):
-        func(*args)
 
-    runner()
+    func(*args,**kwargs)
+
+
 
 

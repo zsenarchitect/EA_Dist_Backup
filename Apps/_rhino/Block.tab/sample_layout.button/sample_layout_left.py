@@ -1,5 +1,5 @@
 
-__alias__ = "SampleLayout"
+__title__ = "SampleLayout"
 __doc__ = "Create sample block layout along crvs to quickly visualize design."
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

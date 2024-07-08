@@ -1,5 +1,5 @@
 
-__alias__ = "MergeMaterials"
+__title__ = "MergeMaterials"
 __doc__ = "Merge multiple materials in the file to the same material. Work for object assigned materials as well."
 
 import rhinoscriptsyntax as rs

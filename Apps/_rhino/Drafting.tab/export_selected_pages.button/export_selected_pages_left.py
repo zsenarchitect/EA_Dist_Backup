@@ -1,4 +1,4 @@
-__alias__ = "ExportSelectedLayout"
+__title__ = "ExportSelectedLayout"
 __doc__ = "Export selected layout(s) to pdf"
 
 
@@ -31,11 +31,11 @@ def export_selected_pages_left():
         return
 
     output_folder = rs.BrowseForFolder(message="Where should the output pdf be?",
-                                       title = __alias__)
+                                       title = __title__)
 
     res = rs.ListBox(["Open PDF after export", "Just export"],
                              message = "Do you want to open PDF?",
-                             title = __alias__)
+                             title = __title__)
     should_open = res == "Open PDF after export"
     for page_name in selected_layout_names:
         page = get_page_by_name(page_name)

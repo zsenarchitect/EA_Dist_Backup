@@ -1,5 +1,5 @@
 
-__alias__ = "DestroyLayer"
+__title__ = "DestroyLayer"
 __doc__ = "Delete selected layers, even if there are objs in it. Helpful when layer tree is constrainted by block usage."
 
 import rhinoscriptsyntax as rs

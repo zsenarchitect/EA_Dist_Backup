@@ -1,5 +1,5 @@
 
-__alias__ = "MatchCrvDir"
+__title__ = "MatchCrvDir"
 __doc__ = "This button does MatchCrvDir when left click"
 
 from EnneadTab import NOTIFICATION

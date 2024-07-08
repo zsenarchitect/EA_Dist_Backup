@@ -1,5 +1,5 @@
 
-__alias__ = "SrfToPanel"
+__title__ = "SrfToPanel"
 __doc__ = "Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge."
 
 

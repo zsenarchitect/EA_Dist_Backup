@@ -1,5 +1,5 @@
 
-__alias__ = "ChinaCodeRef"
+__title__ = "ChinaCodeRef"
 __doc__ = "This button does ChinaCodeRef when left click"
 import subprocess
 from EnneadTab import EXE, FOLDER

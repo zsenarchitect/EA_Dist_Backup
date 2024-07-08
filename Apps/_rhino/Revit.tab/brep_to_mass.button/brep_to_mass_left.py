@@ -1,5 +1,5 @@
 
-__alias__ = "BrepToMass"
+__title__ = "BrepToMass"
 __doc__ = "Using faces of the brep to recreate a freeform mass in Revit."
 
 

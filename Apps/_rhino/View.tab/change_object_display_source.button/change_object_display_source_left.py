@@ -1,5 +1,5 @@
 
-__alias__ = "ChangeObjectDisplaySource"
+__title__ = "ChangeObjectDisplaySource"
 __doc__ = "This button does ChangeObjectDisplaySource when left click"
 
 

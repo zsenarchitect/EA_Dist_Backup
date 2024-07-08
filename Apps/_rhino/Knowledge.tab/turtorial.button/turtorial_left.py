@@ -1,5 +1,5 @@
 
-__alias__ = "Turtorial"
+__title__ = "Turtorial"
 __doc__ = "This button does Turtorial when left click"
 import rhinoscriptsyntax as rs
 import subprocess

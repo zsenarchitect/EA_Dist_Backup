@@ -1,5 +1,5 @@
 
-__alias__ = "AiRenderingFromView"
+__title__ = "AiRenderingFromView"
 __doc__ = "Render captured Rhino view with Stable Diffusion."
 
 

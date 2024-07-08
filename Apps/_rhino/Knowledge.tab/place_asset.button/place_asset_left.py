@@ -1,5 +1,5 @@
 
-__alias__ = "PlaceAsset"
+__title__ = "PlaceAsset"
 __doc__ = "This button does PlaceAsset when left click"
 
 

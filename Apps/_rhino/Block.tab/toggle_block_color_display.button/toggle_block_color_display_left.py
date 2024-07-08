@@ -1,5 +1,5 @@
 
-__alias__ = "ToggleBlockColorDisplay"
+__title__ = "ToggleBlockColorDisplay"
 __doc__ = "Toggle on/off for highlighting the different block type. Very helpful when you have many block variation."
 
 import Rhino # pyright: ignore

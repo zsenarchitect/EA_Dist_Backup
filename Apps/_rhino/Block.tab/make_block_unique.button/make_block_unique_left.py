@@ -1,4 +1,4 @@
-__alias__ = ["MakeBlockUnique",
+__title__ = ["MakeBlockUnique",
              "MBU"]
 __doc__ = "Make a block unique on spot. Each unique original block become new unique block."
 

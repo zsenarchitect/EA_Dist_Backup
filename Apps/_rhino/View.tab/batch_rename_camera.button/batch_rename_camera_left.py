@@ -1,5 +1,5 @@
 
-__alias__ = "BatchRenameCamera"
+__title__ = "BatchRenameCamera"
 __doc__ = "This button does BatchRenameCamera when left click"
 
 import Rhino # pyright: ignore

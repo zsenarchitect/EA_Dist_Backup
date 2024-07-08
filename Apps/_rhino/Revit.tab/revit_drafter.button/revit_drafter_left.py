@@ -1,5 +1,5 @@
 
-__alias__ = "RevitDrafterImport"
+__title__ = "RevitDrafterImport"
 __doc__ = "Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types."
 
 import rhinoscriptsyntax as rs

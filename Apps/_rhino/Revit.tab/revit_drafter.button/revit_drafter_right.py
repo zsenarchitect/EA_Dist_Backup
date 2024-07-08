@@ -1,5 +1,5 @@
 
-__alias__ = "RevitDrafterExport"
+__title__ = "RevitDrafterExport"
 __doc__ = "Send the draft content back to Revit."
 import rhinoscriptsyntax as rs
 

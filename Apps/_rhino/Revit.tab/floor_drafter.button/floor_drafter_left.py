@@ -1,5 +1,5 @@
 
-__alias__ = "FloorDrafter"
+__title__ = "FloorDrafter"
 __doc__ = "This button does FloorDrafter when left click"
 
 import Rhino # pyright: ignore

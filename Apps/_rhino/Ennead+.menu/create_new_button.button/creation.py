@@ -2,7 +2,7 @@ import os
 import sys
 parent_folder = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append("{}\Source Codes\lib".format(parent_folder))
-sys.path.append("{}\Source Codes\lib\Enneadtab".format(parent_folder))
+sys.path.append("{}\Source Codes\lib\EnneadTab".format(parent_folder))
 from EnneadTab import NOTIFICATION
 
 
@@ -12,7 +12,7 @@ this has the core function that is shared between Rhino version and IDE version
 
 
 TEMPLATE = """
-__alias__ = "{0}"
+__title__ = "{0}"
 __doc__ = "{1}"
 
 
@@ -20,7 +20,7 @@ def {2}():
     {3}
 
 """
-SAMPLE_PRINT_STATMENT ='print ("Placeholder func <{}> that does this:{}".format(__alias__, __doc__))'
+SAMPLE_PRINT_STATMENT ='print ("Placeholder func <{}> that does this:{}".format(__title__, __doc__))'
 
 def make_button(tab_folder, button_name, is_left_click = True):
     print (tab_folder)

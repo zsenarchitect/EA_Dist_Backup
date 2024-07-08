@@ -1,5 +1,5 @@
 
-__alias__ = "IsolateSimilarBlocks"
+__title__ = "IsolateSimilarBlocks"
 __doc__ = "Isolate blocks of similar definitions from the selected blocks"
 import rhinoscriptsyntax as rs
 

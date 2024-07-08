@@ -1,5 +1,5 @@
 
-__alias__ = "SectionCrowd"
+__title__ = "SectionCrowd"
 __doc__ = "Populate people interactively in TOP view by providing two points."
 
 import Rhino # pyright: ignore

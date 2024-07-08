@@ -1,5 +1,5 @@
 
-__alias__ = "BindWorksession"
+__title__ = "BindWorksession"
 __doc__ = "Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out."
 
 

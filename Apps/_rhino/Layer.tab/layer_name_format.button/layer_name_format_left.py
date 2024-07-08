@@ -1,5 +1,5 @@
 
-__alias__ = "LayerNameFormat"
+__title__ = "LayerNameFormat"
 __doc__ = "Format the spelling of layer name on selected layers."
 
 

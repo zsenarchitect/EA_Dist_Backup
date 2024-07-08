@@ -1,5 +1,5 @@
 
-__alias__ = "ImportRevitCollection"
+__title__ = "ImportRevitCollection"
 __doc__ = "This button does ImportRevitCollection when left click"
 
 import scriptcontext as sc

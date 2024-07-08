@@ -1,5 +1,5 @@
 
-__alias__ = "SectionboxByBoundingBox"
+__title__ = "SectionboxByBoundingBox"
 __doc__ = "Similar to Revit SectionBox, this will crop the view to just around the selected elements region. In Rhino display mode all clipper is supported. In Enscape only one of the clipper will be recognized."
 
 import rhinoscriptsyntax as rs

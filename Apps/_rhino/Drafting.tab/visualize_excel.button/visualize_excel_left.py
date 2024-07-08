@@ -1,5 +1,5 @@
 
-__alias__ = "VisualizeExcel"
+__title__ = "VisualizeExcel"
 __doc__ = "Convert excel data to shape diagrams."
 
 

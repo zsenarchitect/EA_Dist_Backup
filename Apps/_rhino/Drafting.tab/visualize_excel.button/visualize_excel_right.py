@@ -1,5 +1,5 @@
 
-__alias__ = "OpenSampleExcel"
+__title__ = "OpenSampleExcel"
 __doc__ = "Open the sample excel with placeholder area size info."
 
 import rhinoscriptsyntax as rs

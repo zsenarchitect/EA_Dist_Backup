@@ -1,5 +1,5 @@
 
-__alias__ = "ExportForRhino2Revit"
+__title__ = "ExportForRhino2Revit"
 __doc__ = "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit."
 
 import Rhino # pyright: ignore

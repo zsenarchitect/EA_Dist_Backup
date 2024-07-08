@@ -1,5 +1,5 @@
 
-__alias__ = "ExportCameraToRevit"
+__title__ = "ExportCameraToRevit"
 __doc__ = "You can recreate same 3D camera in Revit by exporting cameras from Rhino here first."
 
 import Rhino # pyright: ignore

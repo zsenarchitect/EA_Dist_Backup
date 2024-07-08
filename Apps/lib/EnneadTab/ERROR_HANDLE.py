@@ -53,7 +53,7 @@ def try_catch_error(is_silent=False, is_pass = False):
 
 def print_note(string):
 
-    if USER.is_enneadtab_developer():
+    if USER.is_EnneadTab_developer():
         try:
             from pyrevit import script
             string = str(string)

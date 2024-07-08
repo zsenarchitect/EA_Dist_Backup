@@ -1,5 +1,5 @@
 
-__alias__ = "RandomBlocksOnSrfs"
+__title__ = "RandomBlocksOnSrfs"
 __doc__ = "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides."
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

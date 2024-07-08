@@ -1,5 +1,5 @@
 
-__alias__ = "ListenToMiro"
+__title__ = "ListenToMiro"
 __doc__ = "Listen to changes in the miro"
 
 

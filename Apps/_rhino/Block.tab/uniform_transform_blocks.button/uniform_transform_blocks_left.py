@@ -1,5 +1,5 @@
 
-__alias__ = "UniformTransformBlocks"
+__title__ = "UniformTransformBlocks"
 __doc__ = "Apply same rotational transformation for the blocks. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street."
 
 

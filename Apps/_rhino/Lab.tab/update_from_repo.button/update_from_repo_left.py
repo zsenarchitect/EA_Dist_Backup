@@ -1,5 +1,5 @@
 
-__alias__ = "UpdateFromRepo"
+__title__ = "UpdateFromRepo"
 __doc__ = "This button does UpdateFromRepo when left click"
 
 

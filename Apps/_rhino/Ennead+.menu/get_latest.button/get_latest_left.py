@@ -1,5 +1,5 @@
 
-__alias__ = "GetLatest"
+__title__ = "GetLatest"
 __doc__ = "This button does GetLatest when left click"
 
 from EnneadTab import VERSION_CONTROL, NOTIFICATION

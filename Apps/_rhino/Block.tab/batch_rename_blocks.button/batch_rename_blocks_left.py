@@ -1,5 +1,5 @@
 
-__alias__ = "BatchRenameBlocks"
+__title__ = "BatchRenameBlocks"
 __doc__ = "Rename Block Names In a table"
 
 

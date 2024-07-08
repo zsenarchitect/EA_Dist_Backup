@@ -1,5 +1,5 @@
 
-__alias__ = "InspectEnscapeSetting"
+__title__ = "InspectEnscapeSetting"
 __doc__ = "This button does InspectEnscapeSetting when left click"
 
 

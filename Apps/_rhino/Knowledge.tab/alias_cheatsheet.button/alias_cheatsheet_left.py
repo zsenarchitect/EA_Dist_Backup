@@ -1,5 +1,5 @@
 
-__alias__ = "AliasCheatsheet"
+__title__ = "AliasCheatsheet"
 __doc__ = "Learn about ALL the EnneadTab alias."
 
 import os
@@ -30,7 +30,7 @@ def alias_cheatsheet():
             file_path = os.path.join(root, file)
             script_data = PARSER.extract_global_variables(file_path)
 
-            alias = script_data.get('__alias__')
+            alias = script_data.get('__title__')
             if not alias:
                 continue
 

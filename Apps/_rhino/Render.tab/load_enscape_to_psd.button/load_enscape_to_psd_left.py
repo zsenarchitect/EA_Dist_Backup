@@ -1,5 +1,5 @@
 
-__alias__ = "LoadEnscapeToPsd"
+__title__ = "LoadEnscapeToPsd"
 __doc__ = "This button does LoadEnscapeToPsd when left click"
 
 import rhinoscriptsyntax as rs

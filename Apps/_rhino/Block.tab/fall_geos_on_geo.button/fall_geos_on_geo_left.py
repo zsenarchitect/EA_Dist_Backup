@@ -1,5 +1,5 @@
 
-__alias__ = "FallGeosOnGeo"
+__title__ = "FallGeosOnGeo"
 __doc__ = "Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox."
 
 import rhinoscriptsyntax as rs

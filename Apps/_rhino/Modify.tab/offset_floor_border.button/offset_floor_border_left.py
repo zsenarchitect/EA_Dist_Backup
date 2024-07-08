@@ -1,5 +1,5 @@
 
-__alias__ = "OffsetFloorBorder"
+__title__ = "OffsetFloorBorder"
 __doc__ = "Shrink/Expand the border of floor for input srf or polysrfs. The thickness is retained if using polysrf."
 
 

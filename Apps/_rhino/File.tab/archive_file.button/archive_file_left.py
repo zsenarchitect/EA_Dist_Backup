@@ -1,5 +1,5 @@
 
-__alias__ = "ArchiveFile"
+__title__ = "ArchiveFile"
 __doc__ = "Archive files based on today's date, creation date or last modifyed date."
 
 

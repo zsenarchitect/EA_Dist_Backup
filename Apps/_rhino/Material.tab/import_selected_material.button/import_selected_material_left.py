@@ -1,5 +1,5 @@
 
-__alias__ = "ImportSelectedMaterial"
+__title__ = "ImportSelectedMaterial"
 __doc__ = "Import selected materials from a file."
 
 import scriptcontext as sc

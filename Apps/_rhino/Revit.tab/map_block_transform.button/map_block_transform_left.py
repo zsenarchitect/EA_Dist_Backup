@@ -1,5 +1,5 @@
 
-__alias__ = "MapBlockTransform"
+__title__ = "MapBlockTransform"
 __doc__ = "Send the transformation of the blocks to Revit to be used by space adaptive family. This is the only known way of doing true free 3D orientation in Revit."
 
 import rhinoscriptsyntax as rs

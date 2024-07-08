@@ -1,5 +1,5 @@
 
-__alias__ = "MakeCrvPipe"
+__title__ = "MakeCrvPipe"
 __doc__ = "Make/Update a small pipe along crvs in layers that has '[EDGE]' in it. So coplanar face in enscape can show edge."
 
 import EnneadTab

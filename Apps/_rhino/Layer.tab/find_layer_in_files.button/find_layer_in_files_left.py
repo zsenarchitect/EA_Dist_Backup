@@ -1,5 +1,5 @@
 
-__alias__ = "FindLayerInFiles"
+__title__ = "FindLayerInFiles"
 __doc__ = "In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file."
 
 

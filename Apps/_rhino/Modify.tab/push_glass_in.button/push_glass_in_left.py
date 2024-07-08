@@ -1,5 +1,5 @@
 
-__alias__ = "PushGlassIn"
+__title__ = "PushGlassIn"
 __doc__ = "Make pushed in glass recess from selected srfs."
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

@@ -1,5 +1,5 @@
 
-__alias__ = "TimeTravel"
+__title__ = "TimeTravel"
 __doc__ = "This button does TimeTravel when left click"
 import rhinoscriptsyntax as rs
 from EnneadTab import NOTIFICATION

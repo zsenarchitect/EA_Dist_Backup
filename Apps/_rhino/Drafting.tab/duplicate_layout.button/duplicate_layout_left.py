@@ -1,5 +1,5 @@
 
-__alias__ = "DuplicateLayout"
+__title__ = "DuplicateLayout"
 __doc__ = "Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space."
 
 import rhinoscriptsyntax as rs

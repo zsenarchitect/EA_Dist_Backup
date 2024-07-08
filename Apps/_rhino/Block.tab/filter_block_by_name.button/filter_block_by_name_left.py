@@ -1,5 +1,5 @@
 
-__alias__ = "FilterBlockByName"
+__title__ = "FilterBlockByName"
 __doc__ = "This button does FilterBlockByName when left click"
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

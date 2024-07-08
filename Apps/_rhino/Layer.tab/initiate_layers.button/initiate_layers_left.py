@@ -1,5 +1,5 @@
 
-__alias__ = "InitiateLayers"
+__title__ = "InitiateLayers"
 __doc__ = "Initiate layer tree for quick start on programing or facade design."
 
 import rhinoscriptsyntax as rs

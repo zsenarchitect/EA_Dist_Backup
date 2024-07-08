@@ -1,4 +1,4 @@
-__alias__ = "SectionboxByPolysrf"
+__title__ = "SectionboxByPolysrf"
 __doc__ = "Use closed polysrf as input box cutter."
 
 

@@ -1,5 +1,5 @@
 
-__alias__ = "FlattenMeshFace"
+__title__ = "FlattenMeshFace"
 __doc__ = "This button does FlattenMeshFace when left click"
 
 import Rhino # pyright: ignore

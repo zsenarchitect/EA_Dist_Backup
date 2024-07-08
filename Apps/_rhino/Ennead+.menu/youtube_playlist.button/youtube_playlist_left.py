@@ -1,5 +1,5 @@
 
-__alias__ = "YoutubePlaylist"
+__title__ = "YoutubePlaylist"
 __doc__ = "Checkout pre-recorded turtorials and demos about EnneadTab."
 
 import webbrowser
