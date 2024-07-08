@@ -1,10 +1,4 @@
 {
-    "C:\\Users\\szhang\\github\\EnneadTab-OS\\Apps\\lib\\EnneadTab\\RHINO\\Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad.menu\\Installation.button\\Installation_left.py": {
-        "script": "C:\\Users\\szhang\\github\\EnneadTab-OS\\Apps\\lib\\EnneadTab\\RHINO\\Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad.menu\\Installation.button\\Installation_left.py",
-        "icon": "C:\\Users\\szhang\\github\\EnneadTab-OS\\Apps\\lib\\EnneadTab\\RHINO\\Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad.menu\\Installation.button\\icon.png",
-        "alias": "Install EnneadTab",
-        "doc": "Install EnneadTab"
-    },
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
         "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
