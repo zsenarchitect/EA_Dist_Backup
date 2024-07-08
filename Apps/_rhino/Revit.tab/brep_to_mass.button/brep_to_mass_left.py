@@ -68,3 +68,9 @@ def brep_to_mass():
     DATA_FILE.save_dict_to_json(out, file)
 
     SOUND.play_sound("sound effect_mario message.wav")
+
+
+
+
+if __name__ == "__main__":
+    brep_to_mass()

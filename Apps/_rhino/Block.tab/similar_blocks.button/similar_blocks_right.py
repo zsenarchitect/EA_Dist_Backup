@@ -25,3 +25,6 @@ def similar_blocks():
     invert_objs = rs.InvertSelectedObjects(include_lights = True, include_grips = True, include_references = True)
     rs.HideObjects(invert_objs)
 
+
+if __name__ == "__main__":
+    similar_blocks()

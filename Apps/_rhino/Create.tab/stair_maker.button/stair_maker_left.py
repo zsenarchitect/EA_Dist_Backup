@@ -470,3 +470,5 @@ class GetFlipPoint (Rhino.Input.Custom.GetPoint):
 
 
 
+if __name__ == "__main__":
+    stair_maker()

@@ -45,3 +45,8 @@ class ChangeObjectDisplaySource:
 def change_object_display_source():
     ChangeObjectDisplaySource().change_source()
 
+
+
+
+if __name__ == "__main__":
+    change_object_display_source()

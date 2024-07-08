@@ -25,3 +25,7 @@ def remove_string_in_material_name():
 
         except:
             continue
+
+
+if __name__ == "__main__":
+    remove_string_in_material_name()

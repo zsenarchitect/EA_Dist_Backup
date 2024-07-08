@@ -302,3 +302,5 @@ def offset_floor_border():
 
 
 
+if __name__ == "__main__":
+    offset_floor_border()

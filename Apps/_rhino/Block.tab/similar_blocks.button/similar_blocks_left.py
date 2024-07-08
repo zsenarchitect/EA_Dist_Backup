@@ -21,3 +21,7 @@ def similar_blocks():
 
     rs.UnselectAllObjects()
     rs.SelectObjects( block_collection)
+
+
+if __name__ == "__main__":
+    similar_blocks()

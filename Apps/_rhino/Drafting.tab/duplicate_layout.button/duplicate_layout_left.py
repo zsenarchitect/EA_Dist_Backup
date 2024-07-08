@@ -59,3 +59,8 @@ def duplicate_layout():
             detail_view.CommitViewportChanges()
             rs.DetailLock(detail_view, lock = original_lock_statge)
             #print rs.DetailLock(detail_view)
+
+
+
+if __name__ == "__main__":
+    duplicate_layout()

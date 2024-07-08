@@ -91,3 +91,8 @@ def place_asset():
     block_name = block_name[0]
     print("########", is_ref_block_method)
     insert_ref_block(block_name, is_ref_block_method)
+
+
+
+if __name__ == "__main__":
+    place_asset()

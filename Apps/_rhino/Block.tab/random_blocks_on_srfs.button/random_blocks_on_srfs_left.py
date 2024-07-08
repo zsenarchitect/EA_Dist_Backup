@@ -730,6 +730,7 @@ def random_blocks_on_srfs():
 
 
 def make_unique_block_name(block_name):
+    
     while True:
         if block_name not in rs.BlockNames():
             break
@@ -737,3 +738,7 @@ def make_unique_block_name(block_name):
         block_name += "_new"
 
     return block_name
+
+
+if __name__ == "__main__":
+    random_blocks_on_srfs()

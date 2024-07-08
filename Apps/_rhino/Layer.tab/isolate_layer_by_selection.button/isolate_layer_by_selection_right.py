@@ -18,3 +18,5 @@ def isolate_layer_by_selection():
     for layer in list(used_layers):
         obj_by_layers.extend(rs.ObjectsByLayer(layer, True))
 
+if __name__ == "__main__":
+    isolate_layer_by_selection()

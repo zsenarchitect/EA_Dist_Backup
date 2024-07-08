@@ -126,3 +126,5 @@ class PanelMaker:
             NOTIFICATION.messenger(main_text = "Cannot shrink surface")
         
 
+if __name__ == "__main__":
+    srf_to_panel()

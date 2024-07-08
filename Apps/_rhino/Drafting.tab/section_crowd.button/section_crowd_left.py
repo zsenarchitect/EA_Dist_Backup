@@ -209,3 +209,10 @@ def insert_ref_block( dummy_block_name):
     obj = Rhino.RhinoDoc.ActiveDoc.Objects.AddInstanceObject(indexOfAddedBlock,Rhino.Geometry.Transform.Identity)
 
     return
+
+
+
+
+
+if __name__ == "__main__":
+    section_crowd()

@@ -58,3 +58,8 @@ def relocate_left():
 
     EnneadTab.SOUND.play_sound()
 
+
+
+
+if __name__ == "__main__":
+    relocate_left() 

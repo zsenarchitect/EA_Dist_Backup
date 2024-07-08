@@ -34,3 +34,8 @@ def section_box_cleanup(group_name_key_word=section_box_utility.GROUP_NAME_KEYWO
     #rs.Redraw()
     
     rs.Command("_NoEcho _Purge _Pause _Materials=_No _BlockDefinitions=_No _AnnotationStyles=_No _Groups=_Yes _HatchPatterns=_No _Layers=_No _Linetypes=_No _Textures=_No Environments=_No _Bitmaps=_No _Enter")
+
+
+
+if __name__ == "__main__":
+    section_box_cleanup()

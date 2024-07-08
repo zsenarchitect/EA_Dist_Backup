@@ -660,4 +660,5 @@ def sample_layout():
     dlg.Show()
     sc.sticky[FORM_KEY] = dlg
     
-
+if __name__ == "__main__":
+    sample_layout()

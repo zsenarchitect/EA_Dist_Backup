@@ -142,3 +142,5 @@ def revit_drafter():
     add_additional_layers(setting)
 
 
+if __name__ == "__main__":
+    revit_drafter()

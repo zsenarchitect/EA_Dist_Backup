@@ -7,3 +7,5 @@ from EnneadTab.FUN import JOKES
 def dvd():
     JOKES.prank_dvd()
 
+if __name__ == "__main__":
+    dvd()

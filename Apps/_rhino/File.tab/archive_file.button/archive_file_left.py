@@ -57,3 +57,7 @@ def archive_file():
         import Rhino # pyright: ignore
         Rhino.RhinoDoc.OpenFile(file)
         """
+
+
+if __name__ == "__main__":
+    archive_file()

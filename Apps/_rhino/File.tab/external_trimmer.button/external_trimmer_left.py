@@ -189,3 +189,6 @@ def external_trimmer():
     file3dm.Write(filepath, file3md_options)
     print("Tool Done")
     """
+
+if __name__ == "__main__":
+    external_trimmer()

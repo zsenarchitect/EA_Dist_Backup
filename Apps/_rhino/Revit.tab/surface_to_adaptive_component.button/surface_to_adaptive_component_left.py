@@ -353,3 +353,5 @@ def surface_to_adaptive_component():
     dlg.Show()
     sc.sticky[FORM_KEY] = dlg
 
+if __name__ == "__main__":
+    surface_to_adaptive_component()

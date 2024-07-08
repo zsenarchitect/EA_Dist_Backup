@@ -60,3 +60,5 @@ def process_srf(srf, dist, delete_input):
     if delete_input:
         rs.DeleteObject(srf)
     
+if __name__ == "__main__":
+    push_glass_in()

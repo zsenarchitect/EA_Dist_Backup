@@ -78,3 +78,8 @@ class InsulationDrafter:
 def draft_insulation_batting():
     InsulationDrafter().main()
 
+
+
+
+if __name__ == "__main__":
+    draft_insulation_batting()

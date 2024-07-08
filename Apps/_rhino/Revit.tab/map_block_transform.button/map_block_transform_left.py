@@ -70,3 +70,7 @@ def map_block_transform():
     filepath = FOLDER.get_EA_local_dump_folder() + "\map_block_transform.txt"
     DATA_FILE.save_list_to_txt(data, filepath)
     NOTIFICATION.toast(main_text = "map ready!")
+
+
+if __name__ == "__main__":
+    map_block_transform()

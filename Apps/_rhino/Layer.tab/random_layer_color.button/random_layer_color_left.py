@@ -113,3 +113,5 @@ def random_color(layer_name, use_desaturated_color):
     return denormalized_rgb_color
 
 
+if __name__ == "__main__":
+    random_layer_color(True)

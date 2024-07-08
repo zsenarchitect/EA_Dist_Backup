@@ -91,3 +91,8 @@ def floor_drafter():
 
     SOUND.play_sound("sound effect_mario message.wav")
 
+
+
+
+if __name__ == "__main__":
+    floor_drafter()

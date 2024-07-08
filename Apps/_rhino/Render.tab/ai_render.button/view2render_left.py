@@ -618,3 +618,9 @@ def view2render():
         EXE.open_file_in_default_application(exe_path)
     except:
         NOTIFICATION.messenger(main_text = "For SH team, the only way to access Stable\nDiffusion model is to use remoted NY computer.")
+
+
+
+
+if __name__ == "__main__":
+    view2render()

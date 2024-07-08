@@ -18,3 +18,5 @@ def destroy_layer():
 
 
 
+if __name__ == "__main__":
+    destroy_layer()

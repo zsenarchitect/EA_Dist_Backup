@@ -74,3 +74,7 @@ def has_any_keyword(input, keywords):
 def get_color(tuple):
     red, green, blue = tuple
     return COLOR.from_rgb(red,green,blue)
+
+
+if __name__ == "__main__":
+    initiate_layers()

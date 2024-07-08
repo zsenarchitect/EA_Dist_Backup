@@ -26,3 +26,8 @@ def create_worksession():
     for file in files:
         file_string_link += " Attach \"{}\"".format(file)
     rs.Command("-WorkSession  {} Saveas \"{}\" Enter".format(file_string_link, session_file_path))
+
+
+
+if __name__ == "__main__":
+    create_worksession()

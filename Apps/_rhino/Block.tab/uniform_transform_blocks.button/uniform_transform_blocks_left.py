@@ -38,3 +38,5 @@ def uniform_transform_blocks():
         rs.RotateObject(id, pt,ang,vec)
 
 
+if __name__ == "__main__":
+    uniform_transform_blocks()

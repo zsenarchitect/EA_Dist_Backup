@@ -80,3 +80,7 @@ def turtorial():
     else:
 
         open_playlist()
+
+
+if __name__ == "__main__":
+    turtorial()

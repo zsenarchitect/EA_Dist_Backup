@@ -75,3 +75,8 @@ def inspect_enscape_setting():
             OUT += "\n\t\t[ {} ]: {}".format(file_names[i], content[1])
     
     rs.TextOut(OUT)
+
+
+
+if __name__ == "__main__":
+    inspect_enscape_setting()   

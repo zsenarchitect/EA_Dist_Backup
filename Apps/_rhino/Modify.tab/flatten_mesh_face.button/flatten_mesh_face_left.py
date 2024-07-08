@@ -130,3 +130,5 @@ def flatten_mesh_face():
         if step % 100:
             highlight_planar_region(mesh)
 
+if __name__ == "__main__":
+    flatten_mesh_face()

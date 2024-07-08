@@ -14,3 +14,5 @@ def visualize_excel():
     EXE.open_file_in_default_application(copy)
     rs.TextOut("You can modify this excel to your like and saveas.\nFrom left to right, the fileds are: \nCategory, Area Name, Area Size, Color R, Color, G, Color B, Cateogry Area Sum")
 
+if __name__ == "__main__":
+    visualize_excel()

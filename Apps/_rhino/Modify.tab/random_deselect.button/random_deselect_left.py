@@ -51,3 +51,8 @@ def random_deselect():
     rs.UnselectObjects(objs)
     
     sc.sticky["RandomUnselect_percent"] = percent
+
+
+
+if __name__ == "__main__":
+    random_deselect()

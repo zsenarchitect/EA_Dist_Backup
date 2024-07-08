@@ -81,3 +81,9 @@ def toggle_layer_pointer():
         print ("conduit disabled")
 
     sc.doc.Views.Redraw()
+
+
+
+
+if __name__ == "__main__":
+    toggle_layer_pointer()

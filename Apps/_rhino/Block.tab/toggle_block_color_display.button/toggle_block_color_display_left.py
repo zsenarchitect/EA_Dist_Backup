@@ -126,3 +126,7 @@ def change_block_obj_display(is_apply_random_color):
 
     block_names = rs.BlockNames(sort = True)
     map(update_block_display, block_names)
+
+
+if __name__ == "__main__":
+    toggle_block_color_display()

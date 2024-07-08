@@ -690,3 +690,5 @@ def shape_mapper():
     sc.sticky[FORM_KEY] = dlg
     
 
+if __name__ == "__main__":
+    shape_mapper()

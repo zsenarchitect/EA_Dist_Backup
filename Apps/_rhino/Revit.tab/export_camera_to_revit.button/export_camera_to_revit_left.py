@@ -24,3 +24,5 @@ def export_camera_to_revit():
 
     NOTIFICATION.messenger("Camera Data Ready to be imported at Revit side.")
 
+if __name__ == "__main__":
+    export_camera_to_revit()

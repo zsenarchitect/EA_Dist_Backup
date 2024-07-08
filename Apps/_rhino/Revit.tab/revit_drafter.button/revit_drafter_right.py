@@ -208,3 +208,8 @@ def revit_drafter():
     DATA_FILE.save_dict_to_json(OUT_Data, file_path)
 
     NOTIFICATION.messenger(main_text = "Draft Data recorded. You can return to Revit now")
+
+
+
+if __name__ == "__main__":
+    revit_drafter()

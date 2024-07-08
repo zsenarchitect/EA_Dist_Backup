@@ -438,4 +438,5 @@ def call_exe():
 
  
 
- 
+if __name__ == "__main__":
+    render_upscale()

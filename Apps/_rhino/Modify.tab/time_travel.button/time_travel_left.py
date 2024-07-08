@@ -9,3 +9,9 @@ def time_travel():
         NOTIFICATION.toast(sub_text = "Time travel begin!",
                                     main_text = "Select objects to go back in time.")
     rs.Command("_UndoSelected")
+
+
+
+
+if __name__ == "__main__":
+    time_travel()

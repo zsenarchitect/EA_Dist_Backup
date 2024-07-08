@@ -177,3 +177,8 @@ def print_list(list):
     for x in list:
         temp += str(x) + "\n"
     rs.TextOut(message = temp)
+
+
+
+if __name__ == "__main__":
+    merge_materials()

@@ -50,3 +50,8 @@ def search_command():
     RHINO_ALIAS.register_alias_set()
     print ("Placeholder func <{}> that does this:{}".format(__title__, __doc__))
 
+
+
+
+if __name__ == "__main__":
+    search_command()

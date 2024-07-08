@@ -57,3 +57,7 @@ def export_selected_pages_left():
 
         if should_open:
             os.startfile(filepath)
+
+
+if __name__ == "__main__":
+    export_selected_pages_left()

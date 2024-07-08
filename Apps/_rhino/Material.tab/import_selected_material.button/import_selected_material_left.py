@@ -61,3 +61,8 @@ def import_selected_material():
             material = Rhino.Render.RenderMaterial.CreateBasicMaterial(source_material, sc.doc)
             sc.doc.RenderMaterials.Add(material)
             return
+
+
+
+if __name__ == "__main__":
+    import_selected_material()

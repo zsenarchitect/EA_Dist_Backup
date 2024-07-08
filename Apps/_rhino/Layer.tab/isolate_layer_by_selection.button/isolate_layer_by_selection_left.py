@@ -22,3 +22,7 @@ def isolate_layer_by_selection():
 
 
     rs.UnselectObjects(obj_by_layers)
+
+
+if __name__ == "__main__":
+    isolate_layer_by_selection()

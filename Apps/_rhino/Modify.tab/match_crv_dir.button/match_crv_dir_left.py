@@ -34,3 +34,5 @@ def match_crv_dir():
         rs.DeleteObject(srf)
 
 
+if __name__ == "__main__":
+    match_crv_dir() 

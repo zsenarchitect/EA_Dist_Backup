@@ -25,3 +25,7 @@ def material_prefix():
                 mat_names.append(mat.Name)
         except:
             continue
+
+
+if __name__ == "__main__":
+    material_prefix()

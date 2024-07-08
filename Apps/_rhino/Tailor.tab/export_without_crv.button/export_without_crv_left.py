@@ -59,3 +59,8 @@ def export_without_crv():
     rs.UnselectAllObjects()
 
     NOTIFICATION.messenger(main_text = "special dwg exported!")
+
+
+
+if __name__ == "__main__":
+    export_without_crv()

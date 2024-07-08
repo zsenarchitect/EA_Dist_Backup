@@ -41,3 +41,5 @@ def add_search_path():
             return
 
 
+if __name__ == "__main__":
+    get_latest()

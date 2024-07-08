@@ -61,4 +61,5 @@ def map_revit_subc_material():
             
         
         
-        
+if __name__ == "__main__":
+    map_revit_subc_material()

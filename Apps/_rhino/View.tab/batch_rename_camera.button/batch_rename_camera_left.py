@@ -162,3 +162,7 @@ def batch_rename_camera():
     dlg = rename_dialog()
     dlg.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow)
     SOUND.play_sound()
+
+
+if __name__ == "__main__":
+    batch_rename_camera()

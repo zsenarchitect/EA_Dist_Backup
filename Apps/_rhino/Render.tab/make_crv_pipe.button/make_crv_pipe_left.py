@@ -41,3 +41,9 @@ def make_crv_pipe():
         rs.ObjectLayer(mesh_obj, layer)
 
     EnneadTab.NOTIFICATION.messenger("Edge Pipe updated")
+
+
+
+
+if __name__ == "__main__":
+    make_crv_pipe()

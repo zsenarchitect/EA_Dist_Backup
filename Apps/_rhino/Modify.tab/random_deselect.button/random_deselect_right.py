@@ -41,3 +41,9 @@ def random_deselect_to_group():
 
 
     rs.UnselectObjects(ids)
+
+
+
+
+if __name__ == "__main__":
+    random_deselect_to_group()  

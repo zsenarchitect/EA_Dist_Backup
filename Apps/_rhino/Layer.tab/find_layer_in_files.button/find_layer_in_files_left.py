@@ -51,4 +51,7 @@ def process_file(file, search_layer):
 
 
     return log
- 
+
+
+if __name__ == "__main__":
+    find_layer_in_files()

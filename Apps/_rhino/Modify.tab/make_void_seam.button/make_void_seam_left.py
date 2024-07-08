@@ -83,3 +83,9 @@ def process_layer(layer_name):
     rs.LayerColor(void_layer_name, color = rs.LayerColor(layer_name))
 
     pass
+
+
+
+
+if __name__ == "__main__":
+    make_void_seam()

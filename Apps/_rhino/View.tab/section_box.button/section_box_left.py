@@ -53,3 +53,11 @@ def section_box():
     print(bbox)
 
     SB.section_box(section_box_utility.GROUP_NAME_KEYWORD, predefined_polysurf = bbox)
+
+
+
+
+
+
+if __name__ == "__main__":
+    section_box()

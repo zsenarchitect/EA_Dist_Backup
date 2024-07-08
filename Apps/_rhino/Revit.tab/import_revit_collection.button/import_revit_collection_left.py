@@ -168,3 +168,7 @@ def import_revit_collection():
     
     
     NOTIFICATION.duck_pop("All imported!")
+
+
+if __name__ == "__main__":
+    import_revit_collection()

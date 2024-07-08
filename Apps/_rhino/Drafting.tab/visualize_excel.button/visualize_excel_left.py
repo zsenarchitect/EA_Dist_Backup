@@ -301,3 +301,5 @@ class ShapeWriter:
             rs.AddText(title, big_title_location, height = 3)
         rs.AddText(str(int(area)), rs.PointAdd(big_title_location, [0, -self.row_gap*0.5, 0]), height = 3)
 
+if __name__ == "__main__":
+    visualize_excel()

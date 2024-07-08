@@ -42,3 +42,5 @@ def load_enscape_to_psd():
     """
 
 
+if __name__ == "__main__":
+    load_enscape_to_psd()

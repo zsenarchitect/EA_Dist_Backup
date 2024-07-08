@@ -531,3 +531,6 @@ def export_for_rhino2revit():
     else:
         print ("Dialog did not run")
         return
+
+if __name__ == "__main__":
+    export_for_rhino2revit()

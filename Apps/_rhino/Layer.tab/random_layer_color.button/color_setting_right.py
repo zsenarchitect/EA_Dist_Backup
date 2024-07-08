@@ -34,3 +34,7 @@ def color_setting():
         
     DATA_FILE.set_sticky_longterm(RLC.KEY_COLOR_SETTING, setting)
 
+
+
+if __name__ == "__main__":
+    color_setting()

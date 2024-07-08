@@ -23,3 +23,7 @@ def rename_enscape_files():
         except Exception as e:
             print( e)
             rs.MessageBox("This file rename <{}> is skipped, check for if same file name already exist.".format(new_tail))
+
+
+if __name__ == "__main__":
+    rename_enscape_files()

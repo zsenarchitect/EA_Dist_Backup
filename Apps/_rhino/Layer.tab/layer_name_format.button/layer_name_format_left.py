@@ -102,3 +102,7 @@ def layer_name_format():
 
 def should_ignore(layer):
     return False
+
+
+if __name__ == "__main__":
+    layer_name_format()

@@ -16,3 +16,5 @@ def display_setting():
 
 
 
+if __name__ == "__main__":
+    display_setting()

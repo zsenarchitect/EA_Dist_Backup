@@ -95,4 +95,5 @@ def randomize_block_transformation():
     SOUND.play_sound(file = "sound effect_popup msg3.wav")
     SOUND.play_sound(file = "sound effect_dice.wav")
 
-
+if __name__ == "__main__":
+    randomize_block_transformation()

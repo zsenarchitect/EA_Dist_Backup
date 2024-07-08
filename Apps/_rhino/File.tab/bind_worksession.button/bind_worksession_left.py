@@ -158,3 +158,5 @@ def decorate_parent_layer(name):
     return "Binded Session [{}]".format(name)
 
 
+if __name__ == "__main__":
+    bind_worksession()
