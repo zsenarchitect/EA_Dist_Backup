@@ -7,7 +7,11 @@ import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import Rhino # pyright: ignore
 import System # pyright: ignore
+from EnneadTab import LOG, ERROR_HANDLE
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def make_crv_pipe():
 
     for layer in rs.LayerNames():

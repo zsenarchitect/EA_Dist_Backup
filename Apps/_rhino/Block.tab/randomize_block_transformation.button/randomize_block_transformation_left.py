@@ -6,7 +6,12 @@ import random
 
 from EnneadTab import DATA_FILE
 from EnneadTab import SOUND
+from EnneadTab import LOG
+from EnneadTab import ERROR_HANDLE
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def randomize_block_transformation():
  
 

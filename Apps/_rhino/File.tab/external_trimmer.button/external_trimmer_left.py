@@ -9,11 +9,15 @@ import sys
 sys.path.append("..\lib")
 
 from EnneadTab import EXE, NOTIFICATION, FOLDER
+from EnneadTab import LOG, ERROR_HANDLE
 
 BLOCK_NAME = "EA_EXTERNAL_LINK"
 
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def update_or_insert_external_link(block_name):
 
     if not rs.IsBlock(block_name):

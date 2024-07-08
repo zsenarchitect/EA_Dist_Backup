@@ -3,6 +3,7 @@ __title__ = "RevitDrafterExport"
 __doc__ = "Send the draft content back to Revit."
 import rhinoscriptsyntax as rs
 
+from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab import FOLDER, NOTIFICATION, DATA_FILE
 from EnneadTab.RHINO import RHINO_LAYER
 
@@ -156,6 +157,9 @@ def process_layer(layer):
 
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def revit_drafter():
 
     # get all layers related to OUT

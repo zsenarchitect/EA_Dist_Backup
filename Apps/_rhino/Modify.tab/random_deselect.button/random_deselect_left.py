@@ -8,8 +8,12 @@ import random
 
 
 from EnneadTab import NOTIFICATION
+from EnneadTab import LOG, ERROR_HANDLE
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def random_deselect():
     ids = rs.SelectedObjects(False, False)
     if not ids: 

@@ -6,6 +6,7 @@ import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import System # pyright: ignore
+from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_OBJ_DATA, RHINO_LAYER, RHINO_CONDUIT
 
 KEY = "EA_LAYERS_DISPLAY_Conduit"
@@ -63,6 +64,9 @@ def get_good_layers():
 
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def toggle_layer_pointer():
 
     if sc.sticky.has_key(KEY):

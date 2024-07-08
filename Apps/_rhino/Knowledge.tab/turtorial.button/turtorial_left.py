@@ -4,6 +4,8 @@ __doc__ = "This button does Turtorial when left click"
 import rhinoscriptsyntax as rs
 import subprocess
 
+
+from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab import FOLDER, EXE
 from EnneadTab.RHINO import RHINO_FORMS
 
@@ -68,6 +70,8 @@ def open_playlist():
 
 
 
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def turtorial():
 
     opts = ["L drive contents(PDFs, Docs, GH Scripts, Videos)", "EnneadTab YouTube Playlist"]

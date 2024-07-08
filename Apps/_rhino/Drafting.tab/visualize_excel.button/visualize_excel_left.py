@@ -13,7 +13,11 @@ import textwrap
 from EnneadTab import NOTIFICATION
 from EnneadTab import DATA_FILE
 from EnneadTab import EXCEL
+from EnneadTab import LOG, ERROR_HANDLE
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def visualize_excel():
     ShapeWriter().write_shape()
 

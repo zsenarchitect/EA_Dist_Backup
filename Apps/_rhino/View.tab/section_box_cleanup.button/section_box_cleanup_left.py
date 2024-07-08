@@ -9,7 +9,11 @@ import rhinoscriptsyntax as rs
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)) + "\\section_box.button")
 import section_box_utility
+from EnneadTab import LOG, ERROR_HANDLE
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def section_box_cleanup(group_name_key_word=section_box_utility.GROUP_NAME_KEYWORD):
     if rs.GroupNames() is None:
         return

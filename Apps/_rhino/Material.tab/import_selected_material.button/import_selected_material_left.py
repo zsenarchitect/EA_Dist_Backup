@@ -6,10 +6,14 @@ import scriptcontext as sc
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore
 
+from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_FORMS
 
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def import_selected_material():
 
 

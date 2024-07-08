@@ -6,7 +6,11 @@ import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
 from EnneadTab import COLOR
+from EnneadTab import LOG, ERROR_HANDLE
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def push_glass_in():
 
     srf = rs.GetObjects("pick surfaces", rs.filter.surface)

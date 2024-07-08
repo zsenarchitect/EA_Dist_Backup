@@ -9,6 +9,7 @@ import clr # pyright: ignore
 import math
 
 
+from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab import FOLDER, NOTIFICATION, DATA_FILE
 """
 use Transform.DecomposeAffine Method (Vector3d, Transform, Transform, Vector3d) to decompose trnasform to trnaltion and rotation
@@ -63,6 +64,9 @@ def get_data(block):
     return str(OUT)
 
 
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
 def map_block_transform():
     blocks = rs.GetObjects(message = "pick blocks", custom_filter = rs.filter.instance)
     data = [get_data(x) for x in blocks]
