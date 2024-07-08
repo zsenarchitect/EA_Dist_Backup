@@ -110,7 +110,10 @@ def run_Rhino_button(locator, *args,**kwargs):
             NOTIFICATION.messenger(main_text="Oooops, cannot find the func <{}> in source code.\nContact SZ and let him know. Thx!".format(func_name))
             return
 
-
+    # no longer decide to aapkly pre error 
+    # cather here. so the scripte structure can be same for revit and rhino
+    # also make it possoble to call alis run 
+    # directly in the future and still get proper logging and error handle
     func(*args,**kwargs)
 
 
