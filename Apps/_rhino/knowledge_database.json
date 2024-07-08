@@ -1,19 +1,19 @@
 {
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "Make A New Button",
         "doc": null
     },
     "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
         "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "ExtractPreviewImages",
         "doc": "This button does ExtractPreviewImages when left click"
     },
     "Ennead+.menu\\get_latest.button\\get_latest_left.py": {
         "script": "Ennead+.menu\\get_latest.button\\get_latest_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "GetLatest",
         "doc": "This button does GetLatest when left click"
     },
@@ -277,13 +277,13 @@
     },
     "Lab.tab\\tester.button\\tester_left.py": {
         "script": "Lab.tab\\tester.button\\tester_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "tester",
         "doc": "tester"
     },
     "Lab.tab\\update_from_repo.button\\update_from_repo_left.py": {
         "script": "Lab.tab\\update_from_repo.button\\update_from_repo_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "UpdateFromRepo",
         "doc": "This button does UpdateFromRepo when left click"
     },
@@ -367,13 +367,13 @@
     },
     "Material.tab\\random_texture_walk.button\\random_texture_walk_left.py": {
         "script": "Material.tab\\random_texture_walk.button\\random_texture_walk_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "RandomTextureWalk",
         "doc": "Randomly walk the texture map a bit to avoid them lineup"
     },
     "Material.tab\\remove_string_in_material_name.button\\remove_string_in_material_name_left.py": {
         "script": "Material.tab\\remove_string_in_material_name.button\\remove_string_in_material_name_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "RemoveStringInMaterialName",
         "doc": "This button does RemoveStringInMaterialName when left click"
     },
@@ -427,7 +427,7 @@
     },
     "Modify.tab\\srf_to_panel.button\\srf_to_panel_left.py": {
         "script": "Modify.tab\\srf_to_panel.button\\srf_to_panel_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "SrfToPanel",
         "doc": "Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge."
     },
@@ -505,7 +505,7 @@
     },
     "Revit.tab\\floor_drafter.button\\floor_drafter_left.py": {
         "script": "Revit.tab\\floor_drafter.button\\floor_drafter_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "FloorDrafter",
         "doc": "This button does FloorDrafter when left click"
     },
@@ -547,13 +547,13 @@
     },
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "(1634)ExportWithoutCrv",
         "doc": "Export the rhino file as dwg but solidate all blocks and remove all crvs."
     },
     "Tailor.tab\\relocate_file.button\\relocate_left.py": {
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
-        "icon": "c:\\Users\\szhang\\github\\EnneadTab-OS\\DarkSide\\RuiWriter\\.\\default_icon.png",
+        "icon": null,
         "alias": "(1634)RelocateAll",
         "doc": "Relocate all the cameras and models to new Revit location."
     },
