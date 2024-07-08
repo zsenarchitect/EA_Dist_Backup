@@ -13,6 +13,8 @@ def remove_invalid_alias():
     exisitng_alias = rs.AliasNames()
     for alias in exisitng_alias:
         exisiting_macro = rs.AliasMacro(alias)
+        if "RunPythonScript" not in exisiting_macro:
+            continue
         exisiting_full_path = exisiting_macro.split('_-RunPythonScript "')[1].split('"')[0]
         if not os.path.exists(exisiting_full_path):
             rs.DeleteAlias(alias)
