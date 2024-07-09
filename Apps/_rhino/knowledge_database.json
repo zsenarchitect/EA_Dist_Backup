@@ -49,7 +49,7 @@
     },
     "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py": {
         "script": "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py",
-        "icon": null,
+        "icon": "Ennead+.menu\\restart_rhino.button\\icon.png",
         "alias": "RestartRhino",
         "doc": "This button does RestartRhino when left click",
         "tab": "Ennead+.menu",
