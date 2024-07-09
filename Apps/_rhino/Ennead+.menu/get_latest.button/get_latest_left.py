@@ -53,6 +53,7 @@ def get_latest(is_silient = False):
 
 
 def add_startup_script():
+    return
     """hear me out here:
     python cannot add startup script directly
    

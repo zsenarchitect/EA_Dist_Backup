@@ -31,6 +31,14 @@
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
+    "Ennead+.menu\\reload_python.button\\reload_python_left.py": {
+        "script": "Ennead+.menu\\reload_python.button\\reload_python_left.py",
+        "icon": null,
+        "alias": "Reload Python",
+        "doc": "Checkout pre-recorded turtorials and demos about EnneadTab.",
+        "tab": "Ennead+.menu",
+        "tab_icon": null
+    },
     "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
         "script": "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
         "icon": "Ennead+.menu\\reset_all_conduit.button\\icon.png",
