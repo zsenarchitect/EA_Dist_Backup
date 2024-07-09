@@ -154,6 +154,14 @@
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png"
     },
+    "Block.tab\\restart_rhino.button\\restart_rhino_left.py": {
+        "script": "Block.tab\\restart_rhino.button\\restart_rhino_left.py",
+        "icon": null,
+        "alias": "RestartRhino",
+        "doc": "This button does RestartRhino when left click",
+        "tab": "Block.tab",
+        "tab_icon": "Block.tab\\icon.png"
+    },
     "Block.tab\\sample_layout.button\\sample_layout_left.py": {
         "script": "Block.tab\\sample_layout.button\\sample_layout_left.py",
         "icon": "Block.tab\\sample_layout.button\\icon.png",
