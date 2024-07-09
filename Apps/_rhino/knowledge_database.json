@@ -47,6 +47,14 @@
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
+    "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py": {
+        "script": "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py",
+        "icon": null,
+        "alias": "RestartRhino",
+        "doc": "This button does RestartRhino when left click",
+        "tab": "Ennead+.menu",
+        "tab_icon": null
+    },
     "Ennead+.menu\\star.button\\star_left.py": {
         "script": "Ennead+.menu\\star.button\\star_left.py",
         "icon": "Ennead+.menu\\star.button\\icon.png",
@@ -151,14 +159,6 @@
         "icon": "Block.tab\\random_blocks_on_srfs.button\\icon.png",
         "alias": "RandomBlocksOnSrfs",
         "doc": "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides.",
-        "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
-    },
-    "Block.tab\\restart_rhino.button\\restart_rhino_left.py": {
-        "script": "Block.tab\\restart_rhino.button\\restart_rhino_left.py",
-        "icon": null,
-        "alias": "RestartRhino",
-        "doc": "This button does RestartRhino when left click",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png"
     },
