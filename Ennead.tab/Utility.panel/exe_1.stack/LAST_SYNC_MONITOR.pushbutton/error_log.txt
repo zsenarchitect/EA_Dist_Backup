@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\LAST_SYNC_MONITOR.py", line 305, in main
-    action_main()
-  File "C:\Users\szhang\github\EnneadTab-for-Revit\ENNEAD.extension\Ennead.tab\Utility.panel\exe_1.stack\LAST_SYNC_MONITOR.pushbutton\LAST_SYNC_MONITOR.py", line 250, in action_main
-    draw_text("EnneadTab Revit Last Sync Monitor. ", font, TEXT_COL, 50, H)
-NameError: global name 'font' is not defined
