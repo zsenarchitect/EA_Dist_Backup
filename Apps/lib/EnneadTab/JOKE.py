@@ -206,7 +206,7 @@ def april_fool():
                 prank_dvd()
 
         else:
-            SOUNDS.play_meme_sound()
+            SOUND.play_meme_sound()
         with open(marker_file, 'w') as f:
             f.write("You have been pranked.")
 
