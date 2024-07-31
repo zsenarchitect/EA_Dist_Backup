@@ -1,4 +1,4 @@
-# EnneadTab for Revit Distributor
+# EnneadTab OS Distributor
 
 
 this is for distribution purpose only
