@@ -13,6 +13,7 @@ from pyrevit.revit import ErrorSwallower
 # from pyrevit import revit #
 
 import proDUCKtion # pyright: ignore 
+proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
 from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG
 
@@ -346,7 +347,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
         self.data_grid.ItemsSource = [DataGridObj(
             x.file_path, self.object_style_combos.ItemsSource, selected_name=x.selected_OST_name) for x in self.data_grid.ItemsSource]
 
-    def handleclick(self, sender, args):
+    def handle_click(self, sender, args):
         print("surface clicked")
 
     def close_click(self, sender, args):
