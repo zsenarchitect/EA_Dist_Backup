@@ -28,7 +28,7 @@ def generic_healthcare_tool(doc, show_log):
     if not USER.IS_DEVELOPER:
         return
     
-    note = """enneadtab-to-do:
+    note = """TO-DO:
 here is what will the tool auto run:
 
 1, get all the area, get their names, make sure all area is defined within a predefined list of HealthCare Category
