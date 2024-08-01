@@ -121,3 +121,16 @@ def is_L_drive_alert_hook_depressed():
 
 def set_L_drive_alert_hook_depressed(is_depressed = True):
     envvars.set_pyrevit_env_var("IS_L_DRIVE_WORKING_ALARM_DISABLED", is_depressed)
+
+
+
+
+    
+def is_sync_queue_hook_depressed():
+    return envvars.get_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED")
+
+
+def set_sync_queue_hook_depressed(is_depressed = True):
+    envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", is_depressed)
+
+
