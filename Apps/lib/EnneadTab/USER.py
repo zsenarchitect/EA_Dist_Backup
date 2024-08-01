@@ -9,7 +9,7 @@ import UNIT_TEST
 USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
 
 # this line kept for now for backward compatibility reason, 
-# TO-DO: check again in 2024-09-15 to remove it. 
+# enneadtab-to-do: check again in 2024-09-15 to remove it. 
 USERNAME = USER_NAME 
 
 
