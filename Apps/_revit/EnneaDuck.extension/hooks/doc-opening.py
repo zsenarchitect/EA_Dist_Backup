@@ -3,7 +3,7 @@ from pyrevit.coreutils import envvars
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, FOLDER
-from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_EVENT
 
 
 
