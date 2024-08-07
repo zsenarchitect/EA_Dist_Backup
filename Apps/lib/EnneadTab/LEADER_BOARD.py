@@ -17,3 +17,23 @@ def update_money(coin_change):
 def get_money():
     return update_money(0)
 
+
+def daily_reward():
+    pass
+
+
+def print_leader_board():
+    pass
+
+def print_history():
+    pass
+
+def manual_transaction():
+    pass
+
+
+def get_data_by_name():
+    pass
+
+def set_data_by_name():
+    pass
