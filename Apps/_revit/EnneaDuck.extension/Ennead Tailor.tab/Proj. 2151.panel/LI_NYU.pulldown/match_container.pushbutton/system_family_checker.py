@@ -4,6 +4,8 @@ from EnneadTab.REVIT import REVIT_FAMILY
 
 output = script.get_output()
 
+from match_container_script import EMOJI_DICT
+
 def process_system_family(category_name, container_doc, working_docs):
     output.print_md("# Checking {}".format(category_name))
     category = getattr(DB.BuiltInCategory, "OST_{}".format(category_name))
@@ -21,7 +23,7 @@ def process_system_family(category_name, container_doc, working_docs):
     total_type_names = sorted(list(set(_type.type_name for _type in total_types)))
 
     def is_in_list(_type, _list):
-        return ":OK_button:" if _type in _list else "---"
+        return EMOJI_DICT["Exist"] if _type in _list else EMOJI_DICT["NotExist"]
     data = []
     for type_name in total_type_names:
         row_data = [type_name, is_in_list(type_name, master_type_names)]
@@ -32,7 +34,7 @@ def process_system_family(category_name, container_doc, working_docs):
     
     output.print_table(
         table_data=data,
-        title="{}Type Compare".format(category_name.rsplit('s', 1)[0]),
+        title="{}Type Existents Compare".format(category_name.rsplit('s', 1)[0]),
         columns=["{}Type".format(category_name.rsplit('s', 1)[0]), "In Container File"] + ["in [{}]".format(_doc.Title) for _doc in working_docs],
     )
 
@@ -55,12 +57,12 @@ def process_type_para(master_type, working_doc_types_collection, working_docs):
         for i, working_doc_types in enumerate(working_doc_types_collection):
             working_doc_type = get_matching_type(master_type.type_name, working_doc_types)
             if not working_doc_type:
-                row_data.append("NoMatchType")
+                row_data.append(EMOJI_DICT["NoMatchType"]) 
                 continue
 
             working_doc_type_para = get_matching_para(master_para.Definition.Name, working_doc_type.paras)
             if not working_doc_type_para:
-                row_data.append("NoMatchPara")
+                row_data.append(EMOJI_DICT["NoMatchPara"])
                 continue
             working_doc_type_para_value = working_doc_type_para.AsValueString ()
             if working_doc_type_para_value !=  master_para.AsValueString ():
@@ -111,7 +113,7 @@ def process_type_compound(master_types, working_doc_types_collection, working_do
         for i, working_doc_types in enumerate(working_doc_types_collection):
             working_doc_type = get_matching_type(master_type.type_name, working_doc_types)
             if not working_doc_type:
-                row_data.append("?")
+                row_data.append(EMOJI_DICT["NoMatchType"])
                 continue
 
            
@@ -122,9 +124,9 @@ def process_type_compound(master_types, working_doc_types_collection, working_do
             if not master_compound.IsEqual (working_doc_type_compound ):
                 bad_conditions.append("At [**{}**], master version structure compound is NOT same as [**{}**] version. There are many thing that might be different, check carefully".format(master_type.type_name,
                                                                                                                                 working_docs[i].Title))
-                row_data.append("NotSame")
+                row_data.append(EMOJI_DICT["NoSame"]) 
             else:
-                row_data.append("ok")
+                row_data.append(EMOJI_DICT["Same"]) 
 
         data.append(row_data)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Use container file as base to compare BIM data to other major NYULI docs for comsistensy"
 __title__ = "Match Container"
 
 import proDUCKtion # pyright: ignore 
@@ -10,13 +10,24 @@ proDUCKtion.validify()
 from pyrevit import script
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, OUTPUT
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC
+from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
 # DOC = REVIT_APPLICATION.get_doc()
 import file_getter as FG
 import system_family_checker as SFC
+
+from collections import OrderedDict
+EMOJI_DICT = OrderedDict({
+    "Exist": ":ballot_box_with_check:",
+    "NotExist":":question_mark:",
+    "NoMatchType":":question_mark:",
+    "NoMatchPara":":double_exclamation_mark:",
+    "NoSame":":face_with_raised_eyebrow:",
+    "Same":":thumbs_up:"
+})
+
 
 
 @LOG.log(__file__, __title__)
@@ -30,7 +41,18 @@ def match_container():
     container_doc = FG.get_NYU_doc(doc_title = container_file_title)
     if not container_doc:
         return
-    
+
+    output.print_md("## Objective:")
+    print (__doc__)
+    output.print_md("## Icon Legend:")
+    for key in EMOJI_DICT.keys():
+        emoji = EMOJI_DICT[key]
+        output.print_md("{}: {}".format(key, emoji))
+
+    print ("\n\n")
+
+
+        
     NYULI_list = [
         "2151_A_EA_NYULI_Hospital_EXT",
         "2151_A_EAEC_NYULI_Hospital_INT",
