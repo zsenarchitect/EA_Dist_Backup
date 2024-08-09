@@ -23,7 +23,7 @@ from pyrevit import script #
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_EXPORT, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_EXPORT, REVIT_APPLICATION, REVIT_SYNC
 from EnneadTab import EXE, DATA_FILE, ENVIRONMENT,  NOTIFICATION, ERROR_HANDLE, FOLDER, LOG
 from Autodesk.Revit import DB # pyright: ignore 
 import os
@@ -53,7 +53,7 @@ def update_miro():
 
 
 
-    res = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+    res = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
 
     dump_folder = "{}\\miro_dump".format(ENVIRONMENT.DUMP_FOLDER)
 

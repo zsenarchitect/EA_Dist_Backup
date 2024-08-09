@@ -5,7 +5,7 @@ try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument
+    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
     DOC = UIDOC.Document
     from pyrevit import script #
     
@@ -15,7 +15,7 @@ except:
 
 
 
-from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_VIEW, REVIT_EVENT, REVIT_APPLICATION
 from EnneadTab import EXE, DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
 
 import time
@@ -145,6 +145,119 @@ def start_monitor():
         return
 
     EXE.try_open_app("LastSyncMonitor")
+
+
+
+
+def do_you_want_to_sync_and_close_after_done():
+    will_sync_and_close = False
+    res = REVIT_FORMS.dialogue(main_text = "Sync and Close after done?", options = ["Yes", "No"])
+    if res == "Yes":
+        will_sync_and_close = True
+
+    return will_sync_and_close
+
+
+
+def sync_and_close(close_others = True, disable_sync_queue = True):
+
+    from pyrevit import script
+    from pyrevit.coreutils import envvars
+    output = script.get_output()
+    killtime = 30
+    output.self_destruct(killtime)
+
+    
+    REVIT_EVENT.set_sync_queue_enable_stage(disable_sync_queue)
+    if close_others:
+        envvars.set_pyrevit_env_var("IS_AFTER_SYNC_WARNING_DISABLED", True)
+        # if you descide to close others, they should be no further warning. Only recover that warning behavir in DOC OPENED event
+
+
+    def get_docs():
+        try:
+            doc = __revit__.ActiveUIDocument.Document # pyright: ignore
+            docs = doc.Application.Documents
+            ERROR_HANDLE.print_note("get docs using using method 1")
+        except:
+            docs = __revit__.Documents #pyright: ignore
+            ERROR_HANDLE.print_note("get docs using using method 2")
+        ERROR_HANDLE.print_note( "Get all docs, inlcuding links and family doc = {}".format(str([x.Title for x in docs])))
+        return docs
+
+    ERROR_HANDLE.print_note("getting docs before sync")
+    docs = get_docs()
+    logs = []
+
+    for doc in docs:
+
+        if doc.IsLinked or doc.IsFamilyDocument:
+            continue
+        REVIT_VIEW.switch_to_sync_draft_view(doc)
+        # print "#####"
+        # print ("# {}".format( doc.Title) )
+        #with revit.Transaction("Sync {}".format(doc.Title)):
+        t_opts = DB.TransactWithCentralOptions()
+        #t_opts.SetLockCallback(SynchLockCallBack())
+        s_opts = DB.SynchronizeWithCentralOptions()
+        s_opts.SetRelinquishOptions(DB.RelinquishOptions(True))
+
+        s_opts.SaveLocalAfter = True
+        s_opts.SaveLocalBefore = True
+        s_opts.Comment = "EnneadTab Batch Sync"
+        s_opts.Compact = True
+
+
+        try:
+            doc.SynchronizeWithCentral(t_opts,s_opts)
+            logs.append( "\tSync [{}] Success.".format(doc.Title))
+            import SPEAK
+            SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
+        except Exception as e:
+            logs.append( "\tSync [{}] Failed.\n{}\t".format(doc.Title, e))
+
+        REVIT_VIEW.switch_from_sync_draft_view()
+    
+    envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", not(disable_sync_queue))
+    for log in logs:
+        ERROR_HANDLE.print_note( log)
+    if not close_others:
+        return
+
+    ERROR_HANDLE.print_note("getting docs before active safty doc")
+    docs = get_docs()
+    REVIT_APPLICATION.open_safety_doc_family()
+    ERROR_HANDLE.print_note("active doc set as safety doc")
+    for doc in docs:
+        if doc is None:
+            ERROR_HANDLE.print_note("doc is None, skip")
+            continue
+        try:
+            if doc.IsLinked:
+                ERROR_HANDLE.print_note("doc {} is a link doc, skip".format(doc.Title))
+                continue
+        except Exception as e:
+            ERROR_HANDLE.print_note ("Sync&Close Info:")
+            ERROR_HANDLE.print_note (e)
+            ERROR_HANDLE.print_note(str(doc))
+            continue
+
+        title = doc.Title
+        try:
+            ERROR_HANDLE.print_note ("Trying to close [{}]".format(title))
+            doc.Close(False)
+            doc.Dispose()
+        except Exception as e:
+            ERROR_HANDLE.print_note (e)
+            try:
+                ERROR_HANDLE.print_note ("skip closing [{}]".format(title))
+            except:
+                ERROR_HANDLE.print_note ("skip closing some doc")
+        """
+        try to open a dummy family rvt file in the buldle folder and switch to that as active doc then close original active doc
+        """
+
+
 ################## main code below #####################
 if __name__== "__main__":
     output = script.get_output()

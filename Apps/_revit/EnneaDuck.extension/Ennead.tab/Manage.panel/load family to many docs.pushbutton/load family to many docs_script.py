@@ -120,7 +120,7 @@ def process_family():
     global LOG
     LOG = []
 
-    will_sync_and_close = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+    will_sync_and_close = REVIT_EVENT.do_you_want_to_sync_and_close_after_done()
 
 
 

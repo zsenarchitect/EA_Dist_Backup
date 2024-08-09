@@ -134,7 +134,11 @@ def get_family_instances_by_family_name_and_type_name(family_name, type_name, do
 class RevitInstance:
     def __init__(self, element):
         self.element = element
-
+        
+    @property
+    def paras(self):
+        return list(self.element.Parameters)
+        
 
     def get_para(self, name):
         para =  self.element.LookupParameter(name)

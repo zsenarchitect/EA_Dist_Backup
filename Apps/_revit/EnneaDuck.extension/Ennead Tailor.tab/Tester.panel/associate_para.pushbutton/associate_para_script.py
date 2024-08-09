@@ -10,7 +10,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_SYNC
 from Autodesk.Revit import DB # pyright: ignore 
 
 from pyrevit import forms
@@ -98,7 +98,7 @@ def associate_para():
     subc_exclusion = "Placeholder"
 
     # provide option to return file after long process.
-    should_sync_and_close = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+    should_sync_and_close = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
 
     # loop thru each family
     map(lambda family_path: process_family(family_path, selected_built_in_family_para, family_param_name, subc_exclusion), family_paths)

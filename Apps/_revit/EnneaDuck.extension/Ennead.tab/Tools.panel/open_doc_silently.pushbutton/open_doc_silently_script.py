@@ -53,12 +53,13 @@ class Solution:
         if self.use_audit:
             open_options.Audit = True
         try:
-            __revit__.OpenAndActivateDocument (cloud_path, open_options, False) # pyright: ignore 
-            return
-            new_doc = REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path,
-                                                                                            open_options)
-        except Exception as e:
-            print ("{} cannot be opened becasue {}".format(doc_name, e))
+            return REVIT_APPLICATION.get_uiapp().OpenAndActivateDocument (cloud_path, open_options, False) # pyright: ignore 
+            
+        except:
+            try:
+                return REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path,open_options)
+            except Exception as e:
+                print ("{} cannot be opened becasue {}".format(doc_name, e))
 
     @ERROR_HANDLE.try_catch_error()
     def main(self, doc_names = None):

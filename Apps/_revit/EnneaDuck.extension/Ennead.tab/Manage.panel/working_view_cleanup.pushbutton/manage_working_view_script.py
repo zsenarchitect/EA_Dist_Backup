@@ -7,8 +7,8 @@ __doc__ = "A floating window that give you quick access to review un-sheeted vie
 __title__ = "Manage\nWorking Views"
 __tip__ = True
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from pyrevit.forms import WPFWindow
 # from pyrevit import forms #
 from pyrevit import script #
@@ -19,7 +19,7 @@ import time
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION, REVIT_SYNC
 from EnneadTab import USER, NOTIFICATION, DATA_CONVERSION, IMAGE, ERROR_HANDLE, FOLDER, LOG, ENVIRONMENT
 import traceback
 from Autodesk.Revit import DB # pyright: ignore 
@@ -289,7 +289,7 @@ class WorkingViewManager(WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def export_working_views_Click(self, sender, e):
-        will_close = REVIT_APPLICATION.do_you_want_to_sync_and_close_after_done()
+        will_close = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
         total = len(self.data_grid.ItemsSource)
         for i, preview_obj in enumerate(self.data_grid.ItemsSource):
             self.debug_textbox.Text = "{}/{}".format(i + 1, total)

@@ -9,7 +9,7 @@ except:
     pass
 
 
-import FOLDER, SAMPLE_FILE
+import FOLDER, SAMPLE_FILE, ERROR_HANDLE
 
 
 def get_app():
@@ -47,6 +47,7 @@ def get_active_view():
 
 
 def do_you_want_to_sync_and_close_after_done():
+    #To-do: remove at 2024-09-15, this function has move to REVIT-SYNC
     will_sync_and_close = False
     res = REVIT_FORMS.dialogue(main_text = "Sync and Close after done?", options = ["Yes", "No"])
     if res == "Yes":
@@ -57,6 +58,7 @@ def do_you_want_to_sync_and_close_after_done():
 
 
 def sync_and_close(close_others = True, disable_sync_queue = True):
+    #To-do: remove at 2024-09-15, this function has move to REVIT-SYNC
 
     from pyrevit import script
     from pyrevit.coreutils import envvars
@@ -190,7 +192,7 @@ def open_and_active_project(filepath):
     except:
         pass
 
-    print ("Activate Failed")
+    ERROR_HANDLE.print_note ("Activate Failed")
 
 
 def close_docs_by_name(names = [], close_all = False):
