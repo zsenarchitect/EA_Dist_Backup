@@ -21,3 +21,4 @@ layout:
   - transfer_parameter_data
   - update_DOB_page
   - check_formula
+  - lines_in_view_locator

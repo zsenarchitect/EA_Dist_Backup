@@ -1,0 +1,62 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+__doc__ = "Locate the heavy usage view for detail line and model line in current Revit file.\n\nThis is inspired by the orginal pyrevit tool."
+__title__ = "Lines-In-View\nLocator"
+
+import proDUCKtion # pyright: ignore 
+proDUCKtion.validify()
+
+from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab.REVIT import REVIT_APPLICATION
+from Autodesk.Revit import DB # pyright: ignore 
+
+# UIDOC = REVIT_APPLICATION.get_uidoc()
+DOC = REVIT_APPLICATION.get_doc()
+from collections import defaultdict
+
+from pyrevit import script
+output = script.get_output()
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
+def lines_in_view_locator():
+    process_line_type(line_type = "DetailCurve")
+    output.print_md("\n___\n")
+    process_line_type(line_type = "ModelCurve")
+
+
+def process_line_type(line_type):
+    output.print_md("\n\n## [{}] LINE COUNT IN CURRENT DOCUMENT: ".format(line_type)+ DOC.Title+"\n")
+
+    detail_lines = defaultdict(int)
+    table_data = []
+    lines = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Lines).WhereElementIsNotElementType().ToElements()
+    for line in lines:
+        if line.CurveElementType.ToString() == line_type:
+            view_id_int = line.OwnerViewId.IntegerValue
+            detail_lines[view_id_int] += 1
+    for line_count, view_id_int \
+            in sorted(zip(detail_lines.values(), detail_lines.keys()),
+                            reverse=True):
+        view_id = DB.ElementId(view_id_int)
+        view_creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(DOC,view_id).Creator
+        try:
+            view_name = DOC.GetElement(view_id).Name
+        except Exception:
+            view_name = "<no view name available>"
+        table_data.append([line_count,  output.linkify(view_id, title = view_name), view_creator])
+    table_data.append([str(sum(detail_lines.values()))+" Lines in Total","In "+str(len(detail_lines))+" Views",  ""])
+    output.print_table(table_data,columns=["Count", 'ViewName', 'Creator'], last_line_style='font-weight:bold;font-size:1.2em;')
+
+
+################## main code below #####################
+if __name__ == "__main__":
+    lines_in_view_locator()
+
+
+
+
+
+
+
