@@ -27,7 +27,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
 
     if safe_open:
         if not os.path.exists(exe):
-            raise Exception("Only work for stanfle along exe, not for foldered exe.")
+            raise Exception("Only work for stanfle along exe, not for foldered exe.[{}] not exist".format(exe))
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
         temp_exe = ENVIRONMENT.DUMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)

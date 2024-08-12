@@ -10,7 +10,6 @@ import SECRET
 import UNIT_TEST 
 
 
-print("################################################")
 USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
 
 # this line kept for now for backward compatibility reason, 
