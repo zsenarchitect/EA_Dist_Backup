@@ -21,34 +21,52 @@ output = script.get_output()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def lines_in_view_locator():
-    process_line_type(line_type = "DetailCurve")
+    process_line_type()
+
+
+
+def process_line_type():
+    output.print_md("\n\n## LINE COUNT IN CURRENT DOCUMENT: "+ DOC.Title+"\n")
     output.print_md("\n___\n")
-    process_line_type(line_type = "ModelCurve")
-
-
-def process_line_type(line_type):
-    output.print_md("\n\n## [{}] LINE COUNT IN CURRENT DOCUMENT: ".format(line_type)+ DOC.Title+"\n")
 
     detail_lines = defaultdict(int)
-    table_data = []
+    model_lines = defaultdict(int)
+    detail_table_data = []
+    model_table_data = []
+    workset_table = DOC.GetWorksetTable()
     lines = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Lines).WhereElementIsNotElementType().ToElements()
     for line in lines:
-        if line.CurveElementType.ToString() == line_type:
+        if line.CurveElementType.ToString() == "DetailCurve":
             view_id_int = line.OwnerViewId.IntegerValue
             detail_lines[view_id_int] += 1
-    for line_count, view_id_int \
-            in sorted(zip(detail_lines.values(), detail_lines.keys()),
-                            reverse=True):
+        if line.CurveElementType.ToString() == "ModelCurve":
+            workset_id_int = line.WorksetId.IntegerValue
+            model_lines[workset_id_int] += 1
+
+    # print detail line table    
+    for line_count, view_id_int in sorted(zip(detail_lines.values(), detail_lines.keys()),
+                                            reverse=True):
         view_id = DB.ElementId(view_id_int)
         view_creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(DOC,view_id).Creator
         try:
             view_name = DOC.GetElement(view_id).Name
         except Exception:
             view_name = "<no view name available>"
-        table_data.append([line_count,  output.linkify(view_id, title = view_name), view_creator])
-    table_data.append([str(sum(detail_lines.values()))+" Lines in Total","In "+str(len(detail_lines))+" Views",  ""])
-    output.print_table(table_data,columns=["Count", 'ViewName', 'Creator'], last_line_style='font-weight:bold;font-size:1.2em;')
+        detail_table_data.append([line_count,  output.linkify(view_id, title = view_name), view_creator])
+    detail_table_data.append([str(sum(detail_lines.values()))+" Lines in Total","In "+str(len(detail_lines))+" Views",  ""])
+    output.print_table(detail_table_data,columns=["Count", 'ViewName', 'Creator'], last_line_style='font-weight:bold;font-size:1.2em;')
 
+    output.print_md("\n___\n")
+
+    # print model line table
+    for line_count, workset_id_int in sorted(zip(model_lines.values(), model_lines.keys()),
+                                            reverse=True):
+        
+        workset_name = workset_table.GetWorkset(DB.WorksetId(workset_id_int)).Name
+        model_table_data.append([line_count, workset_name])
+    model_table_data.append([str(sum(model_lines.values()))+" Lines in Total","",  ""])    
+    output.print_table(model_table_data,columns=["Count", 'Workset'], last_line_style='font-weight:bold;font-size:1.2em;')
+        
 
 ################## main code below #####################
 if __name__ == "__main__":
