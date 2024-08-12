@@ -41,7 +41,7 @@ from pyrevit import versionmgr
 import System # pyright: ignore
 from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, OUTPUT, TIME, VERSION_CONTROL
 from EnneadTab import MODULE_HELPER, ERROR_HANDLE, USER, KEYBOARD, ENVIRONMENT, SOUND, DOCUMENTATION, LOG, IMAGE
-from EnneadTab import JOKE, EMOJI, ENCOURAGING, HOLIDAY
+from EnneadTab import JOKE, EMOJI, ENCOURAGING, HOLIDAY, EXE
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT
 
 
@@ -223,15 +223,26 @@ def register_xaml_path():
 
     DATA_FILE.set_data(data, "xaml_path.sexyDuck")
     
-
+def set_RIR_clicker():
+    with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:
+        if "ref_images" not in data:
+            data["ref_images"] = []
+        data["ref_images"].append(IMAGE.get_image_path_by_name("search_RIR_7.png"))
+    EXE.try_open_app("AutoClicker.exe")
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
+    if ENVIRONMENT.IS_AVD:
+        set_RIR_clicker()
     VERSION_CONTROL.update_EA_dist()
     register_xaml_path()
     check_minimal_version_for_enneadtab()
-    ENCOURAGING.warming_quote()
+
+    try:
+        ENCOURAGING.warming_quote()
+    except:
+        pass
 
     NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))
     
