@@ -35,6 +35,9 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         os.startfile(temp_exe)
         for file in os.listdir(ENVIRONMENT.DUMP_FOLDER):
             if file.startswith("_temp_exe_"):
+                # ignore if this temp file is less than 1 day old
+                if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.DUMP_FOLDER, file)) < 86400:
+                    continue
                 try:
                     os.remove(os.path.join(ENVIRONMENT.DUMP_FOLDER, file))
                 except:

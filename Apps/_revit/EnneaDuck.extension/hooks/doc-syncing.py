@@ -4,7 +4,7 @@ from Autodesk.Revit import DB # pyright: ignore
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import VERSION_CONTROL, ERROR_HANDLE, LOG, DATA_FILE, TIME, USER, DUCK, ENVIRONMENT, FOLDER
+from EnneadTab import VERSION_CONTROL, ERROR_HANDLE, LOG, DATA_FILE, TIME, USER, DUCK, CONFIG, FOLDER
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_EVENT
 
 __title__ = "Doc Syncing Hook"
@@ -94,7 +94,7 @@ def check_sync_queue():
     # ENNEAD_LOG.sync_queue_wait_in_line()
 
     
-    if DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_duck_allowed", True)):
+    if CONFIG.get_setting("toggle_bt_is_duck_allowed", False):
         DUCK.quack()
  
     try:

@@ -8,7 +8,7 @@ import IMAGE
 import CONFIG
 
 def is_hate_messenger():
-    return not (CONFIG.get_setting("radio_bt_popup_standard", True) or CONFIG.get_setting("radio_bt_popup_full", True))
+    return  CONFIG.get_setting("radio_bt_popup_minimal", True) 
 
 def is_hate_duck_pop():
     return not CONFIG.get_setting("toggle_bt_is_duck_allowed", False)

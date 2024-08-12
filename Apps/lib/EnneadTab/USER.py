@@ -1,37 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+"""Utilities for getting user information and permissions"""
+
 import os
 import traceback
 import ENVIRONMENT
+import SECRET
 import UNIT_TEST 
 
 
+print("################################################")
 USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
 
 # this line kept for now for backward compatibility reason, 
 # TO-DO: check again in 2024-09-15 to remove it. 
 USERNAME = USER_NAME 
 
-
-
 # note: why has seperate system key and autodesk keys? becasue some 
 # developer might only be handling one software, not both.
-EnneadTab_DEVELOPERS = {
-    "Sen Zhang": {
-        "initials": "SZ",
-        "system_id": ["szhang", "sen.zhang"],
-        "autodesk_id": ["szhangXNLCX"],
-        "github_remote": ["zsenarchitect"],
-        "email": ["szhang@ennead.com"]
-    },
-    "Colin Matthews": {
-        "initials": "CM",
-        "system_id": ["cmatthews", "colin.matthews"],
-        "autodesk_id": ["Colin.Matthews8AEED"],
-        "github_remote": ["colinlsmatthews"],
-        "email": ["Colin.Matthews@ennead.com"]
-    }
-}
+EnneadTab_DEVELOPERS = SECRET.get_dev_dict()
 
 
 def get_EA_email_address(user_name = USER_NAME):
@@ -45,9 +33,8 @@ def get_usernames_from_developers():
     Args:
         username (str): The username or Autodesk ID to check.
 
-    Returns:
-        list: Any possible system usernames.
-        list: Any possible autodesk usernames.
+    Returns: 
+        tuple: list: all system usernames, list: all Autodesk usernames
     """
     
     system_usernames = []
@@ -140,7 +127,7 @@ def unit_test():
                                                        UNIT_TEST.print_boolean_in_color(is_EnneadTab_developer())))
     print ("my system name = {}".format(USER_NAME))
     print ("my autodesk name = {}".format(get_autodesk_user_name()))
-    print ("I am  developer? {}".format(UNIT_TEST.print_boolean_in_color(IS_DEVELOPER)))
+    print ("Am I a developer? {}".format(UNIT_TEST.print_boolean_in_color(IS_DEVELOPER)))
     
     
     system_usernames, autodesk_usernames = get_usernames_from_developers()
@@ -151,3 +138,4 @@ def unit_test():
 ###############
 if __name__ == "__main__":
     unit_test()
+

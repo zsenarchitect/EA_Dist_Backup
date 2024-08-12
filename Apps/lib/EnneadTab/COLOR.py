@@ -1,6 +1,8 @@
 
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""Utilities for color manipulation and conversion"""
+
 import random
 import json
 
@@ -12,7 +14,7 @@ try:
 except:
     pass
 
-# define before other custome import to avoid circular reference break in ironpython. 
+# define before other customs import to avoid circular reference break in ironpython. 
 # #cpython seem to be ok with this kind of circular ref
 class TextColorEnum:
     Red = "red"
@@ -43,25 +45,31 @@ import FOLDER
 
 
 def from_rgb(r, g, b):
-    """_summary_
+    """Generate a color object from rgb values.
 
     Args:
-        r (_type_): _description_
-        g (_type_): _description_
-        b (_type_): _description_
+        r (int): The red value.
+        g (int): The green value.
+        b (int): The blue value.
 
     Returns:
-        _type_: _description_
+        System.Drawing.Color: The resulting color object.
     """
     return Color.FromArgb(r, g, b)
 
 def get_random_color(return_tuple = True):
-    """get random color
+    """Generate a random color object.
+
+    Args:
+        return_tuple (bool, optional): Return as a tuple of 3 ints. Defaults to True.
 
     Returns:
-       System.Drawing.Color: _description_
+    if return_tuple is True:
+        tuple: The resulting color as a tuple of 3 ints.
+    else:
+        System.Drawing.Color: The resulting color object.
     """
-
+    
     red = int(255*random.random())
     green = int(255*random.random())
     blue = int(255*random.random())
@@ -80,13 +88,13 @@ def get_random_color(return_tuple = True):
     return Color.FromArgb(*denormalized_rgb_color)
 
 def tuple_to_color(tuple):
-    """quickly convert 3 int to color object
+    """Convert 3 ints to color object
 
     Args:
-        tuple (tuple of 3 int): _description_
+        tuple (tuple of 3 int): The tuple of 3 ints.
 
     Returns:
-        System.Drawing.Color: _description_
+        System.Drawing.Color: The resulting color object.
     """
     red,green,blue = tuple
     
@@ -102,14 +110,17 @@ def tuple_to_color(tuple):
 
 
 def invert_color(color, return_tuple = False):
-    """_summary_
+    """Invert a color.
 
     Args:
-        color (_type_): _description_
-        return_tuple (bool, optional): _description_. Defaults to False.
+        color (tuple): The color to invert.
+        return_tuple (bool, optional): Return as a tuple of 3 ints. Defaults to False.
 
     Returns:
-        _type_: _description_
+    if return_tuple is True:
+        tuple: The resulting color as a tuple of 3 ints.
+    else:
+        System.Drawing.Color: The resulting color object.
     """
     R, G, B = color[0], color[1], color[2]
     inverted_color = 255 - R, 255 - G, 255 - B
@@ -119,29 +130,37 @@ def invert_color(color, return_tuple = False):
         return Color.FromArgb(*inverted_color)
     
 def rgb_to_hex(rgb_tuple):
-    """convert rgb to hex
+    """Convert rgb to hex.
 
     Args:
-        rgb (tuple): _description_
+        rgb_tuple (tuple): The rgb tuple.
 
     Returns:
-        str: _description_
+        str: The resulting hex string.
     """
     return '#{:02x}{:02x}{:02x}'.format(int(rgb_tuple[0]),int(rgb_tuple[1]),int(rgb_tuple[2]))
 
 
 def hex_to_rgb(hex_str):
-    """convert hex to rgb
+    """Convert hex to rgb.
 
     Args:
-        hex_str (str): _description_
+        hex_str (str): The hex string.
 
     Returns:
-        tuple: _description_
+        tuple: The resulting rgb tuple.
     """
     return tuple(int(str(hex_str).lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
 
 def decimal_to_rgb(decimal_color):
+    """Convert decimal to rgb.
+
+    Args:
+        decimal_color (int): The decimal color.
+
+    Returns:
+        tuple: The resulting rgb color.
+    """
     red = decimal_color % 256
     green = (decimal_color // 256) % 256
     blue = (decimal_color // 256 // 256) % 256
@@ -150,14 +169,15 @@ def decimal_to_rgb(decimal_color):
 
 
 def is_same_color(color1, color2):
-    """check if two color is same
+    """Checks if the environment is Revit,
+    then checks if the colors are the same.
 
     Args:
-        color1 (tuple): _description_
-        color2 (tuple): _description_
+        color1 (tuple): The first color.
+        color2 (tuple): The second color.
 
     Returns:
-        bool: _description_
+        bool: True if the colors are the same, False otherwise.
     """
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         return color1.Red == color2.Red and color1.Green == color2.Green and color1.Blue == color2.Blue
@@ -169,6 +189,15 @@ def is_same_color(color1, color2):
 
 
 def _gather_data(raw_data, key_column):
+    """Gather color data from raw data.
+
+    Args:
+        raw_data (dict): The raw data.
+        key_column (int): The key column
+
+    Returns:
+        dict: The resulting data.
+    """
     temp_data = {}
     for pointer in raw_data:
         i,j = pointer # i = row, j = column
@@ -204,6 +233,14 @@ def _gather_data(raw_data, key_column):
     return temp_data
             
 def get_color_template_data(template = None):
+    """Get color template data from department standards.
+
+    Args:
+        template (str, optional): The template path. Defaults to None.
+
+    Returns:
+        dict: The resulting color data.
+    """
     if template:
         safe_template = FOLDER.copy_file_to_local_dump_folder(template)
     else:

@@ -28,7 +28,7 @@ TARGETS = ['fsun',
 
 
 def is_hate_fun():
-    return not CONFIG.get_setting("radio_bt_popup_full", True)
+    return not CONFIG.get_setting("radio_bt_popup_full", False)
 
 def get_all_jokes():
     with io.open(DOCUMENTATION.get_text_path_by_name('_dad_jokes.txt'), "r", encoding = "utf8") as f:
