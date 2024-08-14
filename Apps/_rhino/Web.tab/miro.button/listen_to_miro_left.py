@@ -153,7 +153,7 @@ class RhinoMiroListener_Conduit(EnneadTab.RHINO.RHINO_CONDUIT.RhinoConduit):
 def listen_to_miro():
 
     key = "RECENT_MIRO_URL_RHINO"
-    recent_url = EnneadTab.DATA_FILE.get_revit_ui_setting_data(key_defaule_value=(key,"https://miro.com/app/board/uXjVNsgWNfA=/"))
+    recent_url = EnneadTab.DATA_FILE.get_revit_ui_setting_data(key_default_value=(key,"https://miro.com/app/board/uXjVNsgWNfA=/"))
     miro_url = rs.StringBox(
         message = "Please input the Miro board URL:",
         default_value= recent_url,

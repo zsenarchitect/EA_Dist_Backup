@@ -626,6 +626,14 @@
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png"
     },
+    "Revit.tab\\block2family.button\\block2family_left.py": {
+        "script": "Revit.tab\\block2family.button\\block2family_left.py",
+        "icon": null,
+        "alias": "Block2Family",
+        "doc": "This button does Block2Family when left click",
+        "tab": "Revit.tab",
+        "tab_icon": "Revit.tab\\icon.png"
+    },
     "Revit.tab\\brep_to_mass.button\\brep_to_mass_left.py": {
         "script": "Revit.tab\\brep_to_mass.button\\brep_to_mass_left.py",
         "icon": "Revit.tab\\brep_to_mass.button\\icon.png",

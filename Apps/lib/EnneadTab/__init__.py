@@ -1,6 +1,6 @@
 
 package_name = "EnneadTab"
-version = "0.1"
+version = "2.1"
 
 import os
 import traceback

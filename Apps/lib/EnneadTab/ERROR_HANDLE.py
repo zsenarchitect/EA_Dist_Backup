@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""Defines the primary error handling function for EnneadTab."""
+
 import traceback
 import os
 import ENVIRONMENT
@@ -12,6 +14,12 @@ import OUTPUT
 
 
 def try_catch_error(is_silent=False, is_pass = False):
+    """Decorator for catching exceptions and sending automated error log emails.
+
+    Args:
+        is_silent (bool, optional): If True, no email will be sent. Defaults to False.
+        is_pass (bool, optional): If True, the error will be ignored. Defaults to False.
+    """
     def decorator(func):
         def error_wrapper(*args, **kwargs):
 
@@ -62,7 +70,7 @@ def try_catch_error(is_silent=False, is_pass = False):
 
 
 def print_note(string):
-    """for non developer this is never printed."""
+    """For non-developers this is never printed."""
 
     if USER.is_EnneadTab_developer():
         try:

@@ -167,3 +167,16 @@ class RevitType(RevitInstance):
     @property
     def type_name(self):
         return self.element.LookupParameter("Type Name").AsString()
+
+
+    @property
+    def pretty_name(self):
+        # handle loadble family
+        if hasattr(self.element, "FamilyName"):
+            family_name = self.element.FamilyName
+
+        # handle system family
+        else:
+            family_name = self.element.Category.Name
+            
+        return "[{}]: {}".format(family_name, self.type_name)

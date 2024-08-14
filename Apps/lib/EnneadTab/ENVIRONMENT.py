@@ -1,17 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""Utility functions for checking the current application environment.
+Sets environment variables and paths for EnneadTab."""
+
 import os
 import sys
-
-
 
 
 IS_PY3 = sys.version.startswith("3")
 IS_PY2 = not IS_PY3
 
 
-# this is the repo folder if you are developer, or EA_dist if you are user
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+# this is the repo folder if you are a developer, or EA_dist if you are a normal user
+ROOT = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
@@ -21,7 +24,9 @@ APP_FOLDER = os.path.join(ROOT, "Apps")
 REVIT_FOLDER = os.path.join(APP_FOLDER, "_revit")
 RHINO_FOLDER = os.path.join(APP_FOLDER, "_rhino")
 PRIMARY_EXTENSION_NAME = "EnneaDuck"
-REVIT_PRIMARY_EXTENSION = os.path.join(REVIT_FOLDER, "{}.extension".format(PRIMARY_EXTENSION_NAME))
+REVIT_PRIMARY_EXTENSION = os.path.join(
+    REVIT_FOLDER, "{}.extension".format(PRIMARY_EXTENSION_NAME)
+)
 REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead.tab")
 REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Library.tab")
 REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Tailor.tab")
@@ -61,17 +66,24 @@ for _folder in [ECO_SYS_FOLDER, DUMP_FOLDER]:
         try:
             os.makedirs(_folder)
         except Exception as e:
-            print ("Cannot secure folder [{}] becasue {}".format(_folder, e))
-            
+            print("Cannot secure folder [{}] becasue {}".format(_folder, e))
+
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:
     SHARED_DUMP_FOLDER = DUMP_FOLDER
 
+
 def is_avd():
+    """Check if current environment is an Azure Virtual Desktop.
+
+    Returns:
+        bool: True if current environment is AVD.
+    """
     try:
-        import clr # pyright:ignore
-        clr.AddReference('System')
-        from System.Net import Dns # pyright:ignore
+        import clr  # pyright:ignore
+
+        clr.AddReference("System")
+        from System.Net import Dns  # pyright:ignore
 
         computer_name = Dns.GetHostName()
     except:
@@ -79,55 +91,75 @@ def is_avd():
 
         computer_name = socket.gethostname()
 
-
-
     return "avd" in computer_name.lower()
 
 
-
 def is_Rhino_environment():
-    """Check if current environment is Rhino.
+    """Check if the current environment is Rhino.
 
     Returns:
         bool: True if current environment is Rhino.
     """
     try:
         import rhinoscriptsyntax
+
         return True
     except:
         return False
+
 
 def is_Grasshopper_environment():
+    """Check if current environment is Grasshopper.
+
+    Returns:
+        bool: True if current environment is Grasshopper.
+    """
     try:
-        import Grasshopper # pyright: ignore
+        import Grasshopper  # pyright: ignore
+
         return True
     except:
         return False
 
+
 def is_Revit_environment():
-    """Check if current environment is Revit.
+    """Check if the current environment is Revit.
 
     Returns:
         bool: True if current environment is Revit.
     """
     try:
-        from Autodesk.Revit import DB # pyright: ignore
+        from Autodesk.Revit import DB  # pyright: ignore
+
         return True
     except:
         return False
+
 
 def is_RhinoInsideRevit_environment():
+    """Check if the current environment is RhinoInsideRevit.
+
+    Returns:
+        bool: True if current environment is RhinoInsideRevit
+    """
     try:
-        import clr # pyright: ignore
-        clr.AddReference('RhinoCommon')
-        clr.AddReference('RhinoInside.Revit')
+        import clr  # pyright: ignore
+
+        clr.AddReference("RhinoCommon")
+        clr.AddReference("RhinoInside.Revit")
         return True
     except:
         return False
 
-    
+
 def is_terminal_environment():
+    """Check if the current environment is within the terminal.
+
+    Returns:
+        bool: True if current environment is a terminal.
+    """
     return not is_Rhino_environment() and not is_Revit_environment()
+
 
 def unit_test():
     import inspect
@@ -135,32 +167,27 @@ def unit_test():
 
     for i, x in enumerate(sorted(globals())):
         content = globals()[x]
-        
+
         if inspect.ismodule(content):
             continue
-        
+
         if not x.startswith("_") and not callable(content):
             print(x, " = ", content)
 
-            
             if isinstance(content, bool):
                 continue
-            
+
             if not isinstance(content, list):
                 content = [content]
-            
+
             for item in content:
                 if "\\" in item:
-                    
                     is_ok = os.path.exists(item) or os.path.isdir(item)
 
-                    
-                    
-
-                    
                     if not is_ok:
                         print("!!!!!!!!!!!!! not ok: " + item)
                     # assert is_ok
+
 
 IS_AVD = is_avd()
 IS_RHINO_ENVIRONMENT = is_Rhino_environment()
@@ -170,12 +197,18 @@ IS_RHINOINSIDEREVIT_ENVIRONMENT = is_RhinoInsideRevit_environment()
 
 
 def get_app_name():
+    """Get the current application name.
+
+    Returns:
+        str: The current application name.
+    """
     app_name = "terminal"
     if IS_REVIT_ENVIRONMENT:
         app_name = "revit"
     elif IS_RHINO_ENVIRONMENT:
         app_name = "rhino"
     return app_name
+
 
 ###############
 if __name__ == "__main__":

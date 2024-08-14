@@ -53,10 +53,12 @@ def process_line_type():
         except Exception:
             view_name = "<no view name available>"
         detail_table_data.append([line_count,  output.linkify(view_id, title = view_name), view_creator])
-    detail_table_data.append([str(sum(detail_lines.values()))+" Lines in Total","In "+str(len(detail_lines))+" Views",  ""])
-    output.print_table(detail_table_data,columns=["Count", 'ViewName', 'Creator'], last_line_style='font-weight:bold;font-size:1.2em;')
+    detail_table_data.append([str(sum(detail_lines.values()))+" Detail Lines in Total","In "+str(len(detail_lines))+" Views",  ""])
+    output.print_table(detail_table_data,columns=["Count", 'ViewName', 'ViewCreator'], last_line_style='font-weight:bold;font-size:1.2em;')
 
+    print ("\n\n")
     output.print_md("\n___\n")
+    print ("\n\n")
 
     # print model line table
     for line_count, workset_id_int in sorted(zip(model_lines.values(), model_lines.keys()),
@@ -64,7 +66,7 @@ def process_line_type():
         
         workset_name = workset_table.GetWorkset(DB.WorksetId(workset_id_int)).Name
         model_table_data.append([line_count, workset_name])
-    model_table_data.append([str(sum(model_lines.values()))+" Lines in Total","",  ""])    
+    model_table_data.append([str(sum(model_lines.values()))+" Model Lines in Total","",  ""])    
     output.print_table(model_table_data,columns=["Count", 'Workset'], last_line_style='font-weight:bold;font-size:1.2em;')
         
 

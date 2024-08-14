@@ -149,6 +149,7 @@ def start_monitor():
 
 
 
+
 def do_you_want_to_sync_and_close_after_done():
     will_sync_and_close = False
     res = REVIT_FORMS.dialogue(main_text = "Sync and Close after done?", options = ["Yes", "No"])

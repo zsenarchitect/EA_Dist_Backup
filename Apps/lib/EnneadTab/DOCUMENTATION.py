@@ -1,3 +1,4 @@
+"""Utilities for showing tips and documentation for tools."""
 
 import os
 import random
@@ -14,10 +15,18 @@ import OUTPUT
 
 
 def get_text_path_by_name(file_name):
+    """Get the full path of a text file in the documents library by its name.
+
+    Args:
+        file_name (str): _description
+
+    Returns:
+        str: Full path of the text file
+    """
     path = "{}\\text\\{}".format(ENVIRONMENT.DOCUMENT_FOLDER, file_name)
     if os.path.exists(path):
         return path
-    print ("A ha! {} is not valid or accessibile. Better luck next time.".format(path))
+    print ("A ha! {} is not valid or accessible. Better luck next time.".format(path))
 
 
 
@@ -37,6 +46,7 @@ SCOTT_TIPS = ["https://ei.ennead.com/post/3046/revit-legends-legend-components",
               "https://ei.ennead.com/post/114/revit-short-subject-best-practice-for-new-views"]
 
 def show_scott_tip():
+    """Show a random tip from Scott's EI posts."""
     if ENVIRONMENT.is_Revit_environment():
         from pyrevit import script
         output = script.get_output()
@@ -68,6 +78,16 @@ def show_scott_tip():
     
 
 def get_files_with_keyword(keyword, folder):
+    """Find files containing a keyword in a folder.
+    
+    Args:
+        keyword (str): Keyword to search for.
+        folder (str): Folder to search in.
+        
+    Returns:
+        list: List of file paths containing the keyword.    
+    """
+    
     max_open = 10
     opened = 0
     matching_files = []
@@ -138,14 +158,14 @@ def get_files_with_keyword(keyword, folder):
         pass
 
 def get_title_tip_from_folder(folder, is_random_single = True):
-    """_summary_
+    """Get title and tip from a folder.
 
     Args:
-        folder (_type_): _description_
-        is_random_single (bool, optional): _description_. Defaults to True.
+        folder (str): Folder to search in.
+        is_random_single (bool): If True, return only one random tip.
 
     Returns:
-        list of (title,tip) tutple
+        list: List of tuples containing title, tip, and icon
     """
     
     matching_files = get_files_with_keyword(TIP_KEY, folder)
@@ -157,6 +177,14 @@ def get_title_tip_from_folder(folder, is_random_single = True):
     return [get_title_tip_from_file(x, is_random_single) for x in matching_files]
 
 def get_icon_from_path(file_path):
+    """Get the icon path from a file path. Used within pyRevit folder structure.
+
+    Args:
+        file_path (str): File to get the icon for.
+
+    Returns:
+        str: Path to the corresponding icon.
+    """
     button_folder = os.path.dirname(file_path)
     for file in os.listdir(button_folder):
         if "icon.png" == file:
@@ -167,7 +195,15 @@ def get_icon_from_path(file_path):
             return os.path.join(button_folder, file)
    
 def get_title_tip_from_file(lucky_file, is_random_single):
-    
+    """Get title and tip from a file.
+
+    Args:
+        lucky_file (str): File to get the title and tip from.
+        is_random_single (bool): If True, return only one random tip.
+
+    Returns:
+        tuple: Tuple containing title, tip, and icon
+    """
     icon_path = get_icon_from_path(lucky_file)
         
     module_name = FOLDER.get_file_name_from_path(lucky_file).replace(".py", "")
@@ -175,8 +211,8 @@ def get_title_tip_from_file(lucky_file, is_random_single):
         ref_module = imp.load_source(module_name, lucky_file)
 
     except Exception as e:
-        if USER.is_SZ():
-            print ("\n\nSZ visible only logging:")
+        if USER.is_EnneadTab_developer:
+            print ("\n\nDeveloper visible only logging:")
             print (traceback.format_exc())
         return module_name, None, icon_path
     
@@ -238,9 +274,13 @@ def show_tip_revit(is_random_single=True):
 
     
 def show_tip_rhino():
+    """Show a random tip for Rhino. Not implemented yet.
+    """
     print("TO_DO: use tool lookup data")
 
 def tip_of_day():
+    """Show a random tip of the day.
+    """
     if random.random() < 0.3:
         return
     if ENVIRONMENT.is_Revit_environment():
@@ -258,17 +298,21 @@ def unit_test():
     
     
 def print_documentation_book_for_review_revit():
-    """print all the tip in a book or webpage so can check spelling and doc updates."""
+    """Print all the tips in a book or webpage to check spelling and doc updates."""
     show_tip_revit(is_random_single=False)
     
     OUTPUT.display_output_on_browser()
 
 def show_floating_box_warning():
+    """Show an informational message for floating a box window.
+    """
     import NOTIFICATION
     NOTIFICATION.duck_pop(main_text="Click has no use for this button. Just hold down on the arrow and drag to make the window floating.\nThis will always stay on top even when changed to another tab.")
     
     
 def get_floating_box_documentation():
+    """Return an informational message for floating a box window.
+    """
     return "Hold down on the arrow and drag to make the window floating. This will always stay on top even when changed to another tab."
     
     
