@@ -121,6 +121,8 @@ def email_error(
 
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         developer_emails = USER.get_revit_developer_emails()
+        if len(developer_emails) == 0:
+            developer_emails = ["szhang@ennead.com"]
         if "h" in app_uptime and 50 < int(app_uptime.split("h")[0]):
             email_to_self(
                 subject="I am tired...Revit running non-stop for {}".format(app_uptime),
