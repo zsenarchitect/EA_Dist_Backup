@@ -150,7 +150,7 @@ class FamilyMetaDataExporter:
                                                                       family_path.replace(self.family_lib_folder, ""),
                                         width = 1500))
         
-        family_doc = REVIT_APPLICATION.get_application().OpenDocumentFile(family_path)
+        family_doc = REVIT_APPLICATION.get_app().OpenDocumentFile(family_path)
         # print family_doc
         t = DB.Transaction(family_doc, "Export Family Meta Data")
         t.Start()

@@ -1222,7 +1222,7 @@ def print_ranked_log():
 
 
 def get_all_open_docs():
-    return EA_UTILITY.get_application().Documents
+    return EA_UTILITY.get_app().Documents
 
 def get_full_docs():
 

@@ -379,7 +379,7 @@ def update_account_by_local_warning_diff(doc):
 def is_TTS_killed():
     return not DATA_FILE.get_revit_ui_setting_data(("toggle_bt_is_talkie", True))
     """
-    dump_folder = FOLDER.get_EA_local_dump_folder()
+    dump_folder = ENVIRONMENT.DUMP_FOLDER
     file_name = "EA_TALKIE_KILL.kill"
 
     if EA_UTILITY.is_file_exist_in_folder(file_name, dump_folder):

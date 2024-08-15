@@ -47,7 +47,7 @@ def update_log(string):
 
 
 def process_family():
-    docs = EA_UTILITY.get_application().Documents
+    docs = EA_UTILITY.get_app().Documents
     OUT = []
     for doc in docs:
         if doc.IsFamilyDocument:

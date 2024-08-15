@@ -15,7 +15,7 @@ import clr # pyright: ignore
 from pyrevit.revit import ErrorSwallower
 from pyrevit import script #
 
-from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION, LOG
+from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION, LOG, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_UNIT
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit import ApplicationServices # pyright: ignore 
@@ -35,14 +35,14 @@ KEY_PREFIX = "BLOCKS2FAMILY"
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def block2family():
-    for _doc in REVIT_APPLICATION.get_application().Documents:
+    for _doc in REVIT_APPLICATION.get_app().Documents:
         if _doc.IsFamilyDocument:
             try:
                 _doc.Close()
             except:
                 pass
 
-    working_files = [file for file in os.listdir(FOLDER.get_EA_local_dump_folder()) if file.startswith(KEY_PREFIX) and file.endswith(".json")]
+    working_files = [file for file in os.listdir(ENVIRONMENT.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(".json")]
     for i, file in enumerate(working_files):
         NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "").replace(KEY_PREFIX + "_", "")))
         process_file(file)
@@ -63,7 +63,7 @@ def load_family(file):
     template = "{}\\BaseFamily_mm.rft".format(os.path.dirname(__file__))
 
     # create new family from path(loaded with shared parameter), 
-    family_doc = ApplicationServices.Application.NewFamilyDocument (REVIT_APPLICATION.get_application(), template)
+    family_doc = ApplicationServices.Application.NewFamilyDocument (REVIT_APPLICATION.get_app(), template)
 
     block_name = file.replace(".json", "").replace(KEY_PREFIX + "_", "")
     geo_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)

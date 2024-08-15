@@ -82,7 +82,7 @@ def process_file(file, camera, ref_view_name):
     open_options.DetachFromCentralOption = DB.DetachFromCentralOption.DetachAndPreserveWorksets
 
     try:
-        new_doc = EnneadTab.REVIT.REVIT_APPLICATION.get_application().OpenDocumentFile(model_path,open_options)
+        new_doc = EnneadTab.REVIT.REVIT_APPLICATION.get_app().OpenDocumentFile(model_path,open_options)
 
         views = DB.FilteredElementCollector(new_doc).OfClass(DB.View3D).WhereElementIsNotElementType().ToElements()
         views = filter(lambda x: x.Name == ref_view_name, views)
