@@ -203,4 +203,5 @@ def show_warnings_in_view(view, doc):
 
 def unit_test():
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
-        switch_to_sync_draft_view(DOC)
+        if not isinstance(DOC, object):
+            switch_to_sync_draft_view(DOC)

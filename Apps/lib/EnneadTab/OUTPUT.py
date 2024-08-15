@@ -151,7 +151,7 @@ class Output:
 
             report_file.write("<h1 style='text-align: center;'>{}</h1>".format("EnneadTab Console"))
             report_file.write("<div style='text-align: center;'>")
-            report_file.write("<img src='{}\\logo_ennead-e.png' height='80'>".format(ENVIRONMENT.IMAGE_FOLDER))
+            report_file.write("<img src='file://{}/logo_ennead-e.png' height='80'>".format(ENVIRONMENT.IMAGE_FOLDER))
             report_file.write("</div>")
             report_file.write("<p style='text-align: center;' class='foot_note'>{}</p>".format(TIME.get_formatted_current_time()))
             report_file.write("<hr>") 
@@ -176,8 +176,8 @@ class Output:
         
         if os.path.exists(str(input)):
             if "_large" in str(input):
-                return "<img src='{}' height = '800'>".format(input)
-            return "<img src='{}' height = '300'>".format(input)
+                return "<img src='file://{}' height = '800'>".format(input)
+            return "<img src='file://{}' height = '300'>".format(input)
         return str(input).replace("\n", "<br>")
 
     # try to use a dummy top match pyrevit output method
