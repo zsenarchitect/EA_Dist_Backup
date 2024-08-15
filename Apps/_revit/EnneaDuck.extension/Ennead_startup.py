@@ -177,7 +177,7 @@ class TempGraphicServer(UI.ITemporaryGraphicsHandler):
 
 
 
-        temp_graphic_data = DATA_FILE.read_json_as_dict_in_dump_folder("CANVAS_TEMP_GRAPHIC_DATA_{}.sexyDuck".format(data.Document.Title),
+        temp_graphic_data = DATA_FILE.get_data("CANVAS_TEMP_GRAPHIC_DATA_{}.sexyDuck".format(data.Document.Title),
                                                                                  create_if_not_exist=True)
         record = temp_graphic_data.get(str(data.Index))
         if record and record.get("additional_info").get("description"):

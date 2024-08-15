@@ -58,7 +58,7 @@ class Solution:
 
             data["id"] = floor.UniqueId
             setting_name = EnneadTab.REVIT.REVIT_SELECTION.get_export_setting(doc, setting_name = None, return_name = True) 
-            EnneadTab.REVIT.REVIT_EXPORT.export_dwg(doc.ActiveView, floor.UniqueId , EnneadTab.ENVIRONMENT.DUMP_FOLDER, dwg_setting_name = setting_name, is_export_view_on_sheet = False)
+            EnneadTab.REVIT.REVIT_EXPORT.export_dwg(doc.ActiveView, floor.UniqueId , EnneadTab.FOLDER.DUMP_FOLDER, dwg_setting_name = setting_name, is_export_view_on_sheet = False)
             t.RollBack()
 
 

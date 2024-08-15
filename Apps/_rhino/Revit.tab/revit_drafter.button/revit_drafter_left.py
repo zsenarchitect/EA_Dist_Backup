@@ -97,7 +97,7 @@ def revit_drafter():
 
 
     # get_dwg path
-    transfer_dwg = "{}\\{}".format(ENVIRONMENT.DUMP_FOLDER , "EA_TRANSFER_DRAFT_BACKGROUND.dwg")
+    transfer_dwg = "{}\\{}".format(FOLDER.DUMP_FOLDER , "EA_TRANSFER_DRAFT_BACKGROUND.dwg")
 
     # import and bundle layer
     setting = DATA_FILE.get_data("draft_transfer_revit2rhino_setting.sexyDuck")

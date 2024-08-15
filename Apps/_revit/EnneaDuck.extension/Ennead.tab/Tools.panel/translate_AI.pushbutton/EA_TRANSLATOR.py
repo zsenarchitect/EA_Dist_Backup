@@ -28,13 +28,13 @@ def secure_folder(path):
         pass
     return path
 
-def get_user_folder():
+def get_user_document_folder():
     from os import environ as OS_ENV
     #print OS_ENV["USERPROFILE"]
     return "{}\Documents".format(OS_ENV["USERPROFILE"])
 
 def get_EA_setting_folder():
-    folder = get_user_folder() + "\EnneadTab Settings"
+    folder = get_user_document_folder() + "\EnneadTab Settings"
     #print folder
     return secure_folder(folder)
 

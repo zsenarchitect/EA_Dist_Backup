@@ -2,6 +2,7 @@ import shutil
 import os
 import time
 import ENVIRONMENT
+import FOLDER
 import USER
 import NOTIFICATION
 
@@ -29,17 +30,17 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         if not os.path.exists(exe):
             raise Exception("Only work for stanfle along exe, not for foldered exe.[{}] not exist".format(exe))
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
-        temp_exe = ENVIRONMENT.DUMP_FOLDER + "\\" + temp_exe_name
+        temp_exe = FOLDER.DUMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)
         shutil.copyfile(exe, temp_exe)
         os.startfile(temp_exe)
-        for file in os.listdir(ENVIRONMENT.DUMP_FOLDER):
+        for file in os.listdir(FOLDER.DUMP_FOLDER):
             if file.startswith("_temp_exe_"):
                 # ignore if this temp file is less than 1 day old
-                if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.DUMP_FOLDER, file)) < 86400:
+                if time.time() - os.path.getmtime(os.path.join(FOLDER.DUMP_FOLDER, file)) < 86400:
                     continue
                 try:
-                    os.remove(os.path.join(ENVIRONMENT.DUMP_FOLDER, file))
+                    os.remove(os.path.join(FOLDER.DUMP_FOLDER, file))
                 except:
                     pass
         return True

@@ -628,9 +628,9 @@
     },
     "Revit.tab\\block2family.button\\block2family_left.py": {
         "script": "Revit.tab\\block2family.button\\block2family_left.py",
-        "icon": null,
+        "icon": "Revit.tab\\block2family.button\\icon.png",
         "alias": "Block2Family",
-        "doc": "This button does Block2Family when left click",
+        "doc": "Convert rhino blocks to revit families and place them in project. This tool different from standard Rhino2Revit because you do not need to manage family creation and it can batch process.",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png"
     },

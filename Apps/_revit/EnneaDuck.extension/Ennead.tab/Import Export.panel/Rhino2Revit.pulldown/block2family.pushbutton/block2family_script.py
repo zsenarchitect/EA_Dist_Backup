@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "After getting all the block data from Rhino side, create/update family in Revit.If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id."
+__doc__ = "After getting all the block data from Rhino side, create/update family in Revit. If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id."
 __title__ = "Block2Family"
+
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
@@ -13,7 +14,7 @@ import math
 import clr # pyright: ignore 
 # from pyrevit import forms #
 from pyrevit.revit import ErrorSwallower
-from pyrevit import script #
+from pyrevit import script, forms #
 
 from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION, LOG, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_UNIT
@@ -32,6 +33,9 @@ from Autodesk.Revit import DB # pyright: ignore
 
 KEY_PREFIX = "BLOCKS2FAMILY"
 
+def get_block_name_from_data_file(data_file):
+    return data_file.replace(".sexyDuck", "").replace(KEY_PREFIX + "_", "")
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def block2family():
@@ -42,30 +46,59 @@ def block2family():
             except:
                 pass
 
-    working_files = [file for file in os.listdir(ENVIRONMENT.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(".json")]
-    for i, file in enumerate(working_files):
-        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(working_files), file.replace(".json", "").replace(KEY_PREFIX + "_", "")))
-        process_file(file)
+    data_files = [file for file in os.listdir(FOLDER.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(".sexyDuck")]
+
+    face_model_selection = forms.SelectFromList.show([get_block_name_from_data_file(x) for x in sorted(data_files)],
+                                                     multiselect = True,
+                                                     width = 1000,
+                                                     button_name = "Use UV projection for selected blocks",
+                                                     title="How was your block orgin defined? If it was laid on XY then it is UV projection, if it was standing then it is NOT UV projection.")
+    
+    if face_model_selection is None:
+        return
+    
+    for i, data_file in enumerate(data_files):
+        block_name = get_block_name_from_data_file(data_file)
+        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(data_files),block_name))
+        process_file(data_file, block_name in face_model_selection)
            
     NOTIFICATION.messenger("All Rhino blocks have been loaded to Revit! Hooray!!")
 
 
 
 
-def process_file(file):
-    load_family(file)
-    update_instances(file)
+def process_file(data_file, use_UV_projection):
+    load_family(data_file)
+    update_instances(data_file, use_UV_projection)
 
 
 
 
 def load_family(file):
-    template = "{}\\BaseFamily_mm.rft".format(os.path.dirname(__file__))
+    data = DATA_FILE.get_data(file)
+
+    geo_data = data["geo_data"]
+    para_names = []
+    for id, info in geo_data.items():
+        user_data = info["user_data"]
+        para_names.extend(user_data.keys())
+
+    para_names = list(set(para_names))
+    
+    unit = data["unit"] # ft, in, m, mm
+    if unit in ["ft", "in"]:
+        template_unit = "ft"
+    elif unit in ["m", "mm"]:
+        template_unit = "mm"
+    else:
+        NOTIFICATION.messenger("Wait, cannot use this unit [{}]".format(unit))
+        return
+    template = "{}\\BaseFamily_{}.rft".format(os.path.dirname(__file__), template_unit)
 
     # create new family from path(loaded with shared parameter), 
     family_doc = ApplicationServices.Application.NewFamilyDocument (REVIT_APPLICATION.get_app(), template)
 
-    block_name = file.replace(".json", "").replace(KEY_PREFIX + "_", "")
+    block_name = get_block_name_from_data_file(file)
     geo_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)
     t = DB.Transaction(family_doc, __title__)
     t.Start()
@@ -76,13 +109,21 @@ def load_family(file):
             
         # get in geos, 
         #free_form_convert(family_doc, geo_file)
+
+    manager = family_doc.FamilyManager
+    existing_para_names = [x.Definition.Name for x in manager.GetParameters()]
+    for para_name in para_names:
+        if para_name in existing_para_names:
+            continue
         
+        manager.AddParameter(para_name, DB.GroupTypeId.Data, REVIT_UNIT.lookup_unit_spec_id("text"), True)
+         
     t.Commit()
 
     # load to project
     option = DB.SaveAsOptions()
     option.OverwriteExistingFile = True
-    family_container_folder = FOLDER.get_desktop_folder() + "\\EnneadTab Temp Family Folder"
+    family_container_folder = FOLDER.USER_DESKTOP_FOLDER + "\\EnneadTab Temp Family Folder"
     if not os.path.exists(family_container_folder):
         os.mkdir(family_container_folder)
     family_doc.SaveAs(family_container_folder + "\\" + block_name + ".rfa",
@@ -203,46 +244,71 @@ def get_subC_by_name(doc, name):
 
 
 
-def update_instances(file):
+def update_instances(file, use_UV_projection):
     t = DB.Transaction(doc, __title__)
     t.Start()
-    block_name = file.replace(".json", "").replace(KEY_PREFIX + "_", "")
+    block_name = get_block_name_from_data_file(file)
     exisitng_instances = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(family_name=block_name, type_name=block_name)
     exisitng_instances_map = {x.LookupParameter("Rhino_Id").AsString(): x for x in exisitng_instances}
     
-    data = DATA_FILE.read_json_as_dict_in_dump_folder(file)
+    data = DATA_FILE.get_data(file)
+    unit = data["unit"]
+    if unit == "ft":
+        factor = 1
+    elif unit == "in":
+        factor = 1/12
+    elif unit == "mm":
+        factor = REVIT_UNIT.mm_to_internal(1)
+    else:
+        factor = REVIT_UNIT.m_to_internal(1)
+
+        
+    geo_data = data["geo_data"]
 
     type = REVIT_FAMILY.get_family_type_by_name(family_name=block_name, type_name=block_name)
-    type.LookupParameter("Description").Set("OBO Block Convert")
+    type.LookupParameter("Description").Set("EnneadTab Block Convert")
 
-    for id, info in data.items():
+    for id, info in geo_data.items():
         if id in exisitng_instances_map:
             instance = exisitng_instances_map[id]
             doc.Delete(instance.Id)
         transform_data = info["transform_data"]
-        instance = place_new_instance(type, transform_data)
+        instance = place_new_instance(type, transform_data, factor, use_UV_projection)
         user_data = info["user_data"]
         for key, value in user_data.items():
             if instance.LookupParameter(key) is None:
                 continue
 
             if key == "Projected_Area":
-                value = REVIT_UNIT.sqm_to_internal(float(value))
+                value = factor * float(value)
             if key in ["Panel_Width", "Panel_Height"]:
-                value = REVIT_UNIT.mm_to_internal(float(value))
+                value = factor * float(value)
             instance.LookupParameter(key).Set(value)
             
         instance.LookupParameter("Rhino_Id").Set(id)
     t.Commit()
 
         
-def place_new_instance(type, transform_data):
+def place_new_instance(type, transform_data, factor, use_UV_projection):
+    """_summary_
+
+    Args:
+        type (_type_): _description_
+        transform_data (_type_): _description_
+        factor (_type_): _description_
+        use_UV_projection (Bool): True if you are modeling the facade laying flat, aka UV = XY,
+        False if it is modelied standing, aka XY = XY
+
+    Returns:
+        _type_: _description_
+    """
+    
     transform = transform_data['transform']
     rotation_tuple = transform_data["rotation"]
     reflection = transform_data["is_reflection"]
-    X = REVIT_UNIT.mm_to_internal(transform[0][-1])
-    Y = REVIT_UNIT.mm_to_internal(transform[1][-1])
-    Z = REVIT_UNIT.mm_to_internal(transform[2][-1])
+    X = transform[0][-1] * factor
+    Y = transform[1][-1] * factor
+    Z = transform[2][-1] * factor
 
     temp_instance = DB.AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance(doc, type)
 
@@ -256,13 +322,16 @@ def place_new_instance(type, transform_data):
     angle = rotate_angle_z
     pt = DB.XYZ(0, 0, 0)
     rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
+    if reflection and not use_UV_projection:
+        DB.AdaptiveComponentInstanceUtils.SetInstanceFlipped (temp_instance, True)
+        rotation = DB.Transform.CreateRotationAtPoint (axis, math.pi, pt) * rotation
 
 
     axis = rotation.BasisY
     angle = rotate_angle_y
     pt = DB.XYZ(0, 0, 0)
     rotation = DB.Transform.CreateRotationAtPoint (axis, angle, pt) * rotation
-    if reflection:
+    if reflection and use_UV_projection:
         DB.AdaptiveComponentInstanceUtils.SetInstanceFlipped (temp_instance, True)
         rotation = DB.Transform.CreateRotationAtPoint (axis, math.pi, pt) * rotation
 
@@ -276,7 +345,7 @@ def place_new_instance(type, transform_data):
 
     translation = DB.Transform.CreateTranslation(DB.XYZ(X, Y, Z))
     total_transform = translation * rotation
-    DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
+
 
     # if use non- adaptive generic model then modify this.
     # insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]

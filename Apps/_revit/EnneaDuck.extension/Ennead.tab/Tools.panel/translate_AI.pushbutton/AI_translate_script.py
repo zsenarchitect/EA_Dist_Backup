@@ -523,7 +523,7 @@ class AiTranslator(WPFWindow):
         file_name = "EA_TRANSLATE.sexyDuck"
         #print file_name
 
-        dump_folder = ENVIRONMENT.DUMP_FOLDER
+        dump_folder = FOLDER.DUMP_FOLDER
 
         #print dump_folder
         file_path = "{}\{}".format(dump_folder, file_name)

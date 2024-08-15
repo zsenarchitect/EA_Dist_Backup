@@ -1,7 +1,7 @@
 import time
 import os
 import shutil
-import ENVIRONMENT
+from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 
 def copy_file(original_path, new_path):
     target_folder = os.path.dirname(new_path)
@@ -26,7 +26,7 @@ def secure_folder(folder):
 
 
 
-def get_user_folder():
+def get_user_document_folder():
     return "{}\\Documents".format(os.environ["USERPROFILE"])
 
 
@@ -48,12 +48,12 @@ def get_file_extension_from_path(file_path):
 
 def get_EA_dump_folder_file(file_name):
     """include extension"""
-    return "{}\\{}".format(ENVIRONMENT.DUMP_FOLDER, file_name)
+    return "{}\\{}".format(DUMP_FOLDER, file_name)
 
 
 def get_shared_dump_folder_file(file_name):
     """include extension"""
-    return "{}\\{}".format(ENVIRONMENT.SHARED_DUMP_FOLDER, file_name)
+    return "{}\\{}".format(SHARED_DUMP_FOLDER, file_name)
 
 
 

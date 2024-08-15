@@ -1,11 +1,12 @@
 
 __title__ = "Block2Family"
-__doc__ = "This button does Block2Family when left click"
+__doc__ = "Convert rhino blocks to revit families and place them in project. This tool different from standard Rhino2Revit because you do not need to manage family creation and it can batch process."
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs # pyright: ignore
 import scriptcontext as sc # pyright: ignore
 import os
+import shutil
 import clr # pyright: ignore
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION, FOLDER, ENVIRONMENT
 
@@ -14,34 +15,35 @@ KEY_PREFIX = "BLOCKS2FAMILY"
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def block2family():
+
     blocks = rs.GetObjects("pick blocks to transfer", rs.filter.instance)
     if not blocks:
         return
 
     for block_name in rs.BlockNames():
         rs.RenameBlock(block_name, block_name.replace("/", ""))
-    for block_id in blocks:
+    # for block_id in blocks:
 
-        for key in rs.GetUserText(block_id):
-            if key == "Facade direction":
-                value = rs.GetUserText(block_id, key)
-                rs.SetUserText(block_id, key)
-                rs.SetUserText(block_id, "Orientation", value)
+    #     for key in rs.GetUserText(block_id):
+    #         if key == "Facade direction":
+    #             value = rs.GetUserText(block_id, key)
+    #             rs.SetUserText(block_id, key)
+    #             rs.SetUserText(block_id, "Orientation", value)
 
-            if key == "Building ID":
-                value = rs.GetUserText(block_id, key)
-                rs.SetUserText(block_id, key)
-                rs.SetUserText(block_id, "Bldg_Id", value)
+    #         if key == "Building ID":
+    #             value = rs.GetUserText(block_id, key)
+    #             rs.SetUserText(block_id, key)
+    #             rs.SetUserText(block_id, "Bldg_Id", value)
 
 
 
     rs.EnableRedraw(False)
 
     # purge old data folders
-    for folder in os.listdir(ENVIRONMENT.DUMP_FOLDER):
+    for folder in os.listdir(FOLDER.DUMP_FOLDER):
         if folder.startswith(KEY_PREFIX):
             if os.path.isdir(FOLDER.get_EA_dump_folder_file(folder)):
-                FOLDER.purge_folder(FOLDER.get_EA_dump_folder_file(folder))
+                shutil.rmtree(FOLDER.get_EA_dump_folder_file(folder))
             else:
                 os.remove(FOLDER.get_EA_dump_folder_file(folder))
 
@@ -96,18 +98,24 @@ def process_block_name(block_name,block_ids):
 
 
     
-    with DATA_FILE.update_data("{}_{}.json".format(KEY_PREFIX, block_name)) as data_file:
-
+    with DATA_FILE.update_data("{}_{}.sexyDuck".format(KEY_PREFIX, block_name)) as data:
+        geo_data = {}
         for block_id in block_ids:
             rs.SetUserText(block_id, "Projected_Area", area)
             rs.SetUserText(block_id, "Panel_Width", width)
             rs.SetUserText(block_id, "Panel_Height", height)
-            rs.SetUserText(block_id, "Nest_Tiles", ",".join(children_block))
+
             
-            data_file[str(block_id)] = {
+            geo_data[str(block_id)] = {
                 "transform_data": get_transform(block_id),
                 "user_data": {key:rs.GetUserText(block_id, key) for key in rs.GetUserText(block_id)}
                 }
+        
+        data["unit"] = rs.UnitSystemName(abbreviate=True)    
+        # ft, in, m, mm
+
+        
+        data["geo_data"] = geo_data
 
 
 def detail_matrix(xform):
@@ -165,9 +173,11 @@ def export_sample_block(block_name, output_folder):
     min = bbox[0]
     max = bbox[6]
     area = (max[0] - min[0]) * (max[1] - min[1])
-    area = abs(area) / 1000000# convert from sqmm to sqm
-    width = max[0] - min[0]
-    height = max[1] - min[1]
+    
+    # convert from any unit to sqft
+    area = abs(area)# * rs.UnitScale(9)*rs.UnitScale(9)
+    width = (max[0] - min[0])# * rs.UnitScale(9)
+    height = (max[1] - min[1])# * rs.UnitScale(9)
 
 
     layer_dict = {}

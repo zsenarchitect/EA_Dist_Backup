@@ -71,7 +71,7 @@ def get_special_selection():
         panel_location = (bbox.Max + bbox.Min)/2
         all_panel_locations[panel.Id] = panel_location
     
-    data = EnneadTab.DATA_FILE.read_json_as_dict_in_dump_folder("temp_selection_location.json")
+    data = EnneadTab.DATA_FILE.get_data("temp_selection_location.json")
     #print data
     if not data:
 

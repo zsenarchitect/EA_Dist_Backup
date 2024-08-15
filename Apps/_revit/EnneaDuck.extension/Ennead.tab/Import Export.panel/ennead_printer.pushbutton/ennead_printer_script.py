@@ -220,7 +220,7 @@ class EA_Printer_UI(WPFWindow):
 
         # important data setup
         self.setting_file = "exporter_setting.sexyDuck"
-        self.output_folder = "{}\EnneadTab Exporter".format(ENVIRONMENT.DUMP_FOLDER)
+        self.output_folder = "{}\EnneadTab Exporter".format(FOLDER.DUMP_FOLDER)
         FOLDER.secure_folder(self.output_folder)
 
 
@@ -1469,7 +1469,7 @@ class EA_Printer_UI(WPFWindow):
 
 
     def update_preview_image(self, view_or_sheet):
-        REVIT_EXPORT.export_image(view_or_sheet, "exporter_preview", ENVIRONMENT.DUMP_FOLDER, is_thumbnail = True)
+        REVIT_EXPORT.export_image(view_or_sheet, "exporter_preview", FOLDER.DUMP_FOLDER, is_thumbnail = True)
         self.set_image_source(self.preview_image, FOLDER.get_EA_dump_folder_file("exporter_preview.jpg"))
 
 

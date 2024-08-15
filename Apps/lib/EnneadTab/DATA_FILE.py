@@ -211,41 +211,48 @@ def pretty_print_dict(dict):
     print(pretty_string)
 
 
-def get_data(file_name, is_local=True):
+def get_data(file_name_or_full_path, is_local=True):
     """Get data from a JSON file and return it as a dictionary.
 
     Args:
-        file_name (str): The name of the file to read.
+        file_name_or_full_path (str): The name of the file to read, ends with extension, or the full path. The full path is a backward compatiablity feature and is not prefered.
         is_local (bool, optional): Whether the file is in the local dump folder. Defaults to True.
 
     Returns:
         dict: The contents of the file as a dictionary.
     """
-    if os.path.exists(file_name):
-        return _read_json_as_dict(file_name, use_encode=True, create_if_not_exist=False)
+    if os.path.exists(file_name_or_full_path):
+        if "ENNEADTAB_DEVELOPERS.secret" not in file_name_or_full_path:
+            print("Using full path feature is allowed but not prefered.",file_name_or_full_path)
+        return _read_json_as_dict(file_name_or_full_path, use_encode=True, create_if_not_exist=False)
 
     if is_local:
         return _read_json_as_dict_in_dump_folder(
-            file_name, use_encode=True, create_if_not_exist=True
+            file_name_or_full_path, use_encode=True, create_if_not_exist=True
         )
     else:
         return _read_json_as_dict_in_shared_dump_folder(
-            file_name, use_encode=True, create_if_not_exist=True
+            file_name_or_full_path, use_encode=True, create_if_not_exist=True
         )
 
 
-def set_data(data, file_name, is_local=True):
+def set_data(data, file_name_or_full_path, is_local=True):
     """Save a dictionary to a JSON file in either the dump folder or the shared dump folder.
 
     Args:
         data (dict): The dictionary to store.
-        file_name (str): The name of the file to write to.
+        file_name_or_full_path (str): The name of the file to write to, ends with extension. The full path is a backward compatiablity feature and is not prefered.
         is_local (bool, optional): Whether the file should be saved to the local dump folder. Defaults to True.
     """
+    if os.path.exists(file_name_or_full_path):
+        if "ENNEADTAB_DEVELOPERS.secret" not in file_name_or_full_path:
+            print("Using full path feature is allowed but not prefered.",file_name_or_full_path)
+        return _save_dict_to_json(file_name_or_full_path, use_encode=True)
+    
     if is_local:
-        _save_dict_to_json_in_dump_folder(data, file_name, use_encode=True)
+        _save_dict_to_json_in_dump_folder(data, file_name_or_full_path, use_encode=True)
     else:
-        _save_dict_to_json_in_shared_dump_folder(data, file_name, use_encode=True)
+        _save_dict_to_json_in_shared_dump_folder(data, file_name_or_full_path, use_encode=True)
 
 
 @contextmanager

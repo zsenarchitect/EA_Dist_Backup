@@ -19,7 +19,7 @@ from pyrevit import script #
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_HISTORY
-from EnneadTab import ENVIRONMENT, OUTPUT, NOTIFICATION, ERROR_HANDLE, LOG
+from EnneadTab import ENVIRONMENT, OUTPUT, NOTIFICATION, ERROR_HANDLE, LOG, FOLDER
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
@@ -53,7 +53,7 @@ def display_warning_history(using_current = True):
         @property
         def name(self):
             return self.item.replace("REVIT_WARNING_HISTORY_", "").replace(".sexyDuck", "")
-    folder = ENVIRONMENT.DUMP_FOLDER or ENVIRONMENT.SHARED_DATA_DUMP_FOLDER
+    folder = FOLDER.DUMP_FOLDER or FOLDER.SHARED_DATA_DUMP_FOLDER
 
     file_list = [MyOption(x) for x in os.listdir(folder) if x.startswith("REVIT_WARNING_HISTORY_")]
     file_list.sort(key=lambda x: x.name)
