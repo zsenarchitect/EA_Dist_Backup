@@ -33,6 +33,8 @@ Legacy version use script hosted by L drive version. Legacy version only works w
 
 4. You can now open Revit.
 
+5. __(Optional)__ Configer your notification level at chapter 4 below.
+
 ## 2.3 Uninstall Ennead-For-Revit
 
 1. Revit is not open.
@@ -55,3 +57,13 @@ Legacy version use script hosted by L drive version. Legacy version only works w
 
 > [!IMPORTANT]
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick.
+
+
+## 4. Configer Notification Level
+EnneadTab comes with many functions to help your task. It also provide many notification for long process time event, such as heavy exporting and family loading, you are are more aware of the status of the workflow.
+
+By default, EnneadTab set default amount of notification. But you can set it to be __no notification__ or __more notification__ by going to the __Setting__ in EnneadTab Revit.
+
+![screenshot of EnneadTab Revit Setting](/Apps/lib/EnneadTab/images/Instruction_setting.png)
+
+
