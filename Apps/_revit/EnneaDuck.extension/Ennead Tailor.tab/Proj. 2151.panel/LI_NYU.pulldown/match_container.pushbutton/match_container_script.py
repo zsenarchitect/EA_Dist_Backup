@@ -41,7 +41,9 @@ for pair in dict_definitions:
     key, value = pair
     EMOJI_DICT[key] = value
 
-    
+IS_TESING_NEW_FUNC =  USER.IS_DEVELOPER
+
+
 import file_getter as FG
 # import system_family_checker as SFC
 import family_checker as FC
@@ -83,17 +85,19 @@ def match_container():
         "2151_A_EA_NYULI_Parking West",
         "2151_A_EA_NYULI_CUP_EXT"
     ]
-    if USER.IS_DEVELOPER:
+
+
+    if IS_TESING_NEW_FUNC:
         NYULI_list = NYULI_list[3:]
     working_docs = [FG.get_NYU_doc(doc_title = x) for x in NYULI_list]
     working_docs = [x for x in working_docs if x is not None]
 
 
-    if USER.IS_DEVELOPER:
-        TC.process_template(container_doc, working_docs)
-        NOTIFICATION.messenger("AAAAAAAAAAA Done!")
-        OUTPUT.display_output_on_browser()
-        return
+    # if IS_TESING_NEW_FUNC:
+    #     TC.process_template(container_doc, working_docs)
+    #     NOTIFICATION.messenger("AAAAAAAAAAA Done!")
+    #     OUTPUT.display_output_on_browser()
+        
 
 
     
@@ -104,7 +108,11 @@ def match_container():
         "Ceilings"
     ]
     for sys_cate in sys_cates_with_compound:
-        FC.process_family(sys_cate, container_doc, working_docs, has_compound = True)
+        FC.process_family(sys_cate, 
+                          container_doc, 
+                          working_docs, 
+                          has_compound = True, 
+                          is_loadable=False)
 
     sys_cates_without_compound = [
         "Ramps",
@@ -121,7 +129,11 @@ def match_container():
         "TextNotes"
     ]
     for sys_cate in sys_cates_without_compound:
-        FC.process_family(sys_cate, container_doc, working_docs, has_compound = False)
+        FC.process_family(sys_cate, 
+                          container_doc, 
+                          working_docs, 
+                          has_compound = False, 
+                          is_loadable=False)
 
 
     family_cates = [
@@ -150,7 +162,11 @@ def match_container():
         "CaseworkTags"
     ]
     for family_cate in family_cates:
-        FC.process_family(family_cate, container_doc, working_docs, has_compound = False)
+        FC.process_family(family_cate, 
+                          container_doc, 
+                          working_docs, 
+                          has_compound = False, 
+                          is_loadable=True)
 
     TC.process_template(container_doc, working_docs)
 

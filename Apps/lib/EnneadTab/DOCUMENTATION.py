@@ -236,19 +236,15 @@ def get_title_tip_from_file(lucky_file, is_random_single):
     return title, tip, icon_path
 
 def show_tip_revit(is_random_single=True):
-    import REVIT
-    import TEXT
+
     from pyrevit import script
     output = script.get_output()
     if not output:
         output = OUTPUT.Output()
-    folder =  "{}\ENNEAD.extension".format(ENVIRONMENT.PUBLISH_BETA_FOLDER_FOR_REVIT)
-    if os.path.exists(ENVIRONMENT.WORKING_FOLDER_FOR_REVIT):
-        folder =  "{}\ENNEAD.extension".format(ENVIRONMENT.WORKING_FOLDER_FOR_REVIT)
-   
+      
     
-    for title_titp_tuple in get_title_tip_from_folder(folder, is_random_single):
-        title, tips, icon_path = title_titp_tuple
+    for title_tits_tuple in get_title_tip_from_folder(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, is_random_single):
+        title, tips, icon_path = title_tits_tuple
         if tips:
             print ("\n\n\n\n")
             if is_random_single:

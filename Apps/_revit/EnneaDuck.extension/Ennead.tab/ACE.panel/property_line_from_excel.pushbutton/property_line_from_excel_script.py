@@ -8,7 +8,7 @@ import os
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, EXCEL, TIME, DATA_CONVERSION, FOLDER, DATA_FILE
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, EXCEL, TIME, DATA_CONVERSION, FOLDER
 
 from pyrevit import forms
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS, REVIT_GEOMETRY, REVIT_UNIT, REVIT_GEOMETRY

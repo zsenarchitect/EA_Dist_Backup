@@ -6,6 +6,7 @@ try:
     DOC = __revit__.ActiveUIDocument.Document # pyright: ignore
 except:
     REF_CLASS = object # this is to trick that class can be used during INIT process
+    DOC = object
 
     
 import NOTIFICATION
@@ -36,6 +37,40 @@ class EnneadTabFamilyLoadingOption(REF_CLASS):
             source = DB.FamilySource.Project
         return True
 
+
+
+class DryLoadFamilyOption(REF_CLASS):
+    """this option will always return False becasue it is only to check the difference but not really load family"""
+    def __init__(self):
+        # assuming it is same at beging and check to see if it is changed during load, which mean a found is triggered
+        self.is_version_different = False
+        
+    def OnFamilyFound(self, familyInUse, overwriteParameterValues):
+        self.is_version_different = True
+        return False
+
+    def OnSharedFamilyFound(self, sharedFamily, familyInUse, source, overwriteParameterValues):
+        self.is_version_different = True
+        return False
+
+
+def is_family_version_different(family_doc, project_doc):
+    """_summary_
+
+    Args:
+        family_doc (DB.Document): _description_
+        project_doc (DB.Document): _description_
+
+    return : True: family exist, but version different
+            False: family exsit, and version is same
+            None: family not exist in project.
+    """
+    if not is_family_exist(family_doc.Title, project_doc):
+        NOTIFICATION.messenger("[{}] does not exist in [{}]".format(family_doc.Title, project_doc.Title))
+        return None
+    dry_opt = DryLoadFamilyOption()
+    load_family(family_doc,project_doc,loading_opt=dry_opt)  
+    return dry_opt.is_version_different  
 
 def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOption()):
     """safely load a family to a project.
@@ -168,15 +203,23 @@ class RevitType(RevitInstance):
     def type_name(self):
         return self.element.LookupParameter("Type Name").AsString()
 
-
     @property
-    def pretty_name(self):
+    def family_name(self):
         # handle loadble family
         if hasattr(self.element, "FamilyName"):
-            family_name = self.element.FamilyName
+            return self.element.FamilyName
 
         # handle system family
         else:
-            family_name = self.element.Category.Name
-            
-        return "[{}]: {}".format(family_name, self.type_name)
+            return self.element.Category.Name
+    @property
+    def pretty_name(self):
+        return "[{}]: {}".format(self.family_name, self.type_name)
+
+    # def __getattr__(self, name):
+    #     try:
+    #         # First, try to get the attribute from the class itself
+    #         return self.__getattribute__(name)
+    #     except AttributeError:
+    #         # If it's not found, return the attribute from self.element
+    #         return getattr(self.element, name)

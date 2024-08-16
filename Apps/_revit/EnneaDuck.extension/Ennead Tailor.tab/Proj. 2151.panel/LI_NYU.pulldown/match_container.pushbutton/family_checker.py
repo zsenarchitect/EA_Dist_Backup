@@ -1,3 +1,4 @@
+from doctest import master
 from pyrevit import script
 from Autodesk.Revit import DB # pyright: ignore 
 from EnneadTab.REVIT import REVIT_FAMILY
@@ -7,7 +8,7 @@ output = script.get_output()
 
 from match_container_script import EMOJI_DICT
 
-def process_family(family_category_name, container_doc, working_docs, has_compound):
+def process_family(family_category_name, container_doc, working_docs, has_compound, is_loadable):
     output.print_md("# Checking Family Category {}".format(family_category_name))
     category = getattr(DB.BuiltInCategory, "OST_{}".format(family_category_name))
 
@@ -44,6 +45,10 @@ def process_family(family_category_name, container_doc, working_docs, has_compou
     )
 
 
+    if is_loadable:
+        process_version_difference(master_types, working_docs)
+        
+
     # compare all type parameter of each type BASED ON CONTAINER VERSION
     # it is ok that working doc has additional info, but inwa to to make sure AUTHERISED TYPE must be same.
     map(lambda x: process_type_para(x, working_doc_types_collection, working_docs), master_types)
@@ -54,6 +59,47 @@ def process_family(family_category_name, container_doc, working_docs, has_compou
 
     output.print_md ("\n\n___\n\n")
     print ("\n\n")
+
+def process_version_difference(master_types, working_docs):
+    data = []
+    bad_conditions = []
+    master_family_names_checked = []
+    for master_type in master_types:
+        # some type such as FilledRegionType are part of detailcomponent category but are still considered systwm family
+        if not hasattr(master_type.element, "Family"):
+            continue
+        family_name = master_type.family_name
+        if family_name in master_family_names_checked:
+            continue
+        master_family_names_checked.append(family_name)
+        row_data = [family_name, "---"]
+        family_doc = master_type.element.Document.EditFamily(master_type.element.Family)
+        for i, working_doc in enumerate(working_docs):
+            is_different = REVIT_FAMILY.is_family_version_different(family_doc, working_doc)
+            if is_different is None:
+                row_data.append(EMOJI_DICT["NotExist"])
+            elif is_different:
+                bad_conditions.append("At <**{}**>, master version is NOT same as in <**{}**>".format(family_name, working_doc.Title))
+                row_data.append(EMOJI_DICT["NoSame"]) 
+            else:
+                row_data.append(EMOJI_DICT["Same"]) 
+
+        data.append(row_data)
+        family_doc.Close(False)
+
+    print_detail = len(bad_conditions)
+    if print_detail:
+        output.print_table(
+            table_data=data,
+            title="Version Comparision",
+            columns=["TypeName", "Container File"] + ["[{}]".format(_doc.Title) for _doc in working_docs],
+        )
+
+        for i, bad_condition in enumerate(bad_conditions):
+            output.print_md("{} - {}".format(i+1,bad_condition))
+
+        output.print_md ("\n___\n")
+
 
 def process_type_para(master_type, working_doc_types_collection, working_docs):
     data = []

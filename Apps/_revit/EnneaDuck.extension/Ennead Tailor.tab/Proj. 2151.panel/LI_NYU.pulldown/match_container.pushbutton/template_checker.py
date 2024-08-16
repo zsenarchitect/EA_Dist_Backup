@@ -3,7 +3,7 @@ from pyrevit import script
 from Autodesk.Revit import DB  # pyright: ignore
 from EnneadTab.REVIT import REVIT_CATEGORY
 from EnneadTab import TIME, USER
-from match_container_script import EMOJI_DICT
+from match_container_script import EMOJI_DICT, IS_TESING_NEW_FUNC
 
 output = script.get_output()
 
@@ -210,7 +210,7 @@ def process_template(container_doc, working_docs):
     output.print_md("# Checking Template")
 
     master_templates = query_template(container_doc)
-    if USER.IS_DEVELOPER:
+    if IS_TESING_NEW_FUNC:
         master_templates = master_templates[:5]
     master_template_names = {template.Name: template for template in master_templates}
 

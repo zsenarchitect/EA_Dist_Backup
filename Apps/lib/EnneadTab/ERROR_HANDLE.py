@@ -17,8 +17,8 @@ def try_catch_error(is_silent=False, is_pass = False):
     """Decorator for catching exceptions and sending automated error log emails.
 
     Args:
-        is_silent (bool, optional): If True, no email will be sent. Defaults to False.
-        is_pass (bool, optional): If True, the error will be ignored. Defaults to False.
+        is_silent (bool, optional): If True, email will be sent but no e msg will be visible to user. Defaults to False.
+        is_pass (bool, optional): If True, the error will be ignored, user will not be paused and no email will be sent. Defaults to False.
     """
     def decorator(func):
         def error_wrapper(*args, **kwargs):
@@ -52,7 +52,6 @@ def try_catch_error(is_silent=False, is_pass = False):
                     except IOError as e:
                         print_note(e)
 
-                    # os.startfile(error_file)
                     output = OUTPUT.get_output()
                     output.write(error_time, OUTPUT.Style.SubTitle)
                     output.write(error)
