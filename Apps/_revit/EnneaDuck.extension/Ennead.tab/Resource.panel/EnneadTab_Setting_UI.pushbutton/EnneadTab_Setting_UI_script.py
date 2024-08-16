@@ -141,12 +141,6 @@ class MainSetting(REVIT_FORMS.EnneadTabModelessForm):
     @ERROR_HANDLE.try_catch_error()
     def tab_setting_changed(self, sender, args):
         for tab in ribbon.get_current_ui():
-            #print tab.name
-            #continue
-            """EnneadTab_Basic
-            EnneadTab_Tailor
-            EnneadTab_Advanced
-            EnneadTab_Beta"""
 
             if tab.name == "Ennead Tailor":
                 # not new state since the visible value is reverse
@@ -154,9 +148,7 @@ class MainSetting(REVIT_FORMS.EnneadTabModelessForm):
             if tab.name == "Ennead Library":
                 # not new state since the visible value is reverse
                 tab.visible = self.checkbox_tab_library.IsChecked
-            if tab.name == "Ennead Beta":
-                # not new state since the visible value is reverse
-                tab.visible = self.checkbox_tab_beta.IsChecked
+
 
     @ERROR_HANDLE.try_catch_error()
     def apply_setting_click(self, sender, args):

@@ -86,12 +86,12 @@ example:
 
         NOTIFICATION.messenger(main_text="There is no pre-recorded path, going to re-search again.")
         # if the path has changed during editng, need to redo search
-        for folder, _, file in os.walk(ENVIRONMENT.REVIT_FOLDER):
-            if xaml_file_name in file:
-                data[file] = os.path.join(folder, xaml_file_name)
+        for folder, _, files in os.walk(ENVIRONMENT.REVIT_FOLDER):
+            if xaml_file_name in files:
+                data[xaml_file_name] = os.path.join(folder, xaml_file_name)
                 DATA_FILE.set_data(data, "xaml_path.sexyDuck")
                 
-                return data[file]
+                return data[xaml_file_name]
                 
         else:
             NOTIFICATION.messenger(main_text="Cannot find the xaml file....")

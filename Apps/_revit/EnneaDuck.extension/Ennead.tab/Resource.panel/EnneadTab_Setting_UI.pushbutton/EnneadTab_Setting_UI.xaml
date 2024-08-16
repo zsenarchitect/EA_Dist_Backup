@@ -206,7 +206,6 @@
                             <TextBlock Text="The core EnneadTab is alway on by default, while the following tabs are optional to load." TextWrapping="Wrap" Margin="0,0,0,10"/>
                             <CheckBox x:Name="checkbox_tab_tailor" Content="Ennead Tailor (personal and project tools)" Click="tab_setting_changed"/>
                             <CheckBox  x:Name="checkbox_tab_library" Content="Ennead Library (loadable content)" Click="tab_setting_changed"/>
-                            <CheckBox  x:Name="checkbox_tab_beta" Content="Ennead Beta (Buttons that might become basic)" Click="tab_setting_changed"/>
                             
                             <Separator/>
                             <TextBlock Text="Note: The setting becomes effective everytime you open a document." TextWrapping="WrapWithOverflow"/>
@@ -246,52 +245,19 @@
                             
                         </StackPanel>
                     </Expander>
+                    
                     <Separator/>
-                    <Expander Header="LITE VS Pro Version">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="Control if you are use the pro version instead of the default LITE version." Margin="0,0,0,15" TextWrapping="Wrap"/>
-                            <TextBlock Text="Pro version will expose you to the full collection of EnneadTab. Show off to your team what else you can do! LITE version is for baby, you know..." TextWrapping="Wrap"/>
-                            <WrapPanel HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                                <WrapPanel.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform X="-15"/>
-                                    </TransformGroup>
-                                </WrapPanel.RenderTransform>
-                                <TextBlock Text="No Join " FontWeight="Bold"/>
-                                <ToggleButton Style="{StaticResource AnimatedSwitch}" Height="24"  IsChecked="False" x:Name="toggle_bt_is_beta_tester"/>
-                                <TextBlock Text="Join" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" >
-                                    <TextBlock.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform/>
-                                            <RotateTransform/>
-                                            <TranslateTransform X="30"/>
-                                        </TransformGroup>
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                            </WrapPanel>
-                            <Separator/>
-                            <TextBlock Text="Reload is needed for this change to be effective."/>
-                            <Button Content="Apply Setting and Reload"
-                                    Click="apply_setting_click"
-                                    HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Expander>
-                    <Separator/>
-                    <Expander Header="Reminder Level"
-                              x:Name="reminder_level_setting">
+                    <Expander Header="Notification Popup"
+                              x:Name="notification_level_setting">
                         <StackPanel Margin="10">
 
-                            <GroupBox Header="Popup Reminder Frequency Setting.">
+                            <GroupBox Header="Popup Notification Frequency Setting.">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="This controls the shown frequency of the lower right side window popup." TextWrapping="Wrap" Margin="0,0,0,10"/>
-                                    <RadioButton  Content="Mimimal." x:Name="radio_bt_popup_minimal" FontWeight="Bold"/>
-                                    <TextBlock Text="Only show very important popup." Margin="20,0,0,20"/>
+                                    <RadioButton  Content="Minimal." x:Name="radio_bt_popup_minimal" FontWeight="Bold"/>
+                                    <TextBlock Text="No popup notification." Margin="20,0,0,20"/>
                                     <RadioButton  Content="Standard." IsChecked="True" x:Name="radio_bt_popup_standard" FontWeight="Bold"/>
-                                    <TextBlock Text="The default amount of reminder popup." Margin="20,0,0,20" />
+                                    <TextBlock Text="The default amount of notification popup." Margin="20,0,0,20" />
                                     <RadioButton  Content="Full." x:Name="radio_bt_popup_full" FontWeight="Bold"/>
                                     <TextBlock Text="The everything, including the fun stuff." Margin="20,0,0,20"/>
                                 </StackPanel>
@@ -413,15 +379,7 @@
 
                         </StackPanel>
                     </Expander>
-                    <Separator/>
-                    <Expander Header="Game">
-                        
-                        <StackPanel>
-                            <CheckBox  x:Name="checkbox_game" Content="Monopoly (Reload needed, rvt 2022 only)" />
-                            <Button Content="Reload" 
-                                    Click="apply_setting_click"/>
-                        </StackPanel>
-                    </Expander>
+                    
                 </StackPanel>
 
 
