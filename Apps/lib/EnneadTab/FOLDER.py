@@ -163,4 +163,4 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
                     os.rename(os.path.join(output_folder, file_name),os.path.join(output_folder, new_name + extension))
 
                 except Exception as e:
-                    ERROR_HANDLE.print_note( "filename clean up failed: skip {} becasue: {}".format(file_name, e))
+                    print ( "filename clean up failed: skip {} becasue: {}".format(file_name, e))
