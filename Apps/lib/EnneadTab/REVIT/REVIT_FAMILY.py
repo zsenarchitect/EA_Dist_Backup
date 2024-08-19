@@ -1,13 +1,18 @@
 
 try:
     from Autodesk.Revit import DB # pyright: ignore
-    REF_CLASS = DB.IFamilyLoadOptions
     import clr # pyright: ignore
-    DOC = __revit__.ActiveUIDocument.Document # pyright: ignore
+except:
+    pass
+try:
+    REF_CLASS = DB.IFamilyLoadOptions
 except:
     REF_CLASS = object # this is to trick that class can be used during INIT process
+try:
+    DOC = __revit__.ActiveUIDocument.Document # pyright: ignore
+except:
     DOC = object
-
+    
     
 import NOTIFICATION
 import FOLDER 
