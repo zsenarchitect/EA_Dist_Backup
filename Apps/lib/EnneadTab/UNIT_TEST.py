@@ -111,14 +111,15 @@ def test_core_module():
     if len( tester.failed_module) > 0:
         print ("\n\n\nbelow modules are failed.")
         print ("\n--".join(tester.failed_module))
-        raise EnneadTabExcepion
+        raise TooManyFailedModuleException
     
     OUTPUT.display_output_on_browser()
     
-        
 
-class EnneadTabExcepion(BaseException):
-    pass
+class TooManyFailedModuleException(BaseException):
+    def __init__(self):
+        super().__init__("There are too many failed module during unit-test for the core module.")
+
  
 if __name__ == '__main__':
     test_core_module()

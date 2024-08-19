@@ -46,6 +46,7 @@ SCOTT_TIPS = ["https://ei.ennead.com/post/3046/revit-legends-legend-components",
               "https://ei.ennead.com/post/114/revit-short-subject-best-practice-for-new-views"]
 
 def show_scott_tip():
+    
     """Show a random tip from Scott's EI posts."""
     if ENVIRONMENT.is_Revit_environment():
         from pyrevit import script
@@ -277,10 +278,10 @@ def show_tip_rhino():
 def tip_of_day():
     """Show a random tip of the day.
     """
-    if random.random() < 0.3:
+    if random.random() < 0.8:
         return
     if ENVIRONMENT.is_Revit_environment():
-        if random.random() < 0.7:
+        if random.random() < 0.95:
             show_tip_revit()
         else:
             show_scott_tip()
