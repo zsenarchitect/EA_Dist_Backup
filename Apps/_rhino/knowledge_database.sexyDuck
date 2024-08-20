@@ -752,7 +752,7 @@
         "alias": "RandomDeselect",
         "doc": "This button does RandomDeselect when left click",
         "tab": "Selection.tab",
-        "tab_icon": null
+        "tab_icon": "Selection.tab\\icon.png"
     },
     "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py": {
         "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",
@@ -760,7 +760,7 @@
         "alias": "RandomSelectionToGroup",
         "doc": "This button does RandomSelectionToGroup when left click",
         "tab": "Selection.tab",
-        "tab_icon": null
+        "tab_icon": "Selection.tab\\icon.png"
     },
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
