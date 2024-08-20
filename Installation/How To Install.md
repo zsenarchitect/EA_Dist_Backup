@@ -47,7 +47,11 @@ Legacy version use script hosted by L drive version. Legacy version only works w
 
 4. You can now open Revit.
 
-## 3. EnnneaTab-For-Rhino 2.0
+## 3.1 EnnneaTab-For-Rhino(Legacy)
+(No plan to distribute/maintain)
+
+
+## 3.2 EnnneaTab-For-Rhino 2.0
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have only ONE Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window
