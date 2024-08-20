@@ -69,6 +69,9 @@ You can get pyrevit from here, there is no admin restriction: https://github.com
 > [!IMPORTANT]
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick.
 
+> [!TIP]
+> After restart, every button should work just fine, But if you see error message such as "Cannot find EnneadTab", hit __GetLatest__ usually fix it.
+
 ## 3.3 Unistall Ennead-For-Rhino
 With __only one Rhino__ is open, remove any old EnneadTab Rhino by using command "_Toolbar", then close any toolbar that mentions "EnneadTab". Most cases there should be only one mentioning, but certain OG users might see two. Close them all. No need to save any toolbar. __RESTART RHINO__ so any trace of it is completely removed from session. Now you have completely removed EnneadTab-Rhino.
 
