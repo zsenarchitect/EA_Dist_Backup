@@ -1,6 +1,6 @@
 
 __title__ = "UniformTransformGeos"
-__doc__ = "Apply same rotational transformation for the blocks or geometryies. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street."
+__doc__ = "Apply same rotational transformation for the blocks or geometries. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street."
 
 
 

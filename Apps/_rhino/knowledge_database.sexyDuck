@@ -1,7 +1,7 @@
 {
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
-        "icon": null,
+        "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
         "alias": "MakeANewButton",
         "doc": null,
         "tab": "Ennead+.menu",
@@ -9,7 +9,7 @@
     },
     "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
         "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
-        "icon": null,
+        "icon": "Ennead+.menu\\extract_preview_images.button\\icon.png",
         "alias": "ExtractPreviewImages",
         "doc": "This button does ExtractPreviewImages when left click",
         "tab": "Ennead+.menu",
@@ -57,7 +57,7 @@
     },
     "Ennead+.menu\\unit_test.button\\unit_test_left.py": {
         "script": "Ennead+.menu\\unit_test.button\\unit_test_left.py",
-        "icon": null,
+        "icon": "Ennead+.menu\\unit_test.button\\icon.png",
         "alias": "UnitTest",
         "doc": "This button does UnitTest when left click",
         "tab": "Ennead+.menu",
@@ -206,7 +206,7 @@
         "script": "Block.tab\\uniform_transform_geos.button\\uniform_transform_geos_left.py",
         "icon": "Block.tab\\uniform_transform_geos.button\\icon.png",
         "alias": "UniformTransformGeos",
-        "doc": "Apply same rotational transformation for the blocks or geometryies. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street.",
+        "doc": "Apply same rotational transformation for the blocks or geometries. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street.",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png"
     },
@@ -319,6 +319,30 @@
         "icon": "Fun.tab\\dvd.button\\icon.png",
         "alias": "DVD",
         "doc": "When you are bored...",
+        "tab": "Fun.tab",
+        "tab_icon": "Fun.tab\\icon.png"
+    },
+    "Fun.tab\\ennead_city.button\\ennead_city_left.py": {
+        "script": "Fun.tab\\ennead_city.button\\ennead_city_left.py",
+        "icon": "Fun.tab\\ennead_city.button\\icon.png",
+        "alias": "EnneadCity",
+        "doc": "Work on your plot",
+        "tab": "Fun.tab",
+        "tab_icon": "Fun.tab\\icon.png"
+    },
+    "Fun.tab\\ennead_city.button\\ennead_city_right.py": {
+        "script": "Fun.tab\\ennead_city.button\\ennead_city_right.py",
+        "icon": "Fun.tab\\ennead_city.button\\icon.png",
+        "alias": "EnneadCity",
+        "doc": "Load all city plots to a session.",
+        "tab": "Fun.tab",
+        "tab_icon": "Fun.tab\\icon.png"
+    },
+    "Fun.tab\\red_alert.button\\red_alert_left.py": {
+        "script": "Fun.tab\\red_alert.button\\red_alert_left.py",
+        "icon": "Fun.tab\\red_alert.button\\icon.png",
+        "alias": "RedAlert",
+        "doc": "This button does RedAlert when left click",
         "tab": "Fun.tab",
         "tab_icon": "Fun.tab\\icon.png"
     },
@@ -721,6 +745,22 @@
         "doc": "Use the corners of the input surfs as the marker for the adaptive pts in Revit.",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png"
+    },
+    "Selection.tab\\random_deselect.button\\random_deselect_left.py": {
+        "script": "Selection.tab\\random_deselect.button\\random_deselect_left.py",
+        "icon": "Selection.tab\\random_deselect.button\\icon.png",
+        "alias": "RandomDeselect",
+        "doc": "This button does RandomDeselect when left click",
+        "tab": "Selection.tab",
+        "tab_icon": null
+    },
+    "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py": {
+        "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",
+        "icon": "Selection.tab\\random_selection_to_group.button\\icon.png",
+        "alias": "RandomSelectionToGroup",
+        "doc": "This button does RandomSelectionToGroup when left click",
+        "tab": "Selection.tab",
+        "tab_icon": null
     },
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
