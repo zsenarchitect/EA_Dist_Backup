@@ -24,6 +24,7 @@ Legacy version use script hosted by L drive version. Legacy version only works w
 
 ## 2.2. EnneadTab-For-Revit 2.0
 1. Make sure you have pyrevit installed. Revit is not open.
+You can get pyrevit from here, there is no admin restriction: https://github.com/pyrevitlabs/pyRevit/releases
 
 2. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
