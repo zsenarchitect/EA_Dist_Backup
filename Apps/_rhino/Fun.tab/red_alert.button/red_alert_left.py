@@ -64,7 +64,7 @@ class GameSound(Eto.Forms.Form):
 
     # Basic form initialization
     def Initialize(self):
-        self.Title = 'Game Sound My Rhino'
+        self.Title = 'Red Alert My Rhino'
         self.Padding = Eto.Drawing.Padding(5)
         self.Resizable = True
         self.Maximizable = False
@@ -73,6 +73,8 @@ class GameSound(Eto.Forms.Form):
         self.MinimumSize = Eto.Drawing.Size(200, 150)
 
         self.test_list = "@@@@@@@@@"
+        
+
         
         self.title_logo = Eto.Forms.ImageView()
         logo_path = "{}\\title_logo.png".format(self.script_folder)
@@ -236,7 +238,7 @@ class GameSound(Eto.Forms.Form):
         else:
             self.msg_lb = Eto.Forms.Label(Text = 'Rhino Objects:' )
             
-        layout.Rows.Add(self.logo)
+        layout.Rows.Add(self.title_logo)
         layout.Rows.Add(Eto.Forms.Label(Text = 'Commander, any object selected/created/deleted will cue the soundtrack.' ))
         layout.Rows.Add(Eto.Forms.Label(Text = '------------' ))
         layout.Rows.Add(self.msg_lb)
@@ -353,8 +355,12 @@ class GameSound(Eto.Forms.Form):
         mesh_setting = Rhino.Geometry.MeshingParameters()
         view_cplane = sc.doc.Views.ActiveView.ActiveViewport.ConstructionPlane()
         
-        
+        max_count = 10
+        count = 0
         for geo in geos:
+            if count > max_count:
+                break
+            count += 1
             geo = geo.Geometry 
             # print (geo)
             try:
