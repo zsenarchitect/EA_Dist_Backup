@@ -257,7 +257,8 @@ def get_all_family_docs(including_current_doc = False):
         if not doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-            if doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
+            # add attr check because if the context was zero-doc, there are no active UI doc.
+            if hasattr(__revit__, "ActiveUIDocument") and doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
                 continue
         OUT.append(doc)
     return OUT

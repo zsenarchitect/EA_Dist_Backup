@@ -11,7 +11,7 @@ from contextlib import contextmanager
 import FOLDER
 
 
-def _read_json_file_safely(filepath, use_encode=False, create_if_not_exist=False):
+def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False):
     """Duplicate a JSON file then read it to avoid holding the file open status
 
     Args:
@@ -35,7 +35,7 @@ def _read_json_file_safely(filepath, use_encode=False, create_if_not_exist=False
     return content
 
 
-def _read_json_as_dict(filepath, use_encode=False, create_if_not_exist=False):
+def _read_json_as_dict(filepath, use_encode=True, create_if_not_exist=False):
     """Get the data from a JSON file and return it as a dictionary.
 
     Args:
@@ -67,7 +67,7 @@ def _read_json_as_dict(filepath, use_encode=False, create_if_not_exist=False):
 
 
 def _read_json_as_dict_in_dump_folder(
-    file_name, use_encode=False, create_if_not_exist=False
+    file_name, use_encode=True, create_if_not_exist=False
 ):
     """Directly access a JSON file in the dump folder and return its contents as a dictionary.
 
@@ -84,7 +84,7 @@ def _read_json_as_dict_in_dump_folder(
 
 
 def _read_json_as_dict_in_shared_dump_folder(
-    file_name, use_encode=False, create_if_not_exist=False
+    file_name, use_encode=True, create_if_not_exist=False
 ):
     """Directly access a JSON file in the shared dump folder and return its contents as a dictionary.
 
@@ -100,7 +100,7 @@ def _read_json_as_dict_in_shared_dump_folder(
     return _read_json_file_safely(filepath, use_encode, create_if_not_exist)
 
 
-def _save_dict_to_json(dict, filepath, use_encode=False):
+def _save_dict_to_json(dict, filepath, use_encode=True):
     """Save a dictionary to a JSON file.
 
     Args:
@@ -128,7 +128,7 @@ def _save_dict_to_json(dict, filepath, use_encode=False):
         return False
 
 
-def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=False):
+def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=True):
     """Direct store a dict to a file in the dump folder.
 
     Args:
@@ -143,7 +143,7 @@ def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=False):
     return _save_dict_to_json(dict, filepath, use_encode=use_encode)
 
 
-def _save_dict_to_json_in_shared_dump_folder(dict, file_name, use_encode=False):
+def _save_dict_to_json_in_shared_dump_folder(dict, file_name, use_encode=True):
     """Direct store a dict to a file in shared the dump folder.
 
     Args:

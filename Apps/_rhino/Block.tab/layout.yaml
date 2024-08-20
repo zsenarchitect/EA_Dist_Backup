@@ -1,6 +1,6 @@
 layout:
   - randomize_block_transformation
-  - uniform_transform_blocks
+  - uniform_transform_geos
   - '---'
   - make_block_unique
   - package_block_layer

@@ -27,7 +27,7 @@ try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    from System import Guid, String
+    from System import Guid, String # pyright: ignore
 
 except:
     pass

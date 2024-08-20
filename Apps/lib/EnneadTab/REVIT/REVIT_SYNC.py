@@ -16,7 +16,7 @@ except:
 
 
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_VIEW, REVIT_EVENT, REVIT_APPLICATION
-from EnneadTab import EXE, DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
+from EnneadTab import CONFIG, EXE, DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
 
 import time
 
@@ -125,18 +125,7 @@ def is_doc_opened(doc):
 
 @ERROR_HANDLE.try_catch_error()
 def is_hate_sync_monitor():
-    return False
-    """
-    file_name = 'revit_ui_setting.json'
-    if not FOLDER.is_file_exist_in_dump_folder(file_name):
-        return False
-
-
-    setting_file = FOLDER.get_EA_dump_folder_file(file_name)
-    data = DATA_FILE.get_data(setting_file)
-    return data.get("radio_bt_sync_monitor_never", False)
-    """
-    return DATA_FILE.get_revit_ui_setting_data(("radio_bt_sync_monitor_never", False))
+    return CONFIG.get_setting("radio_bt_sync_monitor_never", False)
 
 @ERROR_HANDLE.try_catch_error()
 def start_monitor():

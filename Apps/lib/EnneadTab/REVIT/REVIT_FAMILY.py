@@ -71,7 +71,7 @@ def is_family_version_different(family_doc, project_doc):
             None: family not exist in project.
     """
     if not is_family_exist(family_doc.Title, project_doc):
-        NOTIFICATION.messenger("[{}] does not exist in [{}]".format(family_doc.Title, project_doc.Title))
+        # NOTIFICATION.messenger("[{}] does not exist in [{}]".format(family_doc.Title, project_doc.Title))
         return None
     dry_opt = DryLoadFamilyOption()
     load_family(family_doc,project_doc,loading_opt=dry_opt)  

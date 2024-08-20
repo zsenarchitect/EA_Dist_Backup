@@ -27,7 +27,7 @@ except:
 
 
 
-def pick_linestyle(doc, filledregion_friendly=False, return_style=False,title=None):
+def pick_linestyle(doc, filledregion_friendly=False, return_style=False,title="Pick Line Style"):
     from pyrevit import forms
     if filledregion_friendly:
         all_linestyles = [doc.GetElement(x) for x in DB.FilledRegion.GetValidLineStyleIdsForFilledRegion (doc)]
@@ -44,7 +44,6 @@ def pick_linestyle(doc, filledregion_friendly=False, return_style=False,title=No
     #-----> cannot set in family doc, so abodon this method
 
         
-    title = title or "Pick Line Style"
     res = forms.SelectFromList.show(all_linestyles,
                                     name_attr='Name',
                                     title=title,
@@ -73,14 +72,21 @@ def get_linestyle(doc, linestyle_name, creation_data_if_not_exsit=None):
         return get_linestyle(doc, linestyle_name)
     return None
 
-def create_linestyle(linestyle_name, doc=None, creation_data=None):
+def create_linestyle(linestyle_name, doc=DOC, creation_data=None):
+    """_summary_
+
+    Args:
+        linestyle_name (_type_): _description_
+        doc (_type_, optional): _description_. Defaults to DOC.
+        creation_data (dict, optional): something like {"line_weight": int, "color":(int, int, int)}. Defaults to None.
+    """
     if not creation_data:
         # i want to allow partial definition of new style, do not define anything here
         creation_data = dict()
 
     line_weight = creation_data.get("line_weight", 5)
     color = creation_data.get("color", (255,0,0))
-    doc = doc or DOC
+
     line_category = doc.Settings.Categories.get_Item(DB.BuiltInCategory.OST_Lines)
     can_transaction=not doc.IsModifiable
     if can_transaction:
@@ -145,12 +151,8 @@ def get_all_filledregion_types(doc, return_name=True):
     return types
 
 
-def get_all_textnote_types(doc=None, return_name=True):
+def get_all_textnote_types(doc=DOC, return_name=True):
 
-    doc = doc or DOC
-
-
-    
     types = DB.FilteredElementCollector(doc).OfClass(
         DB.TextNoteType).ToElements()
     if return_name:
@@ -197,13 +199,14 @@ def get_detail_groups_by_name(doc, group_name):
 
 
 def get_workset_by_name(doc, name):
+    """to-do: inherate from REVIT_WORKSET, but keep this func"""
     for workset in get_all_userworkset(doc):
         if workset.Name == name:
             return workset
 
 
 def get_all_userworkset(doc):
-
+    """to-do: inherate from REVIT_WORKSET, but keep this func"""
     all_worksets = DB.FilteredWorksetCollector(doc).ToWorksets()
     user_worksets = [x for x in all_worksets if x.Kind.ToString()
                      == "UserWorkset"]

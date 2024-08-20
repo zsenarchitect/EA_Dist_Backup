@@ -68,6 +68,10 @@ def process_version_difference(master_types, working_docs):
         # some type such as FilledRegionType are part of detailcomponent category but are still considered systwm family
         if not hasattr(master_type.element, "Family"):
             continue
+
+        # some system family such as system curtain panel cannot be edited dirrectly
+        if not master_type.element.Family.IsEditable:
+            continue
         family_name = master_type.family_name
         if family_name in master_family_names_checked:
             continue
@@ -85,7 +89,9 @@ def process_version_difference(master_types, working_docs):
                 row_data.append(EMOJI_DICT["Same"]) 
 
         data.append(row_data)
-        family_doc.Close(False)
+
+        # decide to close all family at end so to not trigger doc-close hook and generate new output.
+        # family_doc.Close(False)
 
     print_detail = len(bad_conditions)
     if print_detail:

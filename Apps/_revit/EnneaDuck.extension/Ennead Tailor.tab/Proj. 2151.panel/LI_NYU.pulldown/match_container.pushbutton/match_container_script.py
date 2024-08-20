@@ -173,6 +173,9 @@ def match_container():
 
     OUTPUT.display_output_on_browser()
 
+    for family_doc in REVIT_APPLICATION.get_all_family_docs():
+        family_doc.Close(False)
+
     NOTIFICATION.messenger("Comparision Done!")
 
 

@@ -202,11 +202,11 @@
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png"
     },
-    "Block.tab\\uniform_transform_blocks.button\\uniform_transform_blocks_left.py": {
-        "script": "Block.tab\\uniform_transform_blocks.button\\uniform_transform_blocks_left.py",
-        "icon": "Block.tab\\uniform_transform_blocks.button\\icon.png",
-        "alias": "UniformTransformBlocks",
-        "doc": "Apply same rotational transformation for the blocks. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street.",
+    "Block.tab\\uniform_transform_geos.button\\uniform_transform_geos_left.py": {
+        "script": "Block.tab\\uniform_transform_geos.button\\uniform_transform_geos_left.py",
+        "icon": "Block.tab\\uniform_transform_geos.button\\icon.png",
+        "alias": "UniformTransformGeos",
+        "doc": "Apply same rotational transformation for the blocks or geometryies. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street.",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png"
     },
