@@ -27,10 +27,10 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
     exe = ENVIRONMENT.EXE_PRODUCT_FOLDER + "\\{}.exe".format(exe_name)
 
 
-    def should_ignore_age(file):
+    def get_ignore_age(file):
         if "OS_Installer" in file or "AutoStartup" in file:
-            return True
-        return False
+            return 60*5
+        return 60*60*24
     if safe_open:
         if not os.path.exists(exe):
             raise Exception("Only work for stanfle along exe, not for foldered exe.[{}] not exist".format(exe))
@@ -42,7 +42,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         for file in os.listdir(FOLDER.DUMP_FOLDER):
             if file.startswith("_temp_exe_"):
                 # ignore if this temp file is less than 1 day old, unless it is OS_installer or AutoStartup
-                if not should_ignore_age(file) and time.time() - os.path.getmtime(os.path.join(FOLDER.DUMP_FOLDER, file)) < 86400:
+                if time.time() - os.path.getmtime(os.path.join(FOLDER.DUMP_FOLDER, file)) < get_ignore_age(file):
                     continue
                 try:
                     os.remove(os.path.join(FOLDER.DUMP_FOLDER, file))
