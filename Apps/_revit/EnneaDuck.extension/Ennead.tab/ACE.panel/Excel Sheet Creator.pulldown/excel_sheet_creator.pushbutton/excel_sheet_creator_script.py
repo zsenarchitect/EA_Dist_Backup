@@ -12,8 +12,8 @@ from pyrevit import script #
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION, LOG
-from EnneadTab import NOTIFICATION, ERROR_HANDLE, EXCEL
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import NOTIFICATION, ERROR_HANDLE, EXCEL, LOG
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 uidoc = REVIT_APPLICATION.get_uidoc()

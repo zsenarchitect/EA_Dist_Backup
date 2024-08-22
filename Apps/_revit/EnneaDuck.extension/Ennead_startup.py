@@ -206,7 +206,7 @@ def register_temp_graphic_server():
     my_graphics_service = TempGraphicServer()
     if external_service.IsRegisteredServerId (my_graphics_service.GetServerId()):
         external_service.RemoveServer(my_graphics_service.GetServerId())
-        NOTIFICATION.messenger("Remove old graphical server...")
+        # NOTIFICATION.messenger("Remove old graphical server...")
     external_service.AddServer(my_graphics_service)
     external_service.SetActiveServers(System.Collections.Generic.List[System.Guid]([my_graphics_service.GetServerId()]))
 
