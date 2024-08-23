@@ -99,7 +99,9 @@ example:
 
         
 
-    def load_setting(self, setting_file):
+    def load_setting(self, setting_file = None):
+        if not setting_file:
+            setting_file = getattr(self, "setting_file", None)
         data = DATA_FILE.get_data(setting_file)
         for key, value in data.items():
             ui_obj = getattr(self, key, None)
@@ -111,7 +113,10 @@ example:
                 setattr(ui_obj, "Text", str(value))
         
 
-    def save_setting(self, setting_file):
+    def save_setting(self, setting_file = None):
+        if not setting_file:
+            setting_file = getattr(self, "setting_file", None)
+            
         with DATA_FILE.update_data(setting_file) as data:
             setting_list = self.get_all_xaml_component_names()
             

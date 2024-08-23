@@ -6,7 +6,7 @@ this tool is getting heavy, should consider spliting to smaller files and restru
 
 
 __doc__ = "A great helper for your print on deadline. Feastures include:\n  -pdf, dwg, jpg export together\n  -Package export files to subfolders in destination folder by assigned prefix and file type\n  -Prefix for auto numbering\n  -Email result as a link to folder.\n  -Time esitmation, with increasing accuracy the more you export\n  -Identify color setting per parameter on sheet. So you can mix color and BW export together.\n  -Option to sync and close files after exporting done.\n  -Export sheets by revision mark instead of printSet, and allow selective export without desrupting shared printSet.\n  -Export views on sheet seperatedly for dwg.\n  -Export from links or open docs.\n  -Merge pdf after export.\n  -JOKE while exporting."
-__title__ = "Ennead\nExporter"
+__title__ = "Ennead\nExporter(Test)"
 __tip__ = True
 # from pyrevit import forms #
 from pyrevit import script #
@@ -16,7 +16,7 @@ from pyrevit.revit import ErrorSwallower
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT, REVIT_EXPORT, REVIT_SYNC
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT, REVIT_EXPORT
 
 from EnneadTab import JOKE, DATA_FILE, NOTIFICATION, ENVIRONMENT, SOUND, SPEAK, DOCUMENTATION
 from EnneadTab import ERROR_HANDLE, FOLDER, IMAGE, USER, EMAIL, LOG
@@ -154,7 +154,7 @@ class EmailData(object):
         self.subject = EXPORTER_UI.email_subject_line.Text
         self.body = EXPORTER_UI.email_body.Text
         self.is_adding_final_folder_link = EXPORTER_UI.checkbox_add_folder_link.IsChecked
-        self.body_folder_link_list = [EXPORTER_UI.copy_folder_path]
+        self.body_folder_link_list = [EXPORTER_UI.textbox_folder]
         if hasattr(EXPORTER_UI, "log_file_path"):
             self.log_file_path = EXPORTER_UI.log_file_path
 
@@ -427,24 +427,24 @@ class EA_Printer_UI(WPFWindow):
 
 
         # restore checkbox status for other
-        out_data["is_export_dwg"] = self.checkbox_dwg.IsChecked
-        out_data["is_export_pdf"] = self.checkbox_pdf.IsChecked
-        out_data["is_export_jpg"] = self.checkbox_jpg.IsChecked
-        out_data["is_name_format_with_plotId"] = self.radio_button_plotId_sheetNum_sheetName.IsChecked
-        out_data["is_name_format_with_sheetGroup"] = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
-        out_data["is_play_sound"] = self.checkbox_play_sound.IsChecked
-        out_data["is_combine_pdf"] = self.checkbox_combine_pdf.IsChecked
+        out_data["checkbox_dwg"] = self.checkbox_dwg.IsChecked
+        out_data["checkbox_pdf"] = self.checkbox_pdf.IsChecked
+        out_data["checkbox_jpg"] = self.checkbox_jpg.IsChecked
+        out_data["radio_button_plotId_sheetNum_sheetName"] = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+        out_data["radio_button_sheetGroup_sheetSeries_sheetNum_sheetName"] = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
+        out_data["checkbox_play_sound"] = self.checkbox_play_sound.IsChecked
+        out_data["checkbox_combine_pdf"] = self.checkbox_combine_pdf.IsChecked
         #out_data["dwg_setting_name"] = self.dwg_setting_name
-        out_data["is_sync_and_close"] = self.checkbox_sync_and_close.IsChecked
-        out_data["is_export_view_on_sheet"] = self.checkbox_dwg_view_export.IsChecked
-        out_data["is_color_by_sheet"] = self.radio_button_color_by_sheet.IsChecked
-        out_data["copy_folder_path"] = self.textbox_folder.Text
-        out_data["is_copy_folder"] = self.checkbox_copy_folder.IsChecked
-        out_data["is_send_email"] = self.checkbox_send_email.IsChecked
+        out_data["checkbox_sync_and_close"] = self.checkbox_sync_and_close.IsChecked
+        out_data["checkbox_dwg_view_export"] = self.checkbox_dwg_view_export.IsChecked
+        out_data["radio_button_color_by_sheet"] = self.radio_button_color_by_sheet.IsChecked
+        out_data["textbox_folder"] = self.textbox_folder.Text
+        out_data["checkbox_copy_folder"] = self.checkbox_copy_folder.IsChecked
+        out_data["checkbox_send_email"] = self.checkbox_send_email.IsChecked
 
 
         out_data["issue_name"] = self.issue_name
-        out_data["local_issue_para_name"] = self.textbox_local_isse_para_name.Text
+        out_data["textbox_local_isse_para_name"] = self.textbox_local_isse_para_name.Text
         out_data["dwg_setting_name"] = self.dwg_setting_name
 
 
@@ -502,18 +502,18 @@ class EA_Printer_UI(WPFWindow):
                 self.doc_model_path_pair = {self.central_doc_name(doc): None}
                 NOTIFICATION.messenger(main_text = "This document is not workshared.")
             self.update_data_grid_map_id()
-            self.is_export_dwg = self.checkbox_dwg.IsChecked
-            self.is_export_pdf = self.checkbox_pdf.IsChecked
-            self.is_export_jpg = self.checkbox_jpg.IsChecked
-            self.is_name_format_with_plotId = self.radio_button_plotId_sheetNum_sheetName.IsChecked
-            self.is_name_format_with_sheetGroup = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
-            self.is_play_sound = self.checkbox_play_sound.IsChecked
-            self.is_combine_pdf = self.checkbox_combine_pdf.IsChecked
-            self.is_sync_and_close = self.checkbox_sync_and_close.IsChecked
-            self.is_export_view_on_sheet = self.checkbox_dwg_view_export.IsChecked
-            self.is_color_by_sheet = self.radio_button_color_by_sheet.IsChecked
-            self.copy_folder_path = self.textbox_folder.Text
-            self.is_copy_folder = self.checkbox_copy_folder.IsChecked
+            self.checkbox_dwg = self.checkbox_dwg.IsChecked
+            self.checkbox_pdf = self.checkbox_pdf.IsChecked
+            self.checkbox_jpg = self.checkbox_jpg.IsChecked
+            self.radio_button_plotId_sheetNum_sheetName = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+            self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
+            self.checkbox_play_sound = self.checkbox_play_sound.IsChecked
+            self.checkbox_combine_pdf = self.checkbox_combine_pdf.IsChecked
+            self.checkbox_sync_and_close = self.checkbox_sync_and_close.IsChecked
+            self.checkbox_dwg_view_export = self.checkbox_dwg_view_export.IsChecked
+            self.radio_button_color_by_sheet = self.radio_button_color_by_sheet.IsChecked
+            self.textbox_folder = self.textbox_folder.Text
+            self.checkbox_copy_folder = self.checkbox_copy_folder.IsChecked
 
             self.initiate_para_list_source()
             self.initiate_dwg_setting_list_source()
@@ -542,24 +542,24 @@ class EA_Printer_UI(WPFWindow):
             self.doc_model_path_pair = {self.central_doc_name(doc): None}
             NOTIFICATION.messenger(main_text = "This document is not workshared.")
         self.update_data_grid_map_id()
-        self.checkbox_dwg.IsChecked = self.is_export_dwg
-        self.checkbox_pdf.IsChecked = self.is_export_pdf
-        self.checkbox_jpg.IsChecked = self.is_export_jpg
-        self.radio_button_plotId_sheetNum_sheetName.IsChecked = self.is_name_format_with_plotId
-        self.radio_button_sheetNum_sheetName.IsChecked = not(self.is_name_format_with_plotId)
+        self.checkbox_dwg.IsChecked = self.checkbox_dwg
+        self.checkbox_pdf.IsChecked = self.checkbox_pdf
+        self.checkbox_jpg.IsChecked = self.checkbox_jpg
+        self.radio_button_plotId_sheetNum_sheetName.IsChecked = self.radio_button_plotId_sheetNum_sheetName
+        self.radio_button_sheetNum_sheetName.IsChecked = not(self.radio_button_plotId_sheetNum_sheetName)
         try:
-            self.is_name_format_with_sheetGroup
+            self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName
         except:
-            self.is_name_format_with_sheetGroup = False
-        self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked = self.is_name_format_with_sheetGroup
-        self.checkbox_play_sound.IsChecked = self.is_play_sound
-        self.checkbox_combine_pdf.IsChecked = self.is_combine_pdf
-        self.checkbox_sync_and_close.IsChecked = self.is_sync_and_close
-        self.checkbox_dwg_view_export.IsChecked = self.is_export_view_on_sheet
-        self.radio_button_color_by_sheet.IsChecked = self.is_color_by_sheet
-        self.radio_button_color_BW_globally.IsChecked =not( self.is_color_by_sheet)
-        self.textbox_folder.Text = self.copy_folder_path
-        self.checkbox_copy_folder.IsChecked = self.is_copy_folder
+            self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName = False
+        self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName
+        self.checkbox_play_sound.IsChecked = self.checkbox_play_sound
+        self.checkbox_combine_pdf.IsChecked = self.checkbox_combine_pdf
+        self.checkbox_sync_and_close.IsChecked = self.checkbox_sync_and_close
+        self.checkbox_dwg_view_export.IsChecked = self.checkbox_dwg_view_export
+        self.radio_button_color_by_sheet.IsChecked = self.radio_button_color_by_sheet
+        self.radio_button_color_BW_globally.IsChecked =not( self.radio_button_color_by_sheet)
+        self.textbox_folder.Text = self.textbox_folder
+        self.checkbox_copy_folder.IsChecked = self.checkbox_copy_folder
 
         try:
             self.email_data = EmailData(receiver_list = self.email_data_receivers,
@@ -573,7 +573,7 @@ class EA_Printer_UI(WPFWindow):
             self.email_subject_line.Text = self.email_data_subject_line
             self.email_body.Text = self.email_data_body
             self.checkbox_add_folder_link.IsChecked = self.email_data_is_add_folder_link
-            self.checkbox_send_email.IsChecked = self.is_send_email
+            self.checkbox_send_email.IsChecked = self.checkbox_send_email
 
         except Exception as e:
             print (e.message)
@@ -591,8 +591,8 @@ class EA_Printer_UI(WPFWindow):
             self.issue_para_list.SelectedIndex = 0
 
         try:
-            self.textbox_local_isse_para_name.Text = self.local_issue_para_name
-            if self.local_issue_para_name == self.issue_name:
+            self.textbox_local_isse_para_name.Text = self.textbox_local_isse_para_name
+            if self.textbox_local_isse_para_name == self.issue_name:
                 self.issue_name = self.textbox_local_isse_para_name.Text
         except:
             print (traceback.format_exc())
@@ -720,30 +720,30 @@ class EA_Printer_UI(WPFWindow):
 
 
             index = self.index_dict[sheet.UniqueId]
-            if self.is_name_format_with_plotId:
+            if self.radio_button_plotId_sheetNum_sheetName:
                 file_id = self.get_id_by_doc(sheet.Document)
             else:
                 file_id = None
 
-            if self.is_export_pdf:
+            if self.checkbox_pdf:
                 extension = ".pdf"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
-            if self.is_export_dwg:
+            if self.checkbox_dwg:
                 extension = ".dwg"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
-            if self.is_export_jpg:
+            if self.checkbox_jpg:
                 extension = ".jpg"
                 time_estimate = get_time_estimate_by_sheet_and_extension(sheet, extension)
                 estimated_total += time_estimate
-                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.is_name_format_with_sheetGroup)
+                preview_obj = DataGrid_Preview_Obj(sheet, file_id, index, extension, time_estimate, is_in_height_light_zone, is_sheet_group_prefix=self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName)
                 self.data_grid_preview.ItemsSource.append(preview_obj)
 
             # to flip height light color for next zone
@@ -772,13 +772,13 @@ class EA_Printer_UI(WPFWindow):
         self.button_main.BorderBrush = self.sample_color_disabled.Foreground
 
 
-        if self.is_export_dwg + self.is_export_jpg + self.is_export_pdf == 0:
+        if self.checkbox_dwg + self.checkbox_jpg + self.checkbox_pdf == 0:
             self.button_main.Content = "Need at least one extension."
             self.initiate_empty_data_grid_preview()
             return False
 
 
-        if self.is_copy_folder and self.copy_folder_path == "Folder Path...":
+        if self.checkbox_copy_folder and self.textbox_folder == "Folder Path...":
             self.button_main.Content = "Copy folder path missing."
             return False
 
@@ -796,7 +796,7 @@ class EA_Printer_UI(WPFWindow):
                 return False
 
 
-        if self.is_export_dwg and self.dwg_setting_name == self.dwg_setting_list.ItemsSource[0]:
+        if self.checkbox_dwg and self.dwg_setting_name == self.dwg_setting_list.ItemsSource[0]:
             self.button_main.Content = "DWG setting not picked."
             return False
 
@@ -979,16 +979,16 @@ class EA_Printer_UI(WPFWindow):
 
 
             if extension == ".pdf":
-                is_color_by_sheet = self.is_color_by_sheet
-                final_file = REVIT_EXPORT.export_pdf(view_or_sheet, raw_name, self.output_folder, is_color_by_sheet)
+                radio_button_color_by_sheet = self.radio_button_color_by_sheet
+                final_file = REVIT_EXPORT.export_pdf(view_or_sheet, raw_name, self.output_folder, radio_button_color_by_sheet)
                 self.files_exported_for_this_issue.append(final_file)
 
             if extension == ".dwg":
-                is_export_view_on_sheet = self.is_export_view_on_sheet
+                checkbox_dwg_view_export = self.checkbox_dwg_view_export
                 dwg_setting_name = self.dwg_setting_name
                 DWG_option = DB.DWGExportOptions().GetPredefinedOptions(view_or_sheet.Document, dwg_setting_name)
                 if DWG_option:
-                    final_files = REVIT_EXPORT.export_dwg(view_or_sheet, raw_name, self.output_folder, dwg_setting_name, is_export_view_on_sheet)
+                    final_files = REVIT_EXPORT.export_dwg(view_or_sheet, raw_name, self.output_folder, dwg_setting_name, checkbox_dwg_view_export)
 
                     self.files_exported_for_this_issue.extend(final_files)
                     for new_files in final_files:
@@ -999,7 +999,7 @@ class EA_Printer_UI(WPFWindow):
                     #is_success = False
 
             if extension == ".jpg":
-                final_file = REVIT_EXPORT.export_image(view_or_sheet, raw_name, self.output_folder,  is_color_by_sheet = self.is_color_by_sheet)
+                final_file = REVIT_EXPORT.export_image(view_or_sheet, raw_name, self.output_folder,  radio_button_color_by_sheet = self.radio_button_color_by_sheet)
                 self.files_exported_for_this_issue.append(final_file)
 
             time_end = time.time()
@@ -1030,12 +1030,12 @@ class EA_Printer_UI(WPFWindow):
                                                                 "Estimated remaining time, exluding N/A items = {}".format(remaining_time))
 
 
-            if self.is_copy_folder:
+            if self.checkbox_copy_folder:
                 if extension == ".dwg":
                     new_contents = final_files
                 else:
                     new_contents = [final_file]
-                REVIT_EXPORT.dump_exported_files_to_copy_folder(self.output_folder, new_contents, self.file_id_dict, self.copy_folder_path)
+                REVIT_EXPORT.dump_exported_files_to_copy_folder(self.output_folder, new_contents, self.file_id_dict, self.textbox_folder)
 
 
             # ----- end of for loop
@@ -1062,9 +1062,9 @@ class EA_Printer_UI(WPFWindow):
 
 
 
-        copy_folder = self.copy_folder_path if self.is_copy_folder else None
+        copy_folder = self.textbox_folder if self.checkbox_copy_folder else None
 
-        if self.is_export_jpg:
+        if self.checkbox_jpg:
             primary_doc = self.active_original_doc(self.orginal_doc_name) #!!!when exporting image, the exportimage method will force activate the doc. So we need to switch back primary doc so other can be closed.(tested in 2022 and before)
 
 
@@ -1077,15 +1077,15 @@ class EA_Printer_UI(WPFWindow):
         # EA_UTILITY.set_doc_change_hook_depressed(stage = False)
         # ERROR_HANDLE.print_note("my doc change hook depress status = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
 
-        if self.is_copy_folder:
+        if self.checkbox_copy_folder:
 
             REVIT_EXPORT.dump_exported_files_to_copy_folder(self.output_folder, self.files_exported_for_this_issue, self.file_id_dict, copy_folder)
 
-        if self.is_combine_pdf and not self.is_printing_interupted:
+        if self.checkbox_combine_pdf and not self.is_printing_interupted:
             combined_pdf_name = self.textbox_combined_pdf_name.Text
             REVIT_EXPORT.combine_final_pdf(self.output_folder, self.files_exported_for_this_issue, combined_pdf_name, copy_folder)
 
-        if self.is_play_sound:
+        if self.checkbox_play_sound:
             SOUND.play_sound("sound_effect_mario_stage_clear.wav")
 
 
@@ -1119,9 +1119,9 @@ class EA_Printer_UI(WPFWindow):
 
 
         print ("####")
-        print (self.is_sync_and_close, self.is_printing_interupted)
+        print (self.checkbox_sync_and_close, self.is_printing_interupted)
         print ("####")
-        if self.is_sync_and_close and not self.is_printing_interupted:
+        if self.checkbox_sync_and_close and not self.is_printing_interupted:
             REVIT_SYNC.sync_and_close()
             self.Close()
 
@@ -1137,15 +1137,15 @@ class EA_Printer_UI(WPFWindow):
 
 
         ending_announcement = "enni-ed tab exporter has just finished exporting {} items after {} minutes and {} seconds.".format(len(self.files_exported_for_this_issue), total_time_min_part, total_time_sec_part)
-        if self.is_send_email:
+        if self.checkbox_send_email:
             ending_announcement += "Also, an email is scheduled to sent. Subject line: {}".format(self.email_subject_line.Text.lower().replace("ennead", "enni-ed "))
         SPEAK.speak(ending_announcement)
 
-        if not self.is_sync_and_close:
+        if not self.checkbox_sync_and_close:
             self.update_data_grid_preview()
 
 
-        if self.is_send_email:
+        if self.checkbox_send_email:
             safety = 0
             while True:
                 safety += 1
@@ -1183,20 +1183,20 @@ class EA_Printer_UI(WPFWindow):
 
     def extension_options_changed(self, sender, args):
         #print "options_changed"
-        self.is_export_dwg = self.checkbox_dwg.IsChecked
-        self.is_export_pdf = self.checkbox_pdf.IsChecked
-        self.is_export_jpg = self.checkbox_jpg.IsChecked
+        self.checkbox_dwg = self.checkbox_dwg.IsChecked
+        self.checkbox_pdf = self.checkbox_pdf.IsChecked
+        self.checkbox_jpg = self.checkbox_jpg.IsChecked
         #self.print_opt_status()
         self.update_UI_enable_status()
         self.check_all_setting_ready()
 
     def checkbox_additional_setting_changed(self, sender, args):
-        self.is_export_view_on_sheet = self.checkbox_dwg_view_export.IsChecked
-        self.is_copy_folder = self.checkbox_copy_folder.IsChecked
-        self.is_play_sound = self.checkbox_play_sound.IsChecked
-        self.is_combine_pdf = self.checkbox_combine_pdf.IsChecked
-        self.is_sync_and_close = self.checkbox_sync_and_close.IsChecked
-        self.is_send_email = self.checkbox_send_email.IsChecked
+        self.checkbox_dwg_view_export = self.checkbox_dwg_view_export.IsChecked
+        self.checkbox_copy_folder = self.checkbox_copy_folder.IsChecked
+        self.checkbox_play_sound = self.checkbox_play_sound.IsChecked
+        self.checkbox_combine_pdf = self.checkbox_combine_pdf.IsChecked
+        self.checkbox_sync_and_close = self.checkbox_sync_and_close.IsChecked
+        self.checkbox_send_email = self.checkbox_send_email.IsChecked
 
         self.update_UI_enable_status()
         self.check_all_setting_ready()
@@ -1208,18 +1208,18 @@ class EA_Printer_UI(WPFWindow):
 
 
         # DWG related enable check
-        self.checkbox_dwg_view_export.IsEnabled = self.is_export_dwg
-        if self.is_export_dwg:
+        self.checkbox_dwg_view_export.IsEnabled = self.checkbox_dwg
+        if self.checkbox_dwg:
             self.checkbox_dwg_view_export.Foreground = enabled_color
         else:
             self.checkbox_dwg_view_export.Foreground = disabled_color
 
 
         # PDF related enable check
-        self.checkbox_combine_pdf.IsEnabled = self.is_export_pdf
-        self.radio_button_color_by_sheet.IsEnabled = self.is_export_pdf
-        self.radio_button_color_BW_globally.IsEnabled = self.is_export_pdf
-        if self.is_export_pdf:
+        self.checkbox_combine_pdf.IsEnabled = self.checkbox_pdf
+        self.radio_button_color_by_sheet.IsEnabled = self.checkbox_pdf
+        self.radio_button_color_BW_globally.IsEnabled = self.checkbox_pdf
+        if self.checkbox_pdf:
             self.checkbox_combine_pdf.Foreground = enabled_color
             self.radio_button_color_by_sheet.Foreground = enabled_color
             self.radio_button_color_BW_globally.Foreground = enabled_color
@@ -1230,12 +1230,12 @@ class EA_Printer_UI(WPFWindow):
 
         # combined pdf UI check
         self.textbox_combined_pdf_name.IsEnabled = self.checkbox_combine_pdf.IsEnabled
-        if self.is_combine_pdf:
+        if self.checkbox_combine_pdf:
             self.textbox_combined_pdf_name.Foreground = enabled_color
         else:
             self.textbox_combined_pdf_name.Foreground = disabled_color
 
-        if self.copy_folder_path != "Folder Path...":
+        if self.textbox_folder != "Folder Path...":
             self.button_open_copy_folder.IsEnabled = True
         else:
             self.button_open_copy_folder.IsEnabled = False
@@ -1258,15 +1258,15 @@ class EA_Printer_UI(WPFWindow):
 
 
     def name_format_changed(self, sender, args):
-        self.is_name_format_with_plotId = self.radio_button_plotId_sheetNum_sheetName.IsChecked
-        self.is_name_format_with_sheetGroup = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
+        self.radio_button_plotId_sheetNum_sheetName = self.radio_button_plotId_sheetNum_sheetName.IsChecked
+        self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
 
 
         self.update_data_grid_preview()
 
 
     def color_setting_changed(self, sender, args):
-        self.is_color_by_sheet = self.radio_button_color_by_sheet.IsChecked
+        self.radio_button_color_by_sheet = self.radio_button_color_by_sheet.IsChecked
 
     def button_pick_docs_Clicked(self, sender, args):
         if len([doc for doc in REVIT_APPLICATION.get_top_revit_docs() if not doc.IsFamilyDocument]) > 1:
@@ -1304,7 +1304,7 @@ class EA_Printer_UI(WPFWindow):
         self.folder_status_display.Content = "Folder Picked!"
         self.set_image_source(self.status_icon, "ok_icon.png")
         self.textbox_folder.Text = folder
-        self.copy_folder_path = folder
+        self.textbox_folder = folder
 
         self.check_all_setting_ready()
 
@@ -1449,7 +1449,7 @@ class EA_Printer_UI(WPFWindow):
 
 
     def open_copy_folder_Clicked(self, sender, args):
-        path = os.path.realpath(self.copy_folder_path)
+        path = os.path.realpath(self.textbox_folder)
         os.startfile(path)
 
     def update_doc_id_pair_Changed(self, sender, args):
