@@ -3,4 +3,4 @@ import EXE
 
 
 def quack ():
-    EXE.try_open_app(exe)
+    EXE.try_open_app("EnneaDuck.exe")

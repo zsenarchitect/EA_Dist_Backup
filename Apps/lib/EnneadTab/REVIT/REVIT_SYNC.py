@@ -24,10 +24,6 @@ import time
 SYNC_MONITOR_FILE = "last_sync_record_data.sexyDuck"
 
 
-def get_record_file_path():
-    return FOLDER.get_EA_dump_folder_file(SYNC_MONITOR_FILE)
-
-
 
 
 @ERROR_HANDLE.try_catch_error()
