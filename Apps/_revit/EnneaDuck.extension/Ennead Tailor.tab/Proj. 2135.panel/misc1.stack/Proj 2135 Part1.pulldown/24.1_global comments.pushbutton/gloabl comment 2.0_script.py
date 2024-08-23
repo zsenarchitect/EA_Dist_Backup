@@ -325,6 +325,6 @@ if not will_sync_and_close:
 
 try:
     if will_sync_and_close:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
 except:
     pass

@@ -1182,7 +1182,7 @@ def proceed_all_sheets():
     dump_exported_files_to_copy_folder()
 
     if will_sync_and_close:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
         cleanup_pdf_name()
         cleanup_jpg_name()
     EA_UTILITY.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
@@ -1397,7 +1397,7 @@ if action == action_options[0][0]:
 
     sync_current_session_opts = [["Sync all open documents now and try printing later...","(Especially before you are printing a lot of sheets)"], "Ignore syncing now and Continue..."]
     if EA_UTILITY.dialogue(main_text = "Friendly reminder:\nBefore print do you want to sync all open document, just in case you crash?", options = sync_current_session_opts) == sync_current_session_opts[0][0]:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close(close_others = False)
+        EnneadTab.REVIT.REVIT_SYNC.sync_and_close(close_others = False)
 
 
     proceed_all_sheets()

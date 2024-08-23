@@ -304,7 +304,7 @@ class WorkingViewManager(WPFWindow):
         self.debug_textbox.Text = "{} preview updated.".format( total)
         if will_close:
             self.Close()
-            REVIT_APPLICATION.sync_and_close()
+            REVIT_SYNC.sync_and_close()
             
 
 

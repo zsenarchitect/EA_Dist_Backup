@@ -1122,7 +1122,7 @@ class EA_Printer_UI(WPFWindow):
         print (self.is_sync_and_close, self.is_printing_interupted)
         print ("####")
         if self.is_sync_and_close and not self.is_printing_interupted:
-            REVIT_APPLICATION.sync_and_close()
+            REVIT_SYNC.sync_and_close()
             self.Close()
 
         total_time_min_part = int(math.floor(total_time_second / 60))

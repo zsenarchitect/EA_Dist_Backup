@@ -89,7 +89,7 @@ def update_miro():
 
 
     if res:
-        REVIT_APPLICATION.sync_and_close()
+        REVIT_SYNC.sync_and_close()
     
 
 

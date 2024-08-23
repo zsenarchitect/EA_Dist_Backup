@@ -74,4 +74,4 @@ EA_UTILITY.show_toast(title = "Tool finished!!!", message = "{} warnings reduced
 print("Tool finished")
 print("{} warnings reduced".format(warning_num - current_warning_count() ))
 
-# EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+# EnneadTab.REVIT.REVIT_SYNC.sync_and_close()

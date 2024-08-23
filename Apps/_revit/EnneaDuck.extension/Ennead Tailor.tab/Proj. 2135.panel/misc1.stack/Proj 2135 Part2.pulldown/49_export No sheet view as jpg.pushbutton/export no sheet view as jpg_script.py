@@ -156,7 +156,7 @@ will_sync_and_close = EA_UTILITY.do_you_want_to_sync_and_close_after_done()
 map(lambda x: export_image_from_view(x, doc, adding_creator), no_sheet_views)
 t.Commit()
 if will_sync_and_close:
-    EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+    EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
 
 
 print("################### finish")

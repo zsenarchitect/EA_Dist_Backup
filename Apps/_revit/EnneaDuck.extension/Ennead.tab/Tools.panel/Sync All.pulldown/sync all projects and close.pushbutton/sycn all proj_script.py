@@ -18,7 +18,7 @@ doc = REVIT_APPLICATION.get_doc()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def main():
-    REVIT_APPLICATION.sync_and_close()
+    REVIT_SYNC.sync_and_close()
     
 
     output = script.get_output()

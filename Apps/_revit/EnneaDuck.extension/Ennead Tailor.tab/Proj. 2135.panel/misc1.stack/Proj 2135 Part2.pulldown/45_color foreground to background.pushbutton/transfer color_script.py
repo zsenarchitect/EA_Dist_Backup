@@ -103,4 +103,4 @@ map(modify_material_cut, selected_materials_cut)
 t.Commit()
 
 if res == "Yes":
-    EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+    EnneadTab.REVIT.REVIT_SYNC.sync_and_close()

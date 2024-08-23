@@ -281,7 +281,7 @@ def main():
         family_repath.process_families()
     family_repath.display_results()
     if family_repath.sync_and_close:
-        REVIT_APPLICATION.sync_and_close()
+        REVIT_SYNC.sync_and_close()
 
         
         

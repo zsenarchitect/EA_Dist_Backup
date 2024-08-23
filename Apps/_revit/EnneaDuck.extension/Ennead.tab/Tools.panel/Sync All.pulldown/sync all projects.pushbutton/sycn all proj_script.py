@@ -18,7 +18,7 @@ doc = REVIT_APPLICATION.get_doc()
 def main():
     
 
-    REVIT_APPLICATION.sync_and_close(close_others = False)
+    REVIT_SYNC.sync_and_close(close_others = False)
     SOUND.play_sound()
     output = script.get_output()
     killtime = 30

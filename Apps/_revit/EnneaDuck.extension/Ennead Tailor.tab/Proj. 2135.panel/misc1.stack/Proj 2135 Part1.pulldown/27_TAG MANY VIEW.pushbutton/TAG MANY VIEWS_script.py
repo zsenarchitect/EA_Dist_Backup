@@ -143,7 +143,7 @@ map(tag_in_view, views)
 t.Commit()
 
 if close_others_afterward:
-    EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close(close_others = close_others_afterward)
+    EnneadTab.REVIT.REVIT_SYNC.sync_and_close(close_others = close_others_afterward)
 
 
 #ideas:

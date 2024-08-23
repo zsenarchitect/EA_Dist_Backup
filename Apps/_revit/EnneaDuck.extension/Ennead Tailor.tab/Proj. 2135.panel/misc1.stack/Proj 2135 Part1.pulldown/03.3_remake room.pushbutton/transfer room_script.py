@@ -175,4 +175,4 @@ t.Commit()
 
 print("{} room recreated".format(max_value))
 
-EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+EnneadTab.REVIT.REVIT_SYNC.sync_and_close()

@@ -78,11 +78,11 @@ def main():
 
     EXE.try_open_app("ScheduleOpener")
         
-    REVIT_APPLICATION.sync_and_close()
+    REVIT_SYNC.sync_and_close()
     
     import time
     time.sleep(5)
-    REVIT_APPLICATION.sync_and_close()
+    REVIT_SYNC.sync_and_close()
     REVIT_APPLICATION.close_revit_app()
     REVIT_FORMS.notification(main_text = "There is nothing to see here. Close this revit.",
                                              sub_text = "Your scheduled reopen revit file will show up in new session.")

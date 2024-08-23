@@ -109,7 +109,7 @@ def process_family():
         print(line)
 
     if will_sync_and_close:
-        EnneadTab.REVIT.REVIT_APPLICATION.sync_and_close()
+        EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
     """
     options = ["Yes", "No"]
     res = EA_UTILITY.dialogue(main_text = "Loading finish, you want to close family doc?", options = options)

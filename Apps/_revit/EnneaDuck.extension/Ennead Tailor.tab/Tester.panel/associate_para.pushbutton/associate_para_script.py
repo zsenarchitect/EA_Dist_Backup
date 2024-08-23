@@ -107,7 +107,7 @@ def associate_para():
 
 
     if should_sync_and_close:
-        REVIT_APPLICATION.sync_and_close()
+        REVIT_SYNC.sync_and_close()
 
 ################## main code below #####################
 if __name__ == "__main__":
