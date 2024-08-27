@@ -37,7 +37,7 @@ IGNORE_LIST = ["__pycache__", "RHINO"]
 
 def module_call_test(module_call):
     module = module_call.split(".")[0]
-    eval(f"import {module}")
+    eval("import {}".format(module))
     results = eval(repr(module_call))
     return results
 
@@ -115,8 +115,8 @@ def pretty_test(test_dict, filename):
             else:
                 args = tuple(eval(arg.strip()) for arg in test_case.split(","))
 
-            failure_message = f"    expected {C(expected, T.Blue)}, got {C(result, T.Blue)} - {C('Passed', T.Green)}"
-            success_message = f"    expected {C(expected, T.Blue)}, got {C(result, T.Red)} - {C('Failed', T.Red)}"
+            failure_message = "    expected {}, got {} - {}".format(C(expected, T.Blue),C(result, T.Blue),C('Passed', T.Green))
+            success_message = "    expected {}, got {} - {}".format(C(expected, T.Blue),C(result, T.Red),C('Failed', T.Red))
             try:
                 result = func_to_call(*args)
                 if result == expected:
@@ -132,7 +132,7 @@ def pretty_test(test_dict, filename):
                     failure_message
                 )
                 if e:
-                    print(f"    {C(str(e), T.Red)}")
+                    print("    {}".format(C(str(e), T.Red)))
             if all_passed:
                 if not result == expected:
                     all_passed = False
@@ -235,5 +235,5 @@ class TooManyFailedModuleException(BaseException):
 
 
 if __name__ == "__main__":
-    # test_core_module()
+    test_core_module()
     pass

@@ -3,7 +3,6 @@
 """Defines the primary error handling function for EnneadTab."""
 
 import traceback
-import os
 import ENVIRONMENT
 import FOLDER
 import EMAIL
