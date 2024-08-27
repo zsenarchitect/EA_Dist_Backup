@@ -2,11 +2,15 @@
 
 
 ## 1. Setup Basic
+If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosystem folder just to get a clean reinstall.
+
 Download "EnneadTab_OS_Installer.exe" from link below.
 
 - https://github.com/zsenarchitect/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
 
-Save anywhere and run it. It might takes a few seconds( or minutes, depending on your download speed) to unpack the contents. When you can see "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation" then it is ready to move on installing Rhino and Revit Version. Follow __step 2.2 or 3.2__ below.
+Save anywhere and run it. It might takes a few seconds( or minutes, depending on your download speed) to unpack the contents. 
+
+When you can see "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation" then it is ready to move on installing Rhino and Revit Version. Follow __step 2.2 or 3.2__ below.
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_core.png)
 
 > [!NOTE]
