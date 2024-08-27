@@ -15,6 +15,9 @@ from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
 import time
 import pickle
+import proDUCKtion # pyright: ignore 
+proDUCKtion.validify()
+from EnneadTab.REVIT import REVIT_EVENT
 envvars.set_pyrevit_env_var("FAMILY_LOAD_BEGIN", time.time())
 datafile = script.get_instance_data_file("sub_c_list")
 
@@ -28,9 +31,9 @@ def get_subc(category):
             temp.append("[{0}]--->[{1}]".format(c.Name, sub_c.Name))
     return temp
 
-############### main ###################
-if __name__ == "__main__":
-
+def main():
+    if not REVIT_EVENT.is_family_load_hook_enabled():
+        return
     doc = EXEC_PARAMS.event_args.Document
 
     all_Cs = doc.Settings.Categories
@@ -40,3 +43,8 @@ if __name__ == "__main__":
     f = open(datafile, 'w')
     pickle.dump(data, f)
     f.close()
+############### main ###################
+if __name__ == "__main__":
+    main()
+
+

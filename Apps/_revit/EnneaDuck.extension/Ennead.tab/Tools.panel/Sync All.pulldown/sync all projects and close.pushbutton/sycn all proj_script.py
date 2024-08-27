@@ -5,7 +5,7 @@ __tip__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC
 from EnneadTab import ERROR_HANDLE, LOG
 from pyrevit import script
 

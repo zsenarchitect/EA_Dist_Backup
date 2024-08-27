@@ -150,3 +150,9 @@ def set_sync_cancelled(stage = True):
     envvars.set_pyrevit_env_var("IS_SYNC_CANCELLED", stage)
 
 
+def is_family_load_hook_enabled():
+    return envvars.get_pyrevit_env_var("IS_FAMILY_LOAD_HOOK_ENABLED")
+
+
+def set_family_load_hook_stage(stage = True):
+    envvars.set_pyrevit_env_var("IS_FAMILY_LOAD_HOOK_ENABLED", stage)

@@ -18,7 +18,7 @@ import time
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, SOUND, NOTIFICATION, TIME
-from EnneadTab.REVIT import REVIT_FORMS
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_EVENT
 
 def get_subc(category):
     temp = []
@@ -36,6 +36,10 @@ def difference_list(L1, L2):
 
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def main():
+    if not REVIT_EVENT.is_family_load_hook_enabled():
+        return
+
+    
     SOUND.play_sound("sound_effect_mario_coin.wav")
 
 

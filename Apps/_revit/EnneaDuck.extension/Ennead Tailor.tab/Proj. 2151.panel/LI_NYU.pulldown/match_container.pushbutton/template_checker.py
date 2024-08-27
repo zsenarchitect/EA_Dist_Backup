@@ -206,6 +206,9 @@ class TemplateProcessor:
             DB.WorksetVisibility.UseGlobalSetting: "Use Global Setting"
         }
         return visibility_map.get(visibility, "Unknown")
+
+
+    
 def process_template(container_doc, working_docs):
     output.print_md("# Checking Template")
 

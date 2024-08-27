@@ -3,20 +3,18 @@
 
 __doc__ = """
 Use container file as base to compare BIM data to other major NYULI docs for consistency.
-
-I am checking system family
-Then loadable family
 """
 __title__ = "Match Container"
 __context__ = "zero-doc"
 
+import time
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
 from pyrevit import script
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, OUTPUT, TIME, USER
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_EVENT
 from Autodesk.Revit import DB # pyright: ignore 
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
@@ -48,6 +46,8 @@ import file_getter as FG
 # import system_family_checker as SFC
 import family_checker as FC
 import template_checker as TC
+from model_health_checker import ModelHealthChecker
+from data_holder import SentenceDataHolder
 
 
 
@@ -62,18 +62,23 @@ def match_container():
     container_doc = FG.get_NYU_doc(doc_title = container_file_title)
     if not container_doc:
         return
-
-    output.print_md("## Objective:")
-    print (__doc__)
+    NOTIFICATION.messenger("This will take a while(~10mins)")
     
-    output.print_md("## Icon Legend:")
+    REVIT_EVENT.set_family_load_hook_stage(stage=False)
+    processor_collection = []
+    processor_collection.append(SentenceDataHolder("## Objective:"))
+    processor_collection.append(SentenceDataHolder(__doc__))
+
+    processor_collection.append(SentenceDataHolder("## Icon Legend:"))
     for key in EMOJI_DICT.keys():
         emoji = EMOJI_DICT[key]
-        output.print_md("{}: {}".format(key, emoji))
+        processor_collection.append(SentenceDataHolder("{}: {}".format(key, emoji)))
         
-    output.print_md("## Report Date:{}".format(TIME.get_formatted_current_time()))
+    processor_collection.append(SentenceDataHolder("## Report Date:{}".format(TIME.get_formatted_current_time())))
+    start_time = time.time()
 
-    print ("\n\n")
+    processor_collection.append(SentenceDataHolder("\n\n"))
+    
 
 
         
@@ -87,8 +92,8 @@ def match_container():
     ]
 
 
-    if IS_TESING_NEW_FUNC:
-        NYULI_list = NYULI_list[3:]
+    # if IS_TESING_NEW_FUNC:
+    #     NYULI_list = NYULI_list[3:]
     working_docs = [FG.get_NYU_doc(doc_title = x) for x in NYULI_list]
     working_docs = [x for x in working_docs if x is not None]
 
@@ -100,7 +105,6 @@ def match_container():
         
 
 
-    
     sys_cates_with_compound = [
         "Walls",
         "Floors",
@@ -108,11 +112,13 @@ def match_container():
         "Ceilings"
     ]
     for sys_cate in sys_cates_with_compound:
-        FC.process_family(sys_cate, 
-                          container_doc, 
-                          working_docs, 
-                          has_compound = True, 
-                          is_loadable=False)
+        processor = FC.FamilyProcessor(sys_cate, 
+                                        container_doc, 
+                                        working_docs, 
+                                        has_compound = True, 
+                                        is_loadable=False)
+        processor.process()
+        processor_collection.append(processor)
 
     sys_cates_without_compound = [
         "Ramps",
@@ -129,11 +135,13 @@ def match_container():
         "TextNotes"
     ]
     for sys_cate in sys_cates_without_compound:
-        FC.process_family(sys_cate, 
-                          container_doc, 
-                          working_docs, 
-                          has_compound = False, 
-                          is_loadable=False)
+        processor = FC.FamilyProcessor(sys_cate, 
+                                        container_doc, 
+                                        working_docs, 
+                                        has_compound = False, 
+                                        is_loadable=False)
+        processor.process()
+        processor_collection.append(processor)
 
 
     family_cates = [
@@ -162,14 +170,29 @@ def match_container():
         "CaseworkTags"
     ]
     for family_cate in family_cates:
-        FC.process_family(family_cate, 
-                          container_doc, 
-                          working_docs, 
-                          has_compound = False, 
-                          is_loadable=True)
+        processor = FC.FamilyProcessor(family_cate, 
+                                        container_doc, 
+                                        working_docs, 
+                                        has_compound = False, 
+                                        is_loadable=True)
+        processor.process()
+        processor_collection.append(processor)
+
+
+    for processor in processor_collection:
+        if isinstance(processor, SentenceDataHolder):
+            processor.print_sentence()
+        elif isinstance(processor, FC.FamilyProcessor):
+            processor.print_result()
 
     TC.process_template(container_doc, working_docs)
 
+
+    for doc in working_docs:
+        ModelHealthChecker(doc).check()
+
+    time_lapse = time.time() - start_time
+    print ("Time Used To Run Checks: {}".format(TIME.get_readable_time(time_lapse)))
 
     OUTPUT.display_output_on_browser()
 
@@ -177,6 +200,7 @@ def match_container():
         family_doc.Close(False)
 
     NOTIFICATION.messenger("Comparision Done!")
+    REVIT_EVENT.set_family_load_hook_stage(stage=True)
 
 
 
@@ -184,6 +208,7 @@ def match_container():
 ################## main code below #####################
 if __name__ == "__main__":
     output = script.get_output()
+    output.close_others(True)
     match_container()
 
 

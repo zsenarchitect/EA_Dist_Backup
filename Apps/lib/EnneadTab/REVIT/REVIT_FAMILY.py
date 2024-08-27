@@ -14,6 +14,7 @@ except:
     DOC = object
     
     
+from EnneadTab import ERROR_HANDLE
 import NOTIFICATION
 import FOLDER 
 import REVIT_SELECTION
@@ -74,7 +75,9 @@ def is_family_version_different(family_doc, project_doc):
         # NOTIFICATION.messenger("[{}] does not exist in [{}]".format(family_doc.Title, project_doc.Title))
         return None
     dry_opt = DryLoadFamilyOption()
-    load_family(family_doc,project_doc,loading_opt=dry_opt)  
+    load_family(family_doc,project_doc,loading_opt=dry_opt) 
+    if dry_opt.is_version_different:
+        NOTIFICATION.messenger("family [{}] is different version".format(family_doc.Title)) 
     return dry_opt.is_version_different  
 
 def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOption()):
@@ -88,9 +91,12 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
     try:
         family_doc.LoadFamily.Overloads[DB.Document, DB.IFamilyLoadOptions](project_doc, loading_opt)
     except Exception as e:
-        print (e)
-        family_doc.LoadFamily(project_doc, loading_opt)
-    
+        try:
+            family_doc.LoadFamily(project_doc, loading_opt)
+        except Exception as e:
+            NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
+            ERROR_HANDLE.print_note (e)
+            ERROR_HANDLE.print_note ("failed family is [{}]".format(family_doc.Title))
     
 def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption()):
     project_doc = project_doc or DOC

@@ -71,11 +71,12 @@ def print_note(string):
     """For non-developers this is never printed."""
 
     if USER.is_EnneadTab_developer():
+        
         try:
             from pyrevit import script
             string = str(string)
             script.get_output().print_md(
-                "***[Dev Debug Only Oote]***:{}".format(string))
+                "***[Dev Debug Only Note]***:{}".format(string))
         except Exception as e:
 
-            print("[Dev Debug Only Oote]:{}".format(string))
+            print("[Dev Debug Only Note]:{}".format(string))
