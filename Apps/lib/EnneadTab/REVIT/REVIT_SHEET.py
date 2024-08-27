@@ -7,7 +7,7 @@ try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument
+    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
     DOC = UIDOC.Document
     
 except:

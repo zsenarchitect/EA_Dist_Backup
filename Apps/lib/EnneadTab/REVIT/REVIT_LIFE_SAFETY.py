@@ -81,7 +81,8 @@ class EgressData:
 
 
 class LifeSafetyChecker:
-
+    output = script.get_output()
+    
     @staticmethod
     def get_door_width(door, para_name):
         try:
@@ -100,7 +101,7 @@ class LifeSafetyChecker:
         max_width = runs[0].ActualRunWidth
         for run in runs:
             if not  run.ActualRunWidth == max_width:
-                print( "--This stair has variring  run width--->{}. Talk to Sen Zhang to understand what it means.".format(output.linkify(run.Id)))
+                print( "--This stair has variring  run width--->{}. Talk to Sen Zhang to understand what it means.".format(LifeSafetyChecker.output.linkify(run.Id)))
         return max_width
     
     def __init__(self, doc, data_source):

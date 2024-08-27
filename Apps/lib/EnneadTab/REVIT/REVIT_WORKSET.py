@@ -30,7 +30,8 @@ THIS is direct copy from old MARK_HISTORY script with NO modification, it will f
 TO-DO migrate this to new way of doing things and make startup.py point to this"""
 
 try:
-    from pyrevit import DB, revit
+    from pyrevit import DB, revit, script
+    
 except:
     pass
 

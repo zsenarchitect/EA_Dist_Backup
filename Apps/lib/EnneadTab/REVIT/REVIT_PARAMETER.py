@@ -117,7 +117,7 @@ def add_shared_parameter_to_project_doc(project_doc,
 
     # define category set, should be  OST_Sheets
     cate_sets = DB.CategorySet()
-    for cate in cates:
+    for cate in binding_cate_names:
         
         cate_sets.Insert(cate)
 
