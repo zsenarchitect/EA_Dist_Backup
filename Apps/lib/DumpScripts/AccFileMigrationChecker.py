@@ -59,8 +59,9 @@ class ACCMigrationChecker:
             report_content.append(note)
             details_header = "Details of affected files:\n"
             report_content.append(details_header)
-            for original, new in affected_files:
-                detail = f"Original: {original}\nNew: {new}\nLength: {len(new)}\n"
+            for i, pair in enumerate(affected_files):
+                original, new = pair
+                detail = f"{i+1}.\nOriginal: {original}\nNew: {new}\nLength: {len(original)} -> {len(new)}\n"
                 report_content.append(detail)
         else:
             summary = f"Summary: All paths are below {self.limit} length limit.\n"
@@ -121,8 +122,9 @@ if __name__ == "__main__":
     limit = 245
 
     drives = [
-        "I:\\",
-        "J:\\", 
+        # "I:\\",
+        # "J:\\", 
+        "W:\\INOVA\\",
         ]
 
     async def main():
