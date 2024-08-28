@@ -225,8 +225,9 @@ def register_xaml_path():
     
 def set_RIR_clicker():
     with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:
-        if "ref_images" not in data:
+        if "ref_images" not in data or data["ref_images"] is None:
             data["ref_images"] = []
+            
         data["ref_images"].append(IMAGE.get_image_path_by_name("search_RIR_7.png"))
     EXE.try_open_app("AutoClicker.exe")
 
