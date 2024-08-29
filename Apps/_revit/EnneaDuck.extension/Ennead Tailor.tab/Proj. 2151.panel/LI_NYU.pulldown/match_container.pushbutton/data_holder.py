@@ -11,6 +11,14 @@ class DataHolder(object):
         self.data_type = data_type
         self.data = data
 
+    def print_data(self):
+        if self.data_type == DataType.Table:
+            self.print_table()
+        elif self.data_type == DataType.List:
+            self.print_collection()
+        elif self.data_type == DataType.Sentence:
+            self.print_sentence()
+
 
 class SentenceDataHolder(DataHolder):
     def __init__(self, data):
@@ -38,12 +46,15 @@ class TableDataHolder(DataHolder):
 
 
 class ListDataHolder(DataHolder):
-    def __init__(self, data):
+    def __init__(self, data, title=None):
         data_type = DataType.List
         super(ListDataHolder, self).__init__(data_type, data)
         self.collection = data
+        self.title = title
 
     def print_collection(self):
         output = script.get_output()
+        if self.title:
+            output.print_md("**{}**".format(self.title))
         for i, item in enumerate(self.collection):
-            output.print_md("{} - {}".format(i+1, item))
+            output.print_md("  {} - {}".format(i+1, item))

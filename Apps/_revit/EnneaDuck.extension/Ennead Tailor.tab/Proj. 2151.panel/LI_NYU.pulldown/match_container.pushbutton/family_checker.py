@@ -27,16 +27,10 @@ class FamilyProcessor:
             return
         self.result.append(data_holder)
 
-    def print_result(self):
+    def print_data(self):
         for data_holder in self.result:
-            if isinstance(data_holder, TableDataHolder):
-                data_holder.print_table()
-            elif isinstance(data_holder, ListDataHolder):
-                data_holder.print_collection()
-            elif isinstance(data_holder, SentenceDataHolder):
-                data_holder.print_sentence()
-            else:
-                print (data_holder)
+            data_holder.print_data()
+
         
     def process(self):
         self.update_result(SentenceDataHolder("# Checking Family Category {}".format(self.family_category_name)))
@@ -44,6 +38,7 @@ class FamilyProcessor:
 
         self.master_types = query_family(category, self.container_doc)
         master_type_names = sorted([_type.pretty_name for _type in self.master_types])
+   
 
         # this is list of list
         self.working_doc_types_collection = [query_family(category, working_doc) for working_doc in self.working_docs]
@@ -275,9 +270,8 @@ def get_matching_type(search_name, type_list):
 
 def query_family(ost, doc):
     if "textnote" in str(ost).lower():
-        NOTIFICATION.duck_pop("Querying TextNoteType")
         types = DB.FilteredElementCollector(doc).OfClass(DB.TextNoteType).WhereElementIsElementType().ToElements()
-    if "dimension" in str(ost).lower():
+    elif "dimension" in str(ost).lower():
         types = DB.FilteredElementCollector(doc).OfClass(DB.DimensionType).WhereElementIsElementType().ToElements()
     else:
         types = DB.FilteredElementCollector(doc).OfCategory(ost).WhereElementIsElementType().ToElements()

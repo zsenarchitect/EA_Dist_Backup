@@ -39,7 +39,7 @@ for pair in dict_definitions:
     key, value = pair
     EMOJI_DICT[key] = value
 
-IS_TESING_NEW_FUNC =  USER.IS_DEVELOPER
+IS_TESING_NEW_FUNC =  False and USER.IS_DEVELOPER
 
 
 import file_getter as FG
@@ -92,8 +92,8 @@ def match_container():
     ]
 
 
-    # if IS_TESING_NEW_FUNC:
-    #     NYULI_list = NYULI_list[3:]
+    if IS_TESING_NEW_FUNC:
+        NYULI_list = NYULI_list[5:]
     working_docs = [FG.get_NYU_doc(doc_title = x) for x in NYULI_list]
     working_docs = [x for x in working_docs if x is not None]
 
@@ -111,6 +111,8 @@ def match_container():
         "Roofs",
         "Ceilings"
     ]
+    if IS_TESING_NEW_FUNC:
+        sys_cates_with_compound = []
     for sys_cate in sys_cates_with_compound:
         processor = FC.FamilyProcessor(sys_cate, 
                                         container_doc, 
@@ -134,6 +136,8 @@ def match_container():
         "LevelHeads",
         "TextNotes"
     ]
+    if IS_TESING_NEW_FUNC:
+        sys_cates_without_compound = ["TextNotes"]
     for sys_cate in sys_cates_without_compound:
         processor = FC.FamilyProcessor(sys_cate, 
                                         container_doc, 
@@ -169,6 +173,8 @@ def match_container():
         "FurnitureTags",
         "CaseworkTags"
     ]
+    if IS_TESING_NEW_FUNC:
+        family_cates = ["TitleBlocks"]
     for family_cate in family_cates:
         processor = FC.FamilyProcessor(family_cate, 
                                         container_doc, 
@@ -180,12 +186,10 @@ def match_container():
 
 
     for processor in processor_collection:
-        if isinstance(processor, SentenceDataHolder):
-            processor.print_sentence()
-        elif isinstance(processor, FC.FamilyProcessor):
-            processor.print_result()
+        processor.print_data()
 
-    TC.process_template(container_doc, working_docs)
+    if not IS_TESING_NEW_FUNC:
+        TC.process_template(container_doc, working_docs)
 
 
     for doc in working_docs:
@@ -199,7 +203,7 @@ def match_container():
     for family_doc in REVIT_APPLICATION.get_all_family_docs():
         family_doc.Close(False)
 
-    NOTIFICATION.messenger("Comparision Done!")
+    NOTIFICATION.messenger("Comparision Done!\nView your report in browser.")
     REVIT_EVENT.set_family_load_hook_stage(stage=True)
 
 

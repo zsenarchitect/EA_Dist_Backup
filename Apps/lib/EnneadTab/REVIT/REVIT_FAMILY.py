@@ -98,10 +98,10 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
             try:
                 save_option = DB.SaveAsOptions()
                 save_option.OverwriteExistingFile = True
-                temp_path = os.path.join(FOLDER.USER_DESKTOP_FOLDER, family_doc.Title + ".rfa")
-                family_doc.SaveAs(temp_path)
+                temp_path = FOLDER.get_EA_dump_folder_file( family_doc.Title + ".rfa")
+                family_doc.SaveAs(temp_path, save_option)
                 family_ref = clr.StrongBox[DB.Family](None)
-                DB.Document.LoadFamily(temp_path, loading_opt, family_ref)
+                success, family_ref = project_doc.LoadFamily.Overloads[str, DB.IFamilyLoadOptions](temp_path, loading_opt, family_ref)
                 os.remove(temp_path)
             except Exception as e:
                 NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
@@ -225,13 +225,21 @@ class RevitType(RevitInstance):
 
     @property
     def family_name(self):
+        # handle textnote type seperately becasue it does not category
+        if isinstance(self.element, DB.TextNoteType):
+            return "TextNote"
+            
         # handle loadble family
         if hasattr(self.element, "FamilyName"):
             return self.element.FamilyName
 
         # handle system family
-        else:
+        elif hasattr(self.element,"Category"):
             return self.element.Category.Name
+        else:
+            return "Unknown family name"
+
+        
     @property
     def pretty_name(self):
         return "[{}]: {}".format(self.family_name, self.type_name)
