@@ -264,8 +264,6 @@ def show_tip_revit(is_random_single=True):
                     output.print_md (line)
 
     print ("\n\n\n\n")
-    output.print_md ("<span style='color:blue'>(Note)If you are not seeing this feature on your toolbar, you might be using the ***LITE*** version right now. See if you have a little icon of 'LITE' next to your Setting Gear Icon</span>")
-    output.print_md ("<span style='color:blue'>Switch to ***Pro*** Version to unlock all the cool features!</span>")
     if is_random_single:
         OUTPUT.display_output_on_browser()
 

@@ -11,7 +11,7 @@ __tip__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SYNC
-from EnneadTab import EXE, DATA_FILE, USER, ERROR_HANDLE, LOG
+from EnneadTab import EXE, DATA_FILE, NOTIFICATION, USER, ERROR_HANDLE, LOG, ENVIRONMENT
 from pyrevit import forms, script
 # import datetime
 from datetime import datetime, timedelta
@@ -27,7 +27,8 @@ doc = REVIT_APPLICATION.get_doc()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def main():
-
+    if ENVIRONMENT.IS_AVD:
+        NOTIFICATION.duck_pop("If you log off AVD, this will not reopen new session for you.")
     # get all open docs
     docs = REVIT_APPLICATION.get_app().Documents
     docs = [doc for doc in docs if not doc.IsLinked]

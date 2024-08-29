@@ -108,6 +108,14 @@ class FamilyProcessor:
                 continue
             master_family_names_checked.append(family_name)
             row_data = [family_name, "---"]
+
+            # i suspect if not activated this type cannot be loadded coorectly, even for dry load
+            if not master_type.element.IsActive:
+                t = DB.Transaction(master_type.element.Document, "Activate Type")
+                t.Start()
+                master_type.element.Activate()
+                t.Commit()
+                
             family_doc = master_type.element.Document.EditFamily(master_type.element.Family)
             for i, working_doc in enumerate(self.working_docs):
                 is_different = REVIT_FAMILY.is_family_version_different(family_doc, working_doc)
@@ -236,7 +244,7 @@ class FamilyProcessor:
         print_detail = len(bad_conditions)
         if print_detail:
             table = TableDataHolder(
-                table_data=data,
+                data=data,
                 title="Compound Comparision",
                 columns=["TypeName", "Container File"] + ["[{}]".format(_doc.Title) for _doc in self.working_docs]
             )
@@ -267,6 +275,7 @@ def get_matching_type(search_name, type_list):
 
 def query_family(ost, doc):
     if "textnote" in str(ost).lower():
+        NOTIFICATION.duck_pop("Querying TextNoteType")
         types = DB.FilteredElementCollector(doc).OfClass(DB.TextNoteType).WhereElementIsElementType().ToElements()
     if "dimension" in str(ost).lower():
         types = DB.FilteredElementCollector(doc).OfClass(DB.DimensionType).WhereElementIsElementType().ToElements()

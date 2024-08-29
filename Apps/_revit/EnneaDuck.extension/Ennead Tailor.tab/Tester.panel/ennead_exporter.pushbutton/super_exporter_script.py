@@ -57,7 +57,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
         # important data setup
         self.setting_file = "super_exporter_setting.sexyDuck"
-        self.output_folder = "{}\EnneadTab Exporter".format(FOLDER.DUMP_FOLDER)
+        self.output_folder = "{}\\EnneadTab Exporter".format(FOLDER.DUMP_FOLDER)
         FOLDER.secure_folder(self.output_folder)
 
 
@@ -75,31 +75,14 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
         # generic form setup
         self.folder_status_display.Content = ""
-        notes_A = ["Export from linked Revit.",
-                "Formated names.",
-                "Multiple file extension.",
-                "Export by issue.",
-                "Change color setting per sheet.",
-                "Isolated view export for dwg."]
 
-        notes_B = ["Alert after finish.",
-                "Upload to folder with subfolder.",
-                "Sync and close after export.",
-                "Ordering output.",
-                "Record time estimate.",
-                "Auto combine PDF."]
-        self.feature_sum_note = ""
-        for note in notes_A + notes_B:
-            self.feature_sum_note += "\n -{}".format(note)
 
 
 
 
         self.progress_bar.Value = 0
         self.progress_bar_display.Text = "\n\n\n"
-        self.note.Text = "Notes: Support for 2021 and before dropped."
-        self.copy_folder_note_A.Text = "Folder you pick (example: I:/2135/2_Record/2022-09-30 50% DD)\n    -FileId\n       -PDFs\n         -A101_xx.pdf\n         -A102_xx.pdf\n       -DWGs\n         -A101_xx.dwg\n         -A102_xx.dwg"
-        self.copy_folder_note_B.Text = "For example above, the final selection folder should say '2022-09-30 50% DD', not '2022-09-30 50% DD/FileId'"
+
         self.button_main.Content = "Setting Incomplete"
         logo_file = IMAGE.get_image_path_by_name("logo_vertical_light.png")
         self.set_image_source(self.logo_img, logo_file)
@@ -114,13 +97,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         self.initiate_dwg_setting_list_source()
 
         self.textbox_combined_pdf_name.Text = "{}_{}_Combined".format(date.today(), DOC.Title)
-        self.email_sender.Text = "{}@ennead.com".format(os.environ["USERPROFILE"].split("sers\\")[1])
-
-        if not os.path.exists(self.setting_file):
-            DATA_FILE.set_data(dict(), self.setting_file)
-
-
-
 
 
 
@@ -271,7 +247,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         out_data["is_name_format_with_sheetGroup"] = self.radio_button_sheetGroup_sheetSeries_sheetNum_sheetName.IsChecked
         out_data["is_play_sound"] = self.checkbox_play_sound.IsChecked
         out_data["is_combine_pdf"] = self.checkbox_combine_pdf.IsChecked
-        #out_data["dwg_setting_name"] = self.dwg_setting_name
         out_data["is_sync_and_close"] = self.checkbox_sync_and_close.IsChecked
         out_data["is_export_view_on_sheet"] = self.checkbox_dwg_view_export.IsChecked
         out_data["is_color_by_sheet"] = self.radio_button_color_by_sheet.IsChecked
@@ -292,21 +267,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         out_data["email_data_is_add_folder_link"] = self.email_data.is_adding_final_folder_link
         out_data["email_data_additional_attachments_list"] = self.email_data.additional_attachments_list
         out_data["email_data_embeded_images_list"] = self.email_data.embeded_images_list
-
-
-
-        """export time estimate time should be record on L drive file. so other people can see.
-        will not include in local setting.
-
-        temp = dict()
-        for i in range(10):
-            temp[i] = ("Test_{}".format(i), "test doc", "pdf", 20-i)
-        out_data["export_time_table"] = temp
-        # dict of list [stable id of export obj, doc name,  extension, time]
-        """
-
-
-
 
 
 
@@ -669,15 +629,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         model_path = self.doc_model_path_pair[doc_name]
 
 
-        """
-        if model_path.CloudPath:
-            #cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(System.Guid(data[1]), System.Guid(data[2]) )
-            open_options = DB.OpenOptions()
-            #ERROR_HANDLE.print_note( "setting active doc as {}".format(data[0]))
-            return UI.UIApplication(app).OpenAndActivateDocument (model_path,
-                                                                open_options,
-                                                                False)
-        """
+
 
         # this model path  is server path
         open_options = DB.OpenOptions()
@@ -841,14 +793,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
             format_time = REVIT_EXPORT.print_time("sheet to {}".format(extension), time_end, time_start)
             preview_obj.time_estimate = time_end - time_start
 
-            """
-            EA_UTILITY.show_toast(app_name = "Ennead Exporter",
-                                    title = "[{}] saved. {}".format(file_name, format_time),
-                                    image = script.get_bundle_file("icon.png"),
-                                    message = "{} more to do in current queue.".format(int(self.progress_bar.Maximum - i - 1)))
-            """
-
-
 
             """copy new created file to final folder now"""
             remaining_objs = self.data_grid_preview.ItemsSource[i:]
@@ -984,7 +928,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
             safety = 0
             while True:
                 safety += 1
-                if os.path.exists(self.log_file, self.output_folder):
+                if os.path.exists(self.log_file_path):
                     SPEAK.speak("Output log file saved.")
                     break
 
@@ -1145,19 +1089,26 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
     def show_feature_Clicked(self, sender, args):
+        notes_A = ["Export from linked Revit.",
+                "Formated names.",
+                "Multiple file extension.",
+                "Export by issue.",
+                "Change color setting per sheet.",
+                "Isolated view export for dwg."]
+
+        notes_B = ["Alert after finish.",
+                "Upload to folder with subfolder.",
+                "Sync and close after export.",
+                "Ordering output.",
+                "Record time estimate.",
+                "Auto combine PDF."]
+        self.feature_sum_note = ""
+        for note in notes_A + notes_B:
+            self.feature_sum_note += "\n -{}".format(note)
+
 
         REVIT_FORMS.notification(main_text = "Features:",
-                                        sub_text = self.feature_sum_note)
-        """
-        file_path = script.get_bundle_file("fix bluebeam setting.pdf")
-        EA_UTILITY.try_open_app(file_path)
-        output.show()
-        output.print_md( "open your **bluebeam administrator**(not the bluebeam viewer)")
-        print("on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below.")
-        img_path = script.get_bundle_file("bluebeam admin setting.png")
-        output.set_height(1000)
-        output.print_image(img_path)
-        """
+                                sub_text = self.feature_sum_note)
 
     def button_save_setting_Clicked(self, sender, args):
 
@@ -1243,13 +1194,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         
         
         self.initiate_para_list_source()
-        return
-        url = "https://youtu.be/F1fp4xaewRo"
-        script.open_url(url)
-        main_text = "Goal: Add shared parameter 'Issue XXX' to sheet parameter."
-        sub_text = "Step 1:\nCreate new shared parameter from the manager window.\n\nStep 2:\nUse the method from demo video to bind this parameter to sheet category in multiple documents"
-        REVIT_FORMS.notification(main_text = main_text,
-                                        sub_text = sub_text)
 
 
 
@@ -1268,13 +1212,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
         return
     
-    
-        url = "https://youtu.be/F1fp4xaewRo"
-        script.open_url(url)
-        main_text = "Goal: Add shared parameter 'Print_In_Color' to sheet parameter."
-        sub_text = "Step 1:\nCreate new shared parameter from the manager window.\n\nStep 2:\nUse the method from demo video to bind this parameter to sheet category in multiple documents"
-        REVIT_FORMS.notification(main_text = main_text,
-                                        sub_text = sub_text)
+
 
 
 
@@ -1315,15 +1253,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
     def update_loading_message(self, preview_obj):
         self.textblock_export_status.Text = "{}\nEstimated time = {}".format( preview_obj.format_name, preview_obj.time_estimate_format)
         self.textblock_load_screen.Text = JOKE.random_loading_message()
-    """
-    !! store time 3sitmate  dict[(ID, extension)] = time
-
-    test this, might not work for jason dump.
-    """
-
-    #def update_time_estimate(self, preview_obj, time_span):
-        #preview_obj.time_estimate = time_span
-        #preview_obj.time_estimate_format = "{}s".format(time_span) to convert to second or mins
 
 
     def update_time_estimate(self):
@@ -1350,10 +1279,6 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
  
     
-    def mouse_down_main_panel(self, sender, args):
-        #print "mouse down"
-        sender.DragMove()
-
 
 def get_doc_path(doc):
     if doc.IsWorkshared:

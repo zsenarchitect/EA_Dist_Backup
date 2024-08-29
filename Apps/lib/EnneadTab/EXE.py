@@ -1,3 +1,5 @@
+"""Run apps from the EnneadTab app library."""
+
 import shutil
 import os
 import time
@@ -7,14 +9,18 @@ import USER
 import NOTIFICATION
 
 def try_open_app(exe_name, legacy_name = None, safe_open = False):
-    """extension optional
-    legacy_name if for legacy support just in case, 
-    but alwasys should put preferred exe_name as first arg
-
-    if use safe open, it will make a temp copy of the exe in dump folder and run that
-    there are purged as it go. This is to address the issue that cannot update exe when it is being used.
-    Do not accept foldered exe as this will make it harder to make temp folder? maybe later find a way but now keep it simple.
-    """
+    """Attempt to open an exe file from the app libary.
+    
+    Args:
+        exe_name (str): The name of the exe file to open.
+        legacy_name (str): The name of the legacy exe file to open (optional).
+        safe_open (bool): Whether to open the exe file using safe mode.
+    
+    Note:
+        When using safe open, a temporary copy of the exe file will be created in the dump folder.
+        This is to address the issue that the exe file cannot be updated while it is being used.
+        The temporary copy will be purged after a certain period of time.   
+    """ 
 
     abs_name = exe_name.lower()
     if abs_name.endswith(".3dm") or abs_name.endswith(".xlsx") or abs_name.endswith(".xls") or abs_name.endswith(".pdf") or abs_name.endswith(".png") or abs_name.endswith(".jpg"):

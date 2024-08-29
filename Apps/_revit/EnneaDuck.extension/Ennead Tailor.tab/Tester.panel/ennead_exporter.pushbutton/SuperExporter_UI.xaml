@@ -43,7 +43,7 @@
 
             </StackPanel>
             <StackPanel Grid.Column="3" Margin="0,0,0,5">
-                <TextBlock Text="Note:" x:Name="note" FontSize="9" TextWrapping="Wrap"/>
+                <TextBlock Text="Note: Support for 2021 and before dropped." x:Name="note" FontSize="9" TextWrapping="Wrap"/>
 
                 <TextBlock Text="Debug Output:" x:Name="debug_panel" FontSize="9" TextWrapping="Wrap"/>
             </StackPanel>
@@ -180,7 +180,6 @@
 
                         </Grid.RowDefinitions>
                         <TextBlock Text="Sender Email:" Grid.Column="0" Grid.Row="0" Foreground="#FFDAE8FD" />
-                        <TextBlock x:Name="email_sender" Text="xxx@ennead.com" Grid.Column="1" Grid.Row="0" Foreground="#FFDAE8FD" />
                         <TextBlock Text="Receiver Emails, seperated by semi-colon(;)"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFDAE8FD" />
                         <TextBox x:Name="email_receivers" Text="xxx1@ennead.com; xxx2@ennead.com" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Foreground="#FFC5C5C5" VerticalContentAlignment="Center" Background="#FF5D5D5D" TextWrapping="Wrap"/>
                         <TextBlock Text="Subject Line:" Grid.Column="0" Grid.Row="3"  Foreground="#FFDAE8FD" VerticalAlignment="Center" />
@@ -232,8 +231,19 @@
             <GroupBox Header="Step 8: [After Finishing...]" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" BorderThickness="0.8" Margin="0,10,0,0" BorderBrush="{x:Null}">
                 <StackPanel Margin="10,3,10,0" Grid.Column="1">
                     <CheckBox x:Name="checkbox_copy_folder" Content="Copy to Folder with structured subfolders as below." Background="#FFBBBBBB" Click ="checkbox_additional_setting_changed" Foreground="#FFDAE8FD"></CheckBox>
-                    <TextBlock x:Name="copy_folder_note_A" Text="xxxxx" FontSize="9" Margin="20, 0,0, 0"></TextBlock>
-                    <TextBlock x:Name="copy_folder_note_B" Text="xxxxx" FontSize="9" Margin="20, 0,0, 0" TextDecorations="Underline" Foreground="#FFFB958A"></TextBlock>
+                    <TextBlock xml:space="preserve" 
+                    FontSize="9" 
+                    Margin="20, 0,0, 0">
+                    Folder you pick (example: I:/2135/2_Record/2022-09-30 50% DD)
+                        -FileId
+                            -PDFs
+                                -A101_xx.pdf
+                                -A102_xx.pdf
+                            -DWGs
+                                -A101_xx.dwg
+                                -A102_xx.dwg
+                    </TextBlock>
+                    <TextBlock Text="For example above, the final selection folder should say '2022-09-30 50% DD', not '2022-09-30 50% DD/FileId'" FontSize="9" Margin="20, 0,0, 0" TextDecorations="Underline" Foreground="#FFFB958A"></TextBlock>
                     <TextBlock Text="Pick the folder to copy into:"  TextWrapping="Wrap" TextAlignment="Left" Margin="25, 10, 0, 0"/>
 
                     <Grid Margin="20, 0,0, 0">

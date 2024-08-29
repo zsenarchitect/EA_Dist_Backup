@@ -13,7 +13,7 @@ try:
 except:
     DOC = object
     
-    
+import os
 from EnneadTab import ERROR_HANDLE
 import NOTIFICATION
 import FOLDER 
@@ -93,10 +93,19 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
     except Exception as e:
         try:
             family_doc.LoadFamily(project_doc, loading_opt)
-        except Exception as e:
-            NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
-            ERROR_HANDLE.print_note (e)
-            ERROR_HANDLE.print_note ("failed family is [{}]".format(family_doc.Title))
+
+        except:
+            try:
+                save_option = DB.SaveAsOptions()
+                save_option.OverwriteExistingFile = True
+                temp_path = os.path.join(FOLDER.USER_DESKTOP_FOLDER, family_doc.Title + ".rfa")
+                family_doc.SaveAs(temp_path)
+                family_ref = clr.StrongBox[DB.Family](None)
+                DB.Document.LoadFamily(temp_path, loading_opt, family_ref)
+                os.remove(temp_path)
+            except Exception as e:
+                NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
+                ERROR_HANDLE.print_note ("Failed to load family [{}] becasue {}".format(family_doc.Title, e))
     
 def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption()):
     project_doc = project_doc or DOC

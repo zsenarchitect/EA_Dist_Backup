@@ -10,16 +10,14 @@ __context__ = "zero-doc"
 
 import proDUCKtion # pyright: ignore
 
-from EnneadTab import ERROR_HANDLE, LOG, UNIT_TEST
-
+from EnneadTab import ERROR_HANDLE, LOG
+import webbrowser
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def beer_tab():
+    webbrowser.open("https://beerswithmandy.com/beer-everything-blog/where-to-get-a-beer-in-nyc-financial-district-fidi")
 
-    UNIT_TEST.test_core_module()
-    print ("ok beer")
-    
 
 ################## main code below #####################
 
