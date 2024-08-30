@@ -62,7 +62,7 @@ def match_container():
     container_doc = FG.get_NYU_doc(doc_title = container_file_title)
     if not container_doc:
         return
-    NOTIFICATION.messenger("This will take a while(~10mins)")
+    NOTIFICATION.messenger("This will take a while(10~60mins)")
     
     REVIT_EVENT.set_family_load_hook_stage(stage=False)
     processor_collection = []
@@ -158,6 +158,7 @@ def match_container():
         "DetailComponents",
         "GenericAnnotation",
         "Furniture",
+        "FurnitureSystems",
         "GenericModel",
         "CurtainWallPanels",
         "TitleBlocks",

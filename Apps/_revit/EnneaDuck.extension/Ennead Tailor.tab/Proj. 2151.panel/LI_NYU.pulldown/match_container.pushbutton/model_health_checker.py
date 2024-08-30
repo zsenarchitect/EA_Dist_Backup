@@ -16,6 +16,7 @@ class ModelHealthChecker:
             data_holder.print_data()
 
 
+
     def check_warnings(self):
         all_warnings = self.doc.GetWarnings()
         self.report.append(SentenceDataHolder("There are {} warnings in [{}]".format(len(all_warnings), self.doc.Title)))

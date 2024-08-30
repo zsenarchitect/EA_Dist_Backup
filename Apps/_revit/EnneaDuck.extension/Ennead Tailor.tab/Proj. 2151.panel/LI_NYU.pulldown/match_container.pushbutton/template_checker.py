@@ -24,7 +24,7 @@ class TemplateProcessor:
         self.process_filter()
         self.process_workset()
         time_diff = time.time() - time_start
-        output.print_md("  [**{}**] took {}.".format(self.master_template.Name, TIME.get_readable_time(time_diff)) + " Everything is fine.:thumbs_up:" if self.is_ok else "")
+        output.print_md("  [**{}**] took {}.".format(self.master_template.Name, TIME.get_readable_time(time_diff)) + " Looks ok.:thumbs_up:" if self.is_ok else "")
         print ("\n\n")
         
     def process_template_para(self):

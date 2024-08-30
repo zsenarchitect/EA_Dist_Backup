@@ -237,7 +237,7 @@ def update_sync_queue():
         
 
     if not DATA_FILE.set_list(OUT, log_file):
-        print ("Your account have no access to write in this address.")
+        NOTIFICATION.messenger ("Your account have no access to write in DB folder.")
         return
 
     if REVIT_EVENT.is_sync_queue_disabled:
@@ -261,22 +261,6 @@ def update_sync_queue():
     REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)
 
 
-
-
-
-    
-
-
-
-def update_sync_time_record():
-
-    
-    script_subfolder = "Ennead.tab\\Utility.panel\\exe_1.stack\\LAST_SYNC_MONITOR.pushbutton\\update_last_sync_datafile_script.py"
-    func_name = "update_last_sync_data_file"
-    MODULE_HELPER.run_revit_script(script_subfolder, func_name, doc)
-    
-    func_name = "run_exe"
-    MODULE_HELPER.run_revit_script(script_subfolder, func_name)
 
 
 def play_success_sound():
