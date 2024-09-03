@@ -224,6 +224,8 @@ def register_xaml_path():
     DATA_FILE.set_data(data, "xaml_path.sexyDuck")
     
 def set_RIR_clicker():
+    if not USER.IS_DEVELOPER:
+        return
     with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:
         if "ref_images" not in data or data["ref_images"] is None:
             data["ref_images"] = []
