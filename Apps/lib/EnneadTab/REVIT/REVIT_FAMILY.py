@@ -134,7 +134,7 @@ def get_family_by_name(family_name,
     families = filter(lambda x: x.Name == family_name, all_families)
     
     if len(families) == 0:
-        print ("Cannot find this family")
+        # print ("Cannot find this family")
         if load_path_if_not_exist:
             print ("Loading from [{}]".format(load_path_if_not_exist))
             return load_family_by_path(load_path_if_not_exist, project_doc=doc)

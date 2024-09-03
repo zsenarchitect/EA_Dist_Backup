@@ -25,7 +25,10 @@ try:
 except:
     pass
 
-
+DETAIL_FAMILY_PLACEMENT_TYPES = [
+    DB.FamilyPlacementType.ViewBased,
+    DB.FamilyPlacementType.CurveBasedDetail
+    ]
 
 def pick_linestyle(doc, filledregion_friendly=False, return_style=False,title="Pick Line Style"):
     from pyrevit import forms
@@ -220,7 +223,7 @@ def get_all_phase(doc):
     return sorted([doc.GetElement(phase_id) for phase_id in all_phase_ids], key=lambda x: x.Name)
 
 
-def get_phase_by_name(doc, phase_name=None):
+def get_phase_by_name(doc=DOC, phase_name=None):
     if phase_name is not None:
         for phase in get_all_phase(doc):
             if phase.Name == phase_name:
@@ -250,16 +253,34 @@ def get_rooms_in_phase(doc, phase):
     return all_rooms
 
 
-def pick_family(doc, multi_select = False):
+def pick_family(doc=DOC, multi_select = False, include_2D = True, include_3D = True):
 
     families = DB.FilteredElementCollector(doc).OfClass(
         DB.Family).WhereElementIsNotElementType().ToElements()
-    families = sorted(families, key=lambda x: x.Name.lower())
 
+
+    if include_2D and include_3D:
+        pass
+    elif not include_2D and not include_3D:
+        raise ValueError("At least one of include_2D or include_3D must be True")
+    elif include_2D:
+        families = [x for x in families if x.FamilyPlacementType in DETAIL_FAMILY_PLACEMENT_TYPES]
+    elif include_3D:
+        families = [x for x in families if x.FamilyPlacementType not in DETAIL_FAMILY_PLACEMENT_TYPES]
+        
     from pyrevit import forms
+    class MyOption(forms.TemplateListItem):
+        @property
+        def name(self):
+            if hasattr(self, "FamilyCategory") and self.FamilyCategory :
+                return "[{}] {}".format(self.FamilyCategory.Name, self.Name)
+            else:
+                print (self.item)
+                return self.Name
+    families = [MyOption(x) for x in families]
+    families = sorted(families, key=lambda x: x.name)
     family = forms.SelectFromList.show(families,
                                        multiselect=multi_select,
-                                       name_attr='Name',
                                        width=1000,
                                        title="Pick family",
                                        button_name='Select Family')
@@ -271,7 +292,11 @@ def pick_detail_componenet(doc = None, multi_select = False):
     
     detail_componenet_types = DB.FilteredElementCollector(doc).OfCategory(
         DB.BuiltInCategory.OST_DetailComponents).WhereElementIsElementType().ToElements()
-    familie_names = [x.FamilyName for x in detail_componenet_types if x.FamilyName != "Filled region"]
+    def is_2d_family(_type):
+        if hasattr(_type, "Family") and _type.Family.FamilyPlacementType in DETAIL_FAMILY_PLACEMENT_TYPES:
+            return True
+        return False
+    familie_names = [x.FamilyName for x in detail_componenet_types if x.FamilyName != "Filled region" and is_2d_family(x)]
     familie_names = list(set(familie_names))  # remove duplicates
     familie_names.sort()
     from pyrevit import forms

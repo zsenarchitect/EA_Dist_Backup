@@ -17,7 +17,7 @@ layout:
   - CollectTextures
   - family_tree
   - inspect_local_graphic_override
-  - list_detail_items
+  - list_family
   - transfer_parameter_data
   - update_DOB_page
   - check_formula
