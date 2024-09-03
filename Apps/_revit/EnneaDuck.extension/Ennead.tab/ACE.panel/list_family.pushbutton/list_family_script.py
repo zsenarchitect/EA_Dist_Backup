@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "List selected detail items to a dump drafting view, or 3D family to a view you picked."
+__doc__ = "List selected detail items to a dump drafting view, or 3D family to a 3D view or floor plan view. Note that 3D family will show in all view, so this tool will first create a internal level far from main set and host most items there."
 __title__ = "List\nFamilies"
 
 
@@ -89,6 +89,7 @@ class Deployer:
   
         max_h = -1
         min_gap = 5
+        is_need_host_wall = False
         for type_id in family.GetFamilySymbolIds():
             family_type = DOC.GetElement(type_id)
 
@@ -112,6 +113,7 @@ class Deployer:
                 project_pt = DB.XYZ(self.pointer.X,self.pointer.Y, 0)
                 instance = DOC.Create.NewFamilyInstance(project_pt, family_type, level, DB.Structure.StructuralType.NonStructural)
             elif family.FamilyPlacementType == DB.FamilyPlacementType.OneLevelBasedHosted:
+                is_need_host_wall = True
                 level = self.view.GenLevel
                 if not level:
                     dump_view = REVIT_VIEW.get_view_by_name(FAMILY_DUMP_VIEW)
@@ -193,6 +195,11 @@ class Deployer:
 
             self.step_right(size_x * 2)
 
+
+            #  this is for prettification, so the end of wall looks more balanced.
+            if is_need_host_wall:
+                secure_valid_wall_length(host_wall, self.pointer)
+
         self.step_down(max(min_gap, max_h*2))
 
 
@@ -221,6 +228,8 @@ def list_family():
         list_detail_items()
     elif sel == opts[1][0]:
         list_3d_family()
+
+    NOTIFICATION.messenger("all families listed.")
 
 def list_3d_family():
     families = REVIT_SELECTION.pick_family(multi_select=True, include_2D=False)
@@ -347,7 +356,7 @@ def secure_valid_wall_length(wall, family_ref_pt):
     line = wall.Location.Curve
     end_pt = line.GetEndPoint(1)
     if end_pt.X + 10 < family_ref_pt.X:
-        end_pt = family_ref_pt.X + DB.XYZ(10,0,0)
+        end_pt = family_ref_pt + DB.XYZ(10,0,0)
         line = DB.Line.CreateBound(wall.Location.Curve.GetEndPoint(0), end_pt)
         wall.Location.Curve = line
 
