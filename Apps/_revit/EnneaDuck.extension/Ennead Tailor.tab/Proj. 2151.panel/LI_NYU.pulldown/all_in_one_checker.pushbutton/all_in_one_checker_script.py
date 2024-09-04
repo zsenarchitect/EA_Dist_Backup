@@ -422,7 +422,7 @@ def all_in_one_checker(doc, show_log):
     during sync event hook can both work"""
     for option in [
         OPTION_MAIN, 
-        OPTION_1,
+        # OPTION_1,
         ]:
         InternalCheck(doc, option, show_log).run_check()
 
