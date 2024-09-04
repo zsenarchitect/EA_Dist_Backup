@@ -37,6 +37,9 @@ def list_to_system_list(list, type=DataType.ElementId, use_IList=False):
         if type == DataType.CurveLoop:
             return System.Collections.Generic.IList[DB.CurveLoop](list)
 
+        if type == DataType.Curve:
+            return System.Collections.Generic.IList[DB.Curve](list)
+        
         if type == DataType.TableCellCombinedParameterData:
             return System.Collections.Generic.IList[DB.TableCellCombinedParameterData](
                 list
