@@ -34,7 +34,7 @@ from LibGit2Sharp import Repository, CloneOptions
 def test_coloner():
 
 
-    # repo_url = "https://github.com/zsenarchitect/EA_Dist.git"
+    # repo_url = "https://github.com/Ennead-Architects-LLP/EA_Dist.git"
     # clone_dir = r"C:\Users\szhang\Documents\EnneadTab Ecosystem\DIST"
     # print (clone_dir)
     # if not os.path.exists(clone_dir):
@@ -84,7 +84,7 @@ def test_coloner():
             print("An error occurred: {}".format(e))
 
     # GitHub repository zip download URL
-    repo_url = "https://github.com/zsenarchitect/EA_Dist/archive/refs/heads/master.zip"
+    repo_url = "https://github.com/Ennead-Architects-LLP/EA_Dist/archive/refs/heads/master.zip"
     clone_dir = r"C:\Users\szhang\Documents\EnneadTab Ecosystem\DIST"
 
     download_and_extract(repo_url, clone_dir)

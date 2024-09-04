@@ -464,8 +464,7 @@ class WorkingViewManager(WPFWindow):
         print ("view to Jpg takes {} seconds".format( time_end - time_start))
 
         #add_to_log(file_name + ".jpg", time_end - time_start)
-        NOTIFICATION.messenger(app_name = "EnneadTab Exporter",
-                                main_text = "[{}.jpg] saved.".format(view.Name))
+        NOTIFICATION.messenger(main_text = "[{}.jpg] saved.".format(view.Name))
 
         """clean jpg name"""
         file_names = os.listdir(FOLDER.DUMP_FOLDER)

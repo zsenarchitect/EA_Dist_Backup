@@ -136,10 +136,10 @@ class AssistantUI(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def how_to_rhino_click(self, sender, args):
-        script.open_url('https://github.com/zsenarchitect/EA_Dist/blob/main/Installation/How%20To%20Install.md')
+        script.open_url('https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/How%20To%20Install.md')
     @ERROR_HANDLE.try_catch_error()
     def how_to_revit_click(self, sender, args):
-        script.open_url('https://github.com/zsenarchitect/EA_Dist/blob/main/Installation/How%20To%20Install.md')
+        script.open_url('https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/How%20To%20Install.md')
     @ERROR_HANDLE.try_catch_error()
     def how_to_cad_click(self, sender, args):
         path = "{}\\01_Revit\\04_Tools\\08_EA Extensions\\Library Docs\\CAD LISP\\CAD Command list.txt".format(ENVIRONMENT.L_DRIVE_HOST_FOLDER)

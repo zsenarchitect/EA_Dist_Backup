@@ -6,7 +6,7 @@ If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosys
 
 Download "EnneadTab_OS_Installer.exe" from link below.
 
-- https://github.com/zsenarchitect/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
+- https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
 
 Save anywhere and run it. It might takes a few seconds( or minutes, depending on your download speed) to unpack the contents. 
 
