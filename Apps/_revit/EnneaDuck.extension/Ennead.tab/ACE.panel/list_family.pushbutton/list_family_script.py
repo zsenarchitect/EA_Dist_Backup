@@ -306,6 +306,11 @@ def list_family():
         list_detail_items()
     elif sel == opts[1][0]:
         list_3d_family()
+
+    t = DB.Transaction(DOC, "Disable Temporary View Mode")
+    t.Start()
+    DOC.ActiveView.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate )
+    t.Commit()
     tg.Commit()
 
     NOTIFICATION.messenger("all families listed.")
@@ -428,7 +433,7 @@ def get_internal_dump_wall(family_ref_pt, family_name):
     level = get_internal_dump_level()
     t = DB.Transaction(DOC, "Create Internal Wall")
     t.Start()
-    wall = DB.Wall.Create(DOC, DB.Line.CreateBound(DB.XYZ(-10, family_ref_pt.Y, 0), DB.XYZ(10, family_ref_pt.Y, 0)), level.Id, False)
+    wall = DB.Wall.Create(DOC, DB.Line.CreateBound(DB.XYZ(-5, family_ref_pt.Y, 0), DB.XYZ(20, family_ref_pt.Y, 0)), level.Id, False)
     wall.LookupParameter("Comments").Set(FAMILY_DUMP_WALL_COMMENT + "_" + family_name)
     wall.LookupParameter("Unconnected Height").Set(10) 
     t.Commit()
