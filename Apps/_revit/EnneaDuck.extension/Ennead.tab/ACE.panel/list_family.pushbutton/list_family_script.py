@@ -56,6 +56,13 @@ class Deployer:
         for i, family in enumerate(families):
             NOTIFICATION.messenger("{}/{}: [{}]".format(i+1, len(families), family.Name))
             self.deploy_family(family)
+
+        t = DB.Transaction(DOC, "Disable Temporary View Mode")
+        t.Start()
+        self.view.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate )
+        t.Commit()
+
+
             
     def purge_old_dump_family(self):
         t = DB.Transaction(DOC, "purge old family")
@@ -306,11 +313,6 @@ def list_family():
         list_detail_items()
     elif sel == opts[1][0]:
         list_3d_family()
-
-    t = DB.Transaction(DOC, "Disable Temporary View Mode")
-    t.Start()
-    DOC.ActiveView.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate )
-    t.Commit()
     tg.Commit()
 
     NOTIFICATION.messenger("all families listed.")
