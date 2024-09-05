@@ -23,7 +23,7 @@ BAD_NAMES = ["B - DR-Opening",
             "Detail-Door Swing-Slider"]
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def find_all_door_tag():
     
     sheets = forms.select_sheets(title = "Select sheets to find door tags")

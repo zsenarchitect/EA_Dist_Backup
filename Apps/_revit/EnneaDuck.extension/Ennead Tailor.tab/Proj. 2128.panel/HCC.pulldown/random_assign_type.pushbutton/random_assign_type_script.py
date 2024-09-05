@@ -43,7 +43,7 @@ def get_type_by_name(type_name):
         return family_type
         
         
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def main():
 
     selection = EnneadTab.REVIT.REVIT_SELECTION.get_selection()

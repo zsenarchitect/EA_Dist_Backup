@@ -7,7 +7,7 @@ _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
 
 # print ("\n".join(sys.path))
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, LOG, ENVIRONMENT, VERSION_CONTROL
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, LOG, ENVIRONMENT, TIMESHEET, VERSION_CONTROL
 
 
 import rhinoscriptsyntax as rs
@@ -44,7 +44,7 @@ def add_hook():
 def action_update_timesheet(doc):
     if doc.Path:
         try:
-            LOG.update_time_sheet_rhino(doc.Path)
+            TIMESHEET.update_time_sheet_rhino(doc.Path)
         except:
             print ("Error updating timesheet")
 

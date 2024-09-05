@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "update the delta area graphic"
 __title__ = "update_delta_area_graphic"
 
 # from pyrevit import forms #

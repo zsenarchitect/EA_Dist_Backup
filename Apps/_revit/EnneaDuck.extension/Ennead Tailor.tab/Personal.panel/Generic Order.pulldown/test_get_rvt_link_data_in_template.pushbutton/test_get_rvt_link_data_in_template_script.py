@@ -16,7 +16,7 @@ from Autodesk.Revit import DB # pyright: ignore
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
             
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def test_get_rvt_link_data_in_template():
     views = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Views).WhereElementIsNotElementType().ToElements()
     template = filter(lambda x: x.Name == "tester", views)[0]

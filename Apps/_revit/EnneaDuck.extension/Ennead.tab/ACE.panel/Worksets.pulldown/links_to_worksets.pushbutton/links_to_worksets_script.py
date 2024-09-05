@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Convert each revit link into its own workset."
 __title__ = "Links2Worksets"
 __tip__ = True
 # from pyrevit import forms #

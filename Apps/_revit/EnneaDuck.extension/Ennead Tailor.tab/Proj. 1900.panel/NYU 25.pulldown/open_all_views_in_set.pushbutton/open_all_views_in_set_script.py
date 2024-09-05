@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Open many views by picking from print sets."
 __title__ = "Open Favorite Views by Set"
 
 from pyrevit import forms #

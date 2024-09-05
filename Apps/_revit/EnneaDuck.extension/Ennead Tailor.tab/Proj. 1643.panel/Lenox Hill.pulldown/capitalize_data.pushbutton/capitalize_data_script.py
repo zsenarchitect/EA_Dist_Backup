@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Make all area data capitalized"
 __title__ = "capitalize_data"
 
 # from pyrevit import forms #

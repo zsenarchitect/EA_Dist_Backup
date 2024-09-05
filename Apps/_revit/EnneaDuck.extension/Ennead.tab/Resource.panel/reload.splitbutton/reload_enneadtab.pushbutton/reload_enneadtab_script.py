@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Reload entire UI so can get newer buttons....."
 __title__ = "Reload\nEnneadTab"
 __context__ = "zero-doc"
 

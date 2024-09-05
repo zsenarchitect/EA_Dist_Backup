@@ -16,7 +16,7 @@ from Autodesk.Revit import DB # pyright: ignore
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
             
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def checker_board_selection():
     selection = EnneadTab.REVIT.REVIT_SELECTION.get_selection()
     if len(selection) == 0:

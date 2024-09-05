@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Just download the new repo and unzip. This will not reload the Reevit for UI change."
 __title__ = "Soft\nReload"
 __context__ = "zero-doc"
 

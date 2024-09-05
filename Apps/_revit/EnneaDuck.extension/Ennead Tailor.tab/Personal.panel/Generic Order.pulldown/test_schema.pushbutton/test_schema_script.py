@@ -23,7 +23,7 @@ from EnneadTab.REVIT import REVIT_SCHEMA
 from EnneadTab import NOTIFICATION
 
        
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def test_schema():
     schema_name = "SampleSchema2"
     schema = REVIT_SCHEMA.get_schema_by_name(schema_name)

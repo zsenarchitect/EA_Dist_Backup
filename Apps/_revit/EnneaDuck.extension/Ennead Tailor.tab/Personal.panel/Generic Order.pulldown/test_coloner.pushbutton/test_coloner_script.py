@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Test to clone from url using LibGit2Sharp.dll"
 __title__ = "test_coloner"
 
 # from pyrevit import forms #

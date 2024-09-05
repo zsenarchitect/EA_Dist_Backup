@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Format grid name"
 __title__ = "grid_magic_name"
 
 # from pyrevit import forms #

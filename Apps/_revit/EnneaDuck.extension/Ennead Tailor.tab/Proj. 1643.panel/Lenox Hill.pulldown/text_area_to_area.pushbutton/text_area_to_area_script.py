@@ -17,7 +17,7 @@ from Autodesk.Revit import DB # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
             
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def text_area_to_area():
     for area in DB.FileredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).WhereElementIsNotElementType().ToElements():
         bad_data = area.LookupParameter("Proposed Data_old").AsString().replace("SF", "")

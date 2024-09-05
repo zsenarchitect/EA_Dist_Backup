@@ -29,7 +29,9 @@ def print_timesheet_detail():
         print(text)
 
     output = ""
-    data = DATA_FILE.get_data(TIMESHEET_DATA_FILE)
+    data = DATA_FILE.get_data(TIMESHEET_DATA_FILE, is_local=False)
+    if not data:
+        data = DATA_FILE.get_data(TIMESHEET_DATA_FILE, is_local=True)
 
     for software in ["revit", "rhino", "terminal"]:
         output += "\n\n"

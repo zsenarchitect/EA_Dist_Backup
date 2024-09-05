@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Update grid bldgId with its scopebox information"
 __title__ = "update_grid_bldgId"
 
 # from pyrevit import forms #

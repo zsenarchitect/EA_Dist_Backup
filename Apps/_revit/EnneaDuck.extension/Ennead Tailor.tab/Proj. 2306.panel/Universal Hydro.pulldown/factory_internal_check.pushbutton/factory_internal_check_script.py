@@ -512,7 +512,7 @@ def get_calculator_type_by_egress_id(doc, egress_id):
 
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def factory_internal_check(doc, show_log):
     InternalCheck(doc, show_log).run_check()
     

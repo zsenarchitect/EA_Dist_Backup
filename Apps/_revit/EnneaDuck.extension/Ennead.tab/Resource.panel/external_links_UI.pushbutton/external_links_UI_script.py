@@ -36,7 +36,7 @@ from pyrevit import script, forms
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SYNC
-from EnneadTab import DOCUMENTATION, EXE, DATA_FILE, USER, IMAGE, ERROR_HANDLE, LOG, FOLDER, ENVIRONMENT
+from EnneadTab import DOCUMENTATION, EXE, DATA_FILE, TIMESHEET, USER, IMAGE, ERROR_HANDLE, LOG, FOLDER, ENVIRONMENT
 
 
 import traceback
@@ -268,7 +268,7 @@ class AssistantUI(forms.WPFWindow):
         
     @ERROR_HANDLE.try_catch_error()
     def print_time_sheet_detail_click(self, sender, args):
-        LOG.print_time_sheet_detail()  
+        TIMESHEET.print_timesheet_detail()  
         
     def handleclick(self, sender, args):
         print ("surface clicked")

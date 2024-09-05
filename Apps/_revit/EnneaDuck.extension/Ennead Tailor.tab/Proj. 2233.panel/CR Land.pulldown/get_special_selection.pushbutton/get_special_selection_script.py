@@ -29,7 +29,7 @@ def get_cloest_panel(pt, all_panel_locations):
 
     return doc.GetElement(cloest_panel_id)  
        
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def get_special_selection():
     
     family_list = ["TYP PANEL",

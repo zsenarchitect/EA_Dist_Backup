@@ -25,7 +25,7 @@ def get_type(family_name, type_name):
            return symbol_type
     return None
  
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def replace_leynote():
     
 

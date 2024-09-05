@@ -390,14 +390,14 @@ class EA_search_UI(forms.WPFWindow):
         #global WPF_COLLAPSED
         #obj.Visibility = WPF_COLLAPSED
         #return
-        import System
+        import System # pyright: ignore
         obj.Visibility = System.Windows.Visibility.Collapsed
 
     def set_visibility_visible(self, obj):
         #global WPF_VISIBLE
         #obj.Visibility = WPF_VISIBLE
         #return
-        import System
+        import System # pyright: ignore
         obj.Visibility = System.Windows.Visibility.Visible
 
     @ERROR_HANDLE.try_catch_error()
@@ -405,7 +405,7 @@ class EA_search_UI(forms.WPFWindow):
         """Handle keyboard input event."""
         self.is_x_imported("System", "handle keyboard input begin")
         from pyrevit.framework import Input
-        import System
+        import System # pyright: ignore
         
         from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
         from EnneadTab import USER, ENVIRONMENT, SOUND, TIME, ERROR_HANDLE, FOLDER

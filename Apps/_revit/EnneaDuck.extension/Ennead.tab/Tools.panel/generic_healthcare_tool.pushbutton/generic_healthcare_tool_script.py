@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "This will be the foundation for all future health care tools"
 __title__ = "HealthCare\nHelper"
 __tip__ = True
 # from pyrevit import forms #

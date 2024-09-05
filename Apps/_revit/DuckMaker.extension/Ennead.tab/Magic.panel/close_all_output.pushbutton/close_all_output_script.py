@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Close every output window."
 __title__ = "Close All\nOutput"
 
 import proDUCKtion # pyright: ignore 

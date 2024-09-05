@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Update the window wall ratio chart by reading filled region in groups"
 __title__ = "Update WWR chart"
 
 # from pyrevit import forms #
@@ -32,7 +32,7 @@ def is_good_region(region):
     return type_comments.startswith("WWR")
     
        
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def update_WWR_region():
     # all_regions = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_FilledRegion).WhereElementIsNotElementType().ToElements()
     

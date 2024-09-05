@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Update the relative value of the level so one level can display two set of datum."
 __title__ = "update_level_relative_value"
 
 # from pyrevit import forms #

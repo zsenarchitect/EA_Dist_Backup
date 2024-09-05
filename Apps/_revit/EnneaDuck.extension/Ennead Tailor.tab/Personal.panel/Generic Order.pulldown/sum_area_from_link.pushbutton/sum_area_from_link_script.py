@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Sum all the area from link."
 __title__ = "sum_area_from_link"
 
 # from pyrevit import forms #
@@ -46,8 +46,8 @@ def sum_area_from_link():
     # from Autodesk.Revit.UI import *
 
     # Get the active Revit application and document
-    app = __revit__.Application
-    uidoc = __revit__.ActiveUIDocument
+    app = __revit__.Application # pyright: ignore
+    uidoc = __revit__.ActiveUIDocument # pyright: ignore
 
     sum = 0
     # Prompt the user to pick multiple linked elements

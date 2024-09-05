@@ -5,7 +5,6 @@ import sys
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
 import ENVIRONMENT
-import ENVIRONMENT
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
@@ -32,7 +31,7 @@ def get_material_by_name(name, return_index = False):
 
 def create_material(name, RGBAR, return_index = False):
     # RGBAR = (r,g,b,t,R)
-    from System.Drawing import Color
+    from System.Drawing import Color # pyright: ignore
     import Rhino # pyright: ignore
     material = Rhino.DocObjects.Material()
     material.Name = name
@@ -98,12 +97,12 @@ def create_material_by_type(name,
     import scriptcontext as sc
     red, green, blue, transparency, reflectivity = RGBAR
 
-    """
+
     bmtex = Rhino.Render.RenderContentType.NewContentFromTypeId(Rhino.Render.ContentUuids.BitmapTextureType)
     bmtex.Filename = "C:\\Users\\Nathan\\Pictures\\uvtester.png"
 
     simtex = bmtex.SimulatedTexture(Rhino.Render.RenderTexture.TextureGeneration.Allow)
-    """
+
     #
     #print(Rhino.Render.ContentUuids.PhysicallyBasedMaterialType)
     #print(Rhino.Render.ContentUuids.GlassMaterialType)

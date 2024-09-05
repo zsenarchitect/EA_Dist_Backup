@@ -20,7 +20,7 @@ def get_titleblock_id():
     all_ids = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_TitleBlocks).WhereElementIsElementType().ToElements()
     return filter(lambda x: x.Family.Name == "Consaultant Sheet Placeholder", list(all_ids))[0].Id
             
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def excel_sheet_creator():
     pass
     excel_path = r"J:\2306\2_Record\2023-07-31 SD Submission\SD Sheetlist_REV00.xlsx"

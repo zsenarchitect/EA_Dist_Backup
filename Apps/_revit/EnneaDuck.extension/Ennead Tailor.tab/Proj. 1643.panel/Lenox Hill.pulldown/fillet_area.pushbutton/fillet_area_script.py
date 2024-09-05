@@ -14,16 +14,18 @@ import clr
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
+from EnneadTab import DATA_CONVERSION, ERROR_HANDLE,TIME
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
-doc = EnneadTab.REVIT.REVIT_APPLICATION.get_doc()
+doc = REVIT_APPLICATION.get_doc()
 
 
 RADIUS = 1
 
 
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def fillet_area():
     t = DB.Transaction(doc, __title__)
     t.Start()
@@ -83,11 +85,11 @@ def fillet_area():
                 # print pts
                 pts = [neighbors[0], corner, neighbors[1]]
                 # print pt_count
-                pts = EnneadTab.DATA_CONVERSION.list_to_system_list(pts, type = "XYZ", use_IList = False)
+                pts = DATA_CONVERSION.list_to_system_list(pts, type = "XYZ", use_IList = False)
 
                 weights = [1.0, 0.707106781186548,1.0] 
                 # print weights
-                weights = EnneadTab.DATA_CONVERSION.list_to_system_list(weights, type = "Double", use_IList = False)
+                weights = DATA_CONVERSION.list_to_system_list(weights, type = "Double", use_IList = False)
                 fillet_arc = DB.NurbSpline.CreateCurve(pts, weights)
 
 
@@ -102,10 +104,10 @@ def fillet_area():
 
         new_element_ids = [x.Id for x in new_area_boundaries]
 
-        group = doc.Create.NewGroup(EnneadTab.DATA_CONVERSION.list_to_system_list(new_element_ids))
+        group = doc.Create.NewGroup(DATA_CONVERSION.list_to_system_list(new_element_ids))
 
         group.GroupType.Name = "Rounded Area_({}_{})".format(doc.ActiveView.Name,
-                                                                            EnneadTab.TIME.get_formatted_current_time())
+                                                                            TIME.get_formatted_current_time())
 
 
 

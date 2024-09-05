@@ -50,7 +50,7 @@ class Solution:
   
             return DB.XYZ(x[0], x[1], x[2])
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error()
+    @ERROR_HANDLE.try_catch_error()
     def main(self, brep_data):
 
         #print brep_data

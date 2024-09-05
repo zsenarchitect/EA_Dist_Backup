@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Change parameter keygroup of LifeSafetKey"
 __title__ = "change_para_key_group"
 
 # from pyrevit import forms #

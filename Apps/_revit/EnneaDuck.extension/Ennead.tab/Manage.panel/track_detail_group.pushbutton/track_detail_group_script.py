@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Location the usage of detail groups by view or by group type."
 __title__ = "Track\nDetail Group"
 __tip__ = True
 

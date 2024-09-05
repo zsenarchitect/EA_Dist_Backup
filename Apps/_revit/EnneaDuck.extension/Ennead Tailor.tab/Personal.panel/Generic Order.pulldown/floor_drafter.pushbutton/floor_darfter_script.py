@@ -27,7 +27,7 @@ class Solution:
     def __init__(self):
         pass
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error()
+    @ERROR_HANDLE.try_catch_error()
     def main(self):
 
 

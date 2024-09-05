@@ -64,7 +64,7 @@ class InternalCheck:
         # potentioally can use the AreaData class dict for future version
 
 
-    @EnneadTab.ERROR_HANDLE.try_catch_error()
+    @ERROR_HANDLE.try_catch_error()
     def run_check(self):
 
         # get all the areas
@@ -182,7 +182,7 @@ class AreaData:
         current_area = getattr(self, area_name)
         setattr(self, area_name, current_area + area)
 
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def all_in_one_checker(doc, show_log):
     """this is the main doc
     passing doc and show_log para to make sure using this as button VS using it

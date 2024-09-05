@@ -19,7 +19,7 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 FAMILY_NAMES_PREFIX = "CW-1"
 PARA_NAME = "Mirrored"
 
-@EnneadTab.ERROR_HANDLE.try_catch_error()
+@ERROR_HANDLE.try_catch_error()
 def assign_mirrored_panel():
     # all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
     # families = [x for x in all_families if x.Name.startswith(FAMILY_NAMES_PREFIX)]
