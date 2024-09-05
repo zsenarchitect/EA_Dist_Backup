@@ -8,8 +8,8 @@ __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=
 __tip__ = True
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 
 
 
@@ -116,8 +116,7 @@ def merge_action(window):
     solution.cleanup_type()
 
 
-    NOTIFICATION.messenger(sub_text = "",
-                                main_text = "Family Merge Finished!")
+    NOTIFICATION.messenger(main_text = "Family Merge Finished!")
 
 
     t.Commit()

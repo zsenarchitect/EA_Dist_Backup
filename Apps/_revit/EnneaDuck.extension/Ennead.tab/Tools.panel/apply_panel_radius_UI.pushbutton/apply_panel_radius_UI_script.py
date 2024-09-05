@@ -71,8 +71,7 @@ def apply_radius_action(window):
 
 
 
-    NOTIFICATION.messenger(sub_text = "",
-                                main_text = "Radius Applied Finished!")
+    NOTIFICATION.messenger(main_text = "Radius Applied Finished!")
 
 
     t.Commit()
