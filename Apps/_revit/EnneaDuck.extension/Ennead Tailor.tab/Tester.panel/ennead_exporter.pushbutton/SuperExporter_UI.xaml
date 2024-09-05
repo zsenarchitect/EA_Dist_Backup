@@ -232,16 +232,15 @@
                 <StackPanel Margin="10,3,10,0" Grid.Column="1">
                     <CheckBox x:Name="checkbox_copy_folder" Content="Copy to Folder with structured subfolders as below." Background="#FFBBBBBB" Click ="checkbox_additional_setting_changed" Foreground="#FFDAE8FD"></CheckBox>
                     <TextBlock xml:space="preserve" 
-                    FontSize="9" 
-                    Margin="20, 0,0, 0">
-                    Folder you pick (example: I:/2135/2_Record/2022-09-30 50% DD)
-                        -FileId
-                            -PDFs
-                                -A101_xx.pdf
-                                -A102_xx.pdf
-                            -DWGs
-                                -A101_xx.dwg
-                                -A102_xx.dwg
+                    FontSize="8" 
+                    Margin="20, 0,0, 0">Folder you pick (example: I:/2135/2_Record/2022-09-30 50% DD)
+    -FileId
+        -PDFs
+            -A101_xx.pdf
+            -A102_xx.pdf
+        -DWGs
+            -A101_xx.dwg
+            -A102_xx.dwg
                     </TextBlock>
                     <TextBlock Text="For example above, the final selection folder should say '2022-09-30 50% DD', not '2022-09-30 50% DD/FileId'" FontSize="9" Margin="20, 0,0, 0" TextDecorations="Underline" Foreground="#FFFB958A"></TextBlock>
                     <TextBlock Text="Pick the folder to copy into:"  TextWrapping="Wrap" TextAlignment="Left" Margin="25, 10, 0, 0"/>
