@@ -2337,7 +2337,7 @@
       </menu_text>
       <script>EA_ExternalTrimmer</script>
     </macro_item>
-    <macro_item guid="e2a7b677-1d0c-446e-8889-b9e5ded0eb71" bitmap_id="839bec44-ca40-4731-9a0b-90eddaf85f7b">
+    <macro_item guid="e2a7b677-1d0c-446e-8889-b9e5ded0eb71" bitmap_id="892f3aae-b195-4c92-9a34-84ede3b5b55b">
       <text>
         <locale_1033>(1634)ExportWithoutCrv</locale_1033>
       </text>
@@ -2355,7 +2355,7 @@
       </menu_text>
       <script>EA_(1634)ExportWithoutCrv</script>
     </macro_item>
-    <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="9d12af8e-1936-4963-a1e7-a1f50719cb16">
+    <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="a3a18e65-0878-476b-ae4c-bcb7df4cb17b">
       <text>
         <locale_1033>(1634)RelocateAll</locale_1033>
       </text>
@@ -2879,8 +2879,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <bitmap_item guid="577927a9-abc2-426e-971f-f5540f2f6ee0" index="96"/>
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="97"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="98"/>
-      <bitmap_item guid="839bec44-ca40-4731-9a0b-90eddaf85f7b" index="99"/>
-      <bitmap_item guid="9d12af8e-1936-4963-a1e7-a1f50719cb16" index="100"/>
+      <bitmap_item guid="892f3aae-b195-4c92-9a34-84ede3b5b55b" index="99"/>
+      <bitmap_item guid="a3a18e65-0878-476b-ae4c-bcb7df4cb17b" index="100"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="101"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="102"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="103"/>
@@ -4198,8 +4198,8 @@ RzgXYkIAAAAASUVORK5CYII=</bitmap>
       <bitmap_item guid="577927a9-abc2-426e-971f-f5540f2f6ee0" index="96"/>
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="97"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="98"/>
-      <bitmap_item guid="839bec44-ca40-4731-9a0b-90eddaf85f7b" index="99"/>
-      <bitmap_item guid="9d12af8e-1936-4963-a1e7-a1f50719cb16" index="100"/>
+      <bitmap_item guid="892f3aae-b195-4c92-9a34-84ede3b5b55b" index="99"/>
+      <bitmap_item guid="a3a18e65-0878-476b-ae4c-bcb7df4cb17b" index="100"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="101"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="102"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="103"/>
@@ -6561,8 +6561,8 @@ kZ0fe287GYpNdACA/wuBucc8ugCqYQAAAABJRU5ErkJggg==</bitmap>
       <bitmap_item guid="577927a9-abc2-426e-971f-f5540f2f6ee0" index="96"/>
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="97"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="98"/>
-      <bitmap_item guid="839bec44-ca40-4731-9a0b-90eddaf85f7b" index="99"/>
-      <bitmap_item guid="9d12af8e-1936-4963-a1e7-a1f50719cb16" index="100"/>
+      <bitmap_item guid="892f3aae-b195-4c92-9a34-84ede3b5b55b" index="99"/>
+      <bitmap_item guid="a3a18e65-0878-476b-ae4c-bcb7df4cb17b" index="100"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="101"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="102"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="103"/>
