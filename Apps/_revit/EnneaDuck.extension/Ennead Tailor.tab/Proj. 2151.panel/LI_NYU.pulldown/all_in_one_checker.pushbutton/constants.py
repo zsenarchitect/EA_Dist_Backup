@@ -62,6 +62,7 @@ class DepartmentOption():
                 "L12",
                 "L13 MEP",
                 "T.O.PARAPET"]
+    
 
     # TO-DO: this dummy will pretend to be the excel button sum
     DUMMY_DATA_HOLDER = ["GRAND TOTAL",
