@@ -292,6 +292,10 @@ class ToggleContent_UI(forms.WPFWindow):
         self.pin_click(DB.BuiltInCategory.OST_TitleBlocks)
 
     @ERROR_HANDLE.try_catch_error()
+    def bt_pin_floor_click(self, sender, args):
+        self.pin_click(DB.BuiltInCategory.OST_Floors)
+
+    @ERROR_HANDLE.try_catch_error()
     def bt_pin_cw_click(self, sender, args):
         self.pin_click("Curtain Wall")
 

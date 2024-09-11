@@ -39,7 +39,7 @@ for pair in dict_definitions:
     key, value = pair
     EMOJI_DICT[key] = value
 
-IS_TESING_NEW_FUNC =  False and USER.IS_DEVELOPER
+IS_TESING_NEW_FUNC =  USER.IS_DEVELOPER
 
 
 import file_getter as FG

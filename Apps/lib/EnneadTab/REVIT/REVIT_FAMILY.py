@@ -60,7 +60,7 @@ class DryLoadFamilyOption(REF_CLASS):
         return False
 
 
-def is_family_version_different(family_doc, project_doc):
+def is_family_version_different(family_doc, project_doc, load_if_not_exist=False):
     """_summary_
 
     Args:
@@ -73,9 +73,16 @@ def is_family_version_different(family_doc, project_doc):
     """
     if not is_family_exist(family_doc.Title, project_doc):
         # NOTIFICATION.messenger("[{}] does not exist in [{}]".format(family_doc.Title, project_doc.Title))
+        if load_if_not_exist:
+            load_family(family_doc, project_doc)
         return None
     dry_opt = DryLoadFamilyOption()
+
+    # to-do: this dry load will always trigger family-load hook to fail, even though that is intentional. 
+    # need to find a better way to stop hook display/trigger
     load_family(family_doc,project_doc,loading_opt=dry_opt) 
+
+    
     if dry_opt.is_version_different:
         NOTIFICATION.messenger("family [{}] is different version".format(family_doc.Title)) 
     return dry_opt.is_version_different  
@@ -91,10 +98,12 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
     try:
         family_doc.LoadFamily.Overloads[DB.Document, DB.IFamilyLoadOptions](project_doc, loading_opt)
     except Exception as e:
+        ERROR_HANDLE.print_note ("Failed to load family [{}], level 1, becasue {}".format(family_doc.Title, e))
         try:
             family_doc.LoadFamily(project_doc, loading_opt)
 
-        except:
+        except Exception as e:
+            ERROR_HANDLE.print_note ("Failed to load family [{}], level 2, becasue {}".format(family_doc.Title, e))
             try:
                 save_option = DB.SaveAsOptions()
                 save_option.OverwriteExistingFile = True
@@ -105,7 +114,7 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
                 os.remove(temp_path)
             except Exception as e:
                 NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
-                ERROR_HANDLE.print_note ("Failed to load family [{}] becasue {}".format(family_doc.Title, e))
+                ERROR_HANDLE.print_note ("Failed to load family [{}], level 3, becasue {}".format(family_doc.Title, e))
     
 def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption()):
     project_doc = project_doc or DOC

@@ -101,7 +101,7 @@ def is_Rhino_environment():
         bool: True if current environment is Rhino.
     """
     try:
-        import rhinoscriptsyntax
+        import rhinoscriptsyntax  # pyright: ignore
 
         return True
     except:

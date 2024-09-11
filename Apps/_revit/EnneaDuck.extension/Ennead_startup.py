@@ -42,7 +42,7 @@ import System # pyright: ignore
 from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, OUTPUT, TIME, VERSION_CONTROL
 from EnneadTab import MODULE_HELPER, ERROR_HANDLE, USER, KEYBOARD, ENVIRONMENT, SOUND, DOCUMENTATION, LOG, IMAGE
 from EnneadTab import JOKE, EMOJI, ENCOURAGING, HOLIDAY, EXE
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT, REVIT_SELECTION
 
 
 # need below for the C drive space check
@@ -233,6 +233,37 @@ def set_RIR_clicker():
         data["ref_images"].append(IMAGE.get_image_path_by_name("search_RIR_7.png"))
     EXE.try_open_app("AutoClicker.exe")
 
+def register_selection_owner_checker():
+    # to-do: this is too slow, i am goint to disable it untile better solution found.
+    return
+    from pyrevit import HOST_APP
+    if not HOST_APP.is_newer_than(version = 2023, or_equal = True):
+        return
+
+    from System import EventHandler
+    from Autodesk.Revit.UI.Events import SelectionChangedEventArgs
+    __revit__.SelectionChanged += EventHandler[SelectionChangedEventArgs](selection_owner_checker)
+
+
+def selection_owner_checker(sender, args):
+    selection_ids = list(args.GetSelectedElements ())
+    
+    if len(selection_ids) == 0:
+        return
+
+    doc = args.GetDocument ()
+    for x in selection_ids:
+        try:
+            element = doc.GetElement(DB.ElementId(x.Value))
+        except:
+            element = doc.GetElement(DB.ElementId(x.IntegerValue)) # this is kept for backward compability
+
+        if element.Category and element.Category.Name == "Views":
+            continue
+        if not REVIT_SELECTION.is_changable(element):
+            NOTIFICATION.messenger("Note that your selection contains element owned by [{}]".format(REVIT_SELECTION.get_owner(element)))
+            return
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
@@ -286,6 +317,7 @@ def EnneadTab_startup():
     register_auto_update()
 
     register_temp_graphic_server()
+    register_selection_owner_checker()
 
 
 

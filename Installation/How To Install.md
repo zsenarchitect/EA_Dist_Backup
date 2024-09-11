@@ -14,7 +14,7 @@ When you can see "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\In
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_core.png)
 
 > [!NOTE]
-> Some computer's firewall might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, use below L drive location as a backup.
+> Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, use below L drive location as a backup.
 - "L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe"
      
 

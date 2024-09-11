@@ -6,8 +6,8 @@
 __doc__ = "In the standalone window, you can zoom in with section box to a region that have a warning.\n\nAs you are fixing it, you will see the warning count going down. When you sync baack after all the fix, the EA coins will be rewarded.."
 __title__ = "Isolate\nWarnings"
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
 from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
@@ -21,7 +21,7 @@ import traceback
 from Autodesk.Revit import DB # pyright: ignore 
 import random
 # from Autodesk.Revit import UI # pyright: ignore
-uidoc = __revit__.ActiveUIDocument
+uidoc = __revit__.ActiveUIDocument # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 

@@ -221,6 +221,7 @@
                             <Button Content="Keynote Tag" Click="bt_pin_keynote_tag_click"/>
                             <Button Content="Viewport" Click="bt_pin_viewport_click"/>
                             <Button Content="Titleblock" Click="bt_pin_titleblock_click"/>
+                            <Button Content="Floor" Click="bt_pin_floor_click"/>
                             <Button Content="Curtain Wall" Click="bt_pin_cw_click"/>
                             <Button Content="Grids" Click="bt_pin_grid_click"/>
                             <Button Content="Levels" Click="bt_pin_level_click"/>

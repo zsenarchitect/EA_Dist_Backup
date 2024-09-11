@@ -52,7 +52,8 @@ def show_scott_tip():
         from pyrevit import script
         output = script.get_output()
         if not ENVIRONMENT.IS_OFFLINE_MODE:
-            output.print_image("L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc\\scott_but_younger.png")
+            pass
+            # output.print_image("L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc\\scott_but_younger.png")
     else:
         output = OUTPUT.Output()
     tip = random.choice(SCOTT_TIPS)

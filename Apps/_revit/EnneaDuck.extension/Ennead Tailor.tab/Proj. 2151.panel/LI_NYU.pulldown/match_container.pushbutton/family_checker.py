@@ -1,4 +1,4 @@
-from doctest import master
+
 from EnneadTab import NOTIFICATION
 from pyrevit import script
 from Autodesk.Revit import DB # pyright: ignore 
@@ -8,7 +8,7 @@ from data_holder import TableDataHolder, ListDataHolder, SentenceDataHolder
 
 output = script.get_output()
 
-from match_container_script import EMOJI_DICT
+from match_container_script import EMOJI_DICT 
 
 
 
@@ -113,9 +113,9 @@ class FamilyProcessor:
                 
             family_doc = master_type.element.Document.EditFamily(master_type.element.Family)
             for i, working_doc in enumerate(self.working_docs):
-                is_different = REVIT_FAMILY.is_family_version_different(family_doc, working_doc)
+                is_different = REVIT_FAMILY.is_family_version_different(family_doc, working_doc, load_if_not_exist=True)
                 if is_different is None:
-                    row_data.append(EMOJI_DICT["NotExist"])
+                    row_data.append(EMOJI_DICT["NotExist"] + "(Will add)")
                 elif is_different:
                     bad_conditions.append("At <**{}**>, master version is NOT same as in <**{}**>".format(family_name, working_doc.Title))
                     row_data.append(EMOJI_DICT["NoSame"]) 

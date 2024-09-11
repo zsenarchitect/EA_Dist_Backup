@@ -16,6 +16,7 @@ layout:
   - ">>>"
   - fix_warnings
   - load family to many docs 
+  - load_family_from_link
   - Shake All Tags 
   - remove not placed area 
   - Keynote Tags

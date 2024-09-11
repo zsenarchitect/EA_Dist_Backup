@@ -52,7 +52,7 @@ class DepartmentOption():
                 "L2",
                 "L3",
                 "L4",
-                "L5",
+                "L5 MEP",
                 "L6",
                 "L7",
                 "L8",
@@ -61,7 +61,7 @@ class DepartmentOption():
                 "L11",
                 "L12",
                 "L13 MEP",
-                "T.O.PARAPET"]
+                "ROOF LEVEL"]
     
 
     # TO-DO: this dummy will pretend to be the excel button sum

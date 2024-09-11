@@ -14,7 +14,8 @@ def find_main_repo():
     user_profile_folder = os.environ['USERPROFILE']
     common_locations = [
         "github",
-        "duck-repo"
+        "duck-repo",
+        "design-repo"
         ]
     for location in common_locations:
         if os.path.exists(os.path.join(user_profile_folder, location)):
@@ -24,6 +25,7 @@ def find_main_repo():
     return os.path.join(esosys_folder, 'EA_Dist')
 
 _repo = find_main_repo()
+print ("EnneadTab OS at {}".format(_repo))
 _lib = os.path.join(_repo,"Apps","lib")
 sys.path.append(_lib)
 
