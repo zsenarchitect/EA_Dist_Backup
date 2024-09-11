@@ -264,6 +264,11 @@ def selection_owner_checker(sender, args):
             NOTIFICATION.messenger("Note that your selection contains element owned by [{}]".format(REVIT_SELECTION.get_owner(element)))
             return
 
+def purge_dump_folder_families():
+    FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".rfa", old_file_only=True)
+    FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".3dm", old_file_only=True)
+    FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".dwg", old_file_only=True)
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
@@ -318,6 +323,8 @@ def EnneadTab_startup():
 
     register_temp_graphic_server()
     register_selection_owner_checker()
+    purge_dump_folder_families()
+
 
 
 

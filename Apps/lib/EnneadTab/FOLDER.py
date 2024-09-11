@@ -198,24 +198,33 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
     return decorator
 
 
-def cleanup_folder_by_extension(folder, extension):
+def cleanup_folder_by_extension(folder, extension, old_file_only=False):
     """Delete all files with the specified extension in the specified folder.
 
     Args:
         folder (str, optional): The path of the folder.
-        extension (str, optional): The extension of the files to delete.
+        extension (str, optional): The extension of the files to delete. The dot can be included optionally.
+        old_file_only (bool, optional): Whether to delete files older than 10 days. Defaults to False.
 
     Returns:
         int: The number of files deleted.
     """
     filenames = os.listdir(folder)
 
+    if "." not in extension:
+        extension = "." + extension
+
     count = 0
     for current_file in filenames:
         ext = os.path.splitext(current_file)[1]
         if ext.upper() == extension.upper():
+            full_path = os.path.join(folder, current_file)
+
+            if old_file_only:
+                if time.time() - os.path.getmtime(full_path) > 60 * 60 * 24 * 10:
+                    continue
             try:
-                os.remove(os.path.join(folder, current_file))
+                os.remove(full_path)
                 count += 1
             except Exception as e:
                 print(
