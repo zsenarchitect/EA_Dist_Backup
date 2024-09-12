@@ -160,4 +160,3 @@ if __name__ == "__main__":
     output = script.get_output()
     output.close_others()
     smart_match_grid_bubble()
-    ENNEAD_LOG.use_enneadtab(coin_change=20, tool_used=__title__.replace("\n", " "), show_toast=True)

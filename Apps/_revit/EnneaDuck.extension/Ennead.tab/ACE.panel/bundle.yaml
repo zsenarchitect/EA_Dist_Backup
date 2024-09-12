@@ -21,4 +21,5 @@ layout:
   - transfer_parameter_data
   - update_DOB_page
   - check_formula
+  - smart_match_grid_extend
   - lines_in_view_locator

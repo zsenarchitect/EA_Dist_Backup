@@ -52,6 +52,7 @@ else:
     DEPENDENCY_FOLDER += "\\py3"
 
 
+
 USER_PROFILE_FOLDER = os.environ["USERPROFILE"]
 USER_DOCUMENT_FOLDER = "{}\\Documents".format(USER_PROFILE_FOLDER)
 USER_DOWNLOAD_FOLDER = "{}\\downloads".format(USER_PROFILE_FOLDER)
@@ -72,6 +73,10 @@ IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:
     SHARED_DUMP_FOLDER = DUMP_FOLDER
 
+ONE_DRIVE_ECOSYS_FOLDER = "{}\\OneDrive - Ennead Architects\\Documents\\EnneadTab Ecosystem".format(USER_PROFILE_FOLDER)
+if os.path.exists(ONE_DRIVE_ECOSYS_FOLDER):
+    import shutil
+    shutil.rmtree(ONE_DRIVE_ECOSYS_FOLDER)
 
 def is_avd():
     """Check if current environment is an Azure Virtual Desktop.

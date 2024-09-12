@@ -7,6 +7,7 @@ import ENVIRONMENT
 import FOLDER
 import USER
 import NOTIFICATION
+import COPY
 
 def try_open_app(exe_name, legacy_name = None, safe_open = False):
     """Attempt to open an exe file from the app libary.
@@ -43,7 +44,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
         temp_exe = FOLDER.DUMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)
-        shutil.copyfile(exe, temp_exe)
+        COPY.copyfile(exe, temp_exe)
         os.startfile(temp_exe)
         for file in os.listdir(FOLDER.DUMP_FOLDER):
             if file.startswith("_temp_exe_"):

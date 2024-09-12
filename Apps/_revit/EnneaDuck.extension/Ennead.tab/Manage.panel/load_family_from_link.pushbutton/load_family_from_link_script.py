@@ -22,7 +22,7 @@ def load_family_from_link():
     if not link_doc:
         return
 
-    families = REVIT_SELECTION.pick_families(link_doc, 
+    families = REVIT_SELECTION.pick_family(link_doc, 
                                          multi_select=True)
     if not families:
         return

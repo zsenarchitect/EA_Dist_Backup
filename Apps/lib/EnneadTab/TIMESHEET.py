@@ -1,6 +1,6 @@
-import os
+
 import time
-import shutil
+
 
 import DATA_FILE
 import ENVIRONMENT

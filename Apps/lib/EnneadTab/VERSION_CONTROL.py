@@ -1,8 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 import os
 
 import EXE
 import ENVIRONMENT
 import NOTIFICATION
+
+
+
 
 def update_EA_dist():
     EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
@@ -17,7 +24,11 @@ def show_last_success_update_time():
         NOTIFICATION.messenger("Not successful update recently.\nYour life sucks.")
         return
     records.sort()
-    NOTIFICATION.messenger("Most recent update at:\n{}".format(records[-1].replace(".duck", "")))    
+    record = records[-1]
+    with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record)) as f:
+        commit_line = f.readlines()[-1].replace("\n","")
+    NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record.replace(".duck", ""),
+                                                                 commit_line))    
         
     pass
 

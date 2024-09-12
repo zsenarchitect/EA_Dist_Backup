@@ -7,7 +7,8 @@ _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
 
 # print ("\n".join(sys.path))
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, LOG, ENVIRONMENT, TIMESHEET, VERSION_CONTROL
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL
+from EnneadTab.RHINO import RHINO_ALIAS
 
 
 import rhinoscriptsyntax as rs
@@ -24,6 +25,7 @@ def main():
     add_hook()
     
     get_latest_left.get_latest(is_silient = True)
+    RHINO_ALIAS.register_alias_set()
 
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
 
@@ -44,6 +46,7 @@ def add_hook():
 def action_update_timesheet(doc):
     if doc.Path:
         try:
+            from EnneadTab import TIMESHEET
             TIMESHEET.update_time_sheet_rhino(doc.Path)
         except:
             print ("Error updating timesheet")

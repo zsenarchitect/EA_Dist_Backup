@@ -31,7 +31,10 @@ def try_catch_error(is_silent=False, is_pass = False):
                 print_note(str(e))
                 print_note("error_Wrapper func for EA Log -- Error: " + str(e))
                 error_time = "Oops at {}\n\n".format(TIME.get_formatted_current_time())
-                error = traceback.format_exc()
+                try:
+                    error = traceback.format_exc()
+                except:
+                    error = str(e)
 
                 subject_line = "EnneadTab Auto Error Log"
                 if is_silent:
@@ -80,3 +83,5 @@ def print_note(string):
         except Exception as e:
 
             print("[Dev Debug Only Note]:{}".format(string))
+
+

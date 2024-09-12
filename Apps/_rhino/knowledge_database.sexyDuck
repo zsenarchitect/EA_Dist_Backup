@@ -394,6 +394,14 @@
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
     },
+    "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py": {
+        "script": "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py",
+        "icon": null,
+        "alias": "TestRhino8",
+        "doc": "This button does TestRhino8 when left click",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png"
+    },
     "Layer.tab\\destroy_layer.button\\destroy_layer_left.py": {
         "script": "Layer.tab\\destroy_layer.button\\destroy_layer_left.py",
         "icon": "Layer.tab\\destroy_layer.button\\icon.png",

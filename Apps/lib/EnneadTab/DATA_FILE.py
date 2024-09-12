@@ -53,7 +53,7 @@ def _read_json_as_dict(filepath, use_encode=True, create_if_not_exist=False):
 
     try:
         if use_encode:
-            with io.open(filepath, encoding="utf8") as f:
+            with io.open(filepath, encoding="utf-8") as f:
                 data = json.load(f)
             return data
 
@@ -100,11 +100,11 @@ def _read_json_as_dict_in_shared_dump_folder(
     return _read_json_file_safely(filepath, use_encode, create_if_not_exist)
 
 
-def _save_dict_to_json(dict, filepath, use_encode=True):
+def _save_dict_to_json(data_dict, filepath, use_encode=True):
     """Save a dictionary to a JSON file.
 
     Args:
-        dict (dict): The dictionary to store.
+        data_dict (dict): The dictionary to store.
         filepath (str): The path of the file to write to.
         use_encode (bool, optional): Whether to encode the file. Defaults to False.
 
@@ -115,12 +115,12 @@ def _save_dict_to_json(dict, filepath, use_encode=True):
         if use_encode:
             with io.open(filepath, "w", encoding="utf-8") as f:
                 # Serialize the data and write it to the file
-                json.dump(dict, f, ensure_ascii=False, indent=4)
+                json.dump(data_dict, f, ensure_ascii=False, indent=4)
             return True
 
         else:
             with open(filepath, "w") as f:
-                json.dump(dict, f, indent=4)
+                json.dump(data_dict, f, indent=4)
 
             return True
     except Exception as e:
@@ -128,11 +128,11 @@ def _save_dict_to_json(dict, filepath, use_encode=True):
         return False
 
 
-def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=True):
+def _save_dict_to_json_in_dump_folder(data_dict, file_name, use_encode=True):
     """Direct store a dict to a file in the dump folder.
 
     Args:
-        dict (dict): The dictionary to store.
+        data_dict (dict): The dictionary to store.
         file_name (str): The name of the file to write to.
         use_encode (bool, optional): Whether to encode the file. Defaults to False.
 
@@ -140,14 +140,14 @@ def _save_dict_to_json_in_dump_folder(dict, file_name, use_encode=True):
         bool: Whether the operation was successful or not.
     """
     filepath = FOLDER.get_EA_dump_folder_file(file_name)
-    return _save_dict_to_json(dict, filepath, use_encode=use_encode)
+    return _save_dict_to_json(data_dict, filepath, use_encode=use_encode)
 
 
-def _save_dict_to_json_in_shared_dump_folder(dict, file_name, use_encode=True):
+def _save_dict_to_json_in_shared_dump_folder(data_dict, file_name, use_encode=True):
     """Direct store a dict to a file in shared the dump folder.
 
     Args:
-        dict (dict): The dictionary to store.
+        data_dict (dict): The dictionary to store.
         file_name (str): The name of the file to write to.
         use_encode (bool, optional): Whether to encode the file. Defaults to False.
 
@@ -155,7 +155,7 @@ def _save_dict_to_json_in_shared_dump_folder(dict, file_name, use_encode=True):
         bool: Whether the operation was successful or not.
     """
     filepath = FOLDER.get_shared_dump_folder_file(file_name)
-    return _save_dict_to_json(dict, filepath, use_encode=use_encode)
+    return _save_dict_to_json(data_dict, filepath, use_encode=use_encode)
 
 
 def get_list(filepath):
@@ -173,7 +173,7 @@ def get_list(filepath):
     local_path = FOLDER.get_EA_dump_folder_file("temp{}".format(extention))
     shutil.copyfile(filepath, local_path)
 
-    with io.open(local_path, encoding="utf8") as f:
+    with io.open(local_path, encoding="utf-8") as f:
         lines = f.readlines()
 
     return map(lambda x: x.replace("\n", ""), lines)
@@ -190,7 +190,7 @@ def set_list(list, filepath, end_with_new_line=False):
     Returns:
         bool: Whether the operation was successful or not.
     """
-    with io.open(filepath, "w", encoding="utf8") as f:
+    with io.open(filepath, "w", encoding="utf-8") as f:
         f.write("\n".join(list))
         if end_with_new_line:
             f.write("\n")
@@ -201,13 +201,13 @@ def set_list(list, filepath, end_with_new_line=False):
 #######################################################################################
 
 
-def pretty_print_dict(dict):
+def pretty_print_dict(data_dict):
     """Print a dictionary in a pretty format.
 
     Args:
-        dict (dict): The dictionary to pretty print.
+        data_dict (dict): The dictionary to pretty print.
     """
-    pretty_string = json.dumps(dict, indent=4)
+    pretty_string = json.dumps(data_dict, indent=4)
     print(pretty_string)
 
 
@@ -236,11 +236,11 @@ def get_data(file_name_or_full_path, is_local=True):
         )
 
 
-def set_data(data, file_name_or_full_path, is_local=True):
+def set_data(data_dict, file_name_or_full_path, is_local=True):
     """Save a dictionary to a JSON file in either the dump folder or the shared dump folder.
 
     Args:
-        data (dict): The dictionary to store.
+        data_dict (dict): The dictionary to store.
         file_name_or_full_path (str): The name of the file to write to, ends with extension. The full path is a backward compatiablity feature and is not prefered.
         is_local (bool, optional): Whether the file should be saved to the local dump folder. Defaults to True.
     """
@@ -250,9 +250,9 @@ def set_data(data, file_name_or_full_path, is_local=True):
         return _save_dict_to_json(file_name_or_full_path, use_encode=True)
     
     if is_local:
-        _save_dict_to_json_in_dump_folder(data, file_name_or_full_path, use_encode=True)
+        _save_dict_to_json_in_dump_folder(data_dict, file_name_or_full_path, use_encode=True)
     else:
-        _save_dict_to_json_in_shared_dump_folder(data, file_name_or_full_path, use_encode=True)
+        _save_dict_to_json_in_shared_dump_folder(data_dict, file_name_or_full_path, use_encode=True)
 
 
 @contextmanager

@@ -43,6 +43,7 @@ import get_latest_left # pyright:ignore
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def Installation():
+    print ("Beigining installing....")
     get_latest_left.get_latest(is_silient = False)
 
 
