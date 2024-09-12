@@ -281,10 +281,13 @@ def update_data(file_name, is_local=True):
 
         set_data(data, file_name, is_local)
 
-    except Exception:
-        print(
-            "An error occurred when updating data:\n{}".format(traceback.format_exc())
-        )
+    except Exception as e:
+        try:
+            print(
+                "An error occurred when updating data:\n{}".format(traceback.format_exc())
+            )
+        except:
+            print (e)
 
 
 #######################################

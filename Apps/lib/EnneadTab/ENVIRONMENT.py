@@ -99,6 +99,36 @@ def is_avd():
     return "avd" in computer_name.lower()
 
 
+def is_Rhino_8():
+    """Check if current environment is Rhino 8.
+
+    Returns:
+        bool: True if current environment is Rhino 8.
+    """
+
+    return str(get_rhino_version()) == "8"
+
+def is_Rhino_7():
+    """Check if current environment is Rhino 7.
+
+    Returns:
+        bool: True if current environment is Rhino 7.
+    """
+
+    return str(get_rhino_version()) == "7"
+
+def get_rhino_version(main_version_only=True):
+    """Get Rhino version.
+
+    Returns:
+        str: Rhino version.
+    """
+    if not IS_RHINO_ENVIRONMENT:
+        return None
+    import Rhino
+
+    return Rhino.RhinoApp.ExeVersion  if main_version_only else Rhino.RhinoApp.Version
+
 def is_Rhino_environment():
     """Check if the current environment is Rhino.
 
@@ -196,6 +226,8 @@ def unit_test():
 
 IS_AVD = is_avd()
 IS_RHINO_ENVIRONMENT = is_Rhino_environment()
+IS_RHINO_7 = is_Rhino_7()
+IS_RHINO_8 = is_Rhino_8()
 IS_GRASSHOPPER_ENVIRONMENT = is_Grasshopper_environment()
 IS_REVIT_ENVIRONMENT = is_Revit_environment()
 IS_RHINOINSIDEREVIT_ENVIRONMENT = is_RhinoInsideRevit_environment()

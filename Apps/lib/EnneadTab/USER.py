@@ -77,7 +77,11 @@ def get_autodesk_user_name():
         from REVIT import REVIT_APPLICATION
         return REVIT_APPLICATION.get_app().Username
     except Exception as e:
-        print ("Cannot get Autodesk username becasue {}".format(traceback.format_exc()))
+        # to-do: add try because Rhino 8 traceback is not working peoperly. This should be recheck in future Rhino 8.
+        try:
+            print ("Cannot get Autodesk username becasue {}".format(traceback.format_exc()))
+        except:
+            print (e)
         return None
     
         

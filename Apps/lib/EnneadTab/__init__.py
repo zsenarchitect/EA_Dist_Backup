@@ -18,7 +18,11 @@ for module in os.listdir(os.path.dirname(__file__)):
     try:
         __import__(module[:-3], locals(), globals())
     except Exception as e:
-        print ("Cannot import {} becasue\n\n{}".format(module, traceback.format_exc()))
+        # to-do: add try because Rhino 8 traceback is not working peoperly. This should be recheck in future Rhino 8.
+        try:
+            print ("Cannot import {} becasue\n\n{}".format(module, traceback.format_exc()))
+        except:
+            print ("Cannot import {} becasue\n\n{}".format(module, e))
 del module# delete this varible becaue it is refering to last item on the for loop
 
 
