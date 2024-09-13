@@ -3,7 +3,12 @@ The main purpose of this moudle to is to handle Rhino 8 situation.
 Native shutil.copyfile will fail in some cases, so we use dotnet to copy the file.
 
 """
-import shutil
+try:
+    import shutil
+except:
+    from System.IO import File
+
+
 
 def copyfile(src, dst):
     try:
@@ -14,7 +19,6 @@ def copyfile(src, dst):
 
 def copyfile_with_dotnet(src, dst):
     try:
-        from System.IO import File
         File.Copy(src, dst, True)  # True to overwrite if exists
         return True
     except Exception as e:

@@ -2,8 +2,9 @@
 
 import time
 import os
-import shutil
+
 from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
+import COPY
 
 
 def copy_file(original_path, new_path):
@@ -16,7 +17,7 @@ def copy_file(original_path, new_path):
     target_folder = os.path.dirname(new_path)
     if not os.path.exists(target_folder):
         os.mkdir(target_folder)
-    shutil.copyfile(original_path, new_path)
+    COPY.copyfile(original_path, new_path)
 
 
 def copy_file_to_folder(original_path, target_folder):
@@ -32,7 +33,7 @@ def copy_file_to_folder(original_path, target_folder):
 
     new_path = original_path.replace(os.path.dirname(original_path), target_folder)
     try:
-        shutil.copyfile(original_path, new_path)
+        COPY.copyfile(original_path, new_path)
     except Exception as e:
         print(e)
 
@@ -135,7 +136,7 @@ def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning
 
     local_path = get_EA_dump_folder_file(file_name)
     try:
-        shutil.copyfile(original_path, local_path)
+        COPY.copyfile(original_path, local_path)
     except Exception as e:
         if not ignore_warning:
             if "being used by another process" in str(e):
@@ -187,7 +188,7 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
                 )
 
                 if os.path.exists(get_EA_dump_folder_file(data_file_name)):
-                    shutil.copy(
+                    COPY.copyfile(
                         get_EA_dump_folder_file(data_file_name), backup_file_path
                     )
 

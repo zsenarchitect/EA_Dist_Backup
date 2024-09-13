@@ -29,7 +29,7 @@ def main():
             os.makedirs(destination_dir)
 
         # Copy the file to the destination directory
-        shutil.copy2(source_file, destination_file)
+        shutil.copyfile2(source_file, destination_file)
 
 if __name__ == "__main__":
     main()
