@@ -14,9 +14,11 @@ try:
     import REVIT_SELECTION
     from pyrevit.coreutils import envvars
     
+    
 except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
+
 
 def get_view_by_name( view_name, doc = DOC):
     all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).ToElements()
@@ -38,6 +40,56 @@ def get_default_view_type(view_type, doc = DOC):
     view_family_types = DB.FilteredElementCollector(doc).OfClass(DB.ViewFamilyType).ToElements()
     potential_types = filter(lambda x: x.ViewFamily == mapper[view_type], view_family_types)
     return potential_types[0]
+
+
+def view_ids_to_views(elements, doc=DOC):
+    
+    elements = list(elements) # in case the input were NET LIST from filterelementcollector
+    if not isinstance(elements, list): elements = [elements]
+    if not elements: return []
+    return list(map(lambda x: doc.GetElement(x), elements))
+
+def filter_archi_views(views):
+    out = []
+    for view in views:
+        if view is None:
+            continue
+        if view.IsTemplate:
+            continue
+        if view.ViewType.ToString() in ["Legend", "Schedule"]:
+            continue
+        out.append(view)
+    return out
+
+
+
+class ViewFilter:
+    def __init__(self, views_or_view_ids, doc=DOC):
+        self.doc = doc
+        if len(views_or_view_ids) == 0: 
+            self.views = []
+            return
+        if isinstance(views_or_view_ids[0], DB.ElementId):
+            self.views = view_ids_to_views(views_or_view_ids, doc)
+        else:
+            self.views = views_or_view_ids
+
+    def filter_archi_views(self):
+        self.views = filter_archi_views(self.views)
+        return self
+
+    def filter_non_template_views(self):
+        self.views = filter(lambda x: not x.IsTemplate, self.views)
+        return self
+    
+    def to_view_ids(self):
+        return list(map(lambda x: x.Id, self.views))
+
+    def to_views(self):
+        return self.views
+
+    def to_count(self):
+        return len(self.views)
 
 
 def set_active_view_by_name(view_name, doc = DOC):

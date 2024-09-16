@@ -8,7 +8,7 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 # uidoc = __revit__.ActiveUIDocument
 # app = doc.Application
 
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

@@ -9,7 +9,7 @@ __title__ = "54_Create Shared Para(Legacy)"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 

@@ -9,7 +9,7 @@ __title__ = "62_check sheet value"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 

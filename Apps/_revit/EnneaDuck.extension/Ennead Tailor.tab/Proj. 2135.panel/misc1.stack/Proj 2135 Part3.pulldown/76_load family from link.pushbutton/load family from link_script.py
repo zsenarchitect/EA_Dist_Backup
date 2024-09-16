@@ -20,7 +20,7 @@ from pyrevit import forms, script
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

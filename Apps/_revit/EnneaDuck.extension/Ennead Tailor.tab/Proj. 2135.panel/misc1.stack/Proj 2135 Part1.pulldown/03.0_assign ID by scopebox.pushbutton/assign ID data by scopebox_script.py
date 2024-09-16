@@ -2,7 +2,7 @@ __doc__ = "xxx"
 __title__ = "03.0_Assign Bldg ID data\n by Scopebox"
 
 from pyrevit import forms, DB, revit, script
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

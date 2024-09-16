@@ -4,7 +4,7 @@ __title__ = "29_transfer area to other scheme"
 from pyrevit import forms, revit, script #
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import Creation
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

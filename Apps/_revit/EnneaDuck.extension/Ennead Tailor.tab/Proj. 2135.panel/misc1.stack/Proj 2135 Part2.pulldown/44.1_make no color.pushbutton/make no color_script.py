@@ -9,7 +9,7 @@ __title__ = "44.1_update internal dim selection set"
 
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 

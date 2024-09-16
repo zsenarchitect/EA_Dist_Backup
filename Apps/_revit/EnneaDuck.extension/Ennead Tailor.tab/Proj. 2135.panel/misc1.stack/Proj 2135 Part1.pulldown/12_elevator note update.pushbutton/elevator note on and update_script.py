@@ -2,7 +2,7 @@ __doc__ = "Turn on elevator notes about the base level and top level of the elev
 __title__ = "12_turn on elevator note and update data"
 
 from pyrevit import forms, DB, revit, script
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 import time

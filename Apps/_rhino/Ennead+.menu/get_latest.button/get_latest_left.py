@@ -56,7 +56,7 @@ def add_startup_script():
     i use this python script C to call rhino script B to call rhino script A, which is the command alias
     This will not run the startup command, it just add to the start sequence.
     """
-    rvb_satrtup_modifier_script = "{}\\StartupEnable.rvb".format(os.path.dirname(__file__))
+    rvb_satrtup_modifier_script = "{}\\StartupEnable.rvb".format(os.path.dirname(os.path.abspath(__file__)))
     Rhino.RhinoApp.RunScript("-LoadScript " + rvb_satrtup_modifier_script, True)
  
 def update_GH_folders():

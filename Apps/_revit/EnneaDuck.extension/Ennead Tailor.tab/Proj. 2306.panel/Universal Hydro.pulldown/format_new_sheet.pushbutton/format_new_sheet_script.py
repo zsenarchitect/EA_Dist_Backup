@@ -9,7 +9,7 @@ __title__ = "(Depreciated)Format New Sheets"
 # from pyrevit import forms #
 from pyrevit import script #
 
-import EA_UTILITY
+
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

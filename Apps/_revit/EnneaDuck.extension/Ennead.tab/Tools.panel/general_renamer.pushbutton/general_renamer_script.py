@@ -11,6 +11,7 @@ __doc__ = """A floating window that give you quick access to all kinds of rename
 __title__ = "Super\nRenamer"
 __tip__ = True
 
+
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from pyrevit.forms import WPFWindow
@@ -19,7 +20,7 @@ from pyrevit import script #
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_VIEW
 from EnneadTab import IMAGE, USER, NOTIFICATION, ERROR_HANDLE, LOG
 import traceback
 from Autodesk.Revit import DB # pyright: ignore 
@@ -100,6 +101,8 @@ def remove_creator_mark(name):
 
     return name
 
+
+
 @ERROR_HANDLE.try_catch_error()
 def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0, show_log = True):
 
@@ -126,7 +129,12 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
     for sheet in sheets:
         sheet_num = sheet.SheetNumber
 
-        is_only_one_view = len(list(sheet.GetAllPlacedViews())) == 1
+        try: # to-do: remove this after 10-05
+            view_filter = REVIT_VIEW.ViewFilter(list(sheet.GetAllPlacedViews()))
+            is_only_one_view = view_filter.filter_archi_views().to_count() == 1
+        except Exception as e:
+            ERROR_HANDLE.print_note(traceback.format_exc())
+            is_only_one_view = len(list(sheet.GetAllPlacedViews())) == 1
 
         #for view on current sheet
         for view_id in sheet.GetAllPlacedViews():

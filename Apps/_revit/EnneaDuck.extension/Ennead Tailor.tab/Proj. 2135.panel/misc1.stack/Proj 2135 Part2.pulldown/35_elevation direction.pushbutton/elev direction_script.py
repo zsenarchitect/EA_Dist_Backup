@@ -7,7 +7,7 @@ __title__ = "35_Elevation and Grid orth-direction"
 # from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 

@@ -4,7 +4,7 @@ __title__ = "27_TAG MANY VIEWS---"
 from pyrevit import forms, revit, script #
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit import Creation
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

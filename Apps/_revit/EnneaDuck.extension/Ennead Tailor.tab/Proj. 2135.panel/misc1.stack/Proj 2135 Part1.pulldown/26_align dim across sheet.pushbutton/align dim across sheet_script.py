@@ -4,7 +4,7 @@ __title__ = "26_align dim acroos sheet"
 from pyrevit import forms, revit, script #
 from Autodesk.Revit import DB # pyright: ignore 
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

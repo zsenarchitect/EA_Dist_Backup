@@ -4,7 +4,7 @@ __context__ = "zero-doc"
 
 from pyrevit import forms, DB, revit, script
 import System
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from pyrevit.revit import ErrorSwallower

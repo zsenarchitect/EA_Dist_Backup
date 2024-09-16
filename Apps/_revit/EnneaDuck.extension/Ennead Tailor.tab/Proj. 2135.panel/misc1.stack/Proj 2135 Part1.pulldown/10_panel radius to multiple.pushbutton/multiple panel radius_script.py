@@ -2,7 +2,7 @@ __doc__ = "pick panel types to be fixed, it will update the 'R' or 'r' parameter
 __title__ = "10_By List: multiple panel radius by host wall"
 
 from pyrevit import forms, DB, revit, script
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

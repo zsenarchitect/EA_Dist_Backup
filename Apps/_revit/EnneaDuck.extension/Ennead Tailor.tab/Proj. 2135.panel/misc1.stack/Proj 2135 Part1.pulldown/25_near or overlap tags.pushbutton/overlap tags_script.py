@@ -3,7 +3,7 @@ __title__ = "25_remove near or overlapped area or room tags"
 
 # from pyrevit import forms, revit, script #
 from Autodesk.Revit import DB # pyright: ignore 
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from pyrevit import revit, script, forms

@@ -2,7 +2,7 @@ __doc__ = "Find the line patterns that are similar in definition but silightly d
 __title__ = "Discover\nLine Pattern"
 
 from pyrevit import forms, DB, revit, script
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

@@ -25,7 +25,7 @@ import os
 import os.path as op
 import time
 import System
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

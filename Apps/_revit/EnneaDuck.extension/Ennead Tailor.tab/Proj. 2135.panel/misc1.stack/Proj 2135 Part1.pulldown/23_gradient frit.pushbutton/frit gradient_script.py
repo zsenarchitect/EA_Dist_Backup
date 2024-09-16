@@ -3,7 +3,7 @@ __title__ = "23_frit gradient"
 
 from pyrevit import script, revit #
 from Autodesk.Revit import DB # pyright: ignore 
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore

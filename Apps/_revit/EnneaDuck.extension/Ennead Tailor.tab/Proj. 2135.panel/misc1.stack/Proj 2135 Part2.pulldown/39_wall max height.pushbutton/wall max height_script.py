@@ -9,7 +9,7 @@ __title__ = "39_wall max_height"
 
 from pyrevit import script #
 
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 

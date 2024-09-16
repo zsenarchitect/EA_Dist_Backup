@@ -102,6 +102,7 @@ def lookup_unit_id(key):
     inches
     meters
     millimeters
+    feetFractionalInches
 
     squareFeet
     squareInches
@@ -114,17 +115,30 @@ def lookup_unit_id(key):
         if key == str(unit_type_id.TypeId).split("-")[0].split("unit:")[1]:
             return unit_type_id
 
+def list_all_unit_ids():
+    for unit_type_id in DB.UnitUtils.GetAllUnits():
+        print (str(unit_type_id.TypeId).split("-")[0].split("unit:")[1])
 
+def list_all_unit_specs():
+    for spec_type_id in DB.UnitUtils.GetAllMeasurableSpecs():
+        if  "aec:" in str(spec_type_id.TypeId):
+            print (str(spec_type_id.TypeId).split("-")[0].split("aec:")[1])
+        else:
+            print (str(spec_type_id.TypeId))
 
 def lookup_unit_spec_id(key):
     """
     length
     number
     area
+    volume
+    massDensity
+    distance
     angle
     yesno
     text
     integer
+    speed
     
     """
     #for x in dir(DB.UnitUtils):
@@ -158,7 +172,8 @@ def lookup_unit_spec_id(key):
     for spec_type_id in specs:
         # print spec_type_id.TypeId
         if not "aec:" in str(spec_type_id.TypeId):
-            continue
+            if key == str(spec_type_id.TypeId):
+                return spec_type_id
         if key == str(spec_type_id.TypeId).split("-")[0].split("aec:")[1]:
             return spec_type_id
 

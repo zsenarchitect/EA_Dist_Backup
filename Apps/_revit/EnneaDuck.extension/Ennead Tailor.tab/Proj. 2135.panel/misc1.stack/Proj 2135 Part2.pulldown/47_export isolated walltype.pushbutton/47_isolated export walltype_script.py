@@ -9,7 +9,7 @@ __title__ = "47_Isolate export type for Wall/Floor/Roof/Column/Stair(Legacy)"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 import time
@@ -23,7 +23,7 @@ def update_view_name():
     current_name = doc.ActiveView.Name
 
     keyword = ", exported by "
-    user_time = EA_UTILITY.get_formatted_current_time()
+    user_time = TIME.get_formatted_current_time()
     if keyword not in current_name:
         new_name = current_name + keyword + user_time
     else:

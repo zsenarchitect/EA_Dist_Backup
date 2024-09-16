@@ -3,7 +3,7 @@ __title__ = "05_area to excel 2.0, N3 Only"
 __youtube__ = "https://youtu.be/wom2_hzjBi0"
 from pyrevit import forms, DB, revit, script
 import xlsxwriter as xw
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

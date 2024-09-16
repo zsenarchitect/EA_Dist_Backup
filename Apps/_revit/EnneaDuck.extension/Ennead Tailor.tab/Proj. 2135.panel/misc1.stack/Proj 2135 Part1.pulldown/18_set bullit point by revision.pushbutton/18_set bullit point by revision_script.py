@@ -6,7 +6,7 @@ __title__ = "18_set bullit point by/to revision on sheet"
 
 from pyrevit import forms, DB, revit, script
 import System
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

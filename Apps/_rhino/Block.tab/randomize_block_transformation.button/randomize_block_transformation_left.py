@@ -4,6 +4,7 @@ __doc__ = "Randomly transform block transformation for rotation and scale."
 import rhinoscriptsyntax as rs
 import random
 
+
 from EnneadTab import DATA_FILE
 from EnneadTab import SOUND
 from EnneadTab import LOG

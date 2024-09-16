@@ -9,7 +9,7 @@ __title__ = "Hide Section in Elevation by Orientation"
 from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

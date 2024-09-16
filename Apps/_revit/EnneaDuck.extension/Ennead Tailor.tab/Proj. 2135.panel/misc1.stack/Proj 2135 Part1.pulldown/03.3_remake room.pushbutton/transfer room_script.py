@@ -4,7 +4,7 @@ __title__ = "3.3_recreate room on correct level"
 from pyrevit import script #
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import Creation
-import EA_UTILITY
+
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
