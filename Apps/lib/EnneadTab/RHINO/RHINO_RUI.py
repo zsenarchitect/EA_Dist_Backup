@@ -1,6 +1,5 @@
 import ENVIRONMENT
 import FOLDER
-from rhinoscript.toolbar import IsToolbarCollection
 
 
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
