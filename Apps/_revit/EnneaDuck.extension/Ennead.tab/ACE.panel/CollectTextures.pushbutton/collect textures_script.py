@@ -1,4 +1,4 @@
-from System import Environment
+
 from rpw import db, revit, DB, exceptions
 from pyrevit import forms
 from shutil import copy
@@ -152,9 +152,7 @@ def copy_by_path(file_path, destination_folder):
     """
     try:
         copy(file_path, destination_folder)
-    except EnvironmentError as e:
-        # File exists at destination
-        pass
+
     except Exception as e:
         # Other exceptions
         print(e)

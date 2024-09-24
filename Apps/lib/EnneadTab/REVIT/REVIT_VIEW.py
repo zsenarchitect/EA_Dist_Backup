@@ -54,6 +54,8 @@ def filter_archi_views(views):
     for view in views:
         if view is None:
             continue
+        if not isinstance(view, DB.View):
+            continue
         if view.IsTemplate:
             continue
         if view.ViewType.ToString() in ["Legend", "Schedule"]:

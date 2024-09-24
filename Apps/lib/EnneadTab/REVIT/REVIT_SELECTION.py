@@ -22,6 +22,7 @@ except:
     globals()["DOC"] = object()
 try:
     import REVIT_APPLICATION #pyright: ignore
+    import REVIT_CATEGORY
 except:
     pass
 
@@ -644,7 +645,8 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
     import REVIT_COLOR_SCHEME #pyright: ignore
     return REVIT_COLOR_SCHEME.get_color_scheme_by_name(scheme_name, doc)
 
-
+def pick_category(doc=DOC):
+    return REVIT_CATEGORY.pick_category(doc=doc)
 
 def get_revit_link_instance_by_name(link_doc_name):
     link_instances = DB.FilteredElementCollector(DOC).OfClass(DB.RevitLinkInstance).ToElements()

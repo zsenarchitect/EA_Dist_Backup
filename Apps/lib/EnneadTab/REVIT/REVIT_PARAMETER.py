@@ -19,7 +19,7 @@ def create_shared_parameter(doc,
                             para_name,
                             para_type,
                             para_group_name = None):
-    """_summary_
+    """This will create parameter in the shared parameter text file, but not yet bind to anytthing
 
     Args:
         doc (_type_): _description_
@@ -96,42 +96,35 @@ def add_parameter_to_family_doc(family_doc,
 def add_shared_parameter_to_project_doc(project_doc,
                                  para_definition,
                                  para_group,
-                                 binding_cate_names,
-                                 default_value,
+                                 binding_cates,
+                                 default_value=None,
                                  is_instance_parameter = False):
-    """
-    rework below to a dict, human category as key, OST_xxx as value
-    cate_list = [("OST_Grids", "Grids"),
-                ("OST_Levels", "Levels"),
-                ("OST_Rooms", "Rooms"),
-                ("OST_Areas", "Areas"),
-                ("OST_Furniture", "Furniture")]
 
-    cate_ids = [getattr(DB.BuiltInCategory , cate[0]) for cate in cate_list]
-    cates = [DB.Category.GetCategory(doc, cate_id) for cate_id in cate_ids]
+    # create new shared para to avoid adding same definiation twice
+    try:
+        DB.SharedParameterElement.Create(project_doc, para_definition)
+    except Exception as e:
+        print ("cannot add to doc [{}] becasue {}".format(project_doc.Title, e))
+
+        return False
     
- 
-    """
-    
-
-
-    # define category set, should be  OST_Sheets
     cate_sets = DB.CategorySet()
-    for cate in binding_cate_names:
-        
+    for cate in binding_cates:
         cate_sets.Insert(cate)
 
-
-    #instance binding
     binding = DB.InstanceBinding() if is_instance_parameter else DB.TypeBinding()
     binding.Categories = cate_sets
+    project_doc.ParameterBindings.Insert(para_definition, binding, get_para_group(para_group))
+    return True
 
-    #doc.ParameterBindings.Insert(definition, binding, DB.BuiltInParameterGroup.PG_GREEN_BUILDING)
-    #doc.ParameterBindings.Insert(definition, binding, DB.BuiltInParameterGroup.PG_IFC)
-    project_doc.ParameterBindings.Insert(para_definition, binding, DB.BuiltInParameterGroup.PG_DATA)
-    # make a parser to parameter group
-    
-    
+
+def get_para_group(group_name):
+    """
+    data,
+    set
+    """
+    return getattr(DB.GroupTypeId, group_name)
+
 def get_parameter_by_name(fam_doc, 
                           para_name):
     

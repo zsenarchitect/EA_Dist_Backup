@@ -1,5 +1,30 @@
+from pyrevit import forms
+from Autodesk.Revit import DB # pyright:ignore
+
+def pick_category(doc):
+    cate_list = [("OST_Grids", "Grids"),
+            ("OST_Levels", "Levels"),
+            ("OST_Rooms", "Rooms"),
+            ("OST_Areas", "Areas"),
+            ("OST_Furniture", "Furniture"),
+            ("OST_Parking", "Parking"),]
+    class MyOption(forms.TemplateListItem):
+        @property
+        def name(self):
+            return self.item[1]
+
+    cates = forms.SelectFromList.show([MyOption(cate) for cate in cate_list], 
+                                      title = "Select Categorie(s) to bind", 
+                                      multiselect = True)
+    if not cates:
+        return
+    
+    cate_ids = [getattr(DB.BuiltInCategory , cate[0]) for cate in cate_list]
+    cates = [DB.Category.GetCategory(doc, cate_id) for cate_id in cate_ids]
 
 
+    return cates
+  
 
 
 class RevitCategory:

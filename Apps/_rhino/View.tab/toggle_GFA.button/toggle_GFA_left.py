@@ -245,15 +245,33 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
     
     @try_catch_error
     def DrawForeground(self, e):
-        text = "Ennead GFA Schedule Mode"
+
+
+
+
+
+        
         color = rs.CreateColor([87, 85, 83])
         color_hightlight = rs.CreateColor([150, 85, 83])
+        backgroud_color = rs.CreateColor([240, 240, 240])
         #color = System.Drawing.Color.Red
         position_X_offset = 20
         position_Y_offset = 40
         size = 40
         bounds = e.Viewport.Bounds
         pt = Rhino.Geometry.Point2d(bounds.Left + position_X_offset, bounds.Top + position_Y_offset)
+
+
+        # background_rec = e.Display.DrawRoundedRectangle(Rhino.Geometry.Point2d(pt[0] + 50, pt[1] + 50),
+        #                                                 200,
+        #                                                 200,
+        #                                                 50,
+        #                                                 color_hightlight,
+        #                                                 3,
+        #                                                 backgroud_color)
+
+        
+        text = "Ennead GFA Schedule Mode"
         e.Display.Draw2dText(text, color, pt, False, size)
         recent_time_text = TIME.get_formatted_time(sc.sticky["reset_timestamp"])
         recent_time_text = "Last data cache update: " + recent_time_text

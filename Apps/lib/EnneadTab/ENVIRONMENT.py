@@ -76,7 +76,10 @@ if IS_OFFLINE_MODE:
 ONE_DRIVE_ECOSYS_FOLDER = "{}\\OneDrive - Ennead Architects\\Documents\\EnneadTab Ecosystem".format(USER_PROFILE_FOLDER)
 if os.path.exists(ONE_DRIVE_ECOSYS_FOLDER):
     import shutil
-    shutil.rmtree(ONE_DRIVE_ECOSYS_FOLDER)
+    try:
+        shutil.rmtree(ONE_DRIVE_ECOSYS_FOLDER)
+    except:
+        pass
 
 def is_avd():
     """Check if current environment is an Azure Virtual Desktop.
