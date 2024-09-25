@@ -812,7 +812,7 @@
     },
     "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py": {
         "script": "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py",
-        "icon": null,
+        "icon": "View.tab\\batch_export_rhino_view.button\\icon.png",
         "alias": "BatchExportRhinoView",
         "doc": "This button does BatchExportRhinoView when left click",
         "tab": "View.tab",
