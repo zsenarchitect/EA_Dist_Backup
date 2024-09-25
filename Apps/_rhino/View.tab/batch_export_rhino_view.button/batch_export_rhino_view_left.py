@@ -11,6 +11,8 @@ from EnneadTab.RHINO import RHINO_FORMS
 def batch_export_rhino_view():
     res = rs.PropertyListBox(["Width", "Height",  "Format"],
                              ["1200", "700",  "png"])
+    if not res:
+        return
     width = int(res[0])
     height = int(res[1])
     format = res[2]
