@@ -6,8 +6,8 @@ from pyrevit import forms, DB, UI, script
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SELECTION
-from EnneadTab import SOUND, ERROR_HANDLE
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SELECTION, REVIT_SYNC, REVIT_EVENT
+from EnneadTab import SOUND, ERROR_HANDLE, LOG
 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
@@ -64,8 +64,8 @@ def load_family_to_docs(doc, family_doc):
         print("Cannot close {}".format(family_doc.Title))
 
 def update_log(string):
-    global LOG
-    LOG.append(string)
+    global MY_LOG
+    MY_LOG.append(string)
 
 
 
@@ -117,10 +117,10 @@ def process_family():
     else:
         LOADING_SOURCE = DB.FamilySource.Family
 
-    global LOG
-    LOG = []
+    global MY_LOG
+    MY_LOG = []
 
-    will_sync_and_close = REVIT_EVENT.do_you_want_to_sync_and_close_after_done()
+    will_sync_and_close = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
 
 
 
@@ -168,7 +168,7 @@ def process_family():
         #close_family(selected_family_doc)
 
 
-    for line in LOG:
+    for line in MY_LOG:
         print(line)
 
     if will_sync_and_close:
