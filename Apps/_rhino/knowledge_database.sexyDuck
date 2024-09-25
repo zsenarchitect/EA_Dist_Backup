@@ -810,6 +810,14 @@
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
     },
+    "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py": {
+        "script": "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py",
+        "icon": null,
+        "alias": "BatchExportRhinoView",
+        "doc": "This button does BatchExportRhinoView when left click",
+        "tab": "View.tab",
+        "tab_icon": "View.tab\\icon.png"
+    },
     "View.tab\\batch_rename_camera.button\\batch_rename_camera_left.py": {
         "script": "View.tab\\batch_rename_camera.button\\batch_rename_camera_left.py",
         "icon": "View.tab\\batch_rename_camera.button\\icon.png",
