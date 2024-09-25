@@ -19,7 +19,7 @@ def rebase_file():
 
 def rebase_objects(point):
     # Calculate the vector from the World Origin to the new point
-    vector = rs.VectorCreate(point, [0, 0, 0])
+    vector = rs.VectorCreate([0, 0, 0],point)
     
     # Move all objects
     objects = rs.AllObjects(select=False)
@@ -28,15 +28,15 @@ def rebase_objects(point):
 
 def rebase_views(point):
     # Move all named views (cameras)
-    start_pt = point
-    end_pt = Rhino.Geometry.Point3d(0, 0, 0)
+    start_pt = Rhino.Geometry.Point3d(0, 0, 0)
+    end_pt = point
 
     all_views = rs.NamedViews()
     source_array = [end_pt, rs.PointAdd(end_pt, Rhino.Geometry.Point3d(1, 0, 0))]
     target_array = [start_pt, rs.PointAdd(start_pt, Rhino.Geometry.Point3d(1, 0, 0))]
 
     for view in sorted(all_views, reverse=True):
-        print(view)
+        print("Reorienting view [{}]".format(view))
         rs.RestoreNamedView(view, view=None, restore_bitmap=False)
         current_cam, current_cam_target = rs.ViewCameraTarget(view=view, camera=None, target=None)
 
