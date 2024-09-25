@@ -306,6 +306,14 @@
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png"
     },
+    "File.tab\\rebase_file.button\\rebase_file_left.py": {
+        "script": "File.tab\\rebase_file.button\\rebase_file_left.py",
+        "icon": "File.tab\\rebase_file.button\\icon.png",
+        "alias": "RebaseFile",
+        "doc": "Try to rebase the file center to new origin point, include all the views.",
+        "tab": "File.tab",
+        "tab_icon": "File.tab\\icon.png"
+    },
     "File.tab\\save_small_and_close.button\\save_small_and_close_left.py": {
         "script": "File.tab\\save_small_and_close.button\\save_small_and_close_left.py",
         "icon": "File.tab\\save_small_and_close.button\\icon.png",
