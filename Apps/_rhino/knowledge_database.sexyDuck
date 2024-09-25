@@ -814,7 +814,7 @@
         "script": "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py",
         "icon": "View.tab\\batch_export_rhino_view.button\\icon.png",
         "alias": "BatchExportRhinoView",
-        "doc": "This button does BatchExportRhinoView when left click",
+        "doc": "Batch export Rhino views to folder.",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png"
     },

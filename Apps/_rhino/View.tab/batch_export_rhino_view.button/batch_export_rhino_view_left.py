@@ -1,29 +1,43 @@
 
 __title__ = "BatchExportRhinoView"
-__doc__ = "This button does BatchExportRhinoView when left click"
+__doc__ = "Batch export Rhino views to folder."
 
 import rhinoscriptsyntax as rs
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION
 from EnneadTab.RHINO import RHINO_FORMS
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def batch_export_rhino_view():
+    default_width = DATA_FILE.get_sticky("batch_export_view_default_width", 1200)
+    default_height = DATA_FILE.get_sticky("batch_export_view_default_height", 700)
+    default_format = DATA_FILE.get_sticky("batch_export_view_default_format", "png")
     res = rs.PropertyListBox(["Width", "Height",  "Format"],
-                             ["1200", "700",  "png"])
+                             [str(default_width), str(default_height), default_format],
+                             message="Set the default width, height and format for the exported images.",
+                             title="EnneadTab Batch Export Rhino View")
     if not res:
         return
-    width = int(res[0])
-    height = int(res[1])
+    try:
+        width = int(res[0])
+        height = int(res[1])
+    except:
+        NOTIFICATION.messenger("Invalid input for width or height")
+        return
     format = res[2]
-    
 
-    folder = rs.BrowseForFolder("Select a folder to save the images")
+    DATA_FILE.set_sticky("batch_export_view_default_width", width)
+    DATA_FILE.set_sticky("batch_export_view_default_height", height)
+    DATA_FILE.set_sticky("batch_export_view_default_format", format)
+
+    folder = rs.BrowseForFolder(message="Select a folder to save the images")
     if not folder:
         return
     
     all_views = rs.NamedViews()
-    selected_views = RHINO_FORMS.select_from_list(sorted(all_views, reverse=True), message="Select Views to Export", button_names=["Export"])
+    selected_views = RHINO_FORMS.select_from_list(sorted(all_views, reverse=True), 
+                                                  message="Select Views to Export.  Use Control/Shift to select multiple views.", 
+                                                  button_names=["Export"])
     if not selected_views:
         return
 

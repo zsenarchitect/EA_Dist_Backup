@@ -1388,10 +1388,10 @@
         <locale_1033>BatchExportRhinoView</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>This button does BatchExportRhinoView when left click</locale_1033>
+        <locale_1033>Batch export Rhino views to folder.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>This button does BatchExportRhinoView when left click</locale_1033>
+        <locale_1033>Batch export Rhino views to folder.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>BatchExportRhinoView</locale_1033>
