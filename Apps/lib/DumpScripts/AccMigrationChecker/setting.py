@@ -1,4 +1,6 @@
-
+"""
+Configuration settings for the ACC migration scripts.
+"""
 
 REPORT_FOLDER = (
     "L:\\4b_Applied Computing\\EnneadTab-DB\\ACC Migrate Path Length Report"

@@ -1,3 +1,7 @@
+"""
+Utility functions for logging and progress tracking.
+"""
+
 from tqdm import tqdm
 from colorama import Fore, Style
 from functools import wraps

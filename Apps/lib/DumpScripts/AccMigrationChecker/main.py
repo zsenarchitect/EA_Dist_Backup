@@ -1,8 +1,10 @@
+"""
+Main module for processing ACC project folders.
+"""
 
 import os
 import time
 from datetime import datetime
-
 
 from data import ACC_MAPPING
 from setting import PREFIX_TEMPLATE, LIMIT
@@ -10,13 +12,21 @@ from AccFileMigrationChecker import ACCMigrationChecker
 from utility import log_progress
 from DiskSpaceReleaser import DiskSpaceReleaser
 
-
 def process_project(info):
     """
     Process the project folder to check path lengths and copy files to ACC.
 
     Args:
-        info (dict): Dictionary containing project information.
+        info (dict): Dictionary containing project information. Expected keys:
+            - project_folder (str): Path to the project folder.
+            - acc_project_name (str): Name of the ACC project.
+            - acc_project_inner_folder_name (str): Inner folder name in the ACC project.
+            - folder_names_to_check (list): List of folder names to check.
+            - cutoff_days (int): Number of days to consider for file age.
+            - is_real_copy (bool): Flag indicating if the copy should be real.
+
+    Returns:
+        None
     """
     start_time = datetime.now()
     project_folder = info["project_folder"]

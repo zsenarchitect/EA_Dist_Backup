@@ -6,6 +6,10 @@ from setting import REPORT_FOLDER
 from utility import progress_bar_decorator, format_size
 
 class ACCMigrationChecker:
+    """
+    Class to handle the checking and copying of files for ACC projects.
+    """
+
     def __init__(self, project_folder, folder_names_to_check, acc_project_name, 
                  acc_project_inner_folder_name, prefix, limit, cutoff_days, 
                  is_real_copy):
@@ -151,7 +155,6 @@ class ACCMigrationChecker:
             recent_long_files (list): List of recent affected files.
             older_long_files (list): List of older affected files.
             elapsed_time (float): Time taken to check the path lengths.
-            saved_to_l_drive (bool): Whether the report was saved to the L drive.
 
         Returns:
             str: The report content.
@@ -195,9 +198,9 @@ class ACCMigrationChecker:
         Generate the content for the full report.
 
         Args:
+            recent_long_files (list): List of recent affected files.
             files_to_copy (list): List of all files being copied.
             elapsed_time (float): Time taken to check the path lengths.
-            saved_to_l_drive (bool): Whether the report was saved to the L drive.
 
         Returns:
             str: The full report content.

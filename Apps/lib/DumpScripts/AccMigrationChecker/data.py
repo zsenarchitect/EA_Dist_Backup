@@ -13,6 +13,7 @@ ACC_MAPPING = {
         ],
         "is_real_copy": False
     },
+    # ... other mappings ...
 }
 
 

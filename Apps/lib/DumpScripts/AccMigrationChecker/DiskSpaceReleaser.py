@@ -12,6 +12,10 @@ FILE_ATTRIBUTE_OFFLINE = 0x1000
 kernel32 = ctypes.windll.kernel32
 
 class DiskSpaceReleaser:
+    """
+    Class to handle disk space releasing operations.
+    """
+
     def __init__(self, folder):
         """
         Initialize the DiskSpaceReleaser with the target folder.

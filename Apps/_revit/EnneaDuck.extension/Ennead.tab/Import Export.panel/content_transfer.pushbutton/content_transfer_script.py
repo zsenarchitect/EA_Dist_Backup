@@ -3,29 +3,25 @@
 
 
 
-__doc__ = "A floating window that allow you to transfer view templates, object styles (SubCategory) and materials.\n\nThe main difference between this and the default 'Transfer Project Standard', is that this tool allow you to be selective on what to bring."
+__doc__ = "A floating window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities."
 __title__ = "Content\nTransfer"
 __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 from pyrevit.forms import WPFWindow
-from pyrevit import forms #
-from pyrevit import script #
+from pyrevit import forms, script
 
-import proDUCKtion # pyright: ignore 
+import proDUCKtion  # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_APPLICATION
 from EnneadTab import IMAGE, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE, LOG
 import traceback
-from Autodesk.Revit import DB # pyright: ignore 
-
-from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB, UI  # pyright: ignore 
 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
-
 
 
 class CopyUseDestination(DB.IDuplicateTypeNamesHandler):
