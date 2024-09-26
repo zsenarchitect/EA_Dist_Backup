@@ -94,6 +94,10 @@ class Solution:
 
         t = DB.Transaction(doc, "Create new instance")
         t.Start()
+
+
+        if not self.symbol.IsActive:
+            self.symbol.Activate()
         if doc.IsFamilyDocument:
             doc_create = doc.FamilyCreate
         else:
@@ -105,7 +109,7 @@ class Solution:
                                                     DB.Structure.StructuralType.NonStructural )
         except Exception as e:
             t.RollBack()
-            REVIT_FORMS.dialogue(main_text = str(e), sub_text = "WIP")
+            REVIT_FORMS.dialogue(main_text = str(e), sub_text = "Notify Sen Zhang for this issue...")
             return
 
         if level.Elevation != 0:
