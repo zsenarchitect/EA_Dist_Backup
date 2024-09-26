@@ -7,7 +7,7 @@ from Autodesk.Revit import UI # pyright: ignore
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_FORMS
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_FORMS, REVIT_SYNC
 from EnneadTab import OUTPUT, ERROR_HANDLE, NOTIFICATION, LOG
 
 __doc__ = """Find family file path. And remap the path to a folder you picked. In this folder, families will be organised based on their category.
@@ -99,7 +99,10 @@ class FamilyRePath:
                 self.repath(family, indentation_title)
             except Exception as e:
                 print (e)
-                print ("Failed to repath: {}".format(family.Name))
+                try:
+                    print ("Failed to repath: {}".format(family.Name))
+                except Exception as e:
+                    print ("Failed to repath one family becasue of {}".format(e))
             counter += 1
             #pb.update_progress(counter, len(self.all_families))
 
@@ -180,18 +183,6 @@ class FamilyRePath:
                 famDoc.LoadFamily(family.Document, FamilyOption())
 
 
-
-                """
-                ui_famDoc = REVIT_APPLICATION.open_and_active_project (new_file_path)
-                famDoc = ui_famDoc.Document
-                #out_family = clr.StrongBox[DB.Family](family)
-                #famDoc.LoadFamily(doc, FamilyOption(), out_family)
-                famDoc.LoadFamily(doc, FamilyOption())
-                REVIT_APPLICATION.open_safety_doc_family()
-                famDoc.Close(False)
-                #REVIT_APPLICATION.close_docs_by_name([family_name])
-                #doc.LoadFamily(new_file_path)
-                """
             except Exception as e:
                 self.log += "\nError updating path: {}".format(e)
                 self.log += "\n\n{}".format(e)
@@ -221,29 +212,7 @@ class FamilyRePath:
             return
 
         print( "#" * 40 + "  Summary  " + "#" * 40)
-        """
-        print("{} skipped\n{} no path\n{} found path on BIM 360\n{} found path on disk drive".format()
-            len(self.collection_skip_family),
-            len(self.collection_not_found),
-            len(self.collection_BIM360_family),
-            len(self.collection_drive_family)
-        )
 
-        if len(self.collection_skip_family) > 0:
-            print("\nFollowing families were skipped, mostly because of system family")
-            for item in self.collection_skip_family:
-                print("\t\t{}".format(item.Name))
-
-        if len(self.collection_not_found) > 0:
-            print("\nFollowing families have no file path found, mostly because of unsaved load")
-            for item in self.collection_not_found:
-                print("\t\t{}".format(item.Name))
-
-        if len(self.collection_BIM360_family) > 0:
-            self.output.freeze()
-            print_collection(self.collection_BIM360_family, "BIM 360 Families")
-            self.output.unfreeze()
-        """
         self.final_address.sort(key = lambda x: x[1])
         self.print_collection(self.final_address)
 
@@ -256,10 +225,7 @@ class FamilyRePath:
         OUTPUT.display_output_on_browser()
 
     def print_collection(self,collection):
-        # table_data = []
-        # for item in collection:
 
-        #     table_data.append(item)
         collection.sort(key = lambda x: (x[0],x[1]))
         if len(collection) > 0:
             self.output.print_table(table_data=collection, 

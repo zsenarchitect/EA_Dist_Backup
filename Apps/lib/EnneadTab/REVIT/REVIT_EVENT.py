@@ -113,8 +113,6 @@ def set_open_hook_depressed(stage = True):
     envvars.set_pyrevit_env_var("IS_OPEN_HOOK_DISABLED", stage)
 
 
-
-
 def is_L_drive_alert_hook_depressed():
     return envvars.get_pyrevit_env_var("IS_L_DRIVE_WORKING_ALARM_DISABLED")
 
@@ -123,15 +121,13 @@ def set_L_drive_alert_hook_depressed(stage = True):
     envvars.set_pyrevit_env_var("IS_L_DRIVE_WORKING_ALARM_DISABLED", stage)
 
 
-
-
     
 def is_sync_queue_disabled():
     return envvars.get_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED")
 
 
 def set_sync_queue_enable_stage(stage = True):
-    envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", stage)
+    envvars.set_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED", not(stage))
 
 
 def is_doc_change_hook_depressed():

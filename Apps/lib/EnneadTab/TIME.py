@@ -60,6 +60,9 @@ def get_formatted_time(input_time):
     return "{}-{}-{}_{}-{}-{}".format(year, month, day, hour, minute, second)
 
 def get_readable_time(time_in_seconds):
+    if time_in_seconds < 1:
+        # return floating second with 2 decimal places
+        return "{:.2f}s".format(time_in_seconds)
     
     time_in_seconds = int(time_in_seconds)
     if time_in_seconds < 60:

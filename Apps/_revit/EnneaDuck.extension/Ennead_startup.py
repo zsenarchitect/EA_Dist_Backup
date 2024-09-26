@@ -312,7 +312,9 @@ def EnneadTab_startup():
     open_scheduled_docs()
     
     REVIT_EVENT.set_doc_change_hook_depressed(stage = False)
-    REVIT_EVENT.set_sync_queue_enable_stage(stage = False)
+    REVIT_EVENT.set_sync_queue_enable_stage(stage = True)
+    REVIT_EVENT.set_family_load_hook_stage(stage = True)
+    REVIT_EVENT.set_L_drive_alert_hook_depressed(stage = False)
 
     TIME.update_revit_uptime()
 
@@ -324,6 +326,10 @@ def EnneadTab_startup():
     register_temp_graphic_server()
     register_selection_owner_checker()
     purge_dump_folder_families()
+
+
+    if USER.IS_DEVELOPER:
+        NOTIFICATION.messenger(main_text = "[Developer Only] startup run ok.")
 
 
 
