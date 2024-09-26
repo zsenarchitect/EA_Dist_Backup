@@ -19,6 +19,8 @@ Those manual color text cannot be trusted on the long run.
 """
 __title__ = "Load Color Template"
 
+import proDUCKtion  # pyright: ignore
+proDUCKtion.validify()
 # from pyrevit import forms #
 from EnneadTab import ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_COLOR_SCHEME
