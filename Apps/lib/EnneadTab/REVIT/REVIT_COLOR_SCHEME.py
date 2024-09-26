@@ -41,7 +41,10 @@ class ColorSchemeUpdater:
         OUTPUT.display_output_on_browser()
 
     def update_color_scheme(self, data, lookup_key ):
-        color_scheme = get_color_scheme_by_name(self.naming_map[lookup_key])
+        color_scheme_name = self.naming_map[lookup_key]
+        if not color_scheme_name:
+            return
+        color_scheme = get_color_scheme_by_name(color_scheme_name)
         if not color_scheme:
             NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(self.naming_map[lookup_key]))
             return

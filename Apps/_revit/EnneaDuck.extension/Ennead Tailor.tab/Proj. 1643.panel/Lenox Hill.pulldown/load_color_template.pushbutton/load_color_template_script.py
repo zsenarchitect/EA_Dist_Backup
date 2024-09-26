@@ -19,6 +19,8 @@ Those manual color text cannot be trusted on the long run.
 """
 __title__ = "Load Color Template"
 
+import proDUCKtion  # pyright: ignore
+proDUCKtion.validify()
 # from pyrevit import forms #
 from EnneadTab import ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_COLOR_SCHEME
@@ -37,12 +39,16 @@ NAMING_MAP = {"department_color_map":"Section Category",
               "program_color_map":"SubSection Category"}
 
 
+# this is for the fitout plan and it is not a area plan.
+ADDITIONAL_NAMING_MAP = {"department_color_map":"Department_BOD",
+                        "program_color_map":None}
+
 
     
 @ERROR_HANDLE.try_catch_error()
 def load_color_template():
     REVIT_COLOR_SCHEME.load_color_template(doc, NAMING_MAP, EXCEL_PATH, is_remove_bad = False)
-    
+    REVIT_COLOR_SCHEME.load_color_template(doc, ADDITIONAL_NAMING_MAP, EXCEL_PATH, is_remove_bad = False)
 
 
 ################## main code below #####################
