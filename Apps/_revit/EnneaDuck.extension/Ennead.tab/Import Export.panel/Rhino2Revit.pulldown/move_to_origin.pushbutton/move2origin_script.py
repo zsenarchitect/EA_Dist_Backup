@@ -110,7 +110,12 @@ class Solution:
 
         if level.Elevation != 0:
             offset = level.Elevation
-            instance.LookupParameter("Elevation from Level").Set(-offset)
+            for para_name in ["Elevation from Level", ""]:
+                para = instance.LookupParameter(para_name)
+                if para:
+                    para.Set(-offset)
+                    break
+
 
         #instance.Pinned = True
         t.Commit()

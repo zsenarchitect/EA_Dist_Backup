@@ -78,6 +78,7 @@ class TemplateProcessor:
         def hidden_status_to_text(is_hidden):
             return "Off" if is_hidden else "On"
 
+        # Create a dictionary to store master category visibility
         master_cate_visibilities = {
             master_cate.pretty_name: hidden_status_to_text(self.master_template.GetCategoryHidden(master_cate.category.Id))
             for master_cate in self.cate_dict[self.master_template.Document]
@@ -88,6 +89,12 @@ class TemplateProcessor:
             row_data = [master_cate_name, master_visibility]
             should_record_row = False
 
+            # Create a dictionary to store working document template categories
+            working_doc_categories = {
+                doc: get_matching_category(master_cate_name, self.cate_dict[working_doc_template.Document])
+                for doc, working_doc_template in self.working_doc_templates_dict.items()
+            }
+
             for i, doc in enumerate(self.working_docs):
                 working_doc_template = self.working_doc_templates_dict[doc].get(self.master_template.Name)
                 if not working_doc_template:
@@ -95,7 +102,7 @@ class TemplateProcessor:
                     should_record_row = True
                     continue
 
-                working_doc_template_cate = get_matching_category(master_cate_name, self.cate_dict[working_doc_template.Document])
+                working_doc_template_cate = working_doc_categories[doc]
                 if not working_doc_template_cate:
                     row_data.append(EMOJI_DICT["NoMatchCategory"])
                     should_record_row = True

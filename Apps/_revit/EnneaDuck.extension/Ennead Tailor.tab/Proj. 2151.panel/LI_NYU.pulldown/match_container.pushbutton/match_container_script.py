@@ -14,7 +14,7 @@ proDUCKtion.validify()
 from pyrevit import script
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, OUTPUT, TIME, USER
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_EVENT
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_EVENT, REVIT_SYNC
 from Autodesk.Revit import DB # pyright: ignore 
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
@@ -62,6 +62,9 @@ def match_container():
     container_doc = FG.get_NYU_doc(doc_title = container_file_title)
     if not container_doc:
         return
+
+    should_sync = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
+    
     NOTIFICATION.messenger("This will take a while(10~60mins)")
     
     REVIT_EVENT.set_family_load_hook_stage(stage=False)
@@ -206,6 +209,11 @@ def match_container():
 
     NOTIFICATION.messenger("Comparision Done!\nView your report in browser.")
     REVIT_EVENT.set_family_load_hook_stage(stage=True)
+
+
+    if should_sync:
+        REVIT_SYNC.sync_and_close()
+    
 
 
 

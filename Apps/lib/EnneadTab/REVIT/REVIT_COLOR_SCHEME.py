@@ -50,8 +50,24 @@ class ColorSchemeUpdater:
             return
         
         self.output.print_md("#Working on color scheme [{}]".format(color_scheme.Name))
+
+        is_abbr = False
+        if "abbr" in lookup_key:
+            lookup_key = lookup_key.replace("_abbr", "")
+            is_abbr = True
+            
         department_data = data[lookup_key]
 
+        #  is abbr, then use abbr as the driver key
+        if is_abbr:
+            temp_data = {}
+            for key, value in department_data.items():
+                abbr = value["abbr"]
+                temp_data[abbr] = value
+            department_data = temp_data
+        
+
+        
         try:
             sample_entry = list(color_scheme.GetEntries())[0]
         except:

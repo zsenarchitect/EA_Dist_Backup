@@ -36,19 +36,17 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 EXCEL_PATH = "J:\\1643\\2_Master File\\B-70_Programming\\01_Program & Analysis\\2024-05-07 Color Scheme_LHH.xls"
 NAMING_MAP = {"department_color_map":"Section Category",
+              "department_abbr_color_map":"Department_BOD",
               "program_color_map":"SubSection Category"}
 
 
-# this is for the fitout plan and it is not a area plan.
-ADDITIONAL_NAMING_MAP = {"department_color_map":"Department_BOD",
-                        "program_color_map":None}
 
 
     
 @ERROR_HANDLE.try_catch_error()
 def load_color_template():
     REVIT_COLOR_SCHEME.load_color_template(doc, NAMING_MAP, EXCEL_PATH, is_remove_bad = False)
-    REVIT_COLOR_SCHEME.load_color_template(doc, ADDITIONAL_NAMING_MAP, EXCEL_PATH, is_remove_bad = False)
+
 
 
 ################## main code below #####################
