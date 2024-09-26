@@ -114,7 +114,7 @@ class Solution:
 
         if level.Elevation != 0:
             offset = level.Elevation
-            for para_name in ["Elevation from Level", ""]:
+            for para_name in ["Elevation from Level", "Offset from Host"]:
                 para = instance.LookupParameter(para_name)
                 if para:
                     para.Set(-offset)
