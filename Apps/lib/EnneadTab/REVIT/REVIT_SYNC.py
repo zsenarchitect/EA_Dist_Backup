@@ -66,6 +66,8 @@ def update_last_sync_data_file(doc):
             for key, value in data.items():
                 if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
                     del data[key]
+        else:
+            data = dict()
         
 
         if doc.IsModified:
