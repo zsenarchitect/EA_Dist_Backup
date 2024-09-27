@@ -8,7 +8,7 @@ doc = EXEC_PARAMS.event_args.Document
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import ERROR_HANDLE, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE
+from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE
 from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT
 __title__ = "Doc Synced Hook"
 
@@ -216,11 +216,12 @@ def update_sync_queue():
     if REVIT_EVENT.is_sync_cancelled():
         return
 
-    log_file = "{}\\Sync_Queue\\Sync Queue_{}.sexyDuck". format(ENVIRONMENT.DB_FOLDER, doc.Title)
+
+    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
   
 
     if not os.path.exists(log_file):
-        with open(log_file, "w+"): # if not existing then create
+        with open(log_file, "w"): # if not existing then create
             pass
 
     queue = DATA_FILE.get_list(log_file)
