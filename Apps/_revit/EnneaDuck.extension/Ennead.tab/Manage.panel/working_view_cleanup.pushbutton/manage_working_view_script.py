@@ -56,7 +56,14 @@ def modify_creator_in_view_name(views, is_adding_creator):
     views = REVIT_SELECTION.filter_elements_changable(views)
 
     t = DB.Transaction(doc, "Rename Views")
-    t.Start()
+    try:
+        t.Start()
+    except:
+        # Cannot modify the document for either a read-only 
+        # external command is being executed, or changes to 
+        # the document are temporarily disabled.
+        return
+    
     for view in views:
         if not view:
             continue
