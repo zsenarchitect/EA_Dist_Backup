@@ -22,6 +22,10 @@ def new_button():
         tab_folders = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
         UI(tab_folders)
 
+        
+    url = "https://icons8.com/"
+    os.startfile(url)
+
 
 
 

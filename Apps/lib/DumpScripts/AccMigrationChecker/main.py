@@ -10,7 +10,6 @@ from data import ACC_MAPPING
 from setting import PREFIX_TEMPLATE, LIMIT
 from AccFileMigrationChecker import ACCMigrationChecker
 from utility import log_progress
-from DiskSpaceReleaser import DiskSpaceReleaser
 
 def process_project(info):
     """

@@ -17,18 +17,18 @@ ACC_MAPPING = {
 }
 
 
-ACC_MAPPING = {
-    "2151": {
-        "project_folder": "J:\\2151",
-        "acc_project_name": "2151_NYULI",
-        "acc_project_inner_folder_name": "00_2151",
-        "cutoff_days": 60,
-        "folder_names_to_check": [
-            "temp_test"
-        ],
-        "is_real_copy": True
-    },
-}
+# ACC_MAPPING = {
+#     "2151": {
+#         "project_folder": "J:\\2151",
+#         "acc_project_name": "2151_NYULI",
+#         "acc_project_inner_folder_name": "00_2151",
+#         "cutoff_days": 60,
+#         "folder_names_to_check": [
+#             "temp_test"
+#         ],
+#         "is_real_copy": True
+#     },
+# }
 
 INOVA_MAPPING = {
         "INOVA OPY": {

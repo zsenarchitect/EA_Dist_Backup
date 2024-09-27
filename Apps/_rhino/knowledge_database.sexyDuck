@@ -31,6 +31,14 @@
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
+    "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
+        "script": "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
+        "icon": "Ennead+.menu\\open_ecosystem_folder.button\\icon.png",
+        "alias": "OpenEcosystemFolder",
+        "doc": "Open the Ecosystem folder.",
+        "tab": "Ennead+.menu",
+        "tab_icon": null
+    },
     "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
         "script": "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
         "icon": "Ennead+.menu\\reset_all_conduit.button\\icon.png",
