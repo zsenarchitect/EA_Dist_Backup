@@ -2,6 +2,8 @@ import os
 import winsound
 from datetime import datetime, timedelta
 import shutil
+from tqdm import tqdm
+from colorama import Fore, Style
 from setting import REPORT_FOLDER
 from utility import progress_bar_decorator, format_size
 
@@ -120,30 +122,37 @@ class ACCMigrationChecker:
                     file_paths.append(full_path)
 
         # file_paths here are files that are part of the folder check
-        for original_path in file_paths:
-            new_path = self.generate_new_path(original_path)  # Use the new method
-            target_path_length = len(new_path)
+        with tqdm(total=len(file_paths), desc=Fore.GREEN + "Hard working..." + Style.RESET_ALL, 
+                      unit="file", bar_format="{l_bar}{bar:20}{r_bar}{bar:-10b}") as pbar:
+            for original_path in file_paths:
+                new_path = self.generate_new_path(original_path)  # Use the new method
+                target_path_length = len(new_path)
 
-            file_info = os.stat(original_path)
-            creation_time = datetime.fromtimestamp(file_info.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
-            modified_time = datetime.fromtimestamp(file_info.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
-            accessed_time = datetime.fromtimestamp(file_info.st_atime).strftime('%Y-%m-%d %H:%M:%S')
+                file_info = os.stat(original_path)
+                creation_time = datetime.fromtimestamp(file_info.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+                modified_time = datetime.fromtimestamp(file_info.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                accessed_time = datetime.fromtimestamp(file_info.st_atime).strftime('%Y-%m-%d %H:%M:%S')
 
-            if target_path_length > self.limit:
-                if self.is_recent_file(original_path):
-                    recent_long_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
-                else:
-                    older_long_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
+                if target_path_length > self.limit:
+                    if self.is_recent_file(original_path):
+                        recent_long_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
+                    else:
+                        older_long_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
 
-            all_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
+                all_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
 
-            # copy as long as is real copy and it is recent file, path length not important here because assuming have checked that before.
-            if self.is_real_copy and self.is_recent_file(original_path):
-                target_folder, base_name = os.path.split(new_path)
-      
-                if not os.path.exists(target_folder):
-                    os.makedirs(target_folder)
-                shutil.copy2(original_path, new_path)
+                # copy as long as is real copy and it is recent file, path length not important here because assuming have checked that before.
+                if self.is_real_copy and self.is_recent_file(original_path):
+                    target_folder, base_name = os.path.split(new_path)
+        
+                    if not os.path.exists(target_folder):
+                        os.makedirs(target_folder)
+                    try:
+                        shutil.copy2(original_path, new_path)
+                    except PermissionError:
+                        print(f"\nPermission denied: {original_path}\n")
+
+                pbar.update(1)
 
         return recent_long_files, older_long_files, all_files
 

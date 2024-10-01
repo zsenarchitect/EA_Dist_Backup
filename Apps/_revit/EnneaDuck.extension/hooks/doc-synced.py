@@ -46,14 +46,21 @@ def warn_non_enclosed_room():
 
 
 def update_project_2151():
+
+    if not doc.Title.lower().startswith("2151_"):
+        return
+    
+
+    if random.random() > 0.3333:
+        return
+
+    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    func_name = "update_parking_data"
+    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+
+
     return
     
-    # "ea_healthcare_r22 wip"
-    if doc.Title.lower() not in ["2151_a_ea_nyuli_hospital_ext"]:
-        return
-    
-    if random.random() > 0.1:
-        return
     if USER.USER_NAME not in ["sha.li", "szhang"]:
         return
     
@@ -288,12 +295,14 @@ def doc_synced():
     update_sheet_name()
     update_working_view_name()
     update_with_generic_healthcare_tool()
+
+    
+    update_project_2151()
     return
 
 
     update_project_2314()
     update_project_2306()
-    update_project_2151()
     update_project_1643()
 
 

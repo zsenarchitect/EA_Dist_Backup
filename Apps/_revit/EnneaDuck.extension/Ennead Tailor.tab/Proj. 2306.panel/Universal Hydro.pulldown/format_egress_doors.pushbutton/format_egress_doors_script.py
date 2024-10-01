@@ -243,7 +243,3 @@ output.close_others()
 
 if __name__ == "__main__":
     format_new_egress_doors(doc)
-    ENNEAD_LOG.use_enneadtab(
-        coin_change=20, tool_used=__title__.replace("\n", " "), show_toast=True)
-
-
