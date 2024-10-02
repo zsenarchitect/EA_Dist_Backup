@@ -22,15 +22,15 @@ import get_latest_left # pyright: ignore
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def main():
 
-    add_hook()
     
     get_latest_left.get_latest(is_silient = True)
     RHINO_ALIAS.register_alias_set()
+    add_hook()
 
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
 
     
-
+@ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)
 def add_hook(): 
     # first record current file
     action_update_timesheet(Rhino.RhinoDoc.ActiveDoc)

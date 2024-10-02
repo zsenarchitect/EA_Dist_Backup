@@ -16,6 +16,7 @@ def add_search_path():
     rs.AddSearchPath(lib_path)
     sys.path.append(lib_path)
     sys.path = list(set(sys.path))
+    
       
 time_start = time.time()
 add_search_path()

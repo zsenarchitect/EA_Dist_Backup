@@ -1,4 +1,12 @@
 {
+    "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py": {
+        "script": "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py",
+        "icon": "Ennead+.menu\\activate_enneadtab.button\\icon.png",
+        "alias": "ActivateEnneadTab",
+        "doc": "When things do not load, activate me.",
+        "tab": "Ennead+.menu",
+        "tab_icon": null
+    },
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
         "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
