@@ -39,7 +39,7 @@ def try_catch_error(func):
             error = traceback.format_exc()
 
             error += "\n\n######If you have EnneadTab UI window open, just close the window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########"
-            error_file = "{}\Documents\EnneadTab Settings\Local Copy Dump\error_log.txt".format(
+            error_file = "{}\Documents\error_log.txt".format(
                 os.environ["USERPROFILE"])
 
             with open(error_file, "w") as f:

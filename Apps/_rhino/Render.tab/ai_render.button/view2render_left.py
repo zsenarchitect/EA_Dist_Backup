@@ -418,8 +418,8 @@ class ViewCaptureDialog(Eto.Forms.Form):
 
     def OnOpenFolderButtonClick(self, sender, e):
         try:
-            os.startfile("{}\Documents\EnneadTab Settings\Local Copy Dump\EnneadTab_Ai_Rendering".format(
-                os.environ["USERPROFILE"]))
+            os.startfile("{}\\EnneadTab_Ai_Rendering".format(
+                ENVIRONMENT.DB_FOLDER))
         except:
             print("Folder not exist, please wait")
 

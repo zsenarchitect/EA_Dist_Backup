@@ -34,13 +34,8 @@ class RenderUpscalerDialog(Eto.Forms.Form):
     
     # Class initializer
     def __init__(self):
-        self.root_folder = "{}\Documents\EnneadTab Settings\Local Copy Dump\EnneadTab_Ai_Rendering".format(os.environ["USERPROFILE"])
+        self.root_folder = "{}\\\EnneadTab_Ai_Rendering".format(ENVIRONMENT.DUMP_FOLDER)
 
-        # print self.root_folder
-        # print self.get_all_session_folders()
-        
-
-        
 
                 
                 
@@ -276,7 +271,6 @@ class RenderUpscalerDialog(Eto.Forms.Form):
         try:
             os.startfile(self.session_folder)
             
-            # os.startfile("{}\Documents\EnneadTab Settings\Local Copy Dump\EnneadTab_Ai_Rendering".format(os.environ["USERPROFILE"]))
         except:
             print ("Folder not exist, please wait")
 
