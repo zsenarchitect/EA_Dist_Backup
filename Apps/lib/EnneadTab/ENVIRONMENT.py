@@ -128,7 +128,7 @@ def get_rhino_version(main_version_only=True):
     """
     if not IS_RHINO_ENVIRONMENT:
         return None
-    import Rhino
+    import Rhino  # pyright: ignore
 
     return Rhino.RhinoApp.ExeVersion  if main_version_only else Rhino.RhinoApp.Version
 

@@ -6,7 +6,7 @@ Native shutil.copyfile will fail in some cases, so we use dotnet to copy the fil
 try:
     import shutil
 except:
-    from System.IO import File
+    from System.IO import File  # pyright: ignore
 
 
 
