@@ -45,6 +45,8 @@ def get_latest(is_silient = False):
 
     if not is_silient:
         NOTIFICATION.messenger("Latest EnneadTab-For-Rhino Loaded")
+    else:
+        print ("Latest EnneadTab-For-Rhino Loaded")
 
 
 def add_startup_script():
