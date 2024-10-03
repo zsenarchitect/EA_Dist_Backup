@@ -82,12 +82,8 @@ def update_instance(doc):
             t.RollBack()
             break
 
-        
-        level = parking.LookupParameter("Level").AsValueString()
-        if level:
-            parking.LookupParameter("ParkingLevel").Set(level)
-        else:
-            parking.LookupParameter("ParkingLevel").Set("on a ramp, to be figured out")
+        parking_level = set_parking_level(parking)
+        parking.LookupParameter("ParkingLevel").Set(parking_level)
 
         parking.LookupParameter("BldgId").Set(DOC_NAME_MAP.get(doc.Title, doc.Title))
 
@@ -99,6 +95,16 @@ def update_instance(doc):
     t.Commit()
 
 
+def set_parking_level(parking):
+    level = parking.LookupParameter("Level").AsValueString()
+    if level:
+        return level
+    host = parking.Host
+    if host:
+        level = host.LookupParameter("Level").AsValueString()
+        if level:
+            return level
+    return "on a ramp, to be figured out"
 
 ################## main code below #####################
 if __name__ == "__main__":
