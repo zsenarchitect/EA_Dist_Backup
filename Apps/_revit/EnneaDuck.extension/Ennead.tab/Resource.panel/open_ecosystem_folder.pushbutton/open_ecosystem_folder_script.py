@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "Open Ecosystem Folder"
+__doc__ = "Jump to the ecosystem folder where you can inspect all the magic."
+__title__ = "Open\nEcosystem Folder"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

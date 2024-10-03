@@ -8,7 +8,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION, REVIT_FAMILY
 from Autodesk.Revit import DB # pyright: ignore 
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
@@ -20,13 +20,53 @@ DOC_NAME_MAP = {
     "2151_A_EA_NYULI_Parking West":"Parking West",
     "2151_A_EA_NYULI_CUP_EXT": "CUP Surface",
     "2151_A_EA_NYULI_HOSPITAL_EXT": "Hospital"
-
-
 }
+
+FAMILY_DATA = {
+    "Parking Stall": {
+        "Standard": {
+            "Width": 9,
+            "Length": 18,
+            "Type Comments": "Standard",
+            "is_ADA": False,
+        },
+        "ADA": {
+            "Width": 9,
+            "Length": 18,
+            "Type Comments": "ADA",
+            "is_ADA": True,
+        },
+        "Ambulance": {
+            "Width": 9,
+            "Length": 18,
+            "Type Comments": "Ambu.",
+            "is_ADA": False,
+        }
+    },
+    "Parking Stall_Angled": {
+        "Standard": {
+            "W": 9,
+            "L": 23,
+            "Type Comments": "Standard"
+        },
+    }
+}
+
+
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def update_parking_data(doc, show_log = False):
+    update_type(doc)
+    update_instance(doc)
+
+def update_type(doc):
+    t = DB.Transaction(doc, __title__)
+    t.Start()
+    REVIT_FAMILY.update_family_type_by_dict(doc, FAMILY_DATA)
+    t.Commit()
+
+def update_instance(doc):    
     all_parking = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Parking).WhereElementIsNotElementType().ToElements()
     all_parking = REVIT_SELECTION.filter_elements_changable(all_parking)
 
@@ -47,9 +87,12 @@ def update_parking_data(doc, show_log = False):
         if level:
             parking.LookupParameter("ParkingLevel").Set(level)
         else:
-            parking.LookupParameter("ParkingLevel").Set("to use group")
+            parking.LookupParameter("ParkingLevel").Set("on a ramp, to be figured out")
 
         parking.LookupParameter("BldgId").Set(DOC_NAME_MAP.get(doc.Title, doc.Title))
+
+        if parking.Symbol.LookupParameter("Type Comments").AsString() == "Ambu.":
+            parking.LookupParameter("ParkingUser").Set("Ambu.")
     t.Commit()
 
 
