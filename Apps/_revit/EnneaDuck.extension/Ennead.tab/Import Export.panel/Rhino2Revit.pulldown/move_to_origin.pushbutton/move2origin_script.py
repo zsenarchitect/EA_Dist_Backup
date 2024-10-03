@@ -29,6 +29,7 @@ class Solution:
                                             title = "Pick family",
                                             button_name = 'Select Family')
         if not family:
+            NOTIFICATION.messenger("No family selected, operation cancelled.")
             return
 
 
@@ -44,6 +45,7 @@ class Solution:
                                                 title = "Pick family type",
                                                 button_name = 'Select Type')
         if not family_type:
+            NOTIFICATION.messenger("No family type selected, operation cancelled.")
             return
 
 
@@ -89,6 +91,7 @@ class Solution:
                                             title = "Pick hosting level(this has no effect on actual location, but probably make sense to pick a level closer to your intent.)",
                                             button_name = 'Select Level that is closest to absolute zero.')
         if not level:
+            NOTIFICATION.messenger("No level selected, operation cancelled.")
             return
 
 

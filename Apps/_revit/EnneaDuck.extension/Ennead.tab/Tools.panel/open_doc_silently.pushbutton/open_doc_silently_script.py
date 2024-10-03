@@ -80,8 +80,10 @@ class Solution:
             self.use_audit = False
             self.open_without_workset = False
 
-
-        self.data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+        try:
+            self.data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+        except:
+            self.data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=True)
 
         if not doc_names:
             docs_to_process = forms.SelectFromList.show(sorted(self.data),

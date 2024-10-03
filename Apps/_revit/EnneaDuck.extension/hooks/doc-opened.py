@@ -262,7 +262,7 @@ def register_silient_open(doc):
         if doc.Title in data.keys():
             return
     except:
-        data = dict()
+        data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=True)
         
     # for revit 2020 and before, model_path has not attribute for region. There is no plan to include it for version so old.
     if not hasattr(model_path, 'Region'):
@@ -275,7 +275,7 @@ def register_silient_open(doc):
     try:
         DATA_FILE.set_data(data, "DOC_OPENER_DATA.sexyDuck", is_local=False)
     except:
-        print ("Cannot register model due to L drive access limit.")
+        DATA_FILE.set_data(data, "DOC_OPENER_DATA.sexyDuck", is_local=True)
     #print "\n\nYour model is regiestered."
 
 
