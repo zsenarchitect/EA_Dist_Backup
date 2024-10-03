@@ -133,6 +133,8 @@ def process_family():
     elif res == opts[1]:
         selected_family_docs = pick_family_from_folder()
         # print selected_docs
+    else:
+        return
     
     
     if selected_family_docs is None:
