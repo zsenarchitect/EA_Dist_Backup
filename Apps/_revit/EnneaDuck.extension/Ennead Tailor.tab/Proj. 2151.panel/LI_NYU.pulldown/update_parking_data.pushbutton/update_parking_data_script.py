@@ -57,13 +57,13 @@ FAMILY_DATA = {
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def update_parking_data(doc, show_log = False):
-    update_type(doc)
+    update_type(doc, show_log)
     update_instance(doc)
 
-def update_type(doc):
+def update_type(doc, show_log = False):
     t = DB.Transaction(doc, __title__)
     t.Start()
-    REVIT_FAMILY.update_family_type_by_dict(doc, FAMILY_DATA)
+    REVIT_FAMILY.update_family_type_by_dict(doc, FAMILY_DATA, show_log=show_log)
     t.Commit()
 
 def update_instance(doc):    
@@ -99,7 +99,7 @@ def update_instance(doc):
 
 ################## main code below #####################
 if __name__ == "__main__":
-    update_parking_data(DOC)
+    update_parking_data(DOC, show_log=True)
 
 
 

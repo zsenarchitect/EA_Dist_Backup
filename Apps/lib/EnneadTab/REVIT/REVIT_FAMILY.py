@@ -191,10 +191,11 @@ def get_family_instances_by_family_name_and_type_name(family_name, type_name, do
     return res
 
 
-def update_family_type(doc, family_name, type_name, update_para_dict):
+def update_family_type(doc, family_name, type_name, update_para_dict, show_log=True):
     family_type = get_family_type_by_name(family_name, type_name, doc=doc, create_if_not_exist=False)
     if not family_type:
-        print ("Cannot find family type [{}]-[{}]".format(family_name,type_name))
+        if show_log:
+            print ("Cannot find family type [{}]-[{}]".format(family_name,type_name))
         return
     
     for para_name, value in update_para_dict.items():
@@ -204,12 +205,13 @@ def update_family_type(doc, family_name, type_name, update_para_dict):
         if para:
             para.Set(value)
         else:
-            print ("Cannot find parameter [{}] in [{}]".format(para_name, family_name))
+            if show_log:
+                print ("Cannot find parameter [{}] in [{}]".format(para_name, family_name))
 
-def update_family_type_by_dict(doc, family_data):
+def update_family_type_by_dict(doc, family_data, show_log=True):
     for family_name, type_data in family_data.items():
         for type_name, para_dict in type_data.items():
-            update_family_type(doc, family_name, type_name, para_dict)
+            update_family_type(doc, family_name, type_name, para_dict, show_log=show_log)
         
 class RevitInstance:
     def __init__(self, element):
