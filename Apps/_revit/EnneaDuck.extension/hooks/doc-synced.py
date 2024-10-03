@@ -8,7 +8,7 @@ doc = EXEC_PARAMS.event_args.Document
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE
+from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK
 from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT
 __title__ = "Doc Synced Hook"
 
@@ -51,8 +51,6 @@ def update_project_2151():
         return
     
 
-    if random.random() > 0.3333:
-        return
 
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_parking_data"
@@ -298,6 +296,10 @@ def doc_synced():
 
     
     update_project_2151()
+
+    if USER.IS_DEVELOPER:
+        SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
+        NOTIFICATION.messenger("Document {} has finished syncing.".format(doc.Title))
     return
 
 
@@ -323,7 +325,6 @@ def doc_synced():
 
 
 
-    SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
     
     
     envvars.set_pyrevit_env_var("IS_DOC_CHANGE_HOOK_ENABLED", True)
