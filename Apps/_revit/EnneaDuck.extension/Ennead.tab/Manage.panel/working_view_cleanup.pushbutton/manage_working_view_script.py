@@ -116,7 +116,10 @@ def modify_creator_in_view_name(views, is_adding_creator):
             try:
                 view.Name = new_name
             except Exception as e:
-                print ("Cannot modify view name for <{}> becasue {}".format(output.linkify(view.Id, title = view.Name), e))
+                try:
+                    print ("Cannot modify view name for <{}> becasue {}".format(output.linkify(view.Id, title = view.Name), e))
+                except:
+                    ERROR_HANDLE.print_note("Cannot modify some view name becasue {}".format(e))
 
 
         else:# removing creator from view name
