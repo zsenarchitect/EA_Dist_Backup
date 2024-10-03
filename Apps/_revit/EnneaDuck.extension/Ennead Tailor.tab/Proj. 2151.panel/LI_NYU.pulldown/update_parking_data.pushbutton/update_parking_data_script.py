@@ -91,7 +91,7 @@ def update_instance(doc):
             parking.LookupParameter("ParkingUser").Set("Ambu.")
 
         if parking.LookupParameter("is_flipped_symbol"):
-            parking.LookupParameter("is_flipped_symbol").Set(parking.HandFlipped)
+            parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
     t.Commit()
 
 
