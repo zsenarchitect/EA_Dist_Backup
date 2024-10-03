@@ -104,7 +104,8 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick.
 
 > [!TIP]
-> After restart, every button should work just fine, But if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __GetLatest__ from dropdown menu usually fix it.
+> After restart, every button should work just fine, But if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __ActivateEnneadTab__ from dropdown menu usually fix it.<br>
+> ![screenshot of activation](/Apps/lib/EnneadTab/images/instruction_activate_rhino.png)
 
 
 ### 3.2 Unistall Ennead-For-Rhino
