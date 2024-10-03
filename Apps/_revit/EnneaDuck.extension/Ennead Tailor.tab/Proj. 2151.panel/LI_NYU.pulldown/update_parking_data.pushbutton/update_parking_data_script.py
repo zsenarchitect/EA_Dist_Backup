@@ -38,7 +38,7 @@ FAMILY_DATA = {
         },
         "Ambulance": {
             "Width": 12,
-            "Length": 22,
+            "Length": 25,
             "Type Comments": "Ambu.",
             "is_ADA": False,
         }
