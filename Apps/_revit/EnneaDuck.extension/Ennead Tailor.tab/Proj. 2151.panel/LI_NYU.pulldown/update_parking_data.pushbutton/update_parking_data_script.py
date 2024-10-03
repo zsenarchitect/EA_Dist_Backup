@@ -16,8 +16,8 @@ DOC = REVIT_APPLICATION.get_doc()
 
 DOC_NAME_MAP = {
     "2151_A_EA_NYULI_Site": "Site",
-    "2151_A_EA_NYULI_Parking East":"Parking East",
-    "2151_A_EA_NYULI_Parking West":"Parking West",
+    "2151_A_EA_NYULI_Parking East":"Garage East",
+    "2151_A_EA_NYULI_Parking West":"Garage West",
     "2151_A_EA_NYULI_CUP_EXT": "CUP Surface",
     "2151_A_EA_NYULI_HOSPITAL_EXT": "Hospital"
 }
