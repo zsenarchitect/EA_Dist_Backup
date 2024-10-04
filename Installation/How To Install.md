@@ -43,15 +43,16 @@ Watch the progress, when it says finished it will close itself, and it is ready 
 
 
 ### 2.1. EnneadTab-For-Revit
-0. EnneadTab-For-Revit run over pyRevit framework. Make sure you have pyrevit installed. Revit is not open.
+0. EnneadTab-For-Revit run over pyRevit framework. Make sure you have pyrevit installed. 
 You can get pyrevit from here and pick the first one under "Download" section. There is no admin restriction to install: https://github.com/pyrevitlabs/pyRevit/releases
 
 1. No need to uninstall old version of EnneadTab-For-Revit, it will be handled automatically.
 
-2. Navigate to 
+2. Make sure no Revit is running during the installation.
+
+3. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 
-3. Make sure no Revit is running during the installation.
 4. Double click on 
     - "EnneadTab-For-Revit.exe"(If you cannot see it, you system might not display file extension such as .exe)
 
