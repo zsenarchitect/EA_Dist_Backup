@@ -90,8 +90,9 @@ def update_instance(doc):
         if parking.Symbol.LookupParameter("Type Comments").AsString() == "Ambu.":
             parking.LookupParameter("ParkingUser").Set("Ambu.")
 
-        if parking.LookupParameter("is_flipped_symbol"):
-            parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
+        if parking.GroupId == DB.ElementId.InvalidElementId:
+            if parking.LookupParameter("is_flipped_symbol"):
+                parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
     t.Commit()
 
 
