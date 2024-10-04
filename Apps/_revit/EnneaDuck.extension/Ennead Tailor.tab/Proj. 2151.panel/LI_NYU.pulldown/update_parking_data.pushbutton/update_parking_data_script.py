@@ -77,6 +77,8 @@ def update_instance(doc):
 
     t = DB.Transaction(doc, __title__)
     t.Start()
+
+    
     for parking in all_parking:
         if not parking.LookupParameter("BldgId") or not parking.LookupParameter("ParkingLevel"):
             t.RollBack()
@@ -90,7 +92,8 @@ def update_instance(doc):
         if parking.Symbol.LookupParameter("Type Comments").AsString() == "Ambu.":
             parking.LookupParameter("ParkingUser").Set("Ambu.")
 
-        if parking.GroupId == DB.ElementId.InvalidElementId:
+
+        if parking.GroupId == DB.ElementId.InvalidElementId or doc.GetElement(parking.GroupId).GroupType.Groups.Size <= 1:
             if parking.LookupParameter("is_flipped_symbol"):
                 parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
     t.Commit()
