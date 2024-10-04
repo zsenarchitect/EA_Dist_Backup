@@ -541,6 +541,15 @@ def is_changable(x):
 def filter_elements_changable(elements):
     return filter(is_changable, elements)
 
+def is_outside_multi_group(element):
+        if element.GroupId == DB.ElementId.InvalidElementId:
+            return True
+        if element.Document.GetElement(element.GroupId).GroupType.Groups.Size <= 1:
+            return True
+        return False
+
+def filter_elements_outside_muti_group(elements):
+    return filter(is_outside_multi_group, elements)
 
 def get_export_setting(doc, setting_name=None, return_name=False):
 

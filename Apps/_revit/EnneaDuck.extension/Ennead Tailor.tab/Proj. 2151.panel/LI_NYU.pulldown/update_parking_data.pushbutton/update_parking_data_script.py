@@ -92,8 +92,11 @@ def update_instance(doc):
         if parking.Symbol.LookupParameter("Type Comments").AsString() == "Ambu.":
             parking.LookupParameter("ParkingUser").Set("Ambu.")
 
-
+        # to-do by 10-08: change to 
+        # if REVIT_SELECTION.is_outside_multi_group(parking):
         if parking.GroupId == DB.ElementId.InvalidElementId or doc.GetElement(parking.GroupId).GroupType.Groups.Size <= 1:
+
+            
             if parking.LookupParameter("is_flipped_symbol"):
                 parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
     t.Commit()
