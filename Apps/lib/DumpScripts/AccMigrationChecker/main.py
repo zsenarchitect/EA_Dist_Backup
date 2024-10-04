@@ -23,7 +23,7 @@ def process_project(info):
             - folder_names_to_check (list): List of folder names to check.
             - cutoff_days (int): Number of days to consider for file age.
             - is_real_copy (bool): Flag indicating if the copy should be real.
-
+            - override_existing_files (bool): Flag indicating if existing files should be overridden.
     Returns:
         None
     """
@@ -34,14 +34,14 @@ def process_project(info):
     folder_names_to_check = info["folder_names_to_check"]
     cutoff_days = info["cutoff_days"]
     is_real_copy = info["is_real_copy"]
-
+    override_existing_files = info["override_existing_files"]
     real_acc_prefix = PREFIX_TEMPLATE.format(os.getlogin())
 
     log_progress("Starting path length check and file copy", start_time)
 
     checker = ACCMigrationChecker(project_folder, folder_names_to_check, acc_project_name, 
                                   acc_project_inner_folder_name, real_acc_prefix, LIMIT, 
-                                  cutoff_days, is_real_copy)
+                                  cutoff_days, is_real_copy, override_existing_files)
 
     recent_long_files, older_long_files, all_files_in_checked_folder = checker.check_and_copy_files()
     elapsed_time = time.time() - start_time.timestamp()

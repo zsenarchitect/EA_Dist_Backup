@@ -33,12 +33,12 @@ __persistentengine__ = True
 
 
 class FireRatingGraphicMaker:
-    def __init__(self, views, rating_list):
+    def __init__(self, views, rating_list, allow_link):
         self.rating_list = rating_list
         self.rating_type_map = self.map_detail_family_type()
         self.log = ""
         self.views = views
-
+        self.allow_link = allow_link
 
 
     def update_log(self, string):
@@ -71,7 +71,10 @@ class FireRatingGraphicMaker:
         return OUT
 
     def create_detail_instance(self, rating, curve, view):
-        type = self.rating_type_map[rating]
+        type = self.rating_type_map.get(rating, None)
+        if not type:
+            print("type not found: {}".format(rating))
+            return 
 
         if not type.IsActive:
             #print family_type
@@ -146,6 +149,15 @@ class FireRatingGraphicMaker:
         
         walls = DB.FilteredElementCollector(doc, view.Id).OfClass(DB.Wall).WhereElementIsNotElementType().ToElements()
 
+
+        if self.allow_link:
+            walls = list(walls)
+            link_docs = REVIT_APPLICATION.get_revit_link_docs()
+
+            for link_doc in link_docs:
+                additional_walls = DB.FilteredElementCollector(link_doc).OfClass(DB.Wall).WhereElementIsNotElementType().ToElements()
+                walls.extend(additional_walls)
+                
         walls = filter(lambda x: x.WallType.Id in self.good_wall_type_ids, walls)
 
 
@@ -172,6 +184,10 @@ class FireRatingGraphicMaker:
                 t = DB.Transaction(doc, "local")
                 t.Start()
                 new_element = self.create_detail_instance(rating, curve, view)
+                if not new_element:
+                    t.RollBack()
+                    continue
+                
                 if is_arc:
                     new_element.LookupParameter("is_arc").Set(1)
                     new_element.LookupParameter("R").Set(arc_radius)
@@ -196,11 +212,11 @@ class FireRatingGraphicMaker:
         self.update_log( "-------")
 
 @ERROR_HANDLE.try_catch_error()
-def update_fire_rating_graphic( views, rating_list):
+def update_fire_rating_graphic( views, rating_list, allow_link):
 
     # t = DB.Transaction(doc, "Update fire rating graphic.")
     # t.Start()
-    FireRatingGraphicMaker(views, rating_list).create_update_wall_fire_rating()
+    FireRatingGraphicMaker(views, rating_list, allow_link).create_update_wall_fire_rating()
     # t.Commit()
 
 
@@ -304,7 +320,7 @@ class fire_rating_ModelessForm(WPFWindow):
     def __init__(self):
         self.pre_actions()
 
-        xaml_file_name = "fire_rating_ModelessForm.xaml" ###>>>>>> if change from window to dockpane, the top level <Window></Window> need to change to <Page></Page>
+        xaml_file_name = "fire_rating_UI.xaml" ###>>>>>> if change from window to dockpane, the top level <Window></Window> need to change to <Page></Page>
         WPFWindow.__init__(self, xaml_file_name)
 
         self.title_text.Text = "EnneadTab Fire Rating Manager"
@@ -371,7 +387,7 @@ class fire_rating_ModelessForm(WPFWindow):
         active_view_walls = filter(lambda x: x.WallType.Id == obj.wall_type.Id, active_view_walls)
         project_walls = filter(lambda x: x.WallType.Id == obj.wall_type.Id, project_walls)
 
-        self.textblock_wall_detail.Text = "Active view [{}] wall count: {}\nProject wall count: {}".format(doc.ActiveView.Name, 
+        self.textblock_wall_detail.Text = "Current Document Only:\nActive view [{}] wall count: {}\nProject wall count: {}".format(doc.ActiveView.Name, 
                                                                                                         len(active_view_walls), 
                                                                                                         len(project_walls))
 
@@ -414,7 +430,7 @@ class fire_rating_ModelessForm(WPFWindow):
         else:
             views_to_apply = self.selected_views
 
-        self.update_graphic_event_handler.kwargs =  views_to_apply, self.rating_list
+        self.update_graphic_event_handler.kwargs =  views_to_apply, self.rating_list, self.checkbox_allow_link.IsChecked
         self.ext_event_update_graphic.Raise()
         res = self.update_graphic_event_handler.OUT
         if res:

@@ -12,7 +12,8 @@ ACC_MAPPING = {
             "2_Master File",
             "0_Progress Set"
         ],
-        "is_real_copy": True
+        "is_real_copy": True,
+        "override_existing_files": False
     },
     # ... other mappings ...
 }

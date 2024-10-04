@@ -173,6 +173,7 @@
                     <Button Content="Pick Views." Click="pick_view_click" />
                     <Button Content="Update Fire Rating Graphic." Click="update_graphic_click"/>
                 </WrapPanel>
+                <CheckBox Content="Allow process walls from link." IsChecked="False" Click="UI_setting_changed" x:Name="checkbox_allow_link" HorizontalAlignment="Center"/>
     
 
                 <Separator/>

@@ -14,7 +14,7 @@ class ACCMigrationChecker:
 
     def __init__(self, project_folder, folder_names_to_check, acc_project_name, 
                  acc_project_inner_folder_name, prefix, limit, cutoff_days, 
-                 is_real_copy):
+                 is_real_copy, override_existing_files):
         """
         Initialize the ACCMigrationChecker.
 
@@ -27,6 +27,7 @@ class ACCMigrationChecker:
             limit (int): Path length limit.
             cutoff_days (int): Number of days to consider a file as recent.
             is_real_copy (bool): Flag to indicate if the copy is real.
+            override_existing_files (bool): Flag to indicate if existing files should be overridden.
         """
         self.project_folder = project_folder
         self.acc_project_name = acc_project_name
@@ -37,6 +38,7 @@ class ACCMigrationChecker:
         self.cutoff_days = cutoff_days
         self.is_real_copy = is_real_copy
         self.job_number = os.path.basename(project_folder)
+        self.override_existing_files = override_existing_files
 
     def generate_new_path(self, original_path):
         """
@@ -110,6 +112,7 @@ class ACCMigrationChecker:
         older_long_files = []
         all_files = []
         file_paths = []
+        skipped_files = []
 
         for folder in self.folder_names_to_check:
             working_folder = os.path.join(self.project_folder, folder)
@@ -142,7 +145,11 @@ class ACCMigrationChecker:
                 all_files.append((original_path, new_path, creation_time, modified_time, accessed_time))
 
                 # copy as long as is real copy and it is recent file, path length not important here because assuming have checked that before.
+                # but do not copy if it is already in the new path
                 if self.is_real_copy and self.is_recent_file(original_path):
+                    if os.path.exists(new_path) and not self.override_existing_files:
+                        skipped_files.append(original_path)
+                        continue
                     target_folder, base_name = os.path.split(new_path)
         
                     if not os.path.exists(target_folder):
@@ -154,7 +161,7 @@ class ACCMigrationChecker:
 
                 pbar.update(1)
 
-        return recent_long_files, older_long_files, all_files
+        return recent_long_files, older_long_files, all_files, skipped_files
 
     def generate_report_content(self, recent_long_files, older_long_files, elapsed_time):
         """
@@ -202,7 +209,7 @@ class ACCMigrationChecker:
                 report_content.append("="*80 + "\n")
         return "".join(report_content)
 
-    def generate_copy_report_content(self, recent_long_files, files_to_copy, elapsed_time):
+    def generate_copy_report_content(self, recent_long_files, files_to_copy, elapsed_time, skipped_files):
         """
         Generate the content for the full report.
 
@@ -210,6 +217,7 @@ class ACCMigrationChecker:
             recent_long_files (list): List of recent affected files.
             files_to_copy (list): List of all files being copied.
             elapsed_time (float): Time taken to check the path lengths.
+            skipped_files (list): List of files skipped due to already existing.
 
         Returns:
             str: The full report content.
@@ -230,6 +238,13 @@ class ACCMigrationChecker:
         for idx, (original_path, new_path, creation_time, modified_time, accessed_time) in enumerate(files_to_copy, 1):
             report_content.append(f"{idx}. {new_path}\n")
             report_content.append("="*80 + "\n")
+
+        if skipped_files:
+            report_content.append(f"\nSkipped files due to already existing ({len(skipped_files)}):\n")
+            for idx, skipped_file in enumerate(skipped_files, 1):
+                report_content.append(f"{idx}. {skipped_file}\n")
+            report_content.append("="*80 + "\n")
+
         return "".join(report_content)
 
     def save_text_report(self, report_content, status, report_type):
