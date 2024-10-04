@@ -7,7 +7,7 @@ If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosys
 > [!IMPORTANT]
 > If you are using One-Drive, please note that you usually have __two__ Documents folders at your computer, see samples below. For all future reference, we will be talking about the non-One-Drive folder.
 > - C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem :thumbsup:
-> - C:\Users\\[USER_NAME]\OneDrive - Ennead Architects\Documents\EnneadTab Ecosystem :thumbsdown:
+> - C:\Users\\[USER_NAME]\OneDrive - Ennead Architects\Documents\EnneadTab Ecosystem :thumbsdown: This should not exist, if so, delete it.
 
 
 <br>
@@ -21,16 +21,19 @@ Download "EnneadTab_OS_Installer.exe" from link below. Save anywhere.
 
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_core.png)
 
+> [!TIP]
+> Unconfirmed.crdownload file is a partial download file. Your chrome is working hard to download, do not attempt to unzip it, run it, or drag it to Rhino. Just wait for it to be fully downloaded and become __EnneadTab_OS_Installer.exe__
+
 
 > [!NOTE]
-> Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, use below L drive location as a backup.
+> Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, or your firewall refuse to run the exe, run exe from below L drive location as a backup plan.
 > - "L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe"
 
 <br>
 <br>
 
 ### 1.2 Install Ecosystem Folder
-Run the installer you just downloaded. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. 
+Run the installer you just downloaded by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. 
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
 Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow __step 2.1 or 3.1__ below.

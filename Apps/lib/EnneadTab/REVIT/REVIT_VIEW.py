@@ -43,7 +43,7 @@ def get_default_view_type(view_type, doc = DOC):
 
 
 def view_ids_to_views(elements, doc=DOC):
-    if not doc.IsValidObject:return []
+    if not hasattr(doc, "GetElement"): return []
     
     elements = list(elements) # in case the input were NET LIST from filterelementcollector
     if not isinstance(elements, list): elements = [elements]
