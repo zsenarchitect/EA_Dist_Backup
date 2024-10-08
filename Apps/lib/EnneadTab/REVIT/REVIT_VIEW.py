@@ -29,6 +29,14 @@ def get_view_by_name( view_name, doc = DOC):
     return None
 
 
+def create_drafting_view(doc, view_name, scale = 1):
+    view = DB.ViewDrafting.Create(doc, 
+                                  get_default_view_type("drafting").Id)
+    view.Name = view_name
+    view.Scale = scale
+    return view
+
+
 def get_default_view_type(view_type, doc = DOC):
 
     mapper = {"3d":DB.ViewFamily.ThreeDimensional,
@@ -99,15 +107,15 @@ def set_active_view_by_name(view_name, doc = DOC):
 
     view = get_view_by_name(view_name, doc)
     if view:
-        # UIDOC.RequestViewChange(view)
-        try:
-            REVIT_APPLICATION.get_uidoc().ActiveView = view
-        except Exception as e:
-            NOTIFICATION.messenger(str(e))
+        set_active_view(view, doc)
     else:
         NOTIFICATION.messenger("<{}> does not exist...".format(view_name))
 
-
+def set_active_view(view, doc = DOC):
+    try:
+        REVIT_APPLICATION.get_uidoc().ActiveView = view
+    except Exception as e:
+        NOTIFICATION.messenger(str(e))
 
 
 def switch_to_sync_draft_view(doc):

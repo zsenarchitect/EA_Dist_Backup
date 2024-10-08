@@ -202,6 +202,7 @@ def update_family_type(doc, family_name, type_name, update_para_dict, show_log=T
             print ("Cannot update family type [{}]-[{}] becasue it is not editable or not activated at the moment.".format(family_name,type_name))
         return
     
+    
     for para_name, value in update_para_dict.items():
         para = family_type.LookupParameter(para_name)
         if isinstance(value, bool):

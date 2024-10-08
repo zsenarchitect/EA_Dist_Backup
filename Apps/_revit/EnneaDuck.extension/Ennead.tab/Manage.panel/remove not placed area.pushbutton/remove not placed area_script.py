@@ -14,12 +14,12 @@ from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 
-def get_all_phase():
+def get_all_phases():
     all_phase_ids = DB.FilteredElementCollector(doc).OfClass(DB.Phase).ToElementIds ()
     return sorted([ doc.GetElement(phase_id) for phase_id in all_phase_ids], key = lambda x: x.Name)
 
 def select_phase():
-    all_phases = get_all_phase()
+    all_phases = get_all_phases()
     if len(all_phases) == 1:
         return all_phases[0]
 

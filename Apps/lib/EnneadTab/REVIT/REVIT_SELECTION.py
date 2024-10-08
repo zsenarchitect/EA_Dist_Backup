@@ -534,19 +534,18 @@ def is_changable(x):
         return True
     if current_owner.lower() == x.Document.Application.Username.lower():
         return True
-    #print "not changeable"
-    # print ("Owner AutodeskID = {}".format(x.Document.Application.Username))
     return False
+
 
 def filter_elements_changable(elements):
     return filter(is_changable, elements)
 
 def is_outside_multi_group(element):
-        if element.GroupId == DB.ElementId.InvalidElementId:
-            return True
-        if element.Document.GetElement(element.GroupId).GroupType.Groups.Size <= 1:
-            return True
-        return False
+    if element.GroupId == DB.ElementId.InvalidElementId:
+        return True
+    if element.Document.GetElement(element.GroupId).GroupType.Groups.Size <= 1:
+        return True
+    return False
 
 def filter_elements_outside_muti_group(elements):
     return filter(is_outside_multi_group, elements)
@@ -554,7 +553,7 @@ def filter_elements_outside_muti_group(elements):
 def get_export_setting(doc, setting_name=None, return_name=False):
 
     def pick_from_setting():
-        from pyrevit import forms
+        from pyrevit import forms #pyright: ignore
 
         attempt = 0
         while True:
