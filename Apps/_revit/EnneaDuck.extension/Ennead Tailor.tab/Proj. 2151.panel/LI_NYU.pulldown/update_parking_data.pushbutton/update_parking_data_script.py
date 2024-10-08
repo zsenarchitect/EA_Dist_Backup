@@ -66,6 +66,8 @@ FAMILY_DATA = {
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def update_parking_data(doc, show_log = False):
+    if doc.Title not in DOC_NAME_MAP:
+        return
     update_type(doc, show_log)
     update_instance(doc)
 
@@ -85,21 +87,21 @@ def update_instance(doc):
     if not all_parking:
         return
     
-
-
     t = DB.Transaction(doc, __title__)
     t.Start()
 
     
     for parking in all_parking:
-        if not parking.LookupParameter("BldgId") or not parking.LookupParameter("ParkingLevel"):
+        if not parking.LookupParameter("BldgId") or not parking.LookupParameter("ParkingLevel") or not parking.LookupParameter("ParkingZone"):
+            print("{} is missing BldgId, ParkingLevel, or ParkingZone".format(parking.Name))
             t.RollBack()
             break
 
         parking_level = set_parking_level(parking)
         parking.LookupParameter("ParkingLevel").Set(parking_level)
 
-        parking.LookupParameter("BldgId").Set(DOC_NAME_MAP.get(doc.Title, doc.Title))
+        bldg_id = DOC_NAME_MAP.get(doc.Title, doc.Title)
+        parking.LookupParameter("BldgId").Set(bldg_id)
 
         if parking.Symbol.LookupParameter("Type Comments").AsString() == "Ambu.":
             parking.LookupParameter("ParkingUser").Set("Ambu.")
@@ -109,8 +111,8 @@ def update_instance(doc):
             if parking.LookupParameter("is_flipped_symbol"):
                 parking.LookupParameter("is_flipped_symbol").Set(parking.Mirrored )
 
-        if parking.LookupParameter("ParkingZone").AsString() == "":
-            parking.LookupParameter("ParkingZone").Set("zone not defined.")
+        if parking.LookupParameter("ParkingZone").AsString() == "" or parking.LookupParameter("ParkingZone").AsString() == "zone not defined.":
+            parking.LookupParameter("ParkingZone").Set("{}'s zone not defined.".format(bldg_id))
     t.Commit()
 
 
