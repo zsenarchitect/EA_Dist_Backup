@@ -9,6 +9,7 @@ You will no longer be restricted by level based vertical up family. It can be \
 freeform as in Rhino."
 __title__ = "Map Rhino Block\nto Revit Family"
 __youtube__ = "https://youtu.be/FMLv-_szLpM"
+__tip__ = True
 import math
 # from pyrevit import forms #
 from pyrevit import script #

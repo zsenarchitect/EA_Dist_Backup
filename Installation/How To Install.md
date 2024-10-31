@@ -15,7 +15,12 @@ If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosys
 
 
 ### 1.1 Download Installer
-Download "EnneadTab_OS_Installer.exe" from link below. Save anywhere.
+Sometime your drive cannot connect to L drive after computer is restarted.(The little red X symbol on your drive icon). You can reconnect it by double clicking on that drive icon.
+
+If you can connect to L drive, go this and ignore rest of step __1.1__
+> - L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe
+
+Otherwise, see link below to download "EnneadTab_OS_Installer.exe". Save anywhere.
 
 - https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
 
@@ -33,7 +38,7 @@ Download "EnneadTab_OS_Installer.exe" from link below. Save anywhere.
 <br>
 
 ### 1.2 Install Ecosystem Folder
-Run the installer you just downloaded by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. 
+Run the installer you just downloaded by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
 Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow __step 2.1 or 3.1__ below.

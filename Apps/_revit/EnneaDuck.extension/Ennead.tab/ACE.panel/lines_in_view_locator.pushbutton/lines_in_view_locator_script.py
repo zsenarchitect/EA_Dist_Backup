@@ -3,7 +3,7 @@
 
 __doc__ = "Locate the heavy usage view for detail line and model line in current Revit file.\n\nThis is inspired by the orginal pyrevit tool."
 __title__ = "Lines-In-View\nLocator"
-
+__tip__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

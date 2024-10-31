@@ -31,7 +31,7 @@ class DepartmentOption():
 
 
     #
-    OVERALL_AREA_SCHEME_NAME = "1_T Tower Gross Building"
+    OVERALL_AREA_SCHEME_NAME = "GFA Scheme"
     OVERALL_PARA_NAME = "GSF"
 
 
@@ -73,7 +73,7 @@ class DepartmentOption():
     TYPE_NAME_COLLECTION = LEVEL_NAMES + DUMMY_DATA_HOLDER
 
 
-    def __init__(self, option_name = "", department_area_scheme_name = "1_Department"):
+    def __init__(self, option_name = "", department_area_scheme_name = "DGSF Scheme"):
 
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name

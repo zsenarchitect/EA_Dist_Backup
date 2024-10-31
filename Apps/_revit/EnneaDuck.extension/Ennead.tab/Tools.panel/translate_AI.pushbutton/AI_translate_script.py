@@ -159,7 +159,7 @@ class AiTranslator(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT.IMAGE_FOLDER))
         self.translation_para_name.Text = "MC_$Translate"
         self.radial_bt_do_sheets.IsChecked = True
         self.mode = "Sheets"

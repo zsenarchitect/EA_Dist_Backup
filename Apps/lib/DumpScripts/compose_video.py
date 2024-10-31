@@ -1,5 +1,5 @@
-import youtube_dl
-import moviepy.editor as mp
+import youtube_dl # pyright: ignore
+import moviepy.editor as mp # pyright: ignore
 import os
 from pathlib import Path
 

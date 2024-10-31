@@ -13,17 +13,17 @@ def pick_category(doc):
         def name(self):
             return self.item[1]
 
-    cates = forms.SelectFromList.show([MyOption(cate) for cate in cate_list], 
+    selected_cates = forms.SelectFromList.show([MyOption(cate) for cate in cate_list], 
                                       title = "Select Categorie(s) to bind", 
                                       multiselect = True)
-    if not cates:
+    if not selected_cates:
         return
     
-    cate_ids = [getattr(DB.BuiltInCategory , cate[0]) for cate in cate_list]
-    cates = [DB.Category.GetCategory(doc, cate_id) for cate_id in cate_ids]
+    selected_cate_ids = [getattr(DB.BuiltInCategory , cate[0]) for cate in selected_cates]
+    selected_cates = [DB.Category.GetCategory(doc, cate_id) for cate_id in selected_cate_ids]
 
 
-    return cates
+    return selected_cates
   
 
 

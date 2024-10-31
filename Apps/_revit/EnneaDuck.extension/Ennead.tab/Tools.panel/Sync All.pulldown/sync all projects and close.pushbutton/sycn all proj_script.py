@@ -5,7 +5,7 @@ __tip__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC, REVIT_EVENT
 from EnneadTab import ERROR_HANDLE, LOG
 from pyrevit import script
 
@@ -18,8 +18,9 @@ doc = REVIT_APPLICATION.get_doc()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def main():
+    REVIT_EVENT.set_all_sync_closing(True)
     REVIT_SYNC.sync_and_close()
-    
+    REVIT_EVENT.set_all_sync_closing(False)
 
     output = script.get_output()
     killtime = 30

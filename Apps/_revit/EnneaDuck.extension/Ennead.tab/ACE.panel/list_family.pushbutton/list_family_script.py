@@ -5,7 +5,7 @@
 
 __doc__ = "List selected detail items to a dump drafting view, or 3D family to a 3D view or floor plan view. Note that 3D family will show in all view, so this tool will first create a internal level far from main set and host most items there."
 __title__ = "List\nFamilies"
-
+__tip__ = True
 
 import os
 from pyrevit import script #

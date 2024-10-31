@@ -15,8 +15,8 @@ from pyrevit import script #
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION, LOG
-from EnneadTab import ERROR_HANDLE, EXE, FOLDER, ENVIRONMENT
+from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab import ERROR_HANDLE, EXE, FOLDER, ENVIRONMENT, LOG
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 

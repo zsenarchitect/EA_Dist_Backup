@@ -222,7 +222,8 @@ def select_revit_link_docs(select_multiple = True, including_current_doc = False
     return docs
 
 
-
+def get_revit_link_types(doc):
+    return list(DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkType).ToElements())
 
 def close_revit_app():
     """try its best to close the revit session.

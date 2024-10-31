@@ -125,7 +125,7 @@ class WarningHistory:
         
         if os.path.exists(FOLDER.get_shared_dump_folder_file(self.file)):
             
-            self.data = DATA_FILE.get_data_in_shared_dump_folder(self.file, create_if_not_exist=True)
+            self.data = DATA_FILE.get_data(self.file)
         else:
             print("data find not found")
             self.data = {}

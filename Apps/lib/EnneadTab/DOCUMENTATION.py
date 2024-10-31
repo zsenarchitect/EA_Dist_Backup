@@ -129,8 +129,7 @@ def get_files_with_keyword(keyword, folder):
                 
                 with open(file_path, 'r') as f:
                     contents = f.read()
-                    if "Sen Zhang has not writed documentation for this tool, but he should!" in contents:
-                        continue
+
                     
                     if "__main__" not in contents:
                         # this is to skip file that can actually run the whole thing during import. This is bad. shoud report back to SEn to fix
@@ -247,20 +246,21 @@ def show_tip_revit(is_random_single=True):
     output = script.get_output()
     if not output:
         output = OUTPUT.Output()
-      
+
+
+    search_folder = ENVIRONMENT.REVIT_PRIMARY_TAB if is_random_single else ENVIRONMENT.REVIT_PRIMARY_EXTENSION
     
-    for title_tits_tuple in get_title_tip_from_folder(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, is_random_single):
+    for title_tits_tuple in get_title_tip_from_folder(search_folder, is_random_single):
         title, tips, icon_path = title_tits_tuple
         if tips:
             print ("\n\n\n\n")
             if is_random_single:
-                # output.print_md (TEXT.centered_text("#EnneadTab Tip of the day:"))
+
                 output.print_md ("#EnneadTab Tip of the day:")
             if icon_path:
-                # output.print_image(icon_path)
+
                 output.print_html("<span style='text-align: center;'><img src=\"file:///{0}\"></span>".format(icon_path))
-            # output.print_md(TEXT.centered_text("##Did you know in [{}]...".format(title)))
-            # output.print_md (TEXT.centered_text("{}".format(tip)))
+
             output.print_md("##Did you know in [{}]...".format(title))
             
             for tip in tips:

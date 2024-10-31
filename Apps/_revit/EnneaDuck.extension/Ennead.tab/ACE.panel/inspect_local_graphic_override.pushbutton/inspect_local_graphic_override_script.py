@@ -5,7 +5,7 @@
 
 __doc__ = "For views on selected sheets, inspect if there are local graphic override or local hidden objects that is not controlled by template."
 __title__ = "Inspect Local\nGraphic Override"
-
+__tip__ = True
 from pyrevit import forms #
 from pyrevit import script #
 

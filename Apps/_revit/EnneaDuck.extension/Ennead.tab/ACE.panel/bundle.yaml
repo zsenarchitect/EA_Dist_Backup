@@ -23,3 +23,6 @@ layout:
   - check_formula
   - smart_match_grid_extend
   - lines_in_view_locator
+  - check_phase_mapping
+  - smart_egress_path
+  - property_line_from_excel

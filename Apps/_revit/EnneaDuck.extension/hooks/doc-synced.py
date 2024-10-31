@@ -3,7 +3,7 @@ import random
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
 from pyrevit.coreutils import envvars
-doc = EXEC_PARAMS.event_args.Document
+DOC = EXEC_PARAMS.event_args.Document
 
 
 import proDUCKtion # pyright: ignore 
@@ -20,14 +20,13 @@ REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                         "2151_A_EAEC_NYULI_Hospital_INT",
                         "2151_a_ea_nyuli_parking east",
                         "2151_a_ea_nyuli_parking west",
-                        "2151_a_ea_nyuli_parking 1",
                         "2151_a_ea_nyuli_site",
                         "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 
 def warn_non_enclosed_area():
-    areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
+    areas = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
     bad_areas = filter(lambda x: x.Area == 0, areas)
     if len(bad_areas) > 0:
 
@@ -35,7 +34,7 @@ def warn_non_enclosed_area():
 
 
 def warn_non_enclosed_room():
-    rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
+    rooms = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
     bad_rooms = filter(lambda x: x.Area == 0, rooms)
     if len(bad_rooms) > 0:
 
@@ -47,14 +46,14 @@ def warn_non_enclosed_room():
 
 def update_project_2151():
 
-    if not doc.Title.lower().startswith("2151_"):
+    if not DOC.Title.lower().startswith("2151_"):
         return
     
 
 
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_parking_data"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False, is_from_sync_hook = True)
 
 
     return
@@ -64,26 +63,26 @@ def update_project_2151():
     
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "color_pills"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
     
     
     
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "all_in_one_checker"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
 
 
 
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "confirm_RGB"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
 
 
 
 
 def update_project_2314():
 
-    if "2314_a-455 1st ave" not in doc.Title.lower():
+    if "2314_a-455 1st ave" not in DOC.Title.lower():
         return
     
     folder = "Ennead Tailor.tab\\Proj. 2314.panel\\First Ave.pulldown"
@@ -91,7 +90,7 @@ def update_project_2314():
     
 
     
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
     
     return
 
@@ -102,38 +101,38 @@ def update_project_1643():
 
 
 def update_new():
-    if "1643_lhh bod-a_new" not in doc.Title.lower():
+    if "1643_lhh bod-a_new" not in DOC.Title.lower():
         return
 
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC)
 
     
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_keyplan"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC)
 
 
     
 
 def update_existing():
-    if "1643_lhh bod-a_existing" not in doc.Title.lower():
+    if "1643_lhh bod-a_existing" not in DOC.Title.lower():
         return
 
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_grid_bldgId"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC)
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC)
 
     folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_keyplan"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC)
 
     
 def update_with_generic_healthcare_tool():
@@ -141,49 +140,49 @@ def update_with_generic_healthcare_tool():
         return
     health_care_projects = ["2151_a_ea_nyuli_hospital_ext"]
     
-    if doc.Title.lower() not in health_care_projects:
+    if DOC.Title.lower() not in health_care_projects:
         return
     
     folder = "Ennead.tab\\Tools.panel"
     func_name = "generic_healthcare_tool"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
 
 
     
 def update_DOB_numbering():
     folder = "Ennead.tab\\ACE.panel"
     func_name = "update_DOB_page"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
 
 
 def update_sheet_name():
 
     try:
-        doc.Title
+        DOC.Title
     except Exception as e:
         if USER.USER_NAME == "szhang":
             print (str(e))
         return
 
 
-    if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
+    if DOC.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
     script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
     func_name = "rename_views"
-    sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
+    sheets = DB.FilteredElementCollector(DOC).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
     is_default_format = True
     show_log = False
-    MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
+    MODULE_HELPER.run_revit_script(script, func_name, DOC, sheets, is_default_format, show_log)
 
     
 def update_working_view_name():
     try:
-        doc.Title
+        DOC.Title
     except:
         return
 
-    if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
+    if DOC.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
     script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
@@ -195,7 +194,7 @@ def update_working_view_name():
 
 
 
-    views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+    views = DB.FilteredElementCollector(DOC).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
     no_sheet_views = filter(ref_module.is_no_sheet, views)
     is_adding_creator = True
     MODULE_HELPER.run_revit_script(script, func_name, no_sheet_views, is_adding_creator)
@@ -203,14 +202,14 @@ def update_working_view_name():
     
 
 def update_project_2306():
-    if "universal hydrogen" not in doc.Title.lower():
+    if "universal hydrogen" not in DOC.Title.lower():
         return
     # if not USER.is_SZ():
     #     return
 
     folder = "Ennead Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown"
     func_name = "factory_internal_check"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, DOC, show_log = False)
  
     
     
@@ -222,7 +221,7 @@ def update_sync_queue():
         return
 
 
-    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
+    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(DOC.Title))
   
 
     if not os.path.exists(log_file):
@@ -247,7 +246,7 @@ def update_sync_queue():
         NOTIFICATION.messenger ("Your account have no access to write in DB folder.")
         return
 
-    if REVIT_EVENT.is_sync_queue_disabled:
+    if REVIT_EVENT.is_sync_queue_disabled():
         # when  gloabl sync queue disabled, dont want to see dialogue, but still want to clear name from log file
         return
 
@@ -262,7 +261,7 @@ def update_sync_queue():
 
     EMAIL.email(receiver_email_list="{}@ennead.com".format(next_user),
                             subject="Your Turn To Sync!",
-                            body="Hi there, it is your turn to sync <{}>!".format(doc.Title),
+                            body="Hi there, it is your turn to sync <{}>!".format(DOC.Title),
                             body_image_link_list=[IMAGE.get_image_path_by_name("meme_you_sync_first.jpg")])
 
     REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)
@@ -279,7 +278,7 @@ def play_success_sound():
 def doc_synced():
     play_success_sound()
 
-    REVIT_SYNC.update_last_sync_data_file(doc)
+    REVIT_SYNC.update_last_sync_data_file(DOC)
     update_sync_queue()
     
 
@@ -288,18 +287,21 @@ def doc_synced():
     if random.random() < 0.1:
         warn_non_enclosed_room()
 
+    if REVIT_EVENT.is_all_sync_closing():
+        return
         
     update_DOB_numbering()
     update_sheet_name()
     update_working_view_name()
     update_with_generic_healthcare_tool()
 
+
     
     update_project_2151()
 
     if USER.IS_DEVELOPER:
-        SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
-        NOTIFICATION.messenger("Document {} has finished syncing.".format(doc.Title))
+        SPEAK.speak("Document {} has finished syncing.".format(DOC.Title))
+        NOTIFICATION.messenger("Document {} has finished syncing.".format(DOC.Title))
     return
 
 
@@ -321,7 +323,7 @@ def doc_synced():
     if ENNEAD_LOG.is_money_negative():
         print ("Your Current balance is {}".format(ENNEAD_LOG.get_current_money()))
 
-    ENNEAD_LOG.update_local_warning(doc)
+    ENNEAD_LOG.update_local_warning(DOC)
 
 
 

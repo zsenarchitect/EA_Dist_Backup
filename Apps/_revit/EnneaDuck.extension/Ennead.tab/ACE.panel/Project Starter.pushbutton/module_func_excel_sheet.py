@@ -26,7 +26,7 @@ def is_new_sheet_number_ok(doc, new_sheet_numbers):
 def excel_sheet_creator(doc, excel_path, worksheet_name , data_map):
 
     
-    data = EXCEL.read_data_from_excel(excel_path, worksheet = worksheet_name, by_line = True)
+    data = EXCEL.read_data_from_excel(excel_path, worksheet = worksheet_name)
     data = [x for x in data if x[0] == "YES"]
     # print (data)
     new_sheet_numbers = [x[4] for x in data]
