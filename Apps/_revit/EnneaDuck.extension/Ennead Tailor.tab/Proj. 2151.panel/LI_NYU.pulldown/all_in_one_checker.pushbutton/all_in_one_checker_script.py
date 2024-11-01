@@ -11,7 +11,7 @@ import traceback
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import NOTIFICATION, ERROR_HANDLE, USER, FOLDER, EXCEL
+from EnneadTab import NOTIFICATION, ERROR_HANDLE, USER, FOLDER, EXCEL, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_FAMILY
 from Autodesk.Revit import DB # pyright: ignore  
 # from Autodesk.Revit import UI # pyright: ignore
@@ -363,7 +363,9 @@ class InternalCheck:
             dummy_target_data.update(para_name, value)
 
 
-        
+        if ENVIRONMENT.IS_AVD:
+            NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
+            return
         self.update_from_excel(dummy_target_data)
 
                 
