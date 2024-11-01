@@ -19,7 +19,11 @@ def update_2151():
         func_name = "update_dummy_patient_room"
         MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
-
+    if not doc.Title.lower().startswith("2151_"):
+        return
+    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    func_name = "update_material_setting"
+    MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
 def check_sync_queue():
     """
