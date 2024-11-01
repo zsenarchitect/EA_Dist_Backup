@@ -280,17 +280,14 @@ def doc_synced(doc):
     play_success_sound()
     REVIT_SYNC.update_last_sync_data_file(doc)
 
-    if USER.IS_DEVELOPER:
-        print ("Current sync monitor data:", DATA_FILE.get_data(REVIT_SYNC.SYNC_MONITOR_FILE))
-        REVIT_SYNC.start_monitor()
 
     update_sync_queue(doc)
     
 
     if random.random() < 0.1:
-        warn_non_enclosed_area()
+        warn_non_enclosed_area(doc)
     if random.random() < 0.1:
-        warn_non_enclosed_room()
+        warn_non_enclosed_room(doc)
 
     if REVIT_EVENT.is_all_sync_closing():
         return

@@ -256,13 +256,13 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
 
 
 @contextmanager
-def update_data(file_name, is_local=True, keep_holder=None):
+def update_data(file_name, is_local=True, keep_holder_key=None):
     """A context manager that allows you to update data in a JSON file.
 
     Args:
         file_name (str): The name of the file to update.
         is_local (bool, optional): Whether the file is in the local dump folder. Defaults to True.
-        keep_holder (any, optional): The value to keep in the "key_holder" key. Defaults to None.
+        keep_holder_key (any, optional): The value to keep in the "key_holder" key. Defaults to None.
     Example:
         with update_data(file_name) as data:
             data["test"] = 1234567890000000
@@ -276,8 +276,8 @@ def update_data(file_name, is_local=True, keep_holder=None):
 
         yield data
 
-        if keep_holder:
-            data["key_holder"] = keep_holder
+        if keep_holder_key:
+            data["key_holder"] = keep_holder_key
 
             
         set_data(data, file_name, is_local)

@@ -77,7 +77,7 @@ def update_last_sync_data_file(doc):
 
 
 
-    with DATA_FILE.update_data(SYNC_MONITOR_FILE, keep_holder=time.time()) as data:
+    with DATA_FILE.update_data(SYNC_MONITOR_FILE, keep_holder_key=time.time()) as data:
         if data:
 
             for key, value in data.items():
