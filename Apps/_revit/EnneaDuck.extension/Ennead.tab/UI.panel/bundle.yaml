@@ -5,3 +5,4 @@ layout:
   - prefilter_selection
   - ">>>" 
   - toggle_warning_mode
+  - open_app_store
