@@ -109,9 +109,12 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
     if attempt > 3:
         return
 
-    t = DB.Transaction(doc, "Rename Views")
-    if not t.HasStarted():
+    try:
+        t = DB.Transaction(doc, "Rename Views")
         t.Start()
+    except Exception as e:
+        # should allow this to happen becasue of the recursive call during additional attempt to rename
+        pass
 
     failed_sheets = set()
     all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()

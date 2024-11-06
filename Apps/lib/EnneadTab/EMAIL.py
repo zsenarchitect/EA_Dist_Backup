@@ -44,6 +44,7 @@ def email(
 
     if isinstance(receiver_email_list, str):
         print("Prefer list but ok.")
+        print (receiver_email_list)
         receiver_email_list = receiver_email_list.rstrip().split(";")
 
     body = body.replace("\n", "<br>")

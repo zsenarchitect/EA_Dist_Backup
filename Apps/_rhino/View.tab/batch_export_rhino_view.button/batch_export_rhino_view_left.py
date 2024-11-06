@@ -46,6 +46,8 @@ def batch_export_rhino_view():
         rs.RestoreNamedView(view, view=None, restore_bitmap=False)
         file_path = "{}\\{}.{}".format(folder, view, format)
         rs.Command("!_-ViewCaptureToFile _Width {} _Height {} \"{}\" -enter -enter".format(width, height, file_path))
-    
+
+
+    NOTIFICATION.duck_pop("All views exported.")
 if __name__ == "__main__":
     batch_export_rhino_view()

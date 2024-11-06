@@ -15,6 +15,7 @@ proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
+from EnneadTab import NOTIFICATION
 
 def get_sorted_all_materials():
     all_materials = DB.FilteredElementCollector(doc).OfClass(DB.Material).ToElements()
@@ -70,7 +71,7 @@ def get_data_in_all_family():
     all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
 
 
-    EA_UTILITY.show_toast(message = "This may take a moment or so.", title = "Checking {} families in the background...".format(len(all_families)))
+    NOTIFICATION.messenger(message = "This may take a moment or so.", title = "Checking {} families in the background...".format(len(all_families)))
 
 
     all_families = sorted(all_families, key = lambda x: x.Name)
@@ -84,7 +85,7 @@ def get_data_in_all_family():
         if count > target:
             should_pop = True
         if should_pop:
-            EA_UTILITY.show_toast(title = "{} out of {} checked".format(count, total_count))
+            NOTIFICATION.messenger(title = "{} out of {} checked".format(count, total_count))
             should_pop = False
             target += target
         data = inspect_family(family, enable_print = False)
@@ -236,12 +237,12 @@ def action_0_inspect_by_family():
     limit = len(all_families)
     with forms.ProgressBar(title = "Checking Families, Hold On...({value} of {max_value})", step = 1, cancellable = True) as pb:
     # initiate the class collection.
-    	for family in all_families:
-    		inspect_family(family)
-    		global_counter += 1
-    		if pb.cancelled:
-    			script.exit()
-    		pb.update_progress(global_counter, limit)
+        for family in all_families:
+            inspect_family(family)
+            global_counter += 1
+            if pb.cancelled:
+                script.exit()
+            pb.update_progress(global_counter, limit)
 
 
 

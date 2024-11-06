@@ -80,13 +80,13 @@ def annouce_hibration_mode():
         output.write("EnneadTab in hibernation mode.", OUTPUT.Style.Title) 
         output.write("Due to staffing plan change, Sen Zhang is no longer maintaining ")
         output.write("Bug-fix and feature-build are suspended.")
-        output.write("{}\\hibernation_large.png".format(ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        output.write("{}\\hibernation_large.png".format(ENVIRONMENT.IMAGE_FOLDER))
         """https://www.fontspace.com/cobemat-cartoon-font-f104361
         this is the font webpage"""
     else:
         output.write("EnneaDuck is on vacation to get a tan.", OUTPUT.Style.Title) 
         output.write("He is not available at the moment, check back later.")
-        output.write("{}\\beijing duck.jpg".format(ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT))
+        output.write("{}\\beijing duck.jpg".format(ENVIRONMENT.IMAGE_FOLDER))
     output.plot()
 
 
@@ -177,8 +177,7 @@ class TempGraphicServer(UI.ITemporaryGraphicsHandler):
 
 
 
-        temp_graphic_data = DATA_FILE.get_data("CANVAS_TEMP_GRAPHIC_DATA_{}.sexyDuck".format(data.Document.Title),
-                                                                                 create_if_not_exist=True)
+        temp_graphic_data = DATA_FILE.get_data("CANVAS_TEMP_GRAPHIC_DATA_{}.sexyDuck".format(data.Document.Title))
         record = temp_graphic_data.get(str(data.Index))
         if record and record.get("additional_info").get("description"):
             NOTIFICATION.messenger(record["additional_info"]["description"])
@@ -224,6 +223,7 @@ def register_xaml_path():
     DATA_FILE.set_data(data, "xaml_path.sexyDuck")
     
 def set_RIR_clicker():
+    return
     if not USER.IS_DEVELOPER:
         return
     with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:

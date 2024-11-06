@@ -65,7 +65,7 @@ def greeting_may_force():
     image = "may_force.jpg"
 
     image_file = "{}\\{}".format(
-        ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT, image
+        ENVIRONMENT.IMAGE_FOLDER, image
     )
     output = script.get_output()
     output.print_image(image_file)
@@ -91,7 +91,7 @@ def greeting_pi():
     image = "pi_day.jpeg"
 
     image_file = "{}\\{}".format(
-        ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT, image
+        ENVIRONMENT.IMAGE_FOLDER, image
     )
     output = script.get_output()
     output.print_image(image_file)
@@ -118,7 +118,7 @@ def greeting_xmas():
     image = "xmax_tree_drawing.png"
 
     image_file = "{}\\{}".format(
-        ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT, image
+        ENVIRONMENT.IMAGE_FOLDER, image
     )
     output = script.get_output()
     output.print_image(image_file)
@@ -135,7 +135,7 @@ def greeting_chinese_new_year():
     if not is_valid_date((2024, 1, 26), (2024, 2, 15)):
         return
     image = "YEAR OF BUNNY.png"
-    files = os.listdir(ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+    files = os.listdir(ENVIRONMENT.IMAGE_FOLDER)
     random.shuffle(files)
     for file in files:
         if file.endswith(".png") and "YEAR OF DRAGON" in file:
@@ -143,7 +143,7 @@ def greeting_chinese_new_year():
             break
 
     image_file = "{}\{}".format(
-        ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT, image
+        ENVIRONMENT.IMAGE_FOLDER, image
     )
     output = script.get_output()
     output.print_image(image_file)

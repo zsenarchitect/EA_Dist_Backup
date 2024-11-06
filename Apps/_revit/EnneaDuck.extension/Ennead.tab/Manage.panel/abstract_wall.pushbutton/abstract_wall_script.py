@@ -59,7 +59,7 @@ class Solution:
     
     def __init__(self):
         self.data_file_name = "ABSTRACT_WALL_{}.sexyDuck".format(doc.Title)
-        self.data = DATA_FILE.get_data_in_shared_dump_folder(self.data_file_name, create_if_not_exist=True)
+        self.data = DATA_FILE.get_data(self.data_file_name)
         self.prefix = "EnneadTab Abstract Wall_"
         self.opts = [["Wall-->Diagram", "Generate abstract walls to review and update"],
                 ["Diagram-->Wall", "Use abstract walls to update original wall locations. This will also delete other diagram lines of the same CW wall."]]

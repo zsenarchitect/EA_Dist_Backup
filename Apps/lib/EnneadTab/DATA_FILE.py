@@ -241,13 +241,13 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
 
     Args:
         data_dict (dict): The dictionary to store.
-        file_name_or_full_path (str): The name of the file to write to, ends with extension. The full path is a backward compatiablity feature and is not prefered.
+        file_name_or_full_path (str): The name of the file to write to, ends with extension.
         is_local (bool, optional): Whether the file should be saved to the local dump folder. Defaults to True.
     """
     if os.path.exists(file_name_or_full_path):
         if "ENNEADTAB_DEVELOPERS.secret" not in file_name_or_full_path:
-            print("Using full path feature is allowed but not prefered.",file_name_or_full_path)
-        return _save_dict_to_json(file_name_or_full_path, use_encode=True)
+            print("Using full path feature is allowed but not prefered.", file_name_or_full_path)
+        return _save_dict_to_json(data_dict, file_name_or_full_path, use_encode=True)
     
     if is_local:
         _save_dict_to_json_in_dump_folder(data_dict, file_name_or_full_path, use_encode=True)
@@ -256,38 +256,37 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
 
 
 @contextmanager
-def update_data(file_name, is_local=True):
+def update_data(file_name, is_local=True, keep_holder_key=None):
     """A context manager that allows you to update data in a JSON file.
 
     Args:
         file_name (str): The name of the file to update.
         is_local (bool, optional): Whether the file is in the local dump folder. Defaults to True.
+        keep_holder_key (any, optional): The value to keep in the "key_holder" key. Defaults to None.
+    Example:
+        with update_data(file_name) as data:
+            data["test"] = 1234567890000000
 
-    # Usage example:
-    with DATA_FILE.update_data("abc.sexyDuck") as data:
-        data['new_key'] = 'new_value'  # Update data here
     """
-
     if os.path.exists(file_name):
         file_name = os.path.basename(file_name)
 
     try:
         data = get_data(file_name, is_local)
 
-        # temporarily hands control back to the caller, allowing them to modify data.
         yield data
-        # Once the block inside the with statement is complete,
-        # control returns to the context manager, which writes the modified data back to the file.
 
+        if keep_holder_key:
+            data["key_holder"] = keep_holder_key
+
+            
         set_data(data, file_name, is_local)
 
+
     except Exception as e:
-        try:
-            print(
-                "An error occurred when updating data:\n{}".format(traceback.format_exc())
-            )
-        except:
-            print (e)
+        print("Error in update_data:", str(e))
+        print(traceback.format_exc())
+        raise
 
 
 #######################################
@@ -323,3 +322,13 @@ def set_sticky(sticky_name, value_to_write):
     """
     with update_data(STICKY_FILE) as data:
         data[sticky_name] = value_to_write
+
+
+
+if __name__ == "__main__":
+    import time
+    with update_data("last_sync_record_data.sexyDuck") as data:
+        data["test1"] = time.time()
+        # print (data)
+
+    print (get_data("last_sync_record_data.sexyDuck"))

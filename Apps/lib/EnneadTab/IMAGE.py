@@ -2,7 +2,9 @@
 
 import os
 import random
+import time
 import ENVIRONMENT
+import FOLDER
 
 try:
     import System.Drawing as SD  # pyright: ignore
@@ -82,5 +84,33 @@ def convert_image_to_greyscale(original_image_path, new_image_path=None):
     return image
 
 
+def create_bitmap_text_image(text, size = (64, 32), bg_color = (0, 0, 0), font_size = 9):
+
+    if random.random() < 0.2:
+        purge_old_temp_bmp_files()
+
+
+    image = SD.Bitmap(size[0], size[1])
+    graphics = SD.Graphics.FromImage(image)
+    font = SD.Font("Arial", font_size)
+    brush = SD.SolidBrush(SD.Color.FromArgb(bg_color[0], bg_color[1], bg_color[2]))
+    text_size = graphics.MeasureString(text, font)
+    text_x = (size[0] - text_size.Width) / 2
+    text_y = (size[1] - text_size.Height) / 2
+    graphics.DrawString(text, font, brush, text_x, text_y)
+    output_path = FOLDER.get_EA_dump_folder_file("_temp_text_bmp_{}_{}.bmp".format(text, time.time()))
+    image.Save(output_path)
+    return output_path
+
+
+def purge_old_temp_bmp_files():
+    """Purge old temporary bmp files in the EA dump folder."""
+    for file in os.listdir(FOLDER.DUMP_FOLDER):
+        if file.endswith(".bmp") and file.startswith("_temp_text_bmp_"):
+            file_path = os.path.join(FOLDER.DUMP_FOLDER, file)
+            if time.time() - os.path.getmtime(file_path) > 60 * 60 * 24*2:
+                os.remove(file_path)
+
 if __name__ == "__main__":
-    pass
+    image = create_bitmap_text_image("qwert", size = (64, 32), bg_color = (0, 99, 0), font_size = 9)
+    os.startfile(image)

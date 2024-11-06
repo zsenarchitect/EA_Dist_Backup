@@ -3,7 +3,7 @@
 
 __doc__ = "After getting all the block data from Rhino side, create/update family in Revit. If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id."
 __title__ = "Block2Family"
-
+__tip__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

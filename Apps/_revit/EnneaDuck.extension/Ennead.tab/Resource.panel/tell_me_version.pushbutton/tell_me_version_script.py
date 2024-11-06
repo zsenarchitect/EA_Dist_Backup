@@ -4,7 +4,7 @@
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
 __title__ = "Tell Me\nVersion"
 __context__ = "zero-doc"
-
+__tip__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

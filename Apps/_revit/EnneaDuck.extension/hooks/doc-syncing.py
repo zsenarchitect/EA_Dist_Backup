@@ -4,12 +4,30 @@ from Autodesk.Revit import DB # pyright: ignore
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import VERSION_CONTROL, ERROR_HANDLE, LOG, DATA_FILE, TIME, USER, DUCK, CONFIG, FOLDER
+from EnneadTab import MODULE_HELPER, VERSION_CONTROL, ERROR_HANDLE, LOG, DATA_FILE, TIME, USER, DUCK, CONFIG, FOLDER, TIMESHEET
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_EVENT
 
 __title__ = "Doc Syncing Hook"
 doc = EXEC_PARAMS.event_args.Document
 
+
+
+def update_2151():
+    if doc.Title.lower() == "2151_a_ea_nyuli_hospital_ext":
+
+        folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+        func_name = "update_dummy_patient_room"
+        MODULE_HELPER.run_revit_script(folder, func_name, doc)
+
+        folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+        func_name = "dgsf_area_data_check"
+        MODULE_HELPER.run_revit_script(folder, func_name, doc)
+
+    if not doc.Title.lower().startswith("2151_"):
+        return
+    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    func_name = "update_material_setting"
+    MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
 def check_sync_queue():
     """
@@ -18,7 +36,7 @@ def check_sync_queue():
     """
 
     log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
-  
+    
     try:
         with open(log_file, "r"):
             pass
@@ -67,7 +85,7 @@ def check_sync_queue():
             return True
         
 
-    if wait_num == 0 or user_name in queue[0] or REVIT_EVENT.is_sync_queue_disabled:
+    if wait_num == 0 or user_name in queue[0] or REVIT_EVENT.is_sync_queue_disabled():
 
         # no one is on wait list now, should go ahead sync
         # or maybe username is at the begining of line, he can go sync as well.
@@ -137,13 +155,15 @@ def doc_syncing():
         # ENNEAD_LOG.update_account_by_local_warning_diff(doc)
         pass
 
-
+    if REVIT_EVENT.is_all_sync_closing():
+        return
 
     # do this after checking ques so the primary EXE_PARAM is same as before
     fill_drafter_info()
 
-    return
-    LOG.update_time_sheet_revit(doc.Title)
+    update_2151()
+
+    TIMESHEET.update_timesheet(doc.Title)
 
 
     

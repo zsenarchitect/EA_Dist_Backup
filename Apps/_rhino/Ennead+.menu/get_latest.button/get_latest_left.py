@@ -41,7 +41,7 @@ def get_latest(is_silient = False):
     VERSION_CONTROL.update_EA_dist()
     RHINO_RUI.update_my_rui()
     RHINO_ALIAS.register_alias_set()
-    add_startup_script()
+    RHINO_RUI.add_startup_script()
 
 
     if not is_silient:
@@ -50,16 +50,7 @@ def get_latest(is_silient = False):
         print ("Latest EnneadTab-For-Rhino Loaded")
 
 
-def add_startup_script():
-    
-    """hear me out here:
-    python cannot add startup script directly
-   
-    i use this python script C to call rhino script B to call rhino script A, which is the command alias
-    This will not run the startup command, it just add to the start sequence.
-    """
-    rvb_satrtup_modifier_script = "{}\\StartupEnable.rvb".format(os.path.dirname(os.path.abspath(__file__)))
-    Rhino.RhinoApp.RunScript("-LoadScript " + rvb_satrtup_modifier_script, True)
+
  
 
 

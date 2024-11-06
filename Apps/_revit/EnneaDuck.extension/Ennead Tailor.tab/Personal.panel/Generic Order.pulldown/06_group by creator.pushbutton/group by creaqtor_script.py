@@ -201,14 +201,14 @@ with revit.Transaction("Mark NoSheet Views"):
 
 """
 def final_print_table():
-	table_data = []
-	for item in view_item_collection:
-		if item.view_name in view_item_collection_selected:
-			#temp_list = [item.critical_level_text, item.view_name, item.line_count]
-			temp_list = [ item.critical_level_text, item.view_name, item.line_count, output.linkify(item.id, title = "Go To View")]
-			table_data.append(temp_list)
+    table_data = []
+    for item in view_item_collection:
+        if item.view_name in view_item_collection_selected:
+            #temp_list = [item.critical_level_text, item.view_name, item.line_count]
+            temp_list = [ item.critical_level_text, item.view_name, item.line_count, output.linkify(item.id, title = "Go To View")]
+            table_data.append(temp_list)
 
-	output.print_table(table_data=table_data,title="Bad Views by Line Count ",columns=[ "Critical Level", "View Name", "Line Count", "View Link"],formats=['', '{}', '{} Lines', '{}'])
+    output.print_table(table_data=table_data,title="Bad Views by Line Count ",columns=[ "Critical Level", "View Name", "Line Count", "View Link"],formats=['', '{}', '{} Lines', '{}'])
 """
 
 

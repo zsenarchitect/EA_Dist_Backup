@@ -16,6 +16,7 @@ class TemplateProcessor:
         self.is_ok = True
 
     def process(self):
+        return
         
         time_start = time.time()
         self.process_template_para()

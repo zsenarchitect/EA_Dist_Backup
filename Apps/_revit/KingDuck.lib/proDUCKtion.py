@@ -33,19 +33,22 @@ if lib_dir not in sys.path:
 
 
 
+def validify():
+    """This func do absolutely NOTHING, it is here so when this module is imported
+    you can call this func to make it seems like usfule for pylint"""
+    pass
 
 
 
 """
 This is to eliminate all the clearup output window step that was needed in the past.
 """
-from pyrevit import script #
-output = script.get_output()
-output.close_others()
+
+try:
+    from pyrevit import script #
+    output = script.get_output()
+    output.close_others()
+except Exception as e:
+    print(e)
 
 
-
-def validify():
-    """This func do absolutely NOTHING, it is here so when this module is imported
-    you can call this func to make it seems like usfule for pylint"""
-    pass

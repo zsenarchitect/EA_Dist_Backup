@@ -3,7 +3,7 @@ import random
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
 from pyrevit.coreutils import envvars
-doc = EXEC_PARAMS.event_args.Document
+DOC = EXEC_PARAMS.event_args.Document
 
 
 import proDUCKtion # pyright: ignore 
@@ -20,13 +20,12 @@ REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                         "2151_A_EAEC_NYULI_Hospital_INT",
                         "2151_a_ea_nyuli_parking east",
                         "2151_a_ea_nyuli_parking west",
-                        "2151_a_ea_nyuli_parking 1",
                         "2151_a_ea_nyuli_site",
                         "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 
-def warn_non_enclosed_area():
+def warn_non_enclosed_area(doc):
     areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
     bad_areas = filter(lambda x: x.Area == 0, areas)
     if len(bad_areas) > 0:
@@ -34,7 +33,7 @@ def warn_non_enclosed_area():
         NOTIFICATION.messenger("There are {} non-placed/redundant/non-enclosed areas in the file.\nThey might have impact on the accuracy of your Area Schedule.".format(len(bad_areas)))
 
 
-def warn_non_enclosed_room():
+def warn_non_enclosed_room(doc):
     rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
     bad_rooms = filter(lambda x: x.Area == 0, rooms)
     if len(bad_rooms) > 0:
@@ -45,7 +44,7 @@ def warn_non_enclosed_room():
 
 
 
-def update_project_2151():
+def update_project_2151(doc):
 
     if not doc.Title.lower().startswith("2151_"):
         return
@@ -54,7 +53,7 @@ def update_project_2151():
 
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_parking_data"
-    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
+    MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False, is_from_sync_hook = True)
 
 
     return
@@ -81,7 +80,7 @@ def update_project_2151():
 
 
 
-def update_project_2314():
+def update_project_2314(doc):
 
     if "2314_a-455 1st ave" not in doc.Title.lower():
         return
@@ -96,12 +95,12 @@ def update_project_2314():
     return
 
 
-def update_project_1643():
-    update_new()
-    update_existing()
+def update_project_1643(doc):
+    update_new(doc)
+    update_existing(doc)
 
 
-def update_new():
+def update_new(doc):
     if "1643_lhh bod-a_new" not in doc.Title.lower():
         return
 
@@ -118,7 +117,7 @@ def update_new():
 
     
 
-def update_existing():
+def update_existing(doc):
     if "1643_lhh bod-a_existing" not in doc.Title.lower():
         return
 
@@ -136,7 +135,7 @@ def update_existing():
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
     
-def update_with_generic_healthcare_tool():
+def update_with_generic_healthcare_tool(doc):
     if not USER.IS_DEVELOPER:
         return
     health_care_projects = ["2151_a_ea_nyuli_hospital_ext"]
@@ -150,13 +149,13 @@ def update_with_generic_healthcare_tool():
 
 
     
-def update_DOB_numbering():
+def update_DOB_numbering(doc):
     folder = "Ennead.tab\\ACE.panel"
     func_name = "update_DOB_page"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
 
-def update_sheet_name():
+def update_sheet_name(doc):
 
     try:
         doc.Title
@@ -177,7 +176,7 @@ def update_sheet_name():
     MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
 
     
-def update_working_view_name():
+def update_working_view_name(doc):
     try:
         doc.Title
     except:
@@ -202,7 +201,7 @@ def update_working_view_name():
 
     
 
-def update_project_2306():
+def update_project_2306(doc):
     if "universal hydrogen" not in doc.Title.lower():
         return
     # if not USER.is_SZ():
@@ -215,7 +214,7 @@ def update_project_2306():
     
     
 
-def update_sync_queue():
+def update_sync_queue(doc):
 
     # dont need to do anything if pre-sycn chech was cancelled,
     if REVIT_EVENT.is_sync_cancelled():
@@ -247,7 +246,7 @@ def update_sync_queue():
         NOTIFICATION.messenger ("Your account have no access to write in DB folder.")
         return
 
-    if REVIT_EVENT.is_sync_queue_disabled:
+    if REVIT_EVENT.is_sync_queue_disabled():
         # when  gloabl sync queue disabled, dont want to see dialogue, but still want to clear name from log file
         return
 
@@ -276,26 +275,31 @@ def play_success_sound():
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
-def doc_synced():
+def doc_synced(doc):
+
     play_success_sound()
-
     REVIT_SYNC.update_last_sync_data_file(doc)
-    update_sync_queue()
+
+
+    update_sync_queue(doc)
     
 
     if random.random() < 0.1:
-        warn_non_enclosed_area()
+        warn_non_enclosed_area(doc)
     if random.random() < 0.1:
-        warn_non_enclosed_room()
+        warn_non_enclosed_room(doc)
 
+    if REVIT_EVENT.is_all_sync_closing():
+        return
         
-    update_DOB_numbering()
-    update_sheet_name()
-    update_working_view_name()
-    update_with_generic_healthcare_tool()
+    update_DOB_numbering(doc)
+    update_sheet_name(doc)
+    update_working_view_name(doc)
+    update_with_generic_healthcare_tool(doc)
+
 
     
-    update_project_2151()
+    update_project_2151(doc)
 
     if USER.IS_DEVELOPER:
         SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
@@ -303,9 +307,9 @@ def doc_synced():
     return
 
 
-    update_project_2314()
-    update_project_2306()
-    update_project_1643()
+    update_project_2314(doc)
+    update_project_2306(doc)
+    update_project_1643(doc)
 
 
 
@@ -334,4 +338,4 @@ def doc_synced():
 
 #################################################################
 if __name__ == "__main__":
-    doc_synced()
+    doc_synced(DOC)

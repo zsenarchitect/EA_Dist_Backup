@@ -7,6 +7,13 @@ import os
 import rhinoscriptsyntax as rs
 import sys
 
+try:
+    import EnneadTab
+    is_tab_loaded_originally = True
+except:
+    is_tab_loaded_originally = False
+
+
 def add_search_path():
     _app_folder = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     lib_path = os.path.join(_app_folder, "lib" )
@@ -14,14 +21,15 @@ def add_search_path():
     sys.path.append(lib_path)
     sys.path = list(set(sys.path))
 
-add_search_path()
-
-
-from EnneadTab import NOTIFICATION
-
+if not is_tab_loaded_originally:
+    add_search_path()
 
 def activate_enneadtab():
-    NOTIFICATION.messenger("EnneadTab Activated")
+    if not is_tab_loaded_originally:
+        from EnneadTab import NOTIFICATION
+        NOTIFICATION.messenger("EnneadTab Activated")
+        from EnneadTab.RHINO import RHINO_RUI
+        RHINO_RUI.add_startup_script()
 
     
 if __name__ == "__main__":

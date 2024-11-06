@@ -2,16 +2,17 @@
 
 import ENVIRONMENT, NOTIFICATION, DATA_FILE
 
+import REVIT_APPLICATION
+import REVIT_SELECTION
 
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
-    DOC = UIDOC.Document
+    UIDOC = REVIT_APPLICATION.get_uidoc() 
+    DOC = REVIT_APPLICATION.get_doc()
+
     
-    import REVIT_APPLICATION
-    import REVIT_SELECTION
     from pyrevit.coreutils import envvars
     
     
@@ -75,8 +76,11 @@ def filter_archi_views(views):
 
 
 class ViewFilter:
-    def __init__(self, views_or_view_ids, doc=DOC):
+    def __init__(self, views_or_view_ids = None, doc=DOC):
+        
         self.doc = doc
+        if views_or_view_ids is None:
+            views_or_view_ids = list(DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements())
         if len(views_or_view_ids) == 0: 
             self.views = []
             return
@@ -185,32 +189,44 @@ def set_detail_number(view, detail_number):
 """the resiter of the server happen during startup"""
 class GraphicDataItem:
 
-    def __init__(self, location, additional_info = {}):
+    def __init__(self, location, additional_info = {}, image = None):
         self.location = location
         self.additional_info = additional_info
+        self.image = image or "{}\\warning_duck.bmp".format(ENVIRONMENT.IMAGE_FOLDER)
 
         
 def show_in_convas_graphic(graphic_datas, doc = DOC, view = None):
     
-    """note: make it 64x64
+    """
+    args:
+        graphic_datas: list of GraphicDataItem
+        doc: revit document
+        view: revit view
+
+
+
+    note: make it 64x64
     open in MS paint and save as 16 bit color bmp
     background 0,128,128
 
     if view is not provided, it will show in all views
     """
 
+    if not isinstance(graphic_datas, list):
+        graphic_datas = [graphic_datas]
 
 
     manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
     
     manager.Clear()
 
-    path = "{}\\warning_duck.bmp".format(ENVIRONMENT.CORE_IMAGES_FOLDER_FOR_PUBLISHED_REVIT)
+    
 
     temp_data = {}
     for graphic_data_item in graphic_datas:
         location = graphic_data_item.location
-        data = DB.InCanvasControlData (path, location)
+        image_path = graphic_data_item.image
+        data = DB.InCanvasControlData (image_path, location)
 
         if not view:
             index = manager.AddControl(data, DB.ElementId.InvalidElementId)
@@ -262,6 +278,10 @@ def show_warnings_in_view(view, doc):
         
     show_in_convas_graphic(graphic_datas, view = view)
     NOTIFICATION.messenger("Warnings marked!")
+
+
+
+
 
 
 def unit_test():

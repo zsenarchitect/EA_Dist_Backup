@@ -1006,7 +1006,7 @@ class EA_Printer_UI(WPFWindow):
             preview_obj.time_estimate = time_end - time_start
 
             """
-            EA_UTILITY.show_toast(app_name = "Ennead Exporter",
+            NOTIFICATION.messenger(app_name = "Ennead Exporter",
                                     title = "[{}] saved. {}".format(file_name, format_time),
                                     image = script.get_bundle_file("icon.png"),
                                     message = "{} more to do in current queue.".format(int(self.progress_bar.Maximum - i - 1)))

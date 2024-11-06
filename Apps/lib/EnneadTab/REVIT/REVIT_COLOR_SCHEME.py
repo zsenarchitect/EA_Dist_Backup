@@ -4,12 +4,13 @@
 
 import NOTIFICATION, COLOR, OUTPUT
 import REVIT_SELECTION
-
+import REVIT_APPLICATION
 try:
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
-    DOC = UIDOC.Document
+    
+    UIDOC = REVIT_APPLICATION.get_uidoc() 
+    DOC = REVIT_APPLICATION.get_doc()
     from pyrevit import script
 except:
     pass

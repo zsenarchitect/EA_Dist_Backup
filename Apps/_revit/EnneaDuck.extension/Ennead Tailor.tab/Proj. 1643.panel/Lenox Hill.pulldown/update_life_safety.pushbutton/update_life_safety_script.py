@@ -6,8 +6,6 @@
 __doc__ = "Update the life safety information data"
 __title__ = "Update Life Safety Info"
 
-# from pyrevit import forms #
-from re import L
 from pyrevit import script #
 
 

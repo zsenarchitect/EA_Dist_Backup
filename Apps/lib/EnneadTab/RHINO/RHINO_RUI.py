@@ -4,6 +4,7 @@ import FOLDER
 
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import rhinoscriptsyntax as rs
+    import Rhino # pyright: ignore
 
 
 def update_my_rui():
@@ -20,7 +21,17 @@ def update_my_rui():
     rs.OpenToolbarCollection(my_local_version)
 
 
-  
+def add_startup_script():
+    
+    """hear me out here:
+    python cannot add startup script directly
+   
+    i use this python script C to call rhino script B to call rhino script A, which is the command alias
+    This will not run the startup command, it just add to the start sequence.
+    """
+    
+    rvb_satrtup_modifier_script = "{}\\Ennead+.menu\\get_latest.button\\StartupEnable.rvb".format(ENVIRONMENT.RHINO_FOLDER)
+    Rhino.RhinoApp.RunScript("-LoadScript " + rvb_satrtup_modifier_script, True)
     
 def unit_test():
     pass

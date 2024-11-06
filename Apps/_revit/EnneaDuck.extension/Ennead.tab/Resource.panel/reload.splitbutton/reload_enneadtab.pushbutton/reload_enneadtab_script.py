@@ -4,7 +4,7 @@
 __doc__ = "Reload entire UI so can get newer buttons....."
 __title__ = "Reload\nEnneadTab"
 __context__ = "zero-doc"
-
+__tip__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

@@ -23,8 +23,7 @@ import DUCK
 import DOCUMENTATION
 
     
-TARGETS = ['fsun', 
-           'eshaw']
+
 
 
 def is_hate_fun():
@@ -67,7 +66,7 @@ def prank_ph():
     
     icon = '{}\prank\pornhub.png'.format(FOLDER.get_folder_path_from_path(__file__))
    
-    NOTIFICATION.toast(sub_text="Please login again at www.pornhub.com",
+    NOTIFICATION.messenger(sub_text="Please login again at www.pornhub.com",
                         main_text="{} videos failed to download.".format(random.randint(2,6)),
                         app_name="Chrome",
                         icon=icon,
@@ -154,10 +153,7 @@ def validating_jokes():
         f.writelines(OUT)
 
 
-if USER.USER_NAME in TARGETS:
-    chance = 0.02
-else:
-    chance = 0.0000000000001
+chance = 0.0000000000001
 if random.random() < chance:
     prank_ph()
 
@@ -177,13 +173,12 @@ if random.random() < chance:
 
 
 def april_fool():
-    return
 
     y, m, d = TIME.get_date_as_tuple(return_string=False)
 
-    marker_file = FOLDER.get_EA_dump_folder_file("2024_april_fooled3.stupid")
+    marker_file = FOLDER.get_EA_dump_folder_file("{}_april_fooled3.stupid".format(y))
     
-    if m == 4 and d in [1, 2] and random.random() < 0.2 :
+    if m == 4 and d in [1, 2] and random.random() < 0.02 :
 
 
         if os.path.exists(marker_file):
@@ -196,7 +191,7 @@ def april_fool():
         # elif dice < 0.48:
         #     NOTIFICATION.messenger(random_loading_message())
         elif dice < 0.95:
-            max = 10 if USER.USER_NAME in TARGETS else 5
+            max = 10
             for _ in range(random.randint(3, max)):
                 prank_dvd()
 
@@ -215,4 +210,5 @@ april_fool()
 if __name__ == "__main__":
 
     prank_dvd()
+    print (give_me_a_joke(talk = True))
 

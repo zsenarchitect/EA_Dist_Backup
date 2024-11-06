@@ -537,12 +537,12 @@ with revit.Transaction("Mark NoSheet Views"):
 
 
 def final_print_table():
-	table_data = []
-	for item in view_item_collection:
-		if item.view_name in view_item_collection_selected:
-			#temp_list = [item.critical_level_text, item.view_name, item.line_count]
-			temp_list = [ item.critical_level_text, item.view_name, item.line_count, output.linkify(item.id, title = "Go To View")]
-			table_data.append(temp_list)
+    table_data = []
+    for item in view_item_collection:
+        if item.view_name in view_item_collection_selected:
+            #temp_list = [item.critical_level_text, item.view_name, item.line_count]
+            temp_list = [ item.critical_level_text, item.view_name, item.line_count, output.linkify(item.id, title = "Go To View")]
+            table_data.append(temp_list)
     output.print_table(table_data=table_data,title="Bad Views by Line Count ",columns=[ "Critical Level", "View Name", "Line Count", "View Link"],formats=['', '{}', '{} Lines', '{}'])
 
 
@@ -560,19 +560,19 @@ output.add_style('body { color: blue; }')
 
 with forms.ProgressBar(title = "Checking Families, Hold On...({value} of {max_value})", step = pb_step, cancellable = True) as pb:
 # initiate the class collection.
-	for family in all_families:
+    for family in all_families:
 
-		family_item_collection.append(family_item(family))
+        family_item_collection.append(family_item(family))
 
 
 
-		global_counter += 1
-		if global_counter > limit:
-			break
+        global_counter += 1
+        if global_counter > limit:
+            break
 
-		if pb.cancelled:
-			script.exit()
-		pb.update_progress(global_counter, limit)
+        if pb.cancelled:
+            script.exit()
+        pb.update_progress(global_counter, limit)
 
 
 >>> for count, value in enumerate(values):

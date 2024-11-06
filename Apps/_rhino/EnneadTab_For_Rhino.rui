@@ -836,7 +836,8 @@
       <menu_text>
         <locale_1033>RandomizeBlockTransformation</locale_1033>
       </menu_text>
-      <script>EA_RandomizeBlockTransformation</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomizeBlockTransformation</script>
     </macro_item>
     <macro_item guid="a0aad7fe-44ed-4ed4-babb-658012d07cdf" bitmap_id="537dff68-b71c-404d-9f19-2dcdcfeb4e98">
       <text>
@@ -854,7 +855,8 @@
       <menu_text>
         <locale_1033>UniformTransformGeos</locale_1033>
       </menu_text>
-      <script>EA_UniformTransformGeos</script>
+      <script>EA_ActivateEnneadTab
+EA_UniformTransformGeos</script>
     </macro_item>
     <macro_item guid="1642cdf8-5318-4a5d-b292-03dc22886e97" bitmap_id="c589668a-3ff6-48be-93f3-a41f9a713092">
       <text>
@@ -872,7 +874,8 @@
       <menu_text>
         <locale_1033>MakeBlockUnique</locale_1033>
       </menu_text>
-      <script>EA_MakeBlockUnique</script>
+      <script>EA_ActivateEnneadTab
+EA_MakeBlockUnique</script>
     </macro_item>
     <macro_item guid="e4b4a7c5-23b6-45c0-afa6-e63686d28e2e" bitmap_id="bb844cf8-5d57-4661-92df-28a66e9e2b96">
       <text>
@@ -890,7 +893,8 @@
       <menu_text>
         <locale_1033>MakeBlockUniqueToOne</locale_1033>
       </menu_text>
-      <script>EA_MakeBlockUniqueToOne</script>
+      <script>EA_ActivateEnneadTab
+EA_MakeBlockUniqueToOne</script>
     </macro_item>
     <macro_item guid="1989ce2b-0a89-491e-bdb6-c928ceeb0ee6" bitmap_id="ba67f874-c14a-4fd5-b2d9-c5638f95a438">
       <text>
@@ -908,7 +912,8 @@
       <menu_text>
         <locale_1033>PackageBlockLayer</locale_1033>
       </menu_text>
-      <script>EA_PackageBlockLayer</script>
+      <script>EA_ActivateEnneadTab
+EA_PackageBlockLayer</script>
     </macro_item>
     <macro_item guid="b235e99c-7dce-404d-9cf9-97748c26f5d8" bitmap_id="c3061a8b-11a9-4605-a84b-8d42e0df6563">
       <text>
@@ -926,7 +931,8 @@
       <menu_text>
         <locale_1033>EditDistortedBlock</locale_1033>
       </menu_text>
-      <script>EA_EditDistortedBlock</script>
+      <script>EA_ActivateEnneadTab
+EA_EditDistortedBlock</script>
     </macro_item>
     <macro_item guid="aebeaa6d-5b44-4f00-a4c0-af58e26c9dfd" bitmap_id="e44ef16a-652a-4fbe-9f7f-3ef554822131">
       <text>
@@ -944,7 +950,8 @@
       <menu_text>
         <locale_1033>EditDistortedBlockRestoreView</locale_1033>
       </menu_text>
-      <script>EA_EditDistortedBlockRestoreView</script>
+      <script>EA_ActivateEnneadTab
+EA_EditDistortedBlockRestoreView</script>
     </macro_item>
     <macro_item guid="fae21858-440d-4c4f-98da-8a149de40209" bitmap_id="556ea686-f41a-4074-a284-b6b99a613e9d">
       <text>
@@ -962,7 +969,8 @@
       <menu_text>
         <locale_1033>ToggleBlockColorDisplay</locale_1033>
       </menu_text>
-      <script>EA_ToggleBlockColorDisplay</script>
+      <script>EA_ActivateEnneadTab
+EA_ToggleBlockColorDisplay</script>
     </macro_item>
     <macro_item guid="9d5926c4-8d47-4a03-aa52-8e89f4e69627" bitmap_id="c0dd763f-d925-4d2e-bdd9-761bd2810325">
       <text>
@@ -980,7 +988,8 @@
       <menu_text>
         <locale_1033>ToggleBlockColorDisplay_Setting</locale_1033>
       </menu_text>
-      <script>EA_ToggleBlockColorDisplay_Setting</script>
+      <script>EA_ActivateEnneadTab
+EA_ToggleBlockColorDisplay_Setting</script>
     </macro_item>
     <macro_item guid="9d196d8a-0efa-4510-90b9-25c943772342" bitmap_id="f3802cb9-9cc3-4201-a9f6-145ae2385902">
       <text>
@@ -998,7 +1007,8 @@
       <menu_text>
         <locale_1033>MatchTextureMappingInBlock</locale_1033>
       </menu_text>
-      <script>EA_MatchTextureMappingInBlock</script>
+      <script>EA_ActivateEnneadTab
+EA_MatchTextureMappingInBlock</script>
     </macro_item>
     <macro_item guid="c0b413ff-1e60-4f94-8302-eeb6009a6d87" bitmap_id="debc7fcf-d138-4ac3-81d7-df17a0d22136">
       <text>
@@ -1016,7 +1026,8 @@
       <menu_text>
         <locale_1033>FallGeosOnGeo</locale_1033>
       </menu_text>
-      <script>EA_FallGeosOnGeo</script>
+      <script>EA_ActivateEnneadTab
+EA_FallGeosOnGeo</script>
     </macro_item>
     <macro_item guid="ce585600-3f31-4817-9d4e-ae091ca6a567" bitmap_id="fb2d08fb-5b00-46d4-9d03-11f11b282c96">
       <text>
@@ -1034,7 +1045,8 @@
       <menu_text>
         <locale_1033>BatchRenameBlocks</locale_1033>
       </menu_text>
-      <script>EA_BatchRenameBlocks</script>
+      <script>EA_ActivateEnneadTab
+EA_BatchRenameBlocks</script>
     </macro_item>
     <macro_item guid="2266f454-dd89-49db-a3ce-83da96838094" bitmap_id="34de6104-1931-400b-9fbe-430295526309">
       <text>
@@ -1052,7 +1064,8 @@
       <menu_text>
         <locale_1033>FilterBlockByName</locale_1033>
       </menu_text>
-      <script>EA_FilterBlockByName</script>
+      <script>EA_ActivateEnneadTab
+EA_FilterBlockByName</script>
     </macro_item>
     <macro_item guid="37b7d803-2536-415a-bfde-035b513448d3" bitmap_id="d2df8f54-c158-42af-831e-b16874795027">
       <text>
@@ -1070,7 +1083,8 @@
       <menu_text>
         <locale_1033>RandomBlocksOnSrfs</locale_1033>
       </menu_text>
-      <script>EA_RandomBlocksOnSrfs</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomBlocksOnSrfs</script>
     </macro_item>
     <macro_item guid="fa359c4f-9b46-4a09-8e3a-517513cd19b7" bitmap_id="273fe3d9-95e9-4c69-9e5f-ae1eba07f1ef">
       <text>
@@ -1088,7 +1102,8 @@
       <menu_text>
         <locale_1033>SampleLayout</locale_1033>
       </menu_text>
-      <script>EA_SampleLayout</script>
+      <script>EA_ActivateEnneadTab
+EA_SampleLayout</script>
     </macro_item>
     <macro_item guid="ca7fbf69-9d21-4c4e-a290-02a9c4cbba57" bitmap_id="627962cd-7e2c-4e46-8d85-0dbf907a5ffa">
       <text>
@@ -1106,7 +1121,8 @@
       <menu_text>
         <locale_1033>SelectSimilarBlocks</locale_1033>
       </menu_text>
-      <script>EA_SelectSimilarBlocks</script>
+      <script>EA_ActivateEnneadTab
+EA_SelectSimilarBlocks</script>
     </macro_item>
     <macro_item guid="7e29aefa-d4b9-451f-aad8-b02235d3b835" bitmap_id="7ee3517d-f395-4640-a8e0-23ed948fdf45">
       <text>
@@ -1124,7 +1140,8 @@
       <menu_text>
         <locale_1033>IsolateSimilarBlocks</locale_1033>
       </menu_text>
-      <script>EA_IsolateSimilarBlocks</script>
+      <script>EA_ActivateEnneadTab
+EA_IsolateSimilarBlocks</script>
     </macro_item>
     <macro_item guid="bc2f7065-4947-40fd-96fc-25b52dd2af2d" bitmap_id="fb397b19-6f69-4481-b81b-e74a7314317b">
       <text>
@@ -1142,7 +1159,8 @@
       <menu_text>
         <locale_1033>DestroyLayer</locale_1033>
       </menu_text>
-      <script>EA_DestroyLayer</script>
+      <script>EA_ActivateEnneadTab
+EA_DestroyLayer</script>
     </macro_item>
     <macro_item guid="6d547596-91ae-40f1-98db-69f55001f45d" bitmap_id="4bb7186a-89b1-4cfa-b404-664c9cf6bac1">
       <text>
@@ -1160,7 +1178,8 @@
       <menu_text>
         <locale_1033>FindLayerInFiles</locale_1033>
       </menu_text>
-      <script>EA_FindLayerInFiles</script>
+      <script>EA_ActivateEnneadTab
+EA_FindLayerInFiles</script>
     </macro_item>
     <macro_item guid="a173409d-e98e-41e8-9314-aaa23dcd8084" bitmap_id="3d009962-db48-4b39-8407-3a5c2c8881a7">
       <text>
@@ -1178,7 +1197,8 @@
       <menu_text>
         <locale_1033>InitiateLayers</locale_1033>
       </menu_text>
-      <script>EA_InitiateLayers</script>
+      <script>EA_ActivateEnneadTab
+EA_InitiateLayers</script>
     </macro_item>
     <macro_item guid="0301b192-8ca5-48bc-804a-2911634b3e17" bitmap_id="c56c578a-b310-409b-8096-a811b981a0e4">
       <text>
@@ -1196,7 +1216,8 @@
       <menu_text>
         <locale_1033>IsolateLayerBySelection</locale_1033>
       </menu_text>
-      <script>EA_IsolateLayerBySelection</script>
+      <script>EA_ActivateEnneadTab
+EA_IsolateLayerBySelection</script>
     </macro_item>
     <macro_item guid="8be13fa8-ef4d-4189-ba47-b5d58a0ca483" bitmap_id="90ab6412-cd7b-495d-8877-cd4b29d751f6">
       <text>
@@ -1214,7 +1235,8 @@
       <menu_text>
         <locale_1033>SelectObjectsOnSimilarLayer</locale_1033>
       </menu_text>
-      <script>EA_SelectObjectsOnSimilarLayer</script>
+      <script>EA_ActivateEnneadTab
+EA_SelectObjectsOnSimilarLayer</script>
     </macro_item>
     <macro_item guid="014b29ba-b0f7-43e4-9c89-d22e9250b100" bitmap_id="ac0c9dab-eb07-4530-911c-460579857659">
       <text>
@@ -1232,7 +1254,8 @@
       <menu_text>
         <locale_1033>LayerNameFormat</locale_1033>
       </menu_text>
-      <script>EA_LayerNameFormat</script>
+      <script>EA_ActivateEnneadTab
+EA_LayerNameFormat</script>
     </macro_item>
     <macro_item guid="ae421672-7573-42f0-bb9c-a4b4c386c1cb" bitmap_id="0f0084f5-e537-4303-9471-c9afa23c23ce">
       <text>
@@ -1250,7 +1273,8 @@
       <menu_text>
         <locale_1033>MergeLayer</locale_1033>
       </menu_text>
-      <script>EA_MergeLayer</script>
+      <script>EA_ActivateEnneadTab
+EA_MergeLayer</script>
     </macro_item>
     <macro_item guid="20eb10b1-a453-4f7d-8407-cf8609764b57" bitmap_id="3b6a745d-dedd-4564-8b0d-797774dbb4f3">
       <text>
@@ -1268,7 +1292,8 @@
       <menu_text>
         <locale_1033>NestLayer</locale_1033>
       </menu_text>
-      <script>EA_NestLayer</script>
+      <script>EA_ActivateEnneadTab
+EA_NestLayer</script>
     </macro_item>
     <macro_item guid="b98bc3d5-20be-457e-8e10-51838db79967" bitmap_id="fa23846b-b13e-489f-a031-da3a31ef1ee0">
       <text>
@@ -1286,7 +1311,8 @@
       <menu_text>
         <locale_1033>RandomLayerColor</locale_1033>
       </menu_text>
-      <script>EA_RandomLayerColor</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomLayerColor</script>
     </macro_item>
     <macro_item guid="aebdd0e8-dd9f-4043-933b-8c01959e63c0" bitmap_id="bcf7ef80-7c96-4067-8e87-aa99f25f04e9">
       <text>
@@ -1304,7 +1330,8 @@
       <menu_text>
         <locale_1033>RandomLayerColorSetting</locale_1033>
       </menu_text>
-      <script>EA_RandomLayerColorSetting</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomLayerColorSetting</script>
     </macro_item>
     <macro_item guid="82d75c71-4bf6-49b9-8db0-f52938d61b74" bitmap_id="63c1e388-d3e4-45b1-b0e6-67746f389d90">
       <text>
@@ -1322,7 +1349,8 @@
       <menu_text>
         <locale_1033>SectionboxByBoundingBox</locale_1033>
       </menu_text>
-      <script>EA_SectionboxByBoundingBox</script>
+      <script>EA_ActivateEnneadTab
+EA_SectionboxByBoundingBox</script>
     </macro_item>
     <macro_item guid="bb00ea9a-f062-46ce-9a00-fe9b3ea11b95" bitmap_id="c5682980-7be8-4b7e-aae5-7b06e0f21e99">
       <text>
@@ -1340,7 +1368,8 @@
       <menu_text>
         <locale_1033>SectionboxByPolysrf</locale_1033>
       </menu_text>
-      <script>EA_SectionboxByPolysrf</script>
+      <script>EA_ActivateEnneadTab
+EA_SectionboxByPolysrf</script>
     </macro_item>
     <macro_item guid="02f44c22-946c-463d-88b1-e45eab369bbe" bitmap_id="2b2672aa-d014-4c60-ad1c-ee1cd6035711">
       <text>
@@ -1358,7 +1387,8 @@
       <menu_text>
         <locale_1033>SectionBoxCleanup</locale_1033>
       </menu_text>
-      <script>EA_SectionBoxCleanup</script>
+      <script>EA_ActivateEnneadTab
+EA_SectionBoxCleanup</script>
     </macro_item>
     <macro_item guid="a2e2495c-db65-447c-978c-4432abf4bbac" bitmap_id="74275bfc-8768-478f-a69f-8e6af3e751a8">
       <text>
@@ -1376,7 +1406,8 @@
       <menu_text>
         <locale_1033>ToggleGFADisplay</locale_1033>
       </menu_text>
-      <script>EA_ToggleGFADisplay</script>
+      <script>EA_ActivateEnneadTab
+EA_ToggleGFADisplay</script>
     </macro_item>
     <macro_item guid="75965aa9-9b4d-4b69-9b09-fb3188ec9069" bitmap_id="a420da2f-38ae-4900-ad69-36775901a0d8">
       <text>
@@ -1394,7 +1425,8 @@
       <menu_text>
         <locale_1033>BakeGFADataToExcel</locale_1033>
       </menu_text>
-      <script>EA_BakeGFADataToExcel</script>
+      <script>EA_ActivateEnneadTab
+EA_BakeGFADataToExcel</script>
     </macro_item>
     <macro_item guid="ba82cff1-a28b-4154-b409-1995b998a9ff" bitmap_id="c82b648f-0eba-486e-9ad4-38d23cb155b2">
       <text>
@@ -1412,7 +1444,8 @@
       <menu_text>
         <locale_1033>BatchExportRhinoView</locale_1033>
       </menu_text>
-      <script>EA_BatchExportRhinoView</script>
+      <script>EA_ActivateEnneadTab
+EA_BatchExportRhinoView</script>
     </macro_item>
     <macro_item guid="b6685ab9-1139-4bb9-9731-e8f56751101e" bitmap_id="30a5700f-c901-4b9c-84bb-b4f51f9ad795">
       <text>
@@ -1430,7 +1463,8 @@
       <menu_text>
         <locale_1033>BatchRenameCamera</locale_1033>
       </menu_text>
-      <script>EA_BatchRenameCamera</script>
+      <script>EA_ActivateEnneadTab
+EA_BatchRenameCamera</script>
     </macro_item>
     <macro_item guid="e349d5d0-f51a-46c8-bbbc-79724ef42418" bitmap_id="c54e183c-0aab-4fda-996f-b6032c349da7">
       <text>
@@ -1448,7 +1482,8 @@
       <menu_text>
         <locale_1033>ChangeObjectDisplaySource</locale_1033>
       </menu_text>
-      <script>EA_ChangeObjectDisplaySource</script>
+      <script>EA_ActivateEnneadTab
+EA_ChangeObjectDisplaySource</script>
     </macro_item>
     <macro_item guid="f0e602f1-28f5-44f4-919c-98adbd23943f" bitmap_id="e72ef51e-7a10-437a-a790-8e7834af69d1">
       <text>
@@ -1466,7 +1501,8 @@
       <menu_text>
         <locale_1033>ToggleLayerPointer</locale_1033>
       </menu_text>
-      <script>EA_ToggleLayerPointer</script>
+      <script>EA_ActivateEnneadTab
+EA_ToggleLayerPointer</script>
     </macro_item>
     <macro_item guid="c671f235-80ce-4cb8-872e-55eb4a096cec" bitmap_id="1d6684ef-bcff-4961-add5-6229486b6c76">
       <text>
@@ -1484,7 +1520,8 @@
       <menu_text>
         <locale_1033>StairMaker</locale_1033>
       </menu_text>
-      <script>EA_StairMaker</script>
+      <script>EA_ActivateEnneadTab
+EA_StairMaker</script>
     </macro_item>
     <macro_item guid="cfb2f877-f4e6-4076-ad38-43eed053c581" bitmap_id="c2b2b410-2e9d-4602-bb2f-e5d72b1d9791">
       <text>
@@ -1502,7 +1539,8 @@
       <menu_text>
         <locale_1033>StairMakerSpiral</locale_1033>
       </menu_text>
-      <script>EA_StairMakerSpiral</script>
+      <script>EA_ActivateEnneadTab
+EA_StairMakerSpiral</script>
     </macro_item>
     <macro_item guid="a8eda7f7-df03-4cf7-83f1-9f879fe327c6" bitmap_id="fd10adf3-d01c-4d96-8fd0-b574c294f61d">
       <text>
@@ -1520,7 +1558,8 @@
       <menu_text>
         <locale_1033>FlattenMeshFace</locale_1033>
       </menu_text>
-      <script>EA_FlattenMeshFace</script>
+      <script>EA_ActivateEnneadTab
+EA_FlattenMeshFace</script>
     </macro_item>
     <macro_item guid="5f3aed9b-ac21-4221-92f7-325d8745c3c1" bitmap_id="5e902a39-3dc0-4823-b703-d4e9757ce309">
       <text>
@@ -1538,7 +1577,8 @@
       <menu_text>
         <locale_1033>MakeVoidSeam</locale_1033>
       </menu_text>
-      <script>EA_MakeVoidSeam</script>
+      <script>EA_ActivateEnneadTab
+EA_MakeVoidSeam</script>
     </macro_item>
     <macro_item guid="62f8daca-1908-427a-acd2-c3d6dc01fafd" bitmap_id="ff3fa863-5a5e-429e-9a7e-6eb19f17d1fe">
       <text>
@@ -1556,7 +1596,8 @@
       <menu_text>
         <locale_1033>MatchCrvDir</locale_1033>
       </menu_text>
-      <script>EA_MatchCrvDir</script>
+      <script>EA_ActivateEnneadTab
+EA_MatchCrvDir</script>
     </macro_item>
     <macro_item guid="cdffd44f-5278-4636-a3ac-6b0c9456a03e" bitmap_id="4499aa99-b872-4986-bdc3-e66093c40966">
       <text>
@@ -1574,7 +1615,8 @@
       <menu_text>
         <locale_1033>OffsetFloorBorder</locale_1033>
       </menu_text>
-      <script>EA_OffsetFloorBorder</script>
+      <script>EA_ActivateEnneadTab
+EA_OffsetFloorBorder</script>
     </macro_item>
     <macro_item guid="67720c88-56ee-49a6-8b81-053d2ef1fb55" bitmap_id="5e358b02-9dd4-499b-9d8e-585f31f41227">
       <text>
@@ -1592,7 +1634,8 @@
       <menu_text>
         <locale_1033>PushGlassIn</locale_1033>
       </menu_text>
-      <script>EA_PushGlassIn</script>
+      <script>EA_ActivateEnneadTab
+EA_PushGlassIn</script>
     </macro_item>
     <macro_item guid="f919e3b7-067c-4ba4-b6bb-dfef4addb511" bitmap_id="36af7f31-cffc-47d1-a7c9-b0e8343bb535">
       <text>
@@ -1610,7 +1653,8 @@
       <menu_text>
         <locale_1033>RandomDeselect</locale_1033>
       </menu_text>
-      <script>EA_RandomDeselect</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomDeselect</script>
     </macro_item>
     <macro_item guid="4bf8e0a7-9e04-4717-b803-57f6c9d6d23a" bitmap_id="7a3518b7-7875-42d7-8746-49a58dddd47d">
       <text>
@@ -1628,7 +1672,8 @@
       <menu_text>
         <locale_1033>RandomGroupPacking</locale_1033>
       </menu_text>
-      <script>EA_RandomGroupPacking</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomGroupPacking</script>
     </macro_item>
     <macro_item guid="0ae0a084-9a2d-4f0c-a4b2-16f6bc4306cc" bitmap_id="3761c31d-40de-446a-8999-bcc66299aefc">
       <text>
@@ -1646,7 +1691,8 @@
       <menu_text>
         <locale_1033>ShapeMapper</locale_1033>
       </menu_text>
-      <script>EA_ShapeMapper</script>
+      <script>EA_ActivateEnneadTab
+EA_ShapeMapper</script>
     </macro_item>
     <macro_item guid="0b4ec81f-e146-44ee-a7d6-fab8e6b63112" bitmap_id="5292c282-32c0-47aa-aa10-610b62e770bb">
       <text>
@@ -1664,7 +1710,8 @@
       <menu_text>
         <locale_1033>SrfToPanel</locale_1033>
       </menu_text>
-      <script>EA_SrfToPanel</script>
+      <script>EA_ActivateEnneadTab
+EA_SrfToPanel</script>
     </macro_item>
     <macro_item guid="7efc96b7-ef74-4fca-b361-4804e333a3e6" bitmap_id="9e12a203-8f00-4501-8eda-9544915d8ac0">
       <text>
@@ -1682,7 +1729,8 @@
       <menu_text>
         <locale_1033>TimeTravel</locale_1033>
       </menu_text>
-      <script>EA_TimeTravel</script>
+      <script>EA_ActivateEnneadTab
+EA_TimeTravel</script>
     </macro_item>
     <macro_item guid="4aad6a00-0321-4d32-b1f1-c3df4346947e" bitmap_id="60c90130-8191-45ea-b4fd-7348426df8d1">
       <text>
@@ -1700,7 +1748,8 @@
       <menu_text>
         <locale_1033>ImportSelectedMaterial</locale_1033>
       </menu_text>
-      <script>EA_ImportSelectedMaterial</script>
+      <script>EA_ActivateEnneadTab
+EA_ImportSelectedMaterial</script>
     </macro_item>
     <macro_item guid="b280b23d-0785-4927-9dbf-7159c9e823e7" bitmap_id="0a85ec28-5176-418f-9024-ab1873ab837d">
       <text>
@@ -1718,7 +1767,8 @@
       <menu_text>
         <locale_1033>MaterialPrefix</locale_1033>
       </menu_text>
-      <script>EA_MaterialPrefix</script>
+      <script>EA_ActivateEnneadTab
+EA_MaterialPrefix</script>
     </macro_item>
     <macro_item guid="d07c8def-8f3e-4694-b8db-cfc99f8915e7" bitmap_id="7faea6d4-5a48-4d4b-87af-efe6db5e321a">
       <text>
@@ -1736,7 +1786,8 @@
       <menu_text>
         <locale_1033>MergeMaterials</locale_1033>
       </menu_text>
-      <script>EA_MergeMaterials</script>
+      <script>EA_ActivateEnneadTab
+EA_MergeMaterials</script>
     </macro_item>
     <macro_item guid="b6298e0a-397b-417b-83c3-e2cccea9af5b" bitmap_id="a6418ab1-0ab8-48cc-8d5d-ad0eda01b960">
       <text>
@@ -1754,7 +1805,8 @@
       <menu_text>
         <locale_1033>RandomTextureWalk</locale_1033>
       </menu_text>
-      <script>EA_RandomTextureWalk</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomTextureWalk</script>
     </macro_item>
     <macro_item guid="7db7a966-c01a-4fb8-828d-21d1b3dd5e95" bitmap_id="4353587a-3dd7-4e0a-ab15-8c0a570798b6">
       <text>
@@ -1772,7 +1824,8 @@
       <menu_text>
         <locale_1033>RemoveStringInMaterialName</locale_1033>
       </menu_text>
-      <script>EA_RemoveStringInMaterialName</script>
+      <script>EA_ActivateEnneadTab
+EA_RemoveStringInMaterialName</script>
     </macro_item>
     <macro_item guid="823698bc-1307-41c1-9839-aac5323a1ce7" bitmap_id="b96979bf-7750-44ad-a9ec-3cc800d70311">
       <text>
@@ -1790,7 +1843,8 @@
       <menu_text>
         <locale_1033>AiRenderingFromView</locale_1033>
       </menu_text>
-      <script>EA_AiRenderingFromView</script>
+      <script>EA_ActivateEnneadTab
+EA_AiRenderingFromView</script>
     </macro_item>
     <macro_item guid="7597f119-93c1-4287-a817-ce7b698bdce8" bitmap_id="4193b825-64f6-4605-8e80-698cb3fa2d84">
       <text>
@@ -1808,7 +1862,8 @@
       <menu_text>
         <locale_1033>AiRenderUpscale</locale_1033>
       </menu_text>
-      <script>EA_AiRenderUpscale</script>
+      <script>EA_ActivateEnneadTab
+EA_AiRenderUpscale</script>
     </macro_item>
     <macro_item guid="136dbe0c-eec1-4299-89c1-6150be578c18" bitmap_id="586b9ee3-2db2-4710-8eb4-28594fa0621a">
       <text>
@@ -1826,7 +1881,8 @@
       <menu_text>
         <locale_1033>ImportSelectedCamera</locale_1033>
       </menu_text>
-      <script>EA_ImportSelectedCamera</script>
+      <script>EA_ActivateEnneadTab
+EA_ImportSelectedCamera</script>
     </macro_item>
     <macro_item guid="a1e32e38-aa22-4c3b-8a97-3135f13f90b4" bitmap_id="45a6d576-e2f4-4315-ac8c-403bafe4f0bc">
       <text>
@@ -1844,7 +1900,8 @@
       <menu_text>
         <locale_1033>InspectEnscapeSetting</locale_1033>
       </menu_text>
-      <script>EA_InspectEnscapeSetting</script>
+      <script>EA_ActivateEnneadTab
+EA_InspectEnscapeSetting</script>
     </macro_item>
     <macro_item guid="36f4309c-bbee-4d63-ba13-95946506eefb" bitmap_id="1386c577-4722-4134-8648-70f200e8f0cf">
       <text>
@@ -1862,7 +1919,8 @@
       <menu_text>
         <locale_1033>LoadEnscapeToPsd</locale_1033>
       </menu_text>
-      <script>EA_LoadEnscapeToPsd</script>
+      <script>EA_ActivateEnneadTab
+EA_LoadEnscapeToPsd</script>
     </macro_item>
     <macro_item guid="a14043ec-d5a5-4ed9-aa71-9ec62da15076" bitmap_id="0cb43fd1-1769-44ae-8f51-5125a5836884">
       <text>
@@ -1880,7 +1938,8 @@
       <menu_text>
         <locale_1033>MakeCrvPipe</locale_1033>
       </menu_text>
-      <script>EA_MakeCrvPipe</script>
+      <script>EA_ActivateEnneadTab
+EA_MakeCrvPipe</script>
     </macro_item>
     <macro_item guid="cabd96a2-8dcb-4e53-a710-7842f28acc5d" bitmap_id="79ac7d46-e376-4993-a248-91411a417466">
       <text>
@@ -1898,7 +1957,8 @@
       <menu_text>
         <locale_1033>RenameEnscapeFiles</locale_1033>
       </menu_text>
-      <script>EA_RenameEnscapeFiles</script>
+      <script>EA_ActivateEnneadTab
+EA_RenameEnscapeFiles</script>
     </macro_item>
     <macro_item guid="510f28b9-c6f0-4ae1-8f52-ef59c680ab90" bitmap_id="b8c1949e-f3d3-4ef4-a802-149dd0a5493c">
       <text>
@@ -1916,7 +1976,8 @@
       <menu_text>
         <locale_1033>DuplicateLayout</locale_1033>
       </menu_text>
-      <script>EA_DuplicateLayout</script>
+      <script>EA_ActivateEnneadTab
+EA_DuplicateLayout</script>
     </macro_item>
     <macro_item guid="1e3ad48b-457b-4acc-a29b-8e45bd92597b" bitmap_id="82b1e1d3-1e5a-463b-8586-517952d2927e">
       <text>
@@ -1934,7 +1995,8 @@
       <menu_text>
         <locale_1033>ExportSelectedLayout</locale_1033>
       </menu_text>
-      <script>EA_ExportSelectedLayout</script>
+      <script>EA_ActivateEnneadTab
+EA_ExportSelectedLayout</script>
     </macro_item>
     <macro_item guid="b3950b0b-5fb1-4999-b0bf-d48d3264f9a0" bitmap_id="07698296-7972-4466-8d2c-b011dbeadce3">
       <text>
@@ -1952,7 +2014,8 @@
       <menu_text>
         <locale_1033>SectionCrowd</locale_1033>
       </menu_text>
-      <script>EA_SectionCrowd</script>
+      <script>EA_ActivateEnneadTab
+EA_SectionCrowd</script>
     </macro_item>
     <macro_item guid="240444af-916b-4475-9a1f-a02ac5d8cac0" bitmap_id="37344ba2-d995-410e-b815-06ada15be721">
       <text>
@@ -1970,7 +2033,8 @@
       <menu_text>
         <locale_1033>VisualizeExcel</locale_1033>
       </menu_text>
-      <script>EA_VisualizeExcel</script>
+      <script>EA_ActivateEnneadTab
+EA_VisualizeExcel</script>
     </macro_item>
     <macro_item guid="7a1f0195-716c-48d2-ad4a-f8e57e630faf" bitmap_id="1d189b7e-7305-4f24-b2a1-54e3ef2e4ba1">
       <text>
@@ -1988,7 +2052,8 @@
       <menu_text>
         <locale_1033>OpenSampleExcel</locale_1033>
       </menu_text>
-      <script>EA_OpenSampleExcel</script>
+      <script>EA_ActivateEnneadTab
+EA_OpenSampleExcel</script>
     </macro_item>
     <macro_item guid="56b20496-9dae-48f4-84a2-e29912c3e1eb" bitmap_id="733888c9-b43c-4bc9-91dd-93f82ce852ee">
       <text>
@@ -2006,7 +2071,8 @@
       <menu_text>
         <locale_1033>RandomDeselect</locale_1033>
       </menu_text>
-      <script>EA_RandomDeselect</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomDeselect</script>
     </macro_item>
     <macro_item guid="1721a0dc-3ba6-4bc4-88f3-e91f3cd4c4a0" bitmap_id="15d0fdfb-dae2-47ed-aa42-d6a4c3dd4dc9">
       <text>
@@ -2024,7 +2090,8 @@
       <menu_text>
         <locale_1033>RandomSelectionToGroup</locale_1033>
       </menu_text>
-      <script>EA_RandomSelectionToGroup</script>
+      <script>EA_ActivateEnneadTab
+EA_RandomSelectionToGroup</script>
     </macro_item>
     <macro_item guid="f7cf1b20-4f88-4010-9816-d68f1f790a09" bitmap_id="35352301-c8d8-4a29-82c8-972a980a5095">
       <text>
@@ -2042,7 +2109,8 @@
       <menu_text>
         <locale_1033>BrepToMass</locale_1033>
       </menu_text>
-      <script>EA_BrepToMass</script>
+      <script>EA_ActivateEnneadTab
+EA_BrepToMass</script>
     </macro_item>
     <macro_item guid="81048bf6-4636-4bdf-bc52-13045fe57359" bitmap_id="d7a7dad0-670c-4296-bf63-7692e4311bfa">
       <text>
@@ -2060,7 +2128,8 @@
       <menu_text>
         <locale_1033>SurfaceToAdaptiveComponent</locale_1033>
       </menu_text>
-      <script>EA_SurfaceToAdaptiveComponent</script>
+      <script>EA_ActivateEnneadTab
+EA_SurfaceToAdaptiveComponent</script>
     </macro_item>
     <macro_item guid="563fcb9b-0e4f-4eb5-9244-eca3678b69df" bitmap_id="87449364-fb51-485a-b8b2-b380960ca299">
       <text>
@@ -2078,7 +2147,8 @@
       <menu_text>
         <locale_1033>Block2Family</locale_1033>
       </menu_text>
-      <script>EA_Block2Family</script>
+      <script>EA_ActivateEnneadTab
+EA_Block2Family</script>
     </macro_item>
     <macro_item guid="38810237-9ece-41ec-98ec-86677962d8f7" bitmap_id="e827fbc6-9c49-48a6-afe7-39f2e737dbad">
       <text>
@@ -2096,7 +2166,8 @@
       <menu_text>
         <locale_1033>ExportForRhino2Revit</locale_1033>
       </menu_text>
-      <script>EA_ExportForRhino2Revit</script>
+      <script>EA_ActivateEnneadTab
+EA_ExportForRhino2Revit</script>
     </macro_item>
     <macro_item guid="6c73e8a4-5a2b-489a-8350-5eb20febac2f" bitmap_id="14859f10-d053-4c5d-8ff2-9bb597e5ed89">
       <text>
@@ -2114,7 +2185,8 @@
       <menu_text>
         <locale_1033>DraftInsulationBatting</locale_1033>
       </menu_text>
-      <script>EA_DraftInsulationBatting</script>
+      <script>EA_ActivateEnneadTab
+EA_DraftInsulationBatting</script>
     </macro_item>
     <macro_item guid="b269f0b1-2ff5-4ea9-ba41-51bec6256e30" bitmap_id="f80223fa-2d82-4a76-b4eb-012fba92bbee">
       <text>
@@ -2132,7 +2204,8 @@
       <menu_text>
         <locale_1033>RevitDrafterImport</locale_1033>
       </menu_text>
-      <script>EA_RevitDrafterImport</script>
+      <script>EA_ActivateEnneadTab
+EA_RevitDrafterImport</script>
     </macro_item>
     <macro_item guid="5ff65e1a-b959-449c-9220-be205f5775b2" bitmap_id="e0262cdb-cae4-4a28-9089-a27c300cc1c0">
       <text>
@@ -2150,7 +2223,8 @@
       <menu_text>
         <locale_1033>RevitDrafterExport</locale_1033>
       </menu_text>
-      <script>EA_RevitDrafterExport</script>
+      <script>EA_ActivateEnneadTab
+EA_RevitDrafterExport</script>
     </macro_item>
     <macro_item guid="0d652aa6-dc70-408b-89e8-74d59cbbdf4a" bitmap_id="39788bf4-cdc3-469e-a087-540a2769192a">
       <text>
@@ -2168,7 +2242,8 @@
       <menu_text>
         <locale_1033>ExportCameraToRevit</locale_1033>
       </menu_text>
-      <script>EA_ExportCameraToRevit</script>
+      <script>EA_ActivateEnneadTab
+EA_ExportCameraToRevit</script>
     </macro_item>
     <macro_item guid="3bbd572a-6c5f-4c64-a76b-06a02901df82" bitmap_id="88fc0c7d-45de-494f-925f-8eb642836256">
       <text>
@@ -2186,7 +2261,8 @@
       <menu_text>
         <locale_1033>MapRevitSubCategoryMaterial</locale_1033>
       </menu_text>
-      <script>EA_MapRevitSubCategoryMaterial</script>
+      <script>EA_ActivateEnneadTab
+EA_MapRevitSubCategoryMaterial</script>
     </macro_item>
     <macro_item guid="20597fed-e040-4415-ab69-9f53f1727ca5" bitmap_id="e5906aff-6ced-49be-a65b-150eaa579b4b">
       <text>
@@ -2204,7 +2280,8 @@
       <menu_text>
         <locale_1033>FloorDrafter</locale_1033>
       </menu_text>
-      <script>EA_FloorDrafter</script>
+      <script>EA_ActivateEnneadTab
+EA_FloorDrafter</script>
     </macro_item>
     <macro_item guid="9e664f4c-adbc-4f84-9694-41789e6a6cdb" bitmap_id="9d9e58d2-bd61-48ff-a01b-0a0af9c3bd68">
       <text>
@@ -2222,7 +2299,8 @@
       <menu_text>
         <locale_1033>ImportRevitCollection</locale_1033>
       </menu_text>
-      <script>EA_ImportRevitCollection</script>
+      <script>EA_ActivateEnneadTab
+EA_ImportRevitCollection</script>
     </macro_item>
     <macro_item guid="f2887e00-2355-4e3e-a013-110716ac9cac" bitmap_id="222fb3c4-926c-425e-853e-f0dac59d6c76">
       <text>
@@ -2240,7 +2318,8 @@
       <menu_text>
         <locale_1033>MapBlockTransform</locale_1033>
       </menu_text>
-      <script>EA_MapBlockTransform</script>
+      <script>EA_ActivateEnneadTab
+EA_MapBlockTransform</script>
     </macro_item>
     <macro_item guid="cc9f0d5d-b3c4-4680-a7a9-f19fbfeab8fd" bitmap_id="32f0f192-5732-402f-8810-29703bb3816d">
       <text>
@@ -2258,7 +2337,8 @@
       <menu_text>
         <locale_1033>ListenToMiro</locale_1033>
       </menu_text>
-      <script>EA_ListenToMiro</script>
+      <script>EA_ActivateEnneadTab
+EA_ListenToMiro</script>
     </macro_item>
     <macro_item guid="d9145d34-bfc4-49cc-9c23-c5ea47f9d97d" bitmap_id="ec2cfcf5-aeb5-4658-bf63-71b65b887c7c">
       <text>
@@ -2276,7 +2356,8 @@
       <menu_text>
         <locale_1033>PushToMiro</locale_1033>
       </menu_text>
-      <script>EA_PushToMiro</script>
+      <script>EA_ActivateEnneadTab
+EA_PushToMiro</script>
     </macro_item>
     <macro_item guid="13a621cc-5069-48e5-b09f-3f31b3a25f10" bitmap_id="5747dab3-dac1-4230-93a7-945790bef776">
       <text>
@@ -2294,7 +2375,8 @@
       <menu_text>
         <locale_1033>ArchiveFile</locale_1033>
       </menu_text>
-      <script>EA_ArchiveFile</script>
+      <script>EA_ActivateEnneadTab
+EA_ArchiveFile</script>
     </macro_item>
     <macro_item guid="e1736158-8d5a-4918-8756-fdd9aff70565" bitmap_id="c7307db8-9e6d-4b24-be72-366ba590f4ec">
       <text>
@@ -2312,7 +2394,8 @@
       <menu_text>
         <locale_1033>SaveSmallAndClose</locale_1033>
       </menu_text>
-      <script>EA_SaveSmallAndClose</script>
+      <script>EA_ActivateEnneadTab
+EA_SaveSmallAndClose</script>
     </macro_item>
     <macro_item guid="6b102c79-a77a-49ae-8ac9-e88535864de1" bitmap_id="4ffcee73-c1fc-4b20-9dc3-7ebd19ba738c">
       <text>
@@ -2330,7 +2413,8 @@
       <menu_text>
         <locale_1033>CreateWorksession</locale_1033>
       </menu_text>
-      <script>EA_CreateWorksession</script>
+      <script>EA_ActivateEnneadTab
+EA_CreateWorksession</script>
     </macro_item>
     <macro_item guid="ce094017-71d6-45be-aa3c-8378857caa65" bitmap_id="84382e89-2dcb-4266-88c3-3f8c9262d7ca">
       <text>
@@ -2348,7 +2432,8 @@
       <menu_text>
         <locale_1033>BindWorksession</locale_1033>
       </menu_text>
-      <script>EA_BindWorksession</script>
+      <script>EA_ActivateEnneadTab
+EA_BindWorksession</script>
     </macro_item>
     <macro_item guid="9995700f-a0f9-4cf2-ae44-24908a075599" bitmap_id="577927a9-abc2-426e-971f-f5540f2f6ee0">
       <text>
@@ -2366,7 +2451,8 @@
       <menu_text>
         <locale_1033>ExternalTrimmer</locale_1033>
       </menu_text>
-      <script>EA_ExternalTrimmer</script>
+      <script>EA_ActivateEnneadTab
+EA_ExternalTrimmer</script>
     </macro_item>
     <macro_item guid="92ce8aa9-6920-4ca9-9868-39a1c3d830a7" bitmap_id="d062e563-7842-4449-9c6e-93d7285bf798">
       <text>
@@ -2384,7 +2470,8 @@
       <menu_text>
         <locale_1033>ExternalTrimmer</locale_1033>
       </menu_text>
-      <script>EA_ExternalTrimmer</script>
+      <script>EA_ActivateEnneadTab
+EA_ExternalTrimmer</script>
     </macro_item>
     <macro_item guid="8e43f98c-7092-4d2b-b559-3e0110a7e1c5" bitmap_id="9c4c34cc-e82a-4ba1-8b3a-4e8414866d87">
       <text>
@@ -2402,7 +2489,8 @@
       <menu_text>
         <locale_1033>RebaseFile</locale_1033>
       </menu_text>
-      <script>EA_RebaseFile</script>
+      <script>EA_ActivateEnneadTab
+EA_RebaseFile</script>
     </macro_item>
     <macro_item guid="e2a7b677-1d0c-446e-8889-b9e5ded0eb71" bitmap_id="433929e8-4c3c-4d67-9b13-4ff4f8040cb2">
       <text>
@@ -2420,7 +2508,8 @@
       <menu_text>
         <locale_1033>(1634)ExportWithoutCrv</locale_1033>
       </menu_text>
-      <script>EA_(1634)ExportWithoutCrv</script>
+      <script>EA_ActivateEnneadTab
+EA_(1634)ExportWithoutCrv</script>
     </macro_item>
     <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="2799f78b-fa30-44a7-8b27-44cf1487210e">
       <text>
@@ -2438,7 +2527,8 @@
       <menu_text>
         <locale_1033>(1634)RelocateAll</locale_1033>
       </menu_text>
-      <script>EA_(1634)RelocateAll</script>
+      <script>EA_ActivateEnneadTab
+EA_(1634)RelocateAll</script>
     </macro_item>
     <macro_item guid="e37fb5dd-4387-4814-bdec-5eee9136b59e" bitmap_id="12985a22-c22f-4ba9-b9de-06dd8e67ee8c">
       <text>
@@ -2456,7 +2546,8 @@
       <menu_text>
         <locale_1033>Stack PSD</locale_1033>
       </menu_text>
-      <script>EA_Stack PSD</script>
+      <script>EA_ActivateEnneadTab
+EA_Stack PSD</script>
     </macro_item>
     <macro_item guid="6d6b29f4-1190-401e-960a-8359d3174a65" bitmap_id="47d50797-ce72-4ec0-8579-dbec926518c9">
       <text>
@@ -2505,7 +2596,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>DVD</locale_1033>
       </menu_text>
-      <script>DVD</script>
+      <script>EA_ActivateEnneadTab
+DVD</script>
     </macro_item>
     <macro_item guid="20635ebd-76eb-4868-ab69-5a54570663a6" bitmap_id="1da6d005-e861-418c-b34d-97b352e7525f">
       <text>
@@ -2523,7 +2615,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>EnneadCity</locale_1033>
       </menu_text>
-      <script>EA_EnneadCity</script>
+      <script>EA_ActivateEnneadTab
+EA_EnneadCity</script>
     </macro_item>
     <macro_item guid="553d18ab-abc5-4885-98da-6469677578ea" bitmap_id="cf3c1c17-62d9-4370-b77d-443436fba487">
       <text>
@@ -2541,7 +2634,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>EnneadCity</locale_1033>
       </menu_text>
-      <script>EA_EnneadCity</script>
+      <script>EA_ActivateEnneadTab
+EA_EnneadCity</script>
     </macro_item>
     <macro_item guid="fd57c4a8-ea6d-4fe1-94d6-1608397c751d" bitmap_id="9493d8f4-f598-4502-af93-e91652231f7e">
       <text>
@@ -2559,7 +2653,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>RedAlert</locale_1033>
       </menu_text>
-      <script>EA_RedAlert</script>
+      <script>EA_ActivateEnneadTab
+EA_RedAlert</script>
     </macro_item>
     <macro_item guid="8fd2b047-3c06-4984-8e50-427a62bc430d" bitmap_id="dc514810-21b7-4215-a097-42017b664a51">
       <text>
@@ -2577,7 +2672,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>TestRhino8</locale_1033>
       </menu_text>
-      <script>EA_TestRhino8</script>
+      <script>EA_ActivateEnneadTab
+EA_TestRhino8</script>
     </macro_item>
     <macro_item guid="7c275daf-2cc3-4f62-8277-dc37d88ca7dd" bitmap_id="a8f74541-3f86-455e-8239-d144d66ac83c">
       <text>
@@ -2595,7 +2691,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>SearchCommand</locale_1033>
       </menu_text>
-      <script>EA_SearchCommand</script>
+      <script>EA_ActivateEnneadTab
+EA_SearchCommand</script>
     </macro_item>
     <macro_item guid="1e0f10ef-7087-4617-ac77-faadf1718cdd" bitmap_id="19cda4da-0f10-4bfe-b184-a717ffd052a7">
       <text>
@@ -2613,7 +2710,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>PerforationRatio</locale_1033>
       </menu_text>
-      <script>EA_PerforationRatio</script>
+      <script>EA_ActivateEnneadTab
+EA_PerforationRatio</script>
     </macro_item>
     <macro_item guid="493db044-36f0-4dae-b107-48d5169891af" bitmap_id="d8fce75b-9d52-4048-ba92-80b834000697">
       <text>
@@ -2631,7 +2729,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>ChinaCodeRef</locale_1033>
       </menu_text>
-      <script>EA_ChinaCodeRef</script>
+      <script>EA_ActivateEnneadTab
+EA_ChinaCodeRef</script>
     </macro_item>
     <macro_item guid="485e8c13-92d8-4263-aab8-f691cfbca398" bitmap_id="fa99e81f-6717-4a1b-ae25-720c3270736f">
       <text>
@@ -2649,7 +2748,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>PlaceAsset</locale_1033>
       </menu_text>
-      <script>EA_PlaceAsset</script>
+      <script>EA_ActivateEnneadTab
+EA_PlaceAsset</script>
     </macro_item>
     <macro_item guid="f79c5e9d-a5d4-4428-8f76-207246a5ef33" bitmap_id="d0055582-da3f-44a7-ad19-605af69138c7">
       <text>
@@ -2667,7 +2767,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>SlopeCalculator</locale_1033>
       </menu_text>
-      <script>EA_SlopeCalculator</script>
+      <script>EA_ActivateEnneadTab
+EA_SlopeCalculator</script>
     </macro_item>
     <macro_item guid="0bd9627a-69a8-4fad-b11d-21d33bc2fe14" bitmap_id="a084012e-09e4-4512-9377-105e9487dc11">
       <text>
@@ -2685,7 +2786,8 @@ MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right
       <menu_text>
         <locale_1033>Turtorial</locale_1033>
       </menu_text>
-      <script>EA_Turtorial</script>
+      <script>EA_ActivateEnneadTab
+EA_Turtorial</script>
     </macro_item>
     <macro_item guid="2af153e8-e6b5-49d7-9aa5-cf41f952e530" bitmap_id="69670fbe-a5a8-473e-85c9-1bd9e29d2c37">
       <text>
@@ -2765,7 +2867,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>TellMeVersion</locale_1033>
       </menu_text>
-      <script>EA_TellMeVersion</script>
+      <script>EA_ActivateEnneadTab
+EA_TellMeVersion</script>
     </macro_item>
     <macro_item guid="b923ca3c-83c0-4f3f-9564-1b7b357da591" bitmap_id="4fad3166-07ae-48d5-845f-405aacb7c9f3">
       <text>
@@ -2783,7 +2886,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>RestartRhino</locale_1033>
       </menu_text>
-      <script>EA_RestartRhino</script>
+      <script>EA_ActivateEnneadTab
+EA_RestartRhino</script>
     </macro_item>
     <macro_item guid="fbb565e6-ff3d-4e39-a63e-b3962f76a8ac" bitmap_id="85160ce0-a6fb-44e4-88a4-bc6bb052dedc">
       <text>
@@ -2801,7 +2905,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>ResetAllConduit</locale_1033>
       </menu_text>
-      <script>EA_ResetAllConduit</script>
+      <script>EA_ActivateEnneadTab
+EA_ResetAllConduit</script>
     </macro_item>
     <macro_item guid="b876257d-88a5-4e4a-8cb5-fa1a9b640fde" bitmap_id="cca7b96d-44b4-44e3-a579-b5bf6d4cdd5a">
       <text>
@@ -2819,7 +2924,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>HowToInstall</locale_1033>
       </menu_text>
-      <script>EA_HowToInstall</script>
+      <script>EA_ActivateEnneadTab
+EA_HowToInstall</script>
     </macro_item>
     <macro_item guid="9ffd613f-1824-41c0-afa7-4d1155b1a52f" bitmap_id="3649dca5-17bd-4d85-9c7a-e0fd0688319c">
       <text>
@@ -2837,7 +2943,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>YoutubePlaylist</locale_1033>
       </menu_text>
-      <script>EA_YoutubePlaylist</script>
+      <script>EA_ActivateEnneadTab
+EA_YoutubePlaylist</script>
     </macro_item>
     <macro_item guid="2cb518cd-2945-4822-a945-161c26d64f27" bitmap_id="fc72a172-4544-4e1c-b947-4c63dc02f7f4">
       <text>
@@ -2855,7 +2962,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>MakeANewButton</locale_1033>
       </menu_text>
-      <script>EA_MakeANewButton</script>
+      <script>EA_ActivateEnneadTab
+EA_MakeANewButton</script>
     </macro_item>
     <macro_item guid="c38b0873-3a17-4158-aadb-6aeef2a221f7" bitmap_id="fd4209ae-be26-475c-880e-0307099b0d2f">
       <text>
@@ -2873,7 +2981,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>ExtractPreviewImages</locale_1033>
       </menu_text>
-      <script>EA_ExtractPreviewImages</script>
+      <script>EA_ActivateEnneadTab
+EA_ExtractPreviewImages</script>
     </macro_item>
     <macro_item guid="bcd59837-8c81-43b9-b884-15d0bfa3e65f" bitmap_id="9f1fb2f3-1a6d-4c6d-a496-dcadffbeaaa2">
       <text>
@@ -2891,7 +3000,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>OpenEcosystemFolder</locale_1033>
       </menu_text>
-      <script>EA_OpenEcosystemFolder</script>
+      <script>EA_ActivateEnneadTab
+EA_OpenEcosystemFolder</script>
     </macro_item>
     <macro_item guid="bc2c9d89-bb97-45da-b529-b7f237c2de2f" bitmap_id="6ab2440a-e45b-4261-9ff3-24990a52e40f">
       <text>
@@ -2909,7 +3019,8 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
       <menu_text>
         <locale_1033>UnitTest</locale_1033>
       </menu_text>
-      <script>EA_UnitTest</script>
+      <script>EA_ActivateEnneadTab
+EA_UnitTest</script>
     </macro_item>
   </macros>
   <bitmaps>

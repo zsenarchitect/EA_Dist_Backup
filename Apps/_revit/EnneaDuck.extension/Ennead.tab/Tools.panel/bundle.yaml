@@ -19,3 +19,4 @@ layout:
   - move_curtain_grids 
   - generic_healthcare_tool
   - set_filled_region_border_line
+  - detail_line_from_excel

@@ -6,6 +6,11 @@ import os
 from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 import COPY
 
+def get_save_copy(filepath, include_metadata=False):
+    _, file = os.path.split(filepath)
+    safe_copy = get_EA_dump_folder_file("save_copy_{}_".format(time.time()) + file)
+    COPY.copyfile(filepath, safe_copy, include_metadata)
+    return safe_copy
 
 def copy_file(original_path, new_path):
     """Copy file from original path to new path. If the new path does not exist, it will be created.

@@ -352,19 +352,10 @@ class FamilyMerger(forms.WPFWindow):
     def pre_actions(self):
 
 
-        #print "doing preaction"
-        # Now we need to make an instance of this handler. Moreover, it shows that the same class could be used to for
-        # different functions using different handler class instances
         self.merge_action_event_handler = SimpleEventHandler(merge_action)
-        #self.clock_event_handler = SimpleEventHandler(clock_work)
-        # We now need to create the ExternalEvent
+
         self.ext_event = ExternalEvent.Create(self.merge_action_event_handler)
-        #self.ext_event_clock = ExternalEvent.Create(self.clock_event_handler)
-        #print "preaction done"
-        #print self.merge_action_event_handler
-        #print self.merge_action_event_handler.kwargs
-        #print self.ext_event
-        #print "-------"
+
         return
 
 
@@ -426,8 +417,7 @@ class FamilyMerger(forms.WPFWindow):
         """
         should add check for instance level so if the instance parameter are different, it should also warn might not be safe to merge
         """
-        #print bad_type
-        #print target_type
+
         bad_type_paras = bad_type.Parameters
         target_type_paras = target_type.Parameters
 

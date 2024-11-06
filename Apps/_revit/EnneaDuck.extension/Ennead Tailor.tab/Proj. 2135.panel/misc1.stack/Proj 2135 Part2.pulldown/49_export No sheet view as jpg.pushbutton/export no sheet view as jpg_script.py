@@ -85,7 +85,7 @@ def export_image_from_view(view, doc, adding_creator):
     print("view to Jpg takes {} seconds".format( time_end - time_start))
     cleanup_jpg_name(output_folder, file_name, str(view.ViewType))
     #add_to_log(file_name + ".jpg", time_end - time_start)
-    EA_UTILITY.show_toast(app_name = "Bilibili exporter",
+    NOTIFICATION.messenger(app_name = "Bilibili exporter",
                             title = "[{}.jpg] saved.".format(file_name),
                             image = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135.pulldown\icon.png",
                             message = "{} more to do in current document".format(total - counter))

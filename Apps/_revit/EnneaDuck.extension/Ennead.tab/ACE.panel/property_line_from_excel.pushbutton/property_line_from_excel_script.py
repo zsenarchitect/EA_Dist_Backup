@@ -3,6 +3,7 @@
 
 __doc__ = "Generate detail line from the Excel survey pt data. Best used for property line geneation."
 __title__ = "Property Line From Excel"
+__tip__ = True
 import os
 
 import proDUCKtion # pyright: ignore 

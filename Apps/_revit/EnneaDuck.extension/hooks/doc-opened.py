@@ -1,4 +1,4 @@
-from operator import is_
+
 import os
 from datetime import date
 import random
@@ -6,7 +6,7 @@ import random
 from Autodesk.Revit import DB # pyright: ignore
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE, EMAIL, NOTIFICATION, USER, FOLDER, DATA_FILE, ENVIRONMENT, SOUND
+from EnneadTab import NOTIFICATION, TIMESHEET, ERROR_HANDLE, EMAIL, NOTIFICATION, USER, FOLDER, DATA_FILE, ENVIRONMENT, SOUND
 from EnneadTab.REVIT import REVIT_HISTORY, REVIT_EXTERNAL_FILE, REVIT_FORMS, REVIT_SYNC, REVIT_EVENT
 from pyrevit import forms, script
 from pyrevit import EXEC_PARAMS
@@ -18,7 +18,7 @@ from pyrevit.coreutils import ribbon
 
 
 def log_time_sheet(doc):
-    LOG.update_time_sheet_revit(doc.Title)
+    TIMESHEET.update_timesheet(doc.Title)
 
 
 
@@ -330,7 +330,7 @@ def warn_ignorance(doc, warning_cate):
     if not os.path.exists(record_file):
         record = dict()
     else:
-        record = DATA_FILE.get_data_in_shared_dump_folder(record_file, create_if_not_exist=True)
+        record = DATA_FILE.get_data(record_file)
     
     import time
     if len(record.keys()) == 0:
@@ -430,16 +430,14 @@ def main():
         append_sync_time_record(doc)
         check_if_keynote_file_pointing_to_library(doc)
 
+        REVIT_HISTORY.record_warning(doc)
+        
+        check_group_usage(doc)
+        log_time_sheet(doc)
         return
         
-        REVIT_HISTORY.record_warning(doc)
-        log_time_sheet(doc)
         
 
-        try:
-            check_group_usage(doc)
-        except SystemError:
-            pass
 
 
 

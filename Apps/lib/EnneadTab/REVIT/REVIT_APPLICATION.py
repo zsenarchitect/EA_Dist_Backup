@@ -58,6 +58,10 @@ def open_safety_doc_family():
 def open_and_active_project(filepath):
     """return a ui document"""
     try:
+        return get_uiapp().OpenAndActivateDocument (filepath)
+    except:
+        pass
+    try:
         app = __revit__ #pyright: ignore
         return UI.UIApplication(app).OpenAndActivateDocument (filepath)
     except:
@@ -199,7 +203,7 @@ def get_revit_link_docs(including_current_doc = False, link_only = False):
         if not including_current_doc:
 
             try:
-                if doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
+                if doc.Title == get_doc().Title: # pyright: ignore
                     continue
             except:
                 pass
@@ -222,7 +226,8 @@ def select_revit_link_docs(select_multiple = True, including_current_doc = False
     return docs
 
 
-
+def get_revit_link_types(doc):
+    return list(DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkType).ToElements())
 
 def close_revit_app():
     """try its best to close the revit session.

@@ -13,7 +13,7 @@ sys.path.append("..\lib")
 
 import traceback
 import time
-
+import random
 from EnneadTab.EXCEL import ExcelDataItem
 
 
@@ -25,17 +25,15 @@ def try_catch_error(func):
     
     def wrapper(*args, **kwargs):
 
-        #.print_note ("Wrapper func for EA Log -- Begin:")
         try:
-            # print "main in wrapper"
             out = func(*args, **kwargs)
-            #.print_note ( "Wrapper func for EA Log -- Finish:")
             return out
         except Exception as e:
             print ( str(e))
-            #.print_note (  "Wrapper func for EA Log -- Error: " + str(e)  )
             error = traceback.format_exc()
             print (error)
+            if random.random() < 0.1:
+                NOTIFICATION.messenger(error)
     return wrapper
 
 

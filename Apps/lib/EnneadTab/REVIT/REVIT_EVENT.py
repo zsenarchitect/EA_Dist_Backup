@@ -152,3 +152,10 @@ def is_family_load_hook_enabled():
 
 def set_family_load_hook_stage(stage = True):
     envvars.set_pyrevit_env_var("IS_FAMILY_LOAD_HOOK_ENABLED", stage)
+
+def is_all_sync_closing():
+    return envvars.get_pyrevit_env_var("IS_ALL_SYNC_CLOSING")
+
+def set_all_sync_closing(stage = True):
+    envvars.set_pyrevit_env_var("IS_ALL_SYNC_CLOSING", stage)
+

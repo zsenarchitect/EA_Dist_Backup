@@ -1,8 +1,8 @@
 import os
-from reportlab.lib.pagesizes import letter  # Changed to US Letter size
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import SimpleDocTemplate, Preformatted, Spacer
-from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter # pyright: ignore
+from reportlab.lib.styles import getSampleStyleSheet # pyright: ignore
+from reportlab.platypus import SimpleDocTemplate, Preformatted, Spacer # pyright: ignore
+from reportlab.lib.units import inch # pyright: ignore
 import textwrap  # Import textwrap for line wrapping
 
 def get_file_content(file_path):

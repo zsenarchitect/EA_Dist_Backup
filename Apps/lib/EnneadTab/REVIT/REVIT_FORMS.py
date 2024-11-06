@@ -273,10 +273,10 @@ def dialogue( title = "EnneadTab",
     options = [["opt 1","description long long long long"], ["opt 2"]]   if options is a string, then used as main text, but if it is a list of two strings, the second string will be used as description. In either case, the command link will return main text
 
 
-    TaskDialogIconNone,	No icon.
-    TaskDialogIconShield,	Shield icon.
-    TaskDialogIconInformation,	Information icon.
-    TaskDialogIconError,	Error icon.
+    TaskDialogIconNone,    No icon.
+    TaskDialogIconShield,    Shield icon.
+    TaskDialogIconInformation,    Information icon.
+    TaskDialogIconError,    Error icon.
     TaskDialogIconWarning, Warning icon
 
     Args:

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+import REVIT_APPLICATION
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
-    DOC = UIDOC.Document
+    UIDOC = REVIT_APPLICATION.get_uidoc() 
+    DOC = REVIT_APPLICATION.get_doc()
     from pyrevit import script #
     
 except:
@@ -58,22 +58,50 @@ def kill_record():
 
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def update_last_sync_data_file(doc):
+
     if "detach" in doc.Title.lower():
         return
 
-    with DATA_FILE.update_data(SYNC_MONITOR_FILE) as data:
+    # old_data = DATA_FILE.get_data(SYNC_MONITOR_FILE)
+    # if old_data:
+    #     for key, value in old_data.items():
+    #         if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
+    #             print ("deleting key", key)
+    #             del old_data[key]
+    # else:
+    #     old_data = dict()
+
+    # old_data[doc.Title] = time.time()
+    # DATA_FILE.set_data(old_data, SYNC_MONITOR_FILE)
+    # return 
+
+
+
+    with DATA_FILE.update_data(SYNC_MONITOR_FILE, keep_holder_key=time.time()) as data:
         if data:
+
             for key, value in data.items():
+                if key == "key_holder":
+                    continue
                 if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
+                    print ("deleting key", key)
                     del data[key]
         else:
+  
             data = dict()
         
 
         if doc.IsModified:
             punish_long_gap_time(data)
 
+
+   
         data[doc.Title] = time.time()
+
+
+
+    
+
 
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def remove_last_sync_data_file(doc):
@@ -181,7 +209,12 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
 
         if doc.IsLinked or doc.IsFamilyDocument:
             continue
-        REVIT_VIEW.switch_to_sync_draft_view(doc)
+
+        try:
+            REVIT_VIEW.switch_to_sync_draft_view(doc)
+        except Exception as e:
+            ERROR_HANDLE.print_note(e)
+            continue
         # print "#####"
         # print ("# {}".format( doc.Title) )
         #with revit.Transaction("Sync {}".format(doc.Title)):

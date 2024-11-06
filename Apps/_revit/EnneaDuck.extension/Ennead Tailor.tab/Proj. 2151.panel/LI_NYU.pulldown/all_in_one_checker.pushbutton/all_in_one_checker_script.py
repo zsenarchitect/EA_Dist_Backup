@@ -7,11 +7,11 @@ __title__ = "Detailed Program Chart Update"
 
 # from pyrevit import forms #
 from pyrevit import script
-
+import traceback
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import NOTIFICATION, ERROR_HANDLE
+from EnneadTab import NOTIFICATION, ERROR_HANDLE, USER, FOLDER, EXCEL, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_FAMILY
 from Autodesk.Revit import DB # pyright: ignore  
 # from Autodesk.Revit import UI # pyright: ignore
@@ -24,6 +24,8 @@ except:
 
 import os
 import sys
+import time
+
 sys.path.append((os.path.realpath(os.path.dirname(__file__))))
 
 from area_data_class import AreaData
@@ -347,7 +349,9 @@ class InternalCheck:
 
  
         
-        dummy_target_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)    
+        dummy_target_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)   
+
+        # only update the internal para, which is Level Name and Order Number, also set factor as 1 as constant 
         for para_name in  self.option.FAMILY_PARA_COLLECTION:
             if para_name == self.option.FACTOR_PARA_NAME:
        
@@ -357,7 +361,34 @@ class InternalCheck:
                 continue
             value = dummy_target_type.LookupParameter(para_name).AsDouble()
             dummy_target_data.update(para_name, value)
+
+        if USER.IS_DEVELOPER:
+            print ("\n\nThis is a developer version")
+            if ENVIRONMENT.IS_AVD:
+                NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
+                return
+            self.update_from_excel(dummy_target_data)
+
                 
+
+    def update_from_excel(self, dummy_target_data):
+        NOTIFICATION.duck_pop("Reading from ACC excel by downloading from cloud, this might take a moment.")
+        source_excel = "{}\\DC\\ACCDocs\\Ennead Architects LLP\\2151_NYULI\\Project Files\\00_EA-EC Teams Files\\4_Programming\\_Public Shared\\Web Portal Only_ACTIVE.NYULI_Program_EA.EC.xlsx".format(os.getenv("USERPROFILE"))
+        # source_excel = FOLDER.get_EA_dump_folder_file("temptemp.xlsx")
+        # NOTIFICATION.duck_pop(main_text="using testing file for now.")
+        data = EXCEL.read_data_from_excel(source_excel, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
+
+        key_column = "B"
+        print ("avaibale excel departments: {}".format(EXCEL.get_column_values(data, key_column).keys()))
+        for department_name in self.option.DEPARTMENT_PARA_MAPPING.keys():
+            row = EXCEL.search_row_in_column_by_value(data, key_column, search_value=department_name, is_fuzzy=True)
+
+            target = data.get((row,EXCEL.get_column_index("P")), None)
+            if target:
+                target = float(target)
+                print ("target value found for [{}]: {}".format(department_name, target))
+                # dummy_target_data.update(self.option.DEPARTMENT_PARA_MAPPING[department_name], target)
+                print ("\n\n")  
         
     def fill_delta_data(self, type_name):
         """maybe should worry about making smaller commit so doc is updated before geting data dfrom type data"""
@@ -393,13 +424,17 @@ class InternalCheck:
 
         if not self.validate_all(self):
             NOTIFICATION.messenger(main_text="Cannot proceed further before all setup is validated.")
-            T.Rollback()
+            T.RollBack()
             return
 
-        self.collect_all_area_data()
-        self.update_main_calculator_family_types()
-        self.update_summery_calculator_family_types()
-        T.Commit()
+        try:
+            self.collect_all_area_data()
+            self.update_main_calculator_family_types()
+            self.update_summery_calculator_family_types()
+            T.Commit()
+        except:
+            print (traceback.format_exc())
+            T.RollBack()
         
         
         if self.show_log:
@@ -407,7 +442,7 @@ class InternalCheck:
 
         
         if self._found_bad_area:
-            NOTIFICATION.messenger(main_text="Attention, there are some un-enclosed area in area plans that might affect your accuracy.\nSee output window for details.")
+            NOTIFICATION.duck_pop(main_text="Attention, there are some un-enclosed area in area plans that might affect your accuracy.\nSee output window for details.")
 
         
 

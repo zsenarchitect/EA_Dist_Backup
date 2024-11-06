@@ -8,23 +8,20 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 import DATA_CONVERSION #pyright: ignore
 import NOTIFICATION #pyright: ignore
+import REVIT_APPLICATION, REVIT_CATEGORY
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    UIDOC = __revit__.ActiveUIDocument # pyright: ignore
-    DOC = UIDOC.Document
+    UIDOC = REVIT_APPLICATION.get_uidoc() 
+    DOC = REVIT_APPLICATION.get_doc()
 
     from pyrevit import forms
     
 except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
-try:
-    import REVIT_APPLICATION #pyright: ignore
-    import REVIT_CATEGORY
-except:
-    pass
+
 
 DETAIL_FAMILY_PLACEMENT_TYPES = [
     DB.FamilyPlacementType.ViewBased,

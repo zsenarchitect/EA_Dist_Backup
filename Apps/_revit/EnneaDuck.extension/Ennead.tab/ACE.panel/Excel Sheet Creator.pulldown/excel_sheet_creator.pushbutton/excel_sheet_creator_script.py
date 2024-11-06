@@ -43,7 +43,7 @@ def excel_sheet_creator():
     # this is the sample excel for reference. 
     # excel_path = r"J:\2306\2_Record\2023-07-31 SD Submission\SD Sheetlist_REV00.xlsx"
     
-    data = EXCEL.read_data_from_excel(excel_path, worksheet = "Sheet1", by_line = True)
+    data = EXCEL.read_data_from_excel(excel_path, worksheet = "Sheet1")
     if not data:
         NOTIFICATION.messenger(main_text = "Cannot open this excel")
         return

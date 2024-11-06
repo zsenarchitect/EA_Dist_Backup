@@ -3,7 +3,7 @@
 
 __doc__ = "Sen Zhang has not written documentation for this tool, but he should!"
 __title__ = "Change Family Unit"
-
+__tip__ = True
 import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 

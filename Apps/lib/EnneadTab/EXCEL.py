@@ -4,10 +4,13 @@
 Check formulas, read data, save data, etc."""
 
 import os
+import shutil
 import sys
-
+import trace
+import traceback
+import time
 try:
-    # 设定了输出的环境为utf8
+    
     sys.setdefaultencoding("utf-8")
 except:
     pass
@@ -19,11 +22,16 @@ import NOTIFICATION
 import COLOR
 import FOLDER
 import UNIT_TEST
-
+import TEXT
+import DATA_FILE
 sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
 import xlrd
 import xlsxwriter
 
+from collections import defaultdict
+
+def column_number_to_letter(number, is_upper=True):
+    return chr(number + 64 + (0 if is_upper else 32))
 
 def letter_to_index(letter):
     """Get the index of a letter in the alphabet.
@@ -35,6 +43,8 @@ def letter_to_index(letter):
     Returns:
         int: The index of the letter in the alphabet.
     """
+    if isinstance(letter, int):
+        return letter
     try:
         return ord(letter.upper()) - ord("A")
     except TypeError:
@@ -50,6 +60,9 @@ def get_column_index(letter):
     Returns:
         int: The column index.
     """
+    if isinstance(letter, int):
+        return letter
+    
     if len(letter) == 1:
         return letter_to_index(letter)
     elif len(letter) == 2:
@@ -101,59 +114,146 @@ def get_all_worksheets(filepath):
     wb = xlrd.open_workbook(filepath, on_demand=True)
     return wb.sheet_names()
 
-
-def read_data_from_excel(filepath, worksheet=None, by_line=True, return_dict=False):
-    """Read data from an Excel file.
+def save_as_xls(filepath):
+    """Save an Excel file as .xls format.
 
     Args:
-        filepath (str): The path to the Excel file.
+        filepath (str): The path to the Excel file to convert.
+
+    Returns:
+        str: The path to the saved .xls file, or None if conversion failed.
+    """
+    _, file = os.path.split(filepath)
+    safe_copy = FOLDER.get_EA_dump_folder_file("save_copy_" + file)
+    shutil.copyfile(filepath, safe_copy)
+
+    
+
+    try:
+        import clr  # pyright: ignore
+        clr.AddReference("Microsoft.Office.Interop.Excel")
+        from Microsoft.Office.Interop import Excel  # pyright: ignore
+
+        excel_app = Excel.ApplicationClass()
+        excel_app.Visible = False
+        excel_app.DisplayAlerts = False  # Suppress warnings and prompts
+
+        
+        # Force open the workbook as ReadOnly and ignore warnings
+        workbook = excel_app.Workbooks.Open(
+            safe_copy,
+            ReadOnly=True,  # Open in read-only mode to avoid write permission issues
+            IgnoreReadOnlyRecommended=True,  # Suppress the read-only prompt
+            CorruptLoad=Excel.XlCorruptLoad.xlRepairFile  # Try opening with repair options
+        )
+        save_as_path = FOLDER.get_EA_dump_folder_file("local_save_as_{}.xls".format(time.time()))
+        workbook.SaveAs(save_as_path, FileFormat=Excel.XlFileFormat.xlExcel8)
+        return save_as_path
+    except:
+        print ("Cannot save as xls, see error below:")
+        print (traceback.format_exc())
+    finally:
+        try:    
+            workbook.Close(False)
+            excel_app.Quit()
+        except:
+            pass
+
+
+def read_data_from_excel(filepath, worksheet=None, return_dict=False, headless=True):
+    """Read data from an Excel file or URL.
+
+    Args:
+        filepath (str): The path to the Excel file or URL.
         worksheet (str, optional): The name of the worksheet. Defaults to None.
-        by_line (bool, optional): Whether to return the data by line. Defaults to True.
-        return_dict (bool, optional): Whether to return the data as a dictionary. Defaults to False.
+        return_dict (bool, optional): Whether to return the data as a dictionary, otherwise by line. Defaults to False.
 
     Returns:
         list or dict: The data from the Excel
     """
-    wb = xlrd.open_workbook(
-        filepath, formatting_info=return_dict
-    )  # , encoding_override = "cp1252")#""big5")#"iso2022_jp_2")#"gb18030")#"gbk")#"hz")  #"gb2312")   #"utf8"
-    try:
-        if not worksheet:
-            worksheet = wb.sheet_names()[0]
-        sheet = wb.sheet_by_name(worksheet)
-    except:
-        NOTIFICATION.messenger(main_text="Cannot open worksheet: {}".format(worksheet))
-        return None
-    # print sheet.cell_value(2, 1)
+    # Check if the filepath is a URL
+    if filepath.startswith("http://"):
+        return _read_data_from_excel_online(filepath, worksheet, return_dict, headless)
+    else:
+        return _read_data_from_excel_locally(filepath, worksheet, return_dict, headless)
+
+def _read_data_from_excel_online(url, worksheet, return_dict, headless):
+    import clr  # pyright: ignore
+    clr.AddReference("System")
+    from System.Net import WebClient  # pyright: ignore
+    from System.IO import MemoryStream  # pyright: ignore
+
+    web_client = WebClient()
+    data = web_client.DownloadData(url)
+    stream = MemoryStream(data)
+
+    # Create a temporary file to save the downloaded data
+    temp_filepath = FOLDER.get_EA_dump_folder_file("_temp_excel_{}.xls".format(time.time()))
+    with open(temp_filepath, 'wb') as f:
+        f.write(data)
+
+    # Clean up temp file
+    print ("temp file is at: {}".format(temp_filepath))
+    os.startfile(temp_filepath)
+    # Read the data using the local file reader
+    result = _read_data_from_excel_locally(temp_filepath, worksheet, return_dict, headless)
+
+    # try:
+    #     os.remove(temp_filepath)
+    # except:
+    #     pass
+
+    return result
+
+
+def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
+    filepath = FOLDER.get_save_copy(filepath)
+    
+    if filepath.endswith(".xlsx"):
+        job_data = {
+            "mode": "read",
+            "filepath": filepath,
+            "worksheet": worksheet
+        }
+        DATA_FILE.set_data(job_data, "excel_handler_input.sexyDuck")
+        EXE.try_open_app("ExcelHandler")
+        max_wait = 100
+        wait = 0
+        while wait<max_wait:
+            job_data = DATA_FILE.get_data("excel_handler_input.sexyDuck")
+            if job_data.get("status") == "done":
+                break
+            time.sleep(0.1)
+            wait += 1
+        raw_data = DATA_FILE.get_data("excel_handler_output.sexyDuck")
+        
+        # Convert string keys back to tuple keys
+        converted_data = {}
+        for key, value in raw_data.items():
+            row, column = map(int, key.split(','))
+            converted_data[(row, column)] = value
+        
+        return converted_data
+        NOTIFICATION.messenger(main_text="Excel file is xlsx, converting to xls, this will take a few moments.\nFor better performance, save as .xls instead of .xlsx.")   
+        filepath = save_as_xls(filepath)
 
     if not return_dict:
+        wb = xlrd.open_workbook(
+            filepath, formatting_info=return_dict
+        )
+        try:
+            if not worksheet:
+                worksheet = wb.sheet_names()[0]
+            sheet = wb.sheet_by_name(worksheet)
+        except:
+            NOTIFICATION.messenger(main_text="Cannot open worksheet: {}".format(worksheet))
+            return None
+        
         OUT = []
 
         for i in range(0, sheet.nrows):
             OUT.append(sheet.row_values(i))
         return OUT
-
-    # from collections import OrderedDict
-    # OUT = OrderedDict()
-
-    # OUT = {}
-    # for i in range(0, sheet.nrows):
-    #     for j in range(sheet.ncols):
-    #         cell = sheet.cell(i, j)
-    #         text_value = cell.value
-
-    #         # Get color
-    #         xf_index = sheet.cell_xf_index(i, j)
-    #         xf = wb.xf_list[xf_index]
-    #         bgx = xf.background.pattern_colour_index
-    #         rgb = wb.colour_map.get(bgx)
-
-    #         # Store in dictionary
-    #         OUT[(i, j)] = {'value': text_value, 'color': rgb}
-    #         # if i == 2:
-    #         #     print (OUT[(i, j)])
-
-    # return OUT
 
     import clr  # pyright: ignore
 
@@ -161,30 +261,94 @@ def read_data_from_excel(filepath, worksheet=None, by_line=True, return_dict=Fal
     from Microsoft.Office.Interop import Excel  # pyright: ignore
 
     excel_app = Excel.ApplicationClass()
-    excel_app.Visible = False
-
-    workbook = excel_app.Workbooks.Open(filepath)
-    sheet = workbook.Sheets[worksheet]
-
-    import COLOR
+    excel_app.Visible = not headless
+    excel_app.DisplayAlerts = False  # Suppress warnings and prompts
 
     OUT = {}
-    for i in range(1, sheet.UsedRange.Rows.Count + 1):
-        for j in range(1, sheet.UsedRange.Columns.Count + 1):
-            cell = sheet.Cells[i, j]
-            decimal_color = cell.Interior.Color
-            rgb_color = COLOR.decimal_to_rgb(decimal_color)
-            cell_value = cell.Value2 if cell.Value2 is not None else ""
+    try:
+        # Force open the workbook as ReadOnly and ignore warnings
+        workbook = excel_app.Workbooks.Open(
+            filepath,
+            ReadOnly=True,  # Open in read-only mode to avoid write permission issues
+            IgnoreReadOnlyRecommended=True,  # Suppress the read-only prompt
+            CorruptLoad=Excel.XlCorruptLoad.xlRepairFile  # Try opening with repair options
+        )
+        sheet = workbook.Sheets[worksheet]
 
-            # note to self, use i-1 and j-1 becaome the index starting method is different for clr called method
-            OUT[(i - 1, j - 1)] = {"value": cell_value, "color": rgb_color}
+        import COLOR
 
-    workbook.Close(False)
-    excel_app.Quit()
-    # print OUT
+        for i in range(1, sheet.UsedRange.Rows.Count + 1):
+            for j in range(1, sheet.UsedRange.Columns.Count + 1):
+                cell = sheet.Cells[i, j]
+                decimal_color = cell.Interior.Color
+                rgb_color = COLOR.decimal_to_rgb(decimal_color)
+                cell_value = cell.Value2 if cell.Value2 is not None else ""
 
+                # note to self, use i-1 and j-1 because the index starting method is different for clr called method
+                OUT[(i - 1, j - 1)] = {"value": cell_value, "color": rgb_color}
+
+    except:
+        print (traceback.format_exc())
+    finally:
+        try:
+            workbook.Close(False)
+            excel_app.Quit()
+        except:
+            pass
+        
     return OUT
 
+
+def get_column_values(data, column):
+    """Get all unique values in a column and their corresponding row numbers.
+    
+    Args:
+        data (dict): Excel data dictionary with (row,col) tuple keys and value/color dicts
+        column (str/int): Column letter (e.g. 'A') or index number (0-based)
+        
+    Returns:
+        dict: Dictionary mapping unique values to lists of row numbers where they appear
+    """
+    column = get_column_index(column)
+    result = defaultdict(list)
+    for key, value_dict in data.items():
+        if key[1] == column:
+            result[value_dict["value"]].append(key[0])
+    return dict(result)
+
+def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False):
+    """Search for a value in a specific column and return the matching row number.
+    
+    Args:
+        data (dict): Excel data dictionary with (row,col) tuple keys and value/color dicts.
+            Example format:
+            {
+                (93, 9): {'color': (255, 255, 255), 'value': 'apple'},
+                (68, 2): {'color': (255, 255, 255), 'value': 'E10 - Lobby Cafe'}
+            }
+        column (str/int): Column letter (e.g. 'A') or index number (0-based)
+        search_value (str): Value to search for in the column
+        is_fuzzy (bool, optional): Whether to use fuzzy matching. Defaults to False.
+        
+    Returns:
+        int: Row number where value was found, or None if not found
+    """
+    column = get_column_index(column)
+    if is_fuzzy:
+        column_values = get_column_values(data, column).keys()
+        new_search_value = TEXT.fuzzy_search(search_value, column_values) # change the search value to the best match
+        print ("search value changed from [{}] --> [{}]".format(search_value, new_search_value))
+        search_value = new_search_value
+        
+
+    for key in data.keys():
+        data_row, data_column = key
+        if data_column != column:
+            continue
+        else:
+            if data[key]["value"] == search_value:
+                return data_row
+    return None
 
 def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True):
     """Save data to an Excel file.
@@ -321,14 +485,6 @@ def check_formula(excel, worksheet, highlight_formula=True):
         EXE.try_open_app(excel)
 
 
-def add_two(A, B):
-    return A + B
-
-def add_to_list(list):
-    output = []
-    for item in list:
-        output.append(item + 1)
-    return output
 
 def flip_dict(dict):
     output = {}
@@ -339,23 +495,8 @@ def flip_dict(dict):
 def num_and_letter(num, letter):
     return num + letter_to_index(letter)
 
-def add_two(A, B):
-    return A + B
 
-def add_to_list(list):
-    output = []
-    for item in list:
-        output.append(item + 1)
-    return output
 
-def flip_dict(dict):
-    output = {}
-    for key in dict.keys():
-        output[dict[key]] = key
-    return output
-
-def num_and_letter(num, letter):
-    return num + letter_to_index(letter)
 
 #################  UNIT TEST  #################
 
@@ -376,15 +517,6 @@ test_dict = {
         "'Z'": 25,
         "'AA'": None,
         "'BBB'": None,
-    },
-    "add_two": {
-        "1, 2": 3,
-        "3, 4": 7,
-        "5, 6": 11,
-    },
-    "add_to_list": {
-        "[1, 2, 3]": [2, 3, 4],
-        "[4, 5, 6]": [5, 6, 7],
     },
     "flip_dict": {
         "{'a': 1, 'b': 2}": {1: 'a', 2: 'b'},

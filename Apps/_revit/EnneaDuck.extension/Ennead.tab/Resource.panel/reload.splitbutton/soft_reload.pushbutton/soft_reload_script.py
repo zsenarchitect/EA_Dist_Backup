@@ -4,7 +4,7 @@
 __doc__ = "Just download the new repo and unzip. This will not reload the Reevit for UI change."
 __title__ = "Soft\nReload"
 __context__ = "zero-doc"
-
+__tip__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

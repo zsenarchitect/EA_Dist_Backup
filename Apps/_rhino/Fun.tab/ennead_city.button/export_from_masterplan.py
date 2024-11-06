@@ -47,12 +47,12 @@ def export_from_masterplan():
         rs.SelectObjects(contents)
 
         if plot_name in used_plots:
-            NOTIFICATION.toast(main_text = "Skipping plot {}. File already been claimmed.".format(plot_name))
+            NOTIFICATION.messenger(main_text = "Skipping plot {}. File already been claimmed.".format(plot_name))
             print(plot_name)
             continue
         """
         if os.path.exists(filepath):
-            NOTIFICATION.toast(main_text = "Skipping plot {}. File already exists".format(plot_name))
+            NOTIFICATION.messenger(main_text = "Skipping plot {}. File already exists".format(plot_name))
             continue
         """
         filepath = "{}\{}.3dm".format(city_utility.PLOT_FILES_FOLDER, plot_name)

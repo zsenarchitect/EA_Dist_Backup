@@ -5,7 +5,7 @@
 
 __doc__ = "In the standalone window, you can zoom in with section box to a region that have a warning.\n\nAs you are fixing it, you will see the warning count going down. When you sync baack after all the fix, the EA coins will be rewarded.."
 __title__ = "Isolate\nWarnings"
-
+__tip__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
 from pyrevit.forms import WPFWindow

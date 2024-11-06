@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Generate detail line from the Excel survey pt data. Best used for property line geneation."
+__doc__ = "(Depreciated, moving to Tool in main E-tab)Generate detail line from the Excel survey pt data. Best used for property line geneation."
 __title__ = "Detail Line By Excel"
 __tip__ = True
 

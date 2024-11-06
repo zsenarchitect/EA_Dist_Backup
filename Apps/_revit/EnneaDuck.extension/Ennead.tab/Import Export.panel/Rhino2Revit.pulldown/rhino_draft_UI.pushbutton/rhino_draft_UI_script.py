@@ -281,8 +281,8 @@ def create_abstract_nurbs(geo_data):
     ipts = System.Collections.Generic.List[DB.XYZ]()
     iweights = System.Collections.Generic.List[System.Double]()
     for pt in pts:
-    	ipts.Add(pt)
-    	iweights.Add(2)
+        ipts.Add(pt)
+        iweights.Add(2)
     """
 
 
@@ -516,10 +516,10 @@ class RhinoDraft_UI(forms.WPFWindow):
         export_unit = DWG_option.TargetUnit
         """
         Default
-        Inch	
-        Foot	
-        Millimeter	
-        Centimeter	
+        Inch    
+        Foot    
+        Millimeter    
+        Centimeter    
         Meter
         """
         global RHINO_UNIT

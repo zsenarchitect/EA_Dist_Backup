@@ -69,7 +69,7 @@ def export_image_from_view(view, doc):
     print("view to Jpg takes {} seconds".format( time_end - time_start))
     cleanup_jpg_name(output_folder, file_name, str(view.ViewType))
     #add_to_log(file_name + ".jpg", time_end - time_start)
-    EA_UTILITY.show_toast(app_name = "EnneadTab Exporter",
+    NOTIFICATION.messenger(app_name = "EnneadTab Exporter",
                             title = "[{}.jpg] saved.".format(file_name),
                             message = "{} more to do in current document".format(total - counter))
 

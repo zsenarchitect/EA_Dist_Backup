@@ -5,7 +5,7 @@
 
 __doc__ = "Show warnings in the active view."
 __title__ = "Toggle\nWarnings"
-
+__tip__ = True
 from pyrevit.userconfig import user_config
 from pyrevit import script
 from pyrevit.coreutils.ribbon import ICON_LARGE

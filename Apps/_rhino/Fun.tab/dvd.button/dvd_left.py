@@ -3,7 +3,7 @@ __title__ = "DVD"
 __doc__ = "When you are bored..."
 
 
-from EnneadTab import LOG, ERROR_HANDLE
+from EnneadTab import LOG, ERROR_HANDLE, JOKE
 
 
 @LOG.log(__file__, __title__)

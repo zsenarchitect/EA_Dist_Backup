@@ -10,10 +10,14 @@ except:
 
 
 
-def copyfile(src, dst):
+def copyfile(src, dst, include_metadata=True):
     try:
-        # Attempt to copy the file using shutil.copyfile
-        shutil.copyfile(src, dst)
+        if include_metadata:
+            # Copy file with metadata
+            shutil.copy2(src, dst)  # shutil.copy2 copies both file content and metadata
+        else:
+            # Copy file content only
+            shutil.copyfile(src, dst)
     except Exception as e:
         copyfile_with_dotnet(src, dst)
 

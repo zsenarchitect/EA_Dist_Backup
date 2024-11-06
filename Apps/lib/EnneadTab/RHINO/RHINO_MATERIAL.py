@@ -158,3 +158,7 @@ def create_material_by_type(name,
         return get_material_index(mat)##material name might surfix number if similar name exist, so the index should be get from final product not name.
     else:
         return mat
+
+
+def get_material_index(mat):
+    return sc.doc.Materials.IndexOf(mat)

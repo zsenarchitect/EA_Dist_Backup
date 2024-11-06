@@ -48,7 +48,7 @@ def insert_block(block_name):
 
     modified = Rhino.RhinoDoc.ActiveDoc.InstanceDefinitions.ModifySourceArchive(indexOfAddedBlock,
                                                                                 Rhino.FileIO.FileReference.CreateFromFullPath(external_block_filepath),
-                                                                                Rhino.DocObjects.InstanceDefinitionUpdateType.	Linked,
+                                                                                Rhino.DocObjects.InstanceDefinitionUpdateType.    Linked,
                                                                                 True)# bool for quite mode, no error msg shown
     Rhino.RhinoDoc.ActiveDoc.Objects.AddInstanceObject(indexOfAddedBlock,Rhino.Geometry.Transform.Identity)
 

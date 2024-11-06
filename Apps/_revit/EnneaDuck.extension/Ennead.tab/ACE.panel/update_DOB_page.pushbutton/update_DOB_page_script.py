@@ -5,7 +5,7 @@
 
 __doc__ = "For DOB submission in NYC there reuqires a page number on the titleblock."
 __title__ = "Update DOB\nPage Number"
-
+__tip__ = True
 # from pyrevit import forms #
 from pyrevit import script #
 
