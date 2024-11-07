@@ -24,7 +24,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
     """ 
 
     abs_name = exe_name.lower()
-    if abs_name.endswith(".3dm") or abs_name.endswith(".xlsx") or abs_name.endswith(".xls") or abs_name.endswith(".pdf") or abs_name.endswith(".png") or abs_name.endswith(".jpg"):
+    if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg")):
         os.startfile(exe_name)
         return True
     
@@ -36,7 +36,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
 
     def get_ignore_age(file):
         if "OS_Installer" in file or "AutoStartup" in file:
-            return 60*5
+            return 60*60*2
         return 60*60*24
     if safe_open:
         if not os.path.exists(exe):
