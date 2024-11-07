@@ -40,43 +40,15 @@ class AbstractDepartment(object):
 
     def get_subdata(self):
         self.secondary_data = {}
-        self.thirdary_data = {}
-
-        def process_value(self, pointer, is_thirdary=False):
-            value = self.raw_data[pointer]["value"]
-            if value.upper().strip() != value.upper():
-                print("Check excel at {}, [{}] should be stripped.".format(pointer, value))
-            value = value.upper()
-            self.raw_data[pointer]["value"] = value
-            return value if value not in ["", " ", None] else None
 
         for pointer in sorted(self.raw_data.keys()):
             row, column = pointer
-            if not self.begin_row <= row <= self.end_row:
-                continue
-                
-            col_letter = EXCEL.column_number_to_letter(column)
-            
-            # Handle secondary data
-            if col_letter == self.__class__.secondary_data_column_letter:
-                processed_value = process_value(self, pointer)
-                if processed_value:
-                    self.secondary_data[pointer] = self.raw_data[pointer]
-                    
-            # Handle thirdary data
-            elif col_letter == self.__class__.thirdary_data_column_letter:
-                processed_value = process_value(self, pointer)
-                if processed_value:
-                    # Find parent program type
-                    secondary_col = EXCEL.get_column_index(self.__class__.secondary_data_column_letter)
-                    for search_row in range(row, self.begin_row - 1, -1):
-                        parent_pointer = (search_row, secondary_col)
-                        if parent_pointer in self.secondary_data:
-                            self.raw_data[pointer]["parent"] = self.secondary_data[parent_pointer]["value"]
-                            break
-                    else:
-                        self.raw_data[pointer]["parent"] = "PARENT NOT FOUND"
-                    self.thirdary_data[pointer] = self.raw_data[pointer]
+            if self.begin_row <= row <= self.end_row and EXCEL.column_number_to_letter(column) == self.__class__.secondary_data_column_letter:
+                value = self.raw_data[pointer]["value"]
+                self.raw_data[pointer]["value"] = value.upper()
+                if value not in ["", " ", None]:
+                    self.secondary_data[(row, column)] = self.raw_data[pointer]
+
 
     def __repr__(self):
         return "{} from row {} to row {}.\nSecondary data column: {}\nRevit department name: {}".format(self.name, self.begin_row, self.end_row, self.secondary_data_column_letter, self.revit_department_name)
