@@ -58,6 +58,9 @@ USER_DOCUMENT_FOLDER = "{}\\Documents".format(USER_PROFILE_FOLDER)
 USER_DOWNLOAD_FOLDER = "{}\\downloads".format(USER_PROFILE_FOLDER)
 # # desktop folder is tricky, reason unknown, maybe related to the One drive desktop sync?
 USER_DESKTOP_FOLDER = "{}\\Desktop".format(USER_PROFILE_FOLDER)
+ONE_DRIVE_DESKTOP_FOLDER = "{}\\OneDrive - Ennead Architects\\Desktop".format(USER_PROFILE_FOLDER)
+if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
+    ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = "{}\\AppData".format(USER_PROFILE_FOLDER)
 ECO_SYS_FOLDER = "{}\\EnneadTab Ecosystem".format(USER_DOCUMENT_FOLDER)
 DUMP_FOLDER = ECO_SYS_FOLDER + "\\Dump"
@@ -126,8 +129,8 @@ def is_avd():
         import socket
 
         computer_name = socket.gethostname()
-
-    return "avd" in computer_name.lower()
+  
+    return "avd" in computer_name.lower() or "gpupd" in computer_name.lower()
 
 
 def is_Rhino_8():

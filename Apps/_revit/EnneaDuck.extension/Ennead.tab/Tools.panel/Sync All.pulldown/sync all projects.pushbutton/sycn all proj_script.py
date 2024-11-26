@@ -6,11 +6,16 @@ from pyrevit import  script
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC
+from EnneadTab.REVIT import REVIT_APPLICATION
+
+doc = REVIT_APPLICATION.get_doc()
+
+print ("doc: ", doc)
+
+
+from EnneadTab.REVIT import REVIT_SYNC
 from EnneadTab import SOUND, ERROR_HANDLE, LOG
 
-uidoc = REVIT_APPLICATION.get_uidoc()
-doc = REVIT_APPLICATION.get_doc()
 
 
 @LOG.log(__file__, __title__)

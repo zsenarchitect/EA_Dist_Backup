@@ -533,6 +533,10 @@ def is_changable(x):
         return True
     return False
 
+def is_borrowed(x):
+    current_owner = get_owner(x)
+    return current_owner.lower() == x.Document.Application.Username.lower()
+    
 
 def filter_elements_changable(elements):
     return filter(is_changable, elements)
@@ -653,9 +657,17 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
 def pick_category(doc=DOC):
     return REVIT_CATEGORY.pick_category(doc=doc)
 
-def get_revit_link_instance_by_name(link_doc_name):
-    link_instances = DB.FilteredElementCollector(DOC).OfClass(DB.RevitLinkInstance).ToElements()
+def get_revit_link_instance_by_name(link_doc_name, doc=DOC):
+    link_instances = DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkInstance).ToElements()
     for link_instance in link_instances:
-        if link_instance.GetLinkDocument().Title == link_doc_name:
+        link_doc = link_instance.GetLinkDocument()
+        if link_doc and link_doc.Title == link_doc_name:
             return link_instance
+    return None
+
+
+def get_revit_link_doc_by_name(link_doc_name, doc=DOC):
+    link_instance = get_revit_link_instance_by_name(link_doc_name, doc)
+    if link_instance:
+        return link_instance.GetLinkDocument()
     return None

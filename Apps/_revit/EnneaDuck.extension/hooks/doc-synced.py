@@ -9,7 +9,7 @@ DOC = EXEC_PARAMS.event_args.Document
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK
-from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT
+from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT
 __title__ = "Doc Synced Hook"
 
 
@@ -27,20 +27,26 @@ REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 
 def warn_non_enclosed_area(doc):
     areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
-    bad_areas = filter(lambda x: x.Area == 0, areas)
-    if len(bad_areas) > 0:
-
-        NOTIFICATION.messenger("There are {} non-placed/redundant/non-enclosed areas in the file.\nThey might have impact on the accuracy of your Area Schedule.".format(len(bad_areas)))
+    non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(areas)
+    note = ""
+    if len(non_closed) > 0:
+        note += "There are {} non-enclosed areas in need of attention.\n".format(len(non_closed))
+    if len(non_placed) > 0:
+        note += "There are {} non-placed areas in need of attention.".format(len(non_placed))
+    if note:
+        NOTIFICATION.messenger(note)
 
 
 def warn_non_enclosed_room(doc):
     rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
-    bad_rooms = filter(lambda x: x.Area == 0, rooms)
-    if len(bad_rooms) > 0:
-
-        NOTIFICATION.messenger("There are {} bad rooms in need of attention.\nA bad room might be either non-placed/redudent/non-enclosed.".format(len(bad_rooms)))
-
-
+    non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(rooms)
+    note = ""
+    if len(non_closed) > 0:
+        note += "There are {} non-enclosed rooms in need of attention.\n".format(len(non_closed))
+    if len(non_placed) > 0:
+        note += "There are {} non-placed rooms in need of attention.".format(len(non_placed))
+    if note:
+        NOTIFICATION.messenger(note)
 
 
 

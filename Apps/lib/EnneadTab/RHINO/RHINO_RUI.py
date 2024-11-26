@@ -7,18 +7,47 @@ if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import Rhino # pyright: ignore
 
 
-def update_my_rui():
+def update_rui_v7():
+    
 
-    rs.CloseToolbarCollection("EnneadTab_For_Rhino_Installer", prompt=False)
-    # close current toolbar so not holding it.
-    rs.CloseToolbarCollection("EnneadTab_For_Rhino", prompt=False)
+    for tool_bar_name in rs.ToolbarCollectionNames():
+        if "enneadtab" in tool_bar_name.lower():
+            rs.CloseToolbarCollection(tool_bar_name, prompt=False)
 
-    # close existing toolbar from 1.0 if exists
-    if "EnneadTab" in rs.ToolbarCollectionNames():
-        rs.CloseToolbarCollection("EnneadTab.rui", prompt=False)
+    rui_file = "EnneadTab_For_Rhino_Classic.rui"
 
-    my_local_version = FOLDER.copy_file_to_local_dump_folder(ENVIRONMENT.RHINO_FOLDER + "\\EnneadTab_For_Rhino.rui")
+    my_local_version = FOLDER.copy_file_to_local_dump_folder(ENVIRONMENT.RHINO_FOLDER + "\\" + rui_file)
     rs.OpenToolbarCollection(my_local_version)
+
+def update_rui_v8():
+    # todo: figure out a way to deal with R8 rui handle disapear after restart
+    good_rui_file = "EnneadTab_For_Rhino_Modern.rui"
+    good_rui_toolbar_name = good_rui_file.replace(".rui", "")
+
+    for tool_bar_name in rs.ToolbarCollectionNames():
+        # do not close current oppedn mordern rui so it will not deacivate and disappear after restart
+        if good_rui_toolbar_name == tool_bar_name:
+            continue
+
+        if "enneadtab" in tool_bar_name.lower():
+            rs.CloseToolbarCollection(tool_bar_name, prompt=False)
+
+
+    my_local_version = FOLDER.copy_file_to_local_dump_folder(ENVIRONMENT.RHINO_FOLDER + "\\" + good_rui_file)
+    rs.OpenToolbarCollection(my_local_version)
+
+
+
+
+def update_my_rui():
+    if rs.ExeVersion() >= 8:
+        update_rui_v8()
+    else:
+        update_rui_v7()
+
+
+    
+
 
 
 def add_startup_script():

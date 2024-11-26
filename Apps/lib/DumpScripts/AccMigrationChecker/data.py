@@ -6,7 +6,6 @@ ACC_MAPPING = {
         "acc_project_inner_folder_name": "00_2151",
         "cutoff_days": 60,
         "folder_names_to_check": [
-            # "0_3D",
             "2_Record",
             "1_Presentation\\01_P-Image",
             "2_Master File",

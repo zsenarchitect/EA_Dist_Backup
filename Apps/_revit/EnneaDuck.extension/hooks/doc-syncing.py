@@ -1,6 +1,6 @@
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
-
+import random
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
@@ -8,11 +8,11 @@ from EnneadTab import MODULE_HELPER, VERSION_CONTROL, ERROR_HANDLE, LOG, DATA_FI
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_SELECTION, REVIT_EVENT
 
 __title__ = "Doc Syncing Hook"
-doc = EXEC_PARAMS.event_args.Document
+DOC = EXEC_PARAMS.event_args.Document
 
 
 
-def update_2151():
+def update_2151(doc):
     if doc.Title.lower() == "2151_a_ea_nyuli_hospital_ext":
 
         folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
@@ -23,13 +23,15 @@ def update_2151():
         func_name = "dgsf_area_data_check"
         MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
+        update_modified_date(doc)
+
     if not doc.Title.lower().startswith("2151_"):
         return
     folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_material_setting"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
-def check_sync_queue():
+def check_sync_queue(doc):
     """
     return True is sync can go
     return False is sync have been stopped
@@ -128,7 +130,7 @@ def check_sync_queue():
 
 
 @ERROR_HANDLE.try_catch_error(is_pass=True)
-def fill_drafter_info():
+def fill_drafter_info(doc):
     all_sheets = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).ToElements()
     free_sheets = REVIT_SELECTION.filter_elements_changable(all_sheets)
     
@@ -142,15 +144,37 @@ def fill_drafter_info():
 
 
 
+def update_modified_date(doc):
+    if random.random() < 0.9:
+        return
 
+    # Get collectors for both categories at once
+    collectors = {
+        "sheets": DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets),
+        "views": DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Views)
+    }
 
+    for collector in collectors.values():
+        sample_element = collector.FirstElement()
+        if not sample_element.LookupParameter("ModifiedDate"):
+            continue
+
+        # Get all elements and process in single transaction
+        t = DB.Transaction(doc, "Update Modified Date")
+        t.Start()
+        for element in collector.ToElements():
+            if REVIT_SELECTION.is_borrowed(element):
+                element.LookupParameter("ModifiedDate").Set(TIME.get_YYYY_MM_DD())
+        t.Commit()
+
+    
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
-def doc_syncing():
+def doc_syncing(doc):
     VERSION_CONTROL.update_EA_dist()
 
 
-    can_sync = check_sync_queue()
+    can_sync = check_sync_queue(doc)
     if can_sync:
         # ENNEAD_LOG.update_account_by_local_warning_diff(doc)
         pass
@@ -159,9 +183,9 @@ def doc_syncing():
         return
 
     # do this after checking ques so the primary EXE_PARAM is same as before
-    fill_drafter_info()
-
-    update_2151()
+    fill_drafter_info(doc)
+    
+    update_2151(doc)
 
     TIMESHEET.update_timesheet(doc.Title)
 
@@ -171,4 +195,4 @@ def doc_syncing():
 #################################################################
 
 if __name__ == "__main__":
-    doc_syncing()
+    doc_syncing(DOC)

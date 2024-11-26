@@ -223,7 +223,7 @@ def register_xaml_path():
     DATA_FILE.set_data(data, "xaml_path.sexyDuck")
     
 def set_RIR_clicker():
-    return
+    
     if not USER.IS_DEVELOPER:
         return
     with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:

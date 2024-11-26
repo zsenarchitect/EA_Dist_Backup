@@ -1,19 +1,22 @@
 
 from collections import OrderedDict
 # data_file = EnneadTab.read_json_as_dict_in_dump_folder("LI_NYU_area.json")
-
+import os
 
 
 
 class DepartmentOption():
+    SOURCE_EXCEL = "{}\\DC\\ACCDocs\\Ennead Architects LLP\\2151_NYULI\\Project Files\\00_EA-EC Teams Files\\4_Programming\\_Public Shared\\Web Portal Only_ACTIVE.NYULI_Program_EA.EC.xlsx".format(os.getenv("USERPROFILE"))
     
 
     DEPARTMENT_KEY_PARA = "Area_$Department" # this is the area parameter used to lookup category
+    PROGRAM_TYPE_KEY_PARA = "Area_$Department_Program Type"
+    PROGRAM_TYPE_DETAIL_KEY_PARA = "Area_$Department_Program Type Detail"
 
 
     # KEY = REVIT ASSIGNED DEPARTMENT, VALUE = NICKNAME USED IN CALCUATOR FAMILY AND EXCEL AND  AREADATA CLASS
     DEPARTMENT_PARA_MAPPING = {"DIAGNOSTIC AND TREATMENT": "D&T",
-                            "AMBULATORY CARE": "AMBULATORY CARE",
+                            # "AMBULATORY CARE": "AMBULATORY CARE",
                             "EMERGENCY DEPARTMENT": "ED",
                             "INPATIENT CARE": "BEDS",
                             "PUBLIC SUPPORT": "PUBLIC SUPPORT",
@@ -33,6 +36,8 @@ class DepartmentOption():
     #
     OVERALL_AREA_SCHEME_NAME = "GFA Scheme"
     OVERALL_PARA_NAME = "GSF"
+
+    DGSF_SCHEME_NAME = "DGSF Scheme"
 
 
 
@@ -73,7 +78,7 @@ class DepartmentOption():
     TYPE_NAME_COLLECTION = LEVEL_NAMES + DUMMY_DATA_HOLDER
 
 
-    def __init__(self, option_name = "", department_area_scheme_name = "DGSF Scheme"):
+    def __init__(self, option_name = "", department_area_scheme_name = DGSF_SCHEME_NAME):
 
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name

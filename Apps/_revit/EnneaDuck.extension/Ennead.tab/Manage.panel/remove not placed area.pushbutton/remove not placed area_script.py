@@ -111,6 +111,8 @@ def main():
     find_non_close_or_redundent_area()
     find_empty_area_department()
 
+    print ("\n\nTool finished")
+
 def delete_not_placed_areas():
     all_areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).WhereElementIsNotElementType().ToElements()
     t = DB.Transaction(doc, "Delete Not Placed area")

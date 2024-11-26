@@ -27,8 +27,8 @@ doc = REVIT_APPLICATION.get_doc()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def main():
-    if ENVIRONMENT.IS_AVD:
-        NOTIFICATION.duck_pop("If you log off AVD, this will not reopen new session for you.")
+    # if ENVIRONMENT.IS_AVD:
+    #     NOTIFICATION.duck_pop("If you log off AVD, this will not reopen new session for you.")
     # get all open docs
     docs = REVIT_APPLICATION.get_app().Documents
     docs = [doc for doc in docs if not doc.IsLinked]

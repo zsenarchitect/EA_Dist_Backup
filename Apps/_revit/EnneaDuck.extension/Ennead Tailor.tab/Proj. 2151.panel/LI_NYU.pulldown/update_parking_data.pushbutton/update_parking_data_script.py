@@ -14,11 +14,6 @@ from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, USER
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION, REVIT_FAMILY, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore 
 
-import sys
-import os
-script_folder = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(script_folder)
-import parking_calculator as PC #pyrevit: ignore
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
@@ -92,6 +87,12 @@ FAMILY_DATA = {
 }
 
 
+import sys
+import os
+script_folder = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(script_folder)
+import parking_calculator as PC #pyrevit: ignore
+import parking_tag_manager as PTM #pyrevit: ignore
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -102,6 +103,8 @@ def update_parking_data(doc, show_log = False, is_from_sync_hook = False):
 
     update_type(doc, show_log)
     update_instance(doc)
+
+    PTM.manage_parking_tags(doc, show_log)
 
     if doc.Title == "2151_A_EA_NYULI_Site":
         if not USER.IS_DEVELOPER and is_from_sync_hook:

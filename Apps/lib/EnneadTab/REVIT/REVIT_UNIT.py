@@ -1,14 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-try:
-    from Autodesk.Revit import DB # pyright: ignore
-except:
-    pass
+from Autodesk.Revit import DB # pyright: ignore
+import ERROR_HANDLE
 
 try:
     import REVIT_FORMS
 except:
-    pass
+    ERROR_HANDLE.print_note("REVIT_UNIT.py: Error importing Revit modules")
 
 
 def get_doc_length_units(doc):

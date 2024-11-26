@@ -33,9 +33,10 @@ from collections import defaultdict
 def column_number_to_letter(number, is_upper=True):
     return chr(number + 64 + (0 if is_upper else 32))
 
-def letter_to_index(letter):
+def letter_to_index(letter, start_from_zero=False):
     """Get the index of a letter in the alphabet.
-    A -> 0, B -> 1, C -> 2, etc.
+    if start_from_zero is True, A -> 0, B -> 1, C -> 2, etc.
+    if start_from_zero is False, A -> 1, B -> 2, C -> 3, etc.
 
     Args:
         letter (str): A single letter.
@@ -46,12 +47,12 @@ def letter_to_index(letter):
     if isinstance(letter, int):
         return letter
     try:
-        return ord(letter.upper()) - ord("A")
+        return ord(letter.upper()) - ord("A") + (0 if start_from_zero else 1)
     except TypeError:
         return None
 
 
-def get_column_index(letter):
+def get_column_index(letter, start_from_zero=False):
     """Get the index of an Excel column.
 
     Args:
@@ -64,11 +65,11 @@ def get_column_index(letter):
         return letter
     
     if len(letter) == 1:
-        return letter_to_index(letter)
+        return letter_to_index(letter, start_from_zero)
     elif len(letter) == 2:
         char1 = letter[0]
         char2 = letter[1]
-        return 26 * (letter_to_index(char1) + 1) + letter_to_index(char2)
+        return 26 * (letter_to_index(char1, start_from_zero) + 1) + letter_to_index(char2, start_from_zero)
     else:
         return None
 
@@ -299,7 +300,7 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
     return OUT
 
 
-def get_column_values(data, column):
+def get_column_values(data, column, start_from_zero=False):
     """Get all unique values in a column and their corresponding row numbers.
     
     Args:
@@ -309,14 +310,14 @@ def get_column_values(data, column):
     Returns:
         dict: Dictionary mapping unique values to lists of row numbers where they appear
     """
-    column = get_column_index(column)
+    column = get_column_index(column, start_from_zero)
     result = defaultdict(list)
     for key, value_dict in data.items():
         if key[1] == column:
             result[value_dict["value"]].append(key[0])
     return dict(result)
 
-def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False):
+def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, start_from_zero=False):
     """Search for a value in a specific column and return the matching row number.
     
     Args:
@@ -333,9 +334,9 @@ def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False):
     Returns:
         int: Row number where value was found, or None if not found
     """
-    column = get_column_index(column)
+    column = get_column_index(column, start_from_zero)
     if is_fuzzy:
-        column_values = get_column_values(data, column).keys()
+        column_values = get_column_values(data, column, start_from_zero).keys()
         new_search_value = TEXT.fuzzy_search(search_value, column_values) # change the search value to the best match
         print ("search value changed from [{}] --> [{}]".format(search_value, new_search_value))
         search_value = new_search_value

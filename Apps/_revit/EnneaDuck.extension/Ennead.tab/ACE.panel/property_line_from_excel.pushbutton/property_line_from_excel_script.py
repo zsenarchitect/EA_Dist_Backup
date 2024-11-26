@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __doc__ = "Generate detail line from the Excel survey pt data. Best used for property line geneation."
-__title__ = "Property Line From Excel"
+__title__ = "Property Line\nFrom Excel"
 __tip__ = True
 import os
 

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import ERROR_HANDLE
 import REVIT_APPLICATION
 try:
 
@@ -12,11 +13,12 @@ try:
 except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
+    ERROR_HANDLE.print_note("REVIT_SYNC.py: Error importing Revit modules")
 
 
 
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_VIEW, REVIT_EVENT, REVIT_APPLICATION
-from EnneadTab import CONFIG, EXE, DATA_FILE, NOTIFICATION, SPEAK, ERROR_HANDLE, FOLDER
+import REVIT_FORMS, REVIT_VIEW, REVIT_EVENT
+from EnneadTab import CONFIG, EXE, DATA_FILE, NOTIFICATION, SPEAK
 
 import time
 
@@ -213,8 +215,8 @@ def sync_and_close(close_others = True, disable_sync_queue = True):
         try:
             REVIT_VIEW.switch_to_sync_draft_view(doc)
         except Exception as e:
-            ERROR_HANDLE.print_note(e)
-            continue
+            ERROR_HANDLE.print_note("Error switching to sync draft view: {}".format(e))
+            pass
         # print "#####"
         # print ("# {}".format( doc.Title) )
         #with revit.Transaction("Sync {}".format(doc.Title)):

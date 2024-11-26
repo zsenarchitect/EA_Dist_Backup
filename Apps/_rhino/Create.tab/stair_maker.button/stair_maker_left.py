@@ -12,7 +12,7 @@ import math
 
 
 
-from EnneadTab import DATA_FILE, LOG, ERROR_HANDLE
+from EnneadTab import DATA_FILE, LOG, ERROR_HANDLE, NOTIFICATION
 
 
 def create_stair_block_from_pts(start_pt, end_pt, max_riser, stair_width, flip_pt ):
@@ -44,6 +44,9 @@ def create_stair_block_from_pts(start_pt, end_pt, max_riser, stair_width, flip_p
     # print vertical_diff
     # print horitiontal_diff
     num_of_step = int(math.ceil(vertical_diff / max_riser))
+    if num_of_step == 0:
+        NOTIFICATION.messenger(main_text = "Number of steps cannot be 0...")
+        return
     actual_riser = vertical_diff / num_of_step
     actual_thread = horitiontal_diff / num_of_step
     # print num_of_step, actual_riser, actual_thread

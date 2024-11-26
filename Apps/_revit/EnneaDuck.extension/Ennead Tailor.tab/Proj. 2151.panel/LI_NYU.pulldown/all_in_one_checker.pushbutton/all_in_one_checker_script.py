@@ -12,7 +12,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import NOTIFICATION, ERROR_HANDLE, USER, FOLDER, EXCEL, ENVIRONMENT
-from EnneadTab.REVIT import REVIT_SELECTION, REVIT_FAMILY
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_FAMILY, REVIT_SPATIAL_ELEMENT
 from Autodesk.Revit import DB # pyright: ignore  
 # from Autodesk.Revit import UI # pyright: ignore
 try:
@@ -118,10 +118,12 @@ class InternalCheck:
                         output.linkify(area.Id)))
                 continue
 
-            if area.Area <= 0:
+            if REVIT_SPATIAL_ELEMENT.is_element_bad(area):
                 if self.show_log:
+                    status = REVIT_SPATIAL_ELEMENT.get_element_status(area)
 
-                    print("\nArea has no size!\nIt might not be enclosed or placed....{} @ Level [{}] @ [{}]".format(output.linkify(area.Id),
+                    print("\nArea has no size!\nIt is {}....{} @ Level [{}] @ [{}]".format(status,
+                                                                                           output.linkify(area.Id, area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()),
                                                                                                    level.Name,
                                                                                                    area_scheme_name))
                 else:
@@ -139,7 +141,7 @@ class InternalCheck:
             if search_key_name:
                 department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
                 if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
-                    print ("Ignore {} for calculation".format(department_name))
+                    print ("Ignore {} for calculation at [{}]".format(output.linkify(area.Id, title=department_name), level.Name))
                     
                     continue
                 department_nickname = para_mapping.get(department_name, None)
@@ -363,27 +365,28 @@ class InternalCheck:
             dummy_target_data.update(para_name, value)
 
         if USER.IS_DEVELOPER:
-            print ("\n\nThis is a developer version")
             if ENVIRONMENT.IS_AVD:
                 NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
                 return
+            print ("\n\nThis is a developer version")
             self.update_from_excel(dummy_target_data)
 
                 
 
     def update_from_excel(self, dummy_target_data):
         NOTIFICATION.duck_pop("Reading from ACC excel by downloading from cloud, this might take a moment.")
-        source_excel = "{}\\DC\\ACCDocs\\Ennead Architects LLP\\2151_NYULI\\Project Files\\00_EA-EC Teams Files\\4_Programming\\_Public Shared\\Web Portal Only_ACTIVE.NYULI_Program_EA.EC.xlsx".format(os.getenv("USERPROFILE"))
-        # source_excel = FOLDER.get_EA_dump_folder_file("temptemp.xlsx")
-        # NOTIFICATION.duck_pop(main_text="using testing file for now.")
-        data = EXCEL.read_data_from_excel(source_excel, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
+        data = EXCEL.read_data_from_excel(OPTION_MAIN.SOURCE_EXCEL, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
 
         key_column = "B"
         print ("avaibale excel departments: {}".format(EXCEL.get_column_values(data, key_column).keys()))
         for department_name in self.option.DEPARTMENT_PARA_MAPPING.keys():
-            row = EXCEL.search_row_in_column_by_value(data, key_column, search_value=department_name, is_fuzzy=True)
+            row = EXCEL.search_row_in_column_by_value(data, 
+                                                      key_column, 
+                                                      search_value=department_name, 
+                                                      is_fuzzy=True)
 
             target = data.get((row,EXCEL.get_column_index("P")), None)
+            print ("At this moment, there is no change to the target value. Just reading")
             if target:
                 target = float(target)
                 print ("target value found for [{}]: {}".format(department_name, target))

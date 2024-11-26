@@ -53,7 +53,7 @@ def print_timesheet_detail():
                         output += "\n    - Duration: {}".format(TIME.get_readable_time(duration))
             output += "\n"
 
-    output += "\n\n\nOutput finish!\nIf you are not seeing the record as wished for Rhino files, please 'GetLatest' from menu and follow instruction on Email."
+    output += "\n\n\nOutput finish!"
 
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         print_revit_log_as_table()
@@ -63,7 +63,7 @@ def print_timesheet_detail():
         OUTPUT.display_output_on_browser()
     if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
         import rhinoscriptsyntax as rs
-        rs.TextOut(output)
+        rs.TextOut(output, "All your busy work recently.")
 
 def print_revit_log_as_table():
     data = DATA_FILE.get_data(TIMESHEET_DATA_FILE)

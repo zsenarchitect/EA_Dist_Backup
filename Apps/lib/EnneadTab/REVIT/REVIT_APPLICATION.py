@@ -1,16 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-try:
-    from Autodesk.Revit import UI # pyright: ignore
-    from Autodesk.Revit import DB # pyright: ignore
-    import REVIT_FORMS, REVIT_EVENT
-except:
-    pass
-
-
-import FOLDER, SAMPLE_FILE, ERROR_HANDLE
-
+from Autodesk.Revit import UI # pyright: ignore
+from Autodesk.Revit import DB # pyright: ignore
 
 def get_app():
     app = __revit__ # pyright: ignore
@@ -38,6 +30,24 @@ def get_uidoc():
 def get_doc():
     """Return active Document."""
     return getattr(get_uidoc(), 'Document', None)
+
+
+
+import os
+import sys
+root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(root_folder)
+import traceback
+try:
+    import FOLDER, SAMPLE_FILE, ERROR_HANDLE
+
+except Exception as e:
+    ERROR_HANDLE.print_note("REVIT_APPLICATION.py: Error importing Revit modules")
+    ERROR_HANDLE.print_note(traceback.format_exc())
+
+
+
+
 
 
 

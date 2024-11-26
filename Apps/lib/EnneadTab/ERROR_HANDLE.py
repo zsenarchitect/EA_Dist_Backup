@@ -70,18 +70,42 @@ def try_catch_error(is_silent=False, is_pass = False):
 
 
 
-def print_note(string):
-    """For non-developers this is never printed."""
-
-    if USER.is_EnneadTab_developer():
+def print_note(*args):
+    """For non-developers this is never printed.
+    Can handle one or more inputs and shows their types.
+    
+    Example:
+    print_note("hello", 123, ["a", "b"])
+    -> [Dev Debug Only Note] 
+       str: hello
+       int: 123
+       list: ['a', 'b']
+    """
+    if not USER.is_EnneadTab_developer():
+        return
         
-        try:
-            from pyrevit import script
-            string = str(string)
-            script.get_output().print_md(
-                "***[Dev Debug Only Note]***:{}".format(string))
-        except Exception as e:
-
-            print("[Dev Debug Only Note]:{}".format(string))
+    try:
+        from pyrevit import script
+        output = script.get_output()
+        
+        # If single argument, keep original behavior
+        if len(args) == 1:
+            output.print_md("***[Dev Debug Only Note]***:{}".format(str(args[0])))
+            return
+            
+        # For multiple arguments, print type and value for each
+        output.print_md("***[Dev Debug Only Note]***")
+        for arg in args:
+            output.print_md("- *{}*: {}".format(type(arg).__name__, str(arg)))
+            
+    except Exception as e:
+        # Fallback to print if pyrevit not available
+        if len(args) == 1:
+            print("[Dev Debug Only Note]:{}".format(str(args[0])))
+            return
+            
+        print("[Dev Debug Only Note]")
+        for arg in args:
+            print("- {}: {}".format(type(arg).__name__, str(arg)))
 
 

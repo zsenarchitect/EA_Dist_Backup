@@ -9,7 +9,7 @@ import System # pyright: ignore
 import traceback
 import math
 
-from EnneadTab import DATA_FILE, NOTIFICATION, LOG, ERROR_HANDLE
+from EnneadTab import DATA_FILE, NOTIFICATION, LOG, ERROR_HANDLE,NOTIFICATION
 
 
 def make_stair_mass_brep(e, center_pt, start_pt, end_pt, max_riser, stair_width, thread_thickness, current_pt = None):
@@ -33,6 +33,9 @@ def make_stair_mass_brep(e, center_pt, start_pt, end_pt, max_riser, stair_width,
     if num_of_step > 30:
         note = "Check your unit, the riser info might not make sense now.\nYou are trying to create {} steps".format(num_of_step)
         # NOTIFICATION.messenger(main_text = note)
+        return (None, note)
+    if num_of_step == 0:
+        note = "Number of steps cannot be 0..."
         return (None, note)
     
     

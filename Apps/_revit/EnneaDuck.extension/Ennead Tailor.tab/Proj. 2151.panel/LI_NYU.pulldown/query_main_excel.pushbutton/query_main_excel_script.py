@@ -13,9 +13,16 @@ from Autodesk.Revit import DB # pyright: ignore
 from pyrevit import forms
 # UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
-DEPARTMENT_KEY_PARA = "Area_$Department"
-PROGRAM_TYPE_KEY_PARA = "Area_$Department_Program Type"
-AREA_SCHEME_NAME = "DGSF Scheme"
+
+# Add path to all_in_one_checker module
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'all_in_one_checker.pushbutton'))
+from constants import DepartmentOption
+
+DEPARTMENT_KEY_PARA = DepartmentOption.DEPARTMENT_KEY_PARA
+PROGRAM_TYPE_KEY_PARA = DepartmentOption.PROGRAM_TYPE_KEY_PARA
+PROGRAM_TYPE_DETAIL_KEY_PARA = DepartmentOption.PROGRAM_TYPE_DETAIL_KEY_PARA
+AREA_SCHEME_NAME = DepartmentOption.DGSF_SCHEME_NAME
 
 
 class AbstractDepartment(object):
@@ -35,23 +42,41 @@ class AbstractDepartment(object):
         self.secondary_data = {}
         self.thirdary_data = {}
 
-        
+        def process_value(self, pointer, is_thirdary=False):
+            value = self.raw_data[pointer]["value"]
+            if value.upper().strip() != value.upper():
+                print("Check excel at {}, [{}] should be stripped.".format(pointer, value))
+            value = value.upper()
+            self.raw_data[pointer]["value"] = value
+            return value if value not in ["", " ", None] else None
+
         for pointer in sorted(self.raw_data.keys()):
             row, column = pointer
             if not self.begin_row <= row <= self.end_row:
                 continue
-            if EXCEL.column_number_to_letter(column) == self.__class__.secondary_data_column_letter:
-                value = self.raw_data[pointer]["value"]
-                self.raw_data[pointer]["value"] = value.upper()
-                if value not in ["", " ", None]:
-                    self.secondary_data[(row, column)] = self.raw_data[pointer]
-
-
-            if EXCEL.column_number_to_letter(column) == self.__class__.thirdary_data_column_letter:
-                value = self.raw_data[pointer]["value"]
-                self.raw_data[pointer]["value"] = value.upper()
-                if value not in ["", " ", None]:
-                    self.thirdary_data[(row, column)] = self.raw_data[pointer]
+                
+            col_letter = EXCEL.column_number_to_letter(column)
+            
+            # Handle secondary data
+            if col_letter == self.__class__.secondary_data_column_letter:
+                processed_value = process_value(self, pointer)
+                if processed_value:
+                    self.secondary_data[pointer] = self.raw_data[pointer]
+                    
+            # Handle thirdary data
+            elif col_letter == self.__class__.thirdary_data_column_letter:
+                processed_value = process_value(self, pointer)
+                if processed_value:
+                    # Find parent program type
+                    secondary_col = EXCEL.get_column_index(self.__class__.secondary_data_column_letter)
+                    for search_row in range(row, self.begin_row - 1, -1):
+                        parent_pointer = (search_row, secondary_col)
+                        if parent_pointer in self.secondary_data:
+                            self.raw_data[pointer]["parent"] = self.secondary_data[parent_pointer]["value"]
+                            break
+                    else:
+                        self.raw_data[pointer]["parent"] = "PARENT NOT FOUND"
+                    self.thirdary_data[pointer] = self.raw_data[pointer]
 
     def __repr__(self):
         return "{} from row {} to row {}.\nSecondary data column: {}\nRevit department name: {}".format(self.name, self.begin_row, self.end_row, self.secondary_data_column_letter, self.revit_department_name)
@@ -97,7 +122,7 @@ class Solution:
     
     department_instances = None
     
-    def get_bad_areas(self, is_program_type=False):
+    def get_bad_areas(self, changed_para):
         """
         Creates a dictionary of areas with department names that don't match the approved list.
         
@@ -110,21 +135,22 @@ class Solution:
         """
         bad_area_dict = {}
 
-        if is_program_type:
-            para_name = PROGRAM_TYPE_KEY_PARA
-            good_names = [(department_instance.revit_department_name, value["value"]) for department_instance in self.department_instances for value in department_instance.secondary_data.values()]
-        else:
-            para_name = DEPARTMENT_KEY_PARA
+        if changed_para == DEPARTMENT_KEY_PARA:
             good_names = [department_instance.revit_department_name for department_instance in self.department_instances]
-
+        elif changed_para == PROGRAM_TYPE_KEY_PARA:
+            good_names = ["[{}] {}".format(department_instance.revit_department_name, value["value"]) for department_instance in self.department_instances for value in department_instance.secondary_data.values()]
+        elif changed_para == PROGRAM_TYPE_DETAIL_KEY_PARA:
+            good_names = ["[{}] [{}] {}".format(department_instance.revit_department_name, value["parent"], value["value"]) for department_instance in self.department_instances for value in department_instance.thirdary_data.values()]
 
         # need to refetch so each round is fresh
         self.all_areas = REVIT_AREA_SCHEME.get_area_by_scheme_name(AREA_SCHEME_NAME, doc = DOC)
         
         for area in self.all_areas:
-            key = area.LookupParameter(para_name).AsString()
-            if is_program_type:
-                key = (area.LookupParameter(DEPARTMENT_KEY_PARA).AsString(), key)
+            key = area.LookupParameter(changed_para).AsString()
+            if changed_para == PROGRAM_TYPE_KEY_PARA:
+                key = "[{}] {}".format(area.LookupParameter(DEPARTMENT_KEY_PARA).AsString(), key)
+            elif changed_para == PROGRAM_TYPE_DETAIL_KEY_PARA:
+                key = "[{}] [{}] {}".format(area.LookupParameter(DEPARTMENT_KEY_PARA).AsString(), area.LookupParameter(PROGRAM_TYPE_KEY_PARA).AsString(), key)
             if key in good_names:
                 continue
 
@@ -133,17 +159,15 @@ class Solution:
             bad_area_dict[key].append(area)
 
         # Add finish option for UI
-        if is_program_type:
-            bad_area_dict[("_Finish_", "_Finish_")] = []
-        else:
-            bad_area_dict["_Finish_"] = []
-        
+        bad_area_dict["_Finish_"] = []
+
+
         return bad_area_dict
 
     def fix_department_assignments(self):
         """Fix department assignments for areas"""
         while True:
-            bad_area_dict = self.get_bad_areas(is_program_type=False)
+            bad_area_dict = self.get_bad_areas(changed_para=DEPARTMENT_KEY_PARA)
             options = sorted(bad_area_dict.keys())
             
             picked_department = forms.SelectFromList.show(options,
@@ -163,93 +187,143 @@ class Solution:
 
             t = DB.Transaction(DOC, "Fix department for {}".format(picked_department))
             t.Start()
-            for area in bad_area_dict[target_department]:
+            for area in bad_area_dict[picked_department]:
                 area.LookupParameter(DEPARTMENT_KEY_PARA).Set(target_department)
 
-            NOTIFICATION.messenger("Fixed {} areas".format(len(bad_area_dict[target_department])))
+            NOTIFICATION.messenger("Fixed {} areas".format(len(bad_area_dict[picked_department])))
             t.Commit()
 
     def fix_program_type_assignments(self):
         """Fix program type assignments for areas"""
-        class ProgramTypeOption(forms.TemplateListItem):
-            @property
-            def name(self):
-                return "[{}] {}".format(self.department_name, self.program_type)
-
-        class SourceOption(ProgramTypeOption):
-            def __init__(self, areas, department_name, program_type):
-                self.item = areas
-                self.department_name = department_name
-                self.program_type = program_type
-
-        class TargetOption(ProgramTypeOption):
-            def __init__(self, program_type, department_name):
-                self.item = program_type
-                self.department_name = department_name
-                self.program_type = program_type
 
         while True:
             # Get bad areas and create source options
-            bad_area_dict = self.get_bad_areas(is_program_type=True)
-            source_options = [SourceOption(areas, dept_name, prog_type) 
-                            for (dept_name, prog_type), areas in bad_area_dict.items()]
-            source_options.sort(key=lambda x: x.name)
+            bad_area_dict = self.get_bad_areas(changed_para=PROGRAM_TYPE_KEY_PARA)
+            options = sorted(bad_area_dict.keys(), key=lambda x: (x != "_Finish_", x))
             
             # Select source program type, return a list of area
             picked_option = forms.SelectFromList.show(
-                source_options,
+                options,
                 title="Pick a PROGRAM TYPE to fix"
             )
 
-            if not picked_option or len(picked_option) == 0:
+            if not picked_option or picked_option == "_Finish_":
                 break
 
             # Create and sort target options            target_options = [
 
             target_options = [
-                TargetOption(prog_type, dept.revit_department_name)
+                "[{}] {}".format(dept.revit_department_name, prog_type)
                 for dept in self.department_instances
                 for prog_type in dept.revit_program_type_names
             ]
-            target_options.sort(key=lambda x: x.name)
+            target_options.sort()
 
-            # Select target program type
-            picked_source_program_type_name = "[{}] {}".format(picked_option[0].LookupParameter(DEPARTMENT_KEY_PARA).AsString(), 
-                                                               picked_option[0].LookupParameter(PROGRAM_TYPE_KEY_PARA).AsString())
 
-            best_match = TEXT.fuzzy_search(picked_source_program_type_name, [option.name for option in target_options])
-            target_options.sort(key=lambda x: x.name == best_match, reverse=True)
+
+            best_match = TEXT.fuzzy_search(picked_option, target_options)
+            target_options.sort(key=lambda x: x == best_match, reverse=True)
 
             target_option = forms.SelectFromList.show(
                 target_options,
-                button_name="{} ---> ?".format(picked_source_program_type_name),
+                button_name="{} ---> ?".format(picked_option),
                 title="Pick a target PROGRAM TYPE"
             )
             if not target_option:
                 break
+            
 
             # Apply changes in transaction
-            t = DB.Transaction(DOC, "Fix program type: {}".format(picked_source_program_type_name))
+            t = DB.Transaction(DOC, "Fix program type: {}".format(picked_option))
             t.Start()
-            for area in picked_option:
-                area.LookupParameter(PROGRAM_TYPE_KEY_PARA).Set(target_option)
-            NOTIFICATION.messenger("Fixed {} areas".format(len(picked_option)))
+            dept_name = re.search(r"\[(.*?)\]", target_option).group(1).strip()
+            prog_type = re.search(r"\](.*?)$", target_option).group(1).strip()
+            for i, area in enumerate(bad_area_dict[picked_option]):
+                area.LookupParameter(PROGRAM_TYPE_KEY_PARA).Set(prog_type)
+                area.LookupParameter(DEPARTMENT_KEY_PARA).Set(dept_name)
+                    
+                print ("{}/{}: {}: {} ---> {}".format(i+1, len(bad_area_dict[picked_option]), output.linkify(area.Id), picked_option, target_option))
+            NOTIFICATION.messenger("Fixed {} areas".format(len(bad_area_dict[picked_option])))
             t.Commit()
 
-    def fix_assignments(self, is_program_type=False):
-        """Main entry point for fixing assignments"""
-        if is_program_type:
-            self.fix_program_type_assignments()
-        else:
-            self.fix_department_assignments()
+    def fix_program_type_detail_assignments(self):
+        """Fix program type detail assignments for areas with a dash of fun"""
+        
+        while True:
+            bad_area_dict = self.get_bad_areas(changed_para=PROGRAM_TYPE_DETAIL_KEY_PARA)
+            options = sorted(bad_area_dict.keys(), key=lambda x: (x != "_Finish_", x))
+
+            # Remove any options that end with " None"
+            options = [x for x in options if not x.endswith(" None")]
+
+            # Remove empty options after last ]
+            options = [x for x in options if not x.strip().endswith("]")]
+            
+            picked_option = forms.SelectFromList.show(
+                options,
+                title="Pick a PROGRAM TYPE DETAIL to fix"
+            )
+
+            if not picked_option or picked_option == "_Finish_":
+                break
+
+            # Create target options with full hierarchy
+            target_options = []
+            for dept in self.department_instances:
+                for detail in dept.thirdary_data.values():
+                    full_option = "[{}] [{}] {}".format(
+                        dept.revit_department_name,
+                        detail["parent"],
+                        detail["value"]
+                    )
+                    target_options.append(full_option)
+            
+            target_options.sort()
+
+            # Find best fuzzy match and put it at the top
+            best_match = TEXT.fuzzy_search(picked_option, target_options)
+            target_options.sort(key=lambda x: x == best_match, reverse=True)
+
+            target_option = forms.SelectFromList.show(
+                target_options,
+                button_name="{} ---> ?".format(picked_option),
+                title="Pick a target PROGRAM TYPE DETAIL"
+            )
+            
+            if not target_option:
+                break
+
+            # Apply changes in transaction
+            t = DB.Transaction(DOC, "Fix program type detail: {}".format(picked_option))
+            t.Start()
+            
+            # Extract department, program type, and detail from target
+            matches = re.findall(r"\[(.*?)\]", target_option)
+            dept_name = matches[0].strip()
+            prog_type = matches[1].strip()
+            detail = re.search(r"\](.*?)$", target_option).group(1).strip()
+
+            for i, area in enumerate(bad_area_dict[picked_option]):
+                area.LookupParameter(PROGRAM_TYPE_DETAIL_KEY_PARA).Set(detail)
+                area.LookupParameter(PROGRAM_TYPE_KEY_PARA).Set(prog_type)
+                area.LookupParameter(DEPARTMENT_KEY_PARA).Set(dept_name)
+                
+                print ("{}/{}: {}: {} ---> {}".format(i+1, len(bad_area_dict[picked_option]), output.linkify(area.Id), picked_option, target_option))
+
+            NOTIFICATION.messenger("Successfully fixed {} areas!".format(
+                len(bad_area_dict[picked_option])
+            ))
+            t.Commit()
+
+
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def query_main_excel():
     NOTIFICATION.messenger("Reading excel file...")
-    source_excel = "{}\\DC\\ACCDocs\\Ennead Architects LLP\\2151_NYULI\\Project Files\\00_EA-EC Teams Files\\4_Programming\\_Public Shared\\Web Portal Only_ACTIVE.NYULI_Program_EA.EC.xlsx".format(os.getenv("USERPROFILE"))
+    
 
-    raw_data = EXCEL.read_data_from_excel(source_excel, 
+    raw_data = EXCEL.read_data_from_excel(DepartmentOption.SOURCE_EXCEL, 
                                       worksheet="EA Benchmarking DGSF Tracker", 
                                       return_dict=True,
                                       headless=True) # if have permission lock---> set it as always availble in this PC from desktop connecter.
@@ -268,7 +342,10 @@ def query_main_excel():
         "TOTAL DEPARTMENTAL PROGRAM AREA (DGSF)"
         ]
 
-    opts = ["Fix Department Assignments", ["Fix Program Type Assignments", "..."]]
+    opts = ["Fix Department Assignments", 
+            ["Fix Program Type Assignments", "..."],
+            ["Fix Program Type Detail Assignments", "Work in progress"]
+            ]
     res = REVIT_FORMS.dialogue(options = opts, main_text="What do you want to fix?")
     if not res:
         return
@@ -285,10 +362,14 @@ def query_main_excel():
 
 
     if res == opts[0]:
-        solution.fix_assignments(is_program_type=False)
+        solution.fix_department_assignments()
 
     if res == opts[1][0]:
-        solution.fix_assignments(is_program_type=True)
+        solution.fix_program_type_assignments()
+
+    if res == opts[2][0]:
+        solution.fix_program_type_detail_assignments()
+
 
 
 def create_department_instances(data, excel_section_list):
@@ -334,6 +415,8 @@ def create_department_instances(data, excel_section_list):
 
 ################## main code below #####################
 if __name__ == "__main__":
+    from pyrevit import script
+    output = script.get_output()
     query_main_excel()
 
 

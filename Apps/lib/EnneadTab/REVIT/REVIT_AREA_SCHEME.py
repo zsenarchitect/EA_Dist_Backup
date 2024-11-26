@@ -1,4 +1,4 @@
-
+import ERROR_HANDLE
 from Autodesk.Revit import DB # pyright:ignore
 import REVIT_APPLICATION
 UIDOC = REVIT_APPLICATION.get_uidoc() 
@@ -14,4 +14,6 @@ def get_area_by_scheme_name(scheme_name, doc = DOC,changable_only = False):
         if changable_only:
             all_areas = REVIT_SELECTION.filter_elements_changable(all_areas)
         return filter(lambda x: x.AreaScheme.Name == scheme_name, all_areas)
+
+
 

@@ -10,7 +10,8 @@ import os
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def restart_rhino():
-    os.startfile("C:\\Program Files\\Rhino 7\\System\\Rhino.exe")
+    
+    os.startfile("C:\\Program Files\\Rhino {}\\System\\Rhino.exe".format(rs.ExeVersion()))
     rs.Exit()
 
 

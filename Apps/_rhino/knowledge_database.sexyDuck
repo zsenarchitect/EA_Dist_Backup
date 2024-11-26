@@ -7,6 +7,14 @@
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
+    "Ennead+.menu\\app_store.button\\app_store_left.py": {
+        "script": "Ennead+.menu\\app_store.button\\app_store_left.py",
+        "icon": "Ennead+.menu\\app_store.button\\icon.png",
+        "alias": "AppStore",
+        "doc": "Open the all apps avaibalie for enneadtab",
+        "tab": "Ennead+.menu",
+        "tab_icon": null
+    },
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
         "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
@@ -418,6 +426,14 @@
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
     },
+    "Lab.tab\\quick_test_temp.button\\quick test temp_left.py": {
+        "script": "Lab.tab\\quick_test_temp.button\\quick test temp_left.py",
+        "icon": null,
+        "alias": "QuickTestTemp",
+        "doc": "This button does QuickTestTemp when left click",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png"
+    },
     "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py": {
         "script": "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py",
         "icon": null,
@@ -642,6 +658,14 @@
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png"
     },
+    "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py": {
+        "script": "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py",
+        "icon": "Render.tab\\enscape_asset_locator.button\\icon.png",
+        "alias": "EnscapeAssetLocator",
+        "doc": "Help you find the Enscape asset folder by search name, so you can manipulate asset material.",
+        "tab": "Render.tab",
+        "tab_icon": "Render.tab\\icon.png"
+    },
     "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py": {
         "script": "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py",
         "icon": "Render.tab\\import_selected_camera.button\\icon.png",
@@ -797,7 +821,7 @@
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
         "icon": null,
-        "alias": "(1634)ExportWithoutCrv",
+        "alias": "ExportWithoutCrv_1643",
         "doc": "Export the rhino file as dwg but solidate all blocks and remove all crvs.",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
@@ -821,6 +845,14 @@
     "Tailor.tab\\stack_enscape.button\\move_img_right.py": {
         "script": "Tailor.tab\\stack_enscape.button\\move_img_right.py",
         "icon": "Tailor.tab\\stack_enscape.button\\icon.png",
+        "alias": null,
+        "doc": null,
+        "tab": "Tailor.tab",
+        "tab_icon": "Tailor.tab\\icon.png"
+    },
+    "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py": {
+        "script": "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py",
+        "icon": null,
         "alias": null,
         "doc": null,
         "tab": "Tailor.tab",

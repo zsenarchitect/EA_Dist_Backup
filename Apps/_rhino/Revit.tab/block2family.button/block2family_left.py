@@ -60,11 +60,11 @@ def block2family():
         
         
     
-
-    for block_name, block_ids in block_dict.items():
-
+    rs.StatusBarProgressMeterShow(label = "Total Blocks to process <{}> ".format(len(blocks)), lower = 0, upper = len(blocks), embed_label = True, show_percent = True)
+    for i, (block_name, block_ids) in enumerate(block_dict.items()):
+        rs.StatusBarProgressMeterUpdate(position = len(block_ids), absolute = True)
         process_block_name(block_name, block_ids)
-
+    rs.StatusBarProgressMeterHide()
 
 
     NOTIFICATION.messenger("Done exporting, now go to Revit and get in blocks as family.")

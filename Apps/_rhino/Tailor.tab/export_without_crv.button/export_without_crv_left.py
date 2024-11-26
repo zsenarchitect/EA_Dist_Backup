@@ -1,5 +1,5 @@
 
-__title__ = "(1634)ExportWithoutCrv"
+__title__ = "ExportWithoutCrv_1643"
 __doc__ = "Export the rhino file as dwg but solidate all blocks and remove all crvs."
 
 import rhinoscriptsyntax as rs
