@@ -27,10 +27,12 @@ def repath_dwg_drive_letter(doc):
     dwg_type_list = DB.FilteredElementCollector(doc).OfClass(DB.CADLinkType ).ToElements()
 
     old_drive_letter = forms.ask_for_string(prompt="Enter the old drive letter (e.g., 'J') to fix",
-                                            default="J")
+                                            default="J",
+                                            title = "EnneadTab DWG Drive Letter Repather")
 
     new_drive_letter = forms.ask_for_string(prompt="Enter the new drive letter (e.g., 'X') to assign",
-                                            default="X")
+                                            default="X",
+                                            title = "EnneadTab DWG Drive Letter Repather")
     
     t = DB.Transaction(doc, "Repath All Linked Dwgs")
     t.Start()
@@ -43,11 +45,11 @@ def repath_dwg_drive_letter(doc):
             file_path = DB.ModelPathUtils.ConvertModelPathToUserVisiblePath(file_path)
             current_drive_letter = file_path[0]
             if current_drive_letter != old_drive_letter:
-                print("The current drive letter {} in {} does not need to repath.".format(current_drive_letter, file_path))
+                print("The current drive letter [{}] in [{}] does not need to repath.".format(current_drive_letter, file_path))
                 continue
             new_path = file_path.replace(file_path[0], new_drive_letter)
             if not os.path.exists(new_path):
-                print("The new path {} does not exist.".format(new_path))
+                print("The new path [{}] does not exist.".format(new_path))
                 continue
             dwg_type.LoadFrom(new_path)
             print ("[{}] ---> [{}]".format(file_path, new_path))
