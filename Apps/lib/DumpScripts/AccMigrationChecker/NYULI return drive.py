@@ -4,6 +4,8 @@ import time
 import filecmp
 from tqdm import tqdm  # Import tqdm for progress bar
 from datetime import datetime  # Import datetime for timestamp
+import shutil
+import tkinter.messagebox as messagebox
 
 ACC_PREFIX = f"C:\\Users\\{os.getlogin()}\\DC\\ACCDocs\\Ennead Architects LLP\\{ACC_MAPPING['2151']['acc_project_name']}\\Project Files\\{ACC_MAPPING['2151']['acc_project_inner_folder_name']}"
 J_DRIVE_PREFIX = ACC_MAPPING['2151']['project_folder']
@@ -17,7 +19,7 @@ SITUATIONS = ["Do not have J drive cousin, can safely copy back",
             "Have J drive cousin but different content, you should manually check copy or not copy", 
             "Have J drive cousin but same content, no need to copy back"]
 
-        
+IS_REAL_COPY = True
 
 class FileInfo:
     def __init__(self, root, file):
@@ -84,6 +86,12 @@ def is_good_folder(folder):
 
 class ReturnDriveChecker:
     def check_return_drive(self):
+
+        if IS_REAL_COPY:
+            response = messagebox.askyesno("Confirm Copy", "This is a real copy operation. Do you want to copy all files back to J drive?")
+            if not response:  # If the user selects 'No'
+                print("Operation cancelled by the user.")
+                return  # Terminate the app
         # walk all files in the return drive
         files_info = []  # List to store FileInfo objects
         output_file_path = os.path.join("J:\\2151", "return_drive_report.html")
@@ -101,6 +109,10 @@ class ReturnDriveChecker:
                     file_info = FileInfo(root, file)  # Create FileInfo object
                     files_info.append(file_info)  # Add to list
                     pbar.update(1)  # Update progress bar
+
+                    if IS_REAL_COPY:
+                        if file_info.should_copy_back:
+                            shutil.copy(file_info.acc_full_path, file_info.j_drive_full_path)
 
         end_time = time.time()  # Record end time
         total_time = end_time - start_time  # Calculate total processing time
