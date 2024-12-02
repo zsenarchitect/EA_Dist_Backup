@@ -15,13 +15,13 @@ import os
 import math
 import random
 import traceback
-import System
+import System # pyright: ignore
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from System import EventHandler, Uri
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from System import EventHandler, Uri # pyright: ignore
 
 
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
 from pyrevit.forms import WPFWindow
 from pyrevit import forms #
 from pyrevit import script #
