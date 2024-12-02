@@ -405,7 +405,10 @@
     "Knowledge.tab\\search_command.button\\search_command_left.py": {
         "script": "Knowledge.tab\\search_command.button\\search_command_left.py",
         "icon": "Knowledge.tab\\search_command.button\\icon.png",
-        "alias": "SearchCommand",
+        "alias": [
+            "SearchCommandLearnEnneadTabForRhino",
+            "CommandList"
+        ],
         "doc": "Learn all the buttons functions.",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
@@ -909,7 +912,10 @@
     "View.tab\\toggle_GFA.button\\toggle_GFA_left.py": {
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_left.py",
         "icon": "View.tab\\toggle_GFA.button\\icon.png",
-        "alias": "ToggleGFADisplay",
+        "alias": [
+            "ToggleGFADisplay",
+            "GFA"
+        ],
         "doc": "Dynamically display GFA area by simply changing layer name.",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png"

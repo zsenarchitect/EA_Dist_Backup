@@ -2770,7 +2770,7 @@ EA_TestRhino8</script>
     </macro_item>
     <macro_item guid="7c275daf-2cc3-4f62-8277-dc37d88ca7dd" bitmap_id="a8f74541-3f86-455e-8239-d144d66ac83c">
       <text>
-        <locale_1033>SearchCommand</locale_1033>
+        <locale_1033>SearchCommandLearnEnneadTabForRhino</locale_1033>
       </text>
       <tooltip>
         <locale_1033>Learn all the buttons functions.</locale_1033>
@@ -2779,13 +2779,13 @@ EA_TestRhino8</script>
         <locale_1033>Learn all the buttons functions.</locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>SearchCommand</locale_1033>
+        <locale_1033>SearchCommandLearnEnneadTabForRhino</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>SearchCommand</locale_1033>
+        <locale_1033>SearchCommandLearnEnneadTabForRhino</locale_1033>
       </menu_text>
       <script>EA_ActivateEnneadTab
-EA_SearchCommand</script>
+EA_SearchCommandLearnEnneadTabForRhino</script>
     </macro_item>
     <macro_item guid="1e0f10ef-7087-4617-ac77-faadf1718cdd" bitmap_id="19cda4da-0f10-4bfe-b184-a717ffd052a7">
       <text>

@@ -1,5 +1,6 @@
 
-__title__ = "ToggleGFADisplay"
+__title__ = ["ToggleGFADisplay",
+             "GFA"]
 __doc__ = "Dynamically display GFA area by simply changing layer name."
 
 import re
