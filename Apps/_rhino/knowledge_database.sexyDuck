@@ -429,6 +429,14 @@
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
     },
+    "Lab.tab\\core_framework.button\\core framework_left.py": {
+        "script": "Lab.tab\\core_framework.button\\core framework_left.py",
+        "icon": null,
+        "alias": "CoreFramework",
+        "doc": "This button does CoreFramework when left click",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png"
+    },
     "Lab.tab\\quick_test_temp.button\\quick test temp_left.py": {
         "script": "Lab.tab\\quick_test_temp.button\\quick test temp_left.py",
         "icon": null,
