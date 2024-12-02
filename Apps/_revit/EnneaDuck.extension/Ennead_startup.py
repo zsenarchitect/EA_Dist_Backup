@@ -57,7 +57,9 @@ def check_minimal_version_for_enneadtab():
     desired_major = 4
     desired_minor = 8
     major, minor, patch = v.as_int_tuple()
-    if major < desired_major or minor < desired_minor:
+    if major > desired_major:
+        return
+    if minor < desired_minor:
         NOTIFICATION.messenger("Please update pyrevit from self service port\n{}.{} ---> {}.{}".format(major, minor, desired_major, desired_minor))
         output = OUTPUT.get_output()
 
@@ -66,8 +68,8 @@ def check_minimal_version_for_enneadtab():
         output.insert_division()
         output.write ("Did you know pyrevit 4.7 was released at end of 2019? That was so long ago Covid was not even a thing yet.")
 
-        covid_img = IMAGE.get_one_image_path_by_prefix("covid_joke")
-        output.write(covid_img)
+        # covid_img = IMAGE.get_one_image_path_by_prefix("covid_joke")
+        # output.write(covid_img)
 
         output.plot()
 

@@ -78,6 +78,25 @@ def process_enneadtab_chain(repo_path, num_lines=50):
     
     return begin_content, end_content
 
+def process_file_full(file_path):
+    """Process a single file and return all lines."""
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.readlines()
+
+def process_acc_opener_chain(repo_path):
+    """Process all files in ACC Opener and return full content."""
+    all_files = [f for f in os.listdir(repo_path) if f.endswith('.py')]
+    content = []
+    
+    for module in sorted(all_files):
+        file_path = os.path.join(repo_path, module)
+        if not os.path.exists(file_path):
+            continue
+        lines = process_file_full(file_path)
+        content.append((module, lines))
+    
+    return content
+
 def report_enneadtab():
     current_dir = os.getcwd()
     repo_path = os.path.join(current_dir, 'Apps', 'lib',"EnneadTab")  # Updated as per your request
@@ -100,23 +119,20 @@ def report_enneadtab():
 
 def report_acc_opener():
     current_dir = os.getcwd()
-    repo_path = os.path.join(current_dir, 'DarkSide', 'exes','source code','AccFileOpenner')  # Updated as per your request
+    repo_path = os.path.join(current_dir, 'DarkSide', 'exes', 'source code', 'AccFileOpenner')
     output_folder = os.path.join(current_dir, 'Apps', 'lib', 'DumpScripts', 'Legal')
 
-    # Create output directory if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    # Define output files
-    beginning_output_file = os.path.join(output_folder, '[AccFileOpener]25 pages of codebase from the beginning of scripts.pdf')
-    ending_output_file = os.path.join(output_folder, '[AccFileOpener]25 pages of codebase from the ending of scripts.pdf')
+    # Define output file (now just one file for full content)
+    output_file = os.path.join(output_folder, '[AccFileOpener]Full codebase.pdf')
 
-    # Extract content
-    begin_content, end_content = process_enneadtab_chain(repo_path, num_lines=50)
+    # Extract full content
+    content = process_acc_opener_chain(repo_path)
 
-    # Generate PDFs
-    generate_pdf(begin_content, beginning_output_file, title="Beginning Pages of EnneadTab Modules")
-    generate_pdf(end_content, ending_output_file, title="Ending Pages of EnneadTab Modules")
+    # Generate PDF
+    generate_pdf(content, output_file, title="ACC File Opener Full Codebase")
 
 
 if __name__ == "__main__":
