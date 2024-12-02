@@ -10,7 +10,6 @@ from EnneadTab.REVIT import REVIT_APPLICATION
 
 doc = REVIT_APPLICATION.get_doc()
 
-print ("doc: ", doc)
 
 
 from EnneadTab.REVIT import REVIT_SYNC
