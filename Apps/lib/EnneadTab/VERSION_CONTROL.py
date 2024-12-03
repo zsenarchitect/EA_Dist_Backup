@@ -42,5 +42,6 @@ def unit_test():
 
 
 if __name__ == "__main__":
+    update_EA_dist()
 
     show_last_success_update_time()

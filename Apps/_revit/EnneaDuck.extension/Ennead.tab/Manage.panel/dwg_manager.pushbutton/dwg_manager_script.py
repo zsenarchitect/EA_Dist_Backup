@@ -13,12 +13,11 @@ __title__ = "DWG\nManager"
 __tip__ = True
 import os
 import math
-import random
+
 import traceback
 import System # pyright: ignore
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
-from System import EventHandler, Uri # pyright: ignore
 
 
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore

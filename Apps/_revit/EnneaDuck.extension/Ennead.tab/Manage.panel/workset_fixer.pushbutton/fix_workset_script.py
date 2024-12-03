@@ -13,7 +13,6 @@ import traceback
 import System
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from System import EventHandler, Uri
 
 
 from Autodesk.Revit.Exceptions import InvalidOperationException

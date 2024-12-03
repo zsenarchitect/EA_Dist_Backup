@@ -8,7 +8,7 @@ __title__ = "QAQC\nReporter"
 
 
 import System
-
+import os
 from pyrevit import script
 from pyrevit import forms
 
@@ -138,9 +138,9 @@ class AI_Report_modelessForm(WPFWindow):
 
    
     def get_previous_conversation(self):
- 
-        if FOLDER.is_file_exist_in_dump_folder(self.log_file):
-            record = DATA_FILE.get_data(self.log_file)
+        log_file_path = FOLDER.get_EA_dump_folder_file(self.log_file)
+        if os.path.exists(log_file_path):
+            record = DATA_FILE.get_data(log_file_path)
             self.tbox_conversation.Text = record["conversation_history"]
         else:
             self.tbox_conversation.Text = ""

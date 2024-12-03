@@ -8,7 +8,7 @@ __title__ = "What\nHappened?"
 __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from System import EventHandler, Uri
+from System import EventHandler
 import System
 
 

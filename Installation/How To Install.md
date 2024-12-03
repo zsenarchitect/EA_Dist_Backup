@@ -51,8 +51,9 @@ Watch the progress, when it says finished it will close itself, and it is ready 
 > [!NOTE]
 > Attention, __Revit 2025__ users!
 > <br>
-> Due to the significant .Net framework changes from 2024 to 2025, pyRevit is not yet supported for Revit 2025. <br>
-> Therefore, EnneadTab-For-Revit is not supported for Revit 2025 yet. Please check back later.
+> Due to the significant .Net framework changes from 2024 to 2025, pyRevit stable version is not supported for Revit 2025. <br>
+> Therefore, EnneadTab-For-Revit is suggeted to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you have uninstall pyrevit 4.8 and install pyrevit 5 WIP. See link below. 
+> - L:\4b_Applied Computing\EnneadTab-DB\pyrevit-installers\pyRevit_5.0.0.24325_signed.exe
 
 
 ### 2.1. EnneadTab-For-Revit

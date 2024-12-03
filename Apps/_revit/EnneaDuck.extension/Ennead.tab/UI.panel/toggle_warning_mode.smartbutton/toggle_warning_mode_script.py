@@ -19,7 +19,7 @@ from Autodesk.Revit import DB # pyright: ignore
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
-from System import EventHandler, Uri # pyright: ignore
+from System import EventHandler # pyright: ignore
 from Autodesk.Revit.UI.Events import ViewActivatedEventArgs # pyright: ignore
 
 

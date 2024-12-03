@@ -8,7 +8,7 @@ __title__ = "Tag\nAligner"
 __tip__ = True
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from System import EventHandler, Uri
+from System import EventHandler
 
 
 from Autodesk.Revit.Exceptions import InvalidOperationException
