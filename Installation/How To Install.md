@@ -15,12 +15,16 @@ If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosys
 
 
 ### 1.1 Download Installer
-Sometime your drive cannot connect to L drive after computer is restarted.(The little red X symbol on your drive icon). You can reconnect it by double clicking on that drive icon.
-
-If you can connect to L drive, go this and ignore rest of step __1.1__
+Depending on your network access, you can download the installer from inside Ennead Network or from GitHub. __you do not need to do both__.
+#### 1.1.0 From inside Ennead Network
+Run this installer from L drive.
 > - L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe
 
-Otherwise, see link below to download "EnneadTab_OS_Installer.exe". Save anywhere.
+<br>
+<br>
+
+#### 1.1.1 From GitHub
+See link below to download "EnneadTab_OS_Installer.exe". Save anywhere.
 
 - https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
 
@@ -31,8 +35,7 @@ Otherwise, see link below to download "EnneadTab_OS_Installer.exe". Save anywher
 
 
 > [!NOTE]
-> Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, or your firewall refuse to run the exe, run exe from below L drive location as a backup plan.
-> - "L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe"
+> Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. If for whatever reason your firewall still reject the download, or your firewall refuse to run the exe, try method in step 1.1.0.
 
 <br>
 <br>
@@ -51,6 +54,9 @@ Watch the progress, when it says finished it will close itself, and it is ready 
 > [!NOTE]
 > Attention, __Revit 2025__ users!
 > <br>
+> Due to the significant .Net framework changes from 2024 to 2025, pyRevit stable version is not supported for Revit 2025. <br>
+> Therefore, EnneadTab-For-Revit is suggeted to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you have uninstall pyrevit 4.8 and install pyrevit 5 WIP. See link below. 
+> - L:\4b_Applied Computing\EnneadTab-DB\pyrevit-installers\pyRevit_5.0.0.24325_signed.exe
 > Due to the significant .Net framework changes from 2024 to 2025, pyRevit stable version is not supported for Revit 2025. <br>
 > Therefore, EnneadTab-For-Revit is suggeted to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you have uninstall pyrevit 4.8 and install pyrevit 5 WIP. See link below. 
 > - L:\4b_Applied Computing\EnneadTab-DB\pyrevit-installers\pyRevit_5.0.0.24325_signed.exe

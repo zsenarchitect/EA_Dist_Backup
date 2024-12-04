@@ -41,15 +41,19 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
             raise Exception("Only work for stanfle along exe, not for foldered exe.[{}] not exist".format(exe))
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
         temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
+        temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)
         COPY.copyfile(exe, temp_exe)
         os.startfile(temp_exe)
         for file in os.listdir(ENVIRONMENT.WINDOW_TEMP_FOLDER):
+        for file in os.listdir(ENVIRONMENT.WINDOW_TEMP_FOLDER):
             if file.startswith("_temp_exe_"):
                 # ignore if this temp file is less than 1 day old, unless it is OS_installer or AutoStartup
                 if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file)) < get_ignore_age(file):
+                if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file)) < get_ignore_age(file):
                     continue
                 try:
+                    os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
                     os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
                 except:
                     pass

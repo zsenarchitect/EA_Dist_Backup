@@ -50,6 +50,12 @@ if not os.path.exists(WINDOW_TEMP_FOLDER):
         os.makedirs(WINDOW_TEMP_FOLDER)
     except Exception as e:
         print("Cannot secure folder [{}] becasue {}".format(WINDOW_TEMP_FOLDER, e))
+WINDOW_TEMP_FOLDER = "C:\\temp\\EnneadTab Dump"
+if not os.path.exists(WINDOW_TEMP_FOLDER):
+    try:
+        os.makedirs(WINDOW_TEMP_FOLDER)
+    except Exception as e:
+        print("Cannot secure folder [{}] becasue {}".format(WINDOW_TEMP_FOLDER, e))
 
 DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency")
 if IS_PY2:
