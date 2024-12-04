@@ -130,14 +130,21 @@ class FireRatingGraphicMaker:
         instances = DB.FilteredElementCollector(doc, view.Id).OfClass(DB.FamilyInstance ).WhereElementIsNotElementType().ToElements()
         #print types
         instances = filter(lambda x: "EA_Fire Rating" in x.Symbol.FamilyName, instances)
+
+        clean_list = []
+        for instance in instances:
+            para = instance.LookupParameter("is_override")
+            if not para or para.AsInteger() == 0:
+                clean_list.append(instance)
+            
         #print types
-        if not instances:
+        if not clean_list:
             return
 
 
         t0 = DB.Transaction(doc, "purge old graphic")
         t0.Start()
-        doc.Delete(DATA_CONVERSION.list_to_system_list([x.Id for x in instances]))
+        doc.Delete(DATA_CONVERSION.list_to_system_list([x.Id for x in clean_list]))
         #doc.Regenerate()
         t0.Commit()
         

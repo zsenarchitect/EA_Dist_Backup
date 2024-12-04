@@ -459,10 +459,12 @@ def display_room_targets(doc, views, key_para_name = "Rooms_$LS_Occupancy Load_T
         return
     if not isinstance(views, list):
         views = [views]
+    from pyrevit import script
+    output = script.get_output()
     graphic_datas = []
     target_color_map = {}
     for view in views:
-        print ("Displaying egress targets on [{}]".format(view.Name))
+        print ("Displaying egress targets on [{}]".format(output.linkify(view.Id, title = view.Name)))
         all_rooms = DB.FilteredElementCollector(doc, view.Id).OfCategory(DB.BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
         for room in all_rooms:
             room_target = room.LookupParameter(key_para_name).AsString()
