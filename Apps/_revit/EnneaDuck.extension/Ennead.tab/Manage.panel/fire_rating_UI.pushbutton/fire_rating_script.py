@@ -76,14 +76,16 @@ class FireRatingGraphicMaker:
             return 
 
         if not type.IsActive:
-            #print family_type
-            #t = DB.Transaction(doc, "Activate Symbol")
-            #t.Start()
+ 
             type.Activate ()
             doc.Regenerate()
-            #t.Commit()
-        instance = doc.Create.NewFamilyInstance(curve, type, view)
-        # doc.Regenerate()
+
+        # introduce a temp detailcurve element to avoid the curve not in view plane issue
+        temp_detail_line = doc.Create.NewDetailCurve(view, curve)
+        base_line = temp_detail_line.GeometryCurve
+        instance = doc.Create.NewFamilyInstance(base_line, type, view)
+        doc.Delete(temp_detail_line.Id)
+
         return instance
 
 
@@ -164,7 +166,10 @@ class FireRatingGraphicMaker:
         for i, wall in enumerate(walls):
 
             curve =  wall.Location.Curve
+            # print (curve.GetEndPoint (0), curve.GetEndPoint (1))
             # curve = REVIT_GEOMETRY.project_crv_in_view(curve, view)
+            # print (curve.GetEndPoint (0), curve.GetEndPoint (1))
+            # print (view.Origin)
 
 
             is_arc = hasattr(curve, "Radius")
@@ -198,7 +203,7 @@ class FireRatingGraphicMaker:
 
 
             except Exception as e:
-      
+                print (e)
                 if "The line is not in the plane of view."  in str(e) :
        
                     self.update_log("Skipping creation/update: {} has some problem...The line is not in the plane of view, or it is outside the view crop.".format(output.linkify(wall.Id, title = "This Wall"))  )
