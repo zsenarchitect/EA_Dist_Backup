@@ -20,7 +20,7 @@ from pyrevit import script
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_GEOMETRY
 from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER, IMAGE, LOG
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -164,6 +164,7 @@ class FireRatingGraphicMaker:
         for i, wall in enumerate(walls):
 
             curve =  wall.Location.Curve
+            # curve = REVIT_GEOMETRY.project_crv_in_view(curve, view)
 
 
             is_arc = hasattr(curve, "Radius")
