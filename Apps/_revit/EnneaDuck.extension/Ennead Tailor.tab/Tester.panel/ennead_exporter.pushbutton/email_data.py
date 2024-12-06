@@ -50,5 +50,4 @@ class EmailData(object):
                     body = self.body,
                     body_folder_link_list = self.body_folder_link_list,
                     body_image_link_list = self.embeded_images_list,
-                    attachment_list = self.additional_attachments_list,
-                    schedule_time = None)
+                    attachment_list = self.additional_attachments_list)

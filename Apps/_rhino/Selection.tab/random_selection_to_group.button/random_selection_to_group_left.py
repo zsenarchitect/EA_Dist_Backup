@@ -1,7 +1,6 @@
 
 __title__ = "RandomSelectionToGroup"
-__doc__ = "This button does RandomSelectionToGroup when left click"
-
+__doc__ = "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering"
 
 import random
 from EnneadTab import ERROR_HANDLE, LOG
@@ -10,7 +9,7 @@ import rhinoscriptsyntax as rs
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
-def random_selection_to_group():
+def random_selection_to_group_left():
     ids = rs.SelectedObjects(False, False)
     if not ids: return
     if len(ids) == 1: return
@@ -46,4 +45,4 @@ def random_selection_to_group():
 
 
 if __name__ == "__main__":
-    random_selection_to_group()
+    random_selection_to_group_left()

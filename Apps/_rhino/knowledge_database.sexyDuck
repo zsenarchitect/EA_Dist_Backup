@@ -613,22 +613,6 @@
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png"
     },
-    "Modify.tab\\random_deselect.button\\random_deselect_left.py": {
-        "script": "Modify.tab\\random_deselect.button\\random_deselect_left.py",
-        "icon": "Modify.tab\\random_deselect.button\\icon.png",
-        "alias": "RandomDeselect",
-        "doc": "Ramdonly deselect objs by percentage",
-        "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
-    },
-    "Modify.tab\\random_deselect.button\\random_deselect_right.py": {
-        "script": "Modify.tab\\random_deselect.button\\random_deselect_right.py",
-        "icon": "Modify.tab\\random_deselect.button\\icon.png",
-        "alias": "RandomGroupPacking",
-        "doc": "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering",
-        "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
-    },
     "Modify.tab\\shape_mapper.button\\shape_mapper_left.py": {
         "script": "Modify.tab\\shape_mapper.button\\shape_mapper_left.py",
         "icon": "Modify.tab\\shape_mapper.button\\icon.png",
@@ -817,7 +801,7 @@
         "script": "Selection.tab\\random_deselect.button\\random_deselect_left.py",
         "icon": "Selection.tab\\random_deselect.button\\icon.png",
         "alias": "RandomDeselect",
-        "doc": "This button does RandomDeselect when left click",
+        "doc": "Ramdonly deselect objs by percentage",
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png"
     },
@@ -825,7 +809,7 @@
         "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",
         "icon": "Selection.tab\\random_selection_to_group.button\\icon.png",
         "alias": "RandomSelectionToGroup",
-        "doc": "This button does RandomSelectionToGroup when left click",
+        "doc": "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering",
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png"
     },
