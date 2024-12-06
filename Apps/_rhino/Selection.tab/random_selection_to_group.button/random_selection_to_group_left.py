@@ -3,7 +3,7 @@ __title__ = "RandomSelectionToGroup"
 __doc__ = "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering"
 
 import random
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.RHINO import RHINO_OBJ_DATA
 import rhinoscriptsyntax as rs
 
@@ -11,8 +11,12 @@ import rhinoscriptsyntax as rs
 @ERROR_HANDLE.try_catch_error()
 def random_selection_to_group_left():
     ids = rs.SelectedObjects(False, False)
-    if not ids: return
-    if len(ids) == 1: return
+    if not ids: 
+        NOTIFICATION.messenger  ("No objects selected, action cancelled.")
+        return
+    if len(ids) == 1: 
+        NOTIFICATION.messenger  ("Only one object selected, action cancelled.")
+        return
     bbox_center_pt = RHINO_OBJ_DATA.get_center(ids)
     X, Y, Z = RHINO_OBJ_DATA.get_boundingbox_edge_length(ids)
     rough_size = (X + Y + Z)/3

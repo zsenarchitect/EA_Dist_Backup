@@ -11,9 +11,13 @@ from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION
 @ERROR_HANDLE.try_catch_error()
 def random_deselect_left():
     ids = rs.SelectedObjects(False, False)
-    if not ids: return
+    if not ids: 
+        NOTIFICATION.messenger  ("No objects selected, action cancelled.")
+        return
     
-    if len(ids) == 1: return 
+    if len(ids) == 1: 
+        NOTIFICATION.messenger  ("Only one object selected, action cancelled.")
+        return
     
     percent = -1
 
