@@ -1123,7 +1123,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         class MyOption(forms.TemplateListItem):
             @property
             def name(self):
-                return "[{}] {} - {}".format(SuperExporter.get_central_doc_name(self.item.Document), self.item.SheetNumber, self.item.Name)
+                return "[{}] {} - {}".format(DataGridDocIdMapObj.get_central_doc_name(self.item.Document), self.item.SheetNumber, self.item.Name)
 
         temp = []
         for id_map_obj in self.data_grid_doc_id_map.ItemsSource:
