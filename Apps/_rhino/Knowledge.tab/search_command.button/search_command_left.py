@@ -308,7 +308,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         self.checkbox_search_in_tooltip.Text = "Search include Tooltip?"
         self.checkbox_search_in_tooltip.CheckedChanged += self.checkbox_search_in_tooltip_CheckedChanged
         
-        # layout.AddSeparateRow(self.checkbox_search_in_tooltip)
+        layout.AddSeparateRow(self.checkbox_search_in_tooltip)
         
         
         user_buttons = []
@@ -351,7 +351,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
                 self.SearchedScriptList = list(graft(fnmatch.filter(flatten(temp), "*" + text + "*"), 1))
             
             else:
-                complete_data = [["{}^^^{}".format(x[0], self.knowledge[x[0]]["macro_tooltip"])] for x in self.ScriptList]
+                complete_data = [["{}^^^{}".format(x[0], self.knowledge[x[0]]["doc"])] for x in self.ScriptList]
                 # print complete_data[0:2]
                 #print temp
                 #print flatten(temp)

@@ -50,6 +50,6 @@ def Installation():
     if rs.ExeVersion() < 8:
         rs.MessageBox("Please remember to restart your Rhino now.")
     else:
-        rs.MessageBox("Please remember to restart your Rhino now.\n\nIf you do not see the side toolbar, check with the instruction page for the final step.")
-        url = "https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/How%20To%20Install.md#31-ennneatab-for-rhino"
+        rs.MessageBox("Please remember to restart your Rhino now.\n\nIf you do not see the side toolbar, check with the instruction page for the step 5, Dynamic Rui.")
+        url = "https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/How%20To%20Install.md#32-ennneatab-for-rhino-8"
         webbrowser.open(url)

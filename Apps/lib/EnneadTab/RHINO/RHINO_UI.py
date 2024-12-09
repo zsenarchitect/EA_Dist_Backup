@@ -72,7 +72,11 @@ def apply_styles_to_control(control):
     elif isinstance(control, Eto.Forms.CheckBoxList):
         control.BackgroundColor = dark_background_color
         control.TextColor = text_color
-    
+        
+    elif isinstance(control, Eto.Forms.CheckBox):
+        control.BackgroundColor = dark_background_color
+        control.TextColor = text_color
+        
     elif isinstance(control, Eto.Forms.GroupBox):
         control.BackgroundColor = dark_background_color
         control.TextColor = text_color
