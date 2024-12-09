@@ -13,7 +13,10 @@ from EnneadTab import LOG, ERROR_HANDLE
 def material_prefix():
     mats = sc.doc.Materials
     mat_names = []
-    doc_name = sc.doc.Name.split(".3dm")[0]
+    try:    
+        doc_name = sc.doc.Name.split(".3dm")[0]
+    except:
+        doc_name = "Untitled"
     print (doc_name)
     print (mats)
     print ("*******")

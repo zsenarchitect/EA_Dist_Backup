@@ -392,7 +392,9 @@ def get_output_folder():
 
    
     try:
+    
         doc_name = sc.doc.Name.split(".3dm")[0]
+
     except:
         doc_name = "Untitled"
     EA_export_folder = "{}\EnneadTab Export By Layer from [{}]".format(ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER, doc_name)

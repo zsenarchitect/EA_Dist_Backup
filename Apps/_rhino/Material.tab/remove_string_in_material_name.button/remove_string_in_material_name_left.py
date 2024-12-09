@@ -10,7 +10,12 @@ from EnneadTab import LOG, ERROR_HANDLE
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def remove_string_in_material_name():
-    doc_name = sc.doc.Name.split(".3dm")[0]
+    try:    
+ 
+        doc_name = sc.doc.Name.split(".3dm")[0]
+    except:
+
+        doc_name = "Untitled"
 
     search_text = rs.StringBox("string to search to remove, type your string or enter to use current file name", 
                                default_value= doc_name + "_",
