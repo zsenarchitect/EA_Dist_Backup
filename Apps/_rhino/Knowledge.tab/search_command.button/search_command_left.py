@@ -75,6 +75,13 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         # add search
         left_layout.BeginVertical()
         left_layout.AddRow(*self.CreateSearchBar())
+
+        
+        self.checkbox_search_in_tooltip = Eto.Forms.CheckBox()
+        self.checkbox_search_in_tooltip.Text = "Search include Tooltip?"
+        self.checkbox_search_in_tooltip.CheckedChanged += self.checkbox_search_in_tooltip_CheckedChanged
+        left_layout.AddSeparateRow(None, self.checkbox_search_in_tooltip)
+        
         left_layout.EndVertical()
 
         # add listBox
@@ -204,6 +211,8 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     def update_info_panel(self):
         try:
             logger.info("Updating info panel")
+            if len(list(self.lb.SelectedItems)) == 0:
+                return
             self.selected_button_name = list(self.lb.SelectedItems)[0][0]
         except Exception as e:
             logger.error("Error updating info panel: {}".format(str(e)))
@@ -264,6 +273,9 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         self.tB_Search.TextChanged += self.tB_Search_TextChanged
 
 
+
+
+
         return [self.lbl_Search, self.tB_Search]
 
 
@@ -304,11 +316,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         layout.Padding = Eto.Drawing.Padding(5)
         
         
-        self.checkbox_search_in_tooltip = Eto.Forms.CheckBox()
-        self.checkbox_search_in_tooltip.Text = "Search include Tooltip?"
-        self.checkbox_search_in_tooltip.CheckedChanged += self.checkbox_search_in_tooltip_CheckedChanged
-        
-        layout.AddSeparateRow(self.checkbox_search_in_tooltip)
+
         
         
         user_buttons = []
@@ -363,6 +371,8 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
                 searched_compiler = list(graft(fnmatch.filter(flatten(complete_data), "*" + text + "*"), 1))
                 # print searched_compiler
                 self.SearchedScriptList = [[x[0].split("^^^")[0]] for x in searched_compiler]
+
+                self.SearchedScriptList.sort(key=lambda x: text.lower() in x[0].lower(), reverse=True)
                 # print self.SearchedScriptList
             #print "######"
             #print self.SearchedScriptList
