@@ -112,6 +112,9 @@ class ReturnDriveChecker:
 
                     if IS_REAL_COPY:
                         if file_info.should_copy_back:
+                            
+                            # Ensure the target folder exists
+                            os.makedirs(os.path.dirname(file_info.j_drive_full_path), exist_ok=True)
                             shutil.copy(file_info.acc_full_path, file_info.j_drive_full_path)
 
         end_time = time.time()  # Record end time

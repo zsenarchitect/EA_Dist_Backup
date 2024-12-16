@@ -11,6 +11,7 @@ layout:
   - Sync All
   - tag_align
   - toggle content_UI 
+  - batch_cut
   - translate_AI 
   - ">>>" 
   - apply_panel_radius_UI 
