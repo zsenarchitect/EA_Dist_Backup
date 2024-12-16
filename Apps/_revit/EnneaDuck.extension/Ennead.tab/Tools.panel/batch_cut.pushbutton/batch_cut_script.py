@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __doc__ = "Good for batch cutting many curtain panels at once with same void."
-__title__ = "Batch Cut Panels"
+__title__ = "Batch Cut\nPanels"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
@@ -11,7 +11,7 @@ from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
 from Autodesk.Revit import DB, UI # pyright: ignore 
 from pyrevit import forms, script
-import clr
+import clr # pyright: ignore 
 
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
