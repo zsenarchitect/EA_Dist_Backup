@@ -311,6 +311,10 @@ def place_new_instance(type, transform_data, factor, use_UV_projection):
     Z = transform[2][-1] * factor
 
     temp_instance = DB.AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance(doc, type)
+    insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
+    # print(doc.GetElement(insert_pt).Position.Z)
+    # DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , DB.Transform.CreateTranslation(DB.XYZ(0,0,-doc.GetElement(insert_pt).Position.Z)), True)
+    # print(doc.GetElement(insert_pt).Position.Z)
 
     rotation = DB.Transform.CreateTranslation(DB.XYZ(0,0,0))# this is a empty move, just to create a transofmrm
 
@@ -348,11 +352,13 @@ def place_new_instance(type, transform_data, factor, use_UV_projection):
 
 
     # if use non- adaptive generic model then modify this.
-    # insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
-    # actual_Z = doc.GetElement(insert_pt).Position.Z
-    # z_diff = Z - actual_Z
-    # additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, z_diff))
-    # total_transform = additional_translation * total_transform
+    insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
+    actual_Z = doc.GetElement(insert_pt).Position.Z
+    if reflection:
+        additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, actual_Z))
+    else:
+        additional_translation = DB.Transform.CreateTranslation(DB.XYZ(0, 0, -actual_Z))
+    total_transform = additional_translation * total_transform
     
     DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
 

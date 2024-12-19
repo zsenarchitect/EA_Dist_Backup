@@ -28,3 +28,4 @@ layout:
   - smart_egress_path
   - property_line_from_excel
   - repath_dwg_drive_letter
+  - merge_ost
