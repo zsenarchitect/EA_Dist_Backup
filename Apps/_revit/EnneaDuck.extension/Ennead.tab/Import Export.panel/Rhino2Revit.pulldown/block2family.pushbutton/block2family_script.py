@@ -362,6 +362,8 @@ def place_new_instance(type, transform_data, factor, use_UV_projection):
     
     DB.AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance (temp_instance , total_transform, True)
 
+    temp_instance.LookupParameter("Comments").Set("reflection: {}, rotation: {}, Z: {}, actual_Z: {}".format(reflection, rotation_tuple, Z, actual_Z))
+
     return temp_instance
 
 ################## main code below #####################
