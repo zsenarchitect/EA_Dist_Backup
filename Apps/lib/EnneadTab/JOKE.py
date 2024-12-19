@@ -81,9 +81,9 @@ def prank_meme():
 
 
 def prank_dvd():
-    if is_hate_fun():
-        return
-    EXE.open_exe("Bouncer.exe")
+    # if is_hate_fun():
+    #     return
+    EXE.try_open_app("Bouncer.exe")
     
 def joke_quote():
     if is_hate_fun():
