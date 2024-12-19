@@ -21,6 +21,12 @@ REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                         "2151_a_ea_nyuli_parking east",
                         "2151_a_ea_nyuli_parking west",
                         "2151_a_ea_nyuli_site",
+                        "2151_A-EA_NYU Melville_Site",
+                        "2151_A-EA_NYU Melville_Hospital Existing",
+                        "2151_A-EA_NYU Melville_Hospital New",
+                        "2151_A-EA_NYU Melville_Garage North",
+                        "2151_A-EA_NYU Melville_Garage South",
+                        "2151_A-EA_NYU Melville_CUP",
                         "2148_textile museum",
                         "Facade System"]
 
