@@ -6,7 +6,7 @@ __doc__ = "Make a block unique on spot. Each unique original block become new un
 import rhinoscriptsyntax as rs
 
 from EnneadTab.RHINO import RHINO_OBJ_DATA
-from EnneadTab import SOUND
+from EnneadTab import SOUND, USER
 from EnneadTab import NOTIFICATION, ERROR_HANDLE, LOG
 
 @LOG.log(__file__, __title__)
@@ -39,19 +39,22 @@ def make_block_unique(add_name_tag = True, original_blocks = None, treat_nesting
 
 def create_unique_block(orginal_block, will_explode_nesting, add_name_tag, treat_nesting):
     old_block_name = rs.BlockInstanceName(orginal_block)
+    
+    if "[CreatedBy " in old_block_name:
+        old_block_name = old_block_name.split("[CreatedBy ")[0]
 
-    user_new_block_name = rs.StringBox("What is the new name of the block after making unique?",
-                                  default_value = old_block_name + "_new",
+
+    addition_note = ""
+    while True:
+        new_block_name = rs.StringBox("What is the new name of the block after making unique?{}".format(addition_note),
+                                  default_value = old_block_name + "[CreatedBy {}]".format(USER.USER_NAME),
                                   title = "EnneadTab Make Block Unique")
-    if user_new_block_name in rs.BlockNames():
-        new_block_name = old_block_name + "_new"
-        while True:
-            if new_block_name not in rs.BlockNames():
-                break
-            new_block_name += "_new"
-        NOTIFICATION.messenger("The name you entered <{}> already exist in this file.\nWill use <{}> instead.".format(user_new_block_name, new_block_name))
-    else:
-        new_block_name = user_new_block_name
+        if new_block_name not in rs.BlockNames():
+            break
+
+        addition_note = "\nThe name you entered <{}> already exist in this file.".format(new_block_name)
+        NOTIFICATION.messenger("The name you entered <{}> already exist in this file.\nPlease give it a unique name.".format(new_block_name))
+
 
 
 
