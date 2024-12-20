@@ -83,11 +83,7 @@ def prank_meme():
 def prank_dvd():
     # if is_hate_fun():
     #     return
-<<<<<<< HEAD
-    EXE.try_open_app("Bouncer.exe")
-=======
     EXE.open_exe("Bouncer.exe")
->>>>>>> 3858eb6e (Auto Commit 2024-12-20_09-58-04)
     
 def joke_quote():
     if is_hate_fun():

@@ -365,20 +365,17 @@ class InternalCheck:
             dummy_target_data.update(para_name, value)
 
         if USER.IS_DEVELOPER:
-            print ("\n\nThis is a developer version")
             if ENVIRONMENT.IS_AVD:
                 NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
                 return
+            print ("\n\nThis is a developer version")
             self.update_from_excel(dummy_target_data)
 
                 
 
     def update_from_excel(self, dummy_target_data):
         NOTIFICATION.duck_pop("Reading from ACC excel by downloading from cloud, this might take a moment.")
-        source_excel = "{}\\DC\\ACCDocs\\Ennead Architects LLP\\2151_NYULI\\Project Files\\00_EA-EC Teams Files\\4_Programming\\_Public Shared\\Web Portal Only_ACTIVE.NYULI_Program_EA.EC.xlsx".format(os.getenv("USERPROFILE"))
-        # source_excel = FOLDER.get_EA_dump_folder_file("temptemp.xlsx")
-        # NOTIFICATION.duck_pop(main_text="using testing file for now.")
-        data = EXCEL.read_data_from_excel(source_excel, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
+        data = EXCEL.read_data_from_excel(OPTION_MAIN.SOURCE_EXCEL, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
 
         key_column = "B"
         print ("avaibale excel departments: {}".format(EXCEL.get_column_values(data, key_column).keys()))

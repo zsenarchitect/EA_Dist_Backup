@@ -40,17 +40,6 @@ class AbstractDepartment(object):
 
     def get_subdata(self):
         self.secondary_data = {}
-<<<<<<< HEAD
-
-        for pointer in sorted(self.raw_data.keys()):
-            row, column = pointer
-            if self.begin_row <= row <= self.end_row and EXCEL.column_number_to_letter(column) == self.__class__.secondary_data_column_letter:
-                value = self.raw_data[pointer]["value"]
-                self.raw_data[pointer]["value"] = value.upper()
-                if value not in ["", " ", None]:
-                    self.secondary_data[(row, column)] = self.raw_data[pointer]
-
-=======
         self.thirdary_data = {}
 
         def process_value(self, pointer, is_thirdary=False):
@@ -88,7 +77,6 @@ class AbstractDepartment(object):
                     else:
                         self.raw_data[pointer]["parent"] = "PARENT NOT FOUND"
                     self.thirdary_data[pointer] = self.raw_data[pointer]
->>>>>>> 3858eb6e (Auto Commit 2024-12-20_09-58-04)
 
     def __repr__(self):
         return "{} from row {} to row {}.\nSecondary data column: {}\nRevit department name: {}".format(self.name, self.begin_row, self.end_row, self.secondary_data_column_letter, self.revit_department_name)
