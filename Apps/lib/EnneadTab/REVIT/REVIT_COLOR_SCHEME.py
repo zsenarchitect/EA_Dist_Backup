@@ -25,7 +25,7 @@ class ColorSchemeUpdater:
         self.is_remove_bad = is_remove_bad
         self.output = script.get_output()
     
-    def load_color_template(self):
+    def load_color_template_from_excel(self):
         """Update color scheme with office template excel version."""
         # Load data from color excel
         data = COLOR.get_color_template_data(self.excel_path)
@@ -143,7 +143,7 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
 
 
 
-def load_color_template(doc, naming_map, excel_path = None, is_remove_bad = False):
+def load_color_template(doc, naming_map, excel_path, is_remove_bad = False):
     """Update color scheme with office template excel version
 NOTE: excel should be saved with .xls instead of .xlsx format
 Also note, the column header should be as such:
@@ -168,4 +168,4 @@ naming_map = {"department_color_map":"Primary_Department Category",
               "program_color_map":"Primary_Department Program Type"}
 """
     updater = ColorSchemeUpdater(doc, naming_map, excel_path, is_remove_bad)
-    updater.load_color_template()
+    updater.load_color_template_from_excel()
