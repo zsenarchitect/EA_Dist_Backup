@@ -31,7 +31,7 @@ def generic_healthcare_tool(doc, show_log):
         "Update Color Pallete": color_pallete.update_color_pallete
     }
 
-    select_option = forms.SelectFromList.show(options.keys(), multiselect=False, title="Select option")
+    select_option = forms.SelectFromList.show(options.keys(), multiselect=False, title="How can I help you today?", button_name="Help Me!")
     if select_option is None:
         return
 
