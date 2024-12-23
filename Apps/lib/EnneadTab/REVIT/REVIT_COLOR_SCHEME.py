@@ -18,7 +18,7 @@ except:
 
 
 class ColorSchemeUpdater:
-    def __init__(self, doc, naming_map, excel_path=None, is_remove_bad = False):
+    def __init__(self, doc, naming_map, excel_path, is_remove_bad = False):
         self.doc = doc
         self.naming_map = naming_map
         self.excel_path = excel_path
