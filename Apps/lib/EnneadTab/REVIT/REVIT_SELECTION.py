@@ -654,6 +654,10 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
     import REVIT_COLOR_SCHEME #pyright: ignore
     return REVIT_COLOR_SCHEME.get_color_scheme_by_name(scheme_name, doc)
 
+def pick_color_scheme(doc = DOC):
+    import REVIT_COLOR_SCHEME #pyright: ignore
+    return REVIT_COLOR_SCHEME.pick_color_scheme(doc)
+
 def pick_category(doc=DOC):
     return REVIT_CATEGORY.pick_category(doc=doc)
 
