@@ -6,7 +6,7 @@ def update_color_pallete(doc):
 
 
     NOTIFICATION.messenger(main_text="Select the excel file that contains the color pallete")
-    excel_path = forms.pick_excel_file(title="Select the excel file")
+    excel_path = forms.pick_file(title="Select the excel file", files_filter="Excel Files (*.xls)|*.xls")
     if not excel_path:
         NOTIFICATION.messenger(main_text="No excel file selected")
         return
