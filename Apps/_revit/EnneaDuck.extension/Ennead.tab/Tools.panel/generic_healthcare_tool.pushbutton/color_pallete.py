@@ -1,12 +1,27 @@
-
-from EnneadTab.REVIT import REVIT_COLOR_SCHEME
+from EnneadTab import NOTIFICATION
+from EnneadTab.REVIT import REVIT_COLOR_SCHEME, REVIT_FORMS
+from pyrevit import forms
 
 def update_color_pallete(doc):
-    print ("update_color_pallete")
+
 
     print ("excel path has been defined")
+    NOTIFICATION.messenger(main_text="Select the excel file that contains the color pallete")
+    excel_path = forms.pick_file(title="Select the excel file", filter="Excel Files (*.xls)|*.xls")
+    if not excel_path:
+        NOTIFICATION.messenger(main_text="No excel file selected")
+        return
 
-    print ("area scheme for GFA and DGSF has been defined")
+    naming_map = {"department_color_map":"Primary_Department Category",
+                  "program_color_map":"Primary_Department Program Type"}
+
+    options = ["Remove Bad Color", "Keep Bad Color"]
+    select_option = REVIT_FORMS.dialogue(options = options, main_text="Do you want to remove the bad color?")
+    if select_option == options[0]:
+        is_remove_bad = True
+    else:
+        is_remove_bad = False
+    
 
     print ("color sceme name has been defined")
 
