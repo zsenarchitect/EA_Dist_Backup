@@ -54,7 +54,7 @@ class RhinoMiroListener_Conduit(EnneadTab.RHINO.RHINO_CONDUIT.RhinoConduit):
             # self.DrawOverlay(self.e)
 
             
-        EnneadTab.EXE.open_exe("MIRO_Headless")
+        EnneadTab.EXE.try_open_exe("MIRO_Headless")
         rs.Redraw()
 
        
