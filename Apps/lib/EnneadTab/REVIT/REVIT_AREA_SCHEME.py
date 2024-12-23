@@ -17,3 +17,10 @@ def get_area_by_scheme_name(scheme_name, doc = DOC,changable_only = False):
 
 
 
+def get_area_scheme_by_name(scheme_name, doc = DOC):
+    area_schemes = DB.FilteredElementCollector(doc)\
+            .OfCategory(DB.BuiltInCategory.OST_AreaSchemes)\
+            .WhereElementIsNotElementType()\
+            .ToElements()
+    return next((x for x in area_schemes if x.Name == scheme_name), None)
+

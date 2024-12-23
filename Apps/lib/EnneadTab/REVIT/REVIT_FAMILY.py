@@ -122,8 +122,14 @@ def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFa
     
     fam_ref = clr.StrongBox[DB.Family](None)
     family_path = FOLDER.copy_file_to_local_dump_folder(family_path, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
-    project_doc.LoadFamily(family_path, loading_opt, fam_ref)
-    
+
+    res = project_doc.LoadFamily(family_path, loading_opt, fam_ref)
+    if not res:
+        print ("failed to load family [{}], trying to load by open and close".format(family_path))
+        family_doc = REVIT_APPLICATION.get_app().OpenDocumentFile(family_path)
+        load_family(family_doc, project_doc, loading_opt)
+        family_doc.Close(False)
+
     return fam_ref
     
   

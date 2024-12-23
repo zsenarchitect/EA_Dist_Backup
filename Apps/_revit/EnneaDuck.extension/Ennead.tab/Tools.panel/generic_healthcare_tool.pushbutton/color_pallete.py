@@ -25,12 +25,12 @@ def update_color_pallete(doc):
     naming_map = {"department_color_map":department_color_scheme_name,
                   "program_color_map":program_color_scheme_name}
 
-    options = ["Remove Bad Color", "Keep Bad Color"]
-    select_option = REVIT_FORMS.dialogue(options = options, main_text="Do you want to remove the bad color?")
+    options = ["Remove Unused Color", "Keep Unused Color"]
+    select_option = REVIT_FORMS.dialogue(options = options, main_text="Do you want to remove the unused color?")
     if select_option == options[0]:
-        is_remove_bad = True
+        is_remove_unused = True
     else:
-        is_remove_bad = False
+        is_remove_unused = False
     
 
-    REVIT_COLOR_SCHEME.load_color_template(doc, naming_map, excel_path, is_remove_bad)
+    REVIT_COLOR_SCHEME.load_color_template(doc, naming_map, excel_path, is_remove_unused)

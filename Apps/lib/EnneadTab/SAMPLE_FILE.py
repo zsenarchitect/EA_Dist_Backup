@@ -11,6 +11,8 @@ def get_file(file_name):
     if os.path.exists(path):
         return path
     NOTIFICATION.messenger("Cannot find [{}]".format(file_name))
+    print ("cannot find [{}]".format(path))
+    return None
 
 
 if __name__ == "__main__":

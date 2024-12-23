@@ -11,7 +11,7 @@ except:
     globals()["UIDOC"] = object()
     globals()["DOC"] = object()
 
-
+import DATA_CONVERSION
 
 def create_schedule(doc, schedule_name, field_names, built_in_category, is_itemized = False, is_filtered_by_sheet = True):
     view = DB.ViewSchedule.CreateSchedule(doc, 
@@ -32,6 +32,7 @@ def create_schedule(doc, schedule_name, field_names, built_in_category, is_itemi
     return view
 
 def get_schedulable_field_by_name(schedule_view, name):
+    """get possible field, but nessaryly added to this schedule"""
     definition = schedule_view.Definition
     doc = schedule_view.Document
     for schedulable_field in definition.GetSchedulableFields():
@@ -40,6 +41,7 @@ def get_schedulable_field_by_name(schedule_view, name):
     return None
 
 def get_field_by_name(schedule_view, name):
+    """get added field by name"""
     definition = schedule_view.Definition
     doc = schedule_view.Document
     for index in range(definition.GetFieldCount()):
@@ -48,6 +50,37 @@ def get_field_by_name(schedule_view, name):
             return field
     return None
 
+def hide_fields_in_schedule(schedule_view, field_name_or_names):
+    if isinstance(field_name_or_names, str):
+        field_name_or_names = [field_name_or_names]
+    for field_name in field_name_or_names:
+        field = get_field_by_name(schedule_view, field_name)
+        if field is None:
+            print("Field [{}] not found".format(field_name))
+            continue
+        field.IsHidden = True
+
+def add_fields_to_schedule(schedule_view, field_names):
+    definition = schedule_view.Definition
+    for field_name in field_names:
+        field = get_schedulable_field_by_name(schedule_view, field_name)
+        if field is None:
+            print("Field [{}] not found".format(field_name))
+            continue
+        try:
+            definition.AddField(field)
+            print("Adding field [{}] to schedule".format(field_name))
+        except Exception as e:
+            continue
+            print("cannot add field [{}] to schedule because [{}]".format(field_name, e))
+
+def sort_fields_in_schedule(schedule_view, field_names):
+    """make the filed order"""
+    definition = schedule_view.Definition
+    order = [get_field_by_name(schedule_view, x).FieldId for x in field_names]
+    definition.SetFieldOrder(DATA_CONVERSION.list_to_system_list(order, use_IList=True))
+        
+        
 
 def add_filter_to_schedule(schedule_view, field_name, filter_type, filter_value):
     field = get_field_by_name(schedule_view, field_name)

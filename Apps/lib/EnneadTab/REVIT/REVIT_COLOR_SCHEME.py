@@ -18,11 +18,11 @@ except:
 
 
 class ColorSchemeUpdater:
-    def __init__(self, doc, naming_map, excel_path, is_remove_bad = False):
+    def __init__(self, doc, naming_map, excel_path, is_remove_unused = False):
         self.doc = doc
         self.naming_map = naming_map
         self.excel_path = excel_path
-        self.is_remove_bad = is_remove_bad
+        self.is_remove_unused = is_remove_unused
         self.output = script.get_output()
     
     def load_color_template_from_excel(self):
@@ -77,7 +77,7 @@ class ColorSchemeUpdater:
         storage_type = sample_entry.StorageType
 
         current_entry_names = [x.GetStringValue() for x in color_scheme.GetEntries()]
-        if self.is_remove_bad:
+        if self.is_remove_unused:
             self.remove_non_used_entry(color_scheme)
         self.add_missing_entry(color_scheme, department_data, current_entry_names, storage_type)
         self.update_entry_color(color_scheme, department_data)
@@ -146,7 +146,7 @@ def pick_color_scheme(doc = DOC, title = "Select the color scheme", button_name 
     color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
     return forms.SelectFromList.show([x.Name for x in color_schemes], multiselect=False, title=title, button_name=button_name)
 
-def load_color_template(doc, naming_map, excel_path, is_remove_bad = False):
+def load_color_template(doc, naming_map, excel_path, is_remove_unused = False):
     """Update color scheme with office template excel version
 NOTE: excel should be saved with .xls instead of .xlsx format
 Also note, the column header should be as such:
@@ -170,5 +170,5 @@ naming map should looks like this. Key are what to lookup in excel, value is the
 naming_map = {"department_color_map":"Primary_Department Category",
               "program_color_map":"Primary_Department Program Type"}
 """
-    updater = ColorSchemeUpdater(doc, naming_map, excel_path, is_remove_bad)
+    updater = ColorSchemeUpdater(doc, naming_map, excel_path, is_remove_unused)
     updater.load_color_template_from_excel()
