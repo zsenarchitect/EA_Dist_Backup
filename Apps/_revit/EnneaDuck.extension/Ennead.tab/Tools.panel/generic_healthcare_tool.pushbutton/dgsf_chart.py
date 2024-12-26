@@ -1,10 +1,10 @@
 
-from EnneadTab import NOTIFICATION, SAMPLE_FILE
-from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE, REVIT_AREA_SCHEME
+from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL
+from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE, REVIT_AREA_SCHEME, REVIT_SPATIAL_ELEMENT, REVIT_SELECTION
 from pyrevit import forms, script
 from Autodesk.Revit import DB #pyright: ignore
 from collections import OrderedDict
-
+import traceback
 class DepartmentOption:
 
 
@@ -232,7 +232,7 @@ class OptionValidation:
         for calc_type in REVIT_FAMILY.get_all_types_by_family_name(self.option.CALCULATOR_FAMILY_NAME, self.doc):
             type_name = calc_type.LookupParameter("Type Name").AsString()
             if type_name in self.option.LEVEL_NAMES:
-                order_index = self.option.LEVEL_NAMES.index(type_name)
+                order_index = len(self.option.LEVEL_NAMES) - self.option.LEVEL_NAMES.index(type_name)
             elif type_name in self.option.DUMMY_DATA_HOLDER:
                 order_index = self.option.DUMMY_DATA_HOLDER[::-1].index(type_name) - 100
             else:
@@ -283,6 +283,13 @@ class OptionValidation:
 
         REVIT_SCHEDULE.add_fields_to_schedule(view, self.option.FAMILY_PARA_COLLECTION)
         REVIT_SCHEDULE.hide_fields_in_schedule(view, self.option.INTERNAL_PARA_NAMES["order"])
+
+        # set group order descending
+        definition = view.Definition
+        sort_group_field = DB.ScheduleSortGroupField()
+        sort_group_field.FieldId = REVIT_SCHEDULE.get_field_by_name(view, self.option.INTERNAL_PARA_NAMES["order"]).FieldId
+        sort_group_field.SortOrder = DB.ScheduleSortOrder.Descending
+        definition.SetSortGroupFields (DATA_CONVERSION.list_to_system_list([sort_group_field], type = DB.ScheduleSortGroupField, use_IList = False))
                 
 
                 
@@ -313,6 +320,426 @@ class OptionValidation:
 
 
 
+class AreaData:
+    """the main class for holding area data on each level."""
+    data_collection = dict()
+
+    def __init__(self, type_name):
+        self.title = type_name
+
+    @classmethod
+    def purge_data(cls):
+        cls.data_collection.clear()
+        
+        
+    @classmethod
+    def get_data(cls, type_name):
+        key = type_name
+        if key in cls.data_collection:
+            return cls.data_collection[key]
+        instance = AreaData(type_name)
+
+        cls.data_collection[key] = instance
+        return instance
+
+    def update(self, area_name, area):
+        if not hasattr(self, area_name):
+            setattr(self, area_name, area)
+            return
+
+        current_area = getattr(self, area_name)
+        setattr(self, area_name, current_area + area)
+        
+
+class InternalCheck:
+    """the main class for hosting method about area summery
+    """
+
+    def __init__(self, doc, option, show_log):
+        self.doc = doc
+        self.option = option
+        self.show_log = show_log
+        self.output = script.get_output()
+        self._found_bad_area = False
+        
+        AreaData.purge_data()
+       
+
+
+    def collect_all_area_data(self):
+        # collect data for deparmtnet details
+        self.collect_area_data_action(self.option.DEPARTMENT_AREA_SCHEME_NAME, 
+                                      self.option.DEPARTMENT_KEY_PARA, 
+                                      self.option.PARA_TRACKER_MAPPING)
+
+        # collect data for GFA
+        self.collect_area_data_action(self.option.OVERALL_AREA_SCHEME_NAME, 
+                                      None, 
+                                      None)
+
+
+        if not self.option.is_primary:
+            self.copy_data_from_primary()
+
+
+    def collect_area_data_action(self, area_scheme_name, search_key_name, para_mapping):
+        """_summary_
+
+        Args:
+            area_scheme_name (_type_): _description_
+            search_key_name (_type_): lookup para as key. If ommited, will count toward GFA
+            para_mapping (_type_): abbr translation.If ommited, will count toward GFA
+        """
+        # get all the areas
+        all_areas = DB.FilteredElementCollector(self.doc)\
+                        .OfCategory(DB.BuiltInCategory.OST_Areas)\
+                        .WhereElementIsNotElementType()\
+                        .ToElements()
+        all_areas = filter(lambda x: x.AreaScheme.Name == area_scheme_name, all_areas)
+
+        # add info to dataItem
+        for area in all_areas:
+            level = area.Level
+            if level.Name not in self.option.LEVEL_NAMES:
+                if self.show_log:
+                    print("Area is on [{}], which is not a tracking level....{}".format(level.Name,
+                                                                                        self.output.linkify(area.Id)))
+                continue
+
+            if not level:
+                if self.show_log:
+                    print("Area has no level, might not be placed....{}".format(
+                        self.output.linkify(area.Id)))
+                continue
+
+            if REVIT_SPATIAL_ELEMENT.is_element_bad(area):
+                if self.show_log:
+                    status = REVIT_SPATIAL_ELEMENT.get_element_status(area)
+
+                    print("\nArea has no size!\nIt is {}....{} @ Level [{}] @ [{}]".format(status,
+                                                                                           self.output.linkify(area.Id, area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()),
+                                                                                                   level.Name,
+                                                                                                   area_scheme_name))
+                else:
+                    info = DB.WorksharingUtils.GetWorksharingTooltipInfo(self.doc, area.Id)
+                    editor = info.LastChangedBy
+                    print("\nArea has no area number!....Last edited by [{}]\nIt might not be enclosed or placed. Run in manual mode to find out more detail.".format(editor))
+                    
+                self._found_bad_area = True
+                continue
+            
+        
+
+            level_data = AreaData.get_data(level.Name)
+
+            if search_key_name:
+                department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
+                if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
+                    print ("Ignore {} for calculation at [{}]".format(self.output.linkify(area.Id, title=department_name), level.Name))
+                    
+                    continue
+                department_nickname = para_mapping.get(department_name, None)
+                if not department_nickname:
+
+                    if self.show_log:
+
+                        print("Area has department value [{}] not matched any thing in excel....{}@{}".format(department_name,
+                                                                                                           self.output.linkify(area.Id),
+                                                                                                           level.Name))
+                    else:
+                        print("Area has department value [{}] not matched any thing in excel. Run in tailor mode to find out which.".format(
+                            department_name))
+                    continue
+                level_data.update(department_nickname, area.Area)
+                     
+                    
+     
+                
+
+            else:
+                # this is for the GSF senario, everything will count.
+                level_data.update(self.option.OVERALL_PARA_NAME, area.Area)
+
+    def copy_data_from_primary(self):
+        
+        """except BEDS, get all other area per level from OPTION_MAIN family type.
+
+        first reset non BEDS to zero
+        Second, go thru main option and get everything that is not BEDS and fill in.
+        """
+        #  reset all levels data where there is BED. SO later only update BEDS from main
+        for type_name, data in AreaData.data_collection.items():
+            # this is data per level
+            if type_name not in self.option.LEVEL_NAMES:
+                continue
+            for attr_key in self.option.PARA_TRACKER_MAPPING.values():
+                if attr_key != "BEDS":
+                    setattr(data, attr_key, 0)
+
+
+
+                
+        all_areas = DB.FilteredElementCollector(self.doc)\
+                        .OfCategory(DB.BuiltInCategory.OST_Areas)\
+                        .WhereElementIsNotElementType()\
+                        .ToElements()
+        all_areas = filter(lambda x: x.AreaScheme.Name == self.option.DEPARTMENT_AREA_SCHEME_NAME, all_areas)
+
+        for area in all_areas:
+            level = area.Level
+            if level.Name not in self.option.LEVEL_NAMES:
+                continue
+
+            if not level:
+                continue
+
+            if area.Area <= 0:
+                continue
+            
+
+
+            department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
+            if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
+                continue
+            department_nickname = self.option.PARA_TRACKER_MAPPING.get(department_name, None)
+            if department_nickname is not None and department_nickname != "BEDS":
+                level_data = AreaData.get_data(level.Name)
+                level_data.update(department_nickname, area.Area)
+
+
+
+
+
+    
+    def update_main_calculator_family_types(self):
+        # for each data item, get the calcator family and update content
+        t = DB.Transaction(self.doc, "_Part 1_update main calcuator family types")
+        t.Start()
+        for type_name in sorted(self.option.LEVEL_NAMES):
+            if self.show_log:
+                print("Processing data for Level: [{}]".format(type_name))
+            level_data = AreaData.get_data(type_name)
+
+            # get actual calculator types
+            calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
+
+            # since validation is impleteed early on, the below check is no longer nessary...
+            # if not calc_type:
+
+            #     if self.show_log:
+            #         print("   --No calculator found for level: {}".format(type_name))
+            #     else:
+            #         print(
+            #             "   --No calculator found for level. Run in tailor mode to find out which.")
+
+            if not REVIT_SELECTION.is_changable(calc_type):
+                print("Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
+                                                                                    REVIT_SELECTION.get_owner(calc_type)))
+                continue
+
+            # process the content
+            factor = calc_type.LookupParameter(self.option.FACTOR_PARA_NAME).AsDouble()
+            level_data.factor = factor #adding new fator attr to the class instance
+
+
+
+            # fill in department related data
+            design_GSF_before_factor = 0
+            for family_para_name in self.option.PARA_TRACKER_MAPPING.values() + [self.option.OVERALL_PARA_NAME]:
+                if not hasattr(level_data, family_para_name):
+                    setattr(level_data, family_para_name, 0)
+
+                if family_para_name in self.option.PARA_TRACKER_MAPPING.values():
+                    if family_para_name == "MERS":
+                        pass
+                    else:
+                        design_GSF_before_factor += getattr(level_data, family_para_name)
+
+                para = calc_type.LookupParameter(family_para_name)
+                """this part of para availibility check is no longer needed becasue para names are valided before loading"""
+                if para:
+                    if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"]:
+                        local_factor = 1
+                    else:
+                        local_factor = level_data.factor
+                    factored_area = getattr(level_data, family_para_name)* local_factor
+                    para.Set(factored_area)
+               
+                else:
+                    print("No para found for [{}], please edit the family..".format(family_para_name))
+
+
+            # fill in GSF data
+            design_SF_para = calc_type.LookupParameter(self.option.DESIGN_SF_PARA_NAME)
+            design_SF_para.Set(design_GSF_before_factor)
+            estimate_SF_para = calc_type.LookupParameter(self.option.ESTIMATE_SF_PARA_NAME)
+            estimate_SF_para.Set(design_GSF_before_factor * level_data.factor)
+            
+            # below check is no longer needed becasue ealier check
+            # if design_SF_para:
+            #     design_SF_para.Set(design_GSF_before_factor)
+            # else:
+            #     print("No para found for [{}], please edit the family..".format(
+            #         DESIGN_SF_PARA_NAME))
+
+        t.Commit()
+
+
+    def update_summery_calculator_family_types(self):
+        t = DB.Transaction(self.doc, "_Part 2_update summery calcuator family types")
+        t.Start()
+        for i,type_name in enumerate( self.option.DUMMY_DATA_HOLDER):
+            if self.show_log:
+                print ("Processing data for Summery Data Block [{}]".format(type_name))
+
+            
+            calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)         
+            if not REVIT_SELECTION.is_changable(calc_type):
+                note = "AHHHHHHHHHHH!   Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
+                                                                                    REVIT_SELECTION.get_owner(calc_type))
+                print (note)
+
+                NOTIFICATION.messenger(note)
+                continue
+            
+            
+            if i == 0:
+                self.fill_dummy_sum(type_name)
+            elif i == 1:
+                self.fetch_dummy_target(type_name)
+                pass
+            elif i == 2:
+                self.fill_delta_data(type_name)
+            
+        t.Commit()
+            
+    
+    def fill_dummy_sum(self, type_name):
+        dummy_sum_data = AreaData.get_data(type_name)
+
+        
+        for level in self.option.LEVEL_NAMES:
+            level_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, level, self.doc)   
+            for para_name in  self.option.FAMILY_PARA_COLLECTION:
+                if para_name == self.option.FACTOR_PARA_NAME:
+                    setattr(dummy_sum_data,para_name, 1)
+                    continue
+                if para_name in self.option.INTERNAL_PARA_NAMES.values():
+                    continue
+                value = level_calc_type.LookupParameter(para_name).AsDouble()
+                dummy_sum_data.update(para_name, value)
+                
+     
+            
+        
+        dummy_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)    
+        for para_name in self.option.FAMILY_PARA_COLLECTION:
+            if para_name in self.option.INTERNAL_PARA_NAMES.values():
+                continue
+            para = dummy_calc_type.LookupParameter(para_name)
+            para.Set(getattr(dummy_sum_data, para_name))
+          
+
+    def fetch_dummy_target(self, type_name):
+        dummy_target_data = AreaData.get_data(type_name)
+
+ 
+        
+        dummy_target_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)   
+
+        # only update the internal para, which is Level Name and Order Number, also set factor as 1 as constant 
+        for para_name in  self.option.FAMILY_PARA_COLLECTION:
+            if para_name == self.option.FACTOR_PARA_NAME:
+       
+                setattr(dummy_target_data,para_name, 1)
+                continue
+            if para_name in self.option.INTERNAL_PARA_NAMES.values():
+                continue
+            value = dummy_target_type.LookupParameter(para_name).AsDouble()
+            dummy_target_data.update(para_name, value)
+
+        # if USER.IS_DEVELOPER:
+        #     if ENVIRONMENT.IS_AVD:
+        #         NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
+        #         return
+        #     print ("\n\nThis is a developer version")
+        #     self.update_from_excel(dummy_target_data)
+
+                
+
+    def update_from_excel(self, dummy_target_data):
+        NOTIFICATION.duck_pop("Reading from ACC excel by downloading from cloud, this might take a moment.")
+        data = EXCEL.read_data_from_excel(self.option.SOURCE_EXCEL, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
+
+        key_column = "B"
+        print ("avaibale excel departments: {}".format(EXCEL.get_column_values(data, key_column).keys()))
+        for department_name in self.option.DEPARTMENT_PARA_MAPPING.keys():
+            row = EXCEL.search_row_in_column_by_value(data, 
+                                                      key_column, 
+                                                      search_value=department_name, 
+                                                      is_fuzzy=True)
+
+            target = data.get((row,EXCEL.get_column_index("P")), None)
+            print ("At this moment, there is no change to the target value. Just reading")
+            if target:
+                target = float(target)
+                print ("target value found for [{}]: {}".format(department_name, target))
+                # dummy_target_data.update(self.option.DEPARTMENT_PARA_MAPPING[department_name], target)
+                print ("\n\n")  
+        
+    def fill_delta_data(self, type_name):
+        """maybe should worry about making smaller commit so doc is updated before geting data dfrom type data"""
+        dummy_sum_data = AreaData.get_data(self.option.DUMMY_DATA_HOLDER[0])
+        dummy_tartget_data = AreaData.get_data(self.option.DUMMY_DATA_HOLDER[1])
+        dummy_delta_data = AreaData.get_data(type_name)
+        
+ 
+ 
+       
+        dummy_delta_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc) 
+        for para_name in self.option.FAMILY_PARA_COLLECTION:
+            if para_name == self.option.FACTOR_PARA_NAME:
+                setattr(dummy_delta_data,para_name, 1)
+                dummy_delta_type.LookupParameter(para_name).Set(1)
+                continue
+            if para_name in self.option.INTERNAL_PARA_NAMES.values():
+                continue
+            
+            value_real = getattr(dummy_sum_data,para_name)
+            value_manual = getattr(dummy_tartget_data, para_name)
+            delta = value_real - value_manual
+            dummy_delta_data.update(para_name, delta)
+            
+            dummy_delta_type.LookupParameter(para_name).Set(delta)
+            
+
+
+    def update_dgsf_chart(self):
+
+        T = DB.TransactionGroup(self.doc, "update_dgsf_chart")
+        T.Start()
+
+        
+
+        try:
+            self.collect_all_area_data()
+            self.update_main_calculator_family_types()
+            self.update_summery_calculator_family_types()
+            T.Commit()
+        except:
+            print (traceback.format_exc())
+            T.RollBack()
+        
+        
+        if self.show_log:
+            NOTIFICATION.messenger(main_text="Program schedule calculator update done!")
+
+        
+        if self._found_bad_area:
+            NOTIFICATION.duck_pop(main_text="Attention, there are some un-enclosed area in area plans that might affect your accuracy.\nSee output window for details.")
+
+        
+
 
 #########################################################################################
 
@@ -326,7 +753,7 @@ class OptionValidation:
 def dgsf_chart_update(doc):
     levels = list(DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements())
     levels.sort(key=lambda x: x.Elevation, reverse=True)
-    selected_levels = forms.SelectFromList.show(levels, multiselect=True, title="Select the levels", button_name="Select levels", name_attr="Name")
+    selected_levels = forms.SelectFromList.show(levels, multiselect=True, title="Select the levels to calculate area chart", button_name="Select levels", name_attr="Name")
     if not selected_levels:
         NOTIFICATION.messenger(main_text="No levels selected")
         return
@@ -337,3 +764,4 @@ def dgsf_chart_update(doc):
         NOTIFICATION.messenger(main_text="Validation failed")
         return
 
+    InternalCheck(doc, option, show_log=True).update_dgsf_chart()

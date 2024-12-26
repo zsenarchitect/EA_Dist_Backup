@@ -13,13 +13,13 @@ def update_color_pallete(doc):
 
 
 
-    department_color_scheme_name = REVIT_COLOR_SCHEME.pick_color_scheme(doc, title="Select the department color scheme", button_name="Select department color scheme")
+    department_color_scheme_name = REVIT_COLOR_SCHEME.pick_color_scheme(doc, title="Select the [DEPARTMENT] color scheme", button_name="Select [DEPARTMENT] color scheme")
     if not department_color_scheme_name:
-        NOTIFICATION.messenger(main_text="No department color scheme selected")
+        NOTIFICATION.messenger(main_text="No [DEPARTMENT] color scheme selected")
         return
-    program_color_scheme_name = REVIT_COLOR_SCHEME.pick_color_scheme(doc, title="Select the program color scheme", button_name="Select program color scheme")     
+    program_color_scheme_name = REVIT_COLOR_SCHEME.pick_color_scheme(doc, title="Select the [PROGRAM] color scheme", button_name="Select [PROGRAM] color scheme")     
     if not program_color_scheme_name:
-        NOTIFICATION.messenger(main_text="No program color scheme selected")
+        NOTIFICATION.messenger(main_text="No [PROGRAM] color scheme selected")
         return
 
     naming_map = {"department_color_map":department_color_scheme_name,

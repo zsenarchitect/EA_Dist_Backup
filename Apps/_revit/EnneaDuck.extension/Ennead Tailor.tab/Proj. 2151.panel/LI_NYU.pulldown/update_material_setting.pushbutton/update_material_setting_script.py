@@ -7,7 +7,7 @@ __title__ = "Update Material Setting"
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_MATERIAL, REVIT_SELECTION
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -42,29 +42,10 @@ def update_material_setting(doc):
     t.Start()
     
 
-    for material_name, material_setting in MATERIAL_MAP.items():
-        material = REVIT_MATERIAL.get_material_by_name(material_name, doc)
-        
-        if material is None:
-            continue
-
-        if not REVIT_SELECTION.is_changable(material):
-            continue
-
-        for setting_name, setting_value in material_setting.items():
-
-            if "IsSolid" in setting_name:
-                if setting_value:
-                    solid_fill_pattern_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
-                attr_name = setting_name.replace("IsSolid", "Id")
-                setattr(material, attr_name, solid_fill_pattern_id)
-                continue
-                
-            if "color" in setting_name.lower():
-                setting_value = DB.Color(setting_value[0], setting_value[1], setting_value[2])
-            setattr(material, setting_name, setting_value)
+    REVIT_MATERIAL.update_material_setting(doc, MATERIAL_MAP)
 
     t.Commit()
+    NOTIFICATION.messenger(main_text="Material setting updated")
 
 
 
