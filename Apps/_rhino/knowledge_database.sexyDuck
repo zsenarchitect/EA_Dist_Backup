@@ -824,7 +824,7 @@
     "Tailor.tab\\relocate_file.button\\relocate_left.py": {
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
         "icon": null,
-        "alias": "(1634)RelocateAll",
+        "alias": "RelocateAll_1643",
         "doc": "Relocate all the cameras and models to new Revit location.",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
@@ -833,15 +833,15 @@
         "script": "Tailor.tab\\stack_enscape.button\\stack_enscape_left.py",
         "icon": "Tailor.tab\\stack_enscape.button\\icon.png",
         "alias": "Stack PSD",
-        "doc": null,
+        "doc": "Stack PSD files",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
     },
     "Tailor.tab\\stack_enscape.button\\move_img_right.py": {
         "script": "Tailor.tab\\stack_enscape.button\\move_img_right.py",
         "icon": "Tailor.tab\\stack_enscape.button\\icon.png",
-        "alias": null,
-        "doc": null,
+        "alias": "MoveImg_1643",
+        "doc": "Move all the images to new location",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
     },

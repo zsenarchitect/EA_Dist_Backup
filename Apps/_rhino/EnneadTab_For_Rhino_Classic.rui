@@ -2517,7 +2517,7 @@ EA_ExportWithoutCrv_1643</script>
     </macro_item>
     <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="2799f78b-fa30-44a7-8b27-44cf1487210e">
       <text>
-        <locale_1033>(1634)RelocateAll</locale_1033>
+        <locale_1033>RelocateAll_1643</locale_1033>
       </text>
       <tooltip>
         <locale_1033>Relocate all the cameras and models to new Revit location.</locale_1033>
@@ -2526,23 +2526,23 @@ EA_ExportWithoutCrv_1643</script>
         <locale_1033>Relocate all the cameras and models to new Revit location.</locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>(1634)RelocateAll</locale_1033>
+        <locale_1033>RelocateAll_1643</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>(1634)RelocateAll</locale_1033>
+        <locale_1033>RelocateAll_1643</locale_1033>
       </menu_text>
       <script>EA_ActivateEnneadTab
-EA_(1634)RelocateAll</script>
+EA_RelocateAll_1643</script>
     </macro_item>
     <macro_item guid="e37fb5dd-4387-4814-bdec-5eee9136b59e" bitmap_id="12985a22-c22f-4ba9-b9de-06dd8e67ee8c">
       <text>
         <locale_1033>Stack PSD</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Stack PSD files</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Stack PSD files</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>Stack PSD</locale_1033>
@@ -2555,34 +2555,22 @@ EA_Stack PSD</script>
     </macro_item>
     <macro_item guid="6d6b29f4-1190-401e-960a-8359d3174a65" bitmap_id="47d50797-ce72-4ec0-8579-dbec926518c9">
       <text>
-        <locale_1033>move_img_right</locale_1033>
+        <locale_1033>MoveImg_1643</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Move all the images to new location</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Move all the images to new location</locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>move_img_right</locale_1033>
+        <locale_1033>MoveImg_1643</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>move_img_right</locale_1033>
+        <locale_1033>MoveImg_1643</locale_1033>
       </menu_text>
-      <script>! _-RunPythonScript (
-import os
-import sys
-common_folders = [&quot;github&quot;,&quot;dev-repo&quot;,&quot;duck-repo&quot;,&quot;design-repo&quot;]
-lib_folders = [os.path.join(os.environ['USERPROFILE'],x, &quot;EnneadTab-OS&quot;,&quot;Apps&quot;,&quot;lib&quot;,&quot;EnneadTab&quot;) for x in common_folders]
-lib_folders.append( os.path.join(os.environ['USERPROFILE'], 'Documents','EnneadTab Ecosystem','EA_Dist','Apps','lib','EnneadTab'))
-for lib_folder in lib_folders:
-    if os.path.exists(lib_folder):
-        sys.path.append(lib_folder)
-        break
-import MODULE_HELPER
-MODULE_HELPER.run_Rhino_button('Tailor.tab\\stack_enscape.button\\move_img_right.py')
-)
-</script>
+      <script>EA_ActivateEnneadTab
+EA_MoveImg_1643</script>
     </macro_item>
     <macro_item guid="d8b3960e-5881-471b-b829-8232b9f47443" bitmap_id="a18d28d3-8a39-457d-b679-31cc171c1d22">
       <text>

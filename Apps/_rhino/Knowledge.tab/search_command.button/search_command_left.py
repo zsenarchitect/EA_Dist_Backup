@@ -123,12 +123,12 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         
         # for reason not understood yet, value is not displayed in grid view if not contained by list, must convert list format: [1,2,3,"abc"] ----> [[1],[2],[3],["abd"]]
         for value in knowledge_pool.values():
-            command_name = value["alias"]
-            if isinstance(command_name, list):
-                for local_command_name in command_name:
-                    self.knowledge[local_command_name] = value
-            else:
+            command_names = value["alias"]
+            if not isinstance(command_names, list):
+                command_names = [command_names]
+            for command_name in command_names:
                 self.knowledge[command_name] = value
+
 
         # wrap each command name in a list to fit grid view format
         return sorted([[x] for x in self.knowledge.keys()])
@@ -196,9 +196,22 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
             tab_name = "Unknown"
         tab_name = tab_name.replace(".tab", " Tab").replace(".menu", " Menu")
 
+        commands = data.get("alias", None)
+        if not isinstance(commands, list):
+            commands = [commands]
+        final_commands = []
+        for command in commands:
+            if command is None:
+                continue
+            if command.upper() == command:
+                final_commands.append(command)
+            else:
+                final_commands.append("EA_{}".format(command))
+        commands = " / ".join(final_commands)
         # print data
-        self.bt_info_A.Text = "Button Name: {}\nTooltip: {}\nAccess: {}\nButton Icon:".format(self.selected_button_name,
-                                                                                            data["doc"],
+        self.bt_info_A.Text = "Button Name: {}\nCommand: {}\nTooltip: {}\nAccess: {}\nButton Icon:".format(self.selected_button_name,
+                                                                                            commands,
+                                                                                            data.get("doc"),
                                                                                             access)
         self.bt_info_B.Text = "Find this button in: {}\nTab Icon:".format(tab_name)
     

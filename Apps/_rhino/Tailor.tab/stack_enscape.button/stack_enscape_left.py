@@ -1,5 +1,5 @@
 __title__ = "Stack PSD"
-
+__doc__ = "Stack PSD files"
 import process_data as pd
 import prepare_miro as pm
 
