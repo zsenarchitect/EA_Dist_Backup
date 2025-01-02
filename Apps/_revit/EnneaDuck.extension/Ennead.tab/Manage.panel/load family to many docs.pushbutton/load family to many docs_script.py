@@ -2,12 +2,12 @@ __doc__ = "Pick many families, and load them to many projects. You can:\n\t- 1 f
 __title__ = "Load Multiple Families\nTo Multiple Docs"
 __tip__ = True
 from pyrevit import forms, DB, UI, script
-
-
+import os
+import re
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SELECTION, REVIT_SYNC, REVIT_EVENT
-from EnneadTab import SOUND, ERROR_HANDLE, LOG
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_SYNC
+from EnneadTab import SOUND, ERROR_HANDLE, LOG, ENVIRONMENT
 
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
@@ -87,8 +87,21 @@ def pick_open_family_docs():
     return selected_family_docs
 
 
-def pick_family_from_folder():
-    source_files = forms.pick_file(file_ext = "rfa", multi_file = True)
+def pick_family_from_folder(folder = None):
+    if folder is None:
+        source_files = forms.pick_file(file_ext = "rfa", multi_file = True)
+    else:
+        class MyOption(forms.TemplateListItem):
+            @property
+            def name(self):
+                return os.path.splitext(os.path.basename(self.item))[0]
+        source_files = [MyOption(os.path.join(folder, file)) for file in os.listdir(folder) if file.endswith(".rfa") and not re.match(r'.*\.\d+\.rfa$', file)]
+
+        source_files = forms.SelectFromList.show(source_files,
+                                            multiselect = True,
+                                            title = "pick families to load",
+                                            button_name='pick families')
+        
     if not source_files:
         return None
     opened_docs = []
@@ -124,7 +137,7 @@ def process_family():
 
 
 
-    opts = ["Pick From Opened Families", "Pick Families From A Folder."]
+    opts = ["Pick From Opened Families", "Pick Families From A Folder.", "Pick Families From EnneadTab Collection"]
     res = REVIT_FORMS.dialogue(main_text = "Where to search for family?",
                                             options = opts)
     if res == opts[0]:
@@ -132,6 +145,9 @@ def process_family():
         # print selected_docs
     elif res == opts[1]:
         selected_family_docs = pick_family_from_folder()
+        # print selected_docs
+    elif res == opts[2]:
+        selected_family_docs = pick_family_from_folder(folder = os.path.join(ENVIRONMENT.DOCUMENT_FOLDER, ENVIRONMENT.get_app_name()))
         # print selected_docs
     else:
         return
