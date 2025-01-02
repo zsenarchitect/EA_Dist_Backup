@@ -146,4 +146,58 @@ By default, EnneadTab set default amount of notification. But you can set it to 
 
 Those setting will affect both Revit and Rhino, but since the majority notification happens from Revit side, this setting is only configerable in Revit side.
 
+## 5. EnneadTab-for-CAD
 
+It is not recommended in this office to use CAD as production tool, but some time we have to work with CAD files sent from consaltants. EnneadTab-for-CAD is a tool to help you work with those CAD files. All Command begin with "EA_" prefix.
+
+> [!NOTE]
+> __EA_EXPLODE_ALL_BLOCKS__
+> <br>
+> Explode all blocks including nesting blocks.<br>
+> If you want to import to Rhino you may consider flatterning the CAD dynamic block by this command. Otherwise you will see all version of block overlaping in Rhino.<br>
+> If you are planning to import to Revit, this step is not needed.
+
+
+> [!NOTE]
+> __EA_DELETE_ALL_SOLID_HATCH__
+> <br>
+> Remove all solid hatch, inlcuding inside the blocks
+
+> [!NOTE]
+> __EA_ALL_COLOR_BY_LAYER__
+> <br>
+> Set all objects display color by layer
+
+> [!NOTE]
+> __EA_REMOVE_ALL_DIM__
+> <br>
+> Remove all dim objs
+
+> [!NOTE]
+> __EA_EXPLODE_NON_SOLID_HATCH__
+> <br>
+> Freeze the apperance of CAD hatch before going to Revit. <br>
+> CAD hatch on small scale will become black solid in revit. There is not way around since 1985. So here this command explode the hatch into elements so its appearance is preserved regardless of the scale.
+
+> [!NOTE]
+> __EA_PREP_CAD_FOR_REVIT__
+> <br>
+> Quick alias for: DELETE_ALL_SOLID_HATCH + ALL_COLOR_BY_LAYER + EA_REMOVE_ALL_DIM + EA_EXPLODE_NON_SOLID_HATCH
+
+> [!NOTE]
+> __EA_PREP_CAD_FOR_RHINO__
+> <br>
+> Quick alias for: DELETE_ALL_SOLID_HATCH + ALL_COLOR_BY_LAYER + EA_REMOVE_ALL_DIM + EA_EXPLODE_ALL_BLOCKS + EA_EXPLODE_NON_SOLID_HATCH
+
+
+### 5.1 EnneadTab-for-CAD
+
+1. Navigate to 
+    - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
+2. Find the file 
+    - "EnneadTab_For_CAD.lsp"
+3. Open CAD. Type the command 
+    - "CUI"(Customize User Interface)
+4. Right click on "LISP Files" and Load "EnneadTab_For_CAD.lsp"
+![CAD CUI](/Apps/lib/EnneadTab/images/Instruction_cad_cui.png)
+5. Restart CAD.

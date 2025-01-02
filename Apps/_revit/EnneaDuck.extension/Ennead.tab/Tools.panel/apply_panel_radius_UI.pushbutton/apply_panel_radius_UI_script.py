@@ -59,9 +59,6 @@ def apply_radius_action(window):
 
         return
 
-    output.print_md( "--Applying Panel Radius By Host Wall **[{}]:{}** ----Found {} Items".format(solution.bad_type.Family.Name,
-                                            solution.bad_type.LookupParameter("Type Name").AsString(),
-                                            len(bad_instances)))
     #print all_instances
     map(solution.fix_panel, bad_instances)
 
@@ -76,9 +73,16 @@ def apply_radius_action(window):
 
     t.Commit()
     window.update_drop_down_selection_source()
-    text_out = "Radius Applied:\n[{}]: {} --> {} fixed.".format(solution.bad_type.Family.Name,
+    text_out = "Radius Applied:\n[{}]: {} --> {} found, {} ok, {} wrong and fixed.".format(solution.bad_type.Family.Name,
                                                             solution.bad_type.LookupParameter("Type Name").AsString(),
+                                                            len(bad_instances),
+                                                            solution.ok_count,
                                                             solution.fix_count)
+    output.print_md( "--Applying Panel Radius By Host Wall **[{}]:{}** ----Found {} Items, {} ok, {} wrong and fixed.".format(solution.bad_type.Family.Name,
+                                            solution.bad_type.LookupParameter("Type Name").AsString(),
+                                            len(bad_instances),
+                                            solution.ok_count,
+                                            solution.fix_count))
     window.debug_textbox.Text = text_out
     window.debug_textbox.FontSize = 12
 
@@ -90,6 +94,7 @@ class Solution:
 
         self.error_panel_found = False
         self.fix_count = 0
+        self.ok_count = 0
 
 
     def fix_panel(self, panel):
@@ -97,9 +102,11 @@ class Solution:
             return
 
         desires_r = self.find_panel_host_wall_radius(panel)
-        if panel.LookupParameter(self.para_name).AsDouble() != desires_r:
+        if panel.LookupParameter(self.para_name).AsDouble() != float(desires_r):
             panel.LookupParameter(self.para_name).Set(desires_r)
             self.fix_count += 1
+        else:
+            self.ok_count += 1
 
     def find_panel_host_wall_radius(self, panel):
 

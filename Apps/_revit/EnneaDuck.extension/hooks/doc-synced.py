@@ -217,7 +217,7 @@ def update_working_view_name(doc):
 def update_project_2306(doc):
     if "universal hydrogen" not in doc.Title.lower():
         return
-    # if not USER.is_SZ():
+    # if not USER.IS_DEVELOPER:
     #     return
 
     folder = "Ennead Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown"

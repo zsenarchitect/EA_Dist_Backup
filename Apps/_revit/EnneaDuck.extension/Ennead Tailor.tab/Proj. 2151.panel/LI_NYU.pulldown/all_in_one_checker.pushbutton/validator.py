@@ -129,7 +129,7 @@ def validate_schedule_view(doc, option):
         format_schedule(doc, option)
 
 def format_schedule(doc, option):
-    if not USER.is_SZ():
+    if not USER.IS_DEVELOPER:
         return
     # test if schedule has all required parameters as field
     # create a schedule with defined rules(get viewschedule.definition, then add field, and set order)

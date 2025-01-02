@@ -272,7 +272,6 @@ IS_GRASSHOPPER_ENVIRONMENT = is_Grasshopper_environment()
 IS_REVIT_ENVIRONMENT = is_Revit_environment()
 IS_RHINOINSIDEREVIT_ENVIRONMENT = is_RhinoInsideRevit_environment()
 
-
 def get_app_name():
     """Get the current application name.
 
@@ -287,6 +286,13 @@ def get_app_name():
     return app_name
 
 
+if not os.path.exists(L_DRIVE_HOST_FOLDER):
+    print ("L drive is not available, please check your network connection")
+    try:
+        import NOTIFICATION
+        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection")
+    except:
+        pass
 
 ###############
 if __name__ == "__main__":

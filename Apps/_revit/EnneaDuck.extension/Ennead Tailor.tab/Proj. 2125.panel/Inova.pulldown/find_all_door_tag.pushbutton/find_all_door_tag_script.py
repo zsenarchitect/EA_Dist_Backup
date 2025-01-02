@@ -63,7 +63,7 @@ def find_all_door_tag():
                     continue
                 print ("---| Door <{}> is not tagged".format(output.linkify(door_id)))
             
-            if not EnneadTab.USER.is_SZ():
+            if not EnneadTab.USER.IS_DEVELOPER:
                 continue
             continue
              
