@@ -1,6 +1,6 @@
 
 __title__ = "RedAlert"
-__doc__ = "This button does RedAlert when left click"
+__doc__ = "Active game mode in Rhino"
 
 
 from EnneadTab import ERROR_HANDLE, LOG, SOUND

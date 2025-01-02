@@ -1,11 +1,11 @@
 
 __title__ = "FlattenMeshFace"
-__doc__ = "This button does FlattenMeshFace when left click"
+__doc__ = "Try to flattern the mesh face so there is no bump"
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
-from EnneadTab import LOG, ERROR_HANDLE
+from EnneadTab import LOG, ERROR_HANDLE, DATA_CONVERSION
 
 def highlight_planar_region(mesh):
     dot_name = "EA_mesh_flat_face_marker"
@@ -22,7 +22,7 @@ def highlight_planar_region(mesh):
         face_corners = [Rhino.Geometry.Point3d(mesh.Vertices[x]) for x in face_corners]
         #print face_corners
 
-        face_corners = EnneadTab.DATA_CONVERSION.list_to_system_list(face_corners, type = Rhino.Geometry.Point3d)
+        face_corners = DATA_CONVERSION.list_to_system_list(face_corners, type = Rhino.Geometry.Point3d)
         test_crv = Rhino.Geometry.PolylineCurve(face_corners)
 
         if test_crv.IsPlanar(tolerance):

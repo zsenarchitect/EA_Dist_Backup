@@ -1,6 +1,6 @@
 
 __title__ = "ExternalTrimmer"
-__doc__ = "This button does ExternalTrimmer when left click"
+__doc__ = "Trim selected objs in external file and link back to Rhino"
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

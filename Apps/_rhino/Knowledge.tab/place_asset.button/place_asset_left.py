@@ -1,6 +1,6 @@
 
 __title__ = "PlaceAsset"
-__doc__ = "This button does PlaceAsset when left click"
+__doc__ = "Place Asset from asset library"
 
 import os
 import sys

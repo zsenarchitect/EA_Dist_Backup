@@ -1,6 +1,6 @@
 
 __title__ = "InspectEnscapeSetting"
-__doc__ = "This button does InspectEnscapeSetting when left click"
+__doc__ = "Inspect Enscape setting file"
 
 
 import rhinoscriptsyntax as rs

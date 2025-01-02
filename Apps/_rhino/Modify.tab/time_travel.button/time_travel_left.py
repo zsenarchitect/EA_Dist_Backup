@@ -1,6 +1,6 @@
 
 __title__ = "TimeTravel"
-__doc__ = "This button does TimeTravel when left click"
+__doc__ = "Undo history on selected objs"
 import rhinoscriptsyntax as rs
 from EnneadTab import NOTIFICATION
 from EnneadTab import LOG, ERROR_HANDLE

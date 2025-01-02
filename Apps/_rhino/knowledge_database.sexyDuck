@@ -75,7 +75,7 @@
         "script": "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py",
         "icon": "Ennead+.menu\\tell_me_version.button\\icon.png",
         "alias": "TellMeVersion",
-        "doc": "This button does TellMeVersion when left click",
+        "doc": "Show current version of EnneadTab Rhino",
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
@@ -83,7 +83,7 @@
         "script": "Ennead+.menu\\unit_test.button\\unit_test_left.py",
         "icon": "Ennead+.menu\\unit_test.button\\icon.png",
         "alias": "UnitTest",
-        "doc": "This button does UnitTest when left click",
+        "doc": "Perform unit test on EnneadTab",
         "tab": "Ennead+.menu",
         "tab_icon": null
     },
@@ -318,7 +318,7 @@
         "script": "File.tab\\external_trimmer.button\\external_trimmer_left.py",
         "icon": "File.tab\\external_trimmer.button\\icon.png",
         "alias": "ExternalTrimmer",
-        "doc": "This button does ExternalTrimmer when left click",
+        "doc": "Trim selected objs in external file and link back to Rhino",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png"
     },
@@ -326,7 +326,7 @@
         "script": "File.tab\\external_trimmer.button\\external_trimmer_right.py",
         "icon": "File.tab\\external_trimmer.button\\icon.png",
         "alias": "ExternalTrimmer",
-        "doc": "This button does ExternalTrimmer when right click",
+        "doc": "Update external link",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png"
     },
@@ -374,7 +374,7 @@
         "script": "Fun.tab\\red_alert.button\\red_alert_left.py",
         "icon": "Fun.tab\\red_alert.button\\icon.png",
         "alias": "RedAlert",
-        "doc": "This button does RedAlert when left click",
+        "doc": "Active game mode in Rhino",
         "tab": "Fun.tab",
         "tab_icon": "Fun.tab\\icon.png"
     },
@@ -398,7 +398,7 @@
         "script": "Knowledge.tab\\place_asset.button\\place_asset_left.py",
         "icon": "Knowledge.tab\\place_asset.button\\icon.png",
         "alias": "PlaceAsset",
-        "doc": "This button does PlaceAsset when left click",
+        "doc": "Place Asset from asset library",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
     },
@@ -425,33 +425,9 @@
         "script": "Knowledge.tab\\turtorial.button\\turtorial_left.py",
         "icon": "Knowledge.tab\\turtorial.button\\icon.png",
         "alias": "Turtorial",
-        "doc": "This button does Turtorial when left click",
+        "doc": "Show tutorial for some useful trick in GH",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png"
-    },
-    "Lab.tab\\core_framework.button\\core framework_left.py": {
-        "script": "Lab.tab\\core_framework.button\\core framework_left.py",
-        "icon": null,
-        "alias": "CoreFramework",
-        "doc": "This button does CoreFramework when left click",
-        "tab": "Lab.tab",
-        "tab_icon": "Lab.tab\\icon.png"
-    },
-    "Lab.tab\\quick_test_temp.button\\quick test temp_left.py": {
-        "script": "Lab.tab\\quick_test_temp.button\\quick test temp_left.py",
-        "icon": null,
-        "alias": "QuickTestTemp",
-        "doc": "This button does QuickTestTemp when left click",
-        "tab": "Lab.tab",
-        "tab_icon": "Lab.tab\\icon.png"
-    },
-    "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py": {
-        "script": "Lab.tab\\test_Rhino8.button\\test_Rhino8_left.py",
-        "icon": null,
-        "alias": "TestRhino8",
-        "doc": "This button does TestRhino8 when left click",
-        "tab": "Lab.tab",
-        "tab_icon": "Lab.tab\\icon.png"
     },
     "Layer.tab\\destroy_layer.button\\destroy_layer_left.py": {
         "script": "Layer.tab\\destroy_layer.button\\destroy_layer_left.py",
@@ -577,7 +553,7 @@
         "script": "Modify.tab\\flatten_mesh_face.button\\flatten_mesh_face_left.py",
         "icon": "Modify.tab\\flatten_mesh_face.button\\icon.png",
         "alias": "FlattenMeshFace",
-        "doc": "This button does FlattenMeshFace when left click",
+        "doc": "Try to flattern the mesh face so there is no bump",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png"
     },
@@ -633,7 +609,7 @@
         "script": "Modify.tab\\time_travel.button\\time_travel_left.py",
         "icon": "Modify.tab\\time_travel.button\\icon.png",
         "alias": "TimeTravel",
-        "doc": "This button does TimeTravel when left click",
+        "doc": "Undo history on selected objs",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png"
     },
@@ -673,7 +649,7 @@
         "script": "Render.tab\\inspect_enscape_setting.button\\inspect_enscape_setting_left.py",
         "icon": "Render.tab\\inspect_enscape_setting.button\\icon.png",
         "alias": "InspectEnscapeSetting",
-        "doc": "This button does InspectEnscapeSetting when left click",
+        "doc": "Inspect Enscape setting file",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png"
     },
@@ -681,7 +657,7 @@
         "script": "Render.tab\\load_enscape_to_psd.button\\load_enscape_to_psd_left.py",
         "icon": "Render.tab\\load_enscape_to_psd.button\\icon.png",
         "alias": "LoadEnscapeToPsd",
-        "doc": "This button does LoadEnscapeToPsd when left click",
+        "doc": "Load related Enscape image to Photoshop",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png"
     },
@@ -745,7 +721,7 @@
         "script": "Revit.tab\\floor_drafter.button\\floor_drafter_left.py",
         "icon": "Revit.tab\\floor_drafter.button\\icon.png",
         "alias": "FloorDrafter",
-        "doc": "This button does FloorDrafter when left click",
+        "doc": "Convert brep to floor data so in Revit it can be used as floor creation base.",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png"
     },

@@ -1,6 +1,6 @@
 
 __title__ = "ExternalTrimmer"
-__doc__ = "This button does ExternalTrimmer when right click"
+__doc__ = "Update external link"
 
 
 import external_trimmer_left as ET

@@ -1,6 +1,6 @@
 
 __title__ = "LoadEnscapeToPsd"
-__doc__ = "This button does LoadEnscapeToPsd when left click"
+__doc__ = "Load related Enscape image to Photoshop"
 
 import rhinoscriptsyntax as rs
 

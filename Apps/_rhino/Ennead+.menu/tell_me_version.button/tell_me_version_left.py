@@ -1,6 +1,6 @@
 
 __title__ = "TellMeVersion"
-__doc__ = "This button does TellMeVersion when left click"
+__doc__ = "Show current version of EnneadTab Rhino"
 
 
 from EnneadTab import ERROR_HANDLE, LOG, VERSION_CONTROL

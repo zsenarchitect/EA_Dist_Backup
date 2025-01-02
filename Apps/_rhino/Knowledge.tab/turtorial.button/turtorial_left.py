@@ -1,6 +1,6 @@
 
 __title__ = "Turtorial"
-__doc__ = "This button does Turtorial when left click"
+__doc__ = "Show tutorial for some useful trick in GH"
 import os
 import rhinoscriptsyntax as rs
 import subprocess

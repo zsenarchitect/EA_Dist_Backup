@@ -1,6 +1,6 @@
 
 __title__ = "FloorDrafter"
-__doc__ = "This button does FloorDrafter when left click"
+__doc__ = "Convert brep to floor data so in Revit it can be used as floor creation base."
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

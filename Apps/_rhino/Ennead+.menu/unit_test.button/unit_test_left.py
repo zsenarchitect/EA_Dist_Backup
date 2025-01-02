@@ -1,6 +1,6 @@
 
 __title__ = "UnitTest"
-__doc__ = "This button does UnitTest when left click"
+__doc__ = "Perform unit test on EnneadTab"
 
 
 from EnneadTab import ERROR_HANDLE, LOG, UNIT_TEST
