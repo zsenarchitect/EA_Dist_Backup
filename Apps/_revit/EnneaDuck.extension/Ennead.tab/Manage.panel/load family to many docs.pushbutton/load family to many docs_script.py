@@ -95,7 +95,7 @@ def pick_family_from_folder(folder = None):
             @property
             def name(self):
                 return os.path.splitext(os.path.basename(self.item))[0]
-        source_files = [MyOption(os.path.join(folder, file)) for file in os.listdir(folder) if file.endswith(".rfa") and not re.match(r'.*\.\d+\.rfa$', file)]
+        source_files = [MyOption(os.path.join(folder, file)) for file in os.listdir(folder) if file.endswith(".rfa") and not re.match(r'.*\.\d+\.rfa$', file) and "safety doc" not in file.lower()]
 
         source_files = forms.SelectFromList.show(source_files,
                                             multiselect = True,
@@ -160,13 +160,14 @@ def process_family():
     
     
     for selected_family_doc in selected_family_docs:
-        # action begin
-        try:
-            selected_family_doc.Save()
-            update_log("family save success.")
-        except Exception as e:
-            update_log("fail to save family becasue: {}".format(e))
-            #print "fail to save becasue: {}".format(e)
+        ## i think it si better to not save family. Just load it
+        # # action begin
+        # try:
+        #     selected_family_doc.Save()
+        #     update_log("family save success.")
+        # except Exception as e:
+        #     update_log("fail to save family becasue: {}".format(e))
+        #     #print "fail to save becasue: {}".format(e)
 
 
         for doc in selected_docs:
