@@ -269,31 +269,22 @@ def update_data(file_name, is_local=True, keep_holder_key=None):
         file_name = os.path.basename(file_name)
 
     try:
-        # Set up encoding based on environment
-        if sys.platform == "cli":
-            from System.Text import Encoding
-
-            encoding = Encoding.UTF8
-        else:
-            import codecs
-            codecs.register(lambda name: codecs.lookup('utf-8') if name == 'utf-8' else None)
-
-
-        data = get_data(file_name, is_local)
-
-
+        data = get_data(file_name, is_local) or {}  # Ensure we have a dict
+       
 
         yield data
 
-
+     
+       
         if keep_holder_key is not None:
             data["key_holder"] = keep_holder_key
+            print("After setting key_holder:", data)
+
 
         set_data(data, file_name, is_local)
-
-
+   
     except Exception as e:
-        print("Error in update_data at DATA_FILE.py:", str(e))
+        print("Error in DATA_FILE.py at update_data function:", str(e))
         print(traceback.format_exc())
         
 

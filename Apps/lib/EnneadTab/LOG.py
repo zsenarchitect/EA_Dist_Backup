@@ -78,6 +78,8 @@ def log(script_path, func_name_as_record):
                     "duration": TIME.get_readable_time(t_end - t_start),
                 }
 
+                # print ("data to be place in log is ", data)
+
             return out
 
         return wrapper
