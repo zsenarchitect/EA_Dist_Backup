@@ -6,6 +6,7 @@ Native shutil.copyfile will fail in some cases, so we use dotnet to copy the fil
 try:
     import shutil
 except:
+    print ("shutil not found, using dotnet to copy file")
     from System.IO import File  # pyright: ignore
 
 
@@ -23,9 +24,11 @@ def copyfile(src, dst, include_metadata=True):
 
 def copyfile_with_dotnet(src, dst):
     try:
+        from System.IO import File  # pyright: ignore
         File.Copy(src, dst, True)  # True to overwrite if exists
         return True
     except Exception as e:
+        print (e)
         return False
 
 

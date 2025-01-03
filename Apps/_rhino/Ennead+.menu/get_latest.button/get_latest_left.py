@@ -30,24 +30,33 @@ __title__ = "GetLatest"
 __doc__ = "Get the lastest version of EnneadTab"
 __FONDATION__ = True
 from EnneadTab import ERROR_HANDLE
-from EnneadTab import VERSION_CONTROL, NOTIFICATION, LOG,ERROR_HANDLE
+from EnneadTab import VERSION_CONTROL, NOTIFICATION, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_RUI, RHINO_ALIAS
 
-
-@LOG.log(__file__, __title__)
+# @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def get_latest(is_silient = False):
-
-    VERSION_CONTROL.update_EA_dist()
-    RHINO_RUI.update_my_rui()
+    print ("get_latest called")
+    
     RHINO_ALIAS.register_alias_set()
+    print ("alias set registered")
+    RHINO_RUI.update_my_rui()
+    print ("rui updated")
     RHINO_RUI.add_startup_script()
+    print ("startup script added")
 
 
     if not is_silient:
         NOTIFICATION.messenger("Latest EnneadTab-For-Rhino Loaded")
     else:
         print ("Latest EnneadTab-For-Rhino Loaded")
+
+    # this is always done in the background so no need to wait for it.,
+    try:
+        VERSION_CONTROL.update_EA_dist()
+    except Exception as e:
+        print ("Error updating EA dist")
+        print (e)
 
 
 

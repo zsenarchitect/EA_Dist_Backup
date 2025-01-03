@@ -23,6 +23,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
 
     abs_name = exe_name.lower()
     if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg")):
+        
         os.startfile(exe_name)
         return True
     
@@ -43,7 +44,10 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)
         COPY.copyfile(exe, temp_exe)
-        os.startfile(temp_exe)
+        if os.path.exists(temp_exe):
+            os.startfile(temp_exe)
+        else:
+            print ("temp exe not found, maybe failed to copy due to permission issue.")
         for file in os.listdir(ENVIRONMENT.WINDOW_TEMP_FOLDER):
             if file.startswith("_temp_exe_"):
                 # ignore if this temp file is less than 1 day old, unless it is OS_installer or AutoStartup
@@ -52,7 +56,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
                 try:
                     os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
                 except:
-                    pass
+                        pass
         return True
         
     

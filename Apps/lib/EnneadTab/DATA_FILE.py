@@ -1,5 +1,6 @@
 """Utilities for writing and reading data to and from JSON files as well as persistent sticky data."""
 
+import sys
 import shutil
 import json
 import io
@@ -36,33 +37,35 @@ def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False)
 
 
 def _read_json_as_dict(filepath, use_encode=True, create_if_not_exist=False):
-    """Get the data from a JSON file and return it as a dictionary.
-
-    Args:
-        filepath (str): The path of the file to read.
-        use_encode (bool, optional): Might need encoding if there are Chinese characters in the file. Defaults to False.
-        create_if_not_exist (bool, optional): Create the file if it does not exist. Defaults to False.
-
-    Returns:
-        dict: The contents of the file as a dictionary.
-    """
-    if create_if_not_exist:
-        if not os.path.exists(filepath):
-            _save_dict_to_json({}, filepath, use_encode)
-            return dict()
+    """Get the data from a JSON file and return it as a dictionary."""
+    if create_if_not_exist and not os.path.exists(filepath):
+        _save_dict_to_json({}, filepath, use_encode)
+        return dict()
 
     try:
-        if use_encode:
-            with io.open(filepath, encoding="utf-8") as f:
-                data = json.load(f)
-            return data
-
-        else:
-            with open(filepath, "r") as f:
-                data = json.load(f)
-            return data
+        if sys.platform == "cli":  # IronPython
+            from System.IO import File, StreamReader
+            from System.Text import Encoding
+            
+            if use_encode:
+                # Use .NET's StreamReader with UTF8 encoding
+                reader = StreamReader(filepath, Encoding.UTF8)
+                content = reader.ReadToEnd()
+                reader.Close()
+                return json.loads(content)
+            else:
+                # Use basic file reading for non-encoded files
+                content = File.ReadAllText(filepath)
+                return json.loads(content)
+        else:  # CPython
+            if use_encode:
+                with io.open(filepath, encoding="utf-8") as f:
+                    return json.load(f)
+            else:
+                with open(filepath, "r") as f:
+                    return json.load(f)
     except Exception as e:
-        print(e)
+        print("Error reading JSON file {}: {}".format(filepath, str(e)))
         return None
 
 
@@ -101,30 +104,34 @@ def _read_json_as_dict_in_shared_dump_folder(
 
 
 def _save_dict_to_json(data_dict, filepath, use_encode=True):
-    """Save a dictionary to a JSON file.
-
-    Args:
-        data_dict (dict): The dictionary to store.
-        filepath (str): The path of the file to write to.
-        use_encode (bool, optional): Whether to encode the file. Defaults to False.
-
-    Returns:
-        bool: Whether the operation was successful or not.
-    """
+    """Save a dictionary to a JSON file."""
     try:
-        if use_encode:
-            with io.open(filepath, "w", encoding="utf-8") as f:
-                # Serialize the data and write it to the file
-                json.dump(data_dict, f, ensure_ascii=False, indent=4)
-            return True
-
-        else:
-            with open(filepath, "w") as f:
-                json.dump(data_dict, f, indent=4)
-
-            return True
+        # Convert to JSON string first
+        json_str = json.dumps(data_dict, ensure_ascii=False, indent=4)
+        
+        if sys.platform == "cli":  # IronPython
+            from System.IO import File, StreamWriter
+            from System.Text import Encoding, UTF8Encoding
+            
+            if use_encode:
+                # Use UTF8Encoding(False) to prevent BOM
+                utf8_no_bom = UTF8Encoding(False)
+                writer = StreamWriter(filepath, False, utf8_no_bom)
+                writer.Write(json_str)
+                writer.Close()
+            else:
+                # Use basic file writing for non-encoded files
+                File.WriteAllText(filepath, json_str)
+        else:  # CPython
+            if use_encode:
+                with io.open(filepath, "w", encoding="utf-8") as f:
+                    f.write(json_str)
+            else:
+                with open(filepath, "w") as f:
+                    f.write(json_str)
+        return True
     except Exception as e:
-        print(e)
+        print("Error saving JSON file {}: {}".format(filepath, str(e)))
         return False
 
 
@@ -257,36 +264,38 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
 
 @contextmanager
 def update_data(file_name, is_local=True, keep_holder_key=None):
-    """A context manager that allows you to update data in a JSON file.
-
-    Args:
-        file_name (str): The name of the file to update.
-        is_local (bool, optional): Whether the file is in the local dump folder. Defaults to True.
-        keep_holder_key (any, optional): The value to keep in the "key_holder" key. Defaults to None.
-    Example:
-        with update_data(file_name) as data:
-            data["test"] = 1234567890000000
-
-    """
+    """A context manager that allows you to update data in a JSON file."""
     if os.path.exists(file_name):
         file_name = os.path.basename(file_name)
 
     try:
+        # Set up encoding based on environment
+        if sys.platform == "cli":
+            from System.Text import Encoding
+
+            encoding = Encoding.UTF8
+        else:
+            import codecs
+            codecs.register(lambda name: codecs.lookup('utf-8') if name == 'utf-8' else None)
+
+
         data = get_data(file_name, is_local)
+
+
 
         yield data
 
-        if keep_holder_key:
+
+        if keep_holder_key is not None:
             data["key_holder"] = keep_holder_key
 
-            
         set_data(data, file_name, is_local)
 
 
     except Exception as e:
-        print("Error in update_data:", str(e))
+        print("Error in update_data at DATA_FILE.py:", str(e))
         print(traceback.format_exc())
-        raise
+        
 
 
 #######################################

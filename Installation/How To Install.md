@@ -97,30 +97,14 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 
 ## 3 EnnneaTab-For-Rhino
 
-### 3.1 EnnneaTab-For-Rhino 7
-0. Troughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.3__, ignore thsi step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar are not saying "Ennead+" but instead saying "Ennead", you have previous version.
+### 3.1 EnnneaTab-For-Rhino
+0. Troughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.2__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar are not saying "Ennead+" but instead saying "Ennead", you have previous version.
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
 3. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".
 4. Restart Rhino.
 
-### 3.2 EnnneaTab-For-Rhino 8
-> [!NOTE]
-> Attention, __Rhino 8__ users!
-> <br>
-> Due to the significant .Net framework changes from Rhino 7 to 8, you will need to configure your Rhino 8 to be backward compatable before installing EnneadTab-for-Rhino. Therefore, compared to the installation of EnneadTab-for-Rhino 7, you will need to do a few more steps.
-
-
-0. Troughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.3__, ignore thsi step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar are not saying "Ennead+" but instead saying "Ennead", you have previous version.
-1. If you have not done this before, start __ONLY ONE__ Rhino for Windows, type the command __SetDotNetRuntime__, select the __Runtime__ option. Set the __NETFramework__ option. Close Rhino. Again, this step is for Rhino 8 only.
-2. Navigate to 
-    - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
-3. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
-4. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".
-5. You will see that the side bar is not showing up, this is becasue Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly to make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
-![screenshot of toggle r8 sidebar](/Apps/lib/EnneadTab/images/Instruction_toggle_r8_sidebar.png)
-6. Restart Rhino.
 
 
 > [!IMPORTANT]
@@ -131,7 +115,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > ![screenshot of activation](/Apps/lib/EnneadTab/images/instruction_activate_rhino.png)
 
 
-### 3.3 Unistall Ennead-For-Rhino
+### 3.2 Unistall Ennead-For-Rhino
 With __only one Rhino__ is open, remove any old EnneadTab Rhino by using command "_Toolbar", then close any toolbar that mentions "EnneadTab". Most cases there should be only one mentioning, but certain OG users might see two. Close them all. No need to save any toolbar. __RESTART RHINO__ so any trace of it is completely removed from session. Now you have completely removed EnneadTab-Rhino.
 
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_remove_old_rui.png)

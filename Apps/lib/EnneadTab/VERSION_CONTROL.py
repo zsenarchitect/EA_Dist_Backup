@@ -3,6 +3,7 @@
 
 
 import os
+import sys
 
 import EXE
 import ENVIRONMENT
@@ -30,12 +31,24 @@ def show_last_success_update_time():
         return
     records.sort()
     record = records[-1]
-    with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record)) as f:
-        commit_line = f.readlines()[-1].replace("\n","")
-    NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record.replace(".duck", ""),
-                                                                 commit_line))    
-        
-    pass
+    
+    try:
+        if sys.platform == "cli":  # IronPython
+            from System.IO import File
+            # Read all lines and get the last one
+            all_lines = File.ReadAllLines(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record))
+            commit_line = all_lines[-1].replace("\n", "")
+        else:  # CPython
+            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record)) as f:
+                commit_line = f.readlines()[-1].replace("\n","")
+                
+        NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record.replace(".duck", ""),
+                                                                    commit_line))
+    except Exception as e:
+        print("Error reading update record: {}".format(str(e)))
+        NOTIFICATION.messenger("Error reading update record.")
+
+
 
 def unit_test():
     update_EA_dist()

@@ -1,6 +1,7 @@
 import json
 
 import ENVIRONMENT
+import DATA_FILE
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
@@ -21,11 +22,10 @@ def remove_invalid_alias():
 
 def register_alias_set():
     remove_invalid_alias()
+
     exisitng_alias = rs.AliasNames()
     
-            
-    with open(KNOWLEDGE_FILE, "r") as f:
-        data = json.load(f)
+    data = DATA_FILE.get_data(KNOWLEDGE_FILE, is_local=True)
 
     for root, dirs, files in os.walk(ENVIRONMENT.RHINO_FOLDER):
         for file in files:

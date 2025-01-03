@@ -106,18 +106,7 @@ def align_viewports():
         view.DisableTemporaryViewMode (DB.TemporaryViewMode.TemporaryHideIsolate)
     t.Commit()
 
-"""
-def try_catch_error(func):
-    def wrapper(*args, **kwargs):
-        print("Wrapper func for EA Log -- Begin:")
-        try:
-            # print "main in wrapper"
-            return func(*args, **kwargs)
-        except Exception as e:
-            print(str(e))
-            return "Wrapper func for EA Log -- Error: " + str(e)
-    return wrapper
-"""
+
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
