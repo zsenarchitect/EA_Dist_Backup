@@ -133,7 +133,7 @@ def get_files_with_keyword(keyword, folder):
                     
                     if "__main__" not in contents:
                         # this is to skip file that can actually run the whole thing during import. This is bad. shoud report back to SEn to fix
-                        if USER.is_SZ():
+                        if USER.IS_DEVELOPER:
                             print ("\n\nThis contain dangerous format that can run during import:\n" + file_path + "\nYou can add this...")
                             print ("""if __name__ == "__main__":
     pass""")
