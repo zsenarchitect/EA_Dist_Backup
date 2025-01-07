@@ -278,7 +278,7 @@ def update_data(file_name, is_local=True, keep_holder_key=None):
        
         if keep_holder_key is not None:
             data["key_holder"] = keep_holder_key
-            print("After setting key_holder:", data)
+            # print("After setting key_holder:", data)
 
 
         set_data(data, file_name, is_local)
