@@ -62,7 +62,7 @@ PY3_DEPENDENCY_FOLDER =  os.path.join(LIB_FOLDER, "dependency", "py3")
 USER_PROFILE_FOLDER = os.environ["USERPROFILE"]
 USER_DOCUMENT_FOLDER = "{}\\Documents".format(USER_PROFILE_FOLDER)
 USER_DOWNLOAD_FOLDER = "{}\\downloads".format(USER_PROFILE_FOLDER)
-# # desktop folder is tricky, reason unknown, maybe related to the One drive desktop sync?
+
 USER_DESKTOP_FOLDER = "{}\\Desktop".format(USER_PROFILE_FOLDER)
 ONE_DRIVE_DESKTOP_FOLDER = "{}\\OneDrive - Ennead Architects\\Desktop".format(USER_PROFILE_FOLDER)
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
@@ -290,7 +290,7 @@ if not os.path.exists(L_DRIVE_HOST_FOLDER):
     print ("L drive is not available, please check your network connection")
     try:
         import NOTIFICATION
-        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection")
+        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection or activate L drive manually.")
     except:
         pass
 

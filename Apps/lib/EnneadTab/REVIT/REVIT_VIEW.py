@@ -29,12 +29,30 @@ def get_view_by_name( view_name, doc = DOC):
 
 
 def create_drafting_view(doc, view_name, scale = 1):
+    if get_view_by_name(view_name, doc):
+        raise ValueError("View [{}] already exists!".format(view_name))
     view = DB.ViewDrafting.Create(doc, 
                                   get_default_view_type("drafting").Id)
     view.Name = view_name
     view.Scale = scale
     return view
 
+
+def create_legend_view(doc, view_name, scale = 1):
+    if get_view_by_name(view_name, doc):
+        raise ValueError("View [{}] already exists!".format(view_name))
+    for view in DB.FilteredElementCollector(doc).OfClass(DB.View):
+        if view.ViewType == DB.ViewType.Legend and not view.IsTemplate:
+            first_legend_view = view
+            break
+    if first_legend_view:
+        duplicated_view_id = first_legend_view.Duplicate(DB.ViewDuplicateOption.Duplicate)
+        duplicated_view = doc.GetElement(duplicated_view_id)
+        duplicated_view.Name = view_name
+        duplicated_view.Scale = scale
+        return duplicated_view
+    else:
+        return None
 
 def get_default_view_type(view_type, doc = DOC):
 

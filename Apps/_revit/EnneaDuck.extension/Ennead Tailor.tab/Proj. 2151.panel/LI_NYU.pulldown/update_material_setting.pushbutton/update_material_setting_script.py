@@ -8,7 +8,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_MATERIAL, REVIT_SELECTION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_MATERIAL
 from Autodesk.Revit import DB # pyright: ignore 
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()

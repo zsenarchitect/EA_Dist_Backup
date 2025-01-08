@@ -131,12 +131,20 @@ def get_solid_fill_pattern(doc = DOC, return_id = False):
 def get_solid_fill_pattern_id(doc = DOC):
     return get_solid_fill_pattern(doc, return_id = True)
 
-def get_filledregion_type(doc, type_name):
+def get_filledregion_type(doc, type_name, color_if_not_exist = None):
+    """
+    color_if_not_exist: if not exist, create a new one with this color tuple (r,g,b)
+    """
     types = DB.FilteredElementCollector(doc).OfClass(
         DB.FilledRegionType).ToElements()
     for type in types:
         if type.LookupParameter("Type Name").AsString() == type_name:
             return type
+    if color_if_not_exist:
+        new_type = type.Duplicate(type_name)
+        new_type.ForegroundPatternColor = DB.Color(color_if_not_exist[0], color_if_not_exist[1], color_if_not_exist[2])
+        new_type.ForegroundPatternId = get_solid_fill_pattern_id(doc)
+        return new_type
     return None
 
 
@@ -335,24 +343,35 @@ def pick_type(family):
     return my_type
 
 
-def pick_system_type(doc, system_type, type_name=None):
+def pick_system_type(doc, system_type, type_name=None, select_multiple = False):
     if system_type == "floor":
         type = DB.BuiltInCategory.OST_Floors
+    elif system_type == "wall":
+        type = DB.BuiltInCategory.OST_Walls
+    elif system_type == "roof":
+        type = DB.BuiltInCategory.OST_Roofs
+
 
     types = DB.FilteredElementCollector(doc).OfCategory(
         type).WhereElementIsElementType().ToElements()
 
-    types = sorted(types, key=lambda x: x.Name)
+    def get_name(x):
+        try:
+            return x.LookupParameter("Type Name").AsString()
+        except:
+            return x.Name
+
+    types = sorted(types, key=get_name)
     if type_name:
-        return [x for x in types if x.Name == type_name][0]
+        return [x for x in types if get_name(x) == type_name][0]
 
     class MyOption(forms.TemplateListItem):
         @property
         def name(self):
-            return "{}".format(self.Name)
+            return "{}".format(get_name(self.item))
     types = [MyOption(x) for x in types]
     my_type = forms.SelectFromList.show(types,
-                                        multiselect=False,
+                                        multiselect=select_multiple,
 
                                         width=1000,
                                         title="Pick type from {}".format(
@@ -360,7 +379,23 @@ def pick_system_type(doc, system_type, type_name=None):
                                         button_name='Select Type')
     return my_type
 
+def pick_system_types(doc, system_type):
+    return pick_system_type(doc, system_type, select_multiple=True)
 
+def pick_wall_types(doc):
+    all_wall_types = DB.FilteredElementCollector(doc).\
+        OfCategory(DB.BuiltInCategory.OST_Walls).\
+        WhereElementIsElementType().ToElements()
+
+    class MyListItem(forms.SelectFromList.ListItem):
+        def __init__(self, item):
+            self.item = item
+            self.name = item.LookupParameter("Type Name").AsString()
+
+    
+
+    return forms.SelectFromList.show([MyListItem(x) for x in all_wall_types], 
+                                     multi_select=True)
 
 def pick_shared_para_definition(doc, select_multiple = False):
     from pyrevit import forms

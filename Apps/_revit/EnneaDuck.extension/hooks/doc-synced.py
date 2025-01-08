@@ -28,6 +28,7 @@ REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
                         "2151_A-EA_NYU Melville_Garage South",
                         "2151_A-EA_NYU Melville_CUP",
                         "2148_textile museum",
+                        "2419_Xiong An SinoChem",
                         "Facade System"]
 
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
