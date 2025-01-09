@@ -159,10 +159,16 @@ class Output:
                     border-left: 5px solid #987284;
                     transition: all 0.3s ease;
                     color: #F4E1D2;
+<<<<<<< HEAD
                     padding-right: 80px;
                 }
                 .error-card::before {
                     content: '!';
+=======
+                }
+                .error-card::before {
+                    content: '❗';
+>>>>>>> d07d2de1 (Auto Commit 2025-01-09_17-39-24)
                     position: absolute;
                     right: 10px;
                     top: 10px;
@@ -189,6 +195,7 @@ class Output:
                     0%, 100% { transform: translateY(0) rotate(15deg); }
                     50% { transform: translateY(-5px) rotate(15deg); }
                 }
+<<<<<<< HEAD
                 .copy-btn {
                     position: absolute;
                     right: 40px;
@@ -206,6 +213,8 @@ class Output:
                     background: #E1D4C1;
                     color: #2B1C10;
                 }
+=======
+>>>>>>> d07d2de1 (Auto Commit 2025-01-09_17-39-24)
             """)
             report_file.write("</style>")
 
@@ -238,7 +247,11 @@ class Output:
                     is_error = any(keyword in str(content).lower() for keyword in error_keywords)
                     
                     if is_error:
+<<<<<<< HEAD
                         report_file.write("<div class='error-card'>{}<button class='copy-btn' onclick='copyErrorCard(this)'>Copy</button></div>".format(
+=======
+                        report_file.write("<div class='error-card'>{}</div>".format(
+>>>>>>> d07d2de1 (Auto Commit 2025-01-09_17-39-24)
                             Output.format_content(content)))
                     else:
                         report_file.write("<{0}>{1}</{0}>".format(
