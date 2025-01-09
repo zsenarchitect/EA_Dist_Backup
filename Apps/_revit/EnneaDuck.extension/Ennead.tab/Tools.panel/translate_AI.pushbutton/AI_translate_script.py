@@ -32,9 +32,6 @@ doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
 
-
-
-
 def translate_contents(data, para_name):
     print ("firing... ext event")
     t = DB.Transaction(doc, "Translate")
@@ -126,20 +123,9 @@ class AiTranslator(WPFWindow):
 
     def pre_actions(self):
 
-
-        #print "doing preaction"
-        # Now we need to make an instance of this handler. Moreover, it shows that the same class could be used to for
-        # different functions using different handler class instances
         self.revit_update_event_handler = SimpleEventHandler(translate_contents)
-        #self.clock_event_handler = SimpleEventHandler(clock_work)
-        # We now need to create the ExternalEvent
         self.ext_event = ExternalEvent.Create(self.revit_update_event_handler)
-        #self.ext_event_clock = ExternalEvent.Create(self.clock_event_handler)
-        #print "preaction done"
-        #print self.revit_update_event_handler
-        #print self.revit_update_event_handler.kwargs
-        #print self.ext_event
-        #print "-------"
+
         return
 
     def __init__(self):
@@ -177,30 +163,14 @@ class AiTranslator(WPFWindow):
             return
 
         if self.radial_bt_do_sheets.IsChecked:
-            """
-            DB_class = DB.ViewSheet
-            all_elements = DB.FilteredElementCollector(doc).OfClass(DB_class).WhereElementIsNotElementType().ToElements()
-            all_elements = list(all_elements)
-            all_elements.sort(key = lambda x: x.Name)
-            """
+
             selected_elements = forms.select_sheets(title = "Select {} to translate".format(self.mode),
                                                     button_name = "Select {} to translate".format(self.mode))
 
 
         else:
-            DB_class = DB.View
-            """
-            elements = DB.FilteredElementCollector(doc).OfClass(DB_class).WhereElementIsNotElementType().ToElements ()
-            temp = list(elements)[0:10]
-            for x in  temp:
-                print x.ViewType
 
-            elements = filter(lambda x: x.ViewType == DB.ViewType.FloorPlan, elements)
-            if len(elements) == 0:
-                return False
-            element = elements[0]
-            """
-            all_elements = DB.FilteredElementCollector(doc).OfClass(DB_class).WhereElementIsNotElementType().ToElements()
+            all_elements = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
             all_elements = list(all_elements)
 
 
@@ -395,14 +365,14 @@ class AiTranslator(WPFWindow):
         else:
             self.debug_textbox.Text = "Debug Output:"
 
-
+    @ERROR_HANDLE.try_catch_error()
     def open_recent_Click(self, sender, e):
         if not hasattr(self, "recent_translation"):
             NOTIFICATION.messenger(main_text = "No recent translation found.")
             return
         
         filepath = FOLDER.get_EA_dump_folder_file("EA Recent Translation.txt")
-        DATA_FILE.set_list(self.recent_translation, filepath, end_with_new_line = False, use_encode = False)
+        DATA_FILE.set_list(self.recent_translation, filepath, end_with_new_line = False)
         import os
         os.startfile(filepath)
 
@@ -697,9 +667,9 @@ class AiTranslator(WPFWindow):
         if sample_type_systems:
             samples["CW-1 SYSTEM DRAWINGS"] = u"主立面CW-1外墙系统"
             samples["CW-2 RECESS FACADE DETAILS TYP"] = u"CW-2退面幕墙系统详图"
-            samples["CW-1 & CW-2 ENLARGED DRAWINGS - PARAPET"] = u"CW-1与CW-2幕墙系统－女儿墙"
-            samples["SF-1 ENLARGED DRAWINGS - SUNKEN PLAZA"] = u"沿街立面SF－1幕墙系统下沉广场"
-            samples["SKY-1 ENLARGED DRAWINGS - SKYLIGHTS"] = u"SKY－1天窗系统"
+            samples["CW-1 & CW-2 ENLARGED DRAWINGS - PARAPET"] = u"CW-1与CW-2幕墙系统-女儿墙"
+            samples["SF-1 ENLARGED DRAWINGS - SUNKEN PLAZA"] = u"沿街立面SF-1幕墙系统下沉广场"
+            samples["SKY-1 ENLARGED DRAWINGS - SKYLIGHTS"] = u"SKY-1天窗系统"
             samples["N4 - TOWER CW-1 SYSTEM DRAWINGS"] = u"建筑N4塔楼CW-1主立面外墙系统"
             samples["PODIUM CW-5/CW-5A SYSTEM DRAWINGS"] = u"裙楼CW-5/CW-5A 主立面外墙系统"
 
@@ -725,7 +695,7 @@ class AiTranslator(WPFWindow):
             samples["CANOPY/VESTIBULE FACADE DETAILS"] = u"雨棚及门厅详图"
             samples["ENTRANCE FACADE DETAILS"] = u"入口幕墙节点"
             samples["CW-3 FACADE DETAILS TYP"] = u"CW-3外幕墙系统详图"
-            samples["ST-1 FACADE DETAILS"] = u"ST－1主幕墙石墙系统详图"
+            samples["ST-1 FACADE DETAILS"] = u"ST-1主幕墙石墙系统详图"
             samples["CW-5A ENLARGED PLAN - TRANSITION TO CW-4"] = u"CW-5A 放大平面 - 与CW-4交接口"
             samples["CW-1 TYP. SLAB EDGE"] = u"CW-1 板边标准节点"
             samples["TYP. BALCONY DETAIL @ DEPRESSED SLAB"] = u"降板区标准露台节点"
