@@ -553,7 +553,7 @@
         "script": "Modify.tab\\flatten_mesh_face.button\\flatten_mesh_face_left.py",
         "icon": "Modify.tab\\flatten_mesh_face.button\\icon.png",
         "alias": "FlattenMeshFace",
-        "doc": "Try to flattern the mesh face so there is no bump",
+        "doc": "Try to flatten the mesh face so there is no bump",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png"
     },

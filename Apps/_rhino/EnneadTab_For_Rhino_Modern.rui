@@ -1552,10 +1552,10 @@ EA_StairMakerSpiral</script>
         <locale_1033>FlattenMeshFace</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Try to flattern the mesh face so there is no bump</locale_1033>
+        <locale_1033>Try to flatten the mesh face so there is no bump</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Try to flattern the mesh face so there is no bump</locale_1033>
+        <locale_1033>Try to flatten the mesh face so there is no bump</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>FlattenMeshFace</locale_1033>
