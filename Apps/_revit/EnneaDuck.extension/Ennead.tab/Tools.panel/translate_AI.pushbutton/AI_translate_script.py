@@ -9,8 +9,8 @@ __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=
 __youtube__ = "https://youtu.be/7dlOneO2Mts"
 __tip__ = True
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit import UI # pyright: ignore
 
@@ -18,7 +18,7 @@ from pyrevit.forms import WPFWindow
 from pyrevit import script, forms
 
 import traceback
-import System
+import System # pyright: ignore 
 import time
 import difflib
 
@@ -520,15 +520,10 @@ class AiTranslator(WPFWindow):
         human_name = "You: "
         #print human_name
 
-        file_name = "EA_TRANSLATE.sexyDuck"
+        data_file_name = "AiTranslate.sexyDuck"
         #print file_name
 
-        dump_folder = FOLDER.DUMP_FOLDER
-
-        #print dump_folder
-        file_path = "{}\{}".format(dump_folder, file_name)
-        #print file_path
-
+ 
 
 
         data = dict()
@@ -561,7 +556,7 @@ class AiTranslator(WPFWindow):
 
 
 
-        DATA_FILE.set_data(data, file_path)
+        DATA_FILE.set_data(data, data_file_name)
 
         run_exe()
 
@@ -587,11 +582,12 @@ class AiTranslator(WPFWindow):
             attempt += 1
             time.sleep(1)
             try:
-                record = DATA_FILE.get_data(file_path)
+                record = DATA_FILE.get_data(data_file_name)
             except Exception as e:
                 print (e)
 
-            if record["direction"] == "output":
+            
+            if record.get("direction") == "output":
                 #print record["conversation_history"].split(record["key_prompt"])[-1]
                 #print "Figured out!!!!!!!!!!!!!!"
                 SOUND.play_sound("sound_effect_popup_msg3.wav")
@@ -601,7 +597,11 @@ class AiTranslator(WPFWindow):
                 #print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                 output.set_width(500)
                 output.set_height(800)
-                return record["conversation_history"].split(new_prompt)[-1]
+                ai_response = record.get("response")
+                if not ai_response:
+                    return record["conversation_history"].split(new_prompt)[-1]
+                else:
+                    return ai_response
 
     def get_sample_translation_dict_from_user(self, use_predefined = True):
         if use_predefined and hasattr(self, "user_samples"):
@@ -754,7 +754,7 @@ class AiTranslator(WPFWindow):
 
 def run_exe():
 
-    EXE.try_open_app("EA_TRANSLATOR")
+    EXE.try_open_app("AiTranslator")
 
 
 

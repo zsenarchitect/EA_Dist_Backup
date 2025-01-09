@@ -21,3 +21,4 @@ layout:
   - generic_healthcare_tool
   - set_filled_region_border_line
   - detail_line_from_excel
+  - join_all_coln_floor
