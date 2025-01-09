@@ -1,4 +1,3 @@
-
 __title__ = "ExportForRhino2Revit"
 __doc__ = "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit."
 
@@ -18,7 +17,7 @@ flatten = itertools.chain.from_iterable
 graft = itertools.combinations
 
 
-from EnneadTab import NOTIFICATION, SPEAK, DATA_FILE, SOUND, ENVIRONMENT
+from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG
 from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_LAYER, RHINO_UI
 
@@ -388,6 +387,17 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
 
 
 
+class ToggleSaveDocumentHandler:
+
+    def __enter__(self):
+        CONFIG.set_setting("is_update_EA_dist_enabled", False)
+        print ("is_update_EA_dist_enabled set to False")
+        return self
+        
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        CONFIG.set_setting("is_update_EA_dist_enabled", True)
+        print ("is_update_EA_dist_enabled set to True")
+
 def get_output_folder():
 
    
@@ -500,21 +510,17 @@ def export(output_folder, datas):
 
 
 
-
-
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def export_for_rhino2revit():
-
     dlg = Rhino2RevitExporterDialog()
     rc = Rhino.UI.EtoExtensions.ShowSemiModal(dlg, Rhino.RhinoDoc.ActiveDoc, Rhino.UI.RhinoEtoApp.MainWindow)
     if (rc):
-
         datas = dlg.RunScript()
         EA_export_folder = get_output_folder()
-        export(EA_export_folder, datas)
+        with ToggleSaveDocumentHandler():
+            export(EA_export_folder, datas)
         return
-
     else:
         print ("Dialog did not run")
         return

@@ -8,7 +8,7 @@ _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
 
 # print ("\n".join(sys.path))
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL, USER, EXE
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL, USER, EXE, CONFIG
 from EnneadTab.RHINO import RHINO_ALIAS
 
 
@@ -63,7 +63,8 @@ def event_func_timesheet(sender, e):
     action_update_timesheet(e.Document)
 
 def event_func_update_EA_dist(sender, e):
-    VERSION_CONTROL.update_EA_dist()
+    if CONFIG.get_setting("is_update_EA_dist_enabled", True):
+        VERSION_CONTROL.update_EA_dist()
 
 def event_func_update_r8_rui():
     EXE.try_open_app("Rhino8RuiUpdater", safe_open=True)
