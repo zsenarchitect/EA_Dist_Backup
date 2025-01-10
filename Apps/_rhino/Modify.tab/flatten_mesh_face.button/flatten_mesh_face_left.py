@@ -6,7 +6,6 @@ import rhinoscriptsyntax as rs
 import scriptcontext as sc
 from EnneadTab import LOG, ERROR_HANDLE, DATA_CONVERSION
 import Eto # pyright: ignore
-<<<<<<< HEAD
 import os
 import time
 import System # pyright: ignore     
@@ -15,9 +14,6 @@ from System.Drawing.Imaging import PixelFormat, ImageFormat, FrameDimension, Pro
 import System.Windows.Forms.Screen as Screen # pyright: ignore
 from System.IO import MemoryStream # pyright: ignore
 import traceback
-=======
-
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
 class MeshFlattener:
     def __init__(self):
         self.strength = 0.1
@@ -25,7 +21,6 @@ class MeshFlattener:
         self.mesh_id = None
         self.dot_name = "EA_mesh_flat_face_marker"
         self.tolerance = sc.doc.ModelAbsoluteTolerance * 10
-<<<<<<< HEAD
 
     def show_strength_dialog(self):
         # Change Dialog to Form
@@ -34,12 +29,6 @@ class MeshFlattener:
         form.Topmost = True  # Keep form on top
         form.Resizable = False  # Instead of MinimizeButton/MaximizeButton
         form.MinimumSize = Eto.Drawing.Size(300, 150)  # Set a reasonable size
-=======
-        
-    def show_strength_dialog(self):
-        dialog = Eto.Forms.Dialog()
-        dialog.Title = "Mesh Flattener Settings"
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
         
         # Create inputs
         strength_label = Eto.Forms.Label(Text="Flattening Strength:")
@@ -57,14 +46,11 @@ class MeshFlattener:
         self.steps_input.MaxValue = 500
         self.steps_input.DecimalPlaces = 0
         
-<<<<<<< HEAD
         # Add a close handler
         def on_form_closing(sender, e):
             form.Close()
         form.Closing += on_form_closing
         
-=======
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
         # Layout
         layout = Eto.Forms.DynamicLayout()
         layout.Padding = Eto.Drawing.Padding(10)
@@ -72,7 +58,6 @@ class MeshFlattener:
         layout.AddRow(strength_label, self.strength_input)
         layout.AddRow(steps_label, self.steps_input)
         
-<<<<<<< HEAD
         select_button = Eto.Forms.Button()
         select_button.Text = "Select Mesh"
         select_button.Click += self.on_select_mesh
@@ -90,32 +75,17 @@ class MeshFlattener:
         # Show instead of ShowModal
         form.Show()
         return True  # Return True to continue execution
-=======
-        # Buttons
-        btn_layout = Eto.Forms.DynamicLayout()
-        btn_layout.AddRow(None, Eto.Forms.Button(Text="Select Mesh", Click=self.on_select_mesh))
-        btn_layout.AddRow(None, Eto.Forms.Button(Text="OK", Click=self.on_ok_clicked))
-        layout.AddRow(btn_layout)
-        
-        dialog.Content = layout
-        return dialog.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow)
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
         
     def on_select_mesh(self, sender, e):
         self.mesh_id = rs.GetObject(message="Pick one mesh to flatten", filter=32, preselect=True)
         if self.mesh_id:
-<<<<<<< HEAD
             sender.Text = "Mesh Selected"
-=======
-            sender.Text = "Mesh Selected ✓"
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
             sender.BackgroundColor = Eto.Drawing.Colors.LightGreen
 
     def on_ok_clicked(self, sender, e):
         if not self.mesh_id:
             rs.MessageBox("Please select a mesh first!")
             return
-<<<<<<< HEAD
         
         self.strength = self.strength_input.Value
         self.max_steps = int(self.steps_input.Value)
@@ -167,10 +137,6 @@ class MeshFlattener:
 
             pass
 
-=======
-        self.strength = self.strength_input.Value
-        self.max_steps = int(self.steps_input.Value)
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
         sender.ParentWindow.Close()
 
     def process_vertex(self, index, vertex, mesh):
@@ -244,51 +210,12 @@ class MeshFlattener:
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def flatten_mesh_face():
-<<<<<<< HEAD
     """Main function to create and show the mesh flattener dialog"""
     flattener = MeshFlattener()
     # Show the dialog but don't proceed with mesh processing yet
     flattener.show_strength_dialog()
     # Return something explicitly to avoid 'out' variable issue
     return True
-=======
-    flattener = MeshFlattener()
-    if not flattener.show_strength_dialog():
-        return
-        
-    mesh_obj = sc.doc.Objects.FindId(flattener.mesh_id)
-    mesh = mesh_obj.Geometry
-    obj_attribute = mesh_obj.Attributes
-
-    step = 0
-    mesh_obj = None
-    prev_mesh = None
-    
-    while step < flattener.max_steps:
-        mesh = flattener.process_mesh(mesh)
-        print("######### Steps {}#####".format(step + 1))
-        
-        # Check if mesh has stabilized
-        if prev_mesh and mesh.Vertices.Count == prev_mesh.Vertices.Count:
-            max_movement = 0
-            for i in range(mesh.Vertices.Count):
-                dist = mesh.Vertices[i].DistanceTo(prev_mesh.Vertices[i])
-                max_movement = max(max_movement, dist)
-            if max_movement < flattener.tolerance:
-                print("Mesh stabilized after {} steps".format(step + 1))
-                break
-                
-        if mesh_obj:
-            rs.DeleteObject(mesh_obj)
-        mesh_obj = sc.doc.Objects.AddMesh(mesh, obj_attribute)
-        rs.Redraw()
-        
-        prev_mesh = mesh.Duplicate()  # Store current state for next comparison
-        step += 1
-        
-        if step % 50 == 0:  # Changed from 100 to 50 for more frequent updates
-            flattener.highlight_planar_region(mesh)
->>>>>>> e3ed3087 (Auto Commit 2025-01-09_16-48-33)
 
 if __name__ == "__main__":
     flatten_mesh_face()
