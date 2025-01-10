@@ -50,7 +50,11 @@ def tuple_to_model_path(tuple):
         file_guid = tuple[1]
         region = tuple[2]
 
-        cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))
+        try:
+            cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))
+        except Exception as e:
+            print(e)
+            return
         return cloud_path
 
 def open_doc_siliently(doc_name, data):

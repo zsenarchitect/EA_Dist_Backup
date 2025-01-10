@@ -10,3 +10,7 @@ class DataGridDocIdMapObj(object):
     @staticmethod
     def get_central_doc_name(doc):
         return doc.Title.replace("_{}".format(USER.USER_NAME),  "")
+
+
+if __name__ == "__main__":
+    pass

@@ -34,3 +34,7 @@ def update_color_pallete(doc):
     
 
     REVIT_COLOR_SCHEME.load_color_template(doc, naming_map, excel_path, is_remove_unused)
+
+
+if __name__ == "__main__":
+    pass

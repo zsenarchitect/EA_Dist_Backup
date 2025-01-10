@@ -47,12 +47,9 @@ def excel_sheet_creator():
     if not data:
         NOTIFICATION.messenger(main_text = "Cannot open this excel")
         return
-    if not data.endswith(".xlsx"):
-        NOTIFICATION.messenger(main_text = "need .xlsx file")
-        return
     data = [x for x in data if x[0] == "YES"]
     # print (data)
-    new_sheet_numbers = [x[4] for x in data]
+    new_sheet_numbers = [x[3] for x in data]
     if not is_new_sheet_number_ok(new_sheet_numbers):
         return
 
@@ -66,12 +63,24 @@ def excel_sheet_creator():
     for creation_data in data:
         print (creation_data)
         sheet = DB.ViewSheet.Create(doc, titleblock_type_id)
-        
-        sheet.SheetNumber = creation_data[4]
 
-        sheet.LookupParameter("Sheet Name").Set(creation_data[6])
+        # check if the sheet number is already in use
+        if creation_data[3].strip() == "" or creation_data[3] == None:
+            print ("Sheet number is empty")
+            continue
+        else:
+            sheet_number = creation_data[3]
+
+        if creation_data[5].strip() == "" or creation_data[5] == None:
+            sheet_name = "Unnamed Sheet"
+        else:
+            sheet_name = creation_data[5]
+
+        sheet.SheetNumber = sheet_number
+        sheet.LookupParameter("Sheet Name").Set(sheet_name)
+
         try:
-            sheet.LookupParameter("Sheet_$Group").Set(creation_data[1] + "_" + creation_data[3])
+            sheet.LookupParameter("Sheet_$Group").Set(creation_data[2])
         except:
             pass
     t.Commit()

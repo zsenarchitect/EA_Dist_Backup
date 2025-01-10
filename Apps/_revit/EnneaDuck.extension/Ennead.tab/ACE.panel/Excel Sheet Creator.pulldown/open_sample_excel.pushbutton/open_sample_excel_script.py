@@ -26,7 +26,7 @@ doc = REVIT_APPLICATION.get_doc()
 @ERROR_HANDLE.try_catch_error()
 def open_sample_excel():
     
-    excel_path = "{}\ENNEAD.extension\Ennead.tab\ACE.panel\Project Starter.pushbutton\Make Sheet With Excel.xls".format(ENVIRONMENT.REVIT_HOST_FOLDER)
+    excel_path = "{}\Ennead.tab\ACE.panel\Project Starter.pushbutton\Make Sheet With Excel.xls".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION)
     copy = FOLDER.copy_file_to_local_dump_folder(excel_path,
                                                 "Sample Sheet Creation Data.xls")
     EXE.try_open_app(copy)

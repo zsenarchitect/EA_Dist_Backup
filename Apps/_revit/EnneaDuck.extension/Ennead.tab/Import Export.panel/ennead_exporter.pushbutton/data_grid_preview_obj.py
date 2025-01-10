@@ -84,3 +84,7 @@ class DataGridPreviewObj(object):
 
     def __str__(self):
         return "Preview_Object: {}".format(self.format_name)
+
+
+if __name__ == "__main__":
+    pass

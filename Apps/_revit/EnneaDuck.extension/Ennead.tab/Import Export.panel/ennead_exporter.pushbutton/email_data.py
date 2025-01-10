@@ -51,3 +51,7 @@ class EmailData(object):
                     body_folder_link_list = self.body_folder_link_list,
                     body_image_link_list = self.embeded_images_list,
                     attachment_list = self.additional_attachments_list)
+
+
+if __name__ == "__main__":
+    pass

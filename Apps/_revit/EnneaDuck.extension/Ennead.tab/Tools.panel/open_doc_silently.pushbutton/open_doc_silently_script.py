@@ -35,7 +35,11 @@ class Solution:
         #print project_guid, file_guid
         # region = DB.ModelPathUtils.CloudRegionUS
         #print region
-        cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))
+        try:
+            cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))
+        except Exception as e:
+            print(e)
+            return
         return cloud_path
 
 

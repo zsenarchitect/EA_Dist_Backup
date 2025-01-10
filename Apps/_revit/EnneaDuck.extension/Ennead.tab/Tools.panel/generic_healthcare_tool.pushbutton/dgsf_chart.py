@@ -765,3 +765,7 @@ def dgsf_chart_update(doc):
         return
 
     InternalCheck(doc, option, show_log=True).update_dgsf_chart()
+
+
+if __name__ == "__main__":
+    pass
