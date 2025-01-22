@@ -22,7 +22,7 @@ DOC = REVIT_APPLICATION.get_doc()
 @ERROR_HANDLE.try_catch_error()
 def batch_cut():
     # get the wall
-    walls = UIDOC.Selection.PickObjects(UI.Selection.ObjectType.Element, "Pick walls with panels to cut")
+    walls = UIDOC.Selection.PickObjects(UI.Selection.ObjectType.Element, "Pick curtainwalls with panels to cut")
     walls = [DOC.GetElement(x) for x in walls]
     walls = filter(lambda x: isinstance(x, DB.Wall), walls)
     if len(walls) == 0:

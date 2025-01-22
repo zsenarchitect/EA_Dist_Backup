@@ -7,7 +7,7 @@ __doc__ = "Allow you to generate basic QAQC report based on current document, an
 __title__ = "QAQC\nReporter"
 
 
-import System
+import System # pyright: ignore
 import os
 from pyrevit import script
 from pyrevit import forms
@@ -15,9 +15,9 @@ from pyrevit import forms
 import time
 
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
-from pyrevit.forms import WPFWindow
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
+from pyrevit.forms import WPFWindow # pyright: ignore
 # from pyrevit import forms #
 
 # from pyrevit import revit #
@@ -266,7 +266,7 @@ class AI_Report_modelessForm(WPFWindow):
 
 def run_exe():
    
-    EXE.try_open_app('QAQC_REPORT_READER')
+    EXE.try_open_app('QaqcReporter')
 
 
 @LOG.log(__file__, __title__)

@@ -51,13 +51,15 @@ Watch the progress, when it says finished it will close itself, and it is ready 
 <br>
 
 ## 2. EnneadTab-For-Revit
-EnneadTab-For-Revit run over pyRevit framework. Make sure you have pyrevit installed before everything else.
+
+### 2.0 Prerequisite
+EnneadTab-For-Revit run over __pyRevit__ framework. Make sure you have pyrevit installed before everything else.
 You can get pyrevit from here and pick the first one under "Download" section. There is no admin restriction to install: https://github.com/pyrevitlabs/pyRevit/releases
 > [!NOTE]
 > Attention, __Revit 2025__ users!
 > <br>
 > Due to the significant .Net framework changes from 2024 to 2025, pyRevit stable version is not supported for Revit 2025. <br>
-> Therefore, EnneadTab-For-Revit is suggeted to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you uninstall pyrevit 4.8 and install pyrevit 5 WIP, __it is adviced to not have both version in the same machine__. See link below for getting pyrevit 5.
+> Therefore, EnneadTab-For-Revit is suggested to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you uninstall pyrevit 4.8 and install pyrevit 5 WIP, __it is adviced to not have both version in the same machine__. See link below for getting pyrevit 5.
 > - If you have Ennead Network access: L:\4b_Applied Computing\EnneadTab-DB\pyrevit-installers\pyRevit_5.0.0.24325_signed.exe
 > - Otherwise, download pyrevit 5 from here: https://www.pyrevitlabs.io/
 
@@ -95,10 +97,10 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 <br>
 <br>
 
-## 3 EnnneaTab-For-Rhino
+## 3 EnneadTab-For-Rhino
 
-### 3.1 EnnneaTab-For-Rhino
-0. Troughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.2__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar are not saying "Ennead+" but instead saying "Ennead", you have previous version.
+### 3.1 EnneadTab-For-Rhino
+0. Thoroughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version.
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
@@ -113,7 +115,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick. 
 
 > [!TIP]
-> After restart, every button should work just fine, But if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __ActivateEnneadTab__ from dropdown menu usually fix it.<br>
+> After restart, every button should work just fine, but if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __ActivateEnneadTab__ from dropdown menu usually fix it.<br>
 > ![screenshot of activation](/Apps/lib/EnneadTab/images/instruction_activate_rhino.png)
 
 
@@ -123,9 +125,9 @@ With __only one Rhino__ is open, remove any old EnneadTab Rhino by using command
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_remove_old_rui.png)
 
 ## 4. Configure Notification Level
-EnneadTab comes with many functions to help your task. It also provide many notification for long process time event, such as heavy exporting and family loading, so you are are more aware of the status of the workflow.
+EnneadTab comes with many functions to help with your tasks. It also provides many notifications for long process time events, such as heavy exporting and family loading, so you are more aware of the status of the workflow.
 
-By default, EnneadTab set default amount of notification. But you can set it to be __no notification__ or __more notification__ by going to the __Setting__ in EnneadTab Revit. 
+By default, EnneadTab sets a default amount of notifications. But you can set it to __no notifications__ or __more notifications__ by going to __Settings__ in EnneadTab Revit. 
 
 ![screenshot of EnneadTab Revit Setting](/Apps/lib/EnneadTab/images/Instruction_setting.png)
 

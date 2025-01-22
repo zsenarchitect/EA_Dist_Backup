@@ -35,11 +35,11 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
 
     def get_ignore_age(file):
         if "OS_Installer" in file or "AutoStartup" in file:
-            return 60*60*2
+            return 60*60*12
         return 60*60*24
     if safe_open:
         if not os.path.exists(exe):
-            raise Exception("Only work for stanfle along exe, not for foldered exe.[{}] not exist".format(exe))
+            raise Exception("Only work for standalone exe, not for foldered exe.[{}] not exist".format(exe))
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
         temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)

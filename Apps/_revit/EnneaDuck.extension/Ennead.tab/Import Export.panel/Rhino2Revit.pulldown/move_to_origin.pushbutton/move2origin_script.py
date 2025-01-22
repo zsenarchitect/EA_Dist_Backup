@@ -21,29 +21,39 @@ class Solution:
 
 
     def pick_instances(self):
-        families = DB.FilteredElementCollector(doc).OfClass(DB.Family).WhereElementIsNotElementType().ToElements()
-        families = sorted(families, key = lambda x: x.Name.lower())
-        family = forms.SelectFromList.show(families,
-                                            multiselect = False,
-                                            name_attr = 'Name',
-                                            title = "Pick family",
-                                            button_name = 'Select Family')
+        families = DB.FilteredElementCollector(doc)\
+            .OfClass(DB.Family)\
+            .WhereElementIsNotElementType()\
+            .ToElements()
+        families = sorted(families, key=lambda x: x.Name.lower())
+        family = forms.SelectFromList.show(
+            families,
+            multiselect=False,
+            name_attr='Name',
+            title="Pick family",
+            button_name='Select Family')
         if not family:
             NOTIFICATION.messenger("No family selected, operation cancelled.")
             return
 
+        types = [doc.GetElement(x) for x in family.GetFamilySymbolIds()]
+        types = sorted(
+            types, 
+            key=lambda x: x.LookupParameter("Type Name").AsString())
 
-        types = [doc.GetElement(x) for x in family.GetFamilySymbolIds ()]
-        types = sorted(types, key = lambda x: x.LookupParameter("Type Name").AsString())
         class MyOption(forms.TemplateListItem):
             @property
             def name(self):
-                return "[{}]: {}".format(self.FamilyName, self.LookupParameter("Type Name").AsString())
+                return "[{}]: {}".format(
+                    self.FamilyName, 
+                    self.LookupParameter("Type Name").AsString())
+
         types = [MyOption(x) for x in types]
-        family_type = forms.SelectFromList.show(types,
-                                                multiselect = False,
-                                                title = "Pick family type",
-                                                button_name = 'Select Type')
+        family_type = forms.SelectFromList.show(
+            types,
+            multiselect=False,
+            title="Pick family type",
+            button_name='Select Type')
         if not family_type:
             NOTIFICATION.messenger("No family type selected, operation cancelled.")
             return
@@ -78,18 +88,28 @@ class Solution:
     def place_new_instance(self):
 
 
-        levels = DB.FilteredElementCollector(doc).OfClass(DB.Level).WhereElementIsNotElementType().ToElements()
-        levels = sorted(levels, key = lambda x: x.Elevation)
+        levels = DB.FilteredElementCollector(doc)\
+            .OfClass(DB.Level)\
+            .WhereElementIsNotElementType()\
+            .ToElements()
+        levels = sorted(levels, key=lambda x: x.Elevation)
+
         class MyOption(forms.TemplateListItem):
             @property
             def name(self):
-                return "{}: {}ft = {}mm".format(self.Name, self.Elevation, REVIT_UNIT.internal_to_mm(self.Elevation))
+                return "{}: {}ft = {}mm".format(
+                    self.Name,
+                    self.Elevation,
+                    REVIT_UNIT.internal_to_mm(self.Elevation))
+
         levels = [MyOption(x) for x in levels]
-        level = forms.SelectFromList.show(levels,
-                                            multiselect = False,
-                                            width = 1000,
-                                            title = "Pick hosting level(this has no effect on actual location, but probably make sense to pick a level closer to your intent.)",
-                                            button_name = 'Select Level that is closest to absolute zero.')
+        level = forms.SelectFromList.show(
+            levels,
+            multiselect=False,
+            width=1000,
+            title="Pick hosting level(this has no effect on actual location, but "
+                  "probably make sense to pick a level closer to your intent.)",
+            button_name='Select Level that is closest to absolute zero.')
         if not level:
             NOTIFICATION.messenger("No level selected, operation cancelled.")
             return
@@ -106,13 +126,16 @@ class Solution:
         else:
             doc_create = doc.Create
         try:
-            instance = doc_create.NewFamilyInstance(DB.XYZ(0,0,0),
-                                                    self.symbol,
-                                                    level,
-                                                    DB.Structure.StructuralType.NonStructural )
+            instance = doc_create.NewFamilyInstance(
+                DB.XYZ(0,0,0),
+                self.symbol,
+                level,
+                DB.Structure.StructuralType.NonStructural)
         except Exception as e:
             t.RollBack()
-            REVIT_FORMS.dialogue(main_text = str(e), sub_text = "Notify Sen Zhang for this issue...")
+            REVIT_FORMS.dialogue(
+                main_text=str(e), 
+                sub_text="Notify Sen Zhang for this issue...")
             return
 
         if level.Elevation != 0:
@@ -155,7 +178,10 @@ class Solution:
             if not element:
                 continue
             if element.Pinned == True:
-                res1 = REVIT_FORMS.dialogue(main_text = "It is currently pinned.", title = "wait...", options = ["Unpin this element and move it." , "Leave it as it is."])
+                res1 = REVIT_FORMS.dialogue(
+                    main_text="It is currently pinned.",
+                    title="wait...",
+                    options=["Unpin this element and move it.", "Leave it as it is."])
                 # res1 = forms.alert(options = ["Unpin this element and move it." , "Leave it as it is."], msg = "It is currently pinned.", title = "wait...")
                 if res1 == "Unpin this element and move it.":
                     element.Pinned = False
@@ -182,7 +208,10 @@ class Solution:
             """
             and it can pin it afterward
             """
-            res = REVIT_FORMS.dialogue(main_text = "It has moved to the origin point.\nNow I want to ...", title = "good news!", options = ["Pin this element." , "Don't Pin this element."])
+            res = REVIT_FORMS.dialogue(
+                main_text="It has moved to the origin point.\nNow I want to ...",
+                title="good news!",
+                options=["Pin this element.", "Don't Pin this element."])
             # res = forms.alert(options = ["Pin this element." , "Don't Pin this element."], msg = "It has moved to the origin point.\nNow I want to ...", title = "good news!")
             if res == "Pin this element.":
                 element.Pinned = True

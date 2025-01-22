@@ -5,12 +5,12 @@ from pyrevit import script
 
 
 
-from EnneadTab import EXE, DATA_FILE, TIME, FOLDER
+from EnneadTab import EXE, TIME, FOLDER
 
 from Autodesk.Revit import DB # pyright: ignore  
 
 # from Autodesk.Revit import UI # pyright: ignore
-uidoc = __revit__.ActiveUIDocument
+uidoc = __revit__.ActiveUIDocument # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
@@ -166,20 +166,6 @@ COLORS = 10 * [
     "#4d4d4d",
     "#e97800",
     "#a6c844",
-    "#4d4d4d",
-    "#fff0d9",
-    "#ffc299",
-    "#ff751a",
-    "#cc5200",
-    "#ff6666",
-    "#ffd480",
-    "#b33c00",
-    "#ff884d",
-    "#d9d9d9",
-    "#9988bb",
-    "#4d4d4d",
-    "#e97800",
-    "#a6c844",
 ]
 
 
@@ -209,13 +195,12 @@ class QAQC:
         all_warnings = doc.GetWarnings()
         critical_warnings = filter(
             lambda x: x.GetFailureDefinitionId().Guid in CRITICAL_WARNINGS, all_warnings)
-        self.LOG("Warnings Report: {} total warnings.".format(len(all_warnings)), is_title =True)
+        self.LOG("Warnings Report: {} total warnings.".format(len(all_warnings)), is_title=True)
         if len(critical_warnings) > 0:
             self.LOG("In there, {} are critical.".format(len(critical_warnings)))
 
         usage = dict()
         for warning in critical_warnings:
-
             key = warning.GetDescriptionText()
             count = usage.get(key, 0)
             usage[key] = count + 1
@@ -230,22 +215,25 @@ class QAQC:
         user_personal_log = dict()
         warning_category = dict()
         for warning in all_warnings:
-            current_count = warning_category.get(warning.GetDescriptionText (), 0)
-            warning_category[warning.GetDescriptionText ()] = current_count + 1
+            warning_text = warning.GetDescriptionText()
+            
+            # Update warning category count
+            current_count = warning_category.get(warning_text, 0)
+            warning_category[warning_text] = current_count + 1
 
+            # Collect failing elements
             failed_elements.extend(list(warning.GetFailingElements()))
 
+            # Process creator information
             creators = [DB.WorksharingUtils.GetWorksharingTooltipInfo(
                 doc, x).Creator for x in warning.GetFailingElements()]
+                
             for creator in creators:
-                if not user_personal_log.has_key(creator):
+                if creator not in user_personal_log:
                     user_personal_log[creator] = dict()
+                    
                 current_log = user_personal_log[creator]
-
-                current_log_data = current_log.get(warning.GetDescriptionText (), 0)
-
-      
-                current_log[warning.GetDescriptionText ()] = current_log_data + 1
+                current_log[warning_text] = current_log.get(warning_text, 0) + 1
 
         user_data = self.log_list_by_creator(failed_elements, "elements with warnings.", is_id_list = True)
 
