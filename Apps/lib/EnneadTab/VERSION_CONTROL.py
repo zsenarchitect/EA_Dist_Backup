@@ -25,7 +25,7 @@ def update_EA_dist():
 
 def is_update_too_soon():
     """sample time 2025-01-22_09-59-59,convert to timestamp, if it is within 3mins, return True"""
-    recent_update_time = get_last_update_time()
+    recent_update_time = get_last_update_time(return_file=False)
     if not recent_update_time:
         return False
     recent_update_time = datetime.strptime(recent_update_time, "%Y-%m-%d_%H-%M-%S")
@@ -33,17 +33,19 @@ def is_update_too_soon():
         return True
     return False
 
-def get_last_update_time():
+def get_last_update_time(return_file=False):
     records = [file for file in os.listdir(ENVIRONMENT.ECO_SYS_FOLDER) if file.endswith(".duck") and not "_ERROR" in file]
     if len(records) == 0:
         return None
     records.sort()
-    record = records[-1]
-    return record
+    record_file = records[-1]
+    if return_file:
+        return record_file
+    return record_file.replace(".duck", "")
 
 def show_last_success_update_time():
-    record = get_last_update_time()
-    if not record:
+    record_file = get_last_update_time(return_file= True)
+    if not record_file:
         NOTIFICATION.messenger("Not successful update recently.\nYour life sucks.")
         return
     
@@ -51,13 +53,13 @@ def show_last_success_update_time():
         if sys.platform == "cli":  # IronPython
             from System.IO import File
             # Read all lines and get the last one
-            all_lines = File.ReadAllLines(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record))
+            all_lines = File.ReadAllLines(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record_file))
             commit_line = all_lines[-1].replace("\n", "")
         else:  # CPython
-            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record)) as f:
+            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record_file)) as f:
                 commit_line = f.readlines()[-1].replace("\n","")
                 
-        NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record.replace(".duck", ""),
+        NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record_file.replace(".duck", ""),
                                                                     commit_line))
     except Exception as e:
         print("Error reading update record: {}".format(str(e)))
