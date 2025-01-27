@@ -26,11 +26,13 @@ def is_hate_duck_pop():
     return not CONFIG.get_setting("toggle_bt_is_duck_allowed", False)
 
 def messenger(main_text,
-             width = 1200,
+             width = None,
              height = None,
              image = None,
-             animation_stay_duration = 5,
-             x_offset = 0):
+             animation_in_duration = None,
+             animation_stay_duration = None,
+             animation_fade_duration = None,
+             x_offset = None):
     """Pop a simple message to the user, which disappears after a few seconds. 
     
        It can be used in place of the Windows notification, which is more annoying and has a sound .
@@ -49,13 +51,22 @@ def messenger(main_text,
 
     data = {}
     data["main_text"] = main_text
-    data["animation_in_duration"] = 0.5
-    data["animation_stay_duration"] = animation_stay_duration
-    data["animation_fade_duration"] = 2
-    data["width"] = width
-    data["height"] = height or 150 + str(main_text).count("\n") * 40
-    data["image"] = image
-    data["x_offset"] = x_offset
+    if animation_in_duration is not None:
+        data["animation_in_duration"] = animation_in_duration
+    if animation_stay_duration is not None:
+        data["animation_stay_duration"] = animation_stay_duration
+    if animation_fade_duration is not None:
+        data["animation_fade_duration"] = animation_fade_duration
+    if width is not None:
+        data["width"] = width
+    if height is not None:
+        data["height"] = height 
+    if image is not None:
+        data["image"] = image
+    if x_offset is not None:
+        data["x_offset"] = x_offset
+
+
 
     DATA_FILE.set_data(data, "messenger_data.sexyDuck")
 
@@ -69,6 +80,7 @@ def duck_pop(main_text = None):
         main_text (str, optional): The message to show. Defaults to "Quack!".
     """
     if is_hate_duck_pop():
+   
         messenger(main_text)
         return
     

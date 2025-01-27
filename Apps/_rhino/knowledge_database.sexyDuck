@@ -637,6 +637,14 @@
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png"
     },
+    "Render.tab\\get_google_earth_model.button\\get_google_earth_model_left.py": {
+        "script": "Render.tab\\get_google_earth_model.button\\get_google_earth_model_left.py",
+        "icon": "Render.tab\\get_google_earth_model.button\\icon.png",
+        "alias": "GetGoogleEarthModel",
+        "doc": "This button does GetGoogleEarthModel when left click",
+        "tab": "Render.tab",
+        "tab_icon": "Render.tab\\icon.png"
+    },
     "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py": {
         "script": "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py",
         "icon": "Render.tab\\import_selected_camera.button\\icon.png",

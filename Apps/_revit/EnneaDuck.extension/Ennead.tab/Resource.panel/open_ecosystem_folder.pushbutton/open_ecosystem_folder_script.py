@@ -3,6 +3,7 @@
 
 __doc__ = "Jump to the ecosystem folder where you can inspect all the magic."
 __title__ = "Open\nEcosystem Folder"
+__context__ = "zero-doc"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

@@ -100,12 +100,12 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 ## 3 EnneadTab-For-Rhino
 
 ### 3.1 EnneadTab-For-Rhino
-0. Thoroughly uninstall __any__ previous EnneadTab-For-Rhino version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version.
+0. Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first.
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
 3. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".
-4. (Rhino 8 only)You might see that the side bar is not showing up, this is becasue Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly to make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
+4. (Rhino 8 only)You might see that the side bar is not showing up, this is becasue Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly, such as click and unclick 'Block' collection to trigger activation and make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
 ![screenshot of toggle r8 sidebar](/Apps/lib/EnneadTab/images/Instruction_toggle_r8_sidebar.png)
 5. Restart Rhino.
 
