@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-layout:
-
-  - Search
-  - EA_who_did_that
-  - prefilter_selection
-  - ">>>" 
-  - toggle_warning_mode
-  - open_app_store
-=======
 layout:
 
   - Search
@@ -17,4 +7,3 @@ layout:
   - toggle_warning_mode
   - open_app_store
   - pick_absolute_similar
->>>>>>> 0530511b (Auto Commit 2025-01-22_18-07-14)
