@@ -192,3 +192,8 @@ if __name__ == "__main__":
     except Exception as e:
         print("An error occurred: {}".format(str(e)))
 
+
+
+if __name__ == "__main__":
+    account = get_default_account()
+    print (account)
