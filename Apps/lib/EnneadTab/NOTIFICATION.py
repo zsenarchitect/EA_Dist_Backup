@@ -28,8 +28,23 @@ def is_hate_duck_pop():
 FUNFONTS = [
     "Berlin Sans FB"
     "Ravie", 
-    "Small Fonts"
+    "Small Fonts",
+    "Snap ITC",
+    "Viner Hand ITC",
+    "BankGothic Lt BT",
+    "Bauhaus 93",
+    "Bradley Hand ITC",
+    "Broadway",
+    "Chiller",
+    "CityBlueprint",
+    "Comic Sans MS",
+    "CountryBlueprint"
     ]
+
+def get_random_font():
+    import random
+
+    return random.choice(FUNFONTS)
 
 def messenger(main_text,
              width = None,
@@ -124,8 +139,7 @@ def unit_test():
     messenger("Hello Ennead!")
 
 if __name__ == "__main__":
+    font = get_random_font()
+    messenger("Hello world with bigger text\nUsing [{}]".format(font), font_size=30, font_family=font)
 
-
-    messenger("Hello world with bigger text", font_size=30, font_family="Ravie")
-    print ("OK")
     

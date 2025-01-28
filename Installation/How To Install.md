@@ -41,7 +41,7 @@ See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this
 <br>
 
 ### 1.2 Install Ecosystem Folder
-Run the installer by double clicking the exe file. It might takes a few seconds (or minutes(depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
+Run the installer by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
 Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow __step 2.1 or 3.1__ below.
@@ -100,7 +100,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 ## 3 EnneadTab-For-Rhino
 
 ### 3.1 EnneadTab-For-Rhino
-0. Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have previous version? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first.
+0. __(Important!)__ Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
