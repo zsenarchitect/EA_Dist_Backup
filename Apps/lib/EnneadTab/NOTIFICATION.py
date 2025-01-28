@@ -25,6 +25,12 @@ def is_hate_duck_pop():
     """
     return not CONFIG.get_setting("toggle_bt_is_duck_allowed", False)
 
+FUNFONTS = [
+    "Berlin Sans FB"
+    "Ravie", 
+    "Small Fonts"
+    ]
+
 def messenger(main_text,
              width = None,
              height = None,
@@ -32,15 +38,21 @@ def messenger(main_text,
              animation_in_duration = None,
              animation_stay_duration = None,
              animation_fade_duration = None,
-             x_offset = None):
+             x_offset = None,
+             background_color = None,
+             font_size = None,
+             font_color = None,
+             font_family = None):
     """Pop a simple message to the user, which disappears after a few seconds. 
     
        It can be used in place of the Windows notification, which is more annoying and has a sound .
+
 
     Args:
         main_text (str): the message to show. Better within 2 return lines. If too long, please use line return.
         width (int, optional): how width is the message max width. Defaults to 1200.
         height (int, optional): how tall is the message max height. Defaults to 150.
+        font_family: Berlin Sans FB(default), Ravie, Small Fonts
     """
 
     if is_hate_messenger():
@@ -65,6 +77,14 @@ def messenger(main_text,
         data["image"] = image
     if x_offset is not None:
         data["x_offset"] = x_offset
+    if font_color:
+        data["font_color"] = font_color
+    if font_family:
+        data["font_family"] = font_family
+    if font_size:
+        data["font_size"] = font_size
+    if background_color:
+        data["background_color"] = background_color
 
 
 
@@ -104,5 +124,8 @@ def unit_test():
     messenger("Hello Ennead!")
 
 if __name__ == "__main__":
-    duck_pop("Hello, world!")
-    messenger("Hello world")
+
+
+    messenger("Hello world with bigger text", font_size=30, font_family="Ravie")
+    print ("OK")
+    
