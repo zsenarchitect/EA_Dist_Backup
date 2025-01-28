@@ -26,7 +26,7 @@ def get_all_warming_quotes():
     Returns:
         list: All encouraging quotes.
     """
-    with io.open(DOCUMENTATION.get_text_path_by_name('_warming_quotes.txt'), "r", encoding = "utf8") as f:
+    with io.open(DOCUMENTATION.get_text_path_by_name('_warming_quotes.txt'), "r", encoding = "utf-8") as f:
         lines = f.readlines()
     return [x.replace("\n", "") for x  in lines if x != "\n"]
 

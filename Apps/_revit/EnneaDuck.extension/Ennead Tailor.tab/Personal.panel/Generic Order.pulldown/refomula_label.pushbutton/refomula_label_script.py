@@ -20,13 +20,6 @@ DOC = REVIT_APPLICATION.get_doc()
 def refomula_label(doc):
 
     selection = REVIT_SELECTION.get_selection()
-    for x in selection:
-        print (x.LookupParameter("Label"))
-        label = doc.GetElement(x.LookupParameter("Label").AsElementId())
-        print (label)
-    pass
-
-
 
 
     # t = DB.Transaction(doc, __title__)

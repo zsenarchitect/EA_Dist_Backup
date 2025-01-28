@@ -12,7 +12,7 @@ def get_all_emojis():
     Returns:
         list: List of emojis.
     """
-    with io.open(DOCUMENTATION.get_text_path_by_name('_emoji_text.txt'), "r", encoding = "utf8") as f:
+    with io.open(DOCUMENTATION.get_text_path_by_name('_emoji_text.txt'), "r", encoding = "utf-8") as f:
         lines = f.readlines()
     return [x.replace("\n", "") for x  in lines if x != "\n"]
 

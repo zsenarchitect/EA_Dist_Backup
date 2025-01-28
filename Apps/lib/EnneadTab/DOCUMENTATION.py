@@ -127,7 +127,7 @@ def get_files_with_keyword(keyword, folder):
                 #     return file_path
                 
                 
-                with open(file_path, 'r') as f:
+                with open(file_path, 'r', encoding="utf-8") as f:
                     contents = f.read()
 
                     

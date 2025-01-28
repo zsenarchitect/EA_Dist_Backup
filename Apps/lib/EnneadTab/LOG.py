@@ -63,24 +63,28 @@ def log(script_path, func_name_as_record):
 
     def decorator(func):
         def wrapper(*args, **kwargs):
-            with DATA_FILE.update_data(LOG_FILE_NAME) as data:
-                t_start = time.time()
+            try:
+                with DATA_FILE.update_data(LOG_FILE_NAME) as data:
+                    t_start = time.time()
+                    out = func(*args, **kwargs)
+                    t_end = time.time()
+                    if not data:
+                        data = dict()
+                    data[TIME.get_formatted_current_time()] = {
+                        "application": ENVIRONMENT.get_app_name(),
+                        "function_name": func_name_as_record.replace("\n", " "),
+                        "arguments": args,
+                        "result": str(out),
+                        "script_path": script_path,
+                        "duration": TIME.get_readable_time(t_end - t_start),
+                    }
+
+                    # print ("data to be place in log is ", data)
+
+                return out
+            except:
                 out = func(*args, **kwargs)
-                t_end = time.time()
-                if not data:
-                    data = dict()
-                data[TIME.get_formatted_current_time()] = {
-                    "application": ENVIRONMENT.get_app_name(),
-                    "function_name": func_name_as_record.replace("\n", " "),
-                    "arguments": args,
-                    "result": str(out),
-                    "script_path": script_path,
-                    "duration": TIME.get_readable_time(t_end - t_start),
-                }
-
-                # print ("data to be place in log is ", data)
-
-            return out
+                return out
 
         return wrapper
 

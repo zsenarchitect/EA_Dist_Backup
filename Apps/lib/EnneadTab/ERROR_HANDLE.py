@@ -49,7 +49,8 @@ def try_catch_error(is_silent=False, is_pass = False):
                     error += "\n\n######If you have EnneadTab UI window open, just close the original EnneadTab window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########"
                     error_file = FOLDER.get_EA_dump_folder_file("error_general_log.txt")
                     try:
-                        with open(error_file, "w") as f:
+                        import io
+                        with io.open(error_file, "w", encoding="utf-8") as f:
                             f.write(error)
                     except IOError as e:
                         print_note(e)

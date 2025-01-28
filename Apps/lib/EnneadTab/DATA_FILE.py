@@ -270,11 +270,10 @@ def update_data(file_name, is_local=True, keep_holder_key=None):
 
     try:
         data = get_data(file_name, is_local) or {}  # Ensure we have a dict
-       
+
 
         yield data
 
-     
        
         if keep_holder_key is not None:
             data["key_holder"] = keep_holder_key
