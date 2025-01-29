@@ -4,7 +4,7 @@ import os
 import random
 import imp
 import traceback
-
+import json
 
 import ENVIRONMENT
 import FOLDER
@@ -273,9 +273,84 @@ def show_tip_revit(is_random_single=True):
 def show_tip_rhino():
     """Show a random tip for Rhino. Not implemented yet.
     """
+    KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
+
+
+    with open(KNOWLEDGE_FILE, "r") as f:
+        knowledge_pool = json.load(f)
+
+
+    knowledge = {}
+    
+    # for reason not understood yet, value is not displayed in grid view if not contained by list, must convert list format: [1,2,3,"abc"] ----> [[1],[2],[3],["abd"]]
+    for value in knowledge_pool.values():
+        command_names = value["alias"]
+        if not isinstance(command_names, list):
+            command_names = [command_names]
+        for command_name in command_names:
+            knowledge[command_name] = value
+
+
+    button, tip_data = random.choice(knowledge.items())
+    
 
     
-    print("TO_DO: use tool lookup data")
+    if "_right.py" in tip_data["script"]:
+        access = "Right Click"
+    else:
+        access = "Left Click"
+
+    tab_name = tip_data.get("tab", None)
+    if tab_name is None:
+        tab_name = "Unknown"
+    tab_name = tab_name.replace(".tab", " Tab").replace(".menu", " Menu")
+
+    commands = tip_data.get("alias", None)
+    if not isinstance(commands, list):
+        commands = [commands]
+    final_commands = []
+    for command in commands:
+        if command is None:
+            continue
+        if command.upper() == command:
+            final_commands.append(command)
+        else:
+            final_commands.append("EA_{}".format(command))
+    commands = " / ".join(final_commands)
+    output = OUTPUT.Output()
+    output.print_md ("#EnneadTab Tip of the day:")
+
+
+    
+    def update_image_action(search_key):
+        
+        icon_path = tip_data.get(search_key, None)
+        if icon_path is None:
+            icon_path = os.path.join(os.path.dirname(__file__), "missing_icon.png")
+        
+        icon_image_path = os.path.join(ENVIRONMENT.RHINO_FOLDER, icon_path)
+
+
+    button_icon = update_image_action("icon")
+    output.print_html("<span style='text-align: center;'><img src=\"file:///{0}\"></span>".format(button_icon))
+
+    
+    info = "Button Name: {}\nCommand: {}\nTooltip: {}\nAccess: {}\nButton Icon:".format(button,
+                                                                                        commands,
+                                                                                        tip_data.get("doc"),
+                                                                                        access)
+    info += "\nFind this button in: {}\nTab Icon:".format(tab_name)
+
+    
+    click_icon = "{}\\{}.png".format(os.path.join(os.path.dirname(__file__)), access)
+    
+    
+
+
+
+    update_image_action("tab_icon", self.icon_tray_tab_image_viewer)
+    
+
 
 def tip_of_day():
     """Show a random tip of the day.
