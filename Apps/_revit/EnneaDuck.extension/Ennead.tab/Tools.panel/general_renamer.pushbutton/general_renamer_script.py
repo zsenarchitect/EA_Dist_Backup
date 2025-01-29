@@ -132,12 +132,10 @@ def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0
     for sheet in sheets:
         sheet_num = sheet.SheetNumber
 
-        try: # to-do: remove this after 10-05
-            view_filter = REVIT_VIEW.ViewFilter(list(sheet.GetAllPlacedViews()))
-            is_only_one_view = view_filter.filter_archi_views().to_count() == 1
-        except Exception as e:
-            ERROR_HANDLE.print_note(traceback.format_exc())
-            is_only_one_view = len(list(sheet.GetAllPlacedViews())) == 1
+
+        view_filter = REVIT_VIEW.ViewFilter(list(sheet.GetAllPlacedViews()))
+        is_only_one_view = view_filter.filter_archi_views().to_count() == 1
+
 
         #for view on current sheet
         for view_id in sheet.GetAllPlacedViews():

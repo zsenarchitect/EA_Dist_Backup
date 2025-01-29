@@ -59,7 +59,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > Attention, __Revit 2025__ users!
 > <br>
 > Due to the significant .Net framework changes from 2024 to 2025, pyRevit stable version is not supported for Revit 2025. <br>
-> Therefore, EnneadTab-For-Revit is suggested to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you uninstall pyrevit 4.8 and install pyrevit 5 WIP, __it is adviced to not have both version in the same machine__. See link below for getting pyrevit 5.
+> Therefore, EnneadTab-For-Revit is suggested to run with 2024 and before. However if you need to work wth 2025, EnneadTab for Revit can run as long as you __uninstall pyrevit 4.8 and install pyrevit 5 WIP. It is adviced to NOT have both version in the same machine!__ See link below for getting pyrevit 5.
 > - If you have Ennead Network access: L:\4b_Applied Computing\EnneadTab-DB\pyrevit-installers\pyRevit_5.0.0.24325_signed.exe
 > - Otherwise, download pyrevit 5 from here: https://www.pyrevitlabs.io/
 

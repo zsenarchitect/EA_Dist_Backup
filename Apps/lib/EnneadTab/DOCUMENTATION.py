@@ -214,11 +214,8 @@ def get_title_tip_from_file(lucky_file, is_random_single):
     except Exception as e:
         if USER.is_EnneadTab_developer:
             print ("\n\nDeveloper visible only logging:")
-            # to-do: add try because Rhino 8 traceback is not working peoperly. This should be recheck in future Rhino 8.
-            try:
-                print (traceback.format_exc())
-            except:
-                print (e)
+            print (traceback.format_exc())
+        
         return module_name, None, icon_path
     
     tip = getattr(ref_module,TIP_KEY)
@@ -276,6 +273,8 @@ def show_tip_revit(is_random_single=True):
 def show_tip_rhino():
     """Show a random tip for Rhino. Not implemented yet.
     """
+
+    
     print("TO_DO: use tool lookup data")
 
 def tip_of_day():
