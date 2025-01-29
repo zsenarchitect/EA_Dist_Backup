@@ -5,6 +5,8 @@
 
 import random
 import json
+import io
+
 
 try:
     from System.Drawing import Color # pyright: ignore
@@ -247,7 +249,7 @@ def get_color_template_data(template = None):
         safe_template = "OFFICE STANDARD FILE TO BE MADE"
     
     if safe_template.endswith(".sexyDuck"):
-        with open(safe_template, "r") as f:
+        with io.open(safe_template, "r", encoding = "utf-8") as f:
             return json.load(f)
         
     if safe_template.endswith(".xlsx"):

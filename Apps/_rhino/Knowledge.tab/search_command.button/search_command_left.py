@@ -9,6 +9,7 @@ import rhinoscriptsyntax as rs
 
 import Eto # pyright: ignore
 
+import io
 import os
 import fnmatch
 
@@ -115,7 +116,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     def InitializeScriptList(self):
         logger.info("Initializing script list and get base knowledge")
 
-        with open(KNOWLEDGE_FILE, "r") as f:
+        with io.open(KNOWLEDGE_FILE, "r", encoding = "utf-8") as f:
             knowledge_pool = json.load(f)
 
 

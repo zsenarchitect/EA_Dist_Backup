@@ -277,7 +277,7 @@ def show_tip_rhino():
     KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
 
 
-    with open(KNOWLEDGE_FILE, "r") as f:
+    with open(KNOWLEDGE_FILE, "r", encoding="utf-8") as f:
         knowledge_pool = json.load(f)
 
 
