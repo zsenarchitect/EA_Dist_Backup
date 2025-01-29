@@ -8,7 +8,7 @@ _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
 
 # print ("\n".join(sys.path))
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL, USER, EXE, CONFIG
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL, USER, EXE, CONFIG, DOCUMENTATION
 from EnneadTab.RHINO import RHINO_ALIAS
 
 
@@ -29,6 +29,8 @@ def main():
     add_hook()
 
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
+
+    DOCUMENTATION.tip_of_day()
 
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)

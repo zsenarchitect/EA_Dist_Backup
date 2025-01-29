@@ -142,7 +142,7 @@ class Output:
             report_file.write("<style>")
             report_file.write("body {{ background-color: #2B1C10; font-family: {}; color: #F4E1D2; margin-left:300px;margin-right:300px;}}"
                               .format(Output._graphic_settings['font_family']))
-            report_file.write("h1 {{ font-size: 30px; font-weight: bold; color: #E1D4C1; }}")
+            report_file.write("h1 {{ font-size: 35px; font-weight: bold; color: #E1D4C1; }}")
             report_file.write("h2 {{ font-size: 20px; color: #987284; }}")
             report_file.write("ul {{ list-style-type: none; margin: 20; padding: 10; }}")
             report_file.write("li {{ margin-left: 40px; color: #E1D4C1; }}") 
@@ -253,9 +253,14 @@ class Output:
             return "<button onclick='return sample_func(this)'>{}</button>".format(input.split("bt_")[1])
         
         if os.path.exists(str(input)):
+            size = 300
             if "_large" in str(input):
-                return "<img src='file://{}' height = '800'>".format(input)
-            return "<img src='file://{}' height = '300'>".format(input)
+                size = 800
+            elif "icon" in str(input):
+                size = 80
+            elif "Click.png" in str(input):
+                size = 30
+            return "<img src='file://{}' height = '{}'>".format(input, size)
         return str(input).replace("\n", "<br>")
 
     # try to use a dummy top match pyrevit output method
