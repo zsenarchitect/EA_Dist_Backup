@@ -1,7 +1,7 @@
 
 __title__ = "SelectObjectsOnSimilarLayer"
 __doc__ = "Selection objects on the similar layers."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 
 from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION

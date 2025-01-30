@@ -1,6 +1,8 @@
 
 __title__ = "SampleLayout"
 __doc__ = "Create sample block layout along crvs to quickly visualize design."
+__is_popular__ = True
+
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

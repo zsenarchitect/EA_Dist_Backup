@@ -1,7 +1,7 @@
 
 __title__ = "ImportSelectedCamera"
 __doc__ = "Import seleced camera from another file."
-
+__is_popular__ = True
 
 import scriptcontext as sc
 import rhinoscriptsyntax as rs

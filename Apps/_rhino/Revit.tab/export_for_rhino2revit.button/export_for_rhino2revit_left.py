@@ -1,6 +1,6 @@
 __title__ = "ExportForRhino2Revit"
 __doc__ = "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit."
-
+__is_popular__ = True
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

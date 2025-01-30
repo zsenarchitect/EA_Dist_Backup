@@ -1,7 +1,7 @@
 
 __title__ = "RandomDeselect"
 __doc__ = "Ramdonly deselect objs by percentage"
-
+__is_popular__ = True
 
 import random
 import rhinoscriptsyntax as rs

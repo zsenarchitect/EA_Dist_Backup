@@ -1,7 +1,7 @@
 
 __title__ = "ChangeObjectDisplaySource"
 __doc__ = "Change the display source of the object for display color and/or material"
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

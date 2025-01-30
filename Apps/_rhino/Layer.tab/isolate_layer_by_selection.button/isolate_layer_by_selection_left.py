@@ -1,6 +1,8 @@
 
 __title__ = "IsolateLayerBySelection"
 __doc__ = "Isolcate objs from similar layers"
+__is_popular__ = True
+
 import rhinoscriptsyntax as rs
 from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION
 

@@ -1,7 +1,7 @@
 
 __title__ = "FallGeosOnGeo"
 __doc__ = "Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 from EnneadTab.RHINO import RHINO_OBJ_DATA
 from EnneadTab import ERROR_HANDLE, LOG

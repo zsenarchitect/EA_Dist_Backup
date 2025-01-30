@@ -1,7 +1,7 @@
 
 __title__ = "MergeMaterials"
 __doc__ = "Merge multiple materials in the file to the same material. Work for object assigned materials as well."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 

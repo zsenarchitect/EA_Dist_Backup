@@ -1,7 +1,7 @@
 
 __title__ = "StairMaker"
 __doc__ = "Interactively create linear stair."
-
+__is_popular__ = True
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

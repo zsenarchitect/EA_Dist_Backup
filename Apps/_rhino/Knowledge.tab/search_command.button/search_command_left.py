@@ -2,7 +2,7 @@ __title__ = ["SearchCommand"
              "LearnEnneadTabForRhino",
              "CommandList"]
 __doc__ = "Learn all the buttons functions."
-
+__is_popular__ = True
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

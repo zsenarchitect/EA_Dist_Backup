@@ -1,7 +1,7 @@
 
 __title__ = "RandomLayerColor"
 __doc__ = "Randomize the layer color."
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 import random

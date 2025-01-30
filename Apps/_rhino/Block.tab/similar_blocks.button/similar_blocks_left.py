@@ -1,6 +1,10 @@
 
 __title__ = "SelectSimilarBlocks"
 __doc__ = "Select blocks of similar definitions from the selected blocks"
+
+__is_popular__ = True
+
+
 import rhinoscriptsyntax as rs
 
 from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE

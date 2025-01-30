@@ -1,6 +1,7 @@
 
 __title__ = "PushGlassIn"
 __doc__ = "Make pushed in glass recess from selected srfs."
+__is_popular__ = True
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

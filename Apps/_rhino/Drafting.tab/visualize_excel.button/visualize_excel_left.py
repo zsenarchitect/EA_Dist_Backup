@@ -1,7 +1,7 @@
 
 __title__ = "VisualizeExcel"
 __doc__ = "Convert excel data to shape diagrams."
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 import math

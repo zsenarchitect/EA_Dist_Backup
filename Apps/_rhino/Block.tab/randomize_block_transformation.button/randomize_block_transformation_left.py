@@ -1,6 +1,6 @@
 __title__ = "RandomizeBlockTransformation"
 __doc__ = "Randomly transform block transformation for rotation and scale."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 import random
 

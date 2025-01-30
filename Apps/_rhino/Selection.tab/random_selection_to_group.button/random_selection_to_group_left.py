@@ -1,7 +1,7 @@
 
 __title__ = "RandomSelectionToGroup"
 __doc__ = "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering"
-
+__is_popular__ = True
 import random
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.RHINO import RHINO_OBJ_DATA

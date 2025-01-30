@@ -1,7 +1,7 @@
 
 __title__ = "BatchExportRhinoView"
 __doc__ = "Batch export Rhino views to folder."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION
 from EnneadTab.RHINO import RHINO_FORMS

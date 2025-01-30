@@ -1,7 +1,7 @@
 __title__ = ["MakeBlockUnique",
              "MBU"]
 __doc__ = "Make a block unique on spot. Each unique original block become new unique block."
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 

@@ -1,7 +1,7 @@
 
 __title__ = "SurfaceToAdaptiveComponent"
 __doc__ = "Use the corners of the input surfs as the marker for the adaptive pts in Revit."
-
+__is_popular__ = True
 import Eto # pyright: ignore
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

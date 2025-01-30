@@ -1,6 +1,9 @@
 
 __title__ = "FilterBlockByName"
 __doc__ = "Quick select multiple block by block names"
+
+__is_popular__ = True
+
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 

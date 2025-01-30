@@ -1,7 +1,7 @@
 
 __title__ = "OffsetFloorBorder"
 __doc__ = "Shrink/Expand the border of floor for input srf or polysrfs. The thickness is retained if using polysrf."
-
+__is_popular__ = True
 
 import random
 import traceback

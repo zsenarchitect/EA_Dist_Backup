@@ -172,6 +172,9 @@ class PDFGenerator:
         story = []
 
         for doc_data in segment_data:
+            is_popular = doc_data.get('is_popular', False)
+
+            
             alias_info = doc_data.get('alias', "No alias")
             if isinstance(alias_info, list):
                 alias_info = " / ".join(alias_info)
@@ -180,17 +183,32 @@ class PDFGenerator:
             access = "Left Click" if "_left" in doc_data.get("script") else "Right Click"
             access_text = Paragraph("<b>Access:</b> {}".format(access), self.tooltip_style)
             icon = Image(os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['icon']), width=0.5 * inch, height=0.5 * inch) if doc_data.get('icon') else Spacer(1, 0.8 * inch)
+
+
+            if is_popular:
+                poplular_info = "[Popular]"
+            else:
+                poplular_info = ""
+            style_1 = ParagraphStyle('temp',fontSize=7,textColor=colors.grey,alignment=1)
+            poplular_info = Paragraph(poplular_info, style_1)
             
-            data = [[icon, alias], ['', tooltip_text], ["", access_text]]
+            data = [[icon, alias], ['', tooltip_text], [poplular_info, access_text]]
             table = Table(data, colWidths=[1.2 * inch, 6 * inch])
-            table.setStyle([
+
+            table_style = [
                 ('SPAN', (0,0), (0,1)),
                 ('VALIGN', (0,0), (-1,-1), 'TOP'),
                 ('ALIGN', (0,0), (0,-1), 'CENTER'),
                 ('LEFTPADDING', (0,0), (-1,-1), 0),
                 ('BOTTOMPADDING', (0,0), (-1,-1), 4)
-            ])
-            
+            ]
+
+            # Add thick border if popular
+            if is_popular:
+                table_style.append(('BOX', (0,0), (-1,-1), 3, colors.lightgrey))  # Thick black border
+
+
+            table.setStyle(table_style)
             story.append(KeepTogether([table, Spacer(1, 0.2 * inch)]))
         
         doc.build(story, onFirstPage=lambda c, d: self.get_header(c, d, tab_name, tab_icon_path),
@@ -207,9 +225,16 @@ class PDFGenerator:
         cover_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf").name
         self.generate_cover_page(cover_pdf)
         temp_pdfs.append(cover_pdf)
-        
+
+
+        used_scripts = set()
         # Split data into segments based on tab
         for doc_data in doc_data_list:
+            if doc_data.get("script") in used_scripts:
+                continue
+            else:
+                used_scripts.add(doc_data.get("script"))
+                
             tab_name = doc_data.get('tab', 'Unknown Tab')
             if tab_name is None:
                 continue
@@ -260,7 +285,7 @@ class PDFGenerator:
             style_2 = ParagraphStyle('y',fontSize=9,textColor=colors.darkgray,alignment=2)
             table_data.append([tab_icon, 
                                Paragraph(tab_name, style_1),
-                               Paragraph("---------------------------------", self.sub_title_style), 
+                               Paragraph("~~~~~~~~~~~~~~~~~~~~~~", self.sub_title_style), 
                                Paragraph("Page {}".format(page_number), style_2)])
         
         toc_table = Table(table_data, colWidths=[0.3 * inch, 1.2 * inch, 1.8 * inch, 1.2 * inch])
@@ -279,11 +304,22 @@ class PDFGenerator:
         doc = SimpleDocTemplate(temp_pdf_path, pagesize=letter,
                                 rightMargin=self.RIGHT_MARGIN, leftMargin=self.LEFT_MARGIN,
                                 topMargin=self.TOP_MARGIN, bottomMargin=self.BOTTOM_MARGIN)
+
+
+        style = ParagraphStyle('x',fontSize=9,textColor=colors.white,alignment=1)
+
+
         story = [
             Spacer(1, 3 * inch),
             Paragraph("<b>EnneadTab-For-Rhino</b>", self.styles['Title']),
             Spacer(1, 2 * inch),
-            Paragraph("Secret Documentation", self.sub_title_style),
-            Paragraph("{}".format(TIME.get_YYYY_MM_DD()), self.sub_title_style)
+            Paragraph("Secret Documentation", style),
+            Paragraph("{}".format(TIME.get_YYYY_MM_DD()), style)
         ]
-        doc.build(story)
+        def add_background(canvas, doc):
+            canvas.saveState()
+            canvas.setFillColor(colors.lightsalmon)  # Set background color to light orange
+            canvas.rect(0, 0, letter[0], letter[1], fill=1, stroke=0)
+            canvas.restoreState()
+
+        doc.build(story, onFirstPage=add_background)

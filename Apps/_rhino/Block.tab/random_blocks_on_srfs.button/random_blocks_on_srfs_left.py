@@ -1,6 +1,9 @@
 
 __title__ = "RandomBlocksOnSrfs"
 __doc__ = "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides."
+__is_popular__ = True
+
+
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

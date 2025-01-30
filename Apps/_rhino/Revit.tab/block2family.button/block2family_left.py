@@ -1,7 +1,7 @@
 
 __title__ = "Block2Family"
 __doc__ = "Convert rhino blocks to revit families and place them in project. This tool different from standard Rhino2Revit because you do not need to manage family creation and it can batch process."
-
+__is_popular__ = True
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs # pyright: ignore
 import scriptcontext as sc # pyright: ignore

@@ -1,7 +1,7 @@
 
 __title__ = "BatchRenameCamera"
 __doc__ = "Rename multiple cameras without activating them."
-
+__is_popular__ = True
 import Rhino # pyright: ignore
 import Eto # pyright: ignore
 import rhinoscriptsyntax as rs

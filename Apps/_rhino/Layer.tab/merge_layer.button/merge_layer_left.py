@@ -1,6 +1,6 @@
 __title__ = "MergeLayer"
 __doc__ = "Merge multiple layer to single layer. This process include merging layers owned by blocks."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 

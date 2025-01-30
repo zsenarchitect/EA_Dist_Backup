@@ -1,6 +1,6 @@
 __title__ = "EditDistortedBlockRestoreView"
 __doc__ = "Go back to previous view stage"
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 

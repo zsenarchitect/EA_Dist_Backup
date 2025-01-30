@@ -1,6 +1,6 @@
 __title__ = "RebaseFile"
 __doc__ = "Try to rebase the file center to new origin point, include all the views."
-
+__is_popular__ = True
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore
 

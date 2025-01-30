@@ -1,7 +1,7 @@
 __title__ = "EditDistortedBlock"
 __doc__ = "Edit distorted block by editing a copy."
 
-
+__is_popular__ = True
 
 import rhinoscriptsyntax as rs
 from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE

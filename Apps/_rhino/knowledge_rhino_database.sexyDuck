@@ -5,7 +5,8 @@
         "alias": "ActivateEnneadTab",
         "doc": "When things do not load, activate me.",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\app_store.button\\app_store_left.py": {
         "script": "Ennead+.menu\\app_store.button\\app_store_left.py",
@@ -13,15 +14,17 @@
         "alias": "AppStore",
         "doc": "Open the all apps avaibalie for enneadtab",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
         "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
         "alias": "MakeANewButton",
-        "doc": null,
+        "doc": "Doc string not set",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
         "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
@@ -29,7 +32,8 @@
         "alias": "ExtractPreviewImages",
         "doc": "This button does ExtractPreviewImages when left click",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\get_latest.button\\get_latest_left.py": {
         "script": "Ennead+.menu\\get_latest.button\\get_latest_left.py",
@@ -37,7 +41,8 @@
         "alias": "GetLatest",
         "doc": "Get the lastest version of EnneadTab",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\how_to_install.button\\how_to_install_left.py": {
         "script": "Ennead+.menu\\how_to_install.button\\how_to_install_left.py",
@@ -45,7 +50,8 @@
         "alias": "HowToInstall",
         "doc": "Pull up installation guide for the rest of your team.",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
         "script": "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
@@ -53,7 +59,8 @@
         "alias": "OpenEcosystemFolder",
         "doc": "Open the Ecosystem folder.",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
         "script": "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
@@ -61,7 +68,8 @@
         "alias": "ResetAllConduit",
         "doc": "Reset all conduits",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py": {
         "script": "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py",
@@ -69,7 +77,8 @@
         "alias": "RestartRhino",
         "doc": "Restart Rhino to test new core.",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py": {
         "script": "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py",
@@ -77,7 +86,8 @@
         "alias": "TellMeVersion",
         "doc": "Show current version of EnneadTab Rhino",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\unit_test.button\\unit_test_left.py": {
         "script": "Ennead+.menu\\unit_test.button\\unit_test_left.py",
@@ -85,7 +95,8 @@
         "alias": "UnitTest",
         "doc": "Perform unit test on EnneadTab",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Ennead+.menu\\youtube_playlist.button\\youtube_playlist_left.py": {
         "script": "Ennead+.menu\\youtube_playlist.button\\youtube_playlist_left.py",
@@ -93,7 +104,8 @@
         "alias": "YoutubePlaylist",
         "doc": "Checkout pre-recorded turtorials and demos about EnneadTab.",
         "tab": "Ennead+.menu",
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     },
     "Block.tab\\batch_rename_blocks.button\\batch_rename_blocks_left.py": {
         "script": "Block.tab\\batch_rename_blocks.button\\batch_rename_blocks_left.py",
@@ -101,7 +113,8 @@
         "alias": "BatchRenameBlocks",
         "doc": "Rename Block Names In a table",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\edit_distorted_block.button\\edit_distorted_block_left.py": {
         "script": "Block.tab\\edit_distorted_block.button\\edit_distorted_block_left.py",
@@ -109,7 +122,8 @@
         "alias": "EditDistortedBlock",
         "doc": "Edit distorted block by editing a copy.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\edit_distorted_block.button\\edit_distorted_block_right.py": {
         "script": "Block.tab\\edit_distorted_block.button\\edit_distorted_block_right.py",
@@ -117,7 +131,8 @@
         "alias": "EditDistortedBlockRestoreView",
         "doc": "Go back to previous view stage",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\fall_geos_on_geo.button\\fall_geos_on_geo_left.py": {
         "script": "Block.tab\\fall_geos_on_geo.button\\fall_geos_on_geo_left.py",
@@ -125,7 +140,8 @@
         "alias": "FallGeosOnGeo",
         "doc": "Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\filter_block_by_name.button\\filter_block_by_name_left.py": {
         "script": "Block.tab\\filter_block_by_name.button\\filter_block_by_name_left.py",
@@ -133,7 +149,8 @@
         "alias": "FilterBlockByName",
         "doc": "Quick select multiple block by block names",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\make_block_unique.button\\make_block_unique_left.py": {
         "script": "Block.tab\\make_block_unique.button\\make_block_unique_left.py",
@@ -144,7 +161,8 @@
         ],
         "doc": "Make a block unique on spot. Each unique original block become new unique block.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\make_block_unique.button\\make_block_unique_right.py": {
         "script": "Block.tab\\make_block_unique.button\\make_block_unique_right.py",
@@ -152,7 +170,8 @@
         "alias": "MakeBlockUniqueToOne",
         "doc": "Make a block unique on spot. All different types of block will merge to one new block",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\match_texture_mapping_in_block.button\\match_texture_mapping_in_block_left.py": {
         "script": "Block.tab\\match_texture_mapping_in_block.button\\match_texture_mapping_in_block_left.py",
@@ -160,7 +179,8 @@
         "alias": "MatchTextureMappingInBlock",
         "doc": "Pick a source block, then apply the texture mapping of this block to other blocks selected.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\package_block_layer.button\\package_block_layer_left.py": {
         "script": "Block.tab\\package_block_layer.button\\package_block_layer_left.py",
@@ -168,7 +188,8 @@
         "alias": "PackageBlockLayer",
         "doc": "Package blocks content layer under a single parent layer. This is very helpful if you want to test totally new material for the layers.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\randomize_block_transformation.button\\randomize_block_transformation_left.py": {
         "script": "Block.tab\\randomize_block_transformation.button\\randomize_block_transformation_left.py",
@@ -176,7 +197,8 @@
         "alias": "RandomizeBlockTransformation",
         "doc": "Randomly transform block transformation for rotation and scale.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\random_blocks_on_srfs.button\\random_blocks_on_srfs_left.py": {
         "script": "Block.tab\\random_blocks_on_srfs.button\\random_blocks_on_srfs_left.py",
@@ -184,7 +206,8 @@
         "alias": "RandomBlocksOnSrfs",
         "doc": "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\sample_layout.button\\sample_layout_left.py": {
         "script": "Block.tab\\sample_layout.button\\sample_layout_left.py",
@@ -192,7 +215,8 @@
         "alias": "SampleLayout",
         "doc": "Create sample block layout along crvs to quickly visualize design.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\similar_blocks.button\\similar_blocks_left.py": {
         "script": "Block.tab\\similar_blocks.button\\similar_blocks_left.py",
@@ -200,7 +224,8 @@
         "alias": "SelectSimilarBlocks",
         "doc": "Select blocks of similar definitions from the selected blocks",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\similar_blocks.button\\similar_blocks_right.py": {
         "script": "Block.tab\\similar_blocks.button\\similar_blocks_right.py",
@@ -208,7 +233,8 @@
         "alias": "IsolateSimilarBlocks",
         "doc": "Isolate blocks of similar definitions from the selected blocks",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\toggle_block_color_display.button\\toggle_block_color_display_left.py": {
         "script": "Block.tab\\toggle_block_color_display.button\\toggle_block_color_display_left.py",
@@ -216,7 +242,8 @@
         "alias": "ToggleBlockColorDisplay",
         "doc": "Toggle on/off for highlighting the different block type. Very helpful when you have many block variation.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": true
     },
     "Block.tab\\toggle_block_color_display.button\\display_setting_right.py": {
         "script": "Block.tab\\toggle_block_color_display.button\\display_setting_right.py",
@@ -224,7 +251,8 @@
         "alias": "ToggleBlockColorDisplay_Setting",
         "doc": "Toggle the on/off of block names.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Block.tab\\uniform_transform_geos.button\\uniform_transform_geos_left.py": {
         "script": "Block.tab\\uniform_transform_geos.button\\uniform_transform_geos_left.py",
@@ -232,7 +260,8 @@
         "alias": "UniformTransformGeos",
         "doc": "Apply same rotational transformation for the blocks or geometries. Helpful when you have to reorient many directional blocks, such as changing the direction of cars on street.",
         "tab": "Block.tab",
-        "tab_icon": "Block.tab\\icon.png"
+        "tab_icon": "Block.tab\\icon.png",
+        "is_popular": false
     },
     "Create.tab\\stair_maker.button\\stair_maker_left.py": {
         "script": "Create.tab\\stair_maker.button\\stair_maker_left.py",
@@ -240,7 +269,8 @@
         "alias": "StairMaker",
         "doc": "Interactively create linear stair.",
         "tab": "Create.tab",
-        "tab_icon": "Create.tab\\icon.png"
+        "tab_icon": "Create.tab\\icon.png",
+        "is_popular": true
     },
     "Create.tab\\stair_maker.button\\stair_maker_right.py": {
         "script": "Create.tab\\stair_maker.button\\stair_maker_right.py",
@@ -248,7 +278,8 @@
         "alias": "StairMakerSpiral",
         "doc": "Interactively create spiral stair.",
         "tab": "Create.tab",
-        "tab_icon": "Create.tab\\icon.png"
+        "tab_icon": "Create.tab\\icon.png",
+        "is_popular": false
     },
     "Drafting.tab\\duplicate_layout.button\\duplicate_layout_left.py": {
         "script": "Drafting.tab\\duplicate_layout.button\\duplicate_layout_left.py",
@@ -256,7 +287,8 @@
         "alias": "DuplicateLayout",
         "doc": "Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space.",
         "tab": "Drafting.tab",
-        "tab_icon": "Drafting.tab\\icon.png"
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": false
     },
     "Drafting.tab\\export_selected_pages.button\\export_selected_pages_left.py": {
         "script": "Drafting.tab\\export_selected_pages.button\\export_selected_pages_left.py",
@@ -264,7 +296,8 @@
         "alias": "ExportSelectedLayout",
         "doc": "Export selected layout(s) to pdf",
         "tab": "Drafting.tab",
-        "tab_icon": "Drafting.tab\\icon.png"
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": false
     },
     "Drafting.tab\\section_crowd.button\\section_crowd_left.py": {
         "script": "Drafting.tab\\section_crowd.button\\section_crowd_left.py",
@@ -272,7 +305,8 @@
         "alias": "SectionCrowd",
         "doc": "Populate people interactively in TOP view by providing two points.",
         "tab": "Drafting.tab",
-        "tab_icon": "Drafting.tab\\icon.png"
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": false
     },
     "Drafting.tab\\visualize_excel.button\\visualize_excel_left.py": {
         "script": "Drafting.tab\\visualize_excel.button\\visualize_excel_left.py",
@@ -280,7 +314,8 @@
         "alias": "VisualizeExcel",
         "doc": "Convert excel data to shape diagrams.",
         "tab": "Drafting.tab",
-        "tab_icon": "Drafting.tab\\icon.png"
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": true
     },
     "Drafting.tab\\visualize_excel.button\\visualize_excel_right.py": {
         "script": "Drafting.tab\\visualize_excel.button\\visualize_excel_right.py",
@@ -288,7 +323,8 @@
         "alias": "OpenSampleExcel",
         "doc": "Open the sample excel with placeholder area size info.",
         "tab": "Drafting.tab",
-        "tab_icon": "Drafting.tab\\icon.png"
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\archive_file.button\\archive_file_left.py": {
         "script": "File.tab\\archive_file.button\\archive_file_left.py",
@@ -296,7 +332,8 @@
         "alias": "ArchiveFile",
         "doc": "Archive files based on today's date, creation date or last modifyed date.",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\bind_worksession.button\\bind_worksession_left.py": {
         "script": "File.tab\\bind_worksession.button\\bind_worksession_left.py",
@@ -304,7 +341,8 @@
         "alias": "BindWorksession",
         "doc": "Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out.",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\create_worksession.button\\create_worksession_left.py": {
         "script": "File.tab\\create_worksession.button\\create_worksession_left.py",
@@ -312,7 +350,8 @@
         "alias": "CreateWorksession",
         "doc": "Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files.",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\external_trimmer.button\\external_trimmer_left.py": {
         "script": "File.tab\\external_trimmer.button\\external_trimmer_left.py",
@@ -320,7 +359,8 @@
         "alias": "ExternalTrimmer",
         "doc": "Trim selected objs in external file and link back to Rhino",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\external_trimmer.button\\external_trimmer_right.py": {
         "script": "File.tab\\external_trimmer.button\\external_trimmer_right.py",
@@ -328,7 +368,8 @@
         "alias": "ExternalTrimmer",
         "doc": "Update external link",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "File.tab\\rebase_file.button\\rebase_file_left.py": {
         "script": "File.tab\\rebase_file.button\\rebase_file_left.py",
@@ -336,7 +377,8 @@
         "alias": "RebaseFile",
         "doc": "Try to rebase the file center to new origin point, include all the views.",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": true
     },
     "File.tab\\save_small_and_close.button\\save_small_and_close_left.py": {
         "script": "File.tab\\save_small_and_close.button\\save_small_and_close_left.py",
@@ -344,7 +386,8 @@
         "alias": "SaveSmallAndClose",
         "doc": "Save small file and close document. You dont need to wait.",
         "tab": "File.tab",
-        "tab_icon": "File.tab\\icon.png"
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
     },
     "Fun.tab\\dvd.button\\dvd_left.py": {
         "script": "Fun.tab\\dvd.button\\dvd_left.py",
@@ -352,7 +395,8 @@
         "alias": "DVD",
         "doc": "When you are bored...",
         "tab": "Fun.tab",
-        "tab_icon": "Fun.tab\\icon.png"
+        "tab_icon": "Fun.tab\\icon.png",
+        "is_popular": false
     },
     "Fun.tab\\ennead_city.button\\ennead_city_left.py": {
         "script": "Fun.tab\\ennead_city.button\\ennead_city_left.py",
@@ -360,7 +404,8 @@
         "alias": "EnneadCity",
         "doc": "Work on your plot",
         "tab": "Fun.tab",
-        "tab_icon": "Fun.tab\\icon.png"
+        "tab_icon": "Fun.tab\\icon.png",
+        "is_popular": false
     },
     "Fun.tab\\ennead_city.button\\ennead_city_right.py": {
         "script": "Fun.tab\\ennead_city.button\\ennead_city_right.py",
@@ -368,7 +413,8 @@
         "alias": "EnneadCity",
         "doc": "Load all city plots to a session.",
         "tab": "Fun.tab",
-        "tab_icon": "Fun.tab\\icon.png"
+        "tab_icon": "Fun.tab\\icon.png",
+        "is_popular": false
     },
     "Fun.tab\\red_alert.button\\red_alert_left.py": {
         "script": "Fun.tab\\red_alert.button\\red_alert_left.py",
@@ -376,7 +422,8 @@
         "alias": "RedAlert",
         "doc": "Active game mode in Rhino",
         "tab": "Fun.tab",
-        "tab_icon": "Fun.tab\\icon.png"
+        "tab_icon": "Fun.tab\\icon.png",
+        "is_popular": false
     },
     "Knowledge.tab\\china_code_ref.button\\china_code_ref_left.py": {
         "script": "Knowledge.tab\\china_code_ref.button\\china_code_ref_left.py",
@@ -384,7 +431,8 @@
         "alias": "ChinaCodeRef",
         "doc": "This button does ChinaCodeRef when left click",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
     },
     "Knowledge.tab\\perforation_ratio.button\\perforation_ratio_left.py": {
         "script": "Knowledge.tab\\perforation_ratio.button\\perforation_ratio_left.py",
@@ -392,7 +440,8 @@
         "alias": "PerforationRatio",
         "doc": "Find out how to calculate your perforation panel with precise opening ratio.",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
     },
     "Knowledge.tab\\place_asset.button\\place_asset_left.py": {
         "script": "Knowledge.tab\\place_asset.button\\place_asset_left.py",
@@ -400,7 +449,8 @@
         "alias": "PlaceAsset",
         "doc": "Place Asset from asset library",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
     },
     "Knowledge.tab\\search_command.button\\search_command_left.py": {
         "script": "Knowledge.tab\\search_command.button\\search_command_left.py",
@@ -411,7 +461,8 @@
         ],
         "doc": "Learn all the buttons functions.",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": true
     },
     "Knowledge.tab\\slope_calculator.button\\slope_calculator_left.py": {
         "script": "Knowledge.tab\\slope_calculator.button\\slope_calculator_left.py",
@@ -419,7 +470,8 @@
         "alias": "SlopeCalculator",
         "doc": "This button does SlopeCalculator when left click",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
     },
     "Knowledge.tab\\turtorial.button\\turtorial_left.py": {
         "script": "Knowledge.tab\\turtorial.button\\turtorial_left.py",
@@ -427,7 +479,8 @@
         "alias": "Turtorial",
         "doc": "Show tutorial for some useful trick in GH",
         "tab": "Knowledge.tab",
-        "tab_icon": "Knowledge.tab\\icon.png"
+        "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\destroy_layer.button\\destroy_layer_left.py": {
         "script": "Layer.tab\\destroy_layer.button\\destroy_layer_left.py",
@@ -435,7 +488,8 @@
         "alias": "DestroyLayer",
         "doc": "Delete selected layers, even if there are objs in it. Helpful when layer tree is constrainted by block usage.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\find_layer_in_files.button\\find_layer_in_files_left.py": {
         "script": "Layer.tab\\find_layer_in_files.button\\find_layer_in_files_left.py",
@@ -443,7 +497,8 @@
         "alias": "FindLayerInFiles",
         "doc": "In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\initiate_layers.button\\initiate_layers_left.py": {
         "script": "Layer.tab\\initiate_layers.button\\initiate_layers_left.py",
@@ -451,7 +506,8 @@
         "alias": "InitiateLayers",
         "doc": "Initiate layer tree for quick start on programing or facade design.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\isolate_layer_by_selection.button\\isolate_layer_by_selection_left.py": {
         "script": "Layer.tab\\isolate_layer_by_selection.button\\isolate_layer_by_selection_left.py",
@@ -459,7 +515,8 @@
         "alias": "IsolateLayerBySelection",
         "doc": "Isolcate objs from similar layers",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": true
     },
     "Layer.tab\\isolate_layer_by_selection.button\\isolate_layer_by_selection_right.py": {
         "script": "Layer.tab\\isolate_layer_by_selection.button\\isolate_layer_by_selection_right.py",
@@ -467,7 +524,8 @@
         "alias": "SelectObjectsOnSimilarLayer",
         "doc": "Selection objects on the similar layers.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": true
     },
     "Layer.tab\\layer_name_format.button\\layer_name_format_left.py": {
         "script": "Layer.tab\\layer_name_format.button\\layer_name_format_left.py",
@@ -475,7 +533,8 @@
         "alias": "LayerNameFormat",
         "doc": "Format the spelling of layer name on selected layers.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\merge_layer.button\\merge_layer_left.py": {
         "script": "Layer.tab\\merge_layer.button\\merge_layer_left.py",
@@ -483,7 +542,8 @@
         "alias": "MergeLayer",
         "doc": "Merge multiple layer to single layer. This process include merging layers owned by blocks.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": true
     },
     "Layer.tab\\nest_layer.button\\nest_layer_left.py": {
         "script": "Layer.tab\\nest_layer.button\\nest_layer_left.py",
@@ -491,7 +551,8 @@
         "alias": "NestLayer",
         "doc": "Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Layer.tab\\random_layer_color.button\\random_layer_color_left.py": {
         "script": "Layer.tab\\random_layer_color.button\\random_layer_color_left.py",
@@ -499,7 +560,8 @@
         "alias": "RandomLayerColor",
         "doc": "Randomize the layer color.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": true
     },
     "Layer.tab\\random_layer_color.button\\color_setting_right.py": {
         "script": "Layer.tab\\random_layer_color.button\\color_setting_right.py",
@@ -507,7 +569,8 @@
         "alias": "RandomLayerColorSetting",
         "doc": "Change the setting of color style.",
         "tab": "Layer.tab",
-        "tab_icon": "Layer.tab\\icon.png"
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
     },
     "Material.tab\\import_selected_material.button\\import_selected_material_left.py": {
         "script": "Material.tab\\import_selected_material.button\\import_selected_material_left.py",
@@ -515,7 +578,8 @@
         "alias": "ImportSelectedMaterial",
         "doc": "Import selected materials from a file.",
         "tab": "Material.tab",
-        "tab_icon": "Material.tab\\icon.png"
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": false
     },
     "Material.tab\\material_prefix.button\\material_prefix_left.py": {
         "script": "Material.tab\\material_prefix.button\\material_prefix_left.py",
@@ -523,7 +587,8 @@
         "alias": "MaterialPrefix",
         "doc": "Add prefix to material so when sessioning rhino the enscape can treat matreail seperately and not turn white.",
         "tab": "Material.tab",
-        "tab_icon": "Material.tab\\icon.png"
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": false
     },
     "Material.tab\\merge_materials.button\\merge_materials_left.py": {
         "script": "Material.tab\\merge_materials.button\\merge_materials_left.py",
@@ -531,7 +596,8 @@
         "alias": "MergeMaterials",
         "doc": "Merge multiple materials in the file to the same material. Work for object assigned materials as well.",
         "tab": "Material.tab",
-        "tab_icon": "Material.tab\\icon.png"
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": true
     },
     "Material.tab\\random_texture_walk.button\\random_texture_walk_left.py": {
         "script": "Material.tab\\random_texture_walk.button\\random_texture_walk_left.py",
@@ -539,7 +605,8 @@
         "alias": "RandomTextureWalk",
         "doc": "Randomly walk the texture map a bit to avoid them lineup",
         "tab": "Material.tab",
-        "tab_icon": "Material.tab\\icon.png"
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": false
     },
     "Material.tab\\remove_string_in_material_name.button\\remove_string_in_material_name_left.py": {
         "script": "Material.tab\\remove_string_in_material_name.button\\remove_string_in_material_name_left.py",
@@ -547,7 +614,8 @@
         "alias": "RemoveStringInMaterialName",
         "doc": "Remove the specific string in material name. Handy if trying to remove file name prefix.",
         "tab": "Material.tab",
-        "tab_icon": "Material.tab\\icon.png"
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\flatten_mesh_face.button\\flatten_mesh_face_left.py": {
         "script": "Modify.tab\\flatten_mesh_face.button\\flatten_mesh_face_left.py",
@@ -555,7 +623,8 @@
         "alias": "FlattenMeshFace",
         "doc": "Try to flatten the mesh face so there is no bump",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\make_void_seam.button\\make_void_seam_left.py": {
         "script": "Modify.tab\\make_void_seam.button\\make_void_seam_left.py",
@@ -563,7 +632,8 @@
         "alias": "MakeVoidSeam",
         "doc": "Make the void cut polysurface based on layer name.",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\match_crv_dir.button\\match_crv_dir_left.py": {
         "script": "Modify.tab\\match_crv_dir.button\\match_crv_dir_left.py",
@@ -571,7 +641,8 @@
         "alias": "MatchCrvDir",
         "doc": "Match multiple crvs direction.",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\offset_floor_border.button\\offset_floor_border_left.py": {
         "script": "Modify.tab\\offset_floor_border.button\\offset_floor_border_left.py",
@@ -579,7 +650,8 @@
         "alias": "OffsetFloorBorder",
         "doc": "Shrink/Expand the border of floor for input srf or polysrfs. The thickness is retained if using polysrf.",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": true
     },
     "Modify.tab\\push_glass_in.button\\push_glass_in_left.py": {
         "script": "Modify.tab\\push_glass_in.button\\push_glass_in_left.py",
@@ -587,7 +659,8 @@
         "alias": "PushGlassIn",
         "doc": "Make pushed in glass recess from selected srfs.",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": true
     },
     "Modify.tab\\shape_mapper.button\\shape_mapper_left.py": {
         "script": "Modify.tab\\shape_mapper.button\\shape_mapper_left.py",
@@ -595,7 +668,8 @@
         "alias": "ShapeMapper",
         "doc": "Help you map complex design over surface. Consider this as a improved flowAlongSurface",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\srf_to_panel.button\\srf_to_panel_left.py": {
         "script": "Modify.tab\\srf_to_panel.button\\srf_to_panel_left.py",
@@ -603,7 +677,8 @@
         "alias": "SrfToPanel",
         "doc": "Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge.",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\time_travel.button\\time_travel_left.py": {
         "script": "Modify.tab\\time_travel.button\\time_travel_left.py",
@@ -611,7 +686,8 @@
         "alias": "TimeTravel",
         "doc": "Undo history on selected objs",
         "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png"
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\ai_render.button\\view2render_left.py": {
         "script": "Render.tab\\ai_render.button\\view2render_left.py",
@@ -619,7 +695,8 @@
         "alias": "AiRenderingFromView",
         "doc": "Render captured Rhino view with Stable Diffusion.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\ai_render.button\\render_upscale_right.py": {
         "script": "Render.tab\\ai_render.button\\render_upscale_right.py",
@@ -627,7 +704,8 @@
         "alias": "AiRenderUpscale",
         "doc": "Upscale AI generated images.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py": {
         "script": "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py",
@@ -635,7 +713,8 @@
         "alias": "EnscapeAssetLocator",
         "doc": "Help you find the Enscape asset folder by search name, so you can manipulate asset material.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": true
     },
     "Render.tab\\get_google_earth_model.button\\get_google_earth_model_left.py": {
         "script": "Render.tab\\get_google_earth_model.button\\get_google_earth_model_left.py",
@@ -643,7 +722,8 @@
         "alias": "GetGoogleEarthModel",
         "doc": "This button does GetGoogleEarthModel when left click",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py": {
         "script": "Render.tab\\import_selected_camera.button\\import_selected_camera_left.py",
@@ -651,7 +731,8 @@
         "alias": "ImportSelectedCamera",
         "doc": "Import seleced camera from another file.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": true
     },
     "Render.tab\\inspect_enscape_setting.button\\inspect_enscape_setting_left.py": {
         "script": "Render.tab\\inspect_enscape_setting.button\\inspect_enscape_setting_left.py",
@@ -659,7 +740,8 @@
         "alias": "InspectEnscapeSetting",
         "doc": "Inspect Enscape setting file",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\load_enscape_to_psd.button\\load_enscape_to_psd_left.py": {
         "script": "Render.tab\\load_enscape_to_psd.button\\load_enscape_to_psd_left.py",
@@ -667,7 +749,8 @@
         "alias": "LoadEnscapeToPsd",
         "doc": "Load related Enscape image to Photoshop",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\make_crv_pipe.button\\make_crv_pipe_left.py": {
         "script": "Render.tab\\make_crv_pipe.button\\make_crv_pipe_left.py",
@@ -675,7 +758,8 @@
         "alias": "MakeCrvPipe",
         "doc": "Make/Update a small pipe along crvs in layers that has '[EDGE]' in it. So coplanar face in enscape can show edge.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
     },
     "Render.tab\\rename_enscape_files.button\\rename_enscape_files_left.py": {
         "script": "Render.tab\\rename_enscape_files.button\\rename_enscape_files_left.py",
@@ -683,7 +767,8 @@
         "alias": "RenameEnscapeFiles",
         "doc": "Rename the output of Enscape files to remove the long bit.",
         "tab": "Render.tab",
-        "tab_icon": "Render.tab\\icon.png"
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": true
     },
     "Revit.tab\\block2family.button\\block2family_left.py": {
         "script": "Revit.tab\\block2family.button\\block2family_left.py",
@@ -691,7 +776,8 @@
         "alias": "Block2Family",
         "doc": "Convert rhino blocks to revit families and place them in project. This tool different from standard Rhino2Revit because you do not need to manage family creation and it can batch process.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": true
     },
     "Revit.tab\\brep_to_mass.button\\brep_to_mass_left.py": {
         "script": "Revit.tab\\brep_to_mass.button\\brep_to_mass_left.py",
@@ -699,7 +785,8 @@
         "alias": "BrepToMass",
         "doc": "Using faces of the brep to recreate a freeform mass in Revit.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\draft_insulation_batting.button\\draft_insulation_batting_left.py": {
         "script": "Revit.tab\\draft_insulation_batting.button\\draft_insulation_batting_left.py",
@@ -707,7 +794,8 @@
         "alias": "DraftInsulationBatting",
         "doc": "Given base crvs and thickness, it makes a 2D insulation batting graphic that can be any shape. ",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\export_camera_to_revit.button\\export_camera_to_revit_left.py": {
         "script": "Revit.tab\\export_camera_to_revit.button\\export_camera_to_revit_left.py",
@@ -715,7 +803,8 @@
         "alias": "ExportCameraToRevit",
         "doc": "You can recreate same 3D camera in Revit by exporting cameras from Rhino here first.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\export_for_rhino2revit.button\\export_for_rhino2revit_left.py": {
         "script": "Revit.tab\\export_for_rhino2revit.button\\export_for_rhino2revit_left.py",
@@ -723,7 +812,8 @@
         "alias": "ExportForRhino2Revit",
         "doc": "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": true
     },
     "Revit.tab\\floor_drafter.button\\floor_drafter_left.py": {
         "script": "Revit.tab\\floor_drafter.button\\floor_drafter_left.py",
@@ -731,7 +821,8 @@
         "alias": "FloorDrafter",
         "doc": "Convert brep to floor data so in Revit it can be used as floor creation base.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\import_revit_collection.button\\import_revit_collection_left.py": {
         "script": "Revit.tab\\import_revit_collection.button\\import_revit_collection_left.py",
@@ -739,7 +830,8 @@
         "alias": "ImportRevitCollection",
         "doc": "Organize dwgs export from Revit to readable Rhino layer tree.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\map_block_transform.button\\map_block_transform_left.py": {
         "script": "Revit.tab\\map_block_transform.button\\map_block_transform_left.py",
@@ -747,7 +839,8 @@
         "alias": "MapBlockTransform",
         "doc": "Send the transformation of the blocks to Revit to be used by space adaptive family. This is the only known way of doing true free 3D orientation in Revit.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\map_revit_subc_material.button\\map_revit_subc_material_left.py": {
         "script": "Revit.tab\\map_revit_subc_material.button\\map_revit_subc_material_left.py",
@@ -755,7 +848,8 @@
         "alias": "MapRevitSubCategoryMaterial",
         "doc": "Work with ExportSubCategoryMaterialTable on revit side. After you export the OST mapping there, this button help you create and map layer material based on layer name, if found in the OST mapping",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\revit_drafter.button\\revit_drafter_left.py": {
         "script": "Revit.tab\\revit_drafter.button\\revit_drafter_left.py",
@@ -763,7 +857,8 @@
         "alias": "RevitDrafterImport",
         "doc": "Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\revit_drafter.button\\revit_drafter_right.py": {
         "script": "Revit.tab\\revit_drafter.button\\revit_drafter_right.py",
@@ -771,7 +866,8 @@
         "alias": "RevitDrafterExport",
         "doc": "Send the draft content back to Revit.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
     },
     "Revit.tab\\surface_to_adaptive_component.button\\surface_to_adaptive_component_left.py": {
         "script": "Revit.tab\\surface_to_adaptive_component.button\\surface_to_adaptive_component_left.py",
@@ -779,7 +875,8 @@
         "alias": "SurfaceToAdaptiveComponent",
         "doc": "Use the corners of the input surfs as the marker for the adaptive pts in Revit.",
         "tab": "Revit.tab",
-        "tab_icon": "Revit.tab\\icon.png"
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": true
     },
     "Selection.tab\\random_deselect.button\\random_deselect_left.py": {
         "script": "Selection.tab\\random_deselect.button\\random_deselect_left.py",
@@ -787,7 +884,8 @@
         "alias": "RandomDeselect",
         "doc": "Ramdonly deselect objs by percentage",
         "tab": "Selection.tab",
-        "tab_icon": "Selection.tab\\icon.png"
+        "tab_icon": "Selection.tab\\icon.png",
+        "is_popular": true
     },
     "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py": {
         "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",
@@ -795,7 +893,8 @@
         "alias": "RandomSelectionToGroup",
         "doc": "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering",
         "tab": "Selection.tab",
-        "tab_icon": "Selection.tab\\icon.png"
+        "tab_icon": "Selection.tab\\icon.png",
+        "is_popular": true
     },
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
@@ -803,7 +902,8 @@
         "alias": "ExportWithoutCrv_1643",
         "doc": "Export the rhino file as dwg but solidate all blocks and remove all crvs.",
         "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png"
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "Tailor.tab\\relocate_file.button\\relocate_left.py": {
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
@@ -811,7 +911,8 @@
         "alias": "RelocateAll_1643",
         "doc": "Relocate all the cameras and models to new Revit location.",
         "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png"
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "Tailor.tab\\stack_enscape.button\\stack_enscape_left.py": {
         "script": "Tailor.tab\\stack_enscape.button\\stack_enscape_left.py",
@@ -819,7 +920,8 @@
         "alias": "Stack PSD",
         "doc": "Stack PSD files",
         "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png"
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "Tailor.tab\\stack_enscape.button\\move_img_right.py": {
         "script": "Tailor.tab\\stack_enscape.button\\move_img_right.py",
@@ -827,7 +929,8 @@
         "alias": "MoveImg_1643",
         "doc": "Move all the images to new location",
         "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png"
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py": {
         "script": "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py",
@@ -835,7 +938,8 @@
         "alias": "2419_Facade move",
         "doc": "xxxxxxxxxxxxxxxxxxxxx",
         "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png"
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py": {
         "script": "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py",
@@ -843,7 +947,8 @@
         "alias": "BatchExportRhinoView",
         "doc": "Batch export Rhino views to folder.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": true
     },
     "View.tab\\batch_rename_camera.button\\batch_rename_camera_left.py": {
         "script": "View.tab\\batch_rename_camera.button\\batch_rename_camera_left.py",
@@ -851,7 +956,8 @@
         "alias": "BatchRenameCamera",
         "doc": "Rename multiple cameras without activating them.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": true
     },
     "View.tab\\change_object_display_source.button\\change_object_display_source_left.py": {
         "script": "View.tab\\change_object_display_source.button\\change_object_display_source_left.py",
@@ -859,7 +965,8 @@
         "alias": "ChangeObjectDisplaySource",
         "doc": "Change the display source of the object for display color and/or material",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": true
     },
     "View.tab\\section_box.button\\section_box_left.py": {
         "script": "View.tab\\section_box.button\\section_box_left.py",
@@ -867,7 +974,8 @@
         "alias": "SectionboxByBoundingBox",
         "doc": "Similar to Revit SectionBox, this will crop the view to just around the selected elements region. In Rhino display mode all clipper is supported. In Enscape only one of the clipper will be recognized.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": true
     },
     "View.tab\\section_box.button\\section_box_right.py": {
         "script": "View.tab\\section_box.button\\section_box_right.py",
@@ -875,7 +983,8 @@
         "alias": "SectionboxByPolysrf",
         "doc": "Use closed polysrf as input box cutter.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": false
     },
     "View.tab\\section_box_cleanup.button\\section_box_cleanup_left.py": {
         "script": "View.tab\\section_box_cleanup.button\\section_box_cleanup_left.py",
@@ -883,7 +992,8 @@
         "alias": "SectionBoxCleanup",
         "doc": "Reset the view to unbounded.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": false
     },
     "View.tab\\toggle_GFA.button\\toggle_GFA_left.py": {
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_left.py",
@@ -894,7 +1004,8 @@
         ],
         "doc": "Dynamically display GFA area by simply changing layer name.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": true
     },
     "View.tab\\toggle_GFA.button\\toggle_GFA_right.py": {
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_right.py",
@@ -902,7 +1013,8 @@
         "alias": "BakeGFADataToExcel",
         "doc": "Export displayed GFA area to excel. Also you can set checker geo.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": false
     },
     "View.tab\\toggle_layer_pointer.button\\toggle_layer_pointer_left.py": {
         "script": "View.tab\\toggle_layer_pointer.button\\toggle_layer_pointer_left.py",
@@ -910,7 +1022,8 @@
         "alias": "ToggleLayerPointer",
         "doc": "Short list layers with objs that is visible on screen. This is a good way to quickly examine the layer structure in your model space.",
         "tab": "View.tab",
-        "tab_icon": "View.tab\\icon.png"
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": false
     },
     "Web.tab\\miro.button\\listen_to_miro_left.py": {
         "script": "Web.tab\\miro.button\\listen_to_miro_left.py",
@@ -918,7 +1031,8 @@
         "alias": "ListenToMiro",
         "doc": "Listen to changes in the miro",
         "tab": "Web.tab",
-        "tab_icon": "Web.tab\\icon.png"
+        "tab_icon": "Web.tab\\icon.png",
+        "is_popular": false
     },
     "Web.tab\\miro.button\\push_to_miro_right.py": {
         "script": "Web.tab\\miro.button\\push_to_miro_right.py",
@@ -926,7 +1040,8 @@
         "alias": "PushToMiro",
         "doc": "Push selected elements in Rhino to Miro. Only support text and rect and circle.",
         "tab": "Web.tab",
-        "tab_icon": "Web.tab\\icon.png"
+        "tab_icon": "Web.tab\\icon.png",
+        "is_popular": false
     },
     "startup.py": {
         "script": "startup.py",
@@ -934,6 +1049,7 @@
         "alias": "EnneadTab_Startup",
         "doc": "Automatically run on every new rhino start session if bind to Rhino setting.",
         "tab": null,
-        "tab_icon": null
+        "tab_icon": null,
+        "is_popular": false
     }
 }

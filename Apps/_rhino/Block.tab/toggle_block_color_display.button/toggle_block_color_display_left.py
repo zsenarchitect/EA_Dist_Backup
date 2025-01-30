@@ -1,6 +1,8 @@
 
 __title__ = "ToggleBlockColorDisplay"
 __doc__ = "Toggle on/off for highlighting the different block type. Very helpful when you have many block variation."
+__is_popular__ = True
+
 
 import Rhino # pyright: ignore
 import scriptcontext as sc

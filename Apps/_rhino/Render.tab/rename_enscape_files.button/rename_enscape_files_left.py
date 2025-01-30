@@ -1,7 +1,7 @@
 
 __title__ = "RenameEnscapeFiles"
 __doc__ = "Rename the output of Enscape files to remove the long bit."
-
+__is_popular__ = True
 import os
 import rhinoscriptsyntax as rs
 from EnneadTab import LOG, ERROR_HANDLE
