@@ -59,7 +59,7 @@ def _read_json_as_dict(filepath, use_encode=True, create_if_not_exist=False):
                 return json.loads(content)
         else:  # CPython
             if use_encode:
-                with io.open(filepath, encoding="utf-8") as f:
+                with io.open(filepath, "r",encoding="utf-8") as f:
                     return json.load(f)
             else:
                 with open(filepath, "r") as f:
@@ -180,7 +180,7 @@ def get_list(filepath):
     local_path = FOLDER.get_EA_dump_folder_file("temp{}".format(extention))
     shutil.copyfile(filepath, local_path)
 
-    with io.open(local_path, encoding="utf-8") as f:
+    with io.open(local_path,  "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     return map(lambda x: x.replace("\n", ""), lines)

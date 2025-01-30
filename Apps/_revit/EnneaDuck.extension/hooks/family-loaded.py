@@ -9,7 +9,7 @@ https://pyrevit.readthedocs.io/en/latest/pyrevit/coreutils/envvars.html
 """
 from pyrevit import script
 from pyrevit import EXEC_PARAMS
-
+import io
 
 #from pyrevit.coreutils import appdata
 import pickle
@@ -59,7 +59,7 @@ def main():
     datafile = script.get_instance_data_file("sub_c_list")
     #print datafile
 
-    f = open(datafile, 'r')
+    f = io.open(datafile, 'r', encoding="utf-8")
     old_sub_c_list  = pickle.load(f)
     f.close()
     #print old_sub_c_list

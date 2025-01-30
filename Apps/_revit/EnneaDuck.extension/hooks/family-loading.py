@@ -8,7 +8,7 @@ share parameter between script
 https://pyrevit.readthedocs.io/en/latest/pyrevit/coreutils/envvars.html
 """
 
-
+import io
 from pyrevit import script
 from pyrevit import EXEC_PARAMS
 # from pyrevit.coreutils import appdata
@@ -40,7 +40,7 @@ def main():
 
     data = get_subc(all_Cs)
 
-    f = open(datafile, 'w')
+    f = io.open(datafile, 'w', encoding="utf-8")
     pickle.dump(data, f)
     f.close()
 ############### main ###################

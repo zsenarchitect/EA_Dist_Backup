@@ -270,10 +270,8 @@ def show_tip_revit(is_random_single=True):
     if is_random_single:
         OUTPUT.display_output_on_browser()
 
-    
-def show_tip_rhino():
-    """Show a random tip for Rhino. Not implemented yet.
-    """
+
+def get_rhino_knowledge():
     KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
 
 
@@ -290,6 +288,13 @@ def show_tip_rhino():
             command_names = [command_names]
         for command_name in command_names:
             knowledge[command_name] = value
+
+    return knowledge
+
+def show_tip_rhino():
+    """Show a random tip for Rhino. Not implemented yet.
+    """
+    knowledge = get_rhino_knowledge()
 
 
     button, tip_data = random.choice(list(knowledge.items()))
@@ -405,8 +410,30 @@ def get_floating_box_documentation():
     
     
     
+def generate_documentation():
+    rhino_knowledge_dict = get_rhino_knowledge()
+
+    def get_command_order(x):
+        tab = x.get("tab")
+        commands =  x.get("alias")
+        if not isinstance(commands, list):
+            commands = [commands]
+        return  "{}, {}".format(tab, commands)
+    rhino_knowledge = sorted(rhino_knowledge_dict.values(), key = get_command_order)
+    
+    import PDF
+    import time
+    output =  "rhino_knowledge_{}.pdf".format(time.time())
+    PDF.documentation2pdf(rhino_knowledge,output)
+    os.startfile(output)
+
+    # import WEB
+    # output =  "rhino_knowledge_{}.html".format(time.time())
+    # WEB.documentation2html(rhino_knowledge,output)
+    # os.startfile(output)
+
     
     
 if __name__ == "__main__":
-    show_tip_rhino()
+    generate_documentation()
     

@@ -40,10 +40,10 @@ def check_sync_queue(doc):
     log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
     
     try:
-        with open(log_file, "r"):
+        with open(log_file, "r", encoding = "utf-8"):
             pass
     except:
-        with open(log_file, "w+"): # if not existing then create
+        with open(log_file, "w+", encoding = "utf-8"): # if not existing then create
             pass
     queue = DATA_FILE.get_list(log_file)
     wait_num = len(queue)

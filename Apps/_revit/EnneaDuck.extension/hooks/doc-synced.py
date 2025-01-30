@@ -239,7 +239,7 @@ def update_sync_queue(doc):
   
 
     if not os.path.exists(log_file):
-        with open(log_file, "w"): # if not existing then create
+        with open(log_file, "w", encoding = "utf-8"): # if not existing then create
             pass
 
     queue = DATA_FILE.get_list(log_file)

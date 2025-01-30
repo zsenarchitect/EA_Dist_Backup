@@ -123,8 +123,7 @@ def give_me_a_joke(talk = False, max_len = None):
 
 def validating_jokes():
     with open("_dad_jokes.txt", "r") as f:
-    #import io
-    #with io.open("dad_jokes.txt", encoding = "utf8") as f:
+
         lines = f.readlines()
 
 
