@@ -281,7 +281,6 @@ def get_rhino_knowledge():
 
     knowledge = {}
     
-    # for reason not understood yet, value is not displayed in grid view if not contained by list, must convert list format: [1,2,3,"abc"] ----> [[1],[2],[3],["abd"]]
     for value in knowledge_pool.values():
         command_names = value["alias"]
         if not isinstance(command_names, list):

@@ -2,7 +2,8 @@
 it is important to use type hint for GH input.
 Only consider process it with rhino common, do not use rhinoscriptsyntax as it cannot process gh guid correctly to the funcs.
 """
-
+__title__ = "2419_Facade move"
+__doc__ = "xxxxxxxxxxxxxxxxxxxxx"
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

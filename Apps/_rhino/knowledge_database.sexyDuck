@@ -832,8 +832,8 @@
     "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py": {
         "script": "Tailor.tab\\xiong_an_facade_hori.button\\xiong_an_facade_hori_left.py",
         "icon": null,
-        "alias": null,
-        "doc": null,
+        "alias": "2419_Facade move",
+        "doc": "xxxxxxxxxxxxxxxxxxxxx",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png"
     },
