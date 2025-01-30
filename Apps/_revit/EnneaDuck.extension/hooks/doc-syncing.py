@@ -1,6 +1,7 @@
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
 import random
+import io
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
@@ -40,10 +41,10 @@ def check_sync_queue(doc):
     log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
     
     try:
-        with open(log_file, "r", encoding = "utf-8"):
+        with io.open(log_file, "r", encoding = "utf-8"):
             pass
     except:
-        with open(log_file, "w+", encoding = "utf-8"): # if not existing then create
+        with io.open(log_file, "w+", encoding = "utf-8"): # if not existing then create
             pass
     queue = DATA_FILE.get_list(log_file)
     wait_num = len(queue)

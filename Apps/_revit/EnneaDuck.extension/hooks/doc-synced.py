@@ -1,5 +1,6 @@
 import os
 import random
+import io
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
 from pyrevit.coreutils import envvars
@@ -239,7 +240,7 @@ def update_sync_queue(doc):
   
 
     if not os.path.exists(log_file):
-        with open(log_file, "w", encoding = "utf-8"): # if not existing then create
+        with io.open(log_file, "w", encoding = "utf-8"): # if not existing then create
             pass
 
     queue = DATA_FILE.get_list(log_file)
