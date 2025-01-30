@@ -12,8 +12,8 @@ import USER
 import OUTPUT
 import FOLDER
 
-
-
+KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
+KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database.sexyDuck".format(ENVIRONMENT.REVIT_FOLDER)
 
 def get_text_path_by_name(file_name):
     """Get the full path of a text file in the documents library by its name.
@@ -272,10 +272,10 @@ def show_tip_revit(is_random_single=True):
 
 
 def get_rhino_knowledge():
-    KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
+    
 
 
-    with open(KNOWLEDGE_FILE, "r", encoding="utf-8") as f:
+    with open(KNOWLEDGE_RHINO_FILE, "r", encoding="utf-8") as f:
         knowledge_pool = json.load(f)
 
 
@@ -366,8 +366,6 @@ def show_tip_rhino():
 
     output.plot()
 
-    
-
 
 
 def tip_of_day():
@@ -409,7 +407,15 @@ def get_floating_box_documentation():
     
     
     
-def generate_documentation():
+def generate_documentation(debug = False):
+    generate_rhino_documentation(debug)
+    generate_revit_documentation(debug)
+
+def generate_revit_documentation(debug):
+    pass
+
+
+def generate_rhino_documentation(debug):
     rhino_knowledge_dict = get_rhino_knowledge()
 
     def get_command_order(x):
@@ -422,9 +428,13 @@ def generate_documentation():
     
     import PDF
     import time
-    output =  "rhino_knowledge_{}.pdf".format(time.time())
-    PDF.documentation2pdf(rhino_knowledge,output)
-    os.startfile(output)
+    if debug:
+        output =  "rhino_knowledge_{}.pdf".format(time.time())
+        PDF.documentation2pdf(rhino_knowledge,output)
+        os.startfile(output)
+    else:
+        output = "{}\\EnneadTab_For_Rhino_HandBook.pdf".format(ENVIRONMENT.INSTALLATION_FOLDER)
+        PDF.documentation2pdf(rhino_knowledge,output)
 
     # import WEB
     # output =  "rhino_knowledge_{}.html".format(time.time())
@@ -434,5 +444,5 @@ def generate_documentation():
     
     
 if __name__ == "__main__":
-    generate_documentation()
+    generate_documentation(debug=True)
     

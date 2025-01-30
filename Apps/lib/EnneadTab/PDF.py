@@ -1,7 +1,7 @@
 import os
 import ENVIRONMENT
 import tempfile
-
+import TIME
 
 
 
@@ -146,17 +146,19 @@ class PDFGenerator:
         tab_icon = Image(tab_icon_path, width=icon_width, height=icon_height) if tab_icon_path else Spacer(icon_width, icon_height)
         
         tab_data = [[tab_header, tab_icon]]
-        tab_table = Table(tab_data, colWidths=[150, 30])
+        tab_table = Table(tab_data, colWidths=[100, 30])
         tab_table.setStyle([
             ('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
             ('VALIGN', (0, 0), (-1, -1), 'TOP')
         ])
         
         tab_table.wrapOn(canvas, 200, 20)
-        tab_table.drawOn(canvas, page_width - self.RIGHT_MARGIN - 200, page_height - self.TOP_MARGIN + 10)
+        tab_table.drawOn(canvas, page_width - self.RIGHT_MARGIN - 100, page_height - self.TOP_MARGIN + 10)
         
         # Add page number at bottom center
-        canvas.drawCentredString(page_width / 2, self.BOTTOM_MARGIN / 2, "{}".format(self.current_page_num))
+        canvas.setFont("Helvetica", 8)
+        canvas.setFillColor(colors.grey)
+        canvas.drawCentredString(page_width / 2, self.BOTTOM_MARGIN / 3, "{}".format(self.current_page_num))
         
         canvas.restoreState()
 
@@ -186,10 +188,10 @@ class PDFGenerator:
                 ('VALIGN', (0,0), (-1,-1), 'TOP'),
                 ('ALIGN', (0,0), (0,-1), 'CENTER'),
                 ('LEFTPADDING', (0,0), (-1,-1), 0),
-                ('BOTTOMPADDING', (0,0), (-1,-1), 12)
+                ('BOTTOMPADDING', (0,0), (-1,-1), 4)
             ])
             
-            story.append(KeepTogether([table, Spacer(1, 0.5 * inch)]))
+            story.append(KeepTogether([table, Spacer(1, 0.2 * inch)]))
         
         doc.build(story, onFirstPage=lambda c, d: self.get_header(c, d, tab_name, tab_icon_path),
                   onLaterPages=lambda c, d: self.get_header(c, d, tab_name, tab_icon_path))
@@ -214,15 +216,15 @@ class PDFGenerator:
             tab_icon_path = os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['tab_icon']) if doc_data.get('tab_icon') else None
             
             if tab_name not in segmented_data:
-                segmented_data[tab_name] = {'data': [], 'icon': tab_icon_path}
+                segmented_data[tab_name] = {'data': [], 'tab_icon': tab_icon_path}
             segmented_data[tab_name]['data'].append(doc_data)
         
         # Generate temporary PDFs for each segment and track TOC entries
         for tab_name, segment in segmented_data.items():
             temp_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf").name
             temp_pdfs.append(temp_pdf)
-            toc_entries.append((tab_name, self.current_page_num))
-            self.generate_segment_pdf(segment['data'], tab_name, segment['icon'], temp_pdf)
+            toc_entries.append((tab_name, self.current_page_num, segment['tab_icon']))
+            self.generate_segment_pdf(segment['data'], tab_name, segment['tab_icon'], temp_pdf)
 
         
         # Generate table of contents
@@ -242,7 +244,7 @@ class PDFGenerator:
         for temp_pdf in temp_pdfs:
             os.remove(temp_pdf)
         
-        print("Final PDF saved at " + self.pdf_path)
+        print("\n\nHandBook Final PDF saved at: " + self.pdf_path)
 
     def generate_table_of_contents(self, temp_pdf_path, toc_entries):
         """Generate a table of contents page."""
@@ -251,12 +253,27 @@ class PDFGenerator:
                                 topMargin=self.TOP_MARGIN, bottomMargin=self.BOTTOM_MARGIN)
         story = [Paragraph("Table of Contents", self.styles['Title']), Spacer(1, 0.5 * inch)]
         
-        for tab_name, page_number in toc_entries:
-            story.append(Paragraph("{} ----------- Page {}".format(tab_name, page_number), self.sub_title_style))
-            story.append(Spacer(1, 0.2 * inch))
+        table_data = []
+        for tab_name, page_number, tab_icon_path in toc_entries:
+            tab_icon = Image(tab_icon_path, width=0.2 * inch, height=0.2 * inch) if tab_icon_path else Spacer(0.2 * inch, 0.2 * inch)
+            style_1 = ParagraphStyle('x',fontSize=9,textColor=colors.darkgray,alignment=0)
+            style_2 = ParagraphStyle('y',fontSize=9,textColor=colors.darkgray,alignment=2)
+            table_data.append([tab_icon, 
+                               Paragraph(tab_name, style_1),
+                               Paragraph("---------------------------------", self.sub_title_style), 
+                               Paragraph("Page {}".format(page_number), style_2)])
         
+        toc_table = Table(table_data, colWidths=[0.3 * inch, 1.2 * inch, 1.8 * inch, 1.2 * inch])
+        toc_table.setStyle([
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 5),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+        ])
+        
+        story.append(toc_table)
         doc.build(story)
 
+        
     def generate_cover_page(self, temp_pdf_path):
         """Generate a cover page for the document."""
         doc = SimpleDocTemplate(temp_pdf_path, pagesize=letter,
@@ -264,8 +281,9 @@ class PDFGenerator:
                                 topMargin=self.TOP_MARGIN, bottomMargin=self.BOTTOM_MARGIN)
         story = [
             Spacer(1, 3 * inch),
-            Paragraph("<b>EnneadTab For Rhino Secret</b>", self.styles['Title']),
+            Paragraph("<b>EnneadTab-For-Rhino</b>", self.styles['Title']),
             Spacer(1, 2 * inch),
-            Paragraph("Confidential Documentation", self.sub_title_style)
+            Paragraph("Secret Documentation", self.sub_title_style),
+            Paragraph("{}".format(TIME.get_YYYY_MM_DD()), self.sub_title_style)
         ]
         doc.build(story)

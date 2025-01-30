@@ -2503,7 +2503,7 @@ EA_ExternalTrimmer</script>
       <script>EA_ActivateEnneadTab
 EA_RebaseFile</script>
     </macro_item>
-    <macro_item guid="e2a7b677-1d0c-446e-8889-b9e5ded0eb71" bitmap_id="5face6c0-5bfd-415e-b8bf-ea93df609623">
+    <macro_item guid="e2a7b677-1d0c-446e-8889-b9e5ded0eb71" bitmap_id="433929e8-4c3c-4d67-9b13-4ff4f8040cb2">
       <text>
         <locale_1033>ExportWithoutCrv_1643</locale_1033>
       </text>
@@ -2522,7 +2522,7 @@ EA_RebaseFile</script>
       <script>EA_ActivateEnneadTab
 EA_ExportWithoutCrv_1643</script>
     </macro_item>
-    <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="18b5dba3-6526-438f-a311-9f817653565e">
+    <macro_item guid="c2e9d4ff-0aa9-4661-a9c9-1518dea4fdec" bitmap_id="2799f78b-fa30-44a7-8b27-44cf1487210e">
       <text>
         <locale_1033>RelocateAll_1643</locale_1033>
       </text>
@@ -2579,7 +2579,7 @@ EA_Stack PSD</script>
       <script>EA_ActivateEnneadTab
 EA_MoveImg_1643</script>
     </macro_item>
-    <macro_item guid="d8b3960e-5881-471b-b829-8232b9f47443" bitmap_id="8c573d9f-8fd5-4eb6-b2e1-958cc505958c">
+    <macro_item guid="d8b3960e-5881-471b-b829-8232b9f47443" bitmap_id="a18d28d3-8a39-457d-b679-31cc171c1d22">
       <text>
         <locale_1033>2419_Facade move</locale_1033>
       </text>
@@ -3144,11 +3144,11 @@ EA_UnitTest</script>
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="98"/>
       <bitmap_item guid="9c4c34cc-e82a-4ba1-8b3a-4e8414866d87" index="99"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="100"/>
-      <bitmap_item guid="5face6c0-5bfd-415e-b8bf-ea93df609623" index="101"/>
-      <bitmap_item guid="18b5dba3-6526-438f-a311-9f817653565e" index="102"/>
+      <bitmap_item guid="433929e8-4c3c-4d67-9b13-4ff4f8040cb2" index="101"/>
+      <bitmap_item guid="2799f78b-fa30-44a7-8b27-44cf1487210e" index="102"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="103"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="104"/>
-      <bitmap_item guid="8c573d9f-8fd5-4eb6-b2e1-958cc505958c" index="105"/>
+      <bitmap_item guid="a18d28d3-8a39-457d-b679-31cc171c1d22" index="105"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="106"/>
       <bitmap_item guid="43e3303f-846c-42cf-a2f0-36ece901adae" index="107"/>
       <bitmap_item guid="1da6d005-e861-418c-b34d-97b352e7525f" index="108"/>
@@ -4530,11 +4530,11 @@ jXTW1Hd2vz/k9X8CoRJ8MPPMva988Y/z1ea1d7cXD52sC0uHG+JgRkNaFuz6b95Mi/bomt69PSXN
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="98"/>
       <bitmap_item guid="9c4c34cc-e82a-4ba1-8b3a-4e8414866d87" index="99"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="100"/>
-      <bitmap_item guid="5face6c0-5bfd-415e-b8bf-ea93df609623" index="101"/>
-      <bitmap_item guid="18b5dba3-6526-438f-a311-9f817653565e" index="102"/>
+      <bitmap_item guid="433929e8-4c3c-4d67-9b13-4ff4f8040cb2" index="101"/>
+      <bitmap_item guid="2799f78b-fa30-44a7-8b27-44cf1487210e" index="102"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="103"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="104"/>
-      <bitmap_item guid="8c573d9f-8fd5-4eb6-b2e1-958cc505958c" index="105"/>
+      <bitmap_item guid="a18d28d3-8a39-457d-b679-31cc171c1d22" index="105"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="106"/>
       <bitmap_item guid="43e3303f-846c-42cf-a2f0-36ece901adae" index="107"/>
       <bitmap_item guid="1da6d005-e861-418c-b34d-97b352e7525f" index="108"/>
@@ -7015,11 +7015,11 @@ tevqWlALtZhI1mb8/HsCmYUOAPB/AGP/jzBqw7zfAAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="d062e563-7842-4449-9c6e-93d7285bf798" index="98"/>
       <bitmap_item guid="9c4c34cc-e82a-4ba1-8b3a-4e8414866d87" index="99"/>
       <bitmap_item guid="b0812155-2000-41c4-ac66-41dd2ed0dbec" index="100"/>
-      <bitmap_item guid="5face6c0-5bfd-415e-b8bf-ea93df609623" index="101"/>
-      <bitmap_item guid="18b5dba3-6526-438f-a311-9f817653565e" index="102"/>
+      <bitmap_item guid="433929e8-4c3c-4d67-9b13-4ff4f8040cb2" index="101"/>
+      <bitmap_item guid="2799f78b-fa30-44a7-8b27-44cf1487210e" index="102"/>
       <bitmap_item guid="12985a22-c22f-4ba9-b9de-06dd8e67ee8c" index="103"/>
       <bitmap_item guid="47d50797-ce72-4ec0-8579-dbec926518c9" index="104"/>
-      <bitmap_item guid="8c573d9f-8fd5-4eb6-b2e1-958cc505958c" index="105"/>
+      <bitmap_item guid="a18d28d3-8a39-457d-b679-31cc171c1d22" index="105"/>
       <bitmap_item guid="a20e7d67-68d2-44a5-8536-1688ac3dde47" index="106"/>
       <bitmap_item guid="43e3303f-846c-42cf-a2f0-36ece901adae" index="107"/>
       <bitmap_item guid="1da6d005-e861-418c-b34d-97b352e7525f" index="108"/>

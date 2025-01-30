@@ -19,7 +19,7 @@ graft = itertools.combinations
 
 import os
 import json
-from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION, ENVIRONMENT
+from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, DOCUMENTATION
 from EnneadTab.RHINO import RHINO_ALIAS, RHINO_UI
 
 import logging
@@ -28,9 +28,6 @@ import logging
 logging.basicConfig(level=logging.INFO, 
                    format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
-KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
-
 
 
 # make modal dialog
@@ -116,7 +113,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     def InitializeScriptList(self):
         logger.info("Initializing script list and get base knowledge")
 
-        with io.open(KNOWLEDGE_FILE, "r", encoding = "utf-8") as f:
+        with io.open(DOCUMENTATION.KNOWLEDGE_RHINO_FILE, "r", encoding = "utf-8") as f:
             knowledge_pool = json.load(f)
 
 

@@ -2,13 +2,12 @@ import json
 
 import ENVIRONMENT
 import DATA_FILE
+import DOCUMENTATION
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import Rhino # pyright: ignore
     import rhinoscriptsyntax as rs
 
 import os
-KNOWLEDGE_FILE = "{}\\knowledge_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
-
 
 def remove_invalid_alias():
     exisitng_alias = rs.AliasNames()
@@ -25,7 +24,7 @@ def register_alias_set():
 
     exisitng_alias = rs.AliasNames()
     
-    data = DATA_FILE.get_data(KNOWLEDGE_FILE, is_local=True)
+    data = DATA_FILE.get_data(DOCUMENTATION.KNOWLEDGE_RHINO_FILE, is_local=True)
 
     for root, dirs, files in os.walk(ENVIRONMENT.RHINO_FOLDER):
         for file in files:
