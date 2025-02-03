@@ -108,9 +108,10 @@ class PrefilterUI(REVIT_FORMS.EnneadTabModelessForm):
 def prefilter_selection():
 
     external_funcs = []
-    PrefilterUI(title=__title__.replace("\n", " "), 
-                summery = __doc__,
-                xaml_file_name="prefilter_selection_UI.xaml")
+    PrefilterUI(__title__.replace("\n", " "), 
+                __doc__,
+                "prefilter_selection_UI.xaml")
+                
     
 
 ################## main code below #####################

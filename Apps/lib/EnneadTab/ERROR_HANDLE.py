@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Defines the primary error handling function for EnneadTab."""
 
-import traceback
+
 import ENVIRONMENT
 import FOLDER
 import EMAIL
@@ -11,6 +11,17 @@ import TIME
 import NOTIFICATION
 import OUTPUT
 
+
+def get_alternative_traceback():
+    import sys
+    OUT = ""
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    OUT += "Exception Type: {}".format(exc_type)
+    OUT += "\nException Message: {}".format(exc_value)
+    while exc_traceback:
+        OUT += "\nFile: {}, Line: {}".format(exc_traceback.tb_frame.f_code.co_filename,exc_traceback.tb_lineno )
+        exc_traceback = exc_traceback.tb_next
+    return OUT
 
 def try_catch_error(is_silent=False, is_pass = False):
     """Decorator for catching exceptions and sending automated error log emails.
@@ -31,10 +42,15 @@ def try_catch_error(is_silent=False, is_pass = False):
                 print_note(str(e))
                 print_note("error_Wrapper func for EA Log -- Error: " + str(e))
                 error_time = "Oops at {}\n\n".format(TIME.get_formatted_current_time())
-                try:
-                    error = traceback.format_exc()
-                except:
-                    error = str(e)
+                error = get_alternative_traceback()
+                if not error:
+                    try:
+                        import traceback
+                        error = traceback.format_exc()
+                    except Exception as new_e:
+                        
+                        error = str(e)
+                        print (new_e)
 
                 subject_line = "EnneadTab Auto Error Log"
                 if is_silent:
