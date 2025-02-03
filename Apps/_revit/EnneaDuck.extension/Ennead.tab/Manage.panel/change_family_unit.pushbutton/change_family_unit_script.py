@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not written documentation for this tool, but he should!"
+__doc__ = "Convert between a typical imperial family and metric family by setting up unit."
 __title__ = "Change Family Unit"
 __tip__ = True
 import proDUCKtion  # pyright: ignore

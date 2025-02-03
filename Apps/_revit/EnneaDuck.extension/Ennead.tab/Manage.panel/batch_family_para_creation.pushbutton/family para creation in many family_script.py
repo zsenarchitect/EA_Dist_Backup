@@ -9,7 +9,7 @@ from EnneadTab import SOUND, ERROR_HANDLE, LOG
 from Autodesk.Revit import DB # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 import re
-
+__is_popular__ = True
 
 
 class FamilyParameterManager:

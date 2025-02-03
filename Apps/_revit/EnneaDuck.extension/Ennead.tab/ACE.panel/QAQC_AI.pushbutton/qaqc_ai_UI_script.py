@@ -5,7 +5,7 @@
 
 __doc__ = "Allow you to generate basic QAQC report based on current document, and use human language to chat with the report to get QAQC status.\nThis tool features openAI in the background for the chatbot part."
 __title__ = "QAQC\nReporter"
-
+__is_popular__ = True
 
 import System # pyright: ignore
 import os

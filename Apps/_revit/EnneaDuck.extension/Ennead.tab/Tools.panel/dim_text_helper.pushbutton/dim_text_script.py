@@ -8,6 +8,7 @@ __title__ = "Dim Text\nHelper"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29672"
 __youtube__ = "https://youtu.be/WYs-_k5IV48"
 __tip__ = True
+__is_popular__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
 from Autodesk.Revit.Exceptions import InvalidOperationException
 from pyrevit.forms import WPFWindow

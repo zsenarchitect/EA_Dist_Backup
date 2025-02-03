@@ -5,6 +5,7 @@
 
 __doc__ = "A floating window that help you correct worksets by category, by host or by type.\n\nContents inside design option can also change workset as long as they are not in group."
 __title__ = "WorkSet\nManager"
+__is_popular__ = True
 __tip__ = True
 import os
 import math

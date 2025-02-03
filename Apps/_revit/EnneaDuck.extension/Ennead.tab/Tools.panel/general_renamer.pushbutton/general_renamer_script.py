@@ -11,7 +11,7 @@ __doc__ = """A floating window that give you quick access to all kinds of rename
 __title__ = "Super\nRenamer"
 __tip__ = True
 
-
+__is_popular__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from pyrevit.forms import WPFWindow

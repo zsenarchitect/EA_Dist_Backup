@@ -1,6 +1,7 @@
 __doc__ = "Pick many families, and load them to many projects. You can:\n\t- 1 family >> x projects\n\t- x families >> 1 projects\n\t- x families >> x projects\n\t- 1 family >> 1 project\n\nHave bonus option to sync and close after done. And have option to pre-pick shared family loading behaviour. Handy for loading big family at end of day."
 __title__ = "Load Multiple Families\nTo Multiple Docs"
 __tip__ = True
+__is_popular__ = True
 from pyrevit import forms, DB, UI, script
 import os
 import re

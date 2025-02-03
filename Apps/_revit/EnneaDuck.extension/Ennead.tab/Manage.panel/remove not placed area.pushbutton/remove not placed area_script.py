@@ -4,6 +4,7 @@ in the file to increase document accuracy.\n\nUnbounded/redundent area and rooms
 the option to check room status by phase."
 __title__ = "Remove Not Placed\nArea and Rooms"
 __tip__ = True
+__is_popular__ = True
 from pyrevit import forms,  script
 from Autodesk.Revit import DB # pyright: ignore
 

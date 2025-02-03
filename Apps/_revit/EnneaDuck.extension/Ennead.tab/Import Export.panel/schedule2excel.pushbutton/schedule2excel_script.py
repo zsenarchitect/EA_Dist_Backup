@@ -6,13 +6,13 @@
 __doc__ = "Export and open schedule in excel."
 __title__ = "Schedule2Excel"
 __tip__ = True
-
+__is_popular__ = True
 import csv
 from pyrevit import forms 
 from pyrevit import script, revit
 import os
 import xlsxwriter
-import csv
+
 import re
 
 import proDUCKtion # pyright: ignore 

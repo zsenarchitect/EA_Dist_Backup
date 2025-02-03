@@ -1716,7 +1716,7 @@
         "doc": "Are you having trouble trusting the excel when it is past to you from someone else? What if the formula is incorrect and is citing the wrong cell? You could not know it unless you click each one of the cell and see if there is a hidden formula. \nNow this formula checker will help you find every hidden formula so you can see for yourself.\nIt highlight the cells as dash.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\check_phase_mapping.pushbutton\\check_phase_mapping_script.py": {
         "script": "Ennead.tab\\ACE.panel\\check_phase_mapping.pushbutton\\check_phase_mapping_script.py",
@@ -1725,7 +1725,7 @@
         "doc": "Get the phase mapping of mutiple documents.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\check_view_link.pushbutton\\check_view_link_script.py": {
         "script": "Ennead.tab\\ACE.panel\\check_view_link.pushbutton\\check_view_link_script.py",
@@ -1752,7 +1752,7 @@
         "doc": "Create new sheets based on data from Excel.\nIf you need help on what kind of Excel to prepare, you can open a sample excel and begin from there.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\Excel Sheet Creator.pulldown\\open_sample_excel.pushbutton\\open_sample_excel_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Excel Sheet Creator.pulldown\\open_sample_excel.pushbutton\\open_sample_excel_script.py",
@@ -1770,7 +1770,7 @@
         "doc": "Use me tp export selected Color Scheme To Excel. You have the option to exclude unused color.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\export_filled_region_types.pushbutton\\export_filled_region_types_script.py": {
         "script": "Ennead.tab\\ACE.panel\\export_filled_region_types.pushbutton\\export_filled_region_types_script.py",
@@ -1779,7 +1779,7 @@
         "doc": "Export the filled region color setting to excel so you can use it elsewhere.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\Family RePath.pushbutton\\family repath_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Family RePath.pushbutton\\family repath_script.py",
@@ -1788,7 +1788,7 @@
         "doc": "Find family file path. And remap the path to a folder you picked. In this folder, families will be organised based on their category.\nThis will also load the repathed families back to central model.\n\nYou have the option to sync and close after the long-boring reloading.\nYou also have the option to dig inside the nesting family and save them.\n",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\family_tree.pushbutton\\family_tree_script.py": {
         "script": "Ennead.tab\\ACE.panel\\family_tree.pushbutton\\family_tree_script.py",
@@ -1833,7 +1833,7 @@
         "doc": "Which Legand and Schedule were used? Where are they?\nIf you have been wondering about those question, this tool can help you with it.\n\nIt list all the current locations for the schedules and legend, with a clickable link!",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\merge_ost.pushbutton\\merge_ost_script.py": {
         "script": "Ennead.tab\\ACE.panel\\merge_ost.pushbutton\\merge_ost_script.py",
@@ -1869,7 +1869,7 @@
         "doc": "Allow you to generate basic QAQC report based on current document, and use human language to chat with the report to get QAQC status.\nThis tool features openAI in the background for the chatbot part.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py": {
         "script": "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py",
@@ -1887,7 +1887,7 @@
         "doc": "\nUpdate smart egress path maker family data.\n",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\smart_match_grid_extend.pushbutton\\smart_match_grid_extend_script.py": {
         "script": "Ennead.tab\\ACE.panel\\smart_match_grid_extend.pushbutton\\smart_match_grid_extend_script.py",
@@ -1905,7 +1905,7 @@
         "doc": "Transfer some data from one parameter to another. \nWhen you inherated from older file some parameter is carried over and now you have duplcated parameter container. \nUse this to cleanup the parameter panel",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\update_DOB_page.pushbutton\\update_DOB_page_script.py": {
         "script": "Ennead.tab\\ACE.panel\\update_DOB_page.pushbutton\\update_DOB_page_script.py",
@@ -1920,7 +1920,7 @@
         "script": "Ennead.tab\\ACE.panel\\wall_type_diagram.pushbutton\\wall_type_diagram_script.py",
         "icon": "Ennead.tab\\ACE.panel\\wall_type_diagram.pushbutton\\icon.png",
         "alias": "Wall Type Diagram",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Generate walltype legand view as well as view filter. The color is picked based on related filled region type, if not avaibale then pick new color for you.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
@@ -1932,7 +1932,7 @@
         "doc": "Create 3D workset checking view in your working folder.\nEach workset will get a 3D view that only have this workset turned on.\n\nIf there are no 'Views_$Group' and 'Views_$Series' in the view parameter, such as the case in using other firm file setup, the tool will not introduce 'Views_$Group' and 'Views_$Series' to them, the new 3D workset views will be just using revit default '???' group.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\Worksets.pulldown\\create_worksets.pushbutton\\create_worksets_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Worksets.pulldown\\create_worksets.pushbutton\\create_worksets_script.py",
@@ -1941,7 +1941,7 @@
         "doc": "Create Worksets following the standard Ennead Workset Structure.\nYou can the options to create any or all from below:",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\Worksets.pulldown\\links_to_worksets.pushbutton\\links_to_worksets_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Worksets.pulldown\\links_to_worksets.pushbutton\\links_to_worksets_script.py",
@@ -1959,7 +1959,7 @@
         "doc": "A floating window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\DWG export setting.pushbutton\\export setting_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\DWG export setting.pushbutton\\export setting_script.py",
@@ -1968,7 +1968,7 @@
         "doc": "Randomize the layer color, and rename the layer to to format below:\n    Category_SubCategory\n    \nThis tool does not change other existing setting for this export setting.\nIt makes life in Rhino easier after exporting contents over.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\ennead_exporter.pushbutton\\super_exporter_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\ennead_exporter.pushbutton\\super_exporter_script.py",
@@ -1977,7 +1977,7 @@
         "doc": "A great helper for your print on deadline. Feastures include:\n  -pdf, dwg, jpg export together\n  -Package export files to subfolders in destination folder by assigned prefix and file type\n  -Prefix for auto numbering\n  -Email result as a link to folder.\n  -Time esitmation, with increasing accuracy the more you export\n  -Identify color setting per parameter on sheet. So you can mix color and BW export together.\n  -Option to sync and close files after exporting done.\n  -Export sheets by revision mark instead of printSet, and allow selective export without desrupting shared printSet.\n  -Export views on sheet seperatedly for dwg.\n  -Export from links or open docs.\n  -Merge pdf after export.\n  -JOKE while exporting.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\ennead_printer.bad_pushbutton\\ennead_printer_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\ennead_printer.bad_pushbutton\\ennead_printer_script.py",
@@ -1995,7 +1995,7 @@
         "doc": "Pick category and type for the dwg export. It will isolate elements by types in the view and give individual .dwg file.\n\nThe child elements such as shared family will be isolated as well.\n\nUse EnneadTab for Rhino <Import Revit Export Collection> to get things under type parent layers.\n\nCurrently handle Wall/Floor/Roof/Column/Stair\n\nThis tool primarily deal with the system family category that normally will be difficult to seperate in dwg export.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\export_ost_material_table.pushbutton\\export_ost_material_table_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\export_ost_material_table.pushbutton\\export_ost_material_table_script.py",
@@ -2013,7 +2013,7 @@
         "doc": "After getting all the block data from Rhino side, create/update family in Revit. If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\brep2mass.pushbutton\\brep2mass_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\brep2mass.pushbutton\\brep2mass_script.py",
@@ -2049,7 +2049,7 @@
         "doc": "Move this family to the internal origin under current orienttation. \n\nThere are 3 modes for the operation:\n1: Family is placed on 3d view, but location is wrong.>>>You select it and move it.\n2: Family is placed on 3d view somewhere but you don't know where.>>>You select it from listbox and move it.\n3: The family is just loaded in, it is new, and has not been placed anywhere.>>> You select it from list and move it.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py",
@@ -2058,7 +2058,7 @@
         "doc": "A window that allow you to convert .3dm file and .dwg files into native revit family elements.\n\nAllo subCategory assigning per file, you may also add new SubCateogry on the run or simply use the source file name as the subcategory.\n\nSupport all major curve convertion except nurbs curve when part of the control points are not on same CPlane.\n\nSee instruction in the window for more details and features. This tool works best with the EnneadTab for Rhino tool's Rhino2Revit exporter window.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py",
@@ -2067,7 +2067,7 @@
         "doc": "A drafter that allow you to take advantage of Rhino fast editing power. You can operate however you want for crvs and surfaces in Rhino, and transfer those content to Revit detail lines and filled regions with matching linestyle and filled region type.\n\nSome Rhino command to consider:\n+Trim\n+Split\n+Fillet\n+CurveBoolean\n+EditControlPoints\n+Surface trim/split.\n\nIt also support nurbs crv or srf with nurbs edge, and it support AreaBoundaryLine and RoomSeperationLine drafting.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\srf2adp.pushbutton\\srf2adp_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\srf2adp.pushbutton\\srf2adp_script.py",
@@ -2085,7 +2085,7 @@
         "doc": "Export and open schedule in excel.",
         "tab": "Import Export",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Import Export.panel\\update_miro.pushbutton\\update_miro_script.py": {
         "script": "Ennead.tab\\Import Export.panel\\update_miro.pushbutton\\update_miro_script.py",
@@ -2112,13 +2112,13 @@
         "doc": "Help you get started with many families by adding many useful parameter quickly.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\change_family_unit.pushbutton\\change_family_unit_script.py": {
         "script": "Ennead.tab\\Manage.panel\\change_family_unit.pushbutton\\change_family_unit_script.py",
         "icon": "Ennead.tab\\Manage.panel\\change_family_unit.pushbutton\\icon.png",
         "alias": "Change Family Unit",
-        "doc": "Sen Zhang has not written documentation for this tool, but he should!",
+        "doc": "Convert between a typical imperial family and metric family by setting up unit.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": false
@@ -2130,7 +2130,7 @@
         "doc": "A floating window that help you manage DWG in the files. \nYou can find, select, zoom any dwgs with detailed infor on creator, view association, hidden status, workset, file path and file size. \n\nFor linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\fire_rating_script.py": {
         "script": "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\fire_rating_script.py",
@@ -2139,7 +2139,7 @@
         "doc": "Manager fire rating in wall property, and apply/update rating graphic across multiple views.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\fix_warnings.pushbutton\\fix_generic_warnings_script.py": {
         "script": "Ennead.tab\\Manage.panel\\fix_warnings.pushbutton\\fix_generic_warnings_script.py",
@@ -2175,7 +2175,7 @@
         "doc": "Pick many families, and load them to many projects. You can:\n\t- 1 family >> x projects\n\t- x families >> 1 projects\n\t- x families >> x projects\n\t- 1 family >> 1 project\n\nHave bonus option to sync and close after done. And have option to pre-pick shared family loading behaviour. Handy for loading big family at end of day.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\load_family_from_link.pushbutton\\load_family_from_link_script.py": {
         "script": "Ennead.tab\\Manage.panel\\load_family_from_link.pushbutton\\load_family_from_link_script.py",
@@ -2193,7 +2193,7 @@
         "doc": "Merge a few family types to a target family type: \n\nFor instance parameters, the tool tries to record as much information as it can, so after the merging, similar data can be applied back to maintain the graphical consistency.\n\nThere is a built-in check that will search for differences in type parameter data. Should differences be found, you will be prompted to decide to continue with merge or cancel.\n\nIf you find no ideal target type, you may also choose to create a new type under good family with the bad type data and type name.\n\nThis tool will work for most 2D and 3D families, as well as Tags.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\parameter_manager.pushbutton\\parameter_manager_script.py": {
         "script": "Ennead.tab\\Manage.panel\\parameter_manager.pushbutton\\parameter_manager_script.py",
@@ -2211,7 +2211,7 @@
         "doc": "This gives you ability to remove rooms and areas that is not placed in the file to increase document accuracy.\n\nUnbounded/redundent area and rooms will be checked BUT NOT DELETED SO YOU CAN MAKE THE FINAL DECISION.(Mostly likely they are still important for you.)\n\nYou also havethe option to check room status by phase.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\Shake All Tags.pushbutton\\shake all tags_script.py": {
         "script": "Ennead.tab\\Manage.panel\\Shake All Tags.pushbutton\\shake all tags_script.py",
@@ -2229,7 +2229,7 @@
         "doc": "Location the usage of detail groups by view or by group type.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py": {
         "script": "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py",
@@ -2238,7 +2238,7 @@
         "doc": "A floating window that give you quick access to review un-sheeted views, ranked by creator, view group, view type and more. View name can be prefixed to make it more informative the author even from project broswer.\n\n The review process can be quick becasue the view have been exported as jpgs and reviewed quickly. You can also directly open actual view, or delete view in the same window after reviewing.\n\nIf you want to limit how much to see, you can show only views from you.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\workset_fixer.pushbutton\\fix_workset_script.py": {
         "script": "Ennead.tab\\Manage.panel\\workset_fixer.pushbutton\\fix_workset_script.py",
@@ -2247,7 +2247,7 @@
         "doc": "A floating window that help you correct worksets by category, by host or by type.\n\nContents inside design option can also change workset as long as they are not in group.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Resource.panel\\app_store.pushbutton\\app_store_script.py": {
         "script": "Ennead.tab\\Resource.panel\\app_store.pushbutton\\app_store_script.py",
@@ -2382,7 +2382,7 @@
         "doc": "Pick curtain panel type and apply host wall radius to panel radius on parameter defined by user.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py": {
         "script": "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py",
@@ -2391,7 +2391,7 @@
         "doc": "Good for batch cutting many curtain panels at once with same void.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\color_design_option.pushbutton\\color_design_option_script.py": {
         "script": "Ennead.tab\\Tools.panel\\color_design_option.pushbutton\\color_design_option_script.py",
@@ -2418,7 +2418,7 @@
         "doc": "A floating window that give you quick access to add dim text below your selected dim or dims.\nYou can use any of the popular dim text, or use your own by typing in the user bar.\nYou may also pick the relative position on the text to the default numbering.(Up, Down, Prefix, Surfix)",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py": {
         "script": "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py",
@@ -2427,7 +2427,7 @@
         "doc": "A floating window that give you quick access to all kinds of renamer function.\n    - Add/Remove a prefix for selected views.\n    - Change Views/SHeets to upper case.\n    - Format view names based on detail number and sheet number.\n    - Rename family on spot without going thru the project broswer.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\generic_healthcare_tool_script.py": {
         "script": "Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\generic_healthcare_tool_script.py",
@@ -2499,7 +2499,7 @@
         "doc": "for every open document(except family document), it sync with central. Then Close",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects.pushbutton\\sycn all proj_script.py": {
         "script": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects.pushbutton\\sycn all proj_script.py",
@@ -2526,7 +2526,7 @@
         "doc": "Control some pin and unpin status, or hide un hide status, or bubble head.\n\nYou can play with many different categories to control.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\translate_AI.pushbutton\\AI_translate_script.py": {
         "script": "Ennead.tab\\Tools.panel\\translate_AI.pushbutton\\AI_translate_script.py",
@@ -2535,7 +2535,7 @@
         "doc": "Translate sheet names, view names, and maybe one day annotations.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\UI.panel\\EA_who_did_that.pushbutton\\who_did_script.py": {
         "script": "Ennead.tab\\UI.panel\\EA_who_did_that.pushbutton\\who_did_script.py",
@@ -2544,7 +2544,7 @@
         "doc": "A floating window that give you information of the creator, editor and owner of selected elements and active view.",
         "tab": "UI",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\UI.panel\\open_app_store.pushbutton\\open_app_store_script.py": {
         "script": "Ennead.tab\\UI.panel\\open_app_store.pushbutton\\open_app_store_script.py",
@@ -2580,7 +2580,7 @@
         "doc": "Commandline for Revit\n\nFind those button function you might not know where to find.\nThe search result is ranked as follow:\n-Tool name begins with user input text.\n-Tool name contains user input text.\n-Tool help documentation contains user input text.\n\nThe main info panel shows the button icon image, which panel to find it, the full documentation, any hyper link to EI post and Youtube Demo video if available. \nYou can also directly activate the tool with the 'GO' button or 'Enter' key.\n\nYou also have the option to search only EnneadTab buttons or Native Revit buttons.\nOn top left corner there is a minimize button, so you can keep it small when not using it.",
         "tab": "UI",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\UI.panel\\toggle_warning_mode.smartbutton\\toggle_warning_mode_script.py": {
         "script": "Ennead.tab\\UI.panel\\toggle_warning_mode.smartbutton\\toggle_warning_mode_script.py",

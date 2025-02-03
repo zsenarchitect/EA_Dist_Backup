@@ -29,6 +29,7 @@ You can the options to create any or all from below:"""
 for item in DEFAULT_LIST:
     __doc__ += "\n+< " + item + " >"
 __tip__ = True
+__is_popular__ = True
 
 # Obtain the document object
 # uidoc = REVIT_APPLICATION.get_uidoc()

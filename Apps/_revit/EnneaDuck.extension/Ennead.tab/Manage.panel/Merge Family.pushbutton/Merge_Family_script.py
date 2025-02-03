@@ -6,6 +6,7 @@ __title__ = "Merge\nFamily"
 __youtube__ = "https://youtu.be/xZhCxpuQKCs"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29705"
 __tip__ = True
+__is_popular__ = True
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 

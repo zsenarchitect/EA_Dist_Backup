@@ -6,7 +6,7 @@
 __doc__ = "A floating window that give you quick access to review un-sheeted views, ranked by creator, view group, view type and more. View name can be prefixed to make it more informative the author even from project broswer.\n\n The review process can be quick becasue the view have been exported as jpgs and reviewed quickly. You can also directly open actual view, or delete view in the same window after reviewing.\n\nIf you want to limit how much to see, you can show only views from you."
 __title__ = "Manage\nWorking Views"
 __tip__ = True
-
+__is_popular__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from pyrevit.forms import WPFWindow

@@ -3,7 +3,7 @@
 
 __doc__ = "Good for batch cutting many curtain panels at once with same void."
 __title__ = "Batch Cut\nPanels"
-
+__is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

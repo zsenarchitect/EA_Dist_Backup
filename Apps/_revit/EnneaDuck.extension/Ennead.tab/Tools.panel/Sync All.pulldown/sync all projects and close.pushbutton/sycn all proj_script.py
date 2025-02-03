@@ -2,7 +2,7 @@ __doc__ = "for every open document(except family document), it sync with central
 __title__ = "Sync All Open Proj and Close"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=28744"
 __tip__ = True
-
+__is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SYNC, REVIT_EVENT

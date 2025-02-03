@@ -4,6 +4,7 @@
 __doc__ = "Get the phase mapping of mutiple documents."
 __title__ = "Check\nPhase Mapping"
 __tip__ = True
+__is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

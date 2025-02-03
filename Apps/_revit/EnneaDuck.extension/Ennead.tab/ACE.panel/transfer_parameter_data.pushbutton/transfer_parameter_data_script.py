@@ -9,7 +9,7 @@ Use this to cleanup the parameter panel"""
 __title__ = "Transfer\nParameter Data"
 __youtube__ = "https://youtu.be/onJCCtV0hts"
 __tip__ = True
-
+__is_popular__ = True
 from pyrevit import forms #
 from pyrevit import script #
 import System

@@ -1,7 +1,7 @@
 __doc__ = "Move this family to the internal origin under current orienttation. \n\nThere are 3 modes for the operation:\n1: Family is placed on 3d view, but location is wrong.>>>You select it and move it.\n2: Family is placed on 3d view somewhere but you don't know where.>>>You select it from listbox and move it.\n3: The family is just loaded in, it is new, and has not been placed anywhere.>>> You select it from list and move it."
 __title__ = "Move2Origin"
 __tip__ = True
-
+__is_popular__ = True
 from pyrevit import forms
 from pyrevit import script
 

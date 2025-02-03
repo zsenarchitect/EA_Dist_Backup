@@ -535,8 +535,17 @@ def generate_app_documentation(debug, app):
 
         if not tab:
             tab = "no tab"
-        
-        return  "{}, {}, {}".format("proj" in tab.lower(), tab, commands)
+
+
+        delayed_item_keywords = ["proj",
+                                 "personal",
+                                 "tester"]
+        def is_in_delayed_category(x):
+            for item in delayed_item_keywords:
+                if item in x.lower():
+                    return True
+            return False
+        return  "{}, {}, {}".format(is_in_delayed_category(tab), tab, commands)
     app_knowledge = sorted(knowledge_dict.values(), key = get_command_order)
     
     import PDF

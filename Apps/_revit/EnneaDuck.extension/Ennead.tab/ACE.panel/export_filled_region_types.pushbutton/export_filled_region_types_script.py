@@ -6,7 +6,7 @@
 __doc__ = "Export the filled region color setting to excel so you can use it elsewhere."
 __title__ = "Export Filled\nRegion Types"
 __tip__ = True
-
+__is_popular__ = True
 # from pyrevit import forms #
 from pyrevit import script #
 

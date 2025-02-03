@@ -4,7 +4,7 @@ If you have been wondering about those question, this tool can help you with it.
 It list all the current locations for the schedules and legend, with a clickable link!"""
 __title__ = "Legend&Schedule\nWhere?"
 __tip__ = True
-
+__is_popular__ = True
 from pyrevit import script
 from Autodesk.Revit import DB # pyright: ignore
 

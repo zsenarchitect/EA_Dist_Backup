@@ -8,7 +8,7 @@ You can find, select, zoom any dwgs with detailed infor on creator, view associa
 
 For linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder."""
 
-
+__is_popular__ = True
 __title__ = "DWG\nManager"
 __tip__ = True
 import os

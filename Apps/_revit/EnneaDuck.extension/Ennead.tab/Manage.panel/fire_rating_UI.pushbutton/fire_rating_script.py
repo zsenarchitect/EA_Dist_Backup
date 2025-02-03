@@ -6,7 +6,7 @@
 __doc__ = """Manager fire rating in wall property, and apply/update rating graphic across multiple views."""
 __title__ = "Fire Rating\nGraphic"
 __tip__ = True
-
+__is_popular__ = True
 import traceback
 import System # pyright: ignore 
 

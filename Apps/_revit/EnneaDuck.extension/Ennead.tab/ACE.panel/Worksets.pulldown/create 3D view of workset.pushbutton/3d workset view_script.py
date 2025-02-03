@@ -6,6 +6,7 @@
 __doc__ = "Create 3D workset checking view in your working folder.\nEach workset will get a 3D view that only have this workset turned on.\n\nIf there are no 'Views_$Group' and 'Views_$Series' in the view parameter, such as the case in using other firm file setup, the tool will not introduce 'Views_$Group' and 'Views_$Series' to them, the new 3D workset views will be just using revit default '???' group."
 __title__ = "3D Workset\nViews"
 __tip__ = True
+__is_popular__ = True
 from pyrevit import forms #
 from pyrevit import script #
 

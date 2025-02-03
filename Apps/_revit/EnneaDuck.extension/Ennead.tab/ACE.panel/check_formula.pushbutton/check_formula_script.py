@@ -8,6 +8,7 @@ Now this formula checker will help you find every hidden formula so you can see 
 It highlight the cells as dash."""
 __title__ = "Inspect Excel\nFormula"
 __tip__ = True
+__is_popular__ = True
 from pyrevit import forms #
 from pyrevit import script #
 

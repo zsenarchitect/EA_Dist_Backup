@@ -220,7 +220,7 @@ class Output:
 
             report_file.write("<h1 style='text-align: center;'>{}</h1>".format("EnneadTab Console"))
             report_file.write("<div style='text-align: center;'>")
-            report_file.write("<img src='file://{}/logo_ennead-e.png' height='80'>".format(ENVIRONMENT.IMAGE_FOLDER))
+            report_file.write("<img src='file://{}/logo_ennead-e_outline white.png' height='120'>".format(ENVIRONMENT.IMAGE_FOLDER))
             report_file.write("</div>")
             report_file.write("<p style='text-align: center;' class='foot_note'>{}</p>".format(TIME.get_formatted_current_time()))
             report_file.write("<hr>") 

@@ -5,7 +5,7 @@ __doc__ = "A drafter that allow you to take advantage of Rhino fast editing powe
 __title__ = "Rhino Drafter"
 __youtube__ = r"https://youtu.be/dYeVpdXsMYM"
 __tip__ = True
-
+__is_popular__ = True
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent

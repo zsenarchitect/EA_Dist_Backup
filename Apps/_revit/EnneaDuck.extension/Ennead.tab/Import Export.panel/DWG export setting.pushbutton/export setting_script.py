@@ -4,6 +4,7 @@ __doc__ = """Randomize the layer color, and rename the layer to to format below:
 This tool does not change other existing setting for this export setting.
 It makes life in Rhino easier after exporting contents over."""
 __title__ = "DWG Export\nUpdate Layer"
+__is_popular__ = True
 __tip__ = True
 from pyrevit import forms, script
 from Autodesk.Revit import DB # pyright: ignore

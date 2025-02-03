@@ -8,7 +8,7 @@ __title__ = "AI\nTranslate"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29679"
 __youtube__ = "https://youtu.be/7dlOneO2Mts"
 __tip__ = True
-
+__is_popular__ = True
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
 from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore 
 from Autodesk.Revit import DB # pyright: ignore 

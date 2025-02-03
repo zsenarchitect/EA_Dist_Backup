@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Generate walltype legand view as well as view filter. The color is picked based on related filled region type, if not avaibale then pick new color for you."
 __title__ = "Wall Type\nDiagram"
 
 import proDUCKtion # pyright: ignore 

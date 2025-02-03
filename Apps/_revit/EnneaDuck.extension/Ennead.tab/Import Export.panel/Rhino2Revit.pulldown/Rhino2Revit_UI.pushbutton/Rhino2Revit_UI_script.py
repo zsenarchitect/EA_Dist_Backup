@@ -6,7 +6,7 @@ __doc__ = "A window that allow you to convert .3dm file and .dwg files into nati
 __title__ = "Rhino2Revit"
 __tip__ = ["You can get crvs from Rhino into revit family as well, all you need to do to export as dwg in rhino side, and import as dwg in revit family side.\nSee EnneadTab for Rhino LayerPackagre for details",
            __doc__]
-
+__is_popular__ = True
 from pyrevit import forms
 from pyrevit import script
 from pyrevit.revit import ErrorSwallower

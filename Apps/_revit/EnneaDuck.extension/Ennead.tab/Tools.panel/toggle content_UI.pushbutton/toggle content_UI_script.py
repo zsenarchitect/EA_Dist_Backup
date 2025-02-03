@@ -6,7 +6,7 @@ __doc__ = """Control some pin and unpin status, or hide un hide status, or bubbl
 You can play with many different categories to control."""
 __title__ = "Toggle\nContents"
 __tip__ = True
-
+__is_popular__ = True
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent

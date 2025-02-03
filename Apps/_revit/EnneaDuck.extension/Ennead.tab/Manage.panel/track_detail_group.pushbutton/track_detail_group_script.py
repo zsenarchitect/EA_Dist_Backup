@@ -7,7 +7,7 @@ __doc__ = "Location the usage of detail groups by view or by group type."
 __title__ = "Track\nDetail Group"
 __tip__ = True
 
-
+__is_popular__ = True
 from pyrevit import forms 
 from pyrevit import script
 

@@ -8,6 +8,7 @@ __doc__ = "Pick category and type for the dwg export. It will isolate elements b
 __title__ = "Isolated Export\nBy System Family Type"
 __tip__ = True
 __youtube__ = "https://youtu.be/o_cnp-BvnHw"
+__is_popular__ = True
 import os
 from pyrevit import forms #
 from pyrevit import script #

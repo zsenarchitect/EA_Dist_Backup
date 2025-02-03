@@ -18,6 +18,7 @@ You also have the option to dig inside the nesting family and save them.
 """
 __title__ = "Family\nRePath"
 __tip__ = True
+__is_popular__ = True
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 uiapp = UI.UIApplication
