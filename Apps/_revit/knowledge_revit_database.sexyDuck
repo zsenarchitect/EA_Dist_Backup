@@ -1839,7 +1839,7 @@
         "script": "Ennead.tab\\ACE.panel\\merge_ost.pushbutton\\merge_ost_script.py",
         "icon": "Ennead.tab\\ACE.panel\\merge_ost.pushbutton\\icon.png",
         "alias": "Merge Object Style",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Consider using Ideate instead",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
