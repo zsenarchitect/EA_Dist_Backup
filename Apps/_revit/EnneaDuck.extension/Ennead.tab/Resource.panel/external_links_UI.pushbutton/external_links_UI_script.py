@@ -225,13 +225,13 @@ class AssistantUI(forms.WPFWindow):
     @ERROR_HANDLE.try_catch_error()
     def open_cache_revit_click(self, sender, args):
         path = r"{}\AppData\Local\Autodesk\Revit\PacCache".format(os.environ["USERPROFILE"])
-        REVIT_FORMS.dialogue(main_text = "The cache in the upcoming folder 'C:\Users\YouName\AppData\Local\Autodesk\Revit' are all safe to delete. There are Crash journals, very old rvt links, unusaed locals, etc. from every version of Revit you have used.\n\n##BUT PLEASE DELETE THEM ONLY WHEN REVIT HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -Autodesk Revit 20xx\n  -PacCache\n\nNote:\nAfter Cache are deleted, you next Revit document openning will take longer than ususal because it will download cache again as needed.")
+        REVIT_FORMS.dialogue(main_text = "The cache in the upcoming folder 'C:\\Users\YouName\\AppData\\Local\\Autodesk\\Revit' are all safe to delete. There are Crash journals, very old rvt links, unusaed locals, etc. from every version of Revit you have used.\n\n##BUT PLEASE DELETE THEM ONLY WHEN REVIT HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -Autodesk Revit 20xx\n  -PacCache\n\nNote:\nAfter Cache are deleted, you next Revit document openning will take longer than ususal because it will download cache again as needed.")
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
     @ERROR_HANDLE.try_catch_error()
     def open_cache_rhino_click(self, sender, args):
         path = r"{}\AppData\Local\McNeel\Rhinoceros\temp".format(os.environ["USERPROFILE"])
-        REVIT_FORMS.dialogue(main_text = "There are autosaves you might no longer need in the upcoming folder 'C:\Users\YouName\AppData\Local\McNeel\Rhinoceros' are safe to delete.\n\n##BUT PLEASE DELETE THEM ONLY WHEN RHINO HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -6.0\n  -7.0")
+        REVIT_FORMS.dialogue(main_text = "There are autosaves you might no longer need in the upcoming folder 'C:\\Users\\YouName\\AppData\\Local\\McNeel\\Rhinoceros' are safe to delete.\n\n##BUT PLEASE DELETE THEM ONLY WHEN RHINO HAS BEEN CLOSED.##", sub_text = "You can delete those folders:\n  -6.0\n  -7.0")
 
         subprocess.Popen(r'explorer /select, {}'.format(path))
 

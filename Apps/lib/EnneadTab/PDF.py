@@ -95,8 +95,9 @@ except:
 
 
 
-def documentation2pdf(doc_data_list, pdf_path):
+def documentation2pdf_rhino(doc_data_list, pdf_path):
     PDFGenerator(pdf_path).generate((doc_data_list))
+    
 class PDFGenerator:
     def __init__(self, pdf_path):
         self.pdf_path = pdf_path

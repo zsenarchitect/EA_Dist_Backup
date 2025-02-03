@@ -90,7 +90,7 @@ def get_all_user_names():
 
     except Exception as e:
         pass
-        # print str(e)
+        # print (e)
     return names
 
 
@@ -405,7 +405,7 @@ def get_central_name(doc=None):
     try:
         return doc.Title.replace("_{}".format(USER.get_autodesk_user_name()), "")
     except Exception as e:
-        # print str(e)
+        # print (e)
         # print "LOG get central name error"
         EMAIL.email(receiver_email_list=["szhang@ennead.com"],
                               subject="EnneadTab Auto Email: Title error",

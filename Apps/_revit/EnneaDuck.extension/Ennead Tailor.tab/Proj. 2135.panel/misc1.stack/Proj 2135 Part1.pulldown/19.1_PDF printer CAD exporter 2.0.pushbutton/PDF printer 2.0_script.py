@@ -29,6 +29,7 @@ import System
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
+import EA_UTILITY
 
 def legalize_filename(name):
     if r"/" in name:
@@ -334,7 +335,7 @@ def export_image_from_sheet(sheet, doc):
     add_to_log(file_name + ".jpg", time_end - time_start)
     NOTIFICATION.messenger(app_name = "Bilibili exporter",
                             title = "[{}.jpg] saved.".format(file_name),
-                            image = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135.pulldown\icon.png",
+                            image = "C:\\Users\\szhang\\github\\EnneadTab 2.0\\ENNEAD.extension\\Ennead.tab\\Tailor Shop.panel\\misc1.stack\\Proj 2135.pulldown\\icon.png",
                             message = "{} more to do in current document".format(total - counter))
 
 def export_views_on_sheet(sheet, doc):
@@ -407,7 +408,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
 
     NOTIFICATION.messenger(app_name = "Bilibili exporter",
                             title = "[{}.dwg] saved.".format(file_name),
-                            image = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135.pulldown\icon.png",
+                            image = "C:\\Users\\szhang\\github\\EnneadTab 2.0\\ENNEAD.extension\\Ennead.tab\\Tailor Shop.panel\\misc1.stack\\Proj 2135.pulldown\\icon.png",
                             message = additional_msg)
 
 
@@ -465,7 +466,7 @@ def export_DWG_from_sheet(sheet, doc):
     add_to_log(file_name + ".dwg", time_end - time_start)
     NOTIFICATION.messenger(app_name = "Bilibili exporter",
                             title = "[{}.dwg] saved.".format(file_name),
-                            image = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135.pulldown\icon.png",
+                            image = "C:\\Users\\szhang\\github\\EnneadTab 2.0\\ENNEAD.extension\\Ennead.tab\\Tailor Shop.panel\\misc1.stack\\Proj 2135.pulldown\\icon.png",
                             message = "{} more to do in current document".format(total - counter))
 
     """
@@ -557,7 +558,7 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
     add_to_log(file_name + ".pdf", time_end - time_start)
     NOTIFICATION.messenger(app_name = "Bilibili exporter",
                             title = "[{}.pdf] saved.".format(file_name),
-                            image = "C:\Users\szhang\github\EnneadTab 2.0\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135.pulldown\icon.png",
+                            image = "C:\\Users\\szhang\\github\\EnneadTab 2.0\\ENNEAD.extension\\Ennead.tab\\Tailor Shop.panel\\misc1.stack\\Proj 2135.pulldown\\icon.png",
                             message = "{} more to do in current document".format(total - counter))
 
 
@@ -779,7 +780,7 @@ def export_content_in_doc(doc):
     def is_sheet_in_picked_sheets(sheet):
         # print "---"
         # print sheet.Name
-        # print sheet.SheetNumber
+        # print (sheet.SheetNumber)
         # print "-"
         find_match = False
         if sheet is None:

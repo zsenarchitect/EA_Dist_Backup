@@ -1,5 +1,5 @@
 
-from collections import OrderedDict
+
 # data_file = EnneadTab.read_json_as_dict_in_dump_folder("LI_NYU_area.json")
 import os
 DOC_LEVLEL_DICT = {
@@ -24,9 +24,8 @@ DOC_LEVLEL_DICT = {
         "Level 5 Finish Floor",
         "Level 4 Finish Floor",
         "Level 3 Finish Floor",
-        "Level 2 Finish Floor"
-        
-        
+        "Level 2 Finish Floor",
+        "Exisiting_Level 1 Slab (126.00)"
     ]
     }
 

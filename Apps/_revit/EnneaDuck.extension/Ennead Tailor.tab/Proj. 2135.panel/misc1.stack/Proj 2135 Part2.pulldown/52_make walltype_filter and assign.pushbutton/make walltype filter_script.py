@@ -69,7 +69,7 @@ def set_filter_graphic(template, filter_id, color):
     try:
         template.SetFilterOverrides (filter_id, override_setting)
     except Exception as e:
-        print "skip {} becasue:{}".format(template.Name, e)
+        print ("skip {} becasue:{}".format(template.Name, e))
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     t = DB.Transaction(doc, "assign filter by creation")
     t.Start()
     for filter in selected_filters:
-        print doc.GetElement(get_filter_id_by_name(filter)).Name
+        print (doc.GetElement(get_filter_id_by_name(filter)).Name)
 
         for template in selected_template:
             color = get_color(filter)

@@ -304,20 +304,61 @@ def extract_global_variables(script_path):
 
 
 def set_revit_knowledge():
-    data_dict = {}
 
+
+    def strip_folder(folder):
+        return folder.replace(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, "").lstrip("\\")
+    
+    data_dict = {}
+    for root, dirs, files in os.walk(ENVIRONMENT.REVIT_PRIMARY_EXTENSION):
+        for file in files:
+            if not file.endswith("_script.py"):
+                continue
+            if "floating_script.py" in file:
+                continue
+            if ".temp" in root:
+                continue
+            script_path = os.path.join(root, file)
+
+   
+            try:
+                global_vars = extract_global_variables(script_path)
+            except:
+                print (script_path)
+                print (traceback.format_exc())
+                continue
+            icon_path = get_icon_from_path(script_path)
+            if ".panel" in script_path:
+                panel_folder = script_path.split(".panel")[0] + ".panel"
+                tab_name = os.path.basename(panel_folder).replace(".panel", "")
+            else:
+                panel_folder = os.path.dirname(script_path)
+                tab_name = "No Tab"
+            tab_icon_path = get_icon_from_path(panel_folder)
+
+            
+            if not icon_path:
+                print (script_path)
+                raise
 
     
-    data_dict[script_path] = {
-                "script":script_path,
-                "icon":icon_path,
-                "alias": global_vars.get("__title__", "Alias not set"),
-                "doc": global_vars.get("__doc__", "Doc string not set"),
-                "tab": tab_name,
-                "tab_icon":tab_icon,
-                "is_popular": global_vars.get("__is_popular__", False)
-            }
+
+            script_path = strip_folder(script_path)
+            icon_path = strip_folder(icon_path)
+
             
+            data_dict[script_path] = {
+                        "script":script_path,
+                        "icon":icon_path,
+                        "alias": global_vars.get("__title__", "Alias not set").replace("\n", " "),
+                        "doc": global_vars.get("__doc__", "Doc string not set"),
+                        "tab": tab_name,
+                        "tab_icon":tab_icon_path,
+                        "is_popular": global_vars.get("__is_popular__", False)
+                    }
+
+    with open(KNOWLEDGE_REVIT_FILE, 'w') as f:
+        json.dump(data_dict, f, indent=4)
 
 def get_revit_knowledge():
     with io.open(KNOWLEDGE_REVIT_FILE, "r", encoding="utf-8") as f:
@@ -473,6 +514,8 @@ def get_floating_box_documentation():
     
 def generate_documentation(debug = False):
     generate_rhino_documentation(debug)
+
+    set_revit_knowledge()
     generate_revit_documentation(debug)
 
 def generate_revit_documentation(debug):
@@ -494,11 +537,11 @@ def generate_rhino_documentation(debug):
     import time
     if debug:
         output =  "rhino_knowledge_{}.pdf".format(time.time())
-        PDF.documentation2pdf(rhino_knowledge,output)
+        PDF.documentation2pdf_rhino(rhino_knowledge,output)
         os.startfile(output)
     else:
         output = "{}\\EnneadTab_For_Rhino_HandBook.pdf".format(ENVIRONMENT.INSTALLATION_FOLDER)
-        PDF.documentation2pdf(rhino_knowledge,output)
+        PDF.documentation2pdf_rhino(rhino_knowledge,output)
 
     # import WEB
     # output =  "rhino_knowledge_{}.html".format(time.time())
@@ -508,5 +551,5 @@ def generate_rhino_documentation(debug):
     
     
 if __name__ == "__main__":
-    generate_documentation(debug=True)
     
+    generate_documentation(debug=True)

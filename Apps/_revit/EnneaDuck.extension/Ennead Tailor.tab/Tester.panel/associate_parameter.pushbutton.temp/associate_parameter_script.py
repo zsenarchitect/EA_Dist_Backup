@@ -43,7 +43,7 @@ def test():
             continue
         else:
             filtered_elements.append(element)
-            print cat
+            print (cat)
 # test()
 
 # END TESTING AREA
@@ -108,7 +108,7 @@ def assoc_elem_param_to_fam_param(family_path, built_in_param_name, family_param
         except Exception as e:
             t.RollBack()  # If there's any issue, rollback the transaction.
             show_error(str(e))  # Display the error in Grasshopper.
-            print str(e)
+            print (e)
         
         if t.HasStarted() and not t.HasEnded():
             t.RollBack()  # Ensure the transaction is rolled back if it hasn't been committed or rolled back already.

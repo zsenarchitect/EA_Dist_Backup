@@ -78,7 +78,7 @@ class Solution:
                     return True
                 return False
             except Exception as e:
-                #print str(e)
+                #print (e)
                 return False
 
         instances = filter(check_type, family_instances)

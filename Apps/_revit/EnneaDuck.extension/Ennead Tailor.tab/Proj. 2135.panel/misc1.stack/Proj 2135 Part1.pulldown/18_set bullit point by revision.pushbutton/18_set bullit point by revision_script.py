@@ -57,7 +57,7 @@ def set_revision_on_sheet(sheet):
     global revision_names
     global para_names
     """
-    print sheet.SheetNumber
+    print (sheet.SheetNumber)
     new_revision_list = []
     for para_name in para_names:
         try:
@@ -92,7 +92,7 @@ def create_printset():
 
     matching_sheets = []
     for sheet in sheets:
-        #print sheet.SheetNumber
+        #print (sheet.SheetNumber)
         try:
             if len(sheet.LookupParameter(para_name).AsString()) != 0:
                 matching_sheets.append(sheet)
@@ -173,4 +173,4 @@ with revit.Transaction(res):
         pass
 
 
-print "Tool Finished"
+print ("Tool Finished")
