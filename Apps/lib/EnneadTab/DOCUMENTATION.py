@@ -271,10 +271,71 @@ def show_tip_revit(is_random_single=True):
         OUTPUT.display_output_on_browser()
 
 
-def get_rhino_knowledge():
+
+
+def extract_global_variables(script_path):
+    import ast
+    with open(script_path, 'r') as file:
+        script_content = file.read()
     
+    tree = ast.parse(script_content)
+    global_vars = {}
+    
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name):
+                    var_name = target.id
+                    # Handling the value directly if it's a constant
+                    if isinstance(node.value, ast.Constant):
+                        var_value = node.value.value  # Directly accessing the value of the Constant node
+                    else:
+                        try:
+                            # Fallback for other types using literal_eval for safe evaluation
+                            var_value = ast.literal_eval(node.value)
+                        except ValueError:
+                            # For non-literals or complex cases, keep a representation of the code
+                            var_value = "Unsupported value for safe evaluation"
+                    global_vars[var_name] = var_value
+    
+    return global_vars
 
 
+def set_revit_knowledge():
+    data_dict = {}
+
+
+    
+    data_dict[script_path] = {
+                "script":script_path,
+                "icon":icon_path,
+                "alias": global_vars.get("__title__", "Alias not set"),
+                "doc": global_vars.get("__doc__", "Doc string not set"),
+                "tab": tab_name,
+                "tab_icon":tab_icon,
+                "is_popular": global_vars.get("__is_popular__", False)
+            }
+            
+
+def get_revit_knowledge():
+    with open(KNOWLEDGE_REVIT_FILE, "r", encoding="utf-8") as f:
+        knowledge_pool = json.load(f)
+
+
+    knowledge = {}
+    
+    for value in knowledge_pool.values():
+        command_names = value["alias"]
+        if not isinstance(command_names, list):
+            command_names = [command_names]
+        for command_name in command_names:
+            knowledge[command_name] = value
+
+    return knowledge
+
+
+
+def get_rhino_knowledge():
     with open(KNOWLEDGE_RHINO_FILE, "r", encoding="utf-8") as f:
         knowledge_pool = json.load(f)
 
@@ -289,6 +350,7 @@ def get_rhino_knowledge():
             knowledge[command_name] = value
 
     return knowledge
+
 
 def show_tip_rhino():
     """Show a random tip for Rhino. Not implemented yet.

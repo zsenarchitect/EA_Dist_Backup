@@ -4,6 +4,7 @@
 __title__ = "Startup"
 import os
 import sys
+import traceback
 
 """need to navigate to duckking lib first before it can auto detect further. 
 This is special treatment for te startup script only"""
@@ -20,37 +21,40 @@ if lib_dir not in sys.path:
 
 
 
+try:
+
+    import proDUCKtion # pyright: ignore 
+    proDUCKtion.validify()
 
 
-import proDUCKtion # pyright: ignore 
-proDUCKtion.validify()
+
+    import imp
+    import os
+    import random
+    import time
+
+    from Autodesk.Revit import DB # pyright: ignore
+    from Autodesk.Revit import UI # pyright: ignore
+    from pyrevit import forms, script
+    from pyrevit.coreutils import envvars
+    from pyrevit import versionmgr
+
+    import System # pyright: ignore
+    from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, OUTPUT, TIME, VERSION_CONTROL
+    from EnneadTab import MODULE_HELPER, ERROR_HANDLE, USER, KEYBOARD, ENVIRONMENT, SOUND, DOCUMENTATION, LOG, IMAGE
+    from EnneadTab import JOKE, EMOJI, ENCOURAGING, HOLIDAY, EXE
+    from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT, REVIT_SELECTION
 
 
+    # need below for the C drive space check
+    import clr # pyright: ignore
+    clr.AddReference('System.IO')
+    from System.IO import DriveInfo # pyright: ignore
 
-import imp
-import os
-import random
-import time
+except:
+    print (traceback.format_exc())
 
-from Autodesk.Revit import DB # pyright: ignore
-from Autodesk.Revit import UI # pyright: ignore
-from pyrevit import forms, script
-from pyrevit.coreutils import envvars
-from pyrevit import versionmgr
-
-import System # pyright: ignore
-from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, OUTPUT, TIME, VERSION_CONTROL
-from EnneadTab import MODULE_HELPER, ERROR_HANDLE, USER, KEYBOARD, ENVIRONMENT, SOUND, DOCUMENTATION, LOG, IMAGE
-from EnneadTab import JOKE, EMOJI, ENCOURAGING, HOLIDAY, EXE
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_EVENT, REVIT_SELECTION
-
-
-# need below for the C drive space check
-import clr # pyright: ignore
-clr.AddReference('System.IO')
-from System.IO import DriveInfo # pyright: ignore
-
-
+    
 def check_minimal_version_for_enneadtab():
     v = versionmgr.get_pyrevit_version()
 

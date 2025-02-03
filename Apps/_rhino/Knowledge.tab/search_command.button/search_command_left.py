@@ -1,11 +1,11 @@
-__title__ = ["SearchCommand"
+__title__ = ["SearchCommand",
              "LearnEnneadTabForRhino",
              "CommandList"]
 __doc__ = "Learn all the buttons functions."
 __is_popular__ = True
 
 import Rhino # pyright: ignore
-import rhinoscriptsyntax as rs
+import rhinoscriptsyntax as rs # pyright: ignore
 
 import Eto # pyright: ignore
 

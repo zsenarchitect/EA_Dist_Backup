@@ -456,7 +456,8 @@
         "script": "Knowledge.tab\\search_command.button\\search_command_left.py",
         "icon": "Knowledge.tab\\search_command.button\\icon.png",
         "alias": [
-            "SearchCommandLearnEnneadTabForRhino",
+            "SearchCommand",
+            "LearnEnneadTabForRhino",
             "CommandList"
         ],
         "doc": "Learn all the buttons functions.",
@@ -757,6 +758,15 @@
         "icon": "Render.tab\\make_crv_pipe.button\\icon.png",
         "alias": "MakeCrvPipe",
         "doc": "Make/Update a small pipe along crvs in layers that has '[EDGE]' in it. So coplanar face in enscape can show edge.",
+        "tab": "Render.tab",
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
+    },
+    "Render.tab\\material_shop.button\\material_shop_left.py": {
+        "script": "Render.tab\\material_shop.button\\material_shop_left.py",
+        "icon": "Render.tab\\material_shop.button\\icon.png",
+        "alias": "MaterialShop",
+        "doc": "Find good material and asset.",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": false
