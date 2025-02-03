@@ -513,35 +513,41 @@ def get_floating_box_documentation():
     
     
 def generate_documentation(debug = False):
-    generate_rhino_documentation(debug)
-
-    set_revit_knowledge()
-    generate_revit_documentation(debug)
-
-def generate_revit_documentation(debug):
-    pass
+    generate_app_documentation(debug, app="Rhino")
+    generate_app_documentation(debug, app="Revit")
 
 
-def generate_rhino_documentation(debug):
-    rhino_knowledge_dict = get_rhino_knowledge()
+
+def generate_app_documentation(debug, app):
+    if app == "Rhino":
+        knowledge_dict = get_rhino_knowledge()
+    elif app == "Revit":
+        set_revit_knowledge()
+        knowledge_dict = get_revit_knowledge()
+    else:
+        raise
 
     def get_command_order(x):
         tab = x.get("tab")
         commands =  x.get("alias")
         if not isinstance(commands, list):
             commands = [commands]
-        return  "{}, {}".format(tab, commands)
-    rhino_knowledge = sorted(rhino_knowledge_dict.values(), key = get_command_order)
+
+        if not tab:
+            tab = "no tab"
+        
+        return  "{}, {}, {}".format("proj" in tab.lower(), tab, commands)
+    app_knowledge = sorted(knowledge_dict.values(), key = get_command_order)
     
     import PDF
     import time
     if debug:
-        output =  "rhino_knowledge_{}.pdf".format(time.time())
-        PDF.documentation2pdf_rhino(rhino_knowledge,output)
+        output =  "{}_knowledge_{}.pdf".format(app, time.time())
+        PDF.documentation2pdf(app, app_knowledge,output)
         os.startfile(output)
     else:
-        output = "{}\\EnneadTab_For_Rhino_HandBook.pdf".format(ENVIRONMENT.INSTALLATION_FOLDER)
-        PDF.documentation2pdf_rhino(rhino_knowledge,output)
+        output = "{}\\EnneadTab_For_{}_HandBook.pdf".format(ENVIRONMENT.INSTALLATION_FOLDER, app)
+        PDF.documentation2pdf(app, app_knowledge,output)
 
     # import WEB
     # output =  "rhino_knowledge_{}.html".format(time.time())

@@ -51,6 +51,7 @@ Watch the progress, when it says finished it will close itself, and it is ready 
 <br>
 
 ## 2. EnneadTab-For-Revit
+For a complete command list of this plugin, please check [EnneadTab For Revit Handbook](https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_For_Revit_HandBook.pdf)
 
 ### 2.0 Prerequisite
 EnneadTab-For-Revit run over __pyRevit__ framework. Make sure you have pyrevit installed before everything else.

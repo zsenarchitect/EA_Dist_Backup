@@ -95,11 +95,12 @@ except:
 
 
 
-def documentation2pdf_rhino(doc_data_list, pdf_path):
-    PDFGenerator(pdf_path).generate((doc_data_list))
+def documentation2pdf(app, doc_data_list, pdf_path):
+    PDFGenerator(app, pdf_path).generate((doc_data_list))
     
 class PDFGenerator:
-    def __init__(self, pdf_path):
+    def __init__(self, app, pdf_path):
+        self.app = app
         self.pdf_path = pdf_path
         
         # Define margins as class attributes
@@ -181,10 +182,16 @@ class PDFGenerator:
                 alias_info = " / ".join(alias_info)
             alias = Paragraph(alias_info, self.command_style)
             tooltip_text = Paragraph("<b>Tooltip:</b> {}".format(doc_data.get('doc', 'No description available')), self.tooltip_style)
-            access = "Left Click" if "_left" in doc_data.get("script") else "Right Click"
-            access_text = Paragraph("<b>Access:</b> {}".format(access), self.tooltip_style)
-            icon = Image(os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['icon']), width=0.5 * inch, height=0.5 * inch) if doc_data.get('icon') else Spacer(1, 0.8 * inch)
-
+            if self.app == "Rhino":
+                access = "Left Click" if "_left" in doc_data.get("script") else "Right Click"
+                access_text = Paragraph("<b>Access:</b> {}".format(access), self.tooltip_style)
+            else:
+                access_text = ""
+                
+            if self.app == "Rhino":
+                icon = Image(os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['icon']), width=0.5 * inch, height=0.5 * inch) if doc_data.get('icon') else Spacer(1, 0.8 * inch)
+            else:
+                icon = Image(os.path.join(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, doc_data['icon']), width=0.5 * inch, height=0.5 * inch) if doc_data.get('icon') else Spacer(1, 0.8 * inch)
 
             if is_popular:
                 poplular_info = "[Popular]"
@@ -239,7 +246,10 @@ class PDFGenerator:
             tab_name = doc_data.get('tab', 'Unknown Tab')
             if tab_name is None:
                 continue
-            tab_icon_path = os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['tab_icon']) if doc_data.get('tab_icon') else None
+            if self.app == "Rhino":
+                tab_icon_path = os.path.join(ENVIRONMENT.RHINO_FOLDER, doc_data['tab_icon']) if doc_data.get('tab_icon') else None
+            else:
+                tab_icon_path = os.path.join(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, doc_data['tab_icon']) if doc_data.get('tab_icon') else None
             
             if tab_name not in segmented_data:
                 segmented_data[tab_name] = {'data': [], 'tab_icon': tab_icon_path}
@@ -312,7 +322,7 @@ class PDFGenerator:
 
         story = [
             Spacer(1, 3 * inch),
-            Paragraph("<b>EnneadTab-For-Rhino</b>", self.styles['Title']),
+            Paragraph("<b>EnneadTab-For-{}</b>".format(self.app), self.styles['Title']),
             Spacer(1, 2 * inch),
             Paragraph("Secret Documentation", style),
             Paragraph("{}".format(TIME.get_YYYY_MM_DD()), style)
