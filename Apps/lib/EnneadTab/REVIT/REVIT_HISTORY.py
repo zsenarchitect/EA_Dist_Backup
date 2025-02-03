@@ -4,6 +4,7 @@ import pickle
 import os
 import sys
 import time
+import io
 
 # Ensure compatibility with Python 2
 reload(sys)  # Required to set default encoding in Python 2
@@ -28,11 +29,11 @@ def name_fix(name):
 
 def append_data(file, data_entry):
     if not os.path.exists(file):
-        with open(file, 'wb') as f:
+        with io.open(file, 'wb', encoding="utf-8") as f:
             pickle.dump([data_entry], f)
         return
 
-    with open(file, 'rb') as f:
+    with io.open(file, 'rb', encoding="utf-8") as f:
         current_data = pickle.load(f)
 
     for item in current_data:
@@ -40,7 +41,7 @@ def append_data(file, data_entry):
             print("Warning: Data with this date {} already exists".format(date.today()))
             return
 
-    with open(file, 'wb') as f:
+    with io.open(file, 'wb', encoding="utf-8") as f:
         current_data.append(data_entry)
         pickle.dump(current_data, f)
 
@@ -49,7 +50,7 @@ def read_data(file, doc):
         print("Data with this file title {} does not exist".format(doc.Title))
         return None
 
-    with open(file, 'rb') as f:
+    with io.open(file, 'rb', encoding="utf-8") as f:
         current_data = pickle.load(f)
     return current_data
 

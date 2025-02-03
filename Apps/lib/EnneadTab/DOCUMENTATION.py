@@ -1,5 +1,6 @@
 """Utilities for showing tips and documentation for tools."""
 
+import io
 import os
 import random
 import imp
@@ -128,7 +129,7 @@ def get_files_with_keyword(keyword, folder):
                 #     return file_path
                 
                 
-                with open(file_path, 'r', encoding="utf-8") as f:
+                with io.open(file_path, 'r', encoding="utf-8") as f:
                     contents = f.read()
 
                     
@@ -275,7 +276,8 @@ def show_tip_revit(is_random_single=True):
 
 def extract_global_variables(script_path):
     import ast
-    with open(script_path, 'r') as file:
+
+    with io.open(script_path, 'r', encoding="utf-8") as file:
         script_content = file.read()
     
     tree = ast.parse(script_content)
@@ -318,7 +320,7 @@ def set_revit_knowledge():
             
 
 def get_revit_knowledge():
-    with open(KNOWLEDGE_REVIT_FILE, "r", encoding="utf-8") as f:
+    with io.open(KNOWLEDGE_REVIT_FILE, "r", encoding="utf-8") as f:
         knowledge_pool = json.load(f)
 
 
@@ -336,7 +338,7 @@ def get_revit_knowledge():
 
 
 def get_rhino_knowledge():
-    with open(KNOWLEDGE_RHINO_FILE, "r", encoding="utf-8") as f:
+    with io.open(KNOWLEDGE_RHINO_FILE, "r", encoding="utf-8") as f:
         knowledge_pool = json.load(f)
 
 

@@ -31,7 +31,7 @@ sys.path.append((os.path.realpath(os.path.dirname(__file__))))
 from area_data_class import AreaData
 
 
-from constants import OPTION_MAIN, OPTION_1
+from constants import OPTION_MAIN, OPTION_1, DOC_LEVLEL_DICT
 
 
 """
@@ -458,6 +458,10 @@ def all_in_one_checker(doc, show_log):
     """this is the main doc
     passing doc and show_log para to make sure using this as button VS using it
     during sync event hook can both work"""
+    OPTION_MAIN.LEVEL_NAMES = DOC_LEVLEL_DICT.get(doc.Title)
+    if not OPTION_MAIN.LEVEL_NAMES:
+        NOTIFICATION.messenger("Levels info not accuiqred.\nFail Fail Fail")
+        return 
     for option in [
         OPTION_MAIN, 
         # OPTION_1,

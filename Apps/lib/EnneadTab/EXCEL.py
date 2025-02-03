@@ -6,9 +6,9 @@ Check formulas, read data, save data, etc."""
 import os
 import shutil
 import sys
-import trace
 import traceback
 import time
+import io
 try:
     
     sys.setdefaultencoding("utf-8")
@@ -190,7 +190,7 @@ def _read_data_from_excel_online(url, worksheet, return_dict, headless):
 
     # Create a temporary file to save the downloaded data
     temp_filepath = FOLDER.get_EA_dump_folder_file("_temp_excel_{}.xls".format(time.time()))
-    with open(temp_filepath, 'wb') as f:
+    with io.open(temp_filepath, 'wb', encoding="utf-8") as f:
         f.write(data)
 
     # Clean up temp file
@@ -208,7 +208,7 @@ def _read_data_from_excel_online(url, worksheet, return_dict, headless):
 
 
 def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
-    filepath = FOLDER.get_save_copy(filepath)
+    filepath = FOLDER.get_safe_copy(filepath)
     
     if filepath.endswith(".xlsx"):
         job_data = {

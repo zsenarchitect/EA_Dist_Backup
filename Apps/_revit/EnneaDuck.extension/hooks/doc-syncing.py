@@ -14,7 +14,8 @@ DOC = EXEC_PARAMS.event_args.Document
 
 
 def update_2151(doc):
-    if doc.Title.lower() == "2151_a_ea_nyuli_hospital_ext":
+    if doc.Title.lower() in[ "2151_a_ea_nyuli_hospital_ext",
+                            "2151_A_EA_NYU Melville_Hospital Existing"]:
 
         folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
         func_name = "update_dummy_patient_room"

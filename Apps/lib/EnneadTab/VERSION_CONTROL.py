@@ -4,6 +4,7 @@
 
 import os
 import sys
+import io
 
 import EXE
 import ENVIRONMENT
@@ -56,7 +57,7 @@ def show_last_success_update_time():
             all_lines = File.ReadAllLines(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record_file))
             commit_line = all_lines[-1].replace("\n", "")
         else:  # CPython
-            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record_file)) as f:
+            with io.open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, record_file), "r", encoding="utf-8") as f:
                 commit_line = f.readlines()[-1].replace("\n","")
                 
         NOTIFICATION.messenger("Most recent update at:{}\n{}".format(record_file.replace(".duck", ""),

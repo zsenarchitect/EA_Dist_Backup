@@ -35,7 +35,7 @@ def get_all_jokes():
     return [x.replace("\n", "") for x  in lines if x != "\n"]
 
 def get_all_loading_screen_message():
-    with open(DOCUMENTATION.get_text_path_by_name('_loading_screen_message.txt'), "r") as f:
+    with io.open(DOCUMENTATION.get_text_path_by_name('_loading_screen_message.txt'), "r", encoding="utf-8") as f:
         lines = f.readlines()
     return [x.replace("\n", "") for x  in lines if x != "\n"]
 
@@ -122,7 +122,7 @@ def give_me_a_joke(talk = False, max_len = None):
 
 
 def validating_jokes():
-    with open("_dad_jokes.txt", "r") as f:
+    with io.open("_dad_jokes.txt", "r", encoding="utf-8") as f:
 
         lines = f.readlines()
 
@@ -148,7 +148,7 @@ def validating_jokes():
             print (line)
         OUT.append(line)
 
-    with open("dad_jokes.txt", "w") as f:
+    with io.open("dad_jokes.txt", "w", encoding="utf-8") as f:
         f.writelines(OUT)
 
 
@@ -196,7 +196,7 @@ def april_fool():
 
         else:
             SOUND.play_meme_sound()
-        with open(marker_file, 'w') as f:
+        with io.open(marker_file, 'w', encoding="utf-8") as f:
             f.write("You have been pranked.")
 
 

@@ -2,7 +2,33 @@
 from collections import OrderedDict
 # data_file = EnneadTab.read_json_as_dict_in_dump_folder("LI_NYU_area.json")
 import os
-
+DOC_LEVLEL_DICT = {
+    "2151_A_EA_NYULI_Hospital_EXT": [
+        "B1",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5 MEP",
+        "L6",
+        "L7",
+        "L8",
+        "L9",
+        "L10",
+        "L11",
+        "L12",
+        "L13 MEP",
+        "ROOF LEVEL"
+        ],
+    "2151_A_EA_NYU Melville_Hospital Existing":[
+        "Level 5 Finish Floor",
+        "Level 4 Finish Floor",
+        "Level 3 Finish Floor",
+        "Level 2 Finish Floor"
+        
+        
+    ]
+    }
 
 
 class DepartmentOption():
@@ -52,22 +78,12 @@ class DepartmentOption():
 
 
     # in the setting file to set which level to run calc
-    LEVEL_NAMES = ["B1",
-                "L1",
-                "L2",
-                "L3",
-                "L4",
-                "L5 MEP",
-                "L6",
-                "L7",
-                "L8",
-                "L9",
-                "L10",
-                "L11",
-                "L12",
-                "L13 MEP",
-                "ROOF LEVEL"]
+
+
+
+
     
+    LEVEL_NAMES = DOC_LEVLEL_DICT.values()[0]
 
     # TO-DO: this dummy will pretend to be the excel button sum
     DUMMY_DATA_HOLDER = ["GRAND TOTAL",

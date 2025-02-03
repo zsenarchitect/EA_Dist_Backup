@@ -1,5 +1,6 @@
 import os
 import base64
+import io
 
 def documentation2html(doc_data_list, html_path):
     """Generates an HTML file with embedded images from documentation data."""
@@ -29,7 +30,7 @@ def documentation2html(doc_data_list, html_path):
         icon_path = doc_data.get('icon')
         
         if icon_path and os.path.exists(icon_path):
-            with open(icon_path, "rb") as img_file:
+            with io.open(icon_path, "rb", encoding="utf-8") as img_file:
                 base64_img = base64.b64encode(img_file.read()).decode('utf-8')
             icon_html = "<img src=\"data:image/png;base64,{0}\" alt=\"{1} icon\">".format(base64_img, alias)
         else:
@@ -47,7 +48,7 @@ def documentation2html(doc_data_list, html_path):
     
     html_content += "</body></html>"
     
-    with open(html_path, "w", encoding="utf-8") as file:
+    with io.open(html_path, "w", encoding="utf-8") as file:
         file.write(html_content)
     
     print("HTML documentation saved at " + html_path)
