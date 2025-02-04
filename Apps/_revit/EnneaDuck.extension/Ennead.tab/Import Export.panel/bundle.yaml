@@ -8,7 +8,7 @@ layout:
   - content_transfer
   - ennead_exporter
   - schedule2excel
-  - Rhino2Revit
+  - Rhino
   - ">>>"
   - export isolated walltype 
   - update_miro

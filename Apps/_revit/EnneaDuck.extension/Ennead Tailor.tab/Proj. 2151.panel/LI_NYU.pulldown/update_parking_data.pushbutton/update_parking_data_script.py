@@ -23,7 +23,8 @@ DOC_NAME_MAP = {
     "2151_A_EA_NYULI_Parking East":"Garage East",
     "2151_A_EA_NYULI_Parking West":"Garage West",
     "2151_A_EA_NYULI_CUP_EXT": "CUP",
-    "2151_A_EA_NYULI_Hospital_EXT": "Hospital"
+    "2151_A_EA_NYULI_Hospital_EXT": "Hospital",
+    "2151_A_EA_NYU Melville_Garage North":"Garage North"
 }
 
 FAMILY_DATA = {
@@ -99,6 +100,7 @@ import parking_tag_manager as PTM #pyrevit: ignore
 def update_parking_data(doc, show_log = False, is_from_sync_hook = False):
 
     if doc.Title not in DOC_NAME_MAP:
+        NOTIFICATION.messenger("This doc is not registered")
         return
 
     update_type(doc, show_log)
@@ -114,7 +116,7 @@ def update_parking_data(doc, show_log = False, is_from_sync_hook = False):
                                        options=options)
             if res == options[1] or res is None:
                 return
-        PC.update_parking_data(doc)
+        PC.update_calc_parking_data(doc)
 
     NOTIFICATION.messenger("Pakring Data Updated.")
 

@@ -2006,72 +2006,81 @@
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\block2family.pushbutton\\block2family_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\block2family.pushbutton\\block2family_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\block2family.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\block2family.pushbutton\\block2family_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\block2family.pushbutton\\block2family_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\block2family.pushbutton\\icon.png",
         "alias": "Block2Family",
         "doc": "After getting all the block data from Rhino side, create/update family in Revit. If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\brep2mass.pushbutton\\brep2mass_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\brep2mass.pushbutton\\brep2mass_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\brep2mass.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\brep2mass.pushbutton\\brep2mass_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\brep2mass.pushbutton\\brep2mass_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\brep2mass.pushbutton\\icon.png",
         "alias": "Brep2Mass",
         "doc": "Based on the brep data exported from EnneadTab for Rhino, create adaptive mass shape as native Revit object.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\import Rhino camera.pushbutton\\import_rhino_camera_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\import Rhino camera.pushbutton\\import_rhino_camera_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\import Rhino camera.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\import Rhino camera.pushbutton\\import_rhino_camera_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\import Rhino camera.pushbutton\\import_rhino_camera_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\import Rhino camera.pushbutton\\icon.png",
         "alias": "Import Rhino Camera",
         "doc": "Work with Camera exported in Rhino side to recreate the same perspective camera.\n\nIt can be useful for Enscape view recreation in Revit.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\map_Rhino_block.pushbutton\\map_rhino_block_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\map_Rhino_block.pushbutton\\map_rhino_block_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\map_Rhino_block.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\map_Rhino_block.pushbutton\\map_rhino_block_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\map_Rhino_block.pushbutton\\map_rhino_block_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\map_Rhino_block.pushbutton\\icon.png",
         "alias": "Map Rhino Block to Revit Family",
         "doc": "Transform the Rhino block orientation to Adaptive Revit Family. It will be searching for same name as block name.\n The biggest benift is You will no longer be restricted by level based vertical up family. It can be freeform as in Rhino.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\move_to_origin.pushbutton\\move2origin_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\move_to_origin.pushbutton\\move2origin_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\move_to_origin.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\move2origin_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\move2origin_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\icon.png",
         "alias": "Move2Origin",
         "doc": "Move this family to the internal origin under current orienttation. \n\nThere are 3 modes for the operation:\n1: Family is placed on 3d view, but location is wrong.>>>You select it and move it.\n2: Family is placed on 3d view somewhere but you don't know where.>>>You select it from listbox and move it.\n3: The family is just loaded in, it is new, and has not been placed anywhere.>>> You select it from list and move it.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\Rhino2Revit_UI.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\icon.png",
+        "alias": "Revit2Rhino",
+        "doc": "\nScript for exporting Revit Family Instances to Rhino.\nIt converts each FamilyInstance's geometry into a **single Rhino block** containing all its Breps\n(or fallback Meshes). The block definition is annotated with 'RevitElementID'.\n\n\nThis only process current view.\n\nTO-DO: accept layer making\n\n",
+        "tab": "Import Export",
+        "tab_icon": null,
+        "is_popular": false
+    },
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\icon.png",
         "alias": "Rhino2Revit",
         "doc": "A window that allow you to convert .3dm file and .dwg files into native revit family elements.\n\nAllo subCategory assigning per file, you may also add new SubCateogry on the run or simply use the source file name as the subcategory.\n\nSupport all major curve convertion except nurbs curve when part of the control points are not on same CPlane.\n\nSee instruction in the window for more details and features. This tool works best with the EnneadTab for Rhino tool's Rhino2Revit exporter window.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\rhino_draft_UI.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\rhino_draft_UI.pushbutton\\rhino_draft_UI_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\rhino_draft_UI.pushbutton\\icon.png",
         "alias": "Rhino Drafter",
         "doc": "A drafter that allow you to take advantage of Rhino fast editing power. You can operate however you want for crvs and surfaces in Rhino, and transfer those content to Revit detail lines and filled regions with matching linestyle and filled region type.\n\nSome Rhino command to consider:\n+Trim\n+Split\n+Fillet\n+CurveBoolean\n+EditControlPoints\n+Surface trim/split.\n\nIt also support nurbs crv or srf with nurbs edge, and it support AreaBoundaryLine and RoomSeperationLine drafting.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
     },
-    "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\srf2adp.pushbutton\\srf2adp_script.py": {
-        "script": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\srf2adp.pushbutton\\srf2adp_script.py",
-        "icon": "Ennead.tab\\Import Export.panel\\Rhino2Revit.pulldown\\srf2adp.pushbutton\\icon.png",
+    "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\srf2adp.pushbutton\\srf2adp_script.py": {
+        "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\srf2adp.pushbutton\\srf2adp_script.py",
+        "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\srf2adp.pushbutton\\icon.png",
         "alias": "Srf2Adp",
         "doc": "Convert surface in Rhino into Revit Adaptive. The sequence of the adaptive corner needs to be defined in previous step at Rhino.",
         "tab": "Import Export",

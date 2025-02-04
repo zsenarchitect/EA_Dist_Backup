@@ -843,6 +843,15 @@
         "tab_icon": "Revit.tab\\icon.png",
         "is_popular": false
     },
+    "Revit.tab\\live_selection.button\\live_selection_left.py": {
+        "script": "Revit.tab\\live_selection.button\\live_selection_left.py",
+        "icon": null,
+        "alias": "LiveSelection",
+        "doc": "This button does LiveSelection when left click",
+        "tab": "Revit.tab",
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
+    },
     "Revit.tab\\map_block_transform.button\\map_block_transform_left.py": {
         "script": "Revit.tab\\map_block_transform.button\\map_block_transform_left.py",
         "icon": "Revit.tab\\map_block_transform.button\\icon.png",

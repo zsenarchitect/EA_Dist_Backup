@@ -32,6 +32,9 @@ def main():
 
     DOCUMENTATION.tip_of_day()
 
+    if "EnneadTabRevitSelectionHelper" in rs.DocumentName():
+        rs.Command("EA_LiveSelection")
+
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)
 def add_hook(): 

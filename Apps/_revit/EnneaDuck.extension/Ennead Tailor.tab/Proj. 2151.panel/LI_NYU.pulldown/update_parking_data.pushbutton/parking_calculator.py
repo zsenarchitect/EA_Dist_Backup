@@ -36,7 +36,7 @@ class ParkingCalculator:
         for doc in REVIT_APPLICATION.get_revit_link_docs(including_current_doc=True):
             self.output.print_md("#### doc [{}] has phases: {}".format(doc.Title, [x.Name for x in REVIT_PHASE.get_all_phases(doc)]))
 
-    def update_parking_data(self):
+    def update_data(self):
         """Update parking data by processing all phases and calculator types."""
         all_phases = REVIT_PHASE.get_all_phases(self.doc)
         for phase in all_phases:
@@ -214,7 +214,7 @@ class ParkingCalculator:
             return False
         return parking_instance.Symbol.LookupParameter("Type Comments").AsString() == "ADA"
 
-def update_parking_data(doc):
+def update_calc_parking_data(doc):
     """Update parking data in the given document."""
     try:
         switch_to_sheet()
@@ -225,7 +225,7 @@ def update_parking_data(doc):
     t.Start()
     try:
             calculator = ParkingCalculator(doc)
-            calculator.update_parking_data()
+            calculator.update_data()
             t.Commit()
     except Exception as e:
         t.RollBack()

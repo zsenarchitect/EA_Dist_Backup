@@ -9,6 +9,10 @@ except:
     ERROR_HANDLE.print_note("REVIT_UNIT.py: Error importing Revit modules")
 
 
+class RevitUnit:
+    Imperial = "feet"
+    Metric = "millimeters"
+
 def get_doc_length_units(doc):
     unit = doc.GetUnits()
 
@@ -16,6 +20,17 @@ def get_doc_length_units(doc):
     format_option = unit.GetFormatOptions (length_spec)
     #print format_option.GetUnitTypeId()
     return format_option.GetUnitTypeId()
+
+def get_doc_length_unit_name(doc):
+    if is_doc_unit_feet(doc):
+        return "feet"
+    if is_doc_unit_inches(doc):
+        return "inches"
+    if is_doc_unit_mm(doc):
+        return "millimeters"
+    if is_doc_unit_feet_and_inch(doc):
+        return "feetFractionalInches"
+    return "Unknown,,,,,,,,"
 
 def is_doc_unit_mm(doc):
     return get_doc_length_units(doc) == lookup_unit_id(key = "millimeters")
@@ -25,6 +40,9 @@ def is_doc_unit_feet(doc):
 
 def is_doc_unit_inches(doc):
     return get_doc_length_units(doc) == lookup_unit_id(key = "inches")
+
+def is_doc_unit_feet_and_inch(doc):
+    return get_doc_length_units(doc) == lookup_unit_id(key = "feetFractionalInches")
 
 def pick_incoming_file_unit(main_text = "What is the file unit of the incoming file?"):
     opts = ["Millimeters", "Feet"]
@@ -49,6 +67,12 @@ def sqm_to_internal(x):
     except:
         return DB.UnitUtils.ConvertToInternalUnits(x, DB.DisplayUnitType.DUT_SQUARE_METERS)
     #return x/10.764
+
+def internal_to_unit(x, unit_name):
+    return DB.UnitUtils.ConvertFromInternalUnits(x, lookup_unit_id(unit_name))
+
+def unit_to_internal(x, unit_name):
+    return DB.UnitUtils.ConvertToInternalUnits(x, lookup_unit_id(unit_name))
 
 def internal_to_mm(x):
     try:
