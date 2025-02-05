@@ -6,6 +6,7 @@
 __doc__ = "This will be the foundation for all future health care tools"
 __title__ = "HealthCare\nHelper"
 __tip__ = True
+
 # from pyrevit import forms #
 from pyrevit import script #
 from pyrevit import forms #
@@ -21,6 +22,7 @@ DOC = REVIT_APPLICATION.get_doc()
             
 import dgsf_chart
 import color_pallete
+import design_guideline
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -28,7 +30,8 @@ def generic_healthcare_tool(doc, show_log):
 
     options = {
         "Detail DGSF Chart Update": dgsf_chart.dgsf_chart_update,
-        "Update Color Pallete": color_pallete.update_color_pallete
+        "Update Color Pallete From Excel": color_pallete.update_color_pallete,
+        "NYU Design Guideline Sample": design_guideline.show_design_outline
     }
 
     select_option = forms.SelectFromList.show(options.keys(), multiselect=False, title="How can I help you today?", button_name="Help Me!")

@@ -1,6 +1,7 @@
-from EnneadTab import NOTIFICATION
+from EnneadTab import NOTIFICATION, FOLDER
 from EnneadTab.REVIT import REVIT_COLOR_SCHEME, REVIT_FORMS
 from pyrevit import forms
+import os
 
 def update_color_pallete(doc):
 
@@ -8,7 +9,10 @@ def update_color_pallete(doc):
     NOTIFICATION.messenger(main_text="Select the excel file that contains the color pallete")
     excel_path = forms.pick_file(title="Select the excel file", files_filter="Excel Files (*.xls)|*.xls")
     if not excel_path:
-        NOTIFICATION.messenger(main_text="No excel file selected")
+        NOTIFICATION.messenger(main_text="No excel file selected\nHere is a sample excel color.")
+        excel_path = FOLDER.copy_file_to_local_dump_folder("J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls",
+                                                          file_name="Color Scheme_Example.xls")
+        os.startfile(excel_path)
         return
 
 
