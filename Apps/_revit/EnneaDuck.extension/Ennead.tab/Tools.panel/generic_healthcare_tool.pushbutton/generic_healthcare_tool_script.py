@@ -29,9 +29,9 @@ import design_guideline
 def generic_healthcare_tool(doc, show_log):
 
     options = {
+        "How to HealthCare Project in Ennead(NYU as an example)": design_guideline.show_design_outline,
         "Detail DGSF Chart Update": dgsf_chart.dgsf_chart_update,
         "Update Color Pallete From Excel": color_pallete.update_color_pallete,
-        "NYU Design Guideline Sample": design_guideline.show_design_outline
     }
 
     select_option = forms.SelectFromList.show(options.keys(), multiselect=False, title="How can I help you today?", button_name="Help Me!")

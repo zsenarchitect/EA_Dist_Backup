@@ -7,13 +7,13 @@ def update_color_pallete(doc):
 
 
     NOTIFICATION.messenger(main_text="Select the excel file that contains the color pallete")
-    excel_path = forms.pick_file(title="Select the excel file", files_filter="Excel Files (*.xls)|*.xls")
+    excel_path = forms.pick_file(title="Select the excel file. If you don't have one, hit Cancel and get a sample file.", files_filter="Excel Files (*.xls)|*.xls")
     if not excel_path:
         NOTIFICATION.messenger(main_text="No excel file selected\nHere is a sample excel color.")
-        excel_path = FOLDER.copy_file_to_local_dump_folder("J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls",
-                                                          file_name="Color Scheme_Example.xls")
+        excel_path = FOLDER.copy_file_to_local_dump_folder(os.path.join(os.path.dirname(__file__), "HealthCare_Color Scheme.xls"))
         os.startfile(excel_path)
         return
+
 
 
 

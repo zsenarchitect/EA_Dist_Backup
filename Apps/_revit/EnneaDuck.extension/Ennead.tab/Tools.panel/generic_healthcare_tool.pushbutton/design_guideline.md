@@ -1,5 +1,12 @@
+> [!NOTE]
+> Most of the tools mentioned below can be found in the tool panel. If needing help please ask Design Technology Team. Most of workflow of generating report and data can be customized by a tool somewhere in Design Technology Collection.
+
+
 # NYU Health Design Guidelines
-## Design Phase Deliverables 🎨
+
+
+
+## Typical Design Phase Deliverables 🎨
 <div style="border: 1px solid yellow; padding: 10px;">
 
 | Category | SD (Sketchy Days) 🎭 | DD (Deep Dive) 🏊 | CD (Complete Details) 🎯 |
@@ -31,10 +38,22 @@
     - ParaName: PIM
     - ParaType: Text
 
+### 1.2. Linked View Setup
+
+Use linked view setup tool to set cross discipline background view.
+
+### 1.3. Material Setting
+Use material setting tool to set material for project.
+
+### 1.4. Container File Checker
+
+
 
 ## 2. Area Tracking
 
+
 ### 2.1 General Workflow
+
 
 ### Required Area Schemes
 - **"GFA Scheme"** [Area Scheme] 
@@ -55,7 +74,11 @@
 ### DD Phase and Later
 - Switch to walls as bounding elements
 
+### 2.2 Department and Program Color Scheme updater
 
+### 2.3 DGSF Chart Updater
+
+### 2.4 Department and Program Name Checker
 
 
 ## 3. Patient Bed Calculation
@@ -77,12 +100,16 @@
 ### 6.2 Workflow
 
 
-## 7. Essential Families
 
+
+## 7. Essential Families
+### 7.1 System Families
+WallType data matcher
+
+### 7.2 Furniture Families
 - Elevator
 - Elevator door
 - Parking stall
-
 - Parking Tag
 - Patient bed room planner
 
@@ -90,8 +117,6 @@
 ## 8. Exporting
 
 ### 8.1. Sheet List Organization
-
-
 
     A-000 General Information
     A-100 Floor Plans
@@ -103,12 +128,14 @@
     A-700 Finish Plans
     A-800 Schedules
 
+Sheet Setup:
 
 ### 3.2. Exporting DWG
 <div style="border: 1px solid yellow; padding: 10px;">
 #### CAD Layer Standards 🎨
 
 | Category | REDI-F Layer Name | Description | Color | Lineweight | Linetype |
+
 |----------|------------------|-------------|--------|------------|----------|
 | Architectural | A-CURB | Curbs for Equipment | 2-yellow | Default | Continuous |
 | Architectural | A-DOOR | Doors | 1-red | Default | Continuous |
@@ -150,16 +177,22 @@
 | Structural | S-GRID | Column grid | 2-yellow | Default | Center |
 | Telecomm | T-JACK | Data/telephone jacks | 3-green | Default | Continuous |
 </div>
+
 - CAD Layer Mapping Check tool
 - File name format tool
 
+Desired Format:
+
     PIM#-SheetName-SheetName.dwg
     Example:
+
     10662-A-101_First Floor Plan.dwg
 
 
 ### 3.3. Exporting PDF
+- File exportor
 
+Desired Format:
     PIM#-SheetName-SheetName.pdf
     Example:
     10662-A-101_First Floor Plan.pdf
@@ -167,11 +200,12 @@
 ### 3.4 Exporting Rhino
 - layer name mapping tool
 - workflow:
-    - Isolated System export
+    - Isolated System exporter
+    - Revit2Rhino
 
 
 ### 3.5. Exporting Revit
-
+Desired Format:
 
     PIM#-Discipline.rvt
     Example:
@@ -179,6 +213,7 @@
 
 
 ## 9. Material Specific Generator
+generate formated specfic doc based on revit family type image
 
 
 

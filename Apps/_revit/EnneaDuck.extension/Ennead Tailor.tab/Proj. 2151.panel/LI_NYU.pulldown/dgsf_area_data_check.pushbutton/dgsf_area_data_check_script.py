@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
-__title__ = "DGSF Area Data Check"
+__title__ = "DGSF Area Data Name Check"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
