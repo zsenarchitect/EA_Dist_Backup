@@ -1,9 +1,40 @@
 # NYU Health Design Guidelines
+## Design Phase Deliverables 🎨
+<div style="border: 1px solid yellow; padding: 10px;">
+
+| Category | SD (Sketchy Days) 🎭 | DD (Deep Dive) 🏊 | CD (Complete Details) 🎯 |
+|----------|---------------------|-------------------|------------------------|
+| **Demolition Plan** | ✓ | - | - |
+| **Floor Plan** | w/FFE & notes | w/FFE, dimensions, partition tags, RED_F room #s | Fully coordinated |
+| **Enlarged Floor Plan** | - | ✓ | ✓ |
+| **Reflected Ceiling Plan** | - | ✓ | ✓ |
+| **Elevations** | ✓ | ✓ | ✓ |
+| **Sections** | - | ✓ | ✓ |
+| **Schedules** | - | Room Finishes, Furniture, Door, Door Hardware, Lighting, Pubing Fixture, Toilet Axcessory | DD level |
+| **Details** | - | Typical and Major only | All details |
+| **Renderings** | ✓ | ✓ | ✓ |
+| **Specs Material** | Outline | Updated | Final |
+| **Finish and Furniture Booklets** | - | Outline | Final |
+| **Equipment List** | Outline | Updated | Final |
+| **Architect and Engineering Specs** | outline | Updated | Final |
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+## 1. Project Info Setup Requirements
 
 
-## Setup Requirements
+### 1.1. Each Project must have PIM#, stored in project info parameter.
+    - ParaName: PIM
+    - ParaType: Text
 
-- Base of design must have PIM #
+
+## 2. Area Tracking
+
+### 2.1 General Workflow
 
 ### Required Area Schemes
 - **"GFA Scheme"** [Area Scheme] 
@@ -13,20 +44,6 @@
 - **"DGSF Scheme"** [Room Based]
   - SD stage: Room separation lines
   - DD stage: Walls as bounding elements
-
-### Required Parameter Lists
-- Area parameters
-- Room parameters
-- Parking parameters
-
-### Essential Families
-- Elevator
-- Elevator door
-- Parking stall
-- Patient bed room planner
-
-## Area Tracking Workflow
-
 ### Concept and SD Phase
 - Use rooms for area calculations
 - Use room separation lines as bounding elements
@@ -37,3 +54,136 @@
 
 ### DD Phase and Later
 - Switch to walls as bounding elements
+
+
+
+
+## 3. Patient Bed Calculation
+### 5.1 Setup
+### 5.2 Workflow
+
+## 4. Parking Calculation
+### 5.1 Setup
+### 5.2 Workflow
+
+
+## 5. Room Data Sheet
+### 5.1 Setup
+### 5.2 Workflow
+
+
+## 6. Life Safety Calculation
+### 6.1 Setup
+### 6.2 Workflow
+
+
+## 7. Essential Families
+
+- Elevator
+- Elevator door
+- Parking stall
+
+- Parking Tag
+- Patient bed room planner
+
+
+## 8. Exporting
+
+### 8.1. Sheet List Organization
+
+
+
+    A-000 General Information
+    A-100 Floor Plans
+    A-200 Elevations
+    A-300 Exterial Detrails
+    A-400 Interior Detrails
+    A-500 Vertical Transportation
+    A-600 Reflected Ceiling Plans
+    A-700 Finish Plans
+    A-800 Schedules
+
+
+### 3.2. Exporting DWG
+<div style="border: 1px solid yellow; padding: 10px;">
+#### CAD Layer Standards 🎨
+
+| Category | REDI-F Layer Name | Description | Color | Lineweight | Linetype |
+|----------|------------------|-------------|--------|------------|----------|
+| Architectural | A-CURB | Curbs for Equipment | 2-yellow | Default | Continuous |
+| Architectural | A-DOOR | Doors | 1-red | Default | Continuous |
+| Architectural | A-DOOR-DEN | Door number, hardware group, etc. | 4-cyan | Default | Continuous |
+| Architectural | A-FLOR-EVTR | Elevator cars and equipment | 2-yellow | Default | Continuous |
+| Architectural | A-FLOR-GRATE | Grating | 2-yellow | Default | Continuous |
+| Architectural | A-FLOR-DEN-ROOM | Room numbers | 7-white | Default | Continuous |
+| Architectural | A-FLOR-DEN-PRE-EPC | Pre-EPC Room numbers | 7-white | Default | Continuous |
+| Architectural | A-FLOR-DEN-TEXT | Room names, target, comments, etc. | 7-white | Default | Continuous |
+| Architectural | A-FLOR-SHFT | Shafts | 2-yellow | Default | Continuous |
+| Architectural | A-FLOR-SIGN | Signage | 1-red | Default | Continuous |
+| Architectural | A-FLOR-STRS | Stair treads, escalators, ladders, level changes, ramps, etc. depressions | 2-yellow | Default | Continuous |
+| Architectural | A-ROOF | Roof | 1-red | Default | Continuous |
+| Architectural | A-WALL-EXTR | Exterior Building Wall | 5-blue | Default | Continuous |
+| Architectural | A-WALL-INTR | Interior Building Wall | 3-green | Default | Continuous |
+| Architectural | A-WNDW | Windows, curtain walls, glazed partitions | 4-cyan | Default | Continuous |
+| General | DEFPOINTS | Defpoints | 7-white | Default | Continuous |
+| Electrical | E-LITE | Lighting | 3-green | Default | Continuous |
+| Electrical | E-LITE-EXIT | Exit lighting | 3-green | Default | Continuous |
+| Electrical | E-POWR-WALL | Power wall outlets and receptacles | 3-green | Default | Continuous |
+| Electrical | E-SAFETY-CRDNR | Card reader | 3-green | Default | Continuous |
+| Electrical | E-SAFETY-ICBS | Intercom/door buzzer system | 3-green | Default | Continuous |
+| Electrical | E-SYMB | Symbols | 3-green | Default | Continuous |
+| General | G-ANNO-TEXT | General Text | 7-white | Default | Continuous |
+| General | G-ANNO-TTLB | Border and Title Block | 7-white | Default | Continuous |
+| General | G-ANNO-TTLB-TEXT | Border and Title Block Text | 7-white | Default | Continuous |
+| General | G-LOGO | Title Block Logo | 94,56,150 | Default | Continuous |
+| General | G-SCALE | Scale | 7-white | Default | Continuous |
+| General | G-VP | Viewport | 7-white | Default | Continuous |
+| Interior | I-EQPM-FIX | Fixed Equipment, except HVAC | 6-magenta | Default | Continuous |
+| Interior | I-EQPM-MOV | Moveable equipment | 6-magenta | Default | Continuous |
+| Interior | I-FURN | Furniture | 6-magenta | Default | Continuous |
+| Interior | I-CASE | Cabinetry / Casement | 6-magenta | Default | Continuous |
+| Landscaping | L-SITE | Site improvements | 4-cyan | Default | Continuous |
+| Mechanical | M-HVAC-EQPM | Mechanical equip. (chiller, boiler etc.) | 6-magenta | Default | Continuous |
+| Plumbing | P-FIXT | Plumbing fixtures, bowls, sinks | 6-magenta | Default | Continuous |
+| Plumbing | P-SAFETY-SWSH | Emergency shower and eye wash | 2-yellow | Default | Continuous |
+| Structural | S-COLS | Columns | 2-yellow | Default | Center |
+| Structural | S-GRID | Column grid | 2-yellow | Default | Center |
+| Telecomm | T-JACK | Data/telephone jacks | 3-green | Default | Continuous |
+</div>
+- CAD Layer Mapping Check tool
+- File name format tool
+
+    PIM#-SheetName-SheetName.dwg
+    Example:
+    10662-A-101_First Floor Plan.dwg
+
+
+### 3.3. Exporting PDF
+
+    PIM#-SheetName-SheetName.pdf
+    Example:
+    10662-A-101_First Floor Plan.pdf
+
+### 3.4 Exporting Rhino
+- layer name mapping tool
+- workflow:
+    - Isolated System export
+
+
+### 3.5. Exporting Revit
+
+
+    PIM#-Discipline.rvt
+    Example:
+    10662-A.rvt
+
+
+## 9. Material Specific Generator
+
+
+
+<br>
+<br>
+
+## See below for snippets from NYU Guide.pdf
+
