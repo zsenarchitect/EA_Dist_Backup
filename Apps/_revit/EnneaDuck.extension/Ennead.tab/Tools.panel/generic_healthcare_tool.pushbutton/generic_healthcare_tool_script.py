@@ -23,13 +23,14 @@ DOC = REVIT_APPLICATION.get_doc()
 import dgsf_chart
 import color_pallete
 import design_guideline
-
+import healthcare_project_setup
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def generic_healthcare_tool(doc, show_log):
 
     options = {
-        "How to HealthCare Project in Ennead(NYU as an example)": design_guideline.show_design_outline,
+        "How to HealthCare Project in Ennead(NYU as an example)(WIP)": design_guideline.show_design_outline,
+        "Setup Healthcare Project(WIP)": healthcare_project_setup.setup_healthcare_project,
         "Detail DGSF Chart Update": dgsf_chart.dgsf_chart_update,
         "Update Color Pallete From Excel": color_pallete.update_color_pallete,
     }

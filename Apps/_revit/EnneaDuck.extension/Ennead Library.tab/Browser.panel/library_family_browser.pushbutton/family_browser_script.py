@@ -148,7 +148,7 @@ class family_browser_ModelessForm(WPFWindow):
         self.set_image_source(self.status_icon, "update_icon.png")
 
 
-        self.meta_data_folder = "{}\\01_Revit\\06_DB\\Family Browser".format(ENVIRONMENT.HOSTER_FOLDER)
+        self.meta_data_folder = "{}\\01_Revit\\06_DB\\Family Browser".format(ENVIRONMENT.L_DRIVE_HOST_FOLDER)
 
 
 

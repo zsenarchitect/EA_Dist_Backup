@@ -6,7 +6,8 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 
 import NOTIFICATION
-
+import ENVIRONMENT
+import SAMPLE_FILE
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
@@ -67,8 +68,8 @@ def get_shared_para_definition_by_name(doc,
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
   
-        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
-        filepath = "L:\\4b_Applied Computing\\01_Revit\\03_Library\\EA_SharedParam.txt"
+        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file. \nI am going to use default EnneadTab shared parameter file.'.format(doc.Title))
+        filepath = SAMPLE_FILE.get_file("DefaultSharedParameter.txt")
         doc.Application.SharedParametersFilename = filepath
         
         shared_para_file = doc.Application.OpenSharedParameterFile()
@@ -97,9 +98,14 @@ def add_shared_parameter_to_project_doc(project_doc,
                                  para_definition,
                                  para_group,
                                  binding_cates,
-                                 default_value=None,
                                  is_instance_parameter = False):
-
+    """add shared parameter to project doc
+    para_definition: definition object
+    para_group: Data, Set
+    binding_cates: list of category
+    default_value: None
+    is_instance_parameter: False
+    """
     # create new shared para to avoid adding same definiation twice
     try:
         DB.SharedParameterElement.Create(project_doc, para_definition)
@@ -120,15 +126,19 @@ def add_shared_parameter_to_project_doc(project_doc,
 
 def get_para_group(group_name):
     """
-    data,
-    set
+    Data,
+    Set
     """
     return getattr(DB.GroupTypeId, group_name)
 
-def get_parameter_by_name(fam_doc, 
+def get_parameter_by_name(doc, 
                           para_name):
-    
-    for para in fam_doc.FamilyManager.Parameters:
-        if para.Definition.Name == para_name:
-            return para
+    if hasattr(doc, "FamilyManager"):
+        for para in doc.FamilyManager.Parameters:
+            if para.Definition.Name == para_name:
+                return para
+    else:
+        for para in doc.Parameters:
+            if para.Definition.Name == para_name:
+                return para
     return None

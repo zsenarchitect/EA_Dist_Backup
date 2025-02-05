@@ -74,7 +74,11 @@ class DepartmentOption:
         self.CALCULATOR_FAMILY_NAME = "EnneadTab AreaData Calculator"
 
         self.CALCULATOR_CONTAINER_VIEW_NAME = "EnneadTab Area Calculator Collection"
-        self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
+        if self.is_primary:
+            self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
+        else:
+            self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY_{}".format(self.formated_option_name)
+
 
         self.DEPARTMENT_AREA_SCHEME_NAME = department_area_scheme_name
 
@@ -92,8 +96,11 @@ class OptionValidation:
             return False
         self.validate_schedule_view()
         self.is_family_types_valid()
-        self.validate_area_scheme()
+        if not self.is_area_scheme_valid():
+            return False
         return True
+
+
 
     def validate_family(self):
         sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
@@ -305,9 +312,10 @@ class OptionValidation:
         pass
 
 
-    def validate_area_scheme(self):
+    def is_area_scheme_valid(self):
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.OVERALL_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
+
             print("Area scheme [{}] not found".format(self.option.OVERALL_AREA_SCHEME_NAME))
             return False
 
@@ -758,6 +766,7 @@ def dgsf_chart_update(doc):
         NOTIFICATION.messenger(main_text="No levels selected")
         return
     level_names = [level.Name for level in selected_levels]
+    
     option = DepartmentOption(level_names)
 
     if not OptionValidation(doc, option).validate_all():

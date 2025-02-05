@@ -79,16 +79,17 @@ Use material setting tool to set material for project.
   - Tracing of outline on each level
   - Single area per level
 
-- **"DGSF Scheme"** [Room Based]
-  - SD stage: Room separation lines
+- **"DGSF Scheme"** [Area Scheme]
+  - SD stage: Area separation lines
   - DD stage: Walls as bounding elements
 ### Concept and SD Phase
 - Use rooms for area calculations
 - Use room separation lines as bounding elements
 - **Important Note on Design Options:** 
+
   - Avoid using design options for total massing studies (e.g., T building vs L building)
   - Instead, duplicate the entire model for new schemes
-  - Risk warning: Design options can be tricky!
+  - Risk warning: Design options can be tricky. If one person is editing a design option then him/her own the entire set. Using area scheme means parrlel editing. To duplicate a scheme setup without recreating all the area bounary and area, see Sen for help.
 
 ### DD Phase and Later
 - Switch to walls as bounding elements

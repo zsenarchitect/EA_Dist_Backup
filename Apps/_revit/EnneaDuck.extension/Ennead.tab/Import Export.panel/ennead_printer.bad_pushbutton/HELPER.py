@@ -22,7 +22,7 @@ def create_color_setting_to_sheet(doc):
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
         NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file'.format(doc.Title))
-        filepath = "{}\\01_Revit\\03_Library\\EA_SharedParam.txt".format(ENVIRONMENT.HOSTER_FOLDER)
+        filepath = "{}\\01_Revit\\03_Library\\EA_SharedParam.txt".format(ENVIRONMENT.L_DRIVE_HOST_FOLDER)
         doc.Application.SharedParametersFilename = filepath
 
     definition = find_definition_by_name(doc, "Print_In_Color")
