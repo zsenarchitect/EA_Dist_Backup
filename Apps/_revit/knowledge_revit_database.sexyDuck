@@ -1415,7 +1415,7 @@
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\dgsf_area_data_check.pushbutton\\dgsf_area_data_check_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\dgsf_area_data_check.pushbutton\\dgsf_area_data_check_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\dgsf_area_data_check.pushbutton\\icon.png",
-        "alias": "DGSF Area Data Check",
+        "alias": "DGSF Area Data Name Check",
         "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
         "tab": "Proj. 2151",
         "tab_icon": null,

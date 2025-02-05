@@ -34,13 +34,32 @@
 ## 1. Project Info Setup Requirements
 
 
-### 1.1. Each Project must have PIM#, stored in project info parameter.
+### 1.1. Essential Project Info Parameters
     - ParaName: PIM
     - ParaType: Text
+    - Description: Project Identification Number(PIM#) for NYU Health Project
+
+
+    - ParaName: Container_File
+    - ParaType: Text
+    - Description: (Optional)Container File Name for NYU Health Project, if not set, the a default container file will be used.
+
+    - ParaName: EnneadTab_Data
+    - ParaType: Text
+    - Description: (Optional)Name of the json file that stores all the customize data for the project.
+
+
+
+
+
+
 
 ### 1.2. Linked View Setup
+> [!NOTE]
+> Work In Progress
 
 Use linked view setup tool to set cross discipline background view.
+
 
 ### 1.3. Material Setting
 Use material setting tool to set material for project.
@@ -82,12 +101,12 @@ Use material setting tool to set material for project.
 
 
 ## 3. Patient Bed Calculation
-### 5.1 Setup
-### 5.2 Workflow
+### 3.1 Setup
+### 3.2 Workflow
 
 ## 4. Parking Calculation
-### 5.1 Setup
-### 5.2 Workflow
+### 4.1 Setup
+### 4.2 Workflow
 
 
 ## 5. Room Data Sheet
@@ -116,7 +135,7 @@ WallType data matcher
 
 ## 8. Exporting
 
-### 8.1. Sheet List Organization
+### 8.1 Sheet List Organization
 
     A-000 General Information
     A-100 Floor Plans
@@ -130,7 +149,7 @@ WallType data matcher
 
 Sheet Setup:
 
-### 3.2. Exporting DWG
+### 8.2 Exporting DWG
 <div style="border: 1px solid yellow; padding: 10px;">
 #### CAD Layer Standards 🎨
 
@@ -189,7 +208,7 @@ Desired Format:
     10662-A-101_First Floor Plan.dwg
 
 
-### 3.3. Exporting PDF
+### 8.3 Exporting PDF
 - File exportor
 
 Desired Format:
@@ -197,14 +216,14 @@ Desired Format:
     Example:
     10662-A-101_First Floor Plan.pdf
 
-### 3.4 Exporting Rhino
+### 8.4 Exporting Rhino
 - layer name mapping tool
 - workflow:
     - Isolated System exporter
     - Revit2Rhino
 
 
-### 3.5. Exporting Revit
+### 8.5 Exporting Revit
 Desired Format:
 
     PIM#-Discipline.rvt
