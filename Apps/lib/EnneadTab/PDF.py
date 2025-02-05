@@ -329,7 +329,8 @@ class PDFGenerator:
         ]
         def add_background(canvas, doc):
             canvas.saveState()
-            canvas.setFillColor(colors.lightsalmon)  # Set background color to light orange
+            cover_color = colors.lightsalmon if self.app == "Rhino" else colors.lightseagreen
+            canvas.setFillColor(cover_color)  # Set background color to light orange
             canvas.rect(0, 0, letter[0], letter[1], fill=1, stroke=0)
             canvas.restoreState()
 
