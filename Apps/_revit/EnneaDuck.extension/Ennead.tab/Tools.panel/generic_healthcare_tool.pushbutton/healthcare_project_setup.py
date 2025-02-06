@@ -1,8 +1,39 @@
 
-from EnneadTab import NOTIFICATION, DATA_FILE, FOLDER, USER
+from EnneadTab import NOTIFICATION, FOLDER
 from EnneadTab.REVIT import REVIT_PARAMETER
 from Autodesk.Revit import DB # pyright: ignore
 import os
+
+############ data template
+TEMPLATE_DATA = {
+    "container_file": None,
+    "is_update_view_name_format": False,
+    "parking_data": {
+        "auto_update_enabled": False,
+        "setting": {}
+    },
+    "area_tracking": {
+        "auto_update_enabled": True,
+        "setting": {
+            "primary_option": {
+                "option_name": "",
+                "levels": []
+            }
+        }
+    },
+    "wall_type_update": {
+        "auto_update_enabled": False,
+        "setting": {}
+    },
+    "parking_update": {
+        "auto_update_enabled": False,
+        "setting": {}
+    },
+    "color_update": {
+        "auto_update_enabled": False,
+        "setting": {}
+    }
+}
 
 
 def setup_healthcare_project(doc):
@@ -10,61 +41,37 @@ def setup_healthcare_project(doc):
     t = DB.Transaction(doc, "setup healthcare project")
     t.Start()
 
-    # confirm is have [EnneadTab_Data] parameter in project info
-    para = REVIT_PARAMETER.get_shared_para_definition_by_name(doc, "EnneadTab_Data")
-    if not para:
-
-        new_definition = REVIT_PARAMETER.create_shared_parameter(doc, "EnneadTab_Data", DB.SpecTypeId.String.Text)
-        REVIT_PARAMETER.add_shared_parameter_to_project_doc(doc, new_definition, "Data", [DB.Category(DB.BuiltInCategory.OST_ProjectInformation)])
-        doc.LookupParameter("EnneadTab_Data").Set(doc.Title)
-
-    data = DATA_FILE.get_data("ProjectData_{}.sexyDuck".format(doc.Title), is_local=False)
+    data = REVIT_PARAMETER.get_revit_project_data(doc)
     if not data:
-        data = {
-            "container_file": None,
-            "is_update_view_name_format": True,
-            "parking_data": {
-                "auto_update_enabled": True,
-                "parking_dict": {}
-            },
-                "area_tracking": {
-                "auto_update_enabled": True,
-                "area_dict": {}
-            },
-            "wall_type_update": {
-                "auto_update_enabled": True,
-                "wall_type_dict": {}
-            },
-            "parking_update": {
-                "auto_update_enabled": True,
-                "parking_dict": {}
-            },
-            "color_update": {
-                "auto_update_enabled": True,
-                "color_dict": {}
-            }
-        }
-        DATA_FILE.set_data(data, "ProjectData_{}.sexyDuck".format(doc.Title), is_local=False)
-
-
+        levels = list(DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements())
+        levels.sort(key=lambda x: x.Elevation, reverse=True)
+        level_names = [level.Name for level in levels]
+        TEMPLATE_DATA["area_tracking"]["setting"]["primary_option"]["levels"] = level_names
+        REVIT_PARAMETER.set_revit_project_data(doc, TEMPLATE_DATA)
 
     # add [PIM Number] parameter to project info
-    para = REVIT_PARAMETER.get_shared_para_definition_by_name(doc, "PIM Number")
+    para_name = "PIM_Number"
+    para = REVIT_PARAMETER.get_project_info_para_by_name(doc, para_name)
     if not para:
+        definition = REVIT_PARAMETER.get_shared_para_definition_in_txt_file_by_name(doc, para_name)
+        if not definition:
+            definition = REVIT_PARAMETER.create_shared_parameter_in_txt_file(doc, para_name, DB.SpecTypeId.String.Text)
+  
+        REVIT_PARAMETER.add_shared_parameter_to_project_doc(doc, 
+                                                            definition, 
+                                                            "Data", 
+                                                            [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
 
-        new_definition = REVIT_PARAMETER.create_shared_parameter(doc, "PIM Number", DB.SpecTypeId.String.Text)
-        REVIT_PARAMETER.add_shared_parameter_to_project_doc(doc, new_definition, "Data", [DB.Category(DB.BuiltInCategory.OST_ProjectInformation)])
-        doc.LookupParameter("PIM Number").Set("123321")
+    REVIT_PARAMETER.get_project_info_para_by_name(doc, para_name).Set("Replace Me with the real PIM Number")
+    t.Commit()
 
-
-    # [debug]open setup file json
-
-    file = FOLDER.get_shared_dump_folder_file("ProjectData_{}.sexyDuck".format(doc.Title))
+    data_file = REVIT_PARAMETER.get_project_data_file(doc)
+    file = FOLDER.get_shared_dump_folder_file(data_file)
     os.startfile(file)
 
 
 
 
-    t.Commit()
+
 if __name__ == "__main__":
     pass

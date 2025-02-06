@@ -38,15 +38,12 @@
     - ParaName: PIM
     - ParaType: Text
     - Description: Project Identification Number(PIM#) for NYU Health Project
-
-
-    - ParaName: Container_File
-    - ParaType: Text
-    - Description: (Optional)Container File Name for NYU Health Project, if not set, the a default container file will be used.
-
+    - HandledByEnneadTabSetup: Yes
+    
     - ParaName: EnneadTab_Data
     - ParaType: Text
     - Description: (Optional)Name of the json file that stores all the customize data for the project.
+    - HandledByEnneadTabSetup: Yes
 
 
 

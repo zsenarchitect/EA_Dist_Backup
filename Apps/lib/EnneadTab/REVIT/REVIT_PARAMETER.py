@@ -6,20 +6,56 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 
 import NOTIFICATION
-import ENVIRONMENT
 import SAMPLE_FILE
-try:
+import DATA_FILE
 
+try:
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
 except:
     pass
 
 
-def create_shared_parameter(doc,
+def get_project_info_para_by_name(doc, para_name):
+    proj_info = doc.ProjectInformation
+    for para in proj_info.Parameters:
+        if para.Definition.Name == para_name:
+            return para
+    return None
+
+def get_project_data_name(doc):
+    para_name = "EnneadTab_Data"
+    para = get_project_info_para_by_name(doc, para_name)
+    if not para:
+        definition = get_shared_para_definition_in_txt_file_by_name(doc, para_name)
+        if not definition:
+            definition = create_shared_parameter_in_txt_file(doc, para_name, DB.SpecTypeId.String.Text)
+        add_shared_parameter_to_project_doc(doc, 
+                                            definition, 
+                                            "Data", 
+                                            [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
+
+        para = get_project_info_para_by_name(doc, para_name)
+        para.Set(doc.Title)
+
+    return get_project_info_para_by_name(doc, para_name).AsString()
+
+def get_project_data_file(doc):
+    project_data_name = get_project_data_name(doc)
+    return "ProjectData_{}.sexyDuck".format(project_data_name)
+
+def get_revit_project_data(doc):
+    return DATA_FILE.get_data(get_project_data_file(doc), is_local=False)
+
+
+def set_revit_project_data(doc, data):
+    DATA_FILE.set_data(data, get_project_data_file(doc), is_local=False)
+
+
+def create_shared_parameter_in_txt_file(doc,
                             para_name,
                             para_type,
-                            para_group_name = None):
+                            para_group_name = "EnneadTab"):
     """This will create parameter in the shared parameter text file, but not yet bind to anytthing
 
     Args:
@@ -34,18 +70,14 @@ def create_shared_parameter(doc,
     # make a dict about para_type lookup? or maybe REVIT_UNIT has something already?
     
     option = DB.ExternalDefinitionCreationOptions (para_name, para_type)
-    if not para_group_name:
-        
-        definition_group = get_shared_para_group_by_name(doc,"EnneadTab",create_if_not_exist=True)
-    else:
-        definition_group = get_shared_para_group_by_name(doc,para_group_name,create_if_not_exist=True)
+    definition_group = get_shared_para_group_by_name_in_txt_file(doc,para_group_name,create_if_not_exist=True)
         
     definition = definition_group.Definitions.Create(option)
     
     return definition
 
     
-def get_shared_para_group_by_name(doc, 
+def get_shared_para_group_by_name_in_txt_file(doc, 
                                    para_group_name,
                                    create_if_not_exist=False):
     
@@ -61,14 +93,14 @@ def get_shared_para_group_by_name(doc,
     NOTIFICATION.messenger(main_text="Cannot find [{}] in shared parameter file.\nIs this loaded correctly?".format(para_group_name))
     return None
 
-def get_shared_para_definition_by_name(doc, 
+def get_shared_para_definition_in_txt_file_by_name(doc, 
                                        para_name):
     
 
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
   
-        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file. \nI am going to use default EnneadTab shared parameter file.'.format(doc.Title))
+        NOTIFICATION.messenger(main_text='[{}]\nneed to have a valid shared parameter file. \nI am going to use default EnneadTab shared parameter file.\nBut you nned to save it to a better place.'.format(doc.Title))
         filepath = SAMPLE_FILE.get_file("DefaultSharedParameter.txt")
         doc.Application.SharedParametersFilename = filepath
         
@@ -98,13 +130,13 @@ def add_shared_parameter_to_project_doc(project_doc,
                                  para_definition,
                                  para_group,
                                  binding_cates,
-                                 is_instance_parameter = False):
+                                 is_instance_parameter = True):
     """add shared parameter to project doc
     para_definition: definition object
     para_group: Data, Set
     binding_cates: list of category
     default_value: None
-    is_instance_parameter: False
+    is_instance_parameter: False. Not for project info it MUST be instance para
     """
     # create new shared para to avoid adding same definiation twice
     try:

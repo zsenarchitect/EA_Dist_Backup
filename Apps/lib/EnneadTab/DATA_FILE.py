@@ -12,6 +12,8 @@ from contextlib import contextmanager
 import FOLDER
 
 
+
+
 def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False):
     """Duplicate a JSON file then read it to avoid holding the file open status
 
