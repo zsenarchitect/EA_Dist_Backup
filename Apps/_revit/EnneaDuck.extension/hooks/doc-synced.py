@@ -1,6 +1,7 @@
 import os
 import random
 import io
+import imp
 from pyrevit import EXEC_PARAMS
 from Autodesk.Revit import DB # pyright: ignore
 from pyrevit.coreutils import envvars
@@ -10,7 +11,7 @@ DOC = EXEC_PARAMS.event_args.Document
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK
-from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT
+from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT, REVIT_PARAMETER
 __title__ = "Doc Synced Hook"
 
 
@@ -59,7 +60,7 @@ def warn_non_enclosed_room(doc):
 
 
 
-def update_project_2151(doc):
+def DEPRECIATED_update_project_2151(doc):
 
     if not doc.Title.lower().startswith("2151_"):
         return
@@ -150,7 +151,7 @@ def update_existing(doc):
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
     
-def update_with_generic_healthcare_tool(doc):
+def DEPRECIATED_update_with_generic_healthcare_tool(doc):
     if not USER.IS_DEVELOPER:
         return
     health_care_projects = ["2151_a_ea_nyuli_hospital_ext"]
@@ -164,13 +165,13 @@ def update_with_generic_healthcare_tool(doc):
 
 
     
-def update_DOB_numbering(doc):
+def DEPRECIATED_update_DOB_numbering(doc):
     folder = "Ennead.tab\\ACE.panel"
     func_name = "update_DOB_page"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
 
-def update_sheet_name(doc):
+def DEPRECIATED_update_sheet_name(doc):
 
     try:
         doc.Title
@@ -191,7 +192,7 @@ def update_sheet_name(doc):
     MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
 
     
-def update_working_view_name(doc):
+def DEPRECIATED_update_working_view_name(doc):
     try:
         doc.Title
     except:
@@ -307,14 +308,20 @@ def doc_synced(doc):
     if REVIT_EVENT.is_all_sync_closing():
         return
         
-    update_DOB_numbering(doc)
-    update_sheet_name(doc)
-    update_working_view_name(doc)
-    update_with_generic_healthcare_tool(doc)
 
 
-    
-    update_project_2151(doc)
+    proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
+    if not proj_data:
+        DEPRECIATED_update_DOB_numbering(doc)
+        DEPRECIATED_update_sheet_name(doc)
+        DEPRECIATED_update_working_view_name(doc)
+        DEPRECIATED_update_with_generic_healthcare_tool(doc)
+        DEPRECIATED_update_project_2151(doc)
+    else:
+        if proj_data["is_update_view_name_format"]:
+            update_view_names(doc)
+        if proj_data["area_tracking"]["auto_update_enabled"]:
+            update_area_tracking(doc)
 
     if USER.IS_DEVELOPER:
         SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
@@ -351,6 +358,37 @@ def doc_synced(doc):
 
 
 
+def run_legacy_updates(doc):
+    """Run all the deprecated update functions - they're old but gold!"""
+    DEPRECIATED_update_DOB_numbering(doc)
+    DEPRECIATED_update_sheet_name(doc)
+    DEPRECIATED_update_working_view_name(doc)
+    DEPRECIATED_update_with_generic_healthcare_tool(doc)
+    DEPRECIATED_update_project_2151(doc)
+
+def update_view_names(doc):
+    """Update view names - because nobody likes unnamed views wandering around!"""
+    # Update sheet views
+    script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+    sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
+    MODULE_HELPER.run_revit_script(script, "rename_views", doc, sheets, True, False)
+
+    # Update working views
+    script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+    fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
+    ref_module = imp.load_source("manage_working_view_script", fullpath)
+    
+    views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+    no_sheet_views = filter(ref_module.is_no_sheet, views)
+    MODULE_HELPER.run_revit_script(script, "modify_creator_in_view_name", no_sheet_views, True)
+
+def update_area_tracking(doc):
+    """Update area tracking - keeping those square feet in check!"""
+    fullpath = "{}\\Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\dgsf_chart.py".format(
+        ENVIRONMENT.REVIT_PRIMARY_EXTENSION)
+    ref_module = imp.load_source("dgsf_chart", fullpath)
+    ref_module.dgsf_chart_update(doc, show_log=False)
 #################################################################
 if __name__ == "__main__":
     doc_synced(DOC)
+

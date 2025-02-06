@@ -26,10 +26,7 @@
 | **Architect and Engineering Specs** | outline | Updated | Final |
 </div>
 
-<br>
-<br>
-<br>
-<br>
+
 
 ## 1. Project Info Setup Requirements
 

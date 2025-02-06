@@ -174,3 +174,21 @@ def get_parameter_by_name(doc,
             if para.Definition.Name == para_name:
                 return para
     return None
+
+def confirm_shared_para_exist_on_category(doc, para_name, category):
+    """ note that category is such as BuiltInCategory.OST_Areas, OST_Parking etc. 
+    For project information see other function get_project_info_para_by_name()"""
+    sample_element = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().FirstElement()
+    if not sample_element:
+        print ("no sample element found on category [{}]. Please have at least one element on this category.".format(category))
+        return False
+    para = sample_element.LookupParameter(para_name)
+    if para:
+        return True
+
+    definition = get_shared_para_definition_in_txt_file_by_name(doc, para_name)
+    if not definition:
+        definition = create_shared_parameter_in_txt_file(doc, para_name, DB.SpecTypeId.String.Text)
+    add_shared_parameter_to_project_doc(doc, definition, "Data", [DB.Category.GetCategory(doc, category)])
+    return True
+

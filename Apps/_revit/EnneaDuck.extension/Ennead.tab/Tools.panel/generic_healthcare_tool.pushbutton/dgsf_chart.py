@@ -1,43 +1,40 @@
 
-from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL
-from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE, REVIT_AREA_SCHEME, REVIT_SPATIAL_ELEMENT, REVIT_SELECTION
+from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME
+from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PARAMETER
 from pyrevit import forms, script
 from Autodesk.Revit import DB #pyright: ignore
 from collections import OrderedDict
 import traceback
+
 class DepartmentOption:
 
 
-    DEPARTMENT_KEY_PARA = "Area_$Department" # this is the area parameter used to lookup category
-    PROGRAM_TYPE_KEY_PARA = "Area_$Department_Program Type"
-    PROGRAM_TYPE_DETAIL_KEY_PARA = "Area_$Department_Program Type Detail"
+    DEPARTMENT_KEY_PARA = "get from project data para_dict" #default value "Area_$Department" 
+    PROGRAM_TYPE_KEY_PARA = "get from project data para_dict" #default value "Area_$Department_Program Type"
+    PROGRAM_TYPE_DETAIL_KEY_PARA = "get from project data para_dict" #default value "Area_$Department_Program Type Detail"
+
 
 
     # KEY = REVIT ASSIGNED DEPARTMENT, VALUE = NICKNAME USED IN CALCUATOR FAMILY AND EXCEL AND  AREADATA CLASS
-    DEPARTMENT_PARA_MAPPING = OrderedDict([
-                            ("DIAGNOSTIC AND TREATMENT", "D&T"),
-                            ("EMERGENCY DEPARTMENT", "ED"),
-                            ("INPATIENT CARE", "BEDS"),
-                            ("PUBLIC SUPPORT", "PUBLIC SUPPORT"),
-                            ("ADMINISTRATION AND STAFF SUPPORT", "ADMIN"),
-                            ("CLINICAL SUPPORT", "CLINICAL SUPPORT"),
-                            ("BUILDING SUPPORT", "BUILDING SUPPORT"),
-                            ("UNASSIGNED", "UNASSIGNED")
-                            ])
+    DEPARTMENT_PARA_MAPPING = "get from project data table setting"
 
     # in the department area plan, if category fall into the IGNORE list, then it will not alert such discovery. This way only the mis spelled and unintentional category is alerted.
-    DEPARTMENT_IGNORE_PARA_NAMES = ["PUBLIC CIRCULATION",
-                                    "SERVICE CIRCULATION"]
+    DEPARTMENT_IGNORE_PARA_NAMES = "get from project data setting"
 
-    PARA_TRACKER_MAPPING = OrderedDict([("MECHANICAL", "MERS")]) # mech is not part of department calc
-    PARA_TRACKER_MAPPING.update(DEPARTMENT_PARA_MAPPING)
+
+    @property
+    def PARA_TRACKER_MAPPING(self):
+        temp = OrderedDict([("MECHANICAL", "MERS")]) # mech is not part of department calc
+        temp.update(self.DEPARTMENT_PARA_MAPPING)
+        return temp
+
 
 
     #
-    OVERALL_AREA_SCHEME_NAME = "GFA Scheme"
+    OVERALL_AREA_SCHEME_NAME = "get from project data option setting" # deafult value "GFA Scheme"
     OVERALL_PARA_NAME = "GSF"
 
-    DGSF_SCHEME_NAME = "DGSF Scheme"
+    DEPARTMENT_AREA_SCHEME_NAME = "get from project data option setting" # deafult value "DGSF Scheme"
 
 
 
@@ -47,8 +44,13 @@ class DepartmentOption:
 
     INTERNAL_PARA_NAMES = {"title":"LEVEL", "order":"order"}
 
-    FAMILY_PARA_COLLECTION = INTERNAL_PARA_NAMES.values() + [OVERALL_PARA_NAME,  DESIGN_SF_PARA_NAME, FACTOR_PARA_NAME, ESTIMATE_SF_PARA_NAME] + PARA_TRACKER_MAPPING.values() 
+
+    @property
+    def FAMILY_PARA_COLLECTION(self):
+        return self.INTERNAL_PARA_NAMES.values() + [self.OVERALL_PARA_NAME,  self.DESIGN_SF_PARA_NAME, self.FACTOR_PARA_NAME, self.ESTIMATE_SF_PARA_NAME] + self.PARA_TRACKER_MAPPING.values() 
     
+
+
 
     # in the setting file to set which level to run calc
     LEVEL_NAMES = []
@@ -64,46 +66,70 @@ class DepartmentOption:
         return self.LEVEL_NAMES + self.DUMMY_DATA_HOLDER
 
 
-    def __init__(self, levels,  option_name = "", department_area_scheme_name = DGSF_SCHEME_NAME):
+    def __init__(self, 
+                 internal_option_name,
+                 department_para_mapping,
+                 department_ignore_para_names,
+                 levels, 
+                 option_name, 
+                 overall_area_scheme_name, 
+                 department_area_scheme_name,
+                 department_key_para_name,
+                 program_type_key_para_name,
+                 program_type_detail_key_para_name):
+        self.internal_option_name = internal_option_name
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name
 
+
         self.LEVEL_NAMES = levels
 
-
-        self.CALCULATOR_FAMILY_NAME = "EnneadTab AreaData Calculator"
-
+        self.CALCULATOR_FAMILY_NAME_RAW = "EnneadTab AreaData Calculator"
+        self.CALCULATOR_FAMILY_NAME = self.CALCULATOR_FAMILY_NAME_RAW
         self.CALCULATOR_CONTAINER_VIEW_NAME = "EnneadTab Area Calculator Collection"
-        if self.is_primary:
-            self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
-        else:
-            self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY_{}".format(self.formated_option_name)
+        self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
+
+        if not self.is_primary:
+            self.CALCULATOR_FAMILY_NAME += "_{}".format(self.formated_option_name)
+            self.CALCULATOR_CONTAINER_VIEW_NAME += "_{}".format(self.formated_option_name)
+            self.FINAL_SCHEDULE_VIEW_NAME += "_{}".format(self.formated_option_name)
 
 
+        self.OVERALL_AREA_SCHEME_NAME = overall_area_scheme_name
         self.DEPARTMENT_AREA_SCHEME_NAME = department_area_scheme_name
 
+        self.DEPARTMENT_KEY_PARA = department_key_para_name
+        self.PROGRAM_TYPE_KEY_PARA = program_type_key_para_name
+        self.PROGRAM_TYPE_DETAIL_KEY_PARA = program_type_detail_key_para_name
+
+        self.DEPARTMENT_PARA_MAPPING = department_para_mapping
+        self.DEPARTMENT_IGNORE_PARA_NAMES = department_ignore_para_names
+
 class OptionValidation:
-    def __init__(self, doc, option):
+    def __init__(self, doc, option, show_log):
+
+
         self.doc = doc
         self.option = option
         self.output = script.get_output()
-
+        self.show_log = show_log
 
     def validate_all(self):
+        if not self.is_area_scheme_valid():
+            return False
         if not self.validate_family():
             return False
         if not self.validate_container_view():
             return False
         self.validate_schedule_view()
         self.is_family_types_valid()
-        if not self.is_area_scheme_valid():
-            return False
         return True
 
 
 
     def validate_family(self):
-        sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
+        default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME_RAW))
+        sample_family_path = FOLDER.copy_file_to_local_dump_folder(default_sample_family_path, "{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
         fam = REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, doc=self.doc, load_path_if_not_exist=sample_family_path)
         if not fam:
             return False
@@ -140,7 +166,9 @@ class OptionValidation:
         self.format_schedule()
 
         view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
-        print ("Schedule view at [{}]".format(self.output.linkify(view.Id, title = self.option.FINAL_SCHEDULE_VIEW_NAME)))
+        if self.show_log:
+            print ("Schedule view at [{}]".format(self.output.linkify(view.Id, title = self.option.FINAL_SCHEDULE_VIEW_NAME)))
+
 
 
     def is_family_types_valid(self):
@@ -298,8 +326,40 @@ class OptionValidation:
         sort_group_field.SortOrder = DB.ScheduleSortOrder.Descending
         definition.SetSortGroupFields (DATA_CONVERSION.list_to_system_list([sort_group_field], type = DB.ScheduleSortGroupField, use_IList = False))
                 
+        # set all digits to round to 10
+        for field in self.option.FAMILY_PARA_COLLECTION:
+            field = REVIT_SCHEDULE.get_field_by_name(view, field)
+            try:
+                format_option = field.GetFormatOptions()
+                format_option.UseDefault = False
+                format_option.Accuracy = 10.0
+                format_option.UseDigitGrouping = True
+                field.SetFormatOptions(format_option)
+            except:
+                pass
+
+
+            try:    
+                table_cell_style = field.GetStyle()
+                table_cell_style.FontHorizontalAlignment = DB.HorizontalAlignmentStyle.Right
+                import random
+                table_cell_style.BackgroundColor  = DB.Color(random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                field.SetStyle(table_cell_style)
+            except:
+                pass
+
 
                 
+
+
+
+
+
+
+
+
+
+
         # set order
         # REVIT_SCHEDULE.sort_fields_in_schedule(view, self.option.FAMILY_PARA_COLLECTION)
 
@@ -307,21 +367,23 @@ class OptionValidation:
         t.Commit()
         # TO-DO
 
-        # test if each schedule field is the right format(align to right, set whole number, digit grouping)
+        # test if each schedule field is the right format(align to right, digit grouping)
         # TO-DO
         pass
 
 
     def is_area_scheme_valid(self):
+
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.OVERALL_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
 
-            print("Area scheme [{}] not found".format(self.option.OVERALL_AREA_SCHEME_NAME))
+            print("Area scheme [{}] not found for overall area scheme, please create it first".format(self.option.OVERALL_AREA_SCHEME_NAME))
             return False
 
-        area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.DGSF_SCHEME_NAME, self.doc)
+
+        area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.DEPARTMENT_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
-            print("Area scheme [{}] not found".format(self.option.DGSF_SCHEME_NAME))
+            print("Area scheme [{}] not found for departmental scheme, please create it first".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
             return False
 
         return True
@@ -720,9 +782,18 @@ class InternalCheck:
             
             dummy_delta_type.LookupParameter(para_name).Set(delta)
             
+    def update_schedule_last_update_date(self):
+        para_name = "Schedule_Last_Update_Date"
+        schedule = REVIT_SCHEDULE.get_schedule_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, self.doc)
+
+        if schedule.LookupParameter(para_name):
+            schedule.LookupParameter(para_name).Set(TIME.get_formatted_current_time())
+
+
 
 
     def update_dgsf_chart(self):
+
 
         T = DB.TransactionGroup(self.doc, "update_dgsf_chart")
         T.Start()
@@ -733,9 +804,12 @@ class InternalCheck:
             self.collect_all_area_data()
             self.update_main_calculator_family_types()
             self.update_summery_calculator_family_types()
+
+            self.update_schedule_last_update_date()
             T.Commit()
         except:
             print (traceback.format_exc())
+
             T.RollBack()
         
         
@@ -758,22 +832,51 @@ class InternalCheck:
 
 
 
-def dgsf_chart_update(doc):
-    levels = list(DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements())
-    levels.sort(key=lambda x: x.Elevation, reverse=True)
-    selected_levels = forms.SelectFromList.show(levels, multiselect=True, title="Select the levels to calculate area chart", button_name="Select levels", name_attr="Name")
-    if not selected_levels:
-        NOTIFICATION.messenger(main_text="No levels selected")
-        return
-    level_names = [level.Name for level in selected_levels]
-    
-    option = DepartmentOption(level_names)
+def dgsf_chart_update(doc, show_log = True):
+    proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
+    if not proj_data:
+        NOTIFICATION.messenger(main_text="No project data found, please initalize the project first.")
 
-    if not OptionValidation(doc, option).validate_all():
-        NOTIFICATION.messenger(main_text="Validation failed")
         return
 
-    InternalCheck(doc, option, show_log=True).update_dgsf_chart()
+    department_key_para_name = proj_data["area_tracking"]["para_dict"]["DEPARTMENT_KEY_PARA"]
+    program_type_key_para_name = proj_data["area_tracking"]["para_dict"]["PROGRAM_TYPE_KEY_PARA"]
+    program_type_detail_key_para_name = proj_data["area_tracking"]["para_dict"]["PROGRAM_TYPE_DETAIL_KEY_PARA"]
+
+
+    department_para_mapping = OrderedDict(proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"])
+    department_ignore_para_names = proj_data["area_tracking"]["table_setting"]["DEPARTMENT_IGNORE_PARA_NAMES"]
+
+    for internal_option_name, option_setting in proj_data["area_tracking"]["option_setting"].items():
+        
+        level_names = option_setting["levels"]
+        option_name = option_setting["option_name"]
+
+
+        overall_area_scheme_name = option_setting["OVERALL_AREA_SCHEME_NAME"]
+        department_area_scheme_name = option_setting["DEPARTMENT_AREA_SCHEME_NAME"]
+
+
+        option = DepartmentOption(internal_option_name,
+                                  department_para_mapping,
+                                  department_ignore_para_names,
+                                  level_names, 
+                                  option_name, 
+                                  overall_area_scheme_name, 
+                                  department_area_scheme_name,
+                                  department_key_para_name,
+
+                                  program_type_key_para_name,
+                                  program_type_detail_key_para_name)
+
+  
+
+        if not OptionValidation(doc, option, show_log).validate_all():
+            NOTIFICATION.messenger(main_text="Validation failed")
+            return
+
+        InternalCheck(doc, option, show_log).update_dgsf_chart()
+
 
 
 if __name__ == "__main__":
