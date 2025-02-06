@@ -2,17 +2,19 @@
 # -*- coding: utf-8 -*-
 
 __doc__ = "Good for batch cutting many curtain panels at once with same void."
-__title__ = "Batch Cut\nPanels"
+__title__ = "Batch Cut\nElements"
 __is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
+
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION, REVIT_SYNC
 from Autodesk.Revit import DB, UI # pyright: ignore 
 from pyrevit import forms, script
 import clr # pyright: ignore 
 from pyrevit import forms
+
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
@@ -22,10 +24,12 @@ DOC = REVIT_APPLICATION.get_doc()
 @ERROR_HANDLE.try_catch_error()
 def batch_cut():
     opts = ["Get CW panels by selection walls",
-            "Use selected CW panels"]
+            "Use selected floors or CW panels"]
     res = forms.SelectFromList.show(opts, multiselect=False, title = "How do you want to collect CW panels")
     if not res:
         return
+
+
     if res == opts[0]:
         # get the wall
         walls = UIDOC.Selection.PickObjects(UI.Selection.ObjectType.Element, "Pick curtainwalls with panels to cut")
@@ -41,8 +45,9 @@ def batch_cut():
         all_panels = REVIT_SELECTION.get_selection(UIDOC)
 
     if len(all_panels) == 0:
-        NOTIFICATION.messenger("No CW panel found")
+        NOTIFICATION.messenger("No elements found")
         return
+
 
 
     masses = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Mass).WhereElementIsNotElementType().ToElements()
@@ -85,6 +90,9 @@ def batch_cut():
             print ("Failed to cut panel: {}: {}".format(output.linkify(panel.Id), e))
             
     t.Commit()
+
+    REVIT_SYNC.sync_and_close()
+
 
 
 

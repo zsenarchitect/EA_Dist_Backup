@@ -66,3 +66,5 @@ def setup_healthcare_project(doc):
 
 
     t.Commit()
+if __name__ == "__main__":
+    pass

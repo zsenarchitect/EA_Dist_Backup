@@ -2396,7 +2396,7 @@
     "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py": {
         "script": "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py",
         "icon": "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\icon.png",
-        "alias": "Batch Cut Panels",
+        "alias": "Batch Cut Elements",
         "doc": "Good for batch cutting many curtain panels at once with same void.",
         "tab": "Tools",
         "tab_icon": null,
