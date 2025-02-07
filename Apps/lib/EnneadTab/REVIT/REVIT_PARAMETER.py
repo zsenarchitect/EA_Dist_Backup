@@ -8,12 +8,17 @@ sys.path.append(root_folder)
 import NOTIFICATION
 import SAMPLE_FILE
 import DATA_FILE
-
+import FOLDER
+import ENVIRONMENT
 try:
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
+    from pyrevit import forms
 except:
     pass
+
+PROJECT_DATA_PREFIX = "ProjectData_"
+PROJECT_DATA_PARA_NAME = "EnneadTab_Data"
 
 
 def get_project_info_para_by_name(doc, para_name):
@@ -24,27 +29,71 @@ def get_project_info_para_by_name(doc, para_name):
     return None
 
 def get_project_data_name(doc):
-    para_name = "EnneadTab_Data"
-    para = get_project_info_para_by_name(doc, para_name)
+    para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
     if not para:
-        definition = get_shared_para_definition_in_txt_file_by_name(doc, para_name)
+        definition = get_shared_para_definition_in_txt_file_by_name(doc, PROJECT_DATA_PARA_NAME)
         if not definition:
-            definition = create_shared_parameter_in_txt_file(doc, para_name, DB.SpecTypeId.String.Text)
+            definition = create_shared_parameter_in_txt_file(doc, PROJECT_DATA_PARA_NAME, DB.SpecTypeId.String.Text)
         add_shared_parameter_to_project_doc(doc, 
                                             definition, 
                                             "Data", 
                                             [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
 
-        para = get_project_info_para_by_name(doc, para_name)
+        para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
         para.Set(doc.Title)
 
-    return get_project_info_para_by_name(doc, para_name).AsString()
+    return get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).AsString()
 
 def get_project_data_file(doc):
     project_data_name = get_project_data_name(doc)
-    return "ProjectData_{}.sexyDuck".format(project_data_name)
+    return "{}{}.sexyDuck".format(PROJECT_DATA_PREFIX, project_data_name)
+
+
+def mark_doc_to_project_data_file(doc):
+    data = get_revit_project_data(doc)
+    if "docs_attaching" not in data:
+        data["docs_attaching"] = []
+    data["docs_attaching"].append(doc.Title)
+    set_revit_project_data(doc, data)
+
+def reattach_project_data(doc):
+    """Reattach project data from an existing setup file"""
+    # Print current project data file
+    current_data_name = get_project_data_name(doc)
+    print("Current project data file: {}".format(current_data_name))
+
+    # Get all project data files from shared dump folder
+    data_files = [f for f in os.listdir(FOLDER.SHARED_DUMP_FOLDER) if f.startswith(PROJECT_DATA_PREFIX) and f.endswith(".sexyDuck")]
+    
+    # Extract XXX parts for display (without extension)
+    display_options = [f.replace(PROJECT_DATA_PREFIX, "").replace(".sexyDuck", "") for f in data_files]
+    
+    if not display_options:
+        NOTIFICATION.messenger("No project data files found in L drive.")
+        return
+    
+    # Let user pick from the list
+    selected = forms.SelectFromList.show(
+        display_options,
+        multiselect=False,
+        title="Select Project Data File to Attach",
+        button_name="Select"
+    )
+        
+    if not selected:
+        return
+    
+    # Update project data file reference
+    try:
+        get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).Set("{}".format(selected))
+        mark_doc_to_project_data_file(doc)
+        NOTIFICATION.messenger("Successfully reattached project data.")
+    except Exception as e:
+        NOTIFICATION.messenger("Failed to reattach project data: {}".format(str(e)))
+
 
 def get_revit_project_data(doc):
+    ENVIRONMENT.alert_l_drive_not_available()
     return DATA_FILE.get_data(get_project_data_file(doc), is_local=False)
 
 
@@ -175,7 +224,7 @@ def get_parameter_by_name(doc,
                 return para
     return None
 
-def confirm_shared_para_exist_on_category(doc, para_name, category):
+def confirm_shared_para_exist_on_category(doc, para_name, category, para_type = DB.SpecTypeId.String.Text):
     """ note that category is such as BuiltInCategory.OST_Areas, OST_Parking etc. 
     For project information see other function get_project_info_para_by_name()"""
     sample_element = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().FirstElement()
@@ -188,7 +237,19 @@ def confirm_shared_para_exist_on_category(doc, para_name, category):
 
     definition = get_shared_para_definition_in_txt_file_by_name(doc, para_name)
     if not definition:
-        definition = create_shared_parameter_in_txt_file(doc, para_name, DB.SpecTypeId.String.Text)
+        definition = create_shared_parameter_in_txt_file(doc, para_name, para_type)
     add_shared_parameter_to_project_doc(doc, definition, "Data", [DB.Category.GetCategory(doc, category)])
     return True
 
+def __override_L_drive_shared_para_file_to_OS_shared_para_file():
+    L_drive_shared_para_file = "L:\\4b_Applied Computing\\01_Revit\\03_Library\\EA_SharedParam.txt"
+    OS_shared_para_file = "Apps\\lib\\EnneadTab\\documents\\revit\\DefaultSharedParameter.txt"
+    
+
+    # copy L to override OS
+    import shutil
+    shutil.copy(L_drive_shared_para_file, OS_shared_para_file)
+
+
+if __name__ == "__main__":
+    __override_L_drive_shared_para_file_to_OS_shared_para_file()

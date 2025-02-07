@@ -289,14 +289,18 @@ def get_app_name():
         app_name = "rhino"
     return app_name
 
+def alert_l_drive_not_available(play_sound = False):
+    if  os.path.exists(L_DRIVE_HOST_FOLDER):
+        return True
+    import NOTIFICATION
+    NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection or activate L drive manually.")
+    if play_sound:
+        import SOUND
+        SOUND.play_error_sound()
+        
+    return False
 
-if not os.path.exists(L_DRIVE_HOST_FOLDER):
-    print ("L drive is not available, please check your network connection")
-    try:
-        import NOTIFICATION
-        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection or activate L drive manually.")
-    except:
-        pass
+alert_l_drive_not_available()
 
 ###############
 if __name__ == "__main__":

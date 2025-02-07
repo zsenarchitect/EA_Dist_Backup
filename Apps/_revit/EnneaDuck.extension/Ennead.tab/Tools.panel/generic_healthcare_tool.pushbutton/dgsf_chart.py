@@ -431,6 +431,7 @@ class InternalCheck:
         self.show_log = show_log
         self.output = script.get_output()
         self._found_bad_area = False
+        self._owner_holding = set()
         
         AreaData.purge_data()
        
@@ -537,8 +538,11 @@ class InternalCheck:
         first reset non BEDS to zero
         Second, go thru main option and get everything that is not BEDS and fill in.
         """
+        if self.show_log:
+            print ("Copying all data from primary option except BEDS, talk to Sen if you do not want this behavior")
         #  reset all levels data where there is BED. SO later only update BEDS from main
         for type_name, data in AreaData.data_collection.items():
+
             # this is data per level
             if type_name not in self.option.LEVEL_NAMES:
                 continue
@@ -605,6 +609,7 @@ class InternalCheck:
             if not REVIT_SELECTION.is_changable(calc_type):
                 print("Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
                                                                                     REVIT_SELECTION.get_owner(calc_type)))
+                self._owner_holding.add(REVIT_SELECTION.get_owner(calc_type))
                 continue
 
             # process the content
@@ -668,6 +673,7 @@ class InternalCheck:
                 note = "AHHHHHHHHHHH!   Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
                                                                                     REVIT_SELECTION.get_owner(calc_type))
                 print (note)
+                self._owner_holding.add(REVIT_SELECTION.get_owner(calc_type))
 
                 NOTIFICATION.messenger(note)
                 continue
@@ -783,11 +789,26 @@ class InternalCheck:
             dummy_delta_type.LookupParameter(para_name).Set(delta)
             
     def update_schedule_last_update_date(self):
-        para_name = "Schedule_Last_Update_Date"
-        schedule = REVIT_SCHEDULE.get_schedule_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, self.doc)
+        schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, self.doc)
+        if not REVIT_SELECTION.is_changable(schedule_view):
+            return
+        
+        t = DB.Transaction(self.doc, "update schedule last update date")
+        t.Start()
+        para_name = "Last_Update_Date"
+        REVIT_PARAMETER.confirm_shared_para_exist_on_category(self.doc, para_name, DB.BuiltInCategory.OST_Schedules)
+        if self._owner_holding:
+            note = "[Syncing Needed from: {}]".format(", ".join(self._owner_holding))
+        else:
+            note = TIME.get_formatted_current_time()
+        schedule_view.LookupParameter(para_name).Set(note)
+        t.Commit()
 
-        if schedule.LookupParameter(para_name):
-            schedule.LookupParameter(para_name).Set(TIME.get_formatted_current_time())
+
+
+
+
+
 
 
 
@@ -804,7 +825,6 @@ class InternalCheck:
             self.collect_all_area_data()
             self.update_main_calculator_family_types()
             self.update_summery_calculator_family_types()
-
             self.update_schedule_last_update_date()
             T.Commit()
         except:
@@ -816,11 +836,11 @@ class InternalCheck:
         if self.show_log:
             NOTIFICATION.messenger(main_text="Program schedule calculator update done!")
 
-        
+        if self._owner_holding:
+            NOTIFICATION.messenger(main_text="{} need to sync to display more accurate schedule.".format(", ".join(self._owner_holding)))
         if self._found_bad_area:
             NOTIFICATION.duck_pop(main_text="Attention, there are some un-enclosed area in area plans that might affect your accuracy.\nSee output window for details.")
 
-        
 
 
 #########################################################################################
@@ -880,4 +900,6 @@ def dgsf_chart_update(doc, show_log = True):
 
 
 if __name__ == "__main__":
+
+
     pass

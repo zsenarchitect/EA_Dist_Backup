@@ -24,7 +24,10 @@ def get_one_audio_path_by_prefix(prefix):
     file = random.choice(files)
     return file
 
-    
+
+def play_error_sound():
+    play_sound("sound_effect_error")
+
 def play_sound(file = "sound_effect_popup_msg3"):
     file = get_audio_path_by_name(file)
     if not file:
@@ -158,11 +161,12 @@ def sys_alert():
 if __name__ == "__main__":
     print(__file__ + "   -----OK!")
     # unit_test() 
-    file = "sound_effect_spring"
+    # file = "sound_effect_spring"
     # play_sound(file)
     # play_sound()
-    test_play_all_sounds()
+    # test_play_all_sounds()
     # sys_alert()
+    play_error_sound()
 
 
 

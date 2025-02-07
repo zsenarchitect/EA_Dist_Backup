@@ -1,4 +1,4 @@
-from EnneadTab import NOTIFICATION, FOLDER
+from EnneadTab import NOTIFICATION, FOLDER, ENVIRONMENT # pyright: ignore   
 from EnneadTab.REVIT import REVIT_PARAMETER
 from Autodesk.Revit import DB # pyright: ignore
 import os
@@ -78,13 +78,16 @@ def setup_healthcare_project(doc):
 
 
     REVIT_PARAMETER.set_revit_project_data(doc, proj_data)
+    REVIT_PARAMETER.mark_doc_to_project_data_file(doc)
     t.Commit()
     open_project_data_file(doc)
     NOTIFICATION.messenger("Healthcare project setup complete.")
 
 def setup_schedule_update_date_parameter(doc):
-    para_name = "Schedule_Last_Update_Date"
-    if not REVIT_PARAMETER.confirm_shared_para_exist_on_category(doc, para_name,DB.BuiltInCategory.OST_Schedules):
+    para_name = "Last_Update_Date"
+    if not REVIT_PARAMETER.confirm_shared_para_exist_on_category(doc, 
+                                                                 para_name,
+                                                                 DB.BuiltInCategory.OST_Schedules):
         return False
     return True
 
@@ -121,7 +124,7 @@ def update_project_levels_in_project_data(doc, proj_data):
     levels = list(DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements())
     levels.sort(key=lambda x: x.Elevation, reverse=True)
 
-    picked_levels = forms.SelectFromList.show(levels, name_attr="Name", title="Select Levels ti include in calculation", button_name="Select Levels", multiselect=True)
+    picked_levels = forms.SelectFromList.show(levels, name_attr="Name", title="Select Levels to include in calculation", button_name="Select Levels", multiselect=True)
     level_names = [level.Name for level in picked_levels]
 
     for option_setting in proj_data["area_tracking"]["option_setting"].values():
@@ -145,9 +148,10 @@ class ProjectDataEditor:
         
         # Define menu configurations
         self.main_menu = {
-            "1. Area Tracking": self._edit_area_tracking,
-            "2. View Name Update": self._edit_auto_view_name_update,
-            "3. Save and Close": None
+            "1. Reattach Project Data To Exisitng Setup": self._reattach_project_data,
+            "2. Area Tracking": self._edit_area_tracking,
+            "3. Auto View Name Update": self._edit_auto_view_name_update,
+            "4. Save and Close": None
         }
         
         self.area_tracking_menu = {
@@ -176,6 +180,8 @@ class ProjectDataEditor:
         
         while True:
             selection = self._show_menu("Project Data Editor", self.main_menu)
+            if not selection:
+                break
             function = self.main_menu[selection]
             if self._is_return_option(selection):
                 break
@@ -228,7 +234,7 @@ class ProjectDataEditor:
             if res in self.design_option_menu:
                 self.design_option_menu[res](selected_option)
 
-    def _toggle_setting(self, setting_path, prompt):
+    def _toggle_setting(self, setting_path, title):
         """Generic toggle setting handler"""
         options = {
             "1. Enable Auto Update": True,
@@ -238,9 +244,9 @@ class ProjectDataEditor:
         
         while True:
             res = self._show_menu(
-                "Update Setting",
+                title,
                 options,
-                prompt=prompt
+                
             )
             if self._is_return_option(res):
                 break
@@ -258,12 +264,17 @@ class ProjectDataEditor:
     def _edit_option_setting(self, option_name, setting_key, title):
         """Generic option setting editor"""
         while True:
+            if option_name not in self.project_data["area_tracking"]["option_setting"]:
+                NOTIFICATION.messenger("Option '{}' not found due to renaming, return to previous menu and re-select option using the new name.".format(option_name))
+                break
+            
             current_value = self.project_data["area_tracking"]["option_setting"][option_name][setting_key]
             new_value = forms.ask_for_string(
                 default=current_value,
                 prompt="Enter {} (ESC to cancel)".format(title.lower()),
                 title=title
             )
+
 
             
 
@@ -272,8 +283,14 @@ class ProjectDataEditor:
             
             if new_value.strip():  # Ensure non-empty value
                 self.project_data["area_tracking"]["option_setting"][option_name][setting_key] = new_value
+
+                if setting_key == "option_name":
+                    self.project_data["area_tracking"]["option_setting"][new_value] = self.project_data["area_tracking"]["option_setting"][option_name].copy()
+                    del self.project_data["area_tracking"]["option_setting"][option_name]
+
                 self._save_changes()
                 break
+
 
     def _select_design_option(self, title):
         """Generic design option selector"""
@@ -410,6 +427,13 @@ class ProjectDataEditor:
                 self._save_changes()
                 NOTIFICATION.messenger("Design option '{}' has been deleted.".format(option_to_delete))
                 break
+
+
+    def _reattach_project_data(self):
+        t = DB.Transaction(self.doc, "Reattach Project Data")
+        t.Start()
+        REVIT_PARAMETER.reattach_project_data(self.doc)
+        t.Commit()
 
 ############### ENTRY POINT ###############
 if __name__ == "__main__":
