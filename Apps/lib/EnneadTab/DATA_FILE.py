@@ -1,7 +1,7 @@
 """Utilities for writing and reading data to and from JSON files as well as persistent sticky data."""
 
 import sys
-import shutil
+
 import json
 import io
 import os
@@ -9,6 +9,7 @@ import traceback
 from contextlib import contextmanager
 
 
+import COPY
 import FOLDER
 
 
@@ -29,10 +30,10 @@ def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False)
         return dict()
     local_path = FOLDER.get_EA_dump_folder_file("temp.sexyDuck")
     try:
-        shutil.copyfile(filepath, local_path)
+        COPY.copyfile(filepath, local_path)
     except IOError:
         local_path = FOLDER.get_EA_dump_folder_file("temp_additional.sexyDuck")
-        shutil.copyfile(filepath, local_path)
+        COPY.copyfile(filepath, local_path)
 
     content = _read_json_as_dict(local_path, use_encode, create_if_not_exist)
     return content
@@ -180,7 +181,7 @@ def get_list(filepath):
         return []
     extention = FOLDER.get_file_extension_from_path(filepath)
     local_path = FOLDER.get_EA_dump_folder_file("temp{}".format(extention))
-    shutil.copyfile(filepath, local_path)
+    COPY.copyfile(filepath, local_path)
 
     with io.open(local_path,  "r", encoding="utf-8") as f:
         lines = f.readlines()

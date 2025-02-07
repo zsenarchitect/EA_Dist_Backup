@@ -1,5 +1,5 @@
 
-from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME
+from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PARAMETER
 from pyrevit import forms, script
 from Autodesk.Revit import DB #pyright: ignore
@@ -337,8 +337,9 @@ class OptionValidation:
                 format_option.Accuracy = 10.0
                 format_option.UseDigitGrouping = True
                 field.SetFormatOptions(format_option)
-            except:
-                pass
+            except Exception as e:
+                ERROR_HANDLE.print_note(e)
+
 
 
             try:    
@@ -347,8 +348,9 @@ class OptionValidation:
                 import random
                 table_cell_style.BackgroundColor  = DB.Color(random.randint(0,255),random.randint(0,255),random.randint(0,255))
                 field.SetStyle(table_cell_style)
-            except:
-                pass
+            except Exception as e:
+                ERROR_HANDLE.print_note(e)
+
 
 
                 

@@ -4,7 +4,7 @@
 Check formulas, read data, save data, etc."""
 
 import os
-import shutil
+
 import sys
 import traceback
 import time
@@ -24,6 +24,7 @@ import FOLDER
 import UNIT_TEST
 import TEXT
 import DATA_FILE
+import COPY
 sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
 import xlrd
 import xlsxwriter
@@ -126,7 +127,7 @@ def save_as_xls(filepath):
     """
     _, file = os.path.split(filepath)
     safe_copy = FOLDER.get_EA_dump_folder_file("save_copy_" + file)
-    shutil.copyfile(filepath, safe_copy)
+    COPY.copyfile(filepath, safe_copy)
 
     
 

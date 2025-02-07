@@ -21,6 +21,9 @@ def get_alternative_traceback():
     while exc_traceback:
         OUT += "\nFile: {}, Line: {}".format(exc_traceback.tb_frame.f_code.co_filename,exc_traceback.tb_lineno )
         exc_traceback = exc_traceback.tb_next
+
+    if USER.IS_DEVELOPER:
+        print (OUT)
     return OUT
 
 def try_catch_error(is_silent=False, is_pass = False):
