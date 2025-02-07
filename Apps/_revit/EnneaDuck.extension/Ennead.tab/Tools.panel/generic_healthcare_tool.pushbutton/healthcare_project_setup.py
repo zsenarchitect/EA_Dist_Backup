@@ -149,9 +149,10 @@ class ProjectDataEditor:
         # Define menu configurations
         self.main_menu = {
             "1. Reattach Project Data To Exisitng Setup": self._reattach_project_data,
-            "2. Area Tracking": self._edit_area_tracking,
+            "2. Healthcare Area Tracking": self._edit_area_tracking,
             "3. Auto View Name Update": self._edit_auto_view_name_update,
             "4. Save and Close": None
+
         }
         
         self.area_tracking_menu = {

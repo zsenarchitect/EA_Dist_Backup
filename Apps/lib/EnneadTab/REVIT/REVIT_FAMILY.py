@@ -112,7 +112,11 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
                 family_doc.SaveAs(temp_path, save_option)
                 family_ref = clr.StrongBox[DB.Family](None)
                 success, family_ref = project_doc.LoadFamily.Overloads[str, DB.IFamilyLoadOptions](temp_path, loading_opt, family_ref)
-                os.remove(temp_path)
+                try:
+                    family_doc.Close(False)
+                    os.remove(temp_path)
+                except:
+                    pass
             except Exception as e:
                 NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
                 ERROR_HANDLE.print_note ("Failed to load family [{}], level 3, becasue {}".format(family_doc.Title, e))
@@ -125,10 +129,13 @@ def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFa
 
     res = project_doc.LoadFamily(family_path, loading_opt, fam_ref)
     if not res:
-        print ("failed to load family [{}], trying to load by open and close".format(family_path))
+        # print ("failed to load family [{}], trying to load by open and close".format(family_path))
         family_doc = REVIT_APPLICATION.get_app().OpenDocumentFile(family_path)
         load_family(family_doc, project_doc, loading_opt)
-        family_doc.Close(False)
+        try: # adding this try becasue this func is sometimes called by the temp family load that need to be removed already
+            family_doc.Close(False)
+        except:
+            pass
 
     return fam_ref
     
