@@ -300,10 +300,10 @@ def doc_synced(doc):
         
 
 
-    proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
-    if not proj_data:
+    if not REVIT_PARAMETER.is_setup_project_data_para_exist(doc):
         run_legacy_updates(doc)
     else:
+        proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
         if proj_data["is_update_view_name_format"]:
             update_view_names(doc)
         if proj_data["area_tracking"]["auto_update_enabled"]:

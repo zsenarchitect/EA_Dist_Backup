@@ -21,6 +21,12 @@ PROJECT_DATA_PREFIX = "ProjectData_"
 PROJECT_DATA_PARA_NAME = "EnneadTab_Data"
 
 
+def is_setup_project_data_para_exist(doc):
+    para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
+    if para:
+        return True
+    return False
+
 def get_project_info_para_by_name(doc, para_name):
     proj_info = doc.ProjectInformation
     for para in proj_info.Parameters:
@@ -29,8 +35,8 @@ def get_project_info_para_by_name(doc, para_name):
     return None
 
 def get_project_data_name(doc):
-    para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
-    if not para:
+    # Check if parameter exists using the helper function
+    if not is_setup_project_data_para_exist(doc):
         definition = get_shared_para_definition_in_txt_file_by_name(doc, PROJECT_DATA_PARA_NAME)
         if not definition:
             definition = create_shared_parameter_in_txt_file(doc, PROJECT_DATA_PARA_NAME, DB.SpecTypeId.String.Text)
@@ -40,8 +46,9 @@ def get_project_data_name(doc):
                                             [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
 
         para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
-        para.Set(doc.Title)
+        para.Set(doc.Title)  # Set initial value to document title
 
+    # Get the parameter value
     return get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).AsString()
 
 def get_project_data_file(doc):
