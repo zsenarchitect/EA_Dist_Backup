@@ -82,7 +82,7 @@ class DepartmentOption():
 
 
     
-    LEVEL_NAMES = DOC_LEVLEL_DICT.values()[0]
+    LEVEL_NAMES = [] # to be set in the validator
 
     # TO-DO: this dummy will pretend to be the excel button sum
     DUMMY_DATA_HOLDER = ["GRAND TOTAL",
@@ -90,7 +90,12 @@ class DepartmentOption():
                         "DELTA"]
 
     # thia type name collection is to contain all and exact type names for the caulator
-    TYPE_NAME_COLLECTION = LEVEL_NAMES + DUMMY_DATA_HOLDER
+
+    @property
+    def TYPE_NAME_COLLECTION(self):
+        return self.LEVEL_NAMES + self.DUMMY_DATA_HOLDER
+
+
 
 
     def __init__(self, option_name = "", department_area_scheme_name = DGSF_SCHEME_NAME):

@@ -70,7 +70,7 @@ def batch_cut():
 
     
 
-
+    is_sync_and_close = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
 
 
     t = DB.Transaction(DOC, __title__)
@@ -91,7 +91,8 @@ def batch_cut():
             
     t.Commit()
 
-    REVIT_SYNC.sync_and_close()
+    if is_sync_and_close:
+        REVIT_SYNC.sync_and_close()
 
 
 

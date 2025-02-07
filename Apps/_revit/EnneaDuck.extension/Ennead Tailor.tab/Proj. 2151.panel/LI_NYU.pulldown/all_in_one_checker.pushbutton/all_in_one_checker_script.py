@@ -466,6 +466,8 @@ def all_in_one_checker(doc, show_log):
         OPTION_MAIN, 
         # OPTION_1,
         ]:
+
+  
         InternalCheck(doc, option, show_log).run_check()
 
     output.print_md("## Detail Area Chart Updated")

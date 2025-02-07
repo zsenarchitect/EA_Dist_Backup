@@ -260,10 +260,12 @@ def make_new_calcualtor(doc, option, type_name):
         index = option.LEVEL_NAMES.index(type_name)
         row_count = 5
         x, y = index % row_count, index // row_count
-    if type_name in option.DUMMY_DATA_HOLDER:
+    elif type_name in option.DUMMY_DATA_HOLDER:
         index = option.DUMMY_DATA_HOLDER.index(type_name)
         x = index
         y = -2
+    else:
+        print ("!!!!!!!!!!!!!!!!![{}], is not a valid type name".format(type_name))
         
     doc.Create.NewFamilyInstance(DB.XYZ(unit_distant*x, unit_distant*y, 0), 
                                         new_type,

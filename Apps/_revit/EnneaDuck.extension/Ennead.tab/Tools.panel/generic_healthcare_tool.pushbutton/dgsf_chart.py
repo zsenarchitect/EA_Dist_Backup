@@ -313,7 +313,7 @@ class OptionValidation:
             
             if field.GetName() not in self.option.FAMILY_PARA_COLLECTION:
                 print ("[{}] should not appear in the schedule field".format(field.GetName()))
-                definition.RemoveFeild(field.Id)
+                # definition.RemoveFeild(field.Id)
         
 
         REVIT_SCHEDULE.add_fields_to_schedule(view, self.option.FAMILY_PARA_COLLECTION)
@@ -325,7 +325,9 @@ class OptionValidation:
         sort_group_field.FieldId = REVIT_SCHEDULE.get_field_by_name(view, self.option.INTERNAL_PARA_NAMES["order"]).FieldId
         sort_group_field.SortOrder = DB.ScheduleSortOrder.Descending
         definition.SetSortGroupFields (DATA_CONVERSION.list_to_system_list([sort_group_field], type = DB.ScheduleSortGroupField, use_IList = False))
-                
+
+
+
         # set all digits to round to 10
         for field in self.option.FAMILY_PARA_COLLECTION:
             field = REVIT_SCHEDULE.get_field_by_name(view, field)
