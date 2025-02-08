@@ -12,3 +12,4 @@ layout:
   - import Rhino camera 
   - -----
   - revit2rhino
+  - room2diagram

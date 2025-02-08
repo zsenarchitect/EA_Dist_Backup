@@ -17,7 +17,7 @@ TO-DO: accept layer making
 __title__ = "Revit2Rhino"
 
 import clr  # pyright: ignore
-import sys  # pyright: ignore
+
 import os
 
 try:
@@ -35,7 +35,7 @@ import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_RHINO
 from Autodesk.Revit import DB  # pyright: ignore
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
@@ -63,17 +63,7 @@ class RevitToRhinoExporter(object):
         """Collects FamilyInstances, creates a block for each instance,
         scales geometry from feet->mm, places block with only rotation+translation,
         and saves the result to a 3DM file."""
-        self.rhino_doc = Rhino.RhinoDoc.CreateHeadless(None)
-        self.revit_unit = REVIT_UNIT.get_doc_length_unit_name(self.revit_doc)
-
-        
-        unit_dict = {
-            "millimeters":2,
-            "feet":9,
-            "inches":8,
-            "feetFractionalInches":9
-        }
-        self.rhino_doc.AdjustPageUnitSystem(System.Enum.ToObject(Rhino.UnitSystem, unit_dict.get(self.revit_unit, 9)), False)
+        self.rhino_doc = REVIT_RHINO.setup_rhino_doc(self.revit_doc)
         geom_options = self._create_geometry_options()
         family_instances = self._collect_family_instances()
 
