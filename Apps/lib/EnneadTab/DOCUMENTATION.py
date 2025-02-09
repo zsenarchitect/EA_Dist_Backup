@@ -3,7 +3,6 @@
 import io
 import os
 import random
-import imp
 import traceback
 import json
 
@@ -211,13 +210,25 @@ def get_title_tip_from_file(lucky_file, is_random_single):
         
     module_name = FOLDER.get_file_name_from_path(lucky_file).replace(".py", "")
     try:
+        # Try imp first
+        import imp # pyright: ignore
         ref_module = imp.load_source(module_name, lucky_file)
-
+    except (ImportError, AttributeError):
+        try:
+            # Fallback to importlib if imp fails
+            import importlib.util
+            spec = importlib.util.spec_from_file_location(module_name, lucky_file)
+            ref_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(ref_module)
+        except Exception as e:
+            if USER.is_EnneadTab_developer:
+                print ("\n\nDeveloper visible only logging:")
+                print (traceback.format_exc())
+            return module_name, None, icon_path
     except Exception as e:
         if USER.is_EnneadTab_developer:
             print ("\n\nDeveloper visible only logging:")
             print (traceback.format_exc())
-        
         return module_name, None, icon_path
     
     tip = getattr(ref_module,TIP_KEY)
