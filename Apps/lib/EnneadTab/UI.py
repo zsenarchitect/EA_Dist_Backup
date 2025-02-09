@@ -1,9 +1,8 @@
-
-
 DATA_FILE_NAME = "progressbar.sexyDuck"
 
 import DATA_FILE
 import EXE
+import NOTIFICATION
 
 
 
@@ -13,6 +12,7 @@ class ProgressBarManager:
         self.title = title
         self.total = len(self.items) if items is not None else 100
         self.current_progress = 0
+        self.current_item = None
         self.label_func = label_func
 
         
@@ -22,9 +22,9 @@ class ProgressBarManager:
 
         progress = (self.current_progress / self.total) * 100
         if self.label_func is not None:
-            label = self.label_func(self.current_progress)
+            label = self.label_func(self.current_item)
         else:
-            label = f"Processing item {self.current_progress}"
+            label = "Processing item {}".format(self.current_progress)
         data = {
             "progress": progress,
             "is_active": True,
@@ -72,8 +72,8 @@ def progress_bar(items, func, label_func = None, title="Iterating through items"
     
     """
     with ProgressBarManager(items=items, title=title, label_func=label_func) as progress:
-
         for item in items:
+            progress.current_item = item
             func(item)
             progress.update()
 
@@ -84,14 +84,122 @@ def kill_progressbar():
 def unit_test():
     import time
     import random
-    items = list(range(1000))
+    test_products = [
+        "UltraGlow Pro X1000",
+        "QuickSlice Master",
+        "DreamWeaver Elite",
+        "PowerFlex 360",
+        "SmartHome Hub Plus",
+        "EcoClean Supreme",
+        "TechMaster 2000",
+        "ComfortZone Deluxe",
+        "SpeedBrew Max",
+        "FitTracker Prime",
+        "AquaPure Filter",
+        "SoundWave Elite",
+        "ChefMate Pro",
+        "LuxLight Diamond",
+        "GreenThumb Helper",
+        "CloudSync Station",
+        "VitaBlend Master",
+        "SafeGuard Plus",
+        "EnergyBoost Ultra",
+        "CleanAir Premium",
+        "WorkFlow Elite",
+        "HomeGuard Pro",
+        "SleepMaster Deluxe",
+        "SmartScale Connect",
+        "PetCare Premium",
+        "GardenPro Tools",
+        "BrainBoost Focus",
+        "FreshKeep Elite",
+        "TimeSaver Pro",
+        "BeautyGlow Max",
+        "KidSafe Guardian",
+        "SportsFlex Ultra",
+        "CoolBreeze Plus",
+        "MindCalm Essential",
+        "TravelMate Pro",
+        "EasyClean Master",
+        "HealthTrack Elite",
+        "SmartCook Helper",
+        "PowerBank Ultra",
+        "HomeFit Studio",
+        "WaterWise Plus",
+        "NightGuard Pro",
+        "StudyBuddy Max",
+        "EcoFresh Prime",
+        "WorkStation Elite",
+        "SafeSleep Plus",
+        "QuickCharge Pro",
+        "MealPrep Master",
+        "SmartView Display",
+        "PetPlay Premium",
+        "GymMaster Pro",
+        "BabyGuard Elite",
+        "CleanBot 3000",
+        "SoundPod Ultra",
+        "CareCraft Plus",
+        "EasyLife Helper",
+        "SmartLock Pro",
+        "FitnessFuel Max",
+        "HomeStyle Elite",
+        "TechGuard Plus",
+        "EcoSmart Prime",
+        "WorkPro Station",
+        "LifeTrack Master",
+        "CoolComfort Pro",
+        "SmartBrew Elite",
+        "SafeSpace Plus",
+        "PowerTool Ultra",
+        "HealthMate Pro",
+        "EasyOrganize Max",
+        "SmartWatch Prime",
+        "PetCare Deluxe",
+        "GardenMaster Elite",
+        "BrainTrain Plus",
+        "FreshFood Pro",
+        "TimeKeeper Ultra",
+        "BeautyPro Master",
+        "KidPlay Premium",
+        "SportsMaster Elite",
+        "CoolZone Plus",
+        "MindFocus Pro",
+        "TravelPro Elite",
+        "EasyClean Ultra",
+        "HealthGuard Max",
+        "SmartHome Premium",
+        "PowerMax Elite",
+        "HomeFit Plus",
+        "WaterPure Pro",
+        "NightRest Ultra",
+        "StudyMaster Elite",
+        "EcoClean Prime",
+        "WorkSpace Plus",
+        "SafeGuard Ultra",
+        "QuickFix Pro",
+        "MealMaster Elite",
+        "SmartScreen Plus",
+        "PetCare Ultra",
+        "GymPro Elite",
+        "Babycare Premium",
+        "CleanMaster Pro",
+        "SoundBox Ultra",
+        "CareKit Elite",
+        "EasyLife Plus",
+        "SmartSecurity Pro",
+        "FitnessMax Ultra",
+        "HomeStyle Premium"
+    ]
     def test_func(item):
-        time.sleep(random.randint(1,10)/10)
-        print(item)
+        run_time = random.randint(1,10)/10
+        time.sleep(run_time)
+        print("simluate running product [{}] took {:.1f}s".format(item, run_time))
+
 
     def label_func(item):
-        return ("Processing item {}".format(item))
-    progress_bar(items, test_func, label_func = label_func, title = "Iternating through items")
+        return ("Dummy Processing item [{}]".format(item))
+    progress_bar(test_products, test_func, label_func = label_func, title = "Iternating through items")
     
 
 
@@ -101,5 +209,18 @@ def unit_test():
 
 # Example usage
 if __name__ == "__main__":
-    # unit_test()
-    kill_progressbar()
+    NOTIFICATION.messenger("See terminal option")
+    print("\nWhat would you like to do?")
+    print("1. Run unit test")
+    print("2. Kill progress bar")
+    
+
+    choice = input("Enter 1 or 2: ").strip()
+    
+    if choice == "1":
+        unit_test()
+        kill_progressbar()
+    elif choice == "2":
+        kill_progressbar()
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
