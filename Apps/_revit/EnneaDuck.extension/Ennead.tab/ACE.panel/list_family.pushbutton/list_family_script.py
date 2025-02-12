@@ -15,7 +15,7 @@ proDUCKtion.validify()
 from EnneadTab import DATA_CONVERSION, NOTIFICATION, UI, SOUND
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FILTER
 from EnneadTab import ERROR_HANDLE, LOG
-from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY, REVIT_FORMS
+from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY, REVIT_FORMS,REVIT_SYNC
 from Autodesk.Revit import DB # pyright: ignore
 # from rpw.db import family 
 # from Autodesk.Revit import UI # pyright: ignore
@@ -29,6 +29,8 @@ FAMILY_DUMP_WALL_COMMENT = "EnneadTab_Family_List_Internal_Wall"
 FAMILY_DUMP_CEILING_COMMENT = "EnneadTab_Family_List_Internal_Ceiling"
 FAMILY_DUMP_FLOOR_COMMENT = "EnneadTab_Family_List_Internal_Floor"
 FAMILY_DUMP_ROOF_COMMENT = "EnneadTab_Family_List_Internal_Roof"
+FAMILY_LIST_CATEGORY_VIEW_PREFIX = "EnneadTab_Family_List_Category_"
+FAMILY_LIST_FILTER_PREFIX = "EnneadTab_Family_List_Filter_"
 
 class Deployer:
     """Handles deployment of families into views with optional tagging"""
@@ -72,8 +74,27 @@ class Deployer:
         t.Commit()
 
     def process_category_views(self):
-        print ("Processing category views TO_DO: get all category views, add all selection filterers to them, and turn off visiblitu for all filtere not related to this view.")
-        pass
+        
+        all_views = DB.FilteredElementCollector(self.doc).OfClass(DB.View3D).ToElements()
+        all_cate_views = [view for view in all_views if view.Name.startswith(FAMILY_LIST_CATEGORY_VIEW_PREFIX)]
+        all_selection_filters = DB.FilteredElementCollector(self.doc).OfClass(DB.SelectionFilter).ToElements()
+        all_my_selection_filters = [filter for filter in all_selection_filters if filter.Name.startswith(FAMILY_LIST_FILTER_PREFIX)]
+
+        t = DB.Transaction(self.doc, "Process category views")
+        t.Start()
+        for view in all_cate_views:
+            view_category = view.Name.split("_")[-1]
+            for filter in all_my_selection_filters:
+                filter_category = filter.Name.split("_")[-1]
+                view.AddFilter(filter.Id)
+                if filter_category != view_category:
+                    view.SetFilterVisibility (filter.Id, False)
+                else:
+                    view.SetFilterVisibility (filter.Id, True)
+        t.Commit()
+
+
+    
     def _get_model_text_elements(self):
         """Gets or creates model text elements needed for labeling
         
@@ -225,10 +246,10 @@ class Deployer:
             self.item_collection = []
 
         if family.FamilyCategory.Name != self.current_category_header:
+            self.save_item_collection()
             self.header_x += self.max_label_width + 30 + self.max_row_width # ideally it should be using current label max widht with previous row max width, but , well, i am not care enough to improve that yet. Just using mahic 10 and hope for the best
             self.pointer = DB.XYZ(self.header_x, 0, self.pointer.Z)
             self.current_category_header = family.FamilyCategory.Name
-            self.save_item_collection()
             
 
         return True
@@ -238,24 +259,43 @@ class Deployer:
         if not self.item_collection:
             return
             
+        view = self.get_or_create_category_view()
         t = DB.Transaction(self.doc, "Create Selection Filter")
         t.Start()
 
         # Create unique filter name based on category
-        filter_name = "EnneadTab_Family_List_{}".format(
-            self.current_category_header.replace(" ", "_")
-        )
+        filter_name = "{}{}".format(FAMILY_LIST_FILTER_PREFIX, self.current_category_header)
         
         # get filter with this nmae
-        selection_filter = REVIT_FILTER.update_selection_filter(self.doc, filter_name, self.item_collection)
+        try:
+            selection_filter = REVIT_FILTER.update_selection_filter(self.doc, filter_name, self.item_collection)
+        except:
+            print (self.item_collection)
+            print ("failed to update filter {}".format(filter_name))
+            NOTIFICATION.messenger("failed to update filter {}".format(filter_name))
+            
+        t.Commit()
+        NOTIFICATION.messenger("collection for {} is saved to filter".format(self.current_category_header))
+        self.item_collection = []
 
-        cate_3d_view_name = "EnneadTab_Family_List_Category_{}".format(self.current_category_header.replace(" ", "_"))
-        view = REVIT_VIEW.get_view_by_name(cate_3d_view_name)
+    def get_or_create_category_view(self):
+        """Gets or creates a 3D view for the current category"""
+        view_name = "{}{}".format(FAMILY_LIST_CATEGORY_VIEW_PREFIX, self.current_category_header)
+        view = REVIT_VIEW.get_view_by_name(view_name)
+        t = DB.Transaction(self.doc, "Create Category View")
+        t.Start()
         if not view:
             view = DB.View3D.CreateIsometric(self.doc, REVIT_VIEW.get_default_view_type("3d").Id)
-            view.Name = cate_3d_view_name
+            view.Name = view_name
+            
+        try:
+            view.LookupParameter("Views_$Group").Set("Ennead")
+            view.LookupParameter("Views_$Series").Set("List Item Category ₍ᐢ.ˬ.⑅ᐢ₎")
+        except:
+            pass
         t.Commit()
-        self.item_collection = []
+        return view
+            
 
     def deploy_family(self, family):
         self.confirm_new_layout_header(family)
@@ -630,8 +670,11 @@ class Deployer:
         curve_loop = DB.CurveLoop()
         for curve in curves:
             curve_loop.Append(curve)
+        
         floor = DB.Floor.Create(self.doc,
-                                curve_loop,
+                                DATA_CONVERSION.list_to_system_list([curve_loop], 
+                                                                  type=DATA_CONVERSION.DataType.CurveLoop, 
+                                                                  use_IList=False),
                               floor_type_id,
                               self.get_internal_dump_level().Id)
                               
@@ -825,7 +868,8 @@ def list_family():
     sel = REVIT_FORMS.dialogue(main_text="Select what kind of family to list...", options=opts)
     if not sel:
         return
-        
+
+    is_sync = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
     tg = DB.TransactionGroup(REVIT_APPLICATION.get_doc(), __title__)
     tg.Start()
    
@@ -835,11 +879,12 @@ def list_family():
         lister = List3DFamily()
         
     lister.run()
-    tg.Commit()
-    
+    tg.Assimilate ()
     NOTIFICATION.messenger("All families listed.")
-    SOUND.play_sound()
+    SOUND.play_finished_sound()
 
+    if is_sync:
+        REVIT_SYNC.sync_and_close()
 
 class ListFamily:
     """Base class for handling family listing operations"""
