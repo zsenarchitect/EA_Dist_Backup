@@ -4,7 +4,7 @@ import DATA_FILE
 import EXE
 import NOTIFICATION
 import time
-
+import SOUND
 
 class ProgressBarManager:
     def __init__(self, items=None, title="Processing...", label_func = None):
@@ -41,12 +41,13 @@ class ProgressBarManager:
 
     def __enter__(self):
         # Start the progress bar in a separate process
-        EXE.try_open_app("ProgressBar", safe_open=True)
+        start_progressbar()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # Clean up
         kill_progressbar()
+        SOUND.play_finished_sound()
   
 
 
@@ -84,6 +85,9 @@ def progress_bar(items, func, label_func = None, title="Iterating through items"
 def kill_progressbar():
     DATA_FILE.set_data({"is_active":False}, DATA_FILE_NAME)
 
+
+def start_progressbar():
+    EXE.try_open_app("ProgressBar", safe_open=True)
 
 def unit_test():
     import time
@@ -217,14 +221,17 @@ if __name__ == "__main__":
     print("\nWhat would you like to do?")
     print("1. Run unit test")
     print("2. Kill progress bar")
+    print ("3. Start Dummy progress bar")
     
 
-    choice = input("Enter 1 or 2: ").strip()
+    choice = input("Enter 1 or 2 or 3: ").strip()
     
     if choice == "1":
         unit_test()
         kill_progressbar()
     elif choice == "2":
         kill_progressbar()
+    elif choice == "3":
+        start_progressbar()
     else:
         print("Invalid choice. Please enter 1 or 2.")

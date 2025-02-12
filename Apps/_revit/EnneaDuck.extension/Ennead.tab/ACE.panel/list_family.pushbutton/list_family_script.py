@@ -27,7 +27,8 @@ FAMILY_DUMP_LEVEL = "EA_Family_List_Internal_Level"
 INTERNAL_COMMENT = "EnneadTab List Family Dump"
 FAMILY_DUMP_WALL_COMMENT = "EA_Family_List_Internal_Wall"
 FAMILY_DUMP_CEILING_COMMENT = "EA_Family_List_Internal_Ceiling"
-
+FAMILY_DUMP_FLOOR_COMMENT = "EA_Family_List_Internal_Floor"
+FAMILY_DUMP_ROOF_COMMENT = "EA_Family_List_Internal_Roof"
 
 class Deployer:
     """Handles deployment of families into views with optional tagging"""
@@ -125,7 +126,7 @@ class Deployer:
             family_cate_name = family.FamilyCategory.Name
         else:
             family_cate_name = "Unknown Category"
-        new_text_model.Text = "[{}] {}".format(family_cate_name, family.Name)
+        new_text_model.Text = "[{}]   {}".format(family_cate_name, family.Name)
         new_text_model.LookupParameter("Comments").Set(INTERNAL_COMMENT)
         size_x, size_y = self._calculate_instance_size(new_text_model)
         DB.ElementTransformUtils.MoveElement(self.doc, 
@@ -143,6 +144,8 @@ class Deployer:
             (DB.BuiltInCategory.OST_GenericModel, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_Walls, FAMILY_DUMP_WALL_COMMENT, "startswith"),
             (DB.BuiltInCategory.OST_Ceilings, FAMILY_DUMP_CEILING_COMMENT, "startswith"),
+            (DB.BuiltInCategory.OST_Roofs, FAMILY_DUMP_ROOF_COMMENT, "startswith"),
+            (DB.BuiltInCategory.OST_Floors, FAMILY_DUMP_FLOOR_COMMENT, "startswith"),
             (DB.BuiltInCategory.OST_CurtainWallPanels, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_DetailComponents, INTERNAL_COMMENT, "equals"),
             (DB.FamilyInstance, INTERNAL_COMMENT, "equals")
@@ -280,7 +283,7 @@ class Deployer:
         elif family.FamilyPlacementType == DB.FamilyPlacementType.OneLevelBasedHosted:
             return self._create_hosted_instance(family, family_type)
         else:
-            print("[{}]:{} family_placement_type is [{}], need special handle, ask SZ for detail.".format(
+            print("[{}]:{} family_placement_type is [{}], need special handle, ask SZ for detail so he can update the support.".format(
                 family.Name,
                 family_type.LookupParameter("Type Name").AsString(),
                 family.FamilyPlacementType))
@@ -366,9 +369,10 @@ class Deployer:
                                                    level,
                                                    DB.Structure.StructuralType.NonStructural)
         try:
-            instance.LookupParameter("Elevation from Host").Set(0)
-        except:
-            pass
+            if instance.LookupParameter("Elevation from Host"):
+                instance.LookupParameter("Elevation from Host").Set(0)
+        except Exception as e:
+            print ("Failed to set Elevation from Host for [{}]\nBecause [{}]".format(family_type.LookupParameter("Type Name").AsString(), str(e)))
         t.Commit()
         return instance
 
@@ -382,8 +386,10 @@ class Deployer:
             host = self._get_or_create_host_ceiling(family)
         elif "Roof" in host_type:  # Added Roof support
             host = self._get_or_create_host_roof(family)
+        elif "Floor" in host_type:
+            host = self._get_or_create_host_floor(family)
         else:
-            print("Host type [{}] not supported yet, ask SZ for detail.".format(host_type))
+            print("Host type [{}] not supported yet, ask SZ for detail so he can update the support.".format(host_type))
             return None
             
         if not host:
@@ -501,7 +507,7 @@ class Deployer:
                  .WhereElementIsNotElementType()\
                  .ToElements()
                  
-        roof_comment = "{}_{}".format("EA_Family_List_Internal_Roof", family.Name)
+        roof_comment = "{}_{}".format(FAMILY_DUMP_ROOF_COMMENT, family.Name)
         
         for roof in roofs:
             if roof.LookupParameter("Comments").AsString() == roof_comment:
@@ -545,6 +551,39 @@ class Deployer:
         roof.LookupParameter("Comments").Set(roof_comment)
         t.Commit()
         return roof
+
+    def _get_or_create_host_floor(self, family):
+        """Gets or creates a floor for hosting family instances
+        
+        Args:
+            family: Family requiring floor host"""
+        floors = DB.FilteredElementCollector(self.doc)\
+                 .OfCategory(DB.BuiltInCategory.OST_Floors)\
+                 .WhereElementIsNotElementType()\
+                 .ToElements()
+                 
+        floor_comment = "{}_{}".format(FAMILY_DUMP_FLOOR_COMMENT, family.Name)
+        
+        for floor in floors:
+            if floor.LookupParameter("Comments").AsString() == floor_comment:
+                return floor
+                
+        t = DB.Transaction(self.doc, "Create Host Floor")
+        t.Start()   
+        
+        floor_type_id = DB.FilteredElementCollector(self.doc)\
+                        .OfCategory(DB.BuiltInCategory.OST_Floors)\
+                        .WhereElementIsElementType()\
+                        .FirstElementId()   
+                        
+        floor = DB.Floor.Create(self.doc,
+                              floor_type_id,
+                              self.get_internal_dump_level().Id)
+                              
+        floor.LookupParameter("Comments").Set(floor_comment)
+        t.Commit()
+        return floor
+
 
     def _calculate_instance_size(self, instance):
         """Calculates the size of a family instance by its bounding box

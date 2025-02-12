@@ -28,6 +28,12 @@ def get_one_audio_path_by_prefix(prefix):
 def play_error_sound():
     play_sound("sound_effect_error")
 
+def play_success_sound():
+    play_sound("sound_effect_mario_fireball")
+
+def play_finished_sound():
+    play_sound("sound_effect_mario_message")
+
 def play_sound(file = "sound_effect_popup_msg3"):
     file = get_audio_path_by_name(file)
     if not file:
@@ -167,6 +173,8 @@ if __name__ == "__main__":
     # test_play_all_sounds()
     # sys_alert()
     play_error_sound()
+    play_success_sound()
+    play_finished_sound()
 
 
 
