@@ -101,7 +101,7 @@ def export_filled_region_types():
     data.append(ExcelDataItem("BackgroundPattern", 0, 'H'))
 
     filepath = FOLDER.get_EA_dump_folder_file("FilledRegionColor.xlsx")
-    EXCEL.save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = True)
+    EXCEL.save_data_to_excel(data, filepath, worksheet = "EnneadTab", open_after = True, freeze_row = 1)
 
 
 

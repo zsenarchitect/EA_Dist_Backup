@@ -87,7 +87,7 @@ class ExcelDataItem:
         border_color=None,
     ):
         if isinstance(column, str):
-            column = letter_to_index(column)
+            column = letter_to_index(column, start_from_zero=True)
         self.item = item
         self.row = row
         self.column = column
@@ -352,7 +352,7 @@ def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, st
                 return data_row
     return None
 
-def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True):
+def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row = None):
     """Save data to an Excel file.
 
     Args:
@@ -420,6 +420,9 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True):
 
     for column in column_max_width_dict.keys():
         worksheet.set_column(column, column, column_max_width_dict[column])
+
+    if freeze_row:
+        worksheet.freeze_panes(freeze_row, 0)
 
     try:
         workbook.close()
