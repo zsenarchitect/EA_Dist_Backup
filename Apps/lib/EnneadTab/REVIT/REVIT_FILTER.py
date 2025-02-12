@@ -10,12 +10,46 @@ def get_view_filter_by_name(doc, name):
             return filter
     return None
 
+def get_selection_filter_by_name(doc, name):
+    all_filters = DB.FilteredElementCollector(doc)\
+             .OfClass(DB.SelectionFilterElement)\
+             .ToElements()
+    for filter in all_filters:
+        if filter.Name == name:
+            return filter
+    return None
+
+
+
+def add_selection_filter_to_view(doc, view_or_template, filter_name):
+    filter = get_selection_filter_by_name(doc, filter_name)
+    if not filter:
+        filter = create_selection_filter(doc, filter_name, [])
+    view_or_template.AddFilter(filter.Id)
+
 def add_view_filter_to_view(doc, view_or_template, filter_name):
     view_or_template.AddFilter(get_view_filter_by_name(doc, filter_name).Id)
 
 def set_view_filter_overrides(doc, view_or_template, filter_name, overrides):
     filter = get_view_filter_by_name(doc, filter_name)
     view_or_template.SetFilterOverrides(filter.Id, overrides) 
+
+def create_selection_filter(doc, filter_name, selection):
+        
+    selection_filter = DB.SelectionFilterElement.Create(
+        doc,
+        filter_name
+    )
+    selection_filter.SetElementIds (DATA_CONVERSION.list_to_system_list([x.Id for x in selection]))
+    return selection_filter
+
+def update_selection_filter(doc, filter_name, selection):
+    filter = get_selection_filter_by_name(doc, filter_name)
+    if not filter:
+        filter = create_selection_filter(doc, filter_name, selection)
+        return
+    filter.SetElementIds (DATA_CONVERSION.list_to_system_list([x.Id for x in selection]))
+
 
 def create_view_filter(doc, filter_name, categories):
     """categories: list of categories to apply filter to, [OST_xxx, OST_xxx, ...]"""

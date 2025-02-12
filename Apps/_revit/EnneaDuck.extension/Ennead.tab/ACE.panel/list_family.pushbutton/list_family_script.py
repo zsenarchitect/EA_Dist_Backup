@@ -13,7 +13,7 @@ from pyrevit.revit import ErrorSwallower
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import DATA_CONVERSION, NOTIFICATION, UI, SOUND
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FILTER
 from EnneadTab import ERROR_HANDLE, LOG
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore
@@ -21,14 +21,14 @@ from Autodesk.Revit import DB # pyright: ignore
 # from Autodesk.Revit import UI # pyright: ignore
 
 # View and level naming constants
-DETAIL_ITEM_DUMP_VIEW = "EnneadTab_Detail Item Dump"
-FAMILY_DUMP_VIEW = "EnneadTab_Family Dump"
-FAMILY_DUMP_LEVEL = "EA_Family_List_Internal_Level"
-INTERNAL_COMMENT = "EnneadTab List Family Dump"
-FAMILY_DUMP_WALL_COMMENT = "EA_Family_List_Internal_Wall"
-FAMILY_DUMP_CEILING_COMMENT = "EA_Family_List_Internal_Ceiling"
-FAMILY_DUMP_FLOOR_COMMENT = "EA_Family_List_Internal_Floor"
-FAMILY_DUMP_ROOF_COMMENT = "EA_Family_List_Internal_Roof"
+FAMILY_DUMP_2D_DUMP_VIEW = "EnneadTab_2D_Item_Dump"
+FAMILY_DUMP_3D_DUMP_VIEW = "EnneadTab_3D_Family_Dump"
+FAMILY_DUMP_LEVEL = "EnneadTab_Family_List_Internal_Level"
+INTERNAL_COMMENT = "EnneadTab_Family_List_Internal_Comment"
+FAMILY_DUMP_WALL_COMMENT = "EnneadTab_Family_List_Internal_Wall"
+FAMILY_DUMP_CEILING_COMMENT = "EnneadTab_Family_List_Internal_Ceiling"
+FAMILY_DUMP_FLOOR_COMMENT = "EnneadTab_Family_List_Internal_Floor"
+FAMILY_DUMP_ROOF_COMMENT = "EnneadTab_Family_List_Internal_Roof"
 
 class Deployer:
     """Handles deployment of families into views with optional tagging"""
@@ -61,14 +61,19 @@ class Deployer:
         self.purge_old_dump_family()
         with ErrorSwallower() as swallower:
             UI.progress_bar(families,self.deploy_family,label_func=lambda x: "Deploying Family [{}]".format(x.Name), title="Deploying Families")
+        self.save_item_collection()
 
+        self.process_category_views()
 
         # Cleanup view modes
         t = DB.Transaction(self.doc, "Disable Temporary View Mode")
         t.Start()
         self.view.DisableTemporaryViewMode(DB.TemporaryViewMode.TemporaryHideIsolate)
         t.Commit()
-        
+
+    def process_category_views(self):
+        print ("Processing category views TO_DO: get all category views, add all selection filterers to them, and turn off visiblitu for all filtere not related to this view.")
+        pass
     def _get_model_text_elements(self):
         """Gets or creates model text elements needed for labeling
         
@@ -137,6 +142,7 @@ class Deployer:
 
         self.max_label_width = max(self.max_label_width, size_x)
         t.Commit()
+        self.item_collection.append(new_text_model)
     
     def purge_old_dump_family(self):
         """Purges all elements with specific comments from the view"""
@@ -216,15 +222,41 @@ class Deployer:
             self.max_label_width = -1
             self.row_width = 0
             self.max_row_width = -1
+            self.item_collection = []
 
         if family.FamilyCategory.Name != self.current_category_header:
             self.header_x += self.max_label_width + 30 + self.max_row_width # ideally it should be using current label max widht with previous row max width, but , well, i am not care enough to improve that yet. Just using mahic 10 and hope for the best
             self.pointer = DB.XYZ(self.header_x, 0, self.pointer.Z)
             self.current_category_header = family.FamilyCategory.Name
+            self.save_item_collection()
+            
 
         return True
-
     
+    def save_item_collection(self):
+        """Save all items in the collection as a Revit selection filter"""
+        if not self.item_collection:
+            return
+            
+        t = DB.Transaction(self.doc, "Create Selection Filter")
+        t.Start()
+
+        # Create unique filter name based on category
+        filter_name = "EnneadTab_Family_List_{}".format(
+            self.current_category_header.replace(" ", "_")
+        )
+        
+        # get filter with this nmae
+        selection_filter = REVIT_FILTER.update_selection_filter(self.doc, filter_name, self.item_collection)
+
+        cate_3d_view_name = "EnneadTab_Family_List_Category_{}".format(self.current_category_header.replace(" ", "_"))
+        view = REVIT_VIEW.get_view_by_name(cate_3d_view_name)
+        if not view:
+            view = DB.View3D.CreateIsometric(self.doc, REVIT_VIEW.get_default_view_type("3d").Id)
+            view.Name = cate_3d_view_name
+        t.Commit()
+        self.item_collection = []
+
     def deploy_family(self, family):
         self.confirm_new_layout_header(family)
    
@@ -233,7 +265,7 @@ class Deployer:
   
         max_h = -1
         min_gap = 5
-        is_need_host_wall = False
+        self.is_need_host_wall = False
         
         for type_id in family.GetFamilySymbolIds():
             family_type = self.doc.GetElement(type_id)
@@ -242,6 +274,7 @@ class Deployer:
             instance = self._create_family_instance(family, family_type)
             if not instance or not instance.IsValidObject:
                 continue
+            self.item_collection.append(instance)
                 
             self._set_instance_comments(instance)
             
@@ -258,7 +291,7 @@ class Deployer:
                 
             self.step_right(size_x * 2)
 
-            if is_need_host_wall:
+            if self.is_need_host_wall:
                 wall = self.get_internal_dump_wall( family.Name)
                 self.secure_valid_wall_length( wall)
 
@@ -282,6 +315,7 @@ class Deployer:
                                           DB.FamilyPlacementType.TwoLevelsBased]:  # Added TwoLevelsBased
             return self._create_level_based_instance(family_type)
         elif family.FamilyPlacementType == DB.FamilyPlacementType.OneLevelBasedHosted:
+            self.is_need_host_wall = True
             return self._create_hosted_instance(family, family_type)
         else:
             print("[{}]:{} family_placement_type is [{}], need special handle, ask SZ for detail so he can update the support.".format(
@@ -395,6 +429,7 @@ class Deployer:
             
         if not host:
             return None
+        self.item_collection.append(host)
             
         t = DB.Transaction(self.doc, "Create Hosted Instance")
         t.Start()
@@ -576,8 +611,27 @@ class Deployer:
                         .OfCategory(DB.BuiltInCategory.OST_Floors)\
                         .WhereElementIsElementType()\
                         .FirstElementId()   
-                        
+
+        short_side = 2
+        long_side = 6
+        points = [
+            self.pointer.Add(DB.XYZ(-short_side, -short_side, 10)),
+            self.pointer.Add(DB.XYZ(long_side, -short_side, 10)),
+            self.pointer.Add(DB.XYZ(long_side, short_side, 10)),
+            self.pointer.Add(DB.XYZ(-short_side, short_side, 10))
+        ]
+        
+        curves = []
+        for i in range(len(points)):
+            next_i = (i + 1) % len(points)
+            line = DB.Line.CreateBound(points[i], points[next_i])
+            curves.append(line)
+            
+        curve_loop = DB.CurveLoop()
+        for curve in curves:
+            curve_loop.Append(curve)
         floor = DB.Floor.Create(self.doc,
+                                curve_loop,
                               floor_type_id,
                               self.get_internal_dump_level().Id)
                               
@@ -847,12 +901,13 @@ class List2DFamily(ListFamily):
         
     def get_or_create_view(self):
         """Gets or creates drafting view"""
-        view = REVIT_VIEW.get_view_by_name(DETAIL_ITEM_DUMP_VIEW)
+
+        view = REVIT_VIEW.get_view_by_name(FAMILY_DUMP_2D_DUMP_VIEW)
         if not view:
-            t = DB.Transaction(self.doc, "Make new view: " + DETAIL_ITEM_DUMP_VIEW)
+            t = DB.Transaction(self.doc, "Make new view: " + FAMILY_DUMP_2D_DUMP_VIEW)
             t.Start()
             view = DB.ViewDrafting.Create(self.doc, REVIT_VIEW.get_default_view_type("drafting").Id)
-            view.Name = DETAIL_ITEM_DUMP_VIEW
+            view.Name = FAMILY_DUMP_2D_DUMP_VIEW
             view.Scale = 2
             t.Commit()
         return view
@@ -901,8 +956,8 @@ class List3DFamily(ListFamily):
     def _get_view_name(self, view_type):
         """Gets appropriate view name based on type"""
         if view_type == "Use 3D view":
-            return "{}_3D".format(FAMILY_DUMP_VIEW)
-        return "{}_Plan".format(FAMILY_DUMP_VIEW)
+            return "{}_3D".format(FAMILY_DUMP_3D_DUMP_VIEW)
+        return "{}_Plan".format(FAMILY_DUMP_3D_DUMP_VIEW)
         
     def _create_new_view(self, view_type, view_name):
         """Creates new view based on type"""
