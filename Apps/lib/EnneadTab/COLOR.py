@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """Utilities for color manipulation and conversion"""
@@ -76,14 +75,25 @@ def get_random_color(return_tuple = True):
     green = int(255*random.random())
     blue = int(255*random.random())
 
+    color = Color.FromArgb(red, green, blue)
 
-    color =  Color.FromArgb(red,green,blue)
-
-    normalized_color = (color[0]/256.0, color[1]/256.0, color[2]/256.0)
+    # Convert RGB values to 0-1 range for HSV conversion
+    normalized_color = (color.R/256.0, color.G/256.0, color.B/256.0)
+    
+    # Convert RGB to HSV (Hue, Saturation, Value)
     hsv_color = rgb_to_hsv(*normalized_color)
-    grayed_hsv_color = (hsv_color[0], 0.6, hsv_color[2])
+    
+    # Create desaturated version by setting saturation to 0.1
+    # Keeps original hue and value, but reduces color intensity
+    grayed_hsv_color = (hsv_color[0], 0.1, hsv_color[2])
+    
+    # Convert back to RGB colorspace
     grayed_rgb_color = hsv_to_rgb(*grayed_hsv_color)
-    denormalized_rgb_color = (int(grayed_rgb_color[0]*256), int(grayed_rgb_color[1]*256), int(grayed_rgb_color[2]*256))
+    
+    # Convert back to 0-255 range for RGB values
+    denormalized_rgb_color = (int(grayed_rgb_color[0]*256), 
+                             int(grayed_rgb_color[1]*256), 
+                             int(grayed_rgb_color[2]*256))
 
     if return_tuple:
         return denormalized_rgb_color

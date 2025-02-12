@@ -463,7 +463,7 @@ def show_tip_rhino():
     output.write(button_icon)
 
 
-    output.write("Did you know in [{}]...".format(commands), OUTPUT.Style.SubTitle)
+    output.write("Did you know in [{}]...".format(commands), OUTPUT.Style.Subtitle)
 
     output.write (tip_data.get("doc"))
 

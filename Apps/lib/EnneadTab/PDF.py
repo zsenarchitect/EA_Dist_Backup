@@ -129,7 +129,7 @@ class PDFGenerator:
             alignment=2
         )
         self.sub_title_style = ParagraphStyle(
-            'SubTitleStyle',
+            'SubtitleStyle',
             fontSize=9,
             textColor=colors.darkgray,
             alignment=1

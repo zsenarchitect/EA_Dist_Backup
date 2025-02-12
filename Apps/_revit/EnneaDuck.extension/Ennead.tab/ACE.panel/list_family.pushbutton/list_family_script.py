@@ -119,6 +119,7 @@ class Deployer:
                                                               self.pointer - sample_model_text.Location.Point)
         new_text_model = self.doc.GetElement(new_text_model[0])
   
+        
         new_text_model.Depth = 0.01
         new_text_model.ModelTextType = label_text_type
         new_text_model.HorizontalAlignment = DB.HorizontalAlign.Right

@@ -244,7 +244,7 @@ def notification(main_text = "",
     output = OUTPUT.get_output()
  
     output.insert_divider()
-    output.write(main_text, OUTPUT.Style.SubTitle)
+    output.write(main_text, OUTPUT.Style.Subtitle)
     output.write(sub_text, OUTPUT.Style.MainBody)
     output.plot()
     return

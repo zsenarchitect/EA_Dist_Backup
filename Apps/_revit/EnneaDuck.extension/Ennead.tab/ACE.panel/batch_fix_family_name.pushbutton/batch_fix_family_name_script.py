@@ -24,7 +24,7 @@ import re
 from Autodesk.Revit import DB  # pyright: ignore
 from pyrevit import forms, script
 import proDUCKtion  # pyright: ignore
-from EnneadTab import ERROR_HANDLE, LOG, UI, NOTIFICATION, OUTPUT, FOLDER, EXCEL
+from EnneadTab import ERROR_HANDLE, LOG, UI, NOTIFICATION, OUTPUT, FOLDER, EXCEL, COLOR
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY
 
 # Initialize Revit document
@@ -76,9 +76,9 @@ class HostingMethodMapper(BaseMapper):
     """
     
     mapping = {
-        "Wall": "WA",
-        "Ceiling": "CE",
-        "Floor": "FL",
+        "Wall": "WH",
+        "Ceiling": "CH",
+        "Floor": "FH",
         "Face": "FC",
         
         # Non-hosted cases
@@ -121,6 +121,9 @@ class HostingMethodMapper(BaseMapper):
             return True  # Skip validation if name doesn't match pattern, becasue it is ok to not have hosting abbreviation in the name
             
         groups = name_match.groups()
+        # print ("family.Name", family.Name)
+        # print ("name_match", name_match)
+        # print ("groups", groups)
         name_hosting_abbr = groups[-1][1:] if groups[-1] else None  # Remove leading underscore if exists
         
         # Compare actual vs name-specified hosting
@@ -175,62 +178,149 @@ class HostingMethodMapper(BaseMapper):
             
             hosting_groups[group_key].append(family.Name)
         
-        # Output groups with subtitles
-        for abbr, families in sorted(hosting_groups.items()):
-            output.write("\n{} Families ({}):".format(
-                abbr if abbr != "Non-Hosted" else "Non-Hosted",
+        # Output groups with subTitles - hosted families first, then non-hosted
+        # Get all groups except "Non-Hosted"
+        hosted_groups = {k: v for k, v in hosting_groups.items() if k != "Non-Hosted"}
+        
+        # Print hosted families first
+        for abbr, families in sorted(hosted_groups.items()):
+            output.write("\n{} Hosted Families ({}):".format(
+                abbr,
                 len(families)
-            ), OUTPUT.Style.SubTitle)
+            ), OUTPUT.Style.Subtitle)
             output.write(sorted(families))
+        
+        # Print non-hosted families last
+        if "Non-Hosted" in hosting_groups:
+            output.write("\nNon-Hosted Families ({}):".format(
+                len(hosting_groups["Non-Hosted"])
+            ), OUTPUT.Style.Subtitle)
+            output.write(sorted(hosting_groups["Non-Hosted"]))
             
         output.plot()
 
 
 class CategoryMapper(BaseMapper):
-    """Maps Revit categories to standardized abbreviations.
-    
-    Features:
-        - Maintains standard category abbreviations (e.g., DOOR, WIND)
-        - Automatically adds TAG prefix for any tag-related categories
-        - Validates family category against name prefix
-    """
+    """Maps Revit categories to standardized abbreviations."""
     
     mapping = {
-        "Casework": "CSWK",
-        "Ceilings": "CLNG", 
-        "Columns": "CLMN",
-        "Curtain Panels": "CRTN",
-        "Curtain Wall Mullions": "MULL",
-        "Doors": "DOOR",
-        "Electrical Equipment": "ELEC",
-        "Electrical Fixtures": "ELFX",
-        "Entourage": "ETRG",
-        "Fire Alarm Devices": "FIRE",
+        # Architectural Core Elements
+        "Walls": "WALL",
         "Floors": "FLOR",
-        "Furniture": "FURN",
-        "Furniture Systems": "FSYS",
-        "Generic Models": "GMOD",
-        "Generic Annotation": "SYMBOL",
-        "Lighting Fixtures": "LITE",
-        "Mass": "MASS",
-        "Mechanical Equipment": "MECH",
-        "Nurse Call Devices": "NRSE",
-        "Parking": "PARK",
-        "Planting": "PLNT",
-        "Plumbing": "PLBG",
-        "Profile": "PRFL",
-        "Railings": "RAIL",
-        "Roads": "ROAD",
+        "Ceilings": "CLNG", 
         "Roofs": "ROOF",
-        "Security Devices": "SECU",
-        "Site": "SITE",
-        "Specialty Equipment": "SEQP",
+        "Doors": "DOOR",
+        "Windows": "WIND",
+        
+        # Architectural Circulation
         "Stairs": "STAIR", 
+        "Ramps": "RAMP",
+        "Railings": "RAIL",
+        "Balusters": "BLST",
+        
+        # Structural Elements
+        "Columns": "CLMN",
         "Structural Columns": "SCLM",
         "Structural Foundations": "FNDN",
         "Structural Framing": "STRX",
-        "Walls": "WALL",
-        "Windows": "WIND",
+        "Structural Connections": "SCON",
+        "Structural Rebar": "RBAR",
+        "Structural Stiffeners": "STIF",
+        "Structural Tendons": "TEND",
+        "Structural Trusses": "TRUS",
+        
+        # Bridge Components
+        "Abutments": "ABUT",
+        "Bearings": "BEAR",
+        "Bridge Cables": "BCBL",
+        "Bridge Decks": "BDCK",
+        "Piers": "PIER",
+        
+        # Interior Elements
+        "Casework": "CSWK",
+        "Furniture": "FURN",
+        "Furniture Systems": "FSYS",
+        "Spaces": "SPCE",
+        "Supports": "SUPP",
+        
+        # Equipment
+        "Food Service Equipment": "FOOD",
+        "Medical Equipment": "MEQP",
+        "Specialty Equipment": "SEQP",
+        "Nurse Call Devices": "NRSE",
+        
+        # MEP - Electrical
+        "Electrical Equipment": "ELEC",
+        "Electrical Fixtures": "ELFX",
+        "Lighting Fixtures": "LITE",
+        "Lighting Devices": "LDEV",
+        "Security Devices": "SECU",
+        "Communication Devices": "COMM",
+        "Data Devices": "DATA",
+        "Audio Visual Devices": "AVDV",
+        "Fire Alarm Devices": "FIRE",
+        "Wires": "WIRE",
+        
+        # MEP - Mechanical
+        "Air Terminals": "ATRM",
+        "Duct Accessories": "DACC",
+        "Duct Fittings": "DFIT",
+        "Duct Insulations": "DINS",
+        "Duct Linings": "DLIN",
+        "Ducts": "DUCT",
+        "Mechanical Equipment": "MECH",
+        "Mechanical Control Devices": "MCTL",
+        "Zone Equipment": "ZEQP",
+        
+        # MEP - Plumbing
+        "Plumbing": "PLBG",
+        "Plumbing Equipment": "PEQP",
+        "Plumbing Fixtures": "PFIX",
+        "Pipe Accessories": "PACC",
+        "Pipe Fittings": "PFIT",
+        "Pipe Insulations": "PINS",
+        "Pipes": "PIPE",
+        "Sprinklers": "SPNK",
+        
+        # Distribution Systems
+        "Cable Trays": "CTRY",
+        "Conduits": "COND",
+        "Curtain Panels": "CRTN",
+        "Curtain Systems": "CSYS",
+        "Curtain Wall Mullions": "MULL",
+        
+        # Site and Exterior
+        "Entourage": "ETRG",
+        "Hardscape": "HARD",
+        "Parking": "PARK",
+        "Planting": "PLNT",
+        "Roads": "ROAD",
+        "Site": "SITE",
+        
+        # Annotation Elements
+        "Callout Heads": "CALL",
+        "Detail Items": "DETL",
+        "Elevation Marks": "ELEV",
+        "Generic Annotations": "ANNO",
+        "Generic Models": "GMOD",
+        "Generic Annotation": "SYMBOL",
+        "Grid Heads": "GRID",
+        "Level Heads": "LEVL",
+        "Section Marks": "SECT",
+        "Span Direction Symbol": "SPAN",
+        "Spot Elevation Symbols": "SPOT",
+        "Title Blocks": "TITL",
+        "View Reference": "VREF",
+        "View Titles": "VTIT",
+        
+        # Special Elements
+        "Expansion Joints": "EXPJ",
+        "Mass": "MASS",
+        "Parts": "PART",
+        "Profiles": "PRFL",
+        "Signage": "SIGN",
+        "Temporary Structures": "TEMP",
+        "Vibration Management": "VIBR",
     }
 
     @classmethod
@@ -270,19 +360,66 @@ class CategoryMapper(BaseMapper):
 
         return True
 
+    @staticmethod
+    def analyze_category_map():
+        """Analyze and display category mapping status based on document families."""
+        output = OUTPUT.get_output()
+        output.write("Category Mapping Analysis:", OUTPUT.Style.Title)
+        
+        # Group categories
+        registered_categories = {}  # Dict to store category counts
+        unregistered_categories = {}
+        
+        all_families = DB.FilteredElementCollector(REVIT_APPLICATION.get_doc()).OfClass(DB.Family).ToElements()
+        for family in all_families:
+            if not family.FamilyCategory:
+                continue
+                
+            category_name = family.FamilyCategory.Name
+            
+            # Skip if category name contains "Tag"
+            if "Tag" in category_name:
+                continue
+                
+            if category_name in CategoryMapper.mapping:
+                registered_categories[category_name] = registered_categories.get(category_name, 0) + 1
+            else:
+                unregistered_categories[category_name] = unregistered_categories.get(category_name, 0) + 1
+        
+        # Output registered categories
+        output.write("\nRegistered Categories ({}):".format(len(registered_categories)), 
+                    OUTPUT.Style.Subtitle)
+        for category_name in sorted(registered_categories.keys()):
+            output.write("    {} -> {} ({} families)".format(
+                category_name, 
+                CategoryMapper.mapping[category_name],
+                registered_categories[category_name]
+            ))
+            
+        # Output unregistered categories
+        output.write("\nUnregistered Categories ({}):".format(len(unregistered_categories)), 
+                    OUTPUT.Style.Subtitle)
+        for category_name in sorted(unregistered_categories.keys()):
+            output.write("    {} ({} families)".format(
+                category_name,
+                unregistered_categories[category_name]
+            ))
+            
+        output.plot()
+
 # Initialize CategoryMapper by calling class method after class definition
 CategoryMapper.add_tag_categories()
 
 # Regex pattern components for family name validation
 FAMILY_NAME_PATTERN = re.compile(
     r"^"                     # Start of string
-    r"[A-Z]{2,4}"           # Category (2-4 uppercase letters)
-    r"_"                     # Separator
-    r"[A-Z][a-zA-Z0-9]+"    # Description (CamelCase)
-    r"_"                     # Separator
-    r"[A-Z]{2,4}"           # Intended Use (2-4 uppercase letters)
-    r"(?:_[A-Z]{2,4})?"     # Optional Designator
-    r"(?:_[A-Z]{2,4})?"     # Optional Hosting Method
+    r"([A-Z]{2,6})"         # Required: Category (2-6 uppercase letters)
+    r"_"                     # Required: Separator
+    r"([A-Z][a-zA-Z0-9]+)"  # Required: Description (CamelCase)
+    r"_"                     # Required: Separator
+    r"([A-Z]+)"             # Required: Intended Use (uppercase letters)
+    r"(?:_([^_]+))?"        # Optional: Any non-empty characters after underscore
+    r"(?:_([A-Z]{2}))?"     # Optional: Exactly 2 uppercase letters after underscore
     r"$"                     # End of string
 )
 
@@ -290,9 +427,19 @@ FAMILY_NAME_PATTERN = re.compile(
 
 def check_family_name_format(family, show_log=False):
     """Validates if family name follows the naming convention"""
-
+    family_name = family.Name
+    
+    # Debug output for problematic names
+    if show_log:
+        match = FAMILY_NAME_PATTERN.match(family_name)
+        if match:
+            print("Groups found:", match.groups())
+        else:
+            print("No match for:", family_name)
+            
     if not CategoryMapper.validate_category(family, show_log):
         return False
+        
     # Validate hosting method using the mapper
     if not HostingMethodMapper.validate_hosting_method(family, show_log):
         return False
@@ -317,6 +464,7 @@ def batch_rename_families():
 
     options = [
         "Analyze hosting behaviors",
+        "Analyze category map",
         "Show Naming Rules",
         "Fix by Excel"
     ]
@@ -331,8 +479,9 @@ def batch_rename_families():
         
     actions = {
         options[0]: HostingMethodMapper.analyze_hosting_behaviors,
-        options[1]: show_naming_rules,
-        options[2]: fix_by_excel
+        options[1]: CategoryMapper.analyze_category_map,
+        options[2]: show_naming_rules,
+        options[3]: fix_by_excel
     }
     
     actions[selection]()
@@ -355,8 +504,8 @@ def get_problematic_families(doc):
 
 def fix_by_excel():
     """Fix family names by reading from Excel file."""
-    options = {"1_Exporting Family Name":export_bad_family_name_to_excel,
-               "2_Importing Family Name":import_family_name_from_excel}
+    options = {"1_Exporting Family Name First":export_bad_family_name_to_excel,
+               "2_Transfer Edited Family Names":import_family_name_from_excel}
 
     selection = forms.SelectFromList.show(
         sorted(options.keys()),
@@ -382,55 +531,62 @@ def export_bad_family_name_to_excel():
     if not bad_families:
         return
     
-    # Create Excel file
-    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xls")
-    if not excel_file:
-        return
-    
+
+    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xlsx")
+
+
+    cate_color_dict = {}
     # Create Excel file
     data = []
     current_row = 0
-    data.append(EXCEL.ExcelDataItem("Fill in forms below where ever make sense to you. Edited Row will be taken account.", current_row, 0))
-    current_row += 1
-    headers = ["Current Family Name", "Category Abbr", "Description", "Intended Use", "Designator(Optional)", "Hosting(Optional)"]
+    headers = ["Current Family Name", 
+               "Category Abbr/CSI Div No.", 
+               "ItemDescription/ItemSubfields(CamelCase)", 
+               "Intended Use/Practive Area/Office abbr/Client abbr", 
+               "(Optional)Model Designator/Attanla Num/CSI Master format", 
+               "Hosting Method"]
     for i, header in enumerate(headers):
         data.append(EXCEL.ExcelDataItem(header, current_row, i, border_style=6, cell_color=(200, 200, 200)))
+    
     current_row += 1
     for i, family in enumerate(bad_families):
-        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A"))
-        data.append(EXCEL.ExcelDataItem(CategoryMapper.get_abbreviation(family.FamilyCategory.Name), current_row, "B"))
+        cate_abbr = CategoryMapper.get_abbreviation(family.FamilyCategory.Name)
+        if cate_abbr not in cate_color_dict:
+            cate_color_dict[cate_abbr] = COLOR.get_random_color()
+        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A", cell_color=cate_color_dict[cate_abbr]))
+        data.append(EXCEL.ExcelDataItem(cate_abbr, current_row, "B"))
         data.append(EXCEL.ExcelDataItem("---", current_row, "C"))
         data.append(EXCEL.ExcelDataItem("---", current_row, "D"))
         data.append(EXCEL.ExcelDataItem(None, current_row, "E"))
         data.append(EXCEL.ExcelDataItem(HostingMethodMapper.get_hosting_abbreviation(family), current_row, "F"))
         current_row += 1
-    EXCEL.save_data_to_excel(data, excel_file, freeze_row=2)
+    EXCEL.save_data_to_excel(data, excel_file, worksheet="FamilyRenameLittleHelper", freeze_row=1)
 
     
 
 
-def import_family_name_from_excel(doc):
+def import_family_name_from_excel():
     """Import family names from Excel file."""
-    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xls")
+    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xlsx")
     if not excel_file:
         return
     
-    data = EXCEL.read_data_from_excel(excel_file)
+    data = EXCEL.read_data_from_excel(excel_file, worksheet="FamilyRenameLittleHelper")
 
-    # remove the first two rows
-    data = data[2:]
-    print(data)
-    print ("-------------")
+    output = OUTPUT.get_output()
+    # remove the header row
+    data = data[1:]
 
-
+    doc = REVIT_APPLICATION.get_doc()
     t = DB.Transaction(doc, "Batch Fix Family Names")
     t.Start()
+    log  = []
     for row in data:
-        current_family_name = row[0]
+        current_family_name = row[0].get("value")
         
-        category_abbr = row[1]
-        description = row[2]
-        intended_use = row[3]
+        category_abbr = row[1].get("value")
+        description = row[2].get("value")
+        intended_use = row[3].get("value")
 
         # check if the description is empty
         if description == "---":
@@ -438,24 +594,32 @@ def import_family_name_from_excel(doc):
         # check if the intended use is empty
         if intended_use == "---":
             continue
-        designator = row[4]
-        hosting = row[5]
+        designator = row[4].get("value")
+        hosting = row[5].get("value")
         user_defined_name = "{}_{}_{}".format(category_abbr, description, intended_use)
         if designator:
             user_defined_name = "{}_{}".format(user_defined_name, designator)
         if hosting:
             user_defined_name = "{}_{}".format(user_defined_name, hosting)
         
-        if not check_family_name_format(user_defined_name, show_log=True):
-            continue
+        while not is_family_name_unique(user_defined_name):
+            user_defined_name = "{}_{}".format(user_defined_name, "conflicting_name")
         if user_defined_name != current_family_name:
-            print("Renamed: {} -> {}".format(current_family_name, user_defined_name))
+            log.append("{} ---> {}".format(current_family_name, user_defined_name))
             # update the family name
             family = REVIT_FAMILY.get_family_by_name(current_family_name, doc)
             if family:
                 family.Name = user_defined_name
+
+    if len(log) > 0:
+        output.write("{} Family Renamed:".format(len(log)), OUTPUT.Style.Subtitle)
+        output.write(log)
+        output.plot()
     t.Commit()
 
+def is_family_name_unique(family_name):
+    doc = REVIT_APPLICATION.get_doc()
+    return family_name not in set(f.Name for f in DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements())
 
 
 

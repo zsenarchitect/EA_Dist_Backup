@@ -75,7 +75,7 @@ def try_catch_error(is_silent=False, is_pass = False):
                         print_note(e)
 
                     output = OUTPUT.get_output()
-                    output.write(error_time, OUTPUT.Style.SubTitle)
+                    output.write(error_time, OUTPUT.Style.Subtitle)
                     output.write(error)
                     output.insert_divider()
                     output.plot()

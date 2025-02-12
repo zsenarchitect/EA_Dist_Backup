@@ -212,6 +212,9 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
     filepath = FOLDER.get_safe_copy(filepath)
     
     if filepath.endswith(".xlsx"):
+        if not worksheet:
+            NOTIFICATION.messenger(main_text="Worksheet input is required for xlsx files")
+            return {}   
         job_data = {
             "mode": "read",
             "filepath": filepath,
@@ -234,6 +237,23 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
         for key, value in raw_data.items():
             row, column = map(int, key.split(','))
             converted_data[(row, column)] = value
+
+        if not return_dict:
+            # convert the converted_data to a list of lists, sorted by row, adding missing rows with empty strings. the coumn count need to match the max column count in the data
+            max_column = max(column for row, column in converted_data.keys())
+            max_row = max(row for row, column in converted_data.keys())
+            OUT = []
+            for row in range(max_row):
+                row += 1 # because the row index is 1-based, so need to shift it
+                row_data = []
+                for column in range( max_column):
+                    column += 1 # because the column index is 1-based, so need to shift it
+                    if (row, column) in converted_data:
+                        row_data.append(converted_data[(row, column)])
+                    else:
+                        row_data.append({})
+                OUT.append(row_data)
+            return OUT
         
         return converted_data
         NOTIFICATION.messenger(main_text="Excel file is xlsx, converting to xls, this will take a few moments.\nFor better performance, save as .xls instead of .xlsx.")   
@@ -415,7 +435,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         if column not in column_max_width_dict.keys():
             column_max_width_dict[column] = 0
         column_max_width_dict[column] = max(
-            column_max_width_dict[column], 1.2 * len(str(item))
+            column_max_width_dict[column], 1.1 * len(str(item))
         )
 
     for column in column_max_width_dict.keys():

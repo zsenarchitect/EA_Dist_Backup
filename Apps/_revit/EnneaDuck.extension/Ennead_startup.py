@@ -67,7 +67,7 @@ def check_minimal_version_for_enneadtab():
         output = OUTPUT.get_output()
 
         output.write("Please update pyrevit from self service port!!!",OUTPUT.Style.Title)
-        output.write("Your version: {}.{} ---> Suggested version: {}.{}".format(major, minor, desired_major, desired_minor),OUTPUT.Style.SubTitle)
+        output.write("Your version: {}.{} ---> Suggested version: {}.{}".format(major, minor, desired_major, desired_minor),OUTPUT.Style.Subtitle)
         output.insert_divider()
         output.write ("Did you know pyrevit 4.7 was released at end of 2019? That was so long ago Covid was not even a thing yet.")
 

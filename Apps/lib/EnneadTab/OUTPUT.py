@@ -92,7 +92,7 @@ function copyErrorCard(btn) {
 class Style:
     MainBody = "p"
     Title = "h1"
-    SubTitle = "h2"
+    Subtitle = "h2"
     Footnote = "foot_note"
     
 
@@ -130,8 +130,13 @@ class Output:
 
     def reset_output(self):
         Output._out = []
-        
+
+    def is_empty(self):
+        return not Output._out
+
     def plot(self):
+        if self.is_empty():
+            return
         self._generate_html_report()
         self._print_html_report()
         
@@ -298,7 +303,7 @@ def get_output():
 def unit_test():
     output = get_output()
     output.write("Sample text in 'Title' style",Style.Title)
-    output.write("Sample text in 'SubTitle' style",Style.SubTitle)
+    output.write("Sample text in 'Subtitle' style",Style.Subtitle)
     output.write("Sample text in default style")
     output.write("sample text in foot note style(this is not working yet)", Style.Footnote)
 
