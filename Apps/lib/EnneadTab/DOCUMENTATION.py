@@ -467,7 +467,7 @@ def show_tip_rhino():
 
     output.write (tip_data.get("doc"))
 
-    output.insert_division()
+    output.insert_divider()
     
     output.write ("Activated by {}".format(access), OUTPUT.Style.Footnote)
     click_icon = "{}\\{}.png".format("{}\\Knowledge.tab\\search_command.button".format(ENVIRONMENT.RHINO_FOLDER), access)

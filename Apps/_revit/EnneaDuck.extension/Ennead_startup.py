@@ -28,7 +28,6 @@ try:
 
 
 
-    import imp
     import os
     import random
     import time
@@ -69,7 +68,7 @@ def check_minimal_version_for_enneadtab():
 
         output.write("Please update pyrevit from self service port!!!",OUTPUT.Style.Title)
         output.write("Your version: {}.{} ---> Suggested version: {}.{}".format(major, minor, desired_major, desired_minor),OUTPUT.Style.SubTitle)
-        output.insert_division()
+        output.insert_divider()
         output.write ("Did you know pyrevit 4.7 was released at end of 2019? That was so long ago Covid was not even a thing yet.")
 
         # covid_img = IMAGE.get_one_image_path_by_prefix("covid_joke")
@@ -160,9 +159,13 @@ def check_C_drive_space():
 
 
 def register_auto_update():
-    from pyrevit.userconfig import user_config
-    user_config.check_updates = True
-    user_config.save_changes()
+    try:# need pyrevit 5 or higher to work in revit 2025
+        from pyrevit.userconfig import user_config
+        user_config.check_updates = True
+        user_config.save_changes()
+    except:
+        pass
+
 
 
 

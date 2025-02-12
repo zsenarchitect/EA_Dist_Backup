@@ -3,7 +3,7 @@ DATA_FILE_NAME = "progressbar.sexyDuck"
 import DATA_FILE
 import EXE
 import NOTIFICATION
-
+import time
 
 
 class ProgressBarManager:
@@ -11,24 +11,28 @@ class ProgressBarManager:
         self.items = items if items is not None else []
         self.title = title
         self.total = len(self.items) if items is not None else 100
-        self.current_progress = 0
+        self.counter = 0
         self.current_item = None
         self.label_func = label_func
-
+        self.start_time = time.time()
         
 
     def update(self, amount=1):
-        self.current_progress += amount
+        self.counter += amount
 
-        progress = (self.current_progress / self.total) * 100
+        progress = (float(self.counter) / float(self.total)) * 100
+  
         if self.label_func is not None:
             label = self.label_func(self.current_item)
         else:
-            label = "Processing item {}".format(self.current_progress)
+            label = "Processing item {}".format(self.counter)
         data = {
             "progress": progress,
             "is_active": True,
-            "label": label
+            "label": label,
+            "start_time": self.start_time,
+            "counter": self.counter,
+            "total": self.total
         }
 
         DATA_FILE.set_data(data,DATA_FILE_NAME)
@@ -37,7 +41,7 @@ class ProgressBarManager:
 
     def __enter__(self):
         # Start the progress bar in a separate process
-        EXE.try_open_app("ProgressBar")
+        EXE.try_open_app("ProgressBar", safe_open=True)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

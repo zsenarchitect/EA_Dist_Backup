@@ -86,7 +86,7 @@ def update_last_sync_data_file(doc):
                 if key == "key_holder":
                     continue
                 if time.time() - value  > 60*60*24:#record older than 24 hour should be removed
-                    print ("deleting key", key)
+                    print ("This project is no longer being monitored for sync due to long inactivity: {}".format(key))
                     del data[key]
         else:
   

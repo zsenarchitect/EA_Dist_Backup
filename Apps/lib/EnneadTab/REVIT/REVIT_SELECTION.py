@@ -259,7 +259,7 @@ def get_rooms_in_phase(doc, phase):
     return all_rooms
 
 
-def pick_family(doc=DOC, multi_select = False, include_2D = True, include_3D = True):
+def pick_family(doc=DOC, multi_select = False, include_2D = True, include_3D = True, exclude_categories = []):
 
     families = DB.FilteredElementCollector(doc).OfClass(
         DB.Family).WhereElementIsNotElementType().ToElements()
@@ -283,6 +283,8 @@ def pick_family(doc=DOC, multi_select = False, include_2D = True, include_3D = T
             else:
                 print (self.item)
                 return self.Name
+
+    families = [f for f in families if f.FamilyCategory.Name not in exclude_categories]
     families = [MyOption(x) for x in families]
     families = sorted(families, key=lambda x: x.name)
     family = forms.SelectFromList.show(families,

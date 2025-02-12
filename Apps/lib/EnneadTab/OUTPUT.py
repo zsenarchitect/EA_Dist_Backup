@@ -272,11 +272,18 @@ class Output:
         print (content)
 
     def _print_html_report(self):
+        
         webbrowser.open("file://{}".format(Output._report_path))
 
 
-    def insert_division(self):
-        self.write("<hr>")
+    def insert_divider(self):
+        """Inserts a horizontal divider if one doesn't already exist at the end of output."""
+        if not Output._out or Output._out[-1][0] != "<hr>":
+            self.write("<hr>")
+
+    def reset(self):
+        """Resets the output to an empty state."""
+        Output._out = []
 
 
 
@@ -295,9 +302,9 @@ def unit_test():
     output.write("Sample text in default style")
     output.write("sample text in foot note style(this is not working yet)", Style.Footnote)
 
-    output.insert_division()
+    output.insert_divider()
     output.write("\n\n")
-    output.insert_division()
+    output.insert_divider()
     
     output.write("Trying to print list as item list")
     test_list = ["A", "B", "C", 99, 440, 123]
@@ -305,25 +312,25 @@ def unit_test():
     output.write("Trying to print list as str")
     output.write(test_list, as_str=True)
     
-    output.insert_division()
+    output.insert_divider()
 
     
     output.write("Trying to print a random meme image")
     output.write(IMAGE.get_one_image_path_by_prefix("meme"))
 
 
-    output.insert_division()
+    output.insert_divider()
 
     output.write("Trying to print an error:\nThis is a fake error msg but ususaly trigger by try-except")
 
-    output.insert_division()
+    output.insert_divider()
 
 
     output.write("Trying to print a button")
     output.write("bt_sample button")
 
 
-    output.insert_division()
+    output.insert_divider()
     new_output = get_output()
     new_output.write("This is a new output object but should write to same old output window")
     new_output.plot()

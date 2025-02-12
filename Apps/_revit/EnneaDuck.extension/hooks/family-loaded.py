@@ -1,4 +1,3 @@
-
 """
 store session script data to a temp file
 https://pyrevit.readthedocs.io/en/latest/pyrevit/coreutils/appdata.html
@@ -17,7 +16,7 @@ from pyrevit.coreutils import envvars
 import time
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import ERROR_HANDLE, SOUND, NOTIFICATION, TIME
+from EnneadTab import ERROR_HANDLE, SOUND, NOTIFICATION, TIME, OUTPUT
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_EVENT
 
 def get_subc(category):
@@ -57,13 +56,11 @@ def main():
     #output.print_md("this loaded script")
 
     datafile = script.get_instance_data_file("sub_c_list")
-    #print datafile
-
-    f = io.open(datafile, 'r', encoding="utf-8")
-    old_sub_c_list  = pickle.load(f)
-    f.close()
-    #print old_sub_c_list
-
+    
+    # Using context manager for safer file handling
+    with io.open(datafile, 'r', encoding="utf-8") as f:
+        old_sub_c_list = pickle.load(f)
+    
     all_Cs = doc.Settings.Categories
     current_sub_c_list = get_subc(all_Cs)
     #print current_sub_c_list
@@ -75,12 +72,27 @@ def main():
 
     if len(new_sub_c_list) == 0:
         return
+    output = OUTPUT.get_output()
+ 
+    output.insert_divider()
+    output.write("The following new subCategory(s) are brought to the project while loading the family", OUTPUT.Style.SubTitle)
+    output.write("<{}>".format(EXEC_PARAMS.event_args.FamilyName), OUTPUT.Style.Title)
+    output.write(new_sub_c_list)
+    
+    
+    sub_display_text = "\n".join([
+        "It happens when new sub-category is created intentionally, but also when you load a family:",
+        "",
+        "--from other project;",
+        "--from manufacture website;",
+        "--with a typo to an existing sub-category name.",
+        "",
+        "If this is unintensional, please take notes and use Ideate 'StyleManager' tool to manage object style later."
+        ])
+    output.write(sub_display_text, OUTPUT.Style.Footnote)
 
-    display_text = "Ennead Alert:\nThe following new subCategory(s) are brought to the project by loading the family.\n\n"
-    for item in new_sub_c_list:
-        display_text += "{0} \n".format(item)
-    sub_display_text = "It happens when new sub-category is created intentionally, but also when you load a family:\n\n--from other project;\n--from manufacture website;\n--with a typo to an existing sub-category name.\n\nIf this is unintensional, please take notes and use Ideate 'StyleManager' tool to manage object style later."
-
+    output.plot()
+    return
     REVIT_FORMS.notification(main_text = display_text,
                             sub_text = sub_display_text,
                             self_destruct = 5,

@@ -115,6 +115,7 @@ class OptionValidation:
         self.show_log = show_log
 
     def validate_all(self):
+        self.show_logic()
         if not self.is_area_scheme_valid():
             return False
         if not self.validate_family():
@@ -124,6 +125,75 @@ class OptionValidation:
         self.validate_schedule_view()
         self.is_family_types_valid()
         return True
+
+    def show_logic(self):
+        output = script.get_output()
+        if not self.show_log:
+
+            return
+
+
+        output.print_md("## Logic for [{}]".format(self.option.formated_option_name))
+        note = ""
+
+
+        note += "The AreaScheme used for department data is [{}]".format(self.option.DEPARTMENT_AREA_SCHEME_NAME)
+        note += "\nThe parameter used in getting category is [{}]".format(self.option.DEPARTMENT_KEY_PARA)
+        note += "\nThe AreaScheme used for overall data is [{}]".format(self.option.OVERALL_AREA_SCHEME_NAME)
+        note += "\nAny valid area will count toward overall area."
+        
+
+
+        note += "\nThe family used in checking is [{}]".format(self.option.CALCULATOR_FAMILY_NAME)
+
+
+
+        container_view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc = self.doc)
+        note += "\nThe view used to contain all calculator is [{}]".format(output.linkify(container_view.Id, 
+                                                                                            title=self.option.CALCULATOR_CONTAINER_VIEW_NAME))
+
+        
+        schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc = self.doc)
+        note += "\nThe view used to contain final schedule is [{}]".format(output.linkify(schedule_view.Id, 
+                                                                                            title=self.option.FINAL_SCHEDULE_VIEW_NAME))
+
+
+
+        note += "\n\nThe level names used in checking is below:"
+        for x in self.option.LEVEL_NAMES:
+            note += "\n   -[{}]".format(x)
+            
+            
+            
+
+        note += "\n\nThe value of area should fall in to one of below so it can match the excel table:"
+        for para, nick_name in self.option.PARA_TRACKER_MAPPING.items():
+            note += "\n   -[{}]-->[{}]".format(para, nick_name)
+            
+
+        note += "\n\nWhen the department category of area is not part of the above mapping table, it should alert exception. HOWEVER, category in below list will silent the alert, and they will NOT count toward department calculation."
+        for para in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
+            note += "\n   -Ingore [{}]".format(para)
+
+
+
+        note += "\n\nUnder the hood, Here is how the script logic is handled:"
+        note += "\n1, search through all the area in area scheme [{}], ignoring area on levels that not part of the defined Level Names".format(self.option.DEPARTMENT_AREA_SCHEME_NAME)            
+
+        note += "\n2, Look at the parameter [{}] of the area, map that value to the Excel version, and add the area to the related field of the level".format(self.option.DEPARTMENT_KEY_PARA)
+        note += "\n3, Search through all the area in area scheme [{}], add any area to the overall area of this level".format(self.option.OVERALL_AREA_SCHEME_NAME)
+
+        note += "\n4, Search through all the calculator types in the family [{}], get the predefined Factor in this level, apply that factor to each blue column data. Overall GFA and MERS are excluded in this act, they use factor 1 always".format(self.option.CALCULATOR_FAMILY_NAME)
+        note += "\n5, The unfactored sum of blue coloumn is filled to [{0}], and [{1}] is completed by {0}x{2}".format(self.option.DESIGN_SF_PARA_NAME, self.option.ESTIMATE_SF_PARA_NAME, self.option.FACTOR_PARA_NAME)
+        note += "\n6, after all the level based data is filled out, a dummy summery is filled by summing up the similar paramter names above."
+
+        note += "\n7, the target data is left untouched. THE TEAM IS EXPECTED TO FILL IN THOSE INFO BASED ON YOUR DESIRED TARGET. The delta is caulated by looking up the difference between dummy summery and manual target."
+        note += "\n8, after main option is processed, option is look into to primaryu area scheme and copy over data that is not BEDS."
+
+        
+        note += "\n\nOk ok, enough talking, let's start checking....\n\n\n"
+
+        print(note)
 
 
 

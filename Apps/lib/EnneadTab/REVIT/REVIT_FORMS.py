@@ -12,7 +12,7 @@ except:
     WPFWindow = object
     # or globals()["WPFWindow"] = object # this is to trick that class can be used
 
-import ERROR_HANDLE
+import OUTPUT
 import ENVIRONMENT
 import NOTIFICATION
 import IMAGE
@@ -240,6 +240,15 @@ def notification(main_text = "",
         window_width (int, optional): _description_. Defaults to 500.
         window_height (int, optional): _description_. Defaults to 500.
     """
+    
+    output = OUTPUT.get_output()
+ 
+    output.insert_divider()
+    output.write(main_text, OUTPUT.Style.SubTitle)
+    output.write(sub_text, OUTPUT.Style.MainBody)
+    output.plot()
+    return
+        
 
 
     #xmal_template = remap_filepath_between_folder(xmal_template, new_folder_after_dot_extension = "lib")

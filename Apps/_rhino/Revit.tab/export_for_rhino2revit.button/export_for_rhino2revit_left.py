@@ -17,7 +17,7 @@ flatten = itertools.chain.from_iterable
 graft = itertools.combinations
 
 
-from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG
+from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG, UI
 from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_LAYER, RHINO_UI
 

@@ -81,8 +81,11 @@ def email_error(
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(time.time())))
     try:
         if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
+            from pyrevit import versionmgr
+            pyrvt_ver = versionmgr.get_pyrevit_version()
+            nice_version = 'v{}'.format(pyrvt_ver.get_formatted())
             app_uptime = TIME.get_revit_uptime()
-            import REVIT
+            
 
             app = REVIT_APPLICATION.get_app()
 
@@ -94,9 +97,9 @@ def email_error(
                 except:
                     doc_name = "N/A"
 
-            additional_note = "Version Build: {}\nVersion Number: {}\nVersion Name: {}\nDoc name:{}\n\nRevit UpTime: {}".format(
+            additional_note = "pyRevit Version: {}\n\nRevit Version Build: {}\nRevit Version Name: {}\nDoc name:{}\n\nRevit UpTime: {}".format(
+                nice_version,
                 app.VersionBuild,
-                app.VersionNumber,
                 app.VersionName,
                 doc_name,
                 app_uptime,

@@ -77,7 +77,7 @@ def try_catch_error(is_silent=False, is_pass = False):
                     output = OUTPUT.get_output()
                     output.write(error_time, OUTPUT.Style.SubTitle)
                     output.write(error)
-                    output.insert_division()
+                    output.insert_divider()
                     output.plot()
 
                 if ENVIRONMENT.IS_REVIT_ENVIRONMENT and not is_silent:

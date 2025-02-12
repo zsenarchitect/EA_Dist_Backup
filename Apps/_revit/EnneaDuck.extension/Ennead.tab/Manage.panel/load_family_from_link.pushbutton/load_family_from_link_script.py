@@ -7,9 +7,9 @@ __tip__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, UI
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_FAMILY, REVIT_APPLICATION
-from Autodesk.Revit import DB # pyright: ignore 
+from pyrevit.revit import ErrorSwallower
 
 # UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
@@ -27,11 +27,19 @@ def load_family_from_link():
     if not families:
         return
 
-    for family in families:
-        family_doc = link_doc.EditFamily(family)
-        REVIT_FAMILY.load_family(family_doc, 
-                                 DOC)
-        family_doc.Close(False)
+    def loader(family, doc):
+        with ErrorSwallower() as swallower:
+            family_doc = link_doc.EditFamily(family)
+            REVIT_FAMILY.load_family(family_doc, doc)
+            family_doc.Close(False)
+
+
+            
+    UI.progress_bar(families, 
+                    lambda x:loader(x, DOC), 
+                    label_func=lambda x: "Loading Family [{}]".format(x.Name), 
+                    title="Loading Families")
+
 
     
 

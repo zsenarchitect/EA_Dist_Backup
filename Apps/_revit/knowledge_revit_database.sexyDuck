@@ -1709,6 +1709,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead.tab\\ACE.panel\\batch_fix_family_name.pushbutton\\batch_fix_family_name_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\batch_fix_family_name.pushbutton\\batch_fix_family_name_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\batch_fix_family_name.pushbutton\\icon.png",
+        "alias": "Batch Format Family Name",
+        "doc": "Batch rename family names to follow Ennead standard naming convention.\n\nFormat: \n    CATEGORY_Description_INTENDED[_DESIGNATOR][_HOSTING]\n\nExamples:\n    DOOR_SingleFlush_PE_GEN_WH\n    WIND_Casement_PE_EXT\n    FURN_ConferenceTable_PE\n    \nNotes:\n    - CATEGORY: 2-4 uppercase letters (e.g., DOOR, WIND, FURN)\n    - Description: CamelCase (e.g., SingleFlush, Casement)\n    - INTENDED: 2-4 uppercase letters (e.g., PE for Production)\n    - DESIGNATOR: Optional, 2-4 uppercase letters (e.g., GEN, EXT)\n    - HOSTING: Optional, 2 letters for hosting type (e.g., WH for Wall Hosted)\n",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\check_formula.pushbutton\\check_formula_script.py": {
         "script": "Ennead.tab\\ACE.panel\\check_formula.pushbutton\\check_formula_script.py",
         "icon": "Ennead.tab\\ACE.panel\\check_formula.pushbutton\\icon.png",
@@ -1821,7 +1830,7 @@
         "script": "Ennead.tab\\ACE.panel\\list_family.pushbutton\\list_family_script.py",
         "icon": "Ennead.tab\\ACE.panel\\list_family.pushbutton\\icon.png",
         "alias": "List Families",
-        "doc": "List selected detail items to a dump drafting view, or 3D family to a 3D view or floor plan view. Note that 3D family will show in all view, so this tool will first create a internal level far from main set and host most items there.",
+        "doc": "List selected detail items to a dump drafting view, or 3D family to a 3D view or floor plan view. \nNote that 3D family will show in all view, so this tool will first create a internal level far from main set and host most items there.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
@@ -2452,6 +2461,15 @@
         "icon": "Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\icon.png",
         "alias": "HealthCare Helper",
         "doc": "This will be the foundation for all future health care tools",
+        "tab": "Tools",
+        "tab_icon": null,
+        "is_popular": false
+    },
+    "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\inspect_cutter_script.py": {
+        "script": "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\inspect_cutter_script.py",
+        "icon": "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\icon.png",
+        "alias": "Reset Join/Cut",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false

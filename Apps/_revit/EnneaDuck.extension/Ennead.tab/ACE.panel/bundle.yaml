@@ -29,4 +29,5 @@ layout:
   - property_line_from_excel
   - repath_dwg_drive_letter
   - merge_ost
+  - batch_fix_family_name
   - wall_type_diagram
