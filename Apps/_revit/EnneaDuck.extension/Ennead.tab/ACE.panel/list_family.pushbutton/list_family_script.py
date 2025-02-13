@@ -599,8 +599,6 @@ class Deployer:
             print("Host type [{}] not supported yet, ask SZ for detail so he can update the support.".format(host_type))
             return None
             
-        if not host:
-            return None
         self.item_collection.append(host)
             
         t = DB.Transaction(self.doc, "Create Hosted Instance")
@@ -899,7 +897,7 @@ class Deployer:
         """
         return Deployer.get_internal_dump_level_externally()
 
-    def get_internal_dump_wall(self, family_name):
+    def OLD_get_internal_dump_wall(self, family_name):
         """Gets or creates a wall for hosting family instances
         
         Args:
@@ -924,10 +922,11 @@ class Deployer:
                              False)
         wall.LookupParameter("Comments").Set(FAMILY_DUMP_WALL_COMMENT + "_" + family_name)
         wall.LookupParameter("Unconnected Height").Set(10) 
+
         t.Commit()
         return wall
 
-    def get_internal_dump_ceiling(self, family_name):
+    def OLD_get_internal_dump_ceiling(self, family_name):
         """Gets or creates a ceiling for hosting family instances
         
         Args:

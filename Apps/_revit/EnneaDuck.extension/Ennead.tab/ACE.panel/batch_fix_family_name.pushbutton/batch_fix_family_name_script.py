@@ -523,7 +523,7 @@ def export_bad_family_name_to_excel():
     """Export problematic family names to Excel file."""
     doc = REVIT_APPLICATION.get_doc()
     bad_families = forms.SelectFromList.show(
-        [FamilyOption(f) for f in get_problematic_families(doc)],
+        sorted([FamilyOption(f) for f in get_problematic_families(doc)]),
         title="Select Families to Export",
         multiselect=True,
         button_name="Export Families"
@@ -607,12 +607,17 @@ def import_family_name_from_excel():
         
         while not is_family_name_unique(user_defined_name):
             user_defined_name = "{}_{}".format(user_defined_name, "conflicting_name")
+            print ("{} is conflicting with {}, adding conflect marker".format(user_defined_name, current_family_name))
         if user_defined_name != current_family_name:
-            log.append("{} ---> {}".format(current_family_name, user_defined_name))
             # update the family name
             family = REVIT_FAMILY.get_family_by_name(current_family_name, doc)
             if family:
-                family.Name = user_defined_name
+                try:
+                    family.Name = user_defined_name
+                    log.append("{} ---> {}".format(current_family_name, user_defined_name))
+                    doc.Regenerate() # this is needed to refresh the doc family pool
+                except Exception as e:
+                    log.append("Failed to rename {} to {}. Error: {}".format(current_family_name, user_defined_name, e))
 
     if len(log) > 0:
         output.write("{} Family Renamed:".format(len(log)), OUTPUT.Style.Subtitle)
