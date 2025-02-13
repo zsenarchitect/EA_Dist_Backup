@@ -40,6 +40,7 @@ def show_naming_rules():
     image_path = os.path.join(script_dir, "naming_rule.png")
 
     output = OUTPUT.get_output()
+    output.write("HealthCare Family Naming Rules:", OUTPUT.Style.Title)
     output.write(image_path)
 
     HostingMethodMapper.print_desired_mapping()
@@ -562,6 +563,8 @@ def export_bad_family_name_to_excel():
         current_row += 1
     EXCEL.save_data_to_excel(data, excel_file, worksheet="FamilyRenameLittleHelper", freeze_row=1)
 
+
+    show_naming_rules()
     
 
 

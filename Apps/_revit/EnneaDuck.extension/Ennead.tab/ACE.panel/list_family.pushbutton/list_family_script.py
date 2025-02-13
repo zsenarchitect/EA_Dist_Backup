@@ -1,18 +1,36 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """List selected detail items to a dump drafting view, or 3D family to a 3D view or floor plan view. 
-Note that 3D family will show in all view, so this tool will first create a internal level far from main set and host most items there."""
+__doc__ = """Lists selected families in organized views.
+
+This script allows listing of both 2D detail items and 3D families in dedicated views.
+Detail items are placed in a drafting view while 3D families can be placed in either
+a 3D view or floor plan view. Families are organized by category with labels and optional tags.
+
+Key Features:
+- Supports both 2D detail items and 3D families
+- Organizes families by category with clear labeling
+- Creates dedicated views for family display
+- Optional tagging support
+- Handles hosted families with appropriate host elements
+- Creates category-specific filtered views
+
+Note: 
+3D families will be visible in all project views. The script creates an internal level 
+far from the main project levels to minimize interference.
+"""
 __title__ = "List\nFamilies"
 __tip__ = True
 
 
 import os
+import time
+import traceback
 from pyrevit import script
 from pyrevit.revit import ErrorSwallower
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import DATA_CONVERSION, NOTIFICATION, UI, SOUND
+from EnneadTab import DATA_CONVERSION, NOTIFICATION, UI, SOUND, TIME
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FILTER
 from EnneadTab import ERROR_HANDLE, LOG
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY, REVIT_FORMS,REVIT_SYNC
@@ -29,13 +47,33 @@ FAMILY_DUMP_WALL_COMMENT = "EnneadTab_Family_List_Internal_Wall"
 FAMILY_DUMP_CEILING_COMMENT = "EnneadTab_Family_List_Internal_Ceiling"
 FAMILY_DUMP_FLOOR_COMMENT = "EnneadTab_Family_List_Internal_Floor"
 FAMILY_DUMP_ROOF_COMMENT = "EnneadTab_Family_List_Internal_Roof"
-FAMILY_LIST_CATEGORY_VIEW_PREFIX = "EnneadTab_Family_List_Category_"
-FAMILY_LIST_FILTER_PREFIX = "EnneadTab_Family_List_Filter_"
+FAMILY_LIST_CATEGORY_VIEW_KEY_NAME = "_EnneadTab_Family_List_Category"
+FAMILY_LIST_FILTER_KEY_NAME = "EnneadTab_Family_List_Filter_"
 
 class Deployer:
-    """Handles deployment of families into views with optional tagging"""
+    """Handles deployment of families into views with optional tagging.
+    
+    This class manages the placement and organization of families in views, including
+    creation of hosts, labels, and tags as needed.
+    
+    Attributes:
+        doc: Current Revit document
+        uidoc: Current Revit UI document
+        view: Target view for family placement
+        families: List of families to deploy
+        add_tag: Boolean indicating if tagging is enabled
+        tag_symbol: Tag family symbol if tagging enabled
+        pointer: Current placement position (DB.XYZ)
+        item_collection: List of placed elements for filtering
+    """
     def __init__(self, view, families, tag_family=None):
-
+        """Initializes the deployer with view and families.
+        
+        Args:
+            view: Target view for family placement
+            families: List of families to deploy
+            tag_family: Optional tag family for labeling instances
+        """
         tag_family = None# Force turn to None during debugging
         self.doc = REVIT_APPLICATION.get_doc()
         self.uidoc = REVIT_APPLICATION.get_uidoc()
@@ -74,20 +112,25 @@ class Deployer:
         t.Commit()
 
     def process_category_views(self):
+        """Creates and configures category-specific views with filters.
         
+        Creates separate views for each family category and applies appropriate
+        visibility filters to organize families by category.
+        """
         all_views = DB.FilteredElementCollector(self.doc).OfClass(DB.View3D).ToElements()
-        all_cate_views = [view for view in all_views if view.Name.startswith(FAMILY_LIST_CATEGORY_VIEW_PREFIX)]
-        all_selection_filters = DB.FilteredElementCollector(self.doc).OfClass(DB.SelectionFilter).ToElements()
-        all_my_selection_filters = [filter for filter in all_selection_filters if filter.Name.startswith(FAMILY_LIST_FILTER_PREFIX)]
+        all_cate_views = [view for view in all_views if FAMILY_LIST_CATEGORY_VIEW_KEY_NAME in view.Name]
+        all_selection_filters = DB.FilteredElementCollector(self.doc).OfClass(DB.SelectionFilterElement ).ToElements()
+        all_category_selection_filters = [filter for filter in all_selection_filters if FAMILY_LIST_FILTER_KEY_NAME in filter.Name]
 
         t = DB.Transaction(self.doc, "Process category views")
         t.Start()
         for view in all_cate_views:
-            view_category = view.Name.split("_")[-1]
-            for filter in all_my_selection_filters:
-                filter_category = filter.Name.split("_")[-1]
-                view.AddFilter(filter.Id)
-                if filter_category != view_category:
+            view_category_name = self.get_category_name_by_view_name(view.Name)
+            for filter in all_category_selection_filters:
+                if not view.IsFilterApplied(filter.Id):
+                    view.AddFilter(filter.Id)
+                filter_category_name = self.get_category_name_by_filter_name(filter.Name)
+                if filter_category_name != view_category_name:
                     view.SetFilterVisibility (filter.Id, False)
                 else:
                     view.SetFilterVisibility (filter.Id, True)
@@ -96,7 +139,7 @@ class Deployer:
 
     
     def _get_model_text_elements(self):
-        """Gets or creates model text elements needed for labeling
+        """Gets or creates model text elements needed for labeling.
         
         Returns:
             tuple: (sample_model_text, label_text_type) or (None, None) if failed
@@ -134,6 +177,16 @@ class Deployer:
         return sample_model_text, label_text_type
 
     def add_label_text(self, family):
+        """Adds descriptive text label for a family.
+        
+        Args:
+            family: Family to create label for
+            
+        Side Effects:
+            - Creates model text element
+            - Updates max label width
+            - Adds text to item collection
+        """
         sample_model_text, label_text_type = self._get_model_text_elements()
         if not sample_model_text or not label_text_type:
             return
@@ -154,6 +207,8 @@ class Deployer:
         else:
             family_cate_name = "Unknown Category"
         new_text_model.Text = "[{}]   {}".format(family_cate_name, family.Name)
+        if self.need_curtain_wall:
+            new_text_model.Text += "   [Curtain Wall Needed]"
         new_text_model.LookupParameter("Comments").Set(INTERNAL_COMMENT)
         size_x, size_y = self._calculate_instance_size(new_text_model)
         DB.ElementTransformUtils.MoveElement(self.doc, 
@@ -166,7 +221,10 @@ class Deployer:
         self.item_collection.append(new_text_model)
     
     def purge_old_dump_family(self):
-        """Purges all elements with specific comments from the view"""
+        """Purges all previously created elements from the view.
+        
+        Removes all elements with internal comments to clean up before new placement.
+        """
         elements_to_purge = [
             (DB.BuiltInCategory.OST_ModelText, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_GenericModel, INTERNAL_COMMENT, "equals"),
@@ -253,6 +311,76 @@ class Deployer:
             
 
         return True
+
+    def get_filter_name_by_category_name(self, category_name):
+        """Generates a standardized filter name for a category.
+        
+        Creates a unique filter name by prepending the standard prefix to the category name.
+        Used to maintain consistent naming for category-specific filters.
+        
+        Args:
+            category_name (str): Base category name (e.g., "Walls", "Doors")
+            
+        Returns:
+            str: Full filter name with category-specific prefix
+            
+        Example:
+            >>> get_filter_name_by_category_name("Walls")
+            'EnneadTab_Family_List_Filter_Walls'
+        """
+        return "{}{}".format(FAMILY_LIST_FILTER_KEY_NAME, category_name)
+
+    def get_view_name_by_category_name(self, category_name):
+        """Generates a standardized view name for a category.
+        
+        Creates a unique view name by appending the standard suffix to the category name.
+        Used to maintain consistent naming for category-specific views.
+        
+        Args:
+            category_name (str): Base category name (e.g., "Walls", "Doors")
+            
+        Returns:
+            str: Full view name with category-specific suffix
+            
+        Example:
+            >>> get_view_name_by_category_name("Walls")
+            'Walls_EnneadTab_Family_List_Category'
+        """
+        return "{}{}".format(category_name, FAMILY_LIST_CATEGORY_VIEW_KEY_NAME)
+
+    def get_category_name_by_view_name(self, view_name):
+        """Extracts category name from a view name by removing the standard suffix.
+        
+        Used to get the original category name from a generated category-specific view name.
+        
+        Args:
+            view_name (str): Full name of the view including the standard suffix
+            
+        Returns:
+            str: Original category name with the view suffix removed
+            
+        Example:
+            >>> get_category_name_by_view_name("Walls_EnneadTab_Family_List_Category")
+            'Walls'
+        """
+        return view_name.replace(FAMILY_LIST_CATEGORY_VIEW_KEY_NAME, "")
+
+    def get_category_name_by_filter_name(self, filter_name):
+        """Extracts category name from a filter name by removing the standard prefix.
+        
+        Used to get the original category name from a generated category-specific filter name.
+        
+        Args:
+            filter_name (str): Full name of the filter including the standard prefix
+            
+        Returns:
+            str: Original category name with the filter prefix removed
+            
+        Example:
+            >>> get_category_name_by_filter_name("EnneadTab_Family_List_Filter_Walls")
+            'Walls'
+        """
+        return filter_name.replace(FAMILY_LIST_FILTER_KEY_NAME, "")
     
     def save_item_collection(self):
         """Save all items in the collection as a Revit selection filter"""
@@ -264,14 +392,15 @@ class Deployer:
         t.Start()
 
         # Create unique filter name based on category
-        filter_name = "{}{}".format(FAMILY_LIST_FILTER_PREFIX, self.current_category_header)
+        filter_name = self.get_filter_name_by_category_name(self.current_category_header)
+
+        self.item_collection = [x for x in self.item_collection if x.IsValidObject]
         
         # get filter with this nmae
         try:
             selection_filter = REVIT_FILTER.update_selection_filter(self.doc, filter_name, self.item_collection)
-        except:
-            print (self.item_collection)
-            print ("failed to update filter {}".format(filter_name))
+        except Exception as e:
+            print ("failed to update filter {} becasue {}".format(filter_name, traceback.format_exc()))
             NOTIFICATION.messenger("failed to update filter {}".format(filter_name))
             
         t.Commit()
@@ -280,7 +409,7 @@ class Deployer:
 
     def get_or_create_category_view(self):
         """Gets or creates a 3D view for the current category"""
-        view_name = "{}{}".format(FAMILY_LIST_CATEGORY_VIEW_PREFIX, self.current_category_header)
+        view_name = self.get_view_name_by_category_name(self.current_category_header)
         view = REVIT_VIEW.get_view_by_name(view_name)
         t = DB.Transaction(self.doc, "Create Category View")
         t.Start()
@@ -299,6 +428,7 @@ class Deployer:
 
     def deploy_family(self, family):
         self.confirm_new_layout_header(family)
+        self.need_curtain_wall = family.IsCurtainPanelFamily
    
         self.reset_x_to_header()
         self.add_label_text(family)
@@ -388,6 +518,8 @@ class Deployer:
         return size_x, size_y, False
 
     def _position_instance(self, instance, size_x, size_y):
+        if instance.Symbol.Family.FamilyPlacementType == DB.FamilyPlacementType.OneLevelBasedHosted:
+            size_y = 0 # do not move the instance up becaue it should be hosted 
         t = DB.Transaction(self.doc, "Position Instance")
         t.Start()
         DB.ElementTransformUtils.MoveElement(self.doc, instance.Id, DB.XYZ(size_x/2, size_y/2, 0))
@@ -500,14 +632,14 @@ class Deployer:
                 
         t = DB.Transaction(self.doc, "Create Host Wall")
         t.Start()
-        line = DB.Line.CreateBound(self.pointer.Add(DB.XYZ(-5, 0, 0)),
+        line = DB.Line.CreateBound(self.pointer.Add(DB.XYZ(-3, 0, 0)),
                                   self.pointer.Add(DB.XYZ(20, 0, 0)))
         wall = DB.Wall.Create(self.doc,
                             line,
                             self.get_internal_dump_level().Id,
                             False)
         wall.LookupParameter("Comments").Set(wall_comment)
-        wall.LookupParameter("Unconnected Height").Set(10)
+        wall.LookupParameter("Unconnected Height").Set(15)
         t.Commit()
         return wall
 
@@ -743,23 +875,29 @@ class Deployer:
         """
         return family.Parameter[DB.BuiltInParameter.FAMILY_HOSTING_BEHAVIOR].AsValueString()
 
+    @staticmethod
+    def get_internal_dump_level_externally():
+        doc = REVIT_APPLICATION.get_doc()
+        all_levels = DB.FilteredElementCollector(doc).OfClass(DB.Level).ToElements()
+        for level in all_levels:
+            if level.Name == FAMILY_DUMP_LEVEL:
+                return level
+                
+        t = DB.Transaction(doc, "Create Internal Level")
+        t.Start()
+        new_level = DB.Level.Create(doc, 0)
+        new_level.Name = FAMILY_DUMP_LEVEL
+        t.Commit()
+        return new_level
+        
+
     def get_internal_dump_level(self):
         """Gets or creates an internal level for family dumping
         
         Returns:
             DB.Level: The internal dump level
         """
-        all_levels = DB.FilteredElementCollector(self.doc).OfClass(DB.Level).ToElements()
-        for level in all_levels:
-            if level.Name == FAMILY_DUMP_LEVEL:
-                return level
-                
-        t = DB.Transaction(self.doc, "Create Internal Level")
-        t.Start()
-        new_level = DB.Level.Create(self.doc, 0)
-        new_level.Name = FAMILY_DUMP_LEVEL
-        t.Commit()
-        return new_level
+        return Deployer.get_internal_dump_level_externally()
 
     def get_internal_dump_wall(self, family_name):
         """Gets or creates a wall for hosting family instances
@@ -860,7 +998,17 @@ class Deployer:
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def list_family():
-    """Main entry point for the script"""
+    """Main entry point for the family listing script.
+    
+    Prompts user to select between 2D and 3D family listing modes,
+    creates appropriate handler class, and executes the listing operation.
+    
+    Side Effects:
+        - Creates new views
+        - Places family instances
+        - Creates category filters
+        - Optionally syncs and closes document
+    """
     opts = [
         ["List Detail Items", "They will showup in a drafting view"], 
         ["List 3D Family", "They will show up in a non-drafting view.\nNOTE: 3D family will show in all project views"]
@@ -869,31 +1017,48 @@ def list_family():
     if not sel:
         return
 
+    if sel == opts[0][0]:
+        lister = List2DFamily()
+    elif sel == opts[1][0]:
+        lister = List3DFamily()
+    else:
+        return
+
+    start_time = time.time()
     is_sync = REVIT_SYNC.do_you_want_to_sync_and_close_after_done()
     tg = DB.TransactionGroup(REVIT_APPLICATION.get_doc(), __title__)
     tg.Start()
    
-    if sel == opts[0][0]:
-        lister = List2DFamily()
-    else:
-        lister = List3DFamily()
-        
     lister.run()
     tg.Assimilate ()
-    NOTIFICATION.messenger("All families listed.")
+    NOTIFICATION.messenger("All families listed. Totally take {}".format(TIME.get_readable_time(time.time() - start_time)))
     SOUND.play_finished_sound()
 
     if is_sync:
         REVIT_SYNC.sync_and_close()
 
 class ListFamily:
-    """Base class for handling family listing operations"""
+    """Base class for handling family listing operations.
+    
+    Provides common functionality for listing both 2D and 3D families.
+    
+    Attributes:
+        doc: Current Revit document
+        uidoc: Current Revit UI document
+    """
     def __init__(self):
         self.doc = REVIT_APPLICATION.get_doc()
         self.uidoc = REVIT_APPLICATION.get_uidoc()
         
     def run(self):
-        """Main execution method"""
+        """Main execution method for family listing.
+        
+        Orchestrates the process of getting families, creating/getting views,
+        and deploying families through the Deployer class.
+        
+        Returns:
+            None
+        """
         families = self._get_families()
         if not families:
             return
@@ -939,9 +1104,17 @@ class ListFamily:
 
 
 class List2DFamily(ListFamily):
-    """Handles listing of 2D detail items"""
+    """Handles listing of 2D detail items in drafting views.
+    
+    Creates dedicated drafting views for organizing detail items with labels
+    and optional tags.
+    """
     def _get_families(self):
-        """Gets detail component families"""
+        """Gets user-selected detail component families.
+        
+        Returns:
+            list: Selected detail component families
+        """
         return REVIT_SELECTION.pick_detail_componenet(self.doc,multi_select=True)
         
     def get_or_create_view(self):
@@ -968,9 +1141,17 @@ class List2DFamily(ListFamily):
 
 
 class List3DFamily(ListFamily):
-    """Handles listing of 3D families"""
+    """Handles listing of 3D families in 3D or plan views.
+    
+    Creates dedicated views for organizing 3D families with appropriate
+    hosts, labels, and optional tags.
+    """
     def _get_families(self):
-        """Gets 3D families"""
+        """Gets user-selected 3D families.
+        
+        Returns:
+            list: Selected 3D families, excluding curtain panels and mullions
+        """
         return REVIT_SELECTION.pick_family(multi_select=True, include_2D=False, exclude_categories=["Curtain Panels", "Curtain Wall Mullions"])
 
         
@@ -1012,7 +1193,7 @@ class List3DFamily(ListFamily):
         if view_type == "Use 3D view":
             view = DB.View3D.CreateIsometric(self.doc, REVIT_VIEW.get_default_view_type("3d").Id)
         else:
-            new_level = Deployer.get_internal_dump_level()
+            new_level = Deployer.get_internal_dump_level_externally()
             view = DB.ViewPlan.Create(self.doc, REVIT_VIEW.get_default_view_type("plan").Id, new_level.Id)
         
         view.Name = view_name
