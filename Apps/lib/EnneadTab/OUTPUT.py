@@ -145,7 +145,7 @@ class Output:
         with io.open(Output._report_path, 'w', encoding='utf-8') as report_file:
             report_file.write("<html><head><title>EnneadTab Output</title></head><body>")
             report_file.write("<style>")
-            report_file.write("body {{ background-color: #2B1C10; font-family: {}; color: #F4E1D2; margin-left:300px;margin-right:300px;}}"
+            report_file.write("body {{ background-color: #2B1C10; font-family: {}; color: #F4E1D2; margin-left:10%;margin-right:10%;}}"
                               .format(Output._graphic_settings['font_family']))
             report_file.write("h1 {{ font-size: 35px; font-weight: bold; color: #E1D4C1; }}")
             report_file.write("h2 {{ font-size: 20px; color: #987284; }}")

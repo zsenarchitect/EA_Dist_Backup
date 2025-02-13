@@ -76,6 +76,7 @@ def get_column_index(letter, start_from_zero=False):
 
 
 class ExcelDataItem:
+    """ border style reference: https://xlsxwriter.readthedocs.io/format.html#set_border"""
     def __init__(
         self,
         item,

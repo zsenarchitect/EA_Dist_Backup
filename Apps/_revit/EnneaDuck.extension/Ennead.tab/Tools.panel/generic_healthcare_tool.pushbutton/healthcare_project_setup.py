@@ -1,5 +1,5 @@
 from EnneadTab import NOTIFICATION, FOLDER, ENVIRONMENT # pyright: ignore   
-from EnneadTab.REVIT import REVIT_PARAMETER
+from EnneadTab.REVIT import REVIT_PARAMETER, REVIT_COLOR_SCHEME
 from Autodesk.Revit import DB # pyright: ignore
 import os
 from pyrevit import forms
@@ -55,7 +55,13 @@ TEMPLATE_DATA = {
     },
     "color_update": {
         "auto_update_enabled": False,
-        "setting": {}
+        "setting": {
+            "excel_path": None,
+            "naming_map": {
+                "department_color_map":["Department Category_Primary"],
+                "program_color_map":["Department Program Type_Primary"]
+            }
+        }
     }
 }
 
@@ -151,7 +157,8 @@ class ProjectDataEditor:
             "1. Reattach Project Data To Exisitng Setup": self._reattach_project_data,
             "2. Healthcare Area Tracking": self._edit_area_tracking,
             "3. Auto View Name Update": self._edit_auto_view_name_update,
-            "4. Save and Close": None
+            "4. Color Update": self._edit_color_update,
+            "5. Save and Close": None
 
         }
         
@@ -171,6 +178,13 @@ class ProjectDataEditor:
             "3. Edit Department Area Scheme": lambda opt: self._edit_option_setting(opt, "DEPARTMENT_AREA_SCHEME_NAME", "Department Area Scheme"),
             "4. Edit Option Name": lambda opt: self._edit_option_setting(opt, "option_name", "Option Name"),
             "5. Return to Previous Menu": None
+        }
+
+        self.color_update_menu = {
+            "1. Edit Color Update": self._edit_color_update,
+            "2. Edit Excel Path": self._edit_excel_path,
+            "3. Edit ColorScheme Naming Map": self._edit_naming_map,
+            "4. Return to Previous Menu": None
         }
 
     def edit_project_data(self):
@@ -204,6 +218,50 @@ class ProjectDataEditor:
         """Check if the selected option is a return option"""
         return selection is None or "Return to Previous Menu" in str(selection) or "Save and Close" in str(selection)
 
+    def _edit_color_update(self):
+        """Edit color update options"""
+        while True:
+            res = self._show_menu("Auto Color Update Options", self.color_update_menu)
+            if self._is_return_option(res):
+                break
+            
+            if res in self.color_update_menu:
+                self.color_update_menu[res]()
+
+    def _edit_excel_path(self):
+        """Edit excel path"""
+        while True:
+            res = forms.pick_file(
+                title="Select Excel File",
+                files_filter="Excel Files (*.xls)|*.xls"
+            )
+            if res:
+                self.project_data["color_update"]["setting"]["excel_path"] = res
+                self._save_changes()
+                break
+
+    def _edit_naming_map(self):
+        """Edit naming map"""
+        while True:
+            department_color_scheme_names = REVIT_COLOR_SCHEME.pick_color_schemes(self.doc, 
+                                                                                 title="Select the [DEPARTMENT] color schemes", 
+                                                                                 button_name="Select [DEPARTMENT] color schemes")
+            if not department_color_scheme_names:
+                NOTIFICATION.messenger(main_text="No [DEPARTMENT] color scheme selected")
+                continue
+            
+            program_color_scheme_names = REVIT_COLOR_SCHEME.pick_color_schemes(self.doc, 
+                                                                                 title="Select the [PROGRAM] color schemes", 
+                                                                                 button_name="Select [PROGRAM] color schemes")
+            if not program_color_scheme_names:
+                NOTIFICATION.messenger(main_text="No [PROGRAM] color scheme selected")
+                continue
+            
+            self.project_data["color_update"]["setting"]["naming_map"]["department_color_map"] = department_color_scheme_names
+            self.project_data["color_update"]["setting"]["naming_map"]["program_color_map"] = program_color_scheme_names
+            self._save_changes()
+            break
+    
 
 
     def _edit_area_tracking(self):

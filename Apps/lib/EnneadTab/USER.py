@@ -4,10 +4,15 @@
 """Utilities for getting user information and permissions"""
 
 import os
+
 import traceback
+
+import time
 import ENVIRONMENT
 import SECRET
 import UNIT_TEST 
+
+import DATA_FILE
 
 
 USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
@@ -89,6 +94,16 @@ def get_autodesk_user_name():
 IS_DEVELOPER = is_EnneadTab_developer()
 
 
+
+def update_user_log():
+    with DATA_FILE.update_data("USER_LOG_{}.sexyDuck".format(USER_NAME), is_local=False) as data:
+        if "log" not in data.keys():
+            data["log"] = []
+        data["log"].append(time.time())
+
+        
+update_user_log()
+
 def get_rhino_developer_emails():
     out = []
     for developer_data in EnneadTab_DEVELOPERS.values():
@@ -104,6 +119,7 @@ def get_revit_developer_emails():
             continue
         out += developer_data["email"]
     return out
+
 
 
 def unit_test():

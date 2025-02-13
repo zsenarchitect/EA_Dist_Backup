@@ -554,7 +554,7 @@ def export_bad_family_name_to_excel():
         cate_abbr = CategoryMapper.get_abbreviation(family.FamilyCategory.Name)
         if cate_abbr not in cate_color_dict:
             cate_color_dict[cate_abbr] = COLOR.get_random_color()
-        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A", cell_color=cate_color_dict[cate_abbr]))
+        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A", cell_color=cate_color_dict[cate_abbr], border_style=5))
         data.append(EXCEL.ExcelDataItem(cate_abbr, current_row, "B"))
         data.append(EXCEL.ExcelDataItem("---", current_row, "C"))
         data.append(EXCEL.ExcelDataItem("---", current_row, "D"))
@@ -606,8 +606,8 @@ def import_family_name_from_excel():
             user_defined_name = "{}_{}".format(user_defined_name, hosting)
         
         while not is_family_name_unique(user_defined_name):
-            user_defined_name = "{}_{}".format(user_defined_name, "conflicting_name")
-            print ("{} is conflicting with {}, adding conflect marker".format(user_defined_name, current_family_name))
+            # print ("[{}] is not unique, adding conflect marker".format(user_defined_name))
+            user_defined_name = "{}*ConflictingName".format(user_defined_name)
         if user_defined_name != current_family_name:
             # update the family name
             family = REVIT_FAMILY.get_family_by_name(current_family_name, doc)

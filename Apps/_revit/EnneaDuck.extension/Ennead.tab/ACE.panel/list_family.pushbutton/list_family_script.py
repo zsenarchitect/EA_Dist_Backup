@@ -278,7 +278,7 @@ class Deployer:
                     
                 if should_delete:
                     self.doc.Delete(element.Id)
-            except:
+            except Exception as e:
                 continue
 
     def step_right(self, x):
@@ -434,7 +434,7 @@ class Deployer:
         self.add_label_text(family)
   
         max_h = -1
-        min_gap = 5
+        min_gap = 10
         self.is_need_host_wall = False
         
         for type_id in family.GetFamilySymbolIds():
@@ -462,7 +462,7 @@ class Deployer:
             self.step_right(size_x * 2)
 
             if self.is_need_host_wall:
-                wall = self.get_internal_dump_wall( family.Name)
+                wall = self._get_or_create_host_wall( family)
                 self.secure_valid_wall_length( wall)
 
         self.step_down(max(min_gap, max_h*2))
@@ -485,7 +485,7 @@ class Deployer:
                                           DB.FamilyPlacementType.TwoLevelsBased]:  # Added TwoLevelsBased
             return self._create_level_based_instance(family_type)
         elif family.FamilyPlacementType == DB.FamilyPlacementType.OneLevelBasedHosted:
-            self.is_need_host_wall = True
+            
             return self._create_hosted_instance(family, family_type)
         else:
             print("[{}]:{} family_placement_type is [{}], need special handle, ask SZ for detail so he can update the support.".format(
@@ -575,11 +575,11 @@ class Deployer:
                                                    family_type,
                                                    level,
                                                    DB.Structure.StructuralType.NonStructural)
-        try:
-            if instance.LookupParameter("Elevation from Host"):
-                instance.LookupParameter("Elevation from Host").Set(0)
-        except Exception as e:
-            print ("Failed to set Elevation from Host for [{}]\nBecause [{}]".format(family_type.LookupParameter("Type Name").AsString(), str(e)))
+        # try:
+        #     if instance.LookupParameter("Elevation from Host"):
+        #         instance.LookupParameter("Elevation from Host").Set(0)
+        # except Exception as e:
+        #     print ("Failed to set Elevation from Host for [{}]\nBecause [{}]".format(family_type.LookupParameter("Type Name").AsString(), str(e)))
         t.Commit()
         return instance
 
@@ -617,6 +617,9 @@ class Deployer:
 
     def _get_or_create_host_wall(self, family):
         """Gets existing or creates new host wall"""
+        self.is_need_host_wall = True # set this to true so later can try to retreive same wall during wall length secure
+
+        
         walls = DB.FilteredElementCollector(self.doc)\
                  .OfCategory(DB.BuiltInCategory.OST_Walls)\
                  .WhereElementIsNotElementType()\
@@ -664,12 +667,12 @@ class Deployer:
                            
         # Create rectangle points for ceiling boundary
         short_side = 2
-        long_side = 6
+        long_side = 10
         points = [
-            self.pointer.Add(DB.XYZ(-short_side, -short_side, 0)),
-            self.pointer.Add(DB.XYZ(long_side, -short_side, 0)),
-            self.pointer.Add(DB.XYZ(long_side, short_side, 0)),
-            self.pointer.Add(DB.XYZ(-short_side, short_side, 0))
+            self.pointer.Add(DB.XYZ(-short_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(-short_side, short_side, self.pointer.Z))
         ]
         
         # Create lines and curve loop
@@ -731,12 +734,13 @@ class Deployer:
         # Create roof footprint
         level = self.get_internal_dump_level()
         short_side = 2
-        long_side = 6
+        long_side = 10
+        
         points = [
-            self.pointer.Add(DB.XYZ(-short_side, -short_side, 10)),
-            self.pointer.Add(DB.XYZ(long_side, -short_side, 10)),
-            self.pointer.Add(DB.XYZ(long_side, short_side, 10)),
-            self.pointer.Add(DB.XYZ(-short_side, short_side, 10))
+            self.pointer.Add(DB.XYZ(-short_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(-short_side, short_side, self.pointer.Z))
         ]
         
         curves = []
@@ -783,12 +787,12 @@ class Deployer:
                         .FirstElementId()   
 
         short_side = 2
-        long_side = 6
+        long_side = 10
         points = [
-            self.pointer.Add(DB.XYZ(-short_side, -short_side, 10)),
-            self.pointer.Add(DB.XYZ(long_side, -short_side, 10)),
-            self.pointer.Add(DB.XYZ(long_side, short_side, 10)),
-            self.pointer.Add(DB.XYZ(-short_side, short_side, 10))
+            self.pointer.Add(DB.XYZ(-short_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, -short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(long_side, short_side, self.pointer.Z)),
+            self.pointer.Add(DB.XYZ(-short_side, short_side, self.pointer.Z))
         ]
         
         curves = []
@@ -926,53 +930,7 @@ class Deployer:
         t.Commit()
         return wall
 
-    def OLD_get_internal_dump_ceiling(self, family_name):
-        """Gets or creates a ceiling for hosting family instances
-        
-        Args:
-            family_ref_pt: Reference point for ceiling placement
-            family_name: Name of family for ceiling comment
-            
-        Returns:
-            DB.Ceiling: The host ceiling
-        """
-        all_ceilings = DB.FilteredElementCollector(self.doc).OfClass(DB.Ceiling).ToElements()
-        for ceiling in all_ceilings:
-            if ceiling.LookupParameter("Comments").AsString() == FAMILY_DUMP_CEILING_COMMENT + "_" + family_name:
-                return ceiling
-                
-        level = self.get_internal_dump_level()
-        t = DB.Transaction(self.doc, "Create Internal ceiling")
-        t.Start()
-        ceiling_type_id = DB.FilteredElementCollector(self.doc).OfClass(DB.CeilingType).FirstElementId()
-        
-        short_side = 2
-        long_side = 6
 
-        crv_pts = [
-            DB.XYZ(self.pointer.X-short_side, self.pointer.Y-short_side, self.pointer.Z),
-            DB.XYZ(self.pointer.X+long_side, self.pointer.Y-short_side, self.pointer.Z), 
-            DB.XYZ(self.pointer.X+long_side, self.pointer.Y+short_side, self.pointer.Z), 
-            DB.XYZ(self.pointer.X-short_side, self.pointer.Y+short_side, self.pointer.Z)
-        ]
-        
-        crvs = [DB.Line.CreateBound(crv_pts[i], crv_pts[i+1]) for i in range(len(crv_pts)-1)]
-        crvs.append(DB.Line.CreateBound(crv_pts[-1], crv_pts[0]))
-        
-        crv_loop = DB.CurveLoop.Create(DATA_CONVERSION.list_to_system_list(crvs, 
-                                                                          type=DATA_CONVERSION.DataType.Curve, 
-                                                                          use_IList=False))
-        
-        crv_loop_collection = DATA_CONVERSION.list_to_system_list([crv_loop], 
-                                                                type=DATA_CONVERSION.DataType.CurveLoop, 
-                                                                use_IList=False)
-        
-        ceiling = DB.Ceiling.Create(self.doc, crv_loop_collection, ceiling_type_id, level.Id)
-        ceiling.LookupParameter("Comments").Set(FAMILY_DUMP_CEILING_COMMENT + "_" + family_name)
-        ceiling.LookupParameter("Height Offset From Level").Set(10)
-        
-        t.Commit()
-        return ceiling
 
     def secure_valid_wall_length(self, wall):
         """Extends wall length if needed to accommodate family placement

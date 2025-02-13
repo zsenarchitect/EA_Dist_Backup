@@ -588,11 +588,11 @@ class InternalCheck:
 
                     if self.show_log:
 
-                        print("Area has department value [{}] not matched any thing in excel....{}@{}".format(department_name,
+                        print("Area has department value [{}] not matched any thing in project setup....{}@{}".format(department_name,
                                                                                                            self.output.linkify(area.Id),
                                                                                                            level.Name))
                     else:
-                        print("Area has department value [{}] not matched any thing in excel. Run in tailor mode to find out which.".format(
+                        print("Area has department value [{}] not matched any thing in project setup. Run in tailor mode to find out which.".format(
                             department_name))
                     continue
                 level_data.update(department_nickname, area.Area)

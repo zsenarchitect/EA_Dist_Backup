@@ -141,10 +141,13 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
         return
     return color_schemes[0]
 
-def pick_color_scheme(doc = DOC, title = "Select the color scheme", button_name = "Select"):
+def pick_color_scheme(doc = DOC, title = "Select the color scheme", button_name = "Select", multiselect = False):
     from pyrevit import forms
     color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
-    return forms.SelectFromList.show([x.Name for x in color_schemes], multiselect=False, title=title, button_name=button_name)
+    return forms.SelectFromList.show([x.Name for x in color_schemes], multiselect=multiselect, title=title, button_name=button_name)
+
+def pick_color_schemes(doc = DOC, title = "Select the color scheme", button_name = "Select"):
+    return pick_color_scheme(doc, title, button_name, True)
 
 def load_color_template(doc, naming_map, excel_path, is_remove_unused = False):
     """Update color scheme with office template excel version
