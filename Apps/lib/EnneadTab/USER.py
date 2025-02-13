@@ -12,7 +12,7 @@ import ENVIRONMENT
 import SECRET
 import UNIT_TEST 
 
-import DATA_FILE
+
 
 
 USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
@@ -96,13 +96,16 @@ IS_DEVELOPER = is_EnneadTab_developer()
 
 
 def update_user_log():
+    import DATA_FILE
     with DATA_FILE.update_data("USER_LOG_{}.sexyDuck".format(USER_NAME), is_local=False) as data:
         if "log" not in data.keys():
             data["log"] = []
         data["log"].append(time.time())
 
-        
-update_user_log()
+try:
+    update_user_log()
+except Exception as e:
+    pass
 
 def get_rhino_developer_emails():
     out = []
