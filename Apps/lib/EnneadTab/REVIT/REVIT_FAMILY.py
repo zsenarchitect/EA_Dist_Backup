@@ -184,10 +184,12 @@ def get_all_types_by_family_name(family_name, doc=None, return_name = False):
     family = get_family_by_name(family_name, doc=doc)
     if family is None:
         return None
+    family_types = [doc.GetElement(x) for x in family.GetFamilySymbolIds()]
+    family_types = sorted(family_types, key=lambda x: x.LookupParameter("Type Name").AsString())
     if return_name:
-        return [doc.GetElement(x).LookupParameter("Type Name").AsString() for x in family.GetFamilySymbolIds()]
+        return [x.LookupParameter("Type Name").AsString() for x in family_types]
     else:
-        return [doc.GetElement(x) for x in family.GetFamilySymbolIds()]
+        return family_types
 
 def get_family_type_by_name(family_name, type_name, doc=None, create_if_not_exist=False):
     doc = doc or DOC

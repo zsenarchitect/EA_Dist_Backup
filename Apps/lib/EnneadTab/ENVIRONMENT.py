@@ -1,7 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """Utility functions for checking the current application environment.
-Sets environment variables and paths for EnneadTab."""
+Sets environment variables and paths for EnneadTab.
+
+
+Unfortunately IT department cannot make L drive and other drive to be connnected by default ever since the Azure dirve migration.
+There are money to be saved to disconnect the drive, so we need to use github to push update to all users.
+
+Dont tell me it is a security risk, it is NOT.
+
+
+
+"""
 
 import os
 import sys
@@ -23,8 +33,29 @@ INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
 
 APP_FOLDER = os.path.join(ROOT, "Apps")
-REVIT_FOLDER = os.path.join(APP_FOLDER, "_revit")
-RHINO_FOLDER = os.path.join(APP_FOLDER, "_rhino")
+
+# note to self: this is a mess, but it works...becasue need to giveup encoding issue on revit 2025 and rhino 8  new core netframework
+# "_" char can no longer be used in folder name, so we need to use "revit" and "rhino" instead.
+for key in ["revitApp", "_revit"]:
+    if os.path.exists(os.path.join(APP_FOLDER, key)):
+        REVIT_FOLDER_KEYNAME = key
+        REVIT_FOLDER = os.path.join(APP_FOLDER, REVIT_FOLDER_KEYNAME)
+        break
+
+for key in ["rhinoApp", "_rhino"]:
+    if os.path.exists(os.path.join(APP_FOLDER, key)):
+        RHINO_FOLDER_KEYNAME = key
+        RHINO_FOLDER = os.path.join(APP_FOLDER, RHINO_FOLDER_KEYNAME)
+        break
+
+for key in ["indesignApp", "_indesign"]:
+    if os.path.exists(os.path.join(APP_FOLDER, key)):
+        INDESIGN_FOLDER_KEYNAME = key
+        INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
+        break
+
+
+
 PRIMARY_EXTENSION_NAME = "EnneaDuck"
 REVIT_PRIMARY_EXTENSION = os.path.join(
     REVIT_FOLDER, "{}.extension".format(PRIMARY_EXTENSION_NAME)

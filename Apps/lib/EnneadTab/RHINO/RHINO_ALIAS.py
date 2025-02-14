@@ -33,12 +33,13 @@ def register_alias_set():
                 # print (full_path)
                 # print(full_path.split("_rhino\\")[1])
 
-                if full_path.split("_rhino\\")[1] not in data.keys():
+                
+                if full_path.split(ENVIRONMENT.RHINO_FOLDER_KEYNAME + "\\")[1] not in data.keys():
                     continue
                 
 
 
-                alias_list = data.get(full_path.split("_rhino\\")[1]).get('alias')
+                alias_list = data.get(full_path.split(ENVIRONMENT.RHINO_FOLDER_KEYNAME + "\\")[1]).get('alias')
 
 
                 if not isinstance(alias_list, list):
@@ -48,7 +49,7 @@ def register_alias_set():
                     if not alias:
                         continue
 
-                    if rs.IsAlias(alias) and "_rhino" not in exisitng_alias:
+                    if rs.IsAlias(alias) and ENVIRONMENT.RHINO_FOLDER_KEYNAME not in exisitng_alias:
                         #Skip setting alias for {} due to overlapping names, this is usually becasue user has setup their personal alias that happen to be same name as EA ones
                         continue
 
