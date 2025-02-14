@@ -5,10 +5,12 @@ import os
 
 def update_color_pallete(doc):
 
+
     naming_map, excel_path, is_remove_unused = get_data_setup_from_project_data(doc)
     if not naming_map:
         NOTIFICATION.messenger(main_text="No naming map found in the project data, set it up or select the excel file that contains the color pallete")
         naming_map, excel_path, is_remove_unused = manual_update_color_pallete(doc)
+
 
     REVIT_COLOR_SCHEME.load_color_template(doc, naming_map, excel_path, is_remove_unused)
 
@@ -20,25 +22,25 @@ def get_data_setup_from_project_data(doc):
     # Get project data
     project_data = REVIT_PARAMETER.get_revit_project_data(doc)
     if not project_data:
-        return None, None, None
+        return None, None, False
         
     # Validate color_update section exists
     color_settings = project_data.get("color_update", {}).get("setting", {})
     if not color_settings:
-        return None, None, None
+        return None, None, False
         
     # Get values with defaults
     naming_map = color_settings.get("naming_map", None)
     excel_path = color_settings.get("excel_path", None)
-    is_remove_unused = color_settings.get("is_remove_unused", None)
+    is_remove_unused = color_settings.get("is_remove_unused", False)
     
     # Validate required data
     if not all([naming_map, excel_path]):
-        return None, None, None
+        return None, None, False
 
     if not os.path.exists(excel_path):
         NOTIFICATION.messenger(main_text="Cannot find the excel file {}. Maybe your drive is disconnected.".format(excel_path))
-        return None, None, None
+        return None, None, False
         
     return naming_map, excel_path, is_remove_unused
     

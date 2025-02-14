@@ -7,7 +7,7 @@ import time
 import io
 
 # Ensure compatibility with Python 2
-reload(sys)  # Required to set default encoding in Python 2
+reload(sys) # pyright: ignore # Required to set default encoding in Python 2
 sys.setdefaultencoding('utf-8')
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

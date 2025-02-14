@@ -33,21 +33,24 @@ class ColorSchemeUpdater:
         # Update color scheme, create if not exist, update color if exist
         t = DB.Transaction(self.doc, "Update Color Scheme")
         t.Start()
-        for key in self.naming_map.keys():
-            self.update_color_scheme(data, key)
+        for key, value in self.naming_map.items():
+            if isinstance(value, str):
+                value = [value]
+            for color_scheme_name in value:
+                self.update_color_scheme(data, key, color_scheme_name)
         t.Commit()
         
         NOTIFICATION.messenger(main_text="Color Scheme Updated!")
         print ("Finish updating Color Scheme")
         OUTPUT.display_output_on_browser()
 
-    def update_color_scheme(self, data, lookup_key ):
-        color_scheme_name = self.naming_map[lookup_key]
+    def update_color_scheme(self, data, lookup_key, color_scheme_name):
         if not color_scheme_name:
             return
         color_scheme = get_color_scheme_by_name(color_scheme_name)
         if not color_scheme:
-            NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(self.naming_map[lookup_key]))
+            print ("cannot find color scheme {}".format(color_scheme_name))
+            NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(color_scheme_name))
             return
         
         self.output.print_md("#Working on color scheme [{}]".format(color_scheme.Name))
