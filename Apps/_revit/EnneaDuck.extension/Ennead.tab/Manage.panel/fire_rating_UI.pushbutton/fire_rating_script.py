@@ -8,6 +8,7 @@ __title__ = "Fire Rating\nGraphic"
 __tip__ = True
 __is_popular__ = True
 import traceback
+import os
 import System # pyright: ignore 
 
 from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore 
@@ -20,7 +21,7 @@ from pyrevit import script
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_GEOMETRY
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_GEOMETRY, REVIT_FAMILY
 from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER, IMAGE, LOG
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -28,7 +29,7 @@ uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
-
+FAMILY_NAME = "EA_Fire Rating"
 
 
 class FireRatingGraphicMaker:
@@ -247,19 +248,48 @@ def update_wall_data(data_grid_source):
 
 @ERROR_HANDLE.try_catch_error()
 def load_EA_family(title):
-    lib_family = "{}\\Contents.panel\\2D Contents.pulldown\\EA_Fire Rating.content\\EA_Fire Rating_content.rfa".format(ENVIRONMENT.REVIT_LIBRARY_TAB)
-    local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "EA_Fire Rating.rfa")
     try:
+        options = ["Use Ennead Office Version", "Use HeathCare Version"]
+        res = REVIT_FORMS.dialogue(main_text = "Which version of EA Fire Rating family you want to load?",
+                                sub_text = "This family is required for the fire rating graphic to work.",
+                                options = options)
+        if res == options[0]:
+            family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
+        else:
+            family_sub_path = "EA_Fire Rating_HealthCare.content\\EA_Fire Rating_HealthCare_content.rfa"
+
+        # Construct path to library family
+        lib_family = os.path.join(ENVIRONMENT.REVIT_LIBRARY_TAB, 
+                                  "Contents.panel", 
+                                  "2D Contents.pulldown", 
+                                  family_sub_path)
+        
+        # Verify source file exists
+        if not FOLDER.is_file_exist(lib_family):
+            raise Exception("Could not find EA Fire Rating family at: {}".format(lib_family))
+            
+        # Create local copy
+        local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "{}.rfa".format(FAMILY_NAME))
+        if not FOLDER.is_file_exist(local_copy):
+            raise Exception("Failed to create local copy of family file")
+
+        # Load family into project
         t = DB.Transaction(doc, __title__)
         t.Start()
-        doc.LoadFamily(local_copy)
+        family_loaded = doc.LoadFamily(local_copy)
+        if not family_loaded:
+            raise Exception("Family failed to load into project")
         t.Commit()
-        #print "family loaded"
-    except Exception as e:
-        print ("family cannot be loaded")
-        print (e)
-        t.RollBack()
         
+        return "Successfully loaded EA Fire Rating family"
+
+    except Exception as e:
+        if 't' in locals() and t.HasStarted():
+            t.RollBack()
+        error_msg = "Failed to load family: {}".format(str(e))
+        print(error_msg)
+        return error_msg
+
 # Create a subclass of IExternalEventHandler
 class fire_rating_SimpleEventHandler(IExternalEventHandler):
     """
@@ -355,10 +385,18 @@ class fire_rating_ModelessForm(WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def init_data_grid(self):
-        self.rating_list = ["Unrated",
-                            "1 HR",
-                            "2 HR",
-                            "3 HR"]
+
+
+        rating_list = ["Unrated",
+                        "1 HR",
+                        "2 HR",
+                        "3 HR"]
+        rating_family = REVIT_FAMILY.get_family_by_name(FAMILY_NAME, self.doc)
+        if rating_family:
+            rating_list = ["Unrated"] +REVIT_FAMILY.get_all_types_by_family_name(FAMILY_NAME, return_name = True)
+            
+        self.rating_list = rating_list
+        
         self.rating_combos.ItemsSource = self.rating_list
 
 
