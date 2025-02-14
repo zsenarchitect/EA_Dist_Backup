@@ -132,7 +132,7 @@
 
                 <DataGrid x:Name="main_data_grid" 
                         AutoGenerateColumns="False" 
-                        MaxHeight="600" Cursor="Cross"  
+                        MaxHeight="400" Cursor="Cross"  
                           MaxWidth="600"
                         HorizontalAlignment ="Stretch"
                         SelectedCellsChanged="preview_selection_changed"

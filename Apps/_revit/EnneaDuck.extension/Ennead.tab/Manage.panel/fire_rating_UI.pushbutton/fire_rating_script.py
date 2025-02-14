@@ -249,14 +249,16 @@ def update_wall_data(data_grid_source):
 @ERROR_HANDLE.try_catch_error()
 def load_EA_family(title):
     try:
-        options = ["Use Ennead Office Version", "Use HeathCare Version"]
+        options = ["Use Ennead Office Version", "Use HeathCare Version(not there yet)"]
         res = REVIT_FORMS.dialogue(main_text = "Which version of EA Fire Rating family you want to load?",
                                 sub_text = "This family is required for the fire rating graphic to work.",
                                 options = options)
         if res == options[0]:
             family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
-        else:
+        elif res == options[1]:
             family_sub_path = "EA_Fire Rating_HealthCare.content\\EA_Fire Rating_HealthCare_content.rfa"
+        else:
+            return "User chose not to load EA Fire Rating family"
 
         # Construct path to library family
         lib_family = os.path.join(ENVIRONMENT.REVIT_LIBRARY_TAB, 
@@ -265,13 +267,11 @@ def load_EA_family(title):
                                   family_sub_path)
         
         # Verify source file exists
-        if not FOLDER.is_file_exist(lib_family):
-            raise Exception("Could not find EA Fire Rating family at: {}".format(lib_family))
+
             
         # Create local copy
         local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "{}.rfa".format(FAMILY_NAME))
-        if not FOLDER.is_file_exist(local_copy):
-            raise Exception("Failed to create local copy of family file")
+      
 
         # Load family into project
         t = DB.Transaction(doc, __title__)
@@ -391,7 +391,7 @@ class fire_rating_ModelessForm(WPFWindow):
                         "1 HR",
                         "2 HR",
                         "3 HR"]
-        rating_family = REVIT_FAMILY.get_family_by_name(FAMILY_NAME, self.doc)
+        rating_family = REVIT_FAMILY.get_family_by_name(FAMILY_NAME, doc)
         if rating_family:
             rating_list = ["Unrated"] +REVIT_FAMILY.get_all_types_by_family_name(FAMILY_NAME, return_name = True)
             
