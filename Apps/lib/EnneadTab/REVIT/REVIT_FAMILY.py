@@ -179,6 +179,13 @@ def is_family_used(family_name, doc=None):
             break
     return is_used
 
+def is_family_shared(family_name, doc=None):
+    doc = doc or DOC
+    family = get_family_by_name(family_name, doc=doc)
+    if family is None:
+        return False
+    return family.Parameter[DB.BuiltInParameter.FAMILY_SHARED].AsInteger() == 1
+
 def get_all_types_by_family_name(family_name, doc=None, return_name = False):
     doc = doc or DOC
     family = get_family_by_name(family_name, doc=doc)

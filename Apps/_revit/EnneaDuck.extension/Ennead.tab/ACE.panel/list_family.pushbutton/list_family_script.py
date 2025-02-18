@@ -209,6 +209,9 @@ class Deployer:
         new_text_model.Text = "[{}]   {}".format(family_cate_name, family.Name)
         if self.need_curtain_wall:
             new_text_model.Text += "   [Curtain Wall Needed]"
+
+        if REVIT_FAMILY.is_family_shared(family.Name):
+            new_text_model.Text += "   [Shared]"
         new_text_model.LookupParameter("Comments").Set(INTERNAL_COMMENT)
         size_x, size_y = self._calculate_instance_size(new_text_model)
         DB.ElementTransformUtils.MoveElement(self.doc, 

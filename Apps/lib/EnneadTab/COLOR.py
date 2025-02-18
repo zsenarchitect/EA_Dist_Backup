@@ -100,7 +100,7 @@ def get_random_color(return_tuple = True):
     
     # Create desaturated version by setting saturation to 0.1
     # Keeps original hue and value, but reduces color intensity
-    grayed_hsv_color = (hsv_color[0], 0.1, hsv_color[2])
+    grayed_hsv_color = (hsv_color[0], 0.05, hsv_color[2])
     
     # Convert back to RGB colorspace
     grayed_rgb_color = hsv_to_rgb(*grayed_hsv_color)

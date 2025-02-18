@@ -86,6 +86,8 @@ class ExcelDataItem:
         text_color=None,
         border_style=None,
         border_color=None,
+        top_border_style=None,
+        side_border_style=None,
     ):
         if isinstance(column, str):
             column = letter_to_index(column, start_from_zero=True)
@@ -96,7 +98,8 @@ class ExcelDataItem:
         self.text_color = text_color
         self.border_style = border_style
         self.border_color = border_color
-
+        self.top_border_style = top_border_style
+        self.side_border_style = side_border_style
     def __str__(self):
         info = "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
         if self.cell_color:
@@ -388,7 +391,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
     # see doc here: https://xlsxwriter.readthedocs.io/format.html#format-set-border
     def write_data_item(worksheet, data):
         if any(
-            [data.cell_color, data.text_color, data.border_style, data.border_color]
+            [data.cell_color, data.text_color, data.border_style, data.border_color, data.top_border_style]
         ):
             format_dict = {}
             if data.cell_color:
@@ -399,6 +402,11 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
                 format_dict["border"] = data.border_style
             if data.border_color:
                 format_dict["border_color"] = COLOR.rgb_to_hex(data.border_color)
+            if data.top_border_style:
+                format_dict["top"] = data.top_border_style
+            if data.side_border_style:
+                format_dict["left"] = data.side_border_style
+                format_dict["right"] = data.side_border_style
             format = workbook.add_format(format_dict)
             worksheet.write(data.row, data.column, data.item, format)
         else:
