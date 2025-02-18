@@ -15,12 +15,12 @@ from pyrevit.revit import ErrorSwallower
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG
+from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG, UI
 
 from Autodesk.Revit import DB # pyright: ignore  
-import clr
+import clr # pyright: ignore 
 import os
-import System
+import System # pyright: ignore 
 import time
 import traceback
 
@@ -109,10 +109,11 @@ class Rhino2Revit_UI(forms.WPFWindow):
         t = DB.Transaction(doc, "Convert GEO to native Revit")
         t.Start()
         tool_start_time = time.time()
-        detail_list = ""
-        for item in self.data_grid.ItemsSource:
+        self.detail_list = ""
+     
+        def _work(item):
             start_time = time.time()
-            detail_list += "\t{}\n".format(item.display_name)
+            self.detail_list += "\t{}\n".format(item.display_name)
 
             if "Use Source File Name" in item.selected_OST_name:
                 try:
@@ -132,10 +133,13 @@ class Rhino2Revit_UI(forms.WPFWindow):
 
             time_span = time.time() - start_time
             NOTIFICATION.messenger("{} import finished!!\nImport used {}".format(item.display_name, TIME.get_readable_time(time_span)))
+
+        UI.progress_bar(self.data_grid.ItemsSource, _work, label_func=lambda x: "Working on [{}]".format(x.display_name))   
+        
         t.Commit()
         tool_time_span = time.time() - tool_start_time
         REVIT_FORMS.notification(main_text="Rhino2Revit Finished.",
-                                sub_text="Files processeds:\n{}\nTotal time:\n{}".format(detail_list, TIME.get_readable_time(tool_time_span)))
+                                sub_text="Files processeds:\n{}\nTotal time:\n{}".format(self.detail_list, TIME.get_readable_time(tool_time_span)))
         self.Close()
 
     def free_form_convert(self, data_item):

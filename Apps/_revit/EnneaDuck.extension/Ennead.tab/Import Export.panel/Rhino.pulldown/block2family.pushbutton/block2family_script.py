@@ -30,7 +30,7 @@ import clr # pyright: ignore
 from pyrevit.revit import ErrorSwallower # pyright: ignore 
 from pyrevit import script, forms # pyright: ignore 
 
-from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION, LOG, ENVIRONMENT
+from EnneadTab import ERROR_HANDLE, FOLDER, DATA_FILE, NOTIFICATION, LOG, ENVIRONMENT, UI
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_UNIT
 from Autodesk.Revit import DB # pyright: ignore 
 from Autodesk.Revit import ApplicationServices # pyright: ignore 
@@ -70,12 +70,14 @@ def block2family():
     
     if face_model_selection is None:
         return
-    
-    for i, data_file in enumerate(data_files):
+
+    def _work(data_file):
         block_name = get_block_name_from_data_file(data_file)
-        NOTIFICATION.messenger("Loading {}/{}...{}".format(i+1, len(data_files),block_name))
         process_file(data_file, block_name in face_model_selection)
            
+
+    
+    UI.progress_bar(data_files, _work, label_func=lambda x: "Working on [{}]".format(get_block_name_from_data_file(x)))
     NOTIFICATION.messenger("All Rhino blocks have been loaded to Revit! Hooray!!")
 
 

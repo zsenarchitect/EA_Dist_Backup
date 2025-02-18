@@ -201,7 +201,7 @@
         "script": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\rename_all_fam.pushbutton\\rename_all_fam_script.py",
         "icon": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\rename_all_fam.pushbutton\\icon.png",
         "alias": "Rename All Fam",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Batch rename Revit families by replacing '_INT' and '_EXT' suffixes with '_EA'.\n\nKey Features:\n- Processes all families in the current document\n- Handles naming conflicts automatically\n- Provides detailed progress feedback\n- Logs failed rename operations\n",
         "tab": "Personal",
         "tab_icon": null,
         "is_popular": false

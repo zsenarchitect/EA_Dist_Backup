@@ -34,7 +34,7 @@ except:
 import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, UI
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_RHINO
 from Autodesk.Revit import DB  # pyright: ignore
 
