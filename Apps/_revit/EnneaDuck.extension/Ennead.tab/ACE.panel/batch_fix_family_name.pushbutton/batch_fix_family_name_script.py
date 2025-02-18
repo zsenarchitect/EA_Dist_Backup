@@ -214,7 +214,7 @@ class CategoryMapper(BaseMapper):
         "Windows": "WIND",
         
         # Architectural Circulation
-        "Stairs": "STAIR", 
+        "Stairs": "STR", 
         "Ramps": "RAMP",
         "Railings": "RAIL",
         "Balusters": "BLST",
