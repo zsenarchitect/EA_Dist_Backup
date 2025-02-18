@@ -73,6 +73,7 @@ def view_ids_to_views(elements, doc=DOC):
     elements = list(elements) # in case the input were NET LIST from filterelementcollector
     if not isinstance(elements, list): elements = [elements]
     if not elements: return []
+    elements = [x for x in elements if x != DB.ElementId.InvalidElementId]
     return list(map(lambda x: doc.GetElement(x), elements))
 
 def filter_archi_views(views):

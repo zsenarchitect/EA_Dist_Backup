@@ -42,8 +42,23 @@ import FOLDER
 
 
 
+def darken_color(color, amount):
+    """Darken a color.
 
+    Args:
+        color (tuple): The color to darken.
+        amount (float): The amount to darken the color.
+    """
+    return tuple(int(max(0, c * (1 - amount))) for c in color)
 
+def lighten_color(color, amount):
+    """Lighten a color.
+
+    Args:
+        color (tuple): The color to lighten.
+        amount (float): The amount to lighten the color.
+    """ 
+    return tuple(int(min(255, c * (1 + amount))) for c in color)
 
 def from_rgb(r, g, b):
     """Generate a color object from rgb values.

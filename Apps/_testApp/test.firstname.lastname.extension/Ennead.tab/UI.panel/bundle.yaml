@@ -1,0 +1,9 @@
+layout:
+
+  - Search
+  - EA_who_did_that
+  - prefilter_selection
+  - ">>>" 
+  - toggle_warning_mode
+  - open_app_store
+  - pick_absolute_similar

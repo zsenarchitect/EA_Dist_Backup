@@ -2019,7 +2019,7 @@
         "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\block2family.pushbutton\\block2family_script.py",
         "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\block2family.pushbutton\\icon.png",
         "alias": "Block2Family",
-        "doc": "After getting all the block data from Rhino side, create/update family in Revit. If the edit is about moving/rotating in rhino, the revit side will remove old family instance and get a new one based on saved Rhino Id.",
+        "doc": "Converts Rhino blocks to Revit families.\n\nThis script processes block data exported from Rhino to create or update corresponding families in Revit.\nKey features:\n- Creates new families from Rhino block geometry\n- Updates existing family instances\n- Handles transformations (move/rotate) by removing old instances and creating new ones\n- Preserves block parameters as family parameters\n- Supports both UV projection (flat-modeled) and standing geometry\n- Maintains Rhino block IDs for tracking\n\nInput: .sexyDuck files containing block data from Rhino\nOutput: Revit family instances with matching geometry and parameters\n",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true

@@ -1,5 +1,5 @@
 import System # pyright: ignore 
-from pyrevit.revit import ErrorSwallower
+from pyrevit.revit import ErrorSwallower # pyright: ignore 
 
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_EVENT
@@ -17,7 +17,7 @@ def get_NYU_doc(doc_title):
     
     data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
     if doc_title not in data:
-        print ("[{}] has not been recorded by EnneadTab before in data".format(doc_name))
+        print ("[{}] has not been recorded by EnneadTab before in data".format(doc_title))
         return None
     
     REVIT_EVENT.set_open_hook_depressed(True)
@@ -46,9 +46,14 @@ def tuple_to_model_path(tuple):
         if not tuple:
             return
 
-        project_guid = tuple[0]
-        file_guid = tuple[1]
-        region = tuple[2]
+        if isinstance(tuple, dict):
+            project_guid = tuple["project_guid"]
+            file_guid = tuple["model_guid"]
+            region = tuple["region"]
+        else:
+            project_guid = tuple[0]
+            file_guid = tuple[1]
+            region = tuple[2]
 
         try:
             cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))

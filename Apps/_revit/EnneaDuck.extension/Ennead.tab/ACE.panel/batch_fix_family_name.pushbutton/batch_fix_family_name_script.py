@@ -550,17 +550,24 @@ def export_bad_family_name_to_excel():
         data.append(EXCEL.ExcelDataItem(header, current_row, i, border_style=6, cell_color=(200, 200, 200)))
     
     current_row += 1
+    is_row_highlighted = False
     for i, family in enumerate(bad_families):
         cate_abbr = CategoryMapper.get_abbreviation(family.FamilyCategory.Name)
         if cate_abbr not in cate_color_dict:
             cate_color_dict[cate_abbr] = COLOR.get_random_color()
-        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A", cell_color=cate_color_dict[cate_abbr], border_style=5))
-        data.append(EXCEL.ExcelDataItem(cate_abbr, current_row, "B"))
-        data.append(EXCEL.ExcelDataItem("---", current_row, "C"))
-        data.append(EXCEL.ExcelDataItem("---", current_row, "D"))
-        data.append(EXCEL.ExcelDataItem(None, current_row, "E"))
-        data.append(EXCEL.ExcelDataItem(HostingMethodMapper.get_hosting_abbreviation(family), current_row, "F"))
+            
+        cell_color = cate_color_dict[cate_abbr]
+        if is_row_highlighted:
+            cell_color = COLOR.lighten_color(cell_color, 0.5)
+        data.append(EXCEL.ExcelDataItem(family.Name, current_row, "A", cell_color=cell_color, border_style=2))
+        data.append(EXCEL.ExcelDataItem(cate_abbr, current_row, "B", cell_color=cell_color))
+        data.append(EXCEL.ExcelDataItem("---", current_row, "C", cell_color=cell_color))
+        data.append(EXCEL.ExcelDataItem("---", current_row, "D", cell_color=cell_color))
+        data.append(EXCEL.ExcelDataItem(None, current_row, "E", cell_color=cell_color))
+        data.append(EXCEL.ExcelDataItem(HostingMethodMapper.get_hosting_abbreviation(family), current_row, "F", cell_color=cell_color))
         current_row += 1
+        is_row_highlighted = not is_row_highlighted
+       
     EXCEL.save_data_to_excel(data, excel_file, worksheet="FamilyRenameLittleHelper", freeze_row=1)
 
 

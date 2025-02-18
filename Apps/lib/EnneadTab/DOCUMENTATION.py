@@ -10,7 +10,7 @@ import ENVIRONMENT
 import FOLDER
 import USER
 import OUTPUT
-import FOLDER
+import ERROR_HANDLE
 
 KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
 KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database.sexyDuck".format(ENVIRONMENT.REVIT_FOLDER)
@@ -228,7 +228,8 @@ def get_title_tip_from_file(lucky_file, is_random_single):
     except Exception as e:
         if USER.is_EnneadTab_developer:
             print ("\n\nDeveloper visible only logging:")
-            print (traceback.format_exc())
+            print (ERROR_HANDLE.get_alternative_traceback())
+            
         return module_name, None, icon_path
     
     tip = getattr(ref_module,TIP_KEY)

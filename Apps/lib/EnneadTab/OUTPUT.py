@@ -357,12 +357,15 @@ def display_output_on_browser():
     if not ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         NOTIFICATION.messenger("currently only support Revit Env")
         return
-    from pyrevit import script
-    dest_file = FOLDER.get_EA_dump_folder_file("EnneadTab Output.html")
-    output = script.get_output()
-    output.save_contents(dest_file)
-    output.close()
-    os.startfile(dest_file)
+    try:
+        from pyrevit import script
+        dest_file = FOLDER.get_EA_dump_folder_file("EnneadTab Output.html")
+        output = script.get_output()
+        output.save_contents(dest_file)
+        output.close()
+        os.startfile(dest_file)
+    except Exception as e:
+        return
       
 #######################################################
 if __name__ == "__main__":
