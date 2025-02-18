@@ -197,6 +197,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\rename_all_fam.pushbutton\\rename_all_fam_script.py": {
+        "script": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\rename_all_fam.pushbutton\\rename_all_fam_script.py",
+        "icon": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\rename_all_fam.pushbutton\\icon.png",
+        "alias": "Rename All Fam",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "Personal",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\replace_leynote.pushbutton\\replace_leynote_script.py": {
         "script": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\replace_leynote.pushbutton\\replace_leynote_script.py",
         "icon": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\replace_leynote.pushbutton\\icon.png",
@@ -1713,7 +1722,7 @@
         "script": "Ennead.tab\\ACE.panel\\batch_fix_family_name.pushbutton\\batch_fix_family_name_script.py",
         "icon": "Ennead.tab\\ACE.panel\\batch_fix_family_name.pushbutton\\icon.png",
         "alias": "Batch Format Family Name",
-        "doc": "Batch rename family names to follow Ennead standard naming convention.\n\nFormat: \n    CATEGORY_Description_INTENDED[_DESIGNATOR][_HOSTING]\n\nExamples:\n    DOOR_SingleFlush_PE_GEN_WH\n    WIND_Casement_PE_EXT\n    FURN_ConferenceTable_PE\n    \nNotes:\n    - CATEGORY: 2-4 uppercase letters (e.g., DOOR, WIND, FURN)\n    - Description: CamelCase (e.g., SingleFlush, Casement)\n    - INTENDED: 2-4 uppercase letters (e.g., PE for Production)\n    - DESIGNATOR: Optional, 2-4 uppercase letters (e.g., GEN, EXT)\n    - HOSTING: Optional, 2 letters for hosting type (e.g., WH for Wall Hosted)\n",
+        "doc": "Batch rename family names to follow Healthcare standard naming convention.\n\nFormat: \n    CATEGORY_MainDescription_FIRM[_AdditionalInfo][_HOSTING]\n\nExamples:\n    LITE_PendantLamp_EA_Vitra_CH\n    DOOR_Telescopic_EC_TwoPanel_WH\n    FURN_Chair_EA_Tack\n    \nComponents:\n    - CATEGORY: Category abbreviation or CSI Division No. (e.g., LITE, DOOR, FURN)\n    - MainDescription: CamelCase, no underscores or spaces (e.g., PendantLamp, Telescopic)\n    - FIRM: EA (EnneadArchitects) or EC (EwingCole)\n    - AdditionalInfo: Optional - Shape/Brand/Note\n    - HOSTING: Optional - WH(Wall)/CH(Ceiling)/FH(Floor)/FC(Face)\n",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false

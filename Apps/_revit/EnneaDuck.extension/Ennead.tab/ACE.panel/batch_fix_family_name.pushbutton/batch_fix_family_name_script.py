@@ -1,22 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """Batch rename family names to follow Ennead standard naming convention.
+__doc__ = """Batch rename family names to follow Healthcare standard naming convention.
 
 Format: 
-    CATEGORY_Description_INTENDED[_DESIGNATOR][_HOSTING]
+    CATEGORY_MainDescription_FIRM[_AdditionalInfo][_HOSTING]
 
 Examples:
-    DOOR_SingleFlush_PE_GEN_WH
-    WIND_Casement_PE_EXT
-    FURN_ConferenceTable_PE
+    LITE_PendantLamp_EA_Vitra_CH
+    DOOR_Telescopic_EC_TwoPanel_WH
+    FURN_Chair_EA_Tack
     
-Notes:
-    - CATEGORY: 2-4 uppercase letters (e.g., DOOR, WIND, FURN)
-    - Description: CamelCase (e.g., SingleFlush, Casement)
-    - INTENDED: 2-4 uppercase letters (e.g., PE for Production)
-    - DESIGNATOR: Optional, 2-4 uppercase letters (e.g., GEN, EXT)
-    - HOSTING: Optional, 2 letters for hosting type (e.g., WH for Wall Hosted)
+Components:
+    - CATEGORY: Category abbreviation or CSI Division No. (e.g., LITE, DOOR, FURN)
+    - MainDescription: CamelCase, no underscores or spaces (e.g., PendantLamp, Telescopic)
+    - FIRM: EA (EnneadArchitects) or EC (EwingCole)
+    - AdditionalInfo: Optional - Shape/Brand/Note
+    - HOSTING: Optional - WH(Wall)/CH(Ceiling)/FH(Floor)/FC(Face)
 """
 __title__ = "Batch Format\nFamily Name"
 
@@ -411,17 +411,17 @@ class CategoryMapper(BaseMapper):
 # Initialize CategoryMapper by calling class method after class definition
 CategoryMapper.add_tag_categories()
 
-# Regex pattern components for family name validation
+# Update regex pattern to match new format
 FAMILY_NAME_PATTERN = re.compile(
     r"^"                     # Start of string
     r"([A-Z]{2,6})"         # Required: Category (2-6 uppercase letters)
     r"_"                     # Required: Separator
-    r"([A-Z][a-zA-Z0-9]+)"  # Required: Description (CamelCase)
+    r"([A-Z][a-zA-Z0-9]+)"  # Required: MainDescription (CamelCase)
     r"_"                     # Required: Separator
-    r"([A-Z]+)"             # Required: Intended Use (uppercase letters)
-    r"(?:_([^_]+))?"        # Optional: Any non-empty characters after underscore
+    r"([A-Z]+)"             # Required: FIRM (any uppercase letters)
+    r"(?:_([^_]+))?"        # Optional: AdditionalInfo
     r"(?:_([A-Z]{2}))?"     # Optional: Exactly 2 uppercase letters after underscore
-    r"$"                     # End of string
+    r"$"                    # End of string
 )
 
 
@@ -542,10 +542,10 @@ def export_bad_family_name_to_excel():
     current_row = 0
     headers = ["Current Family Name", 
                "Category Abbr/CSI Div No.", 
-               "ItemDescription/ItemSubfields(CamelCase)", 
-               "Intended Use/Practive Area/Office abbr/Client abbr", 
-               "(Optional)Model Designator/Attanla Num/CSI Master format", 
-               "Hosting Method"]
+               "MainDescription(CamelCase)", 
+               "FIRM", 
+               "[Optional]AdditionalInfo", 
+               "[Optional]Hosting Method"]
     for i, header in enumerate(headers):
         data.append(EXCEL.ExcelDataItem(header, current_row, i, border_style=6, cell_color=(200, 200, 200)))
     
