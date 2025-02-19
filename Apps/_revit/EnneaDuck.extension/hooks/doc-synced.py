@@ -11,7 +11,7 @@ DOC = EXEC_PARAMS.event_args.Document
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK
-from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT, REVIT_PARAMETER
+from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT, REVIT_PROJ_DATA
 __title__ = "Doc Synced Hook"
 
 
@@ -300,10 +300,10 @@ def doc_synced(doc):
         
 
 
-    if not REVIT_PARAMETER.is_setup_project_data_para_exist(doc):
+    if not REVIT_PROJ_DATA.is_setup_project_data_para_exist(doc):
         run_legacy_updates(doc)
     else:
-        proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
+        proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
         if proj_data["is_update_view_name_format"]:
             update_view_names(doc)
         if proj_data["area_tracking"]["auto_update_enabled"]:

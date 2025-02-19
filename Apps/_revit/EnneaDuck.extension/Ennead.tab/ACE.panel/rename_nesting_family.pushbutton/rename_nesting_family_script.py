@@ -67,7 +67,7 @@ class NestingFamilyRenamer:
                         self.changes_made.append("In {}: Renamed {} to {}".format(
                             family.Name, nested.Name + "*ConflictingName", new_name))
                     except Exception as e:
-                        print("Error renaming {}: because {}".format(nested.Name, e))
+                        print("Error renaming {} inside {} because {}".format(nested.Name, family.Name, e))
                         attemp += 1
                 else:
                     break

@@ -1,5 +1,5 @@
 from EnneadTab import NOTIFICATION, FOLDER
-from EnneadTab.REVIT import REVIT_COLOR_SCHEME, REVIT_FORMS, REVIT_PARAMETER
+from EnneadTab.REVIT import REVIT_COLOR_SCHEME, REVIT_FORMS,  REVIT_PROJ_DATA
 from pyrevit import forms
 import os
 
@@ -10,17 +10,19 @@ def update_color_pallete(doc):
     if not naming_map:
         NOTIFICATION.messenger(main_text="No naming map found in the project data, set it up or select the excel file that contains the color pallete")
         naming_map, excel_path, is_remove_unused = manual_update_color_pallete(doc)
+        if not naming_map:
+            return
 
 
     REVIT_COLOR_SCHEME.load_color_template(doc, naming_map, excel_path, is_remove_unused)
 
 def get_data_setup_from_project_data(doc):
     # Check if project data parameter exists
-    if not REVIT_PARAMETER.is_setup_project_data_para_exist(doc):
+    if not REVIT_PROJ_DATA.is_setup_project_data_para_exist(doc):
         return None, None, None
         
     # Get project data
-    project_data = REVIT_PARAMETER.get_revit_project_data(doc)
+    project_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     if not project_data:
         return None, None, False
         
@@ -53,7 +55,7 @@ def manual_update_color_pallete(doc):
         NOTIFICATION.messenger(main_text="No excel file selected\nHere is a sample excel color.")
         excel_path = FOLDER.copy_file_to_local_dump_folder(os.path.join(os.path.dirname(__file__), "HealthCare_Color Scheme.xls"))
         os.startfile(excel_path)
-        return
+        return None, None, None
 
 
 

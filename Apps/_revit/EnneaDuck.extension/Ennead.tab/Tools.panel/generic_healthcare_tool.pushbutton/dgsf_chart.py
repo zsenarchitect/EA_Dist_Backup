@@ -1,6 +1,6 @@
 
 from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
-from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PARAMETER
+from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PROJ_DATA, REVIT_PARAMETER
 from pyrevit import forms, script
 from Autodesk.Revit import DB #pyright: ignore
 from collections import OrderedDict
@@ -927,7 +927,7 @@ class InternalCheck:
 
 
 def dgsf_chart_update(doc, show_log = True):
-    proj_data = REVIT_PARAMETER.get_revit_project_data(doc)
+    proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     if not proj_data:
         NOTIFICATION.messenger(main_text="No project data found, please initalize the project first.")
 

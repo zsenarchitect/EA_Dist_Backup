@@ -1,4 +1,10 @@
-"""many helper func that help to dynamically add/pick project parameter, shared paramenter, """
+"""
+Helper functions for managing Revit parameters.
+Provides utilities for:
+- Creating and managing shared parameters
+- Adding parameters to family and project documents
+- Parameter binding and verification
+"""
 
 import os
 import sys
@@ -17,113 +23,23 @@ try:
 except:
     pass
 
-PROJECT_DATA_PREFIX = "ProjectData_"
-PROJECT_DATA_PARA_NAME = "EnneadTab_Data"
 
-
-def is_setup_project_data_para_exist(doc):
-    para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
-    if para:
-        return True
-    return False
-
-def get_project_info_para_by_name(doc, para_name):
-    proj_info = doc.ProjectInformation
-    for para in proj_info.Parameters:
-        if para.Definition.Name == para_name:
-            return para
-    return None
-
-
-
-def get_project_data_name(doc):
-    # Check if parameter exists using the helper function
-    if not is_setup_project_data_para_exist(doc):
-        definition = get_shared_para_definition_in_txt_file_by_name(doc, PROJECT_DATA_PARA_NAME)
-        if not definition:
-            definition = create_shared_parameter_in_txt_file(doc, PROJECT_DATA_PARA_NAME, DB.SpecTypeId.String.Text)
-        add_shared_parameter_to_project_doc(doc, 
-                                            definition, 
-                                            "Data", 
-                                            [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
-
-        para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
-        para.Set(doc.Title)  # Set initial value to document title
-
-    # Get the parameter value
-    return get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).AsString()
-
-def get_project_data_file(doc):
-    project_data_name = get_project_data_name(doc)
-    return "{}{}.sexyDuck".format(PROJECT_DATA_PREFIX, project_data_name)
-
-
-def mark_doc_to_project_data_file(doc):
-    data = get_revit_project_data(doc)
-    if "docs_attaching" not in data:
-        data["docs_attaching"] = []
-    data["docs_attaching"].append(doc.Title)
-    set_revit_project_data(doc, data)
-
-def reattach_project_data(doc):
-    """Reattach project data from an existing setup file"""
-    # Print current project data file
-    current_data_name = get_project_data_name(doc)
-    print("Current project data file: {}".format(current_data_name))
-
-    # Get all project data files from shared dump folder
-    data_files = [f for f in os.listdir(FOLDER.SHARED_DUMP_FOLDER) if f.startswith(PROJECT_DATA_PREFIX) and f.endswith(".sexyDuck")]
-    
-    # Extract XXX parts for display (without extension)
-    display_options = [f.replace(PROJECT_DATA_PREFIX, "").replace(".sexyDuck", "") for f in data_files]
-    
-    if not display_options:
-        NOTIFICATION.messenger("No project data files found in L drive.")
-        return
-    
-    # Let user pick from the list
-    selected = forms.SelectFromList.show(
-        display_options,
-        multiselect=False,
-        title="Select Project Data File to Attach",
-        button_name="Select"
-    )
-        
-    if not selected:
-        return
-    
-    # Update project data file reference
-    try:
-        get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).Set("{}".format(selected))
-        mark_doc_to_project_data_file(doc)
-        NOTIFICATION.messenger("Successfully reattached project data.")
-    except Exception as e:
-        NOTIFICATION.messenger("Failed to reattach project data: {}".format(str(e)))
-
-
-def get_revit_project_data(doc):
-    ENVIRONMENT.alert_l_drive_not_available()
-    return DATA_FILE.get_data(get_project_data_file(doc), is_local=False)
-
-
-def set_revit_project_data(doc, data):
-    DATA_FILE.set_data(data, get_project_data_file(doc), is_local=False)
 
 
 def create_shared_parameter_in_txt_file(doc,
                             para_name,
                             para_type,
                             para_group_name = "EnneadTab"):
-    """This will create parameter in the shared parameter text file, but not yet bind to anytthing
+    """Creates a new shared parameter definition in the shared parameter file.
 
     Args:
-        doc (_type_): _description_
-        para_name (_type_): _description_
-        para_type (_type_): DB.SpecTypeId.Boolean.YesNo, etc
-        para_group (_type_): _description_
+        doc (Document): Active Revit document
+        para_name (str): Name of the parameter to create
+        para_type (SpecTypeId): Parameter data type (e.g., DB.SpecTypeId.Boolean.YesNo)
+        para_group_name (str, optional): Group name in shared parameter file. Defaults to "EnneadTab"
 
     Returns:
-        _type_: _description_
+        ExternalDefinition: The created parameter definition
     """
     # make a dict about para_type lookup? or maybe REVIT_UNIT has something already?
     
@@ -189,12 +105,17 @@ def add_shared_parameter_to_project_doc(project_doc,
                                  para_group,
                                  binding_cates,
                                  is_instance_parameter = True):
-    """add shared parameter to project doc
-    para_definition: definition object
-    para_group: Data, Set
-    binding_cates: list of category
-    default_value: None
-    is_instance_parameter: False. Not for project info it MUST be instance para
+    """Adds a shared parameter to the project document with specified bindings.
+
+    Args:
+        project_doc (Document): Active Revit project document
+        para_definition (ExternalDefinition): Parameter definition to add
+        para_group (str): Parameter group ("Data" or "Set")
+        binding_cates (list): List of Revit categories to bind the parameter to
+        is_instance_parameter (bool, optional): True for instance parameter, False for type parameter. Defaults to True.
+
+    Returns:
+        bool: True if parameter was added successfully, False otherwise
     """
     # create new shared para to avoid adding same definiation twice
     try:
@@ -215,9 +136,13 @@ def add_shared_parameter_to_project_doc(project_doc,
 
 
 def get_para_group(group_name):
-    """
-    Data,
-    Set
+    """Gets the built-in parameter group by name.
+
+    Args:
+        group_name (str): Name of the parameter group ("Data" or "Set")
+
+    Returns:
+        GroupTypeId: Built-in parameter group identifier
     """
     return getattr(DB.GroupTypeId, group_name)
 
@@ -234,8 +159,20 @@ def get_parameter_by_name(doc,
     return None
 
 def confirm_shared_para_exist_on_category(doc, para_name, category, para_type = DB.SpecTypeId.String.Text):
-    """ note that category is such as BuiltInCategory.OST_Areas, OST_Parking etc. 
-    For project information see other function get_project_info_para_by_name()"""
+    """Verifies or creates a shared parameter for a specific category.
+
+    Args:
+        doc (Document): Active Revit document
+        para_name (str): Name of the parameter to verify/create
+        category (BuiltInCategory): Category to check/add parameter to (e.g., OST_Areas, OST_Parking)
+        para_type (SpecTypeId, optional): Parameter data type. Defaults to Text.
+
+    Returns:
+        bool: True if parameter exists or was created successfully
+    
+    Note:
+        For project information parameters, use get_project_info_para_by_name() instead
+    """
     sample_element = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().FirstElement()
     if not sample_element:
         print ("no sample element found on category [{}]. Please have at least one element on this category.".format(category))
