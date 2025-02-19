@@ -43,7 +43,9 @@ def get_all_instance_of_type(type, active_view_only):
 
 
     if REVIT_FAMILY.is_family_shared(type.Family):
-        NOTIFICATION.messenger(main_text = "Note that this family is a shared family, you might need to inspect indepedently for other nested condition.")
+        note = "Note that this family is a shared family, you might need to inspect indepedently for other nested condition."
+        print (note)
+        NOTIFICATION.messenger(main_text = note)
 
 
     type_filter = DB.FamilyInstanceFilter (doc, type.Id)

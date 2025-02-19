@@ -31,3 +31,4 @@ layout:
   - merge_ost
   - batch_fix_family_name
   - wall_type_diagram
+  - rename_nesting_family

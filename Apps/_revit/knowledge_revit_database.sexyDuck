@@ -1889,6 +1889,15 @@
         "tab_icon": null,
         "is_popular": true
     },
+    "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\rename_nesting_family_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\rename_nesting_family_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\icon.png",
+        "alias": "Rename Nesting Family",
+        "doc": "Scans through project families and their nested components to remove '*ConflictingName' string.\n            \nPROCESS:\n- Iterates through all families in current project\n- Opens each family document\n- Checks nested families for '*ConflictingName' string\n- Renames affected nested families by removing the conflicting string\n- Loads modified families back to project\n- Logs all changes made during the process\n",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py": {
         "script": "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py",
         "icon": "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\icon.png",

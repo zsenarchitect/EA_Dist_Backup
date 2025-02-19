@@ -1,8 +1,7 @@
 # How to Install EnneadTab
 
 ## 1. Setup Basic
-### 1.0 Remove Existing Ecosys Folder
-If you have "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem", delete ecosystem folder just to get a clean reinstall.
+
 
 > [!IMPORTANT]
 > If you are using One-Drive, please note that you usually have __two__ Documents folders at your computer, see samples below. For all future reference, we will be talking about the non-One-Drive folder.
