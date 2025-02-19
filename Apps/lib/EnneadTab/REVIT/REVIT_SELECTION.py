@@ -715,3 +715,87 @@ def get_revit_link_doc_by_name(link_doc_name, doc=DOC):
     if link_instance:
         return link_instance.GetLinkDocument()
     return None
+
+def get_selected_elements(doc=DOC):
+    """Retrieves currently selected elements in active view.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        list: Collection of selected Element objects
+    """
+    selection_ids = UIDOC.Selection.GetElementIds()
+    selection = [doc.GetElement(x) for x in selection_ids]
+    return selection
+
+def get_selected_elements_and_verify(doc=DOC):
+    """Retrieves and validates current selection.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        list: Collection of selected Element objects
+        
+    Raises:
+        ValueError: If no elements are selected
+    """
+    selection_ids = UIDOC.Selection.GetElementIds()
+    if not selection_ids:
+        raise ValueError("No elements selected")
+    selection = [DOC.GetElement(x) for x in selection_ids]
+    return selection
+
+def filter_elements_changable(elements):
+    """Filters elements that can be modified.
+    
+    Args:
+        elements (list): Collection of elements to filter
+        
+    Returns:
+        list: Elements that are not read-only or locked
+    """
+    return filter(is_changable, elements)
+
+def get_all_text_note_types(doc=DOC, return_name=True):
+    """Retrieves all text note types from document.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        return_name (bool): Return names instead of objects. Defaults to True
+        
+    Returns:
+        list: Text note type names or objects based on return_name parameter
+    """
+    types = DB.FilteredElementCollector(doc).OfClass(
+        DB.TextNoteType).ToElements()
+    if return_name:
+        names = [x.LookupParameter("Type Name").AsString() for x in types]
+        names.sort()
+        return names
+    types = list(types)
+    types.sort(key=lambda x: x.LookupParameter("Type Name").AsString())
+    return types
+
+def pick_element_by_category(doc, category, message="Select an element"):
+    """Prompts user to select an element of specified category.
+    
+    Args:
+        doc (Document): Document to select from
+        category (BuiltInCategory): Category to filter selection
+        message (str): Prompt message. Defaults to "Select an element"
+        
+    Returns:
+        Element: The selected element, or None if selection canceled
+    """
+    from pyrevit import forms
+    filtered_elements = DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().ToElements()
+    if not filtered_elements:
+        return None
+    selected_element = forms.SelectFromList.show(filtered_elements,
+                                              multiselect=False,
+                                              width=500,
+                                              title=message,
+                                              button_name='Select Element')
+    return selected_element

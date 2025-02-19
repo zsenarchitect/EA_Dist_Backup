@@ -1,9 +1,11 @@
 """
 Helper functions for managing Revit parameters.
+
 Provides utilities for:
 - Creating and managing shared parameters
 - Adding parameters to family and project documents
 - Parameter binding and verification
+- Parameter value retrieval and modification
 """
 
 import os
@@ -24,7 +26,21 @@ except:
     pass
 
 
-
+def get_project_info_para_by_name(doc, para_name):
+    """Retrieve a parameter from project information by its name.
+    
+    Args:
+        doc: Current Revit document
+        para_name: Name of the parameter to find
+        
+    Returns:
+        Parameter: Found parameter object or None if not found
+    """
+    proj_info = doc.ProjectInformation
+    for para in proj_info.Parameters:
+        if para.Definition.Name == para_name:
+            return para
+    return None
 
 def create_shared_parameter_in_txt_file(doc,
                             para_name,
@@ -54,7 +70,16 @@ def create_shared_parameter_in_txt_file(doc,
 def get_shared_para_group_by_name_in_txt_file(doc, 
                                    para_group_name,
                                    create_if_not_exist=False):
-    
+    """Retrieves or creates a parameter group in the shared parameter file.
+
+    Args:
+        doc (Document): Active Revit document
+        para_group_name (str): Name of the parameter group to find/create
+        create_if_not_exist (bool): Create group if not found. Defaults to False
+
+    Returns:
+        DefinitionGroup: The parameter group, or None if not found and not created
+    """
     for definition_group in doc.Application.OpenSharedParameterFile().Groups:
         if definition_group.Name == para_group_name:
             return definition_group
@@ -69,8 +94,18 @@ def get_shared_para_group_by_name_in_txt_file(doc,
 
 def get_shared_para_definition_in_txt_file_by_name(doc, 
                                        para_name):
-    
+    """Retrieves a shared parameter definition by name.
 
+    Args:
+        doc (Document): Active Revit document
+        para_name (str): Name of the parameter to find
+
+    Returns:
+        ExternalDefinition: The parameter definition, or None if not found
+        
+    Note:
+        Will attempt to use default EnneadTab shared parameter file if none is loaded
+    """
     shared_para_file = doc.Application.OpenSharedParameterFile()
     if not shared_para_file:
   
@@ -98,6 +133,15 @@ def add_parameter_to_family_doc(family_doc,
                                 para_group,
                                 default_value, 
                                 is_instance_parameter = False):
+    """Adds a parameter to a family document.
+
+    Args:
+        family_doc (Document): The family document
+        para_name (str): Name of the parameter to add
+        para_group (str): Parameter group ("Data" or "Set")
+        default_value (varies): Default parameter value
+        is_instance_parameter (bool): True for instance parameter. Defaults to False
+    """
     pass
 
 def add_shared_parameter_to_project_doc(project_doc,
@@ -112,10 +156,10 @@ def add_shared_parameter_to_project_doc(project_doc,
         para_definition (ExternalDefinition): Parameter definition to add
         para_group (str): Parameter group ("Data" or "Set")
         binding_cates (list): List of Revit categories to bind the parameter to
-        is_instance_parameter (bool, optional): True for instance parameter, False for type parameter. Defaults to True.
+        is_instance_parameter (bool): True for instance parameter. Defaults to True
 
     Returns:
-        bool: True if parameter was added successfully, False otherwise
+        bool: True if parameter was added successfully
     """
     # create new shared para to avoid adding same definiation twice
     try:
@@ -148,6 +192,15 @@ def get_para_group(group_name):
 
 def get_parameter_by_name(doc, 
                           para_name):
+    """Retrieves a parameter by name from document or family manager.
+
+    Args:
+        doc (Document): The Revit document to query
+        para_name (str): Name of the parameter to find
+
+    Returns:
+        Parameter: The matching parameter, or None if not found
+    """
     if hasattr(doc, "FamilyManager"):
         for para in doc.FamilyManager.Parameters:
             if para.Definition.Name == para_name:

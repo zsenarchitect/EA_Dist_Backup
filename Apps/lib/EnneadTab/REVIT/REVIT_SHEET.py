@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from EnneadTab import NOTIFICATION
 import REVIT_APPLICATION
 
 try:

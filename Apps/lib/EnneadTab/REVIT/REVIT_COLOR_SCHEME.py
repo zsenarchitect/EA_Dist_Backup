@@ -18,6 +18,15 @@ except:
 
 
 class ColorSchemeUpdater:
+    """Manages updates to Revit color schemes from external template data.
+    
+    Args:
+        doc (Document): The Revit document containing color schemes
+        naming_map (dict): Mapping between excel data keys and Revit scheme names
+        excel_path (str): Path to the excel template file
+        is_remove_unused (bool): Whether to remove unused entries. Defaults to False
+    """
+    
     def __init__(self, doc, naming_map, excel_path, is_remove_unused = False):
         self.doc = doc
         self.naming_map = naming_map
@@ -26,7 +35,11 @@ class ColorSchemeUpdater:
         self.output = script.get_output()
     
     def load_color_template_from_excel(self):
-        """Update color scheme with office template excel version."""
+        """Updates color schemes using data from template excel file.
+        
+        Loads color data from excel and updates or creates color scheme entries
+        accordingly. Notifies user upon completion.
+        """
         # Load data from color excel
         data = COLOR.get_color_template_data(self.excel_path)
 
@@ -45,6 +58,13 @@ class ColorSchemeUpdater:
         OUTPUT.display_output_on_browser()
 
     def update_color_scheme(self, data, lookup_key, color_scheme_name):
+        """Updates a specific color scheme with template data.
+        
+        Args:
+            data (dict): Color template data from excel
+            lookup_key (str): Key to find matching data in template
+            color_scheme_name (str): Name of the color scheme to update
+        """
         if not color_scheme_name:
             return
         color_scheme = get_color_scheme_by_name(color_scheme_name)
@@ -87,10 +107,24 @@ class ColorSchemeUpdater:
 
     @staticmethod
     def markdown_text(text, colorRGB):
+        """Formats text with color for markdown output.
+        
+        Args:
+            text (str): Text to format
+            colorRGB (tuple): RGB color values
+            
+        Returns:
+            str: HTML formatted text with color
+        """
         return '<span style="color:rgb{};">{}</span>'.format(str(colorRGB), text)
 
 
     def remove_non_used_entry(self, color_scheme):
+        """Removes unused entries from color scheme.
+        
+        Args:
+            color_scheme (ColorFillScheme): The color scheme to clean up
+        """
         for existing_entry in color_scheme.GetEntries():
             if color_scheme.CanRemoveEntry (existing_entry):
                 color_scheme.RemoveEntry(existing_entry)
@@ -98,6 +132,14 @@ class ColorSchemeUpdater:
                 self.output.print_md("**---** entry [{}] removed{}".format(entry_title, ", not used" if existing_entry.IsInUse else ""))
 
     def add_missing_entry(self, color_scheme, department_data, current_entry_names, storage_type):
+        """Adds new entries to color scheme that exist in template but not in Revit.
+        
+        Args:
+            color_scheme (ColorFillScheme): Target color scheme
+            department_data (dict): Template data for departments
+            current_entry_names (list): Existing entry names
+            storage_type (StorageType): Storage type for new entries
+        """
         for department in department_data.keys():
             if department not in current_entry_names:
                 entry = DB.ColorFillSchemeEntry(storage_type)
@@ -109,6 +151,12 @@ class ColorSchemeUpdater:
                                                                                    self.markdown_text("COLOR RGB={}".format(department_data[department]["color"]), department_data[department]["color"])))
 
     def update_entry_color(self, color_scheme, department_data):
+        """Updates colors of existing entries to match template.
+        
+        Args:
+            color_scheme (ColorFillScheme): Color scheme to update
+            department_data (dict): Template color data
+        """
         for existing_entry in color_scheme.GetEntries():
             entry_title = existing_entry.GetStringValue()
             existing_color = existing_entry.Color
@@ -134,6 +182,15 @@ class ColorSchemeUpdater:
 
 
 def get_color_scheme_by_name(scheme_name, doc = DOC):
+    """Retrieves a color scheme by its name.
+    
+    Args:
+        scheme_name (str): Name of the color scheme to find
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        ColorFillScheme: The matching color scheme, or None if not found
+    """
     color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
     color_schemes = filter(lambda x: x.Name == scheme_name, color_schemes)
     if len(color_schemes)== 0:
@@ -145,36 +202,58 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
     return color_schemes[0]
 
 def pick_color_scheme(doc = DOC, title = "Select the color scheme", button_name = "Select", multiselect = False):
+    """Displays UI for selecting color schemes.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        title (str): Dialog title. Defaults to "Select the color scheme"
+        button_name (str): Button text. Defaults to "Select"
+        multiselect (bool): Allow multiple selection. Defaults to False
+        
+    Returns:
+        str/list: Selected scheme name(s) or None if canceled
+    """
     from pyrevit import forms
     color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
     return forms.SelectFromList.show([x.Name for x in color_schemes], multiselect=multiselect, title=title, button_name=button_name)
 
 def pick_color_schemes(doc = DOC, title = "Select the color scheme", button_name = "Select"):
+    """Wrapper for picking multiple color schemes.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        title (str): Dialog title. Defaults to "Select the color scheme"
+        button_name (str): Button text. Defaults to "Select"
+        
+    Returns:
+        list: Selected scheme names or None if canceled
+    """
     return pick_color_scheme(doc, title, button_name, True)
 
 def load_color_template(doc, naming_map, excel_path, is_remove_unused = False):
-    """Update color scheme with office template excel version
-NOTE: excel should be saved with .xls instead of .xlsx format
-Also note, the column header should be as such:
-A: Department
-B: Department Abbr.
-C: Department Color
-
-D: Program
-E: Program Abbr.
-F: Program Color
-
-ANYTHING ELSE IN THE EXCEL FILE WILL BE IGNORED, including the hex code text on color cell and red, green, blue value number. 
-Those manual color text cannot be trusted on the long run.
-
-
-sample excel path
-excel_path = "J:\\2151\\2_Master File\\B-70_Programming\\03_Colors\\Color Scheme_NYULI_Active.xls"
-
-
-naming map should looks like this. Key are what to lookup in excel, value is the name of color scheme in revit
-naming_map = {"department_color_map":"Primary_Department Category",
-              "program_color_map":"Primary_Department Program Type"}
-"""
+    """Updates color schemes from office template excel file.
+    
+    Excel Requirements:
+    - Save as .xls format (not .xlsx)
+    - Column headers must be:
+        A: Department
+        B: Department Abbr.
+        C: Department Color
+        D: Program
+        E: Program Abbr.
+        F: Program Color
+    
+    Args:
+        doc (Document): The Revit document to update
+        naming_map (dict): Maps excel sections to Revit scheme names
+        excel_path (str): Path to template excel file
+        is_remove_unused (bool): Remove unused entries. Defaults to False
+        
+    Example:
+        naming_map = {
+            "department_color_map": "Primary_Department Category",
+            "program_color_map": "Primary_Department Program Type"
+        }
+    """
     updater = ColorSchemeUpdater(doc, naming_map, excel_path, is_remove_unused)
     updater.load_color_template_from_excel()

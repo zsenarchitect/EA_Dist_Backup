@@ -17,7 +17,16 @@ except:
     globals()["DOC"] = object()
 
 
-def get_material_by_name(material_name, doc = DOC):
+def get_material_by_name(material_name, doc=DOC):
+    """Retrieves a material by its name from the document.
+    
+    Args:
+        material_name (str): Name of the material to find
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        Material: The matching material element, or None if not found
+    """
     all_materials = DB.FilteredElementCollector(doc).OfClass(DB.Material).ToElements()
     
     for material in all_materials:
@@ -45,9 +54,32 @@ MATERIAL_MAP_SAMPLE_FOR_YOU_TO_MIMIC = {
     }
 }
 def update_material_setting(doc, material_map):
-
-
-
+    """Updates material properties based on a configuration map.
+    
+    Material map should follow this structure:
+    {
+        "Material Name": {
+            "Color": (r, g, b),
+            "SurfaceForegroundPatternIsSolid": bool,
+            "SurfaceForegroundPatternColor": (r, g, b),
+            "SurfaceBackgroundPatternIsSolid": bool,
+            "SurfaceBackgroundPatternColor": (r, g, b)
+        }
+    }
+    
+    Args:
+        doc (Document): The Revit document containing materials
+        material_map (dict): Configuration dictionary for material properties
+        
+    Example:
+        material_map = {
+            "Curb": {
+                "Color": (147, 147, 147),
+                "SurfaceForegroundPatternIsSolid": True,
+                "SurfaceForegroundPatternColor": (192, 192, 192)
+            }
+        }
+    """
     for material_name, material_setting in material_map.items():
         material = get_material_by_name(material_name, doc)
         

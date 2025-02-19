@@ -5,6 +5,11 @@ from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore
 
 def get_app():
+    """Returns the Revit Application instance.
+    
+    Returns:
+        Application: The Revit Application object
+    """
     app = __revit__ # pyright: ignore
     if hasattr(app, 'Application'):
         app = app.Application
@@ -12,7 +17,11 @@ def get_app():
 
 
 def get_uiapp():
-    """Return UIApplication provided to the running command."""
+    """Returns the Revit UI Application instance.
+    
+    Returns:
+        UIApplication: The Revit UI Application object
+    """
     if isinstance(__revit__, UI.UIApplication): # pyright: ignore
         return __revit__  # pyright: ignore
 
@@ -23,12 +32,20 @@ def get_uiapp():
 
 
 def get_uidoc():
-    """Return active UIDocument."""
+    """Returns the active Revit UI Document.
+    
+    Returns:
+        UIDocument: The active UI Document, or None if not available
+    """
     return getattr(get_uiapp(), 'ActiveUIDocument', None)
 
 
 def get_doc():
-    """Return active Document."""
+    """Returns the active Revit Document.
+    
+    Returns:
+        Document: The active Document, or None if not available
+    """
     return getattr(get_uidoc(), 'Document', None)
 
 
@@ -52,7 +69,11 @@ except Exception as e:
 
 
 def get_active_view():
-    """Return view that is active (UIDocument.ActiveView)."""
+    """Returns the currently active view in Revit.
+    
+    Returns:
+        View: The active view object, or None if not available
+    """
     return getattr(get_uidoc(), 'ActiveView', None)
 
 
@@ -66,7 +87,14 @@ def open_safety_doc_family():
 
 
 def open_and_active_project(filepath):
-    """return a ui document"""
+    """Opens and activates a Revit project or family file.
+    
+    Args:
+        filepath (str): Full path to the Revit file to open
+        
+    Returns:
+        UIDocument: The opened document's UI interface, or None if operation fails
+    """
     try:
         return get_uiapp().OpenAndActivateDocument (filepath)
     except:
@@ -101,11 +129,11 @@ def open_and_active_project(filepath):
 
 
 def close_docs_by_name(names = [], close_all = False):
-    """close opened docs by providing the name of the docs to close
-
+    """Closes specified Revit documents safely.
+    
     Args:
-        names (list, optional): list of docs to close. Defaults to [].
-        close_all (bool, optional): if true, close every open docs, you do not need to provide the name list. Defaults to False.
+        names (list): List of document names to close. Defaults to empty list
+        close_all (bool): If True, closes all open documents regardless of names. Defaults to False
     """
 
     def safe_close(doc):
@@ -129,10 +157,10 @@ def close_docs_by_name(names = [], close_all = False):
 
 
 def get_top_revit_docs():
-    """get main docs that is NOT link doc or family doc
-
+    """Retrieves all main Revit project documents.
+    
     Returns:
-        list of docs: all docs that is not link or family doc
+        list: Collection of Document objects, excluding linked files and family documents
     """
 
 
@@ -148,13 +176,13 @@ def get_top_revit_docs():
 
 
 def get_all_family_docs(including_current_doc = False):
-    """get all the opened family docs
-
+    """Retrieves all open family documents.
+    
     Args:
-        including_current_doc (bool, optional): if true, current family doc is included as well. Defaults to False.
-
+        including_current_doc (bool): Include currently active family document. Defaults to False
+        
     Returns:
-        list of family docs: _description_
+        list: Collection of family Document objects
     """
     docs = get_app().Documents
     OUT = []
@@ -170,14 +198,14 @@ def get_all_family_docs(including_current_doc = False):
 
 
 def select_family_docs(select_multiple = True, including_current_doc = False):
-    """pick opended family docs.
-
+    """Displays UI for selecting open family documents.
+    
     Args:
-        select_multiple (bool, optional): _description_. Defaults to True.
-        including_current_doc (bool, optional): _description_. Defaults to False.
-
+        select_multiple (bool): Allow multiple family selection. Defaults to True
+        including_current_doc (bool): Include currently active family. Defaults to False
+        
     Returns:
-        list of family docs: _description_
+        list: Selected family Document objects, or single Document if select_multiple is False
     """
     from pyrevit import forms
     title = "Pick Families" if select_multiple else "Pick Family"
@@ -203,6 +231,15 @@ def select_top_level_docs(select_multiple = True):
 
 
 def get_revit_link_docs(including_current_doc = False, link_only = False):
+    """Retrieves Revit documents including or limited to linked files.
+    
+    Args:
+        including_current_doc (bool): Include active document. Defaults to False
+        link_only (bool): Return only linked documents. Defaults to False
+        
+    Returns:
+        list: Collection of Document objects matching specified criteria
+    """
 
     docs = get_app().Documents
 
@@ -227,6 +264,16 @@ def get_revit_link_docs(including_current_doc = False, link_only = False):
     return OUT
 
 def select_revit_link_docs(select_multiple = True, including_current_doc = False, link_only = False):
+    """Displays UI for selecting Revit link documents.
+    
+    Args:
+        select_multiple (bool): Allow multiple document selection. Defaults to True
+        including_current_doc (bool): Include active document. Defaults to False
+        link_only (bool): Show only linked documents. Defaults to False
+        
+    Returns:
+        list: Selected Document objects, or single Document if select_multiple is False
+    """
     from pyrevit import forms
     docs = get_revit_link_docs(including_current_doc = including_current_doc, link_only = link_only )
     docs = forms.SelectFromList.show(docs,
@@ -237,10 +284,18 @@ def select_revit_link_docs(select_multiple = True, including_current_doc = False
 
 
 def get_revit_link_types(doc):
+    """Retrieves all RevitLinkType elements from specified document.
+    
+    Args:
+        doc (Document): The Revit document to query
+        
+    Returns:
+        list: Collection of RevitLinkType elements
+    """
     return list(DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkType).ToElements())
 
 def close_revit_app():
-    """try its best to close the revit session.
+    """Attempts to close the current Revit session using UI automation.
     """
     from Autodesk.Revit.UI import RevitCommandId,PostableCommand  #pyright: ignore
 

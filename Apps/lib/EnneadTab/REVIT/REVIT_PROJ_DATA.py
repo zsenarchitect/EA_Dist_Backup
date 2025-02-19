@@ -16,8 +16,8 @@ try:
 except:
     pass
 
-PROJECT_DATA_PREFIX = "ProjectData_"
-PROJECT_DATA_PARA_NAME = "EnneadTab_Data"
+PROJECT_DATA_PREFIX = "ProjectData_" # this is the prefix used in the shared dump folder to identify the project data file
+PROJECT_DATA_PARA_NAME = "EnneadTab_Data" # this is the name of the parameter in the project information that stores the project data file name
 
 
 TEMPLATE_DATA = {
@@ -89,26 +89,12 @@ def is_setup_project_data_para_exist(doc):
     Returns:
         bool: True if parameter exists, False otherwise
     """
-    para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
+    para = REVIT_PARAMETER.get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
     if para:
         return True
     return False
 
-def get_project_info_para_by_name(doc, para_name):
-    """Retrieve a parameter from project information by its name.
-    
-    Args:
-        doc: Current Revit document
-        para_name: Name of the parameter to find
-        
-    Returns:
-        Parameter: Found parameter object or None if not found
-    """
-    proj_info = doc.ProjectInformation
-    for para in proj_info.Parameters:
-        if para.Definition.Name == para_name:
-            return para
-    return None
+
 
 
 
@@ -134,11 +120,11 @@ def get_project_data_name(doc):
                                                         "Data", 
                                                         [DB.Category.GetCategory(doc,DB.BuiltInCategory.OST_ProjectInformation)])
 
-        para = get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
+        para = REVIT_PARAMETER.get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME)
         para.Set(doc.Title)  # Set initial value to document title
 
     # Get the parameter value
-    return get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).AsString()
+    return REVIT_PARAMETER.get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).AsString()
 
 def get_project_data_file(doc):
     """Generate the project data file name based on project identifier.
@@ -201,7 +187,7 @@ def reattach_project_data(doc):
     
     # Update project data file reference
     try:
-        get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).Set("{}".format(selected))
+        REVIT_PARAMETER.get_project_info_para_by_name(doc, PROJECT_DATA_PARA_NAME).Set("{}".format(selected))
         mark_doc_to_project_data_file(doc)
         NOTIFICATION.messenger("Successfully reattached project data.")
     except Exception as e:

@@ -178,7 +178,22 @@ def do_you_want_to_sync_and_close_after_done():
 
 
 def sync_and_close(close_others = True, disable_sync_queue = True):
-
+    """Synchronizes current document and optionally closes other documents.
+    
+    Performs a safe sync operation with error handling and optional cleanup:
+    1. Attempts to sync current document
+    2. Optionally closes other open documents
+    3. Handles various edge cases (links, read-only, etc.)
+    
+    Args:
+        close_others (bool): Close other open documents. Defaults to True
+        disable_sync_queue (bool): Bypass sync queue system. Defaults to True
+        
+    Note:
+        - Will attempt to close documents even if sync fails
+        - Skips linked documents and read-only files
+        - Logs operations to error handler
+    """
     from pyrevit import script
     from pyrevit.coreutils import envvars
     output = script.get_output()
