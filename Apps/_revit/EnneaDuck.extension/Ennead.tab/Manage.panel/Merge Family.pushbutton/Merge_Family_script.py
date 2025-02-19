@@ -20,7 +20,7 @@ from pyrevit import script, forms
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_FAMILY
 from EnneadTab import IMAGE, NOTIFICATION, DATA_CONVERSION, ERROR_HANDLE, LOG
 
 
@@ -40,6 +40,11 @@ def get_all_instance_of_type(type, active_view_only):
         filtered_collector = DB.FilteredElementCollector(doc, doc.ActiveView.Id)
     else:
         filtered_collector = DB.FilteredElementCollector(doc)
+
+
+    if REVIT_FAMILY.is_family_shared(type.Family):
+        NOTIFICATION.messenger(main_text = "Note that this family is a shared family, you might need to inspect indepedently for other nested condition.")
+
 
     type_filter = DB.FamilyInstanceFilter (doc, type.Id)
 
