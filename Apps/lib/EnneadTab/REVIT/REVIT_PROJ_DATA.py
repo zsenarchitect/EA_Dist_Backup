@@ -556,7 +556,7 @@ class ProjectDataEditor:
 
     def _save_changes(self):
         """Save changes to project data"""
-        REVIT_PARAMETER.set_revit_project_data(self.doc, self.project_data)
+        set_revit_project_data(self.doc, self.project_data)
         NOTIFICATION.messenger("Project data updated successfully!")
 
     def _delete_design_option(self):
@@ -586,5 +586,5 @@ class ProjectDataEditor:
     def _reattach_project_data(self):
         t = DB.Transaction(self.doc, "Reattach Project Data")
         t.Start()
-        REVIT_PARAMETER.reattach_project_data(self.doc)
+        reattach_project_data(self.doc)
         t.Commit()

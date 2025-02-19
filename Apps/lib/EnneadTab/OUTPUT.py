@@ -228,7 +228,9 @@ class Output:
             report_file.write("<img src='file://{}/logo_ennead-e_outline white.png' height='120'>".format(ENVIRONMENT.IMAGE_FOLDER))
             report_file.write("</div>")
             report_file.write("<p style='text-align: center;' class='foot_note'>{}</p>".format(TIME.get_formatted_current_time()))
-            report_file.write("<hr>") 
+
+            if Output._out and Output._out[0][1] != "<hr>":
+                report_file.write("<hr>") 
 
             for header_style, content in Output._out:
                 if isinstance(content, list):
