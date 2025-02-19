@@ -15,6 +15,7 @@ __title__ = "Rename\nNesting Family"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
+from pyrevit.revit import ErrorSwallower
 
 from EnneadTab import ERROR_HANDLE, LOG, UI
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY
@@ -89,7 +90,9 @@ class NestingFamilyRenamer:
     def process_all_families(self):
         """Process all families in the document."""
         all_families = DB.FilteredElementCollector(self.doc).OfClass(DB.Family).ToElements()
-        UI.progress_bar(all_families, self.process_family)
+
+        with ErrorSwallower() as ES:
+            UI.progress_bar(all_families, self.process_family)
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()

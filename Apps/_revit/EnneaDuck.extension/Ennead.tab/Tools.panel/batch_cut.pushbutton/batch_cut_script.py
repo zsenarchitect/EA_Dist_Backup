@@ -14,7 +14,7 @@ from Autodesk.Revit import DB, UI # pyright: ignore
 from pyrevit import forms, script
 import clr # pyright: ignore 
 from pyrevit import forms
-
+from pyrevit.revit import ErrorSwallower
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
@@ -75,20 +75,20 @@ def batch_cut():
 
     t = DB.Transaction(DOC, __title__)
     t.Start()
-    
-    for panel in all_panels:
+    with ErrorSwallower() as ES:
+        for panel in all_panels:
 
-        # reason = clr.StrongBox[DB.CutFailureReason](DB.CutFailureReason.CutAllowed)
-        # DB.SolidSolidCutUtils.CanElementCutElement (panel, select_void, reason)
-        # if reason != DB.CutFailureReason.CutAllowed:
-            
-        #     print (reason)
-        #     continue
-        try:
-            DB.SolidSolidCutUtils.AddCutBetweenSolids(DOC, panel, select_void)
-        except Exception as e:
-            print ("Failed to cut panel: {}: {}".format(output.linkify(panel.Id), e))
-            
+            # reason = clr.StrongBox[DB.CutFailureReason](DB.CutFailureReason.CutAllowed)
+            # DB.SolidSolidCutUtils.CanElementCutElement (panel, select_void, reason)
+            # if reason != DB.CutFailureReason.CutAllowed:
+                
+            #     print (reason)
+            #     continue
+            try:
+                DB.SolidSolidCutUtils.AddCutBetweenSolids(DOC, panel, select_void)
+            except Exception as e:
+                print ("Failed to cut panel: {}: {}".format(output.linkify(panel.Id), e))
+
     t.Commit()
 
     if is_sync_and_close:
