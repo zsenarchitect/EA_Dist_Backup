@@ -1,7 +1,12 @@
-
-
 __title__ = "MaterialPrefix"
-__doc__ = "Add prefix to material so when sessioning rhino the enscape can treat matreail seperately and not turn white."
+__doc__ = """Add file-specific prefixes to materials.
+
+Key Features:
+- Automatic prefix generation
+- Session compatibility
+- Name conflict resolution
+- Batch processing
+- Material tracking"""
 
 import scriptcontext as sc
 

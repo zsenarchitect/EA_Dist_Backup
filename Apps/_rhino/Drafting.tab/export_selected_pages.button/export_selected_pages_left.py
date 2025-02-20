@@ -1,5 +1,12 @@
 __title__ = "ExportSelectedLayout"
-__doc__ = "Export selected layout(s) to pdf"
+__doc__ = """Export selected layouts to PDF format.
+
+Key Features:
+- Multiple layout selection support
+- Customizable output location
+- Maintains print settings and quality
+- Optional automatic PDF opening
+- Batch processing capability"""
 
 
 

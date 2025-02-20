@@ -1,6 +1,12 @@
-
 __title__ = "LayerNameFormat"
-__doc__ = "Format the spelling of layer name on selected layers."
+__doc__ = """Standardize layer naming conventions.
+
+Key Features:
+- Multiple format options
+- Case formatting
+- Pattern preservation
+- Batch renaming
+- Protected name handling"""
 
 
 import rhinoscriptsyntax as rs

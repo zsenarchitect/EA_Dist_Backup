@@ -1,6 +1,12 @@
-
 __title__ = "SectionCrowd"
-__doc__ = "Populate people interactively in TOP view by providing two points."
+__doc__ = """Create section view crowd representations.
+
+Key Features:
+- Interactive crowd placement in TOP view
+- Customizable people spacing and density
+- Random variations for natural appearance
+- Support for multiple crowd patterns
+- Automatic group creation for easy management"""
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

@@ -1,7 +1,9 @@
+__title__ = "ToggleGFA"
+__doc__ = """Toggles Gross Floor Area visualization and calculation.
 
-__title__ = ["ToggleGFADisplay",
-             "GFA"]
-__doc__ = "Dynamically display GFA area by simply changing layer name."
+Processes layers marked with [GFA] to calculate and display area information.
+Supports real-time updates and Excel data export capabilities.
+"""
 __is_popular__ = True
 
 

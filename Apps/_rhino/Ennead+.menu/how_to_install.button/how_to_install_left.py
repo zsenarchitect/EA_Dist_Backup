@@ -1,6 +1,12 @@
-
 __title__ = "HowToInstall"
-__doc__ = "Pull up installation guide for the rest of your team."
+__doc__ = """Access EnneadTab installation documentation.
+
+Key Features:
+- Step-by-step installation guide
+- System requirements
+- Troubleshooting tips
+- Configuration instructions
+- Team deployment guidance"""
 
 import webbrowser
 

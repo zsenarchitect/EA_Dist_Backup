@@ -1,6 +1,12 @@
-
 __title__ = "TellMeVersion"
-__doc__ = "Show current version of EnneadTab Rhino"
+__doc__ = """Display current EnneadTab Rhino version.
+
+Key Features:
+- Version number display
+- Update status information
+- Installation verification
+- Component compatibility check
+- Release notes access"""
 
 
 from EnneadTab import  VERSION_CONTROL

@@ -1,6 +1,9 @@
-
 __title__ = "BatchExportRhinoView"
-__doc__ = "Batch export Rhino views to folder."
+__doc__ = """Exports multiple Rhino views in batch.
+
+Allows selection of multiple views for automated export.
+Supports customizable resolution and format settings.
+"""
 __is_popular__ = True
 import rhinoscriptsyntax as rs
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION

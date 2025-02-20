@@ -1,6 +1,12 @@
-
 __title__ = "ExtractPreviewImages"
-__doc__ = "This button does ExtractPreviewImages when left click"
+__doc__ = """Extract preview images from Rhino files.
+
+Key Features:
+- Batch image extraction
+- Multiple file support
+- Automatic naming convention
+- Progress tracking
+- Error logging"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

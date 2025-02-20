@@ -1,6 +1,9 @@
-
 __title__ = "ToggleLayerPointer"
-__doc__ = "Short list layers with objs that is visible on screen. This is a good way to quickly examine the layer structure in your model space."
+__doc__ = """Displays quick layer information for visible objects.
+
+Creates a filtered layer list showing only layers with visible objects.
+Useful for examining and understanding model layer structure.
+"""
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

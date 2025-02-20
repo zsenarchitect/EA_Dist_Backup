@@ -1424,10 +1424,24 @@ EA_DestroyLayer</script>
         <locale_1033>FindLayerInFiles</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file.</locale_1033>
+        <locale_1033>Search for layers across multiple files.
+
+Key Features:
+- Multi-file layer search
+- Case-insensitive matching
+- Progress tracking
+- Search result summary
+- File origin tracking</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file.</locale_1033>
+        <locale_1033>Search for layers across multiple files.
+
+Key Features:
+- Multi-file layer search
+- Case-insensitive matching
+- Progress tracking
+- Search result summary
+- File origin tracking</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>FindLayerInFiles</locale_1033>
@@ -1443,10 +1457,24 @@ EA_FindLayerInFiles</script>
         <locale_1033>InitiateLayers</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Initiate layer tree for quick start on programing or facade design.</locale_1033>
+        <locale_1033>Create standardized layer structures.
+
+Key Features:
+- Predefined layer schemes
+- Color-coded organization
+- Program-based grouping
+- Material-based grouping
+- Customizable hierarchy</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Initiate layer tree for quick start on programing or facade design.</locale_1033>
+        <locale_1033>Create standardized layer structures.
+
+Key Features:
+- Predefined layer schemes
+- Color-coded organization
+- Program-based grouping
+- Material-based grouping
+- Customizable hierarchy</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>InitiateLayers</locale_1033>
@@ -1462,10 +1490,24 @@ EA_InitiateLayers</script>
         <locale_1033>IsolateLayerBySelection</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Isolcate objs from similar layers</locale_1033>
+        <locale_1033>Show only objects on selected layers.
+
+Key Features:
+- Selection-based isolation
+- Layer visibility control
+- Quick view focusing
+- Multiple layer support
+- View organization</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Isolcate objs from similar layers</locale_1033>
+        <locale_1033>Show only objects on selected layers.
+
+Key Features:
+- Selection-based isolation
+- Layer visibility control
+- Quick view focusing
+- Multiple layer support
+- View organization</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>IsolateLayerBySelection</locale_1033>
@@ -1500,10 +1542,24 @@ EA_SelectObjectsOnSimilarLayer</script>
         <locale_1033>LayerNameFormat</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Format the spelling of layer name on selected layers.</locale_1033>
+        <locale_1033>Standardize layer naming conventions.
+
+Key Features:
+- Multiple format options
+- Case formatting
+- Pattern preservation
+- Batch renaming
+- Protected name handling</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Format the spelling of layer name on selected layers.</locale_1033>
+        <locale_1033>Standardize layer naming conventions.
+
+Key Features:
+- Multiple format options
+- Case formatting
+- Pattern preservation
+- Batch renaming
+- Protected name handling</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>LayerNameFormat</locale_1033>
@@ -1519,10 +1575,24 @@ EA_LayerNameFormat</script>
         <locale_1033>MergeLayer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Merge multiple layer to single layer. This process include merging layers owned by blocks.</locale_1033>
+        <locale_1033>Combine multiple layers into one.
+
+Key Features:
+- Layer consolidation
+- Block-aware merging
+- Property preservation
+- Layer cleanup
+- Batch processing</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Merge multiple layer to single layer. This process include merging layers owned by blocks.</locale_1033>
+        <locale_1033>Combine multiple layers into one.
+
+Key Features:
+- Layer consolidation
+- Block-aware merging
+- Property preservation
+- Layer cleanup
+- Batch processing</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MergeLayer</locale_1033>
@@ -1538,10 +1608,24 @@ EA_MergeLayer</script>
         <locale_1033>NestLayer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks.</locale_1033>
+        <locale_1033>Organize layers in hierarchical structure.
+
+Key Features:
+- Layer nesting automation
+- Block-aware processing
+- Duplicate name handling
+- Layer hierarchy preservation
+- Batch layer organization</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks.</locale_1033>
+        <locale_1033>Organize layers in hierarchical structure.
+
+Key Features:
+- Layer nesting automation
+- Block-aware processing
+- Duplicate name handling
+- Layer hierarchy preservation
+- Batch layer organization</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>NestLayer</locale_1033>
@@ -1557,10 +1641,24 @@ EA_NestLayer</script>
         <locale_1033>RandomLayerColor</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Randomize the layer color.</locale_1033>
+        <locale_1033>Assign random colors to layers.
+
+Key Features:
+- Smart color assignment
+- Context-aware coloring
+- Desaturated color option
+- Color scheme preservation
+- Batch processing support</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Randomize the layer color.</locale_1033>
+        <locale_1033>Assign random colors to layers.
+
+Key Features:
+- Smart color assignment
+- Context-aware coloring
+- Desaturated color option
+- Color scheme preservation
+- Batch processing support</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomLayerColor</locale_1033>
@@ -1595,10 +1693,18 @@ EA_RandomLayerColorSetting</script>
         <locale_1033>SectionboxByBoundingBox</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Similar to Revit SectionBox, this will crop the view to just around the selected elements region. In Rhino display mode all clipper is supported. In Enscape only one of the clipper will be recognized.</locale_1033>
+        <locale_1033>Creates section boxes around selected elements.
+
+Similar to Revit's SectionBox, crops views to selected element boundaries.
+Supports all clipping modes in Rhino, with limited Enscape compatibility.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Similar to Revit SectionBox, this will crop the view to just around the selected elements region. In Rhino display mode all clipper is supported. In Enscape only one of the clipper will be recognized.</locale_1033>
+        <locale_1033>Creates section boxes around selected elements.
+
+Similar to Revit's SectionBox, crops views to selected element boundaries.
+Supports all clipping modes in Rhino, with limited Enscape compatibility.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SectionboxByBoundingBox</locale_1033>
@@ -1649,22 +1755,30 @@ EA_SectionBoxCleanup</script>
     </macro_item>
     <macro_item guid="a2e2495c-db65-447c-978c-4432abf4bbac" bitmap_id="74275bfc-8768-478f-a69f-8e6af3e751a8">
       <text>
-        <locale_1033>ToggleGFADisplay</locale_1033>
+        <locale_1033>ToggleGFA</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Dynamically display GFA area by simply changing layer name.</locale_1033>
+        <locale_1033>Toggles Gross Floor Area visualization and calculation.
+
+Processes layers marked with [GFA] to calculate and display area information.
+Supports real-time updates and Excel data export capabilities.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Dynamically display GFA area by simply changing layer name.</locale_1033>
+        <locale_1033>Toggles Gross Floor Area visualization and calculation.
+
+Processes layers marked with [GFA] to calculate and display area information.
+Supports real-time updates and Excel data export capabilities.
+</locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>ToggleGFADisplay</locale_1033>
+        <locale_1033>ToggleGFA</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>ToggleGFADisplay</locale_1033>
+        <locale_1033>ToggleGFA</locale_1033>
       </menu_text>
       <script>EA_ActivateEnneadTab
-EA_ToggleGFADisplay</script>
+EA_ToggleGFA</script>
     </macro_item>
     <macro_item guid="75965aa9-9b4d-4b69-9b09-fb3188ec9069" bitmap_id="a420da2f-38ae-4900-ad69-36775901a0d8">
       <text>
@@ -1690,10 +1804,18 @@ EA_BakeGFADataToExcel</script>
         <locale_1033>BatchExportRhinoView</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Batch export Rhino views to folder.</locale_1033>
+        <locale_1033>Exports multiple Rhino views in batch.
+
+Allows selection of multiple views for automated export.
+Supports customizable resolution and format settings.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Batch export Rhino views to folder.</locale_1033>
+        <locale_1033>Exports multiple Rhino views in batch.
+
+Allows selection of multiple views for automated export.
+Supports customizable resolution and format settings.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>BatchExportRhinoView</locale_1033>
@@ -1709,10 +1831,18 @@ EA_BatchExportRhinoView</script>
         <locale_1033>BatchRenameCamera</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Rename multiple cameras without activating them.</locale_1033>
+        <locale_1033>Enables bulk camera renaming operations.
+
+Provides interface for renaming multiple cameras without activation.
+Maintains camera properties while updating names efficiently.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Rename multiple cameras without activating them.</locale_1033>
+        <locale_1033>Enables bulk camera renaming operations.
+
+Provides interface for renaming multiple cameras without activation.
+Maintains camera properties while updating names efficiently.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>BatchRenameCamera</locale_1033>
@@ -1728,10 +1858,18 @@ EA_BatchRenameCamera</script>
         <locale_1033>ChangeObjectDisplaySource</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Change the display source of the object for display color and/or material</locale_1033>
+        <locale_1033>Modifies object display source settings.
+
+Controls whether objects inherit color and material properties from their layer.
+Provides batch modification capabilities for multiple objects.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Change the display source of the object for display color and/or material</locale_1033>
+        <locale_1033>Modifies object display source settings.
+
+Controls whether objects inherit color and material properties from their layer.
+Provides batch modification capabilities for multiple objects.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ChangeObjectDisplaySource</locale_1033>
@@ -1747,10 +1885,18 @@ EA_ChangeObjectDisplaySource</script>
         <locale_1033>ToggleLayerPointer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Short list layers with objs that is visible on screen. This is a good way to quickly examine the layer structure in your model space.</locale_1033>
+        <locale_1033>Displays quick layer information for visible objects.
+
+Creates a filtered layer list showing only layers with visible objects.
+Useful for examining and understanding model layer structure.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Short list layers with objs that is visible on screen. This is a good way to quickly examine the layer structure in your model space.</locale_1033>
+        <locale_1033>Displays quick layer information for visible objects.
+
+Creates a filtered layer list showing only layers with visible objects.
+Useful for examining and understanding model layer structure.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ToggleLayerPointer</locale_1033>
@@ -1766,10 +1912,28 @@ EA_ToggleLayerPointer</script>
         <locale_1033>ViewToggle</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Unsupported value for safe evaluation</locale_1033>
+        <locale_1033>Quick view navigation tool for Rhino.
+
+Features:
+- Toggles between Top and Perspective views
+- Left click to switch between views
+- Keyboard shortcut: {KEY}
+- Optimizes modeling workflow with rapid view changes
+
+Usage:
+Click button to toggle between views.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Unsupported value for safe evaluation</locale_1033>
+        <locale_1033>Quick view navigation tool for Rhino.
+
+Features:
+- Toggles between Top and Perspective views
+- Left click to switch between views
+- Keyboard shortcut: {KEY}
+- Optimizes modeling workflow with rapid view changes
+
+Usage:
+Click button to toggle between views.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ViewToggle</locale_1033>
@@ -1785,10 +1949,24 @@ EA_ViewToggle</script>
         <locale_1033>StairMaker</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Interactively create linear stair.</locale_1033>
+        <locale_1033>Interactively create linear stairs in Rhino.
+
+Key Features:
+- Dynamic stair creation with real-time preview
+- Customizable riser height and tread width
+- Automatic step count calculation
+- Integrated error handling for invalid inputs
+- Support for multiple stair configurations</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Interactively create linear stair.</locale_1033>
+        <locale_1033>Interactively create linear stairs in Rhino.
+
+Key Features:
+- Dynamic stair creation with real-time preview
+- Customizable riser height and tread width
+- Automatic step count calculation
+- Integrated error handling for invalid inputs
+- Support for multiple stair configurations</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>StairMaker</locale_1033>
@@ -1804,10 +1982,24 @@ EA_StairMaker</script>
         <locale_1033>StairMakerSpiral</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Interactively create spiral stair.</locale_1033>
+        <locale_1033>Interactively create spiral stairs in Rhino.
+
+Key Features:
+- Dynamic spiral stair creation with preview
+- Customizable riser height and tread width
+- Adjustable spiral radius and rotation
+- Automatic step count calculation
+- Support for clockwise and counter-clockwise rotation</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Interactively create spiral stair.</locale_1033>
+        <locale_1033>Interactively create spiral stairs in Rhino.
+
+Key Features:
+- Dynamic spiral stair creation with preview
+- Customizable riser height and tread width
+- Adjustable spiral radius and rotation
+- Automatic step count calculation
+- Support for clockwise and counter-clockwise rotation</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>StairMakerSpiral</locale_1033>
@@ -1842,10 +2034,18 @@ EA_FlattenMeshFace</script>
         <locale_1033>MakeVoidSeam</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Make the void cut polysurface based on layer name.</locale_1033>
+        <locale_1033>Creates void cut polysurfaces based on layer name configuration.
+
+The script processes layers containing seam definitions to generate corresponding void cuts.
+Layer names should include width parameters in square brackets (e.g. 'seam[12]').
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Make the void cut polysurface based on layer name.</locale_1033>
+        <locale_1033>Creates void cut polysurfaces based on layer name configuration.
+
+The script processes layers containing seam definitions to generate corresponding void cuts.
+Layer names should include width parameters in square brackets (e.g. 'seam[12]').
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MakeVoidSeam</locale_1033>
@@ -1899,10 +2099,18 @@ EA_OffsetFloorBorder</script>
         <locale_1033>PushGlassIn</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Make pushed in glass recess from selected srfs.</locale_1033>
+        <locale_1033>Creates recessed glass surfaces from selected surfaces.
+
+Generates inset glass surfaces with surrounding frame geometry.
+Useful for creating window/curtainwall details with depth.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Make pushed in glass recess from selected srfs.</locale_1033>
+        <locale_1033>Creates recessed glass surfaces from selected surfaces.
+
+Generates inset glass surfaces with surrounding frame geometry.
+Useful for creating window/curtainwall details with depth.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>PushGlassIn</locale_1033>
@@ -1918,10 +2126,18 @@ EA_PushGlassIn</script>
         <locale_1033>ShapeMapper</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Help you map complex design over surface. Consider this as a improved flowAlongSurface</locale_1033>
+        <locale_1033>Maps complex designs over target surfaces.
+
+Advanced surface mapping utility that provides enhanced control compared to FlowAlongSurface.
+Allows mapping of curves, surfaces and polysurfaces while maintaining design intent.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Help you map complex design over surface. Consider this as a improved flowAlongSurface</locale_1033>
+        <locale_1033>Maps complex designs over target surfaces.
+
+Advanced surface mapping utility that provides enhanced control compared to FlowAlongSurface.
+Allows mapping of curves, surfaces and polysurfaces while maintaining design intent.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ShapeMapper</locale_1033>
@@ -1997,10 +2213,24 @@ EA_TimeTravel</script>
         <locale_1033>ImportSelectedMaterial</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Import selected materials from a file.</locale_1033>
+        <locale_1033>Import materials from external files.
+
+Key Features:
+- Selective material import
+- Property preservation
+- Material preview
+- Name conflict handling
+- Multi-select support</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Import selected materials from a file.</locale_1033>
+        <locale_1033>Import materials from external files.
+
+Key Features:
+- Selective material import
+- Property preservation
+- Material preview
+- Name conflict handling
+- Multi-select support</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ImportSelectedMaterial</locale_1033>
@@ -2016,10 +2246,24 @@ EA_ImportSelectedMaterial</script>
         <locale_1033>MaterialPrefix</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Add prefix to material so when sessioning rhino the enscape can treat matreail seperately and not turn white.</locale_1033>
+        <locale_1033>Add file-specific prefixes to materials.
+
+Key Features:
+- Automatic prefix generation
+- Session compatibility
+- Name conflict resolution
+- Batch processing
+- Material tracking</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Add prefix to material so when sessioning rhino the enscape can treat matreail seperately and not turn white.</locale_1033>
+        <locale_1033>Add file-specific prefixes to materials.
+
+Key Features:
+- Automatic prefix generation
+- Session compatibility
+- Name conflict resolution
+- Batch processing
+- Material tracking</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MaterialPrefix</locale_1033>
@@ -2035,10 +2279,24 @@ EA_MaterialPrefix</script>
         <locale_1033>MergeMaterials</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Merge multiple materials in the file to the same material. Work for object assigned materials as well.</locale_1033>
+        <locale_1033>Consolidate multiple materials into one.
+
+Key Features:
+- Material consolidation
+- Block-aware processing
+- Layer material handling
+- Object material updating
+- Automatic cleanup.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Merge multiple materials in the file to the same material. Work for object assigned materials as well.</locale_1033>
+        <locale_1033>Consolidate multiple materials into one.
+
+Key Features:
+- Material consolidation
+- Block-aware processing
+- Layer material handling
+- Object material updating
+- Automatic cleanup.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MergeMaterials</locale_1033>
@@ -2054,10 +2312,24 @@ EA_MergeMaterials</script>
         <locale_1033>RandomTextureWalk</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Randomly walk the texture map a bit to avoid them lineup</locale_1033>
+        <locale_1033>Randomize texture mapping positions.
+
+Key Features:
+- Texture offset randomization
+- Mapping preservation
+- Customizable range
+- Batch processing
+- Pattern variation</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Randomly walk the texture map a bit to avoid them lineup</locale_1033>
+        <locale_1033>Randomize texture mapping positions.
+
+Key Features:
+- Texture offset randomization
+- Mapping preservation
+- Customizable range
+- Batch processing
+- Pattern variation</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomTextureWalk</locale_1033>
@@ -2092,10 +2364,18 @@ EA_RemoveStringInMaterialName</script>
         <locale_1033>AiRenderingFromView</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Render captured Rhino view with Stable Diffusion.</locale_1033>
+        <locale_1033>Renders Rhino views using Stable Diffusion AI.
+
+Captures current viewport and processes it through selected AI models.
+Provides extensive control over rendering style, mood, and architectural context.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Render captured Rhino view with Stable Diffusion.</locale_1033>
+        <locale_1033>Renders Rhino views using Stable Diffusion AI.
+
+Captures current viewport and processes it through selected AI models.
+Provides extensive control over rendering style, mood, and architectural context.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>AiRenderingFromView</locale_1033>
@@ -2130,10 +2410,18 @@ EA_AiRenderUpscale</script>
         <locale_1033>EnscapeAssetLocator</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Help you find the Enscape asset folder by search name, so you can manipulate asset material.</locale_1033>
+        <locale_1033>Locates Enscape assets by name for material manipulation.
+
+Helps find and access Enscape asset folders to modify materials and properties.
+Launches the EnscapeAssetChanger application.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Help you find the Enscape asset folder by search name, so you can manipulate asset material.</locale_1033>
+        <locale_1033>Locates Enscape assets by name for material manipulation.
+
+Helps find and access Enscape asset folders to modify materials and properties.
+Launches the EnscapeAssetChanger application.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>EnscapeAssetLocator</locale_1033>
@@ -2282,10 +2570,24 @@ EA_RenameEnscapeFiles</script>
         <locale_1033>DuplicateLayout</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space.</locale_1033>
+        <locale_1033>Duplicate layouts with customizable viewport offsets.
+
+Key Features:
+- Maintain layout settings and properties
+- Adjust viewport positions with X-Y offsets
+- Capture different model space views
+- Preserve viewport scales and display settings
+- Support for multiple layout selection</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space.</locale_1033>
+        <locale_1033>Duplicate layouts with customizable viewport offsets.
+
+Key Features:
+- Maintain layout settings and properties
+- Adjust viewport positions with X-Y offsets
+- Capture different model space views
+- Preserve viewport scales and display settings
+- Support for multiple layout selection</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>DuplicateLayout</locale_1033>
@@ -2301,10 +2603,24 @@ EA_DuplicateLayout</script>
         <locale_1033>ExportSelectedLayout</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Export selected layout(s) to pdf</locale_1033>
+        <locale_1033>Export selected layouts to PDF format.
+
+Key Features:
+- Multiple layout selection support
+- Customizable output location
+- Maintains print settings and quality
+- Optional automatic PDF opening
+- Batch processing capability</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Export selected layout(s) to pdf</locale_1033>
+        <locale_1033>Export selected layouts to PDF format.
+
+Key Features:
+- Multiple layout selection support
+- Customizable output location
+- Maintains print settings and quality
+- Optional automatic PDF opening
+- Batch processing capability</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ExportSelectedLayout</locale_1033>
@@ -2320,10 +2636,24 @@ EA_ExportSelectedLayout</script>
         <locale_1033>SectionCrowd</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Populate people interactively in TOP view by providing two points.</locale_1033>
+        <locale_1033>Create section view crowd representations.
+
+Key Features:
+- Interactive crowd placement in TOP view
+- Customizable people spacing and density
+- Random variations for natural appearance
+- Support for multiple crowd patterns
+- Automatic group creation for easy management</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Populate people interactively in TOP view by providing two points.</locale_1033>
+        <locale_1033>Create section view crowd representations.
+
+Key Features:
+- Interactive crowd placement in TOP view
+- Customizable people spacing and density
+- Random variations for natural appearance
+- Support for multiple crowd patterns
+- Automatic group creation for easy management</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SectionCrowd</locale_1033>
@@ -2339,10 +2669,24 @@ EA_SectionCrowd</script>
         <locale_1033>VisualizeExcel</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Convert excel data to shape diagrams.</locale_1033>
+        <locale_1033>Convert Excel data into visual diagrams.
+
+Key Features:
+- Multiple shape options (circles, squares, bars)
+- Customizable colors and sizes
+- Automatic area calculations
+- Support for grouped data visualization
+- Dynamic layout adjustments.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Convert excel data to shape diagrams.</locale_1033>
+        <locale_1033>Convert Excel data into visual diagrams.
+
+Key Features:
+- Multiple shape options (circles, squares, bars)
+- Customizable colors and sizes
+- Automatic area calculations
+- Support for grouped data visualization
+- Dynamic layout adjustments.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>VisualizeExcel</locale_1033>
@@ -2358,10 +2702,24 @@ EA_VisualizeExcel</script>
         <locale_1033>OpenSampleExcel</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Open the sample excel with placeholder area size info.</locale_1033>
+        <locale_1033>Access sample Excel template for area visualization.
+
+Key Features:
+- Pre-formatted Excel template
+- Example data structure
+- Color coding guidelines
+- Area calculation formulas
+- Category organization samples</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Open the sample excel with placeholder area size info.</locale_1033>
+        <locale_1033>Access sample Excel template for area visualization.
+
+Key Features:
+- Pre-formatted Excel template
+- Example data structure
+- Color coding guidelines
+- Area calculation formulas
+- Category organization samples</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>OpenSampleExcel</locale_1033>
@@ -2377,10 +2735,32 @@ EA_OpenSampleExcel</script>
         <locale_1033>RandomDeselect</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Ramdonly deselect objs by percentage</locale_1033>
+        <locale_1033>Randomly deselects objects based on percentage.
+
+Features:
+- Deselects random subset of selected objects
+- Percentage-based deselection (1-99%)
+- Remembers last used percentage
+- Maintains object relationships
+
+Usage:
+1. Select objects
+2. Enter deselection percentage
+3. Random subset will be deselected</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Ramdonly deselect objs by percentage</locale_1033>
+        <locale_1033>Randomly deselects objects based on percentage.
+
+Features:
+- Deselects random subset of selected objects
+- Percentage-based deselection (1-99%)
+- Remembers last used percentage
+- Maintains object relationships
+
+Usage:
+1. Select objects
+2. Enter deselection percentage
+3. Random subset will be deselected</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomDeselect</locale_1033>
@@ -2396,10 +2776,32 @@ EA_RandomDeselect</script>
         <locale_1033>RandomSelectionToGroup</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering</locale_1033>
+        <locale_1033>Randomly distributes selected objects into groups.
+
+Features:
+- Creates specified number of groups
+- Randomly assigns objects to groups
+- Useful for applying varied materials/shading
+- Maintains object relationships
+
+Usage:
+1. Select objects to group
+2. Specify number of groups
+3. Objects will be randomly distributed</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering</locale_1033>
+        <locale_1033>Randomly distributes selected objects into groups.
+
+Features:
+- Creates specified number of groups
+- Randomly assigns objects to groups
+- Useful for applying varied materials/shading
+- Maintains object relationships
+
+Usage:
+1. Select objects to group
+2. Specify number of groups
+3. Objects will be randomly distributed</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomSelectionToGroup</locale_1033>
@@ -2510,10 +2912,32 @@ EA_DraftInsulationBatting</script>
         <locale_1033>RevitDrafterImport</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types.</locale_1033>
+        <locale_1033>Imports drafting content from Revit.
+
+Features:
+- Sets up layer structure for line styles
+- Supports filled region types
+- Maintains layer organization
+- Preserves object properties
+
+Usage:
+1. Export content from Revit
+2. Run command to import
+3. Content organized in layer tree</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types.</locale_1033>
+        <locale_1033>Imports drafting content from Revit.
+
+Features:
+- Sets up layer structure for line styles
+- Supports filled region types
+- Maintains layer organization
+- Preserves object properties
+
+Usage:
+1. Export content from Revit
+2. Run command to import
+3. Content organized in layer tree</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RevitDrafterImport</locale_1033>
@@ -2529,10 +2953,32 @@ EA_RevitDrafterImport</script>
         <locale_1033>RevitDrafterExport</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Send the draft content back to Revit.</locale_1033>
+        <locale_1033>Exports drafting content to Revit.
+
+Features:
+- Processes curves and filled regions
+- Maintains layer organization
+- Supports multiple geometry types
+- Preserves object properties
+
+Usage:
+1. Create content in OUT layers
+2. Run command to export
+3. Import in Revit using companion tool</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Send the draft content back to Revit.</locale_1033>
+        <locale_1033>Exports drafting content to Revit.
+
+Features:
+- Processes curves and filled regions
+- Maintains layer organization
+- Supports multiple geometry types
+- Preserves object properties
+
+Usage:
+1. Create content in OUT layers
+2. Run command to export
+3. Import in Revit using companion tool</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RevitDrafterExport</locale_1033>
@@ -2700,10 +3146,24 @@ EA_PushToMiro</script>
         <locale_1033>ArchiveFile</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Archive files based on today's date, creation date or last modifyed date.</locale_1033>
+        <locale_1033>Archive files with customizable date prefixes.
+
+Key Features:
+- Multiple date format options
+- Batch file processing
+- Custom destination selection
+- File opening options
+- Automatic naming convention</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Archive files based on today's date, creation date or last modifyed date.</locale_1033>
+        <locale_1033>Archive files with customizable date prefixes.
+
+Key Features:
+- Multiple date format options
+- Batch file processing
+- Custom destination selection
+- File opening options
+- Automatic naming convention</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ArchiveFile</locale_1033>
@@ -2719,10 +3179,24 @@ EA_ArchiveFile</script>
         <locale_1033>SaveSmallAndClose</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Save small file and close document. You dont need to wait.</locale_1033>
+        <locale_1033>Save optimized file and close document.
+
+Key Features:
+- Automatic resource cleanup
+- Material purging
+- Block definition optimization
+- Layer cleanup
+- Quick document closure</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Save small file and close document. You dont need to wait.</locale_1033>
+        <locale_1033>Save optimized file and close document.
+
+Key Features:
+- Automatic resource cleanup
+- Material purging
+- Block definition optimization
+- Layer cleanup
+- Quick document closure</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SaveSmallAndClose</locale_1033>
@@ -2738,10 +3212,24 @@ EA_SaveSmallAndClose</script>
         <locale_1033>CreateWorksession</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files.</locale_1033>
+        <locale_1033>Create multi-file Rhino worksession.
+
+Key Features:
+- Multiple file selection support
+- Custom session naming
+- Automatic file linking
+- Performance optimization
+- Batch file processing</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files.</locale_1033>
+        <locale_1033>Create multi-file Rhino worksession.
+
+Key Features:
+- Multiple file selection support
+- Custom session naming
+- Automatic file linking
+- Performance optimization
+- Batch file processing</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>CreateWorksession</locale_1033>
@@ -2757,10 +3245,24 @@ EA_CreateWorksession</script>
         <locale_1033>BindWorksession</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out.</locale_1033>
+        <locale_1033>Convert worksession to single file with organized layers.
+
+Key Features:
+- Automatic layer organization
+- File hierarchy preservation
+- Progress tracking
+- Resource cleanup
+- Email notification support</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out.</locale_1033>
+        <locale_1033>Convert worksession to single file with organized layers.
+
+Key Features:
+- Automatic layer organization
+- File hierarchy preservation
+- Progress tracking
+- Resource cleanup
+- Email notification support</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>BindWorksession</locale_1033>
@@ -2776,10 +3278,24 @@ EA_BindWorksession</script>
         <locale_1033>ExternalTrimmer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Trim selected objs in external file and link back to Rhino</locale_1033>
+        <locale_1033>Manage external file trimming operations.
+
+Key Features:
+- External file linking and updating
+- Boolean trimming operations
+- Layer-based filtering
+- Block instance management
+- Automatic file synchronization</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Trim selected objs in external file and link back to Rhino</locale_1033>
+        <locale_1033>Manage external file trimming operations.
+
+Key Features:
+- External file linking and updating
+- Boolean trimming operations
+- Layer-based filtering
+- Block instance management
+- Automatic file synchronization</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ExternalTrimmer</locale_1033>
@@ -2795,10 +3311,24 @@ EA_ExternalTrimmer</script>
         <locale_1033>ExternalTrimmer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Update external link</locale_1033>
+        <locale_1033>Update external linked references.
+
+Key Features:
+- External block updating
+- Link synchronization
+- Reference management
+- File dependency tracking
+- Automatic refresh handling</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Update external link</locale_1033>
+        <locale_1033>Update external linked references.
+
+Key Features:
+- External block updating
+- Link synchronization
+- Reference management
+- File dependency tracking
+- Automatic refresh handling</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ExternalTrimmer</locale_1033>
@@ -2814,10 +3344,24 @@ EA_ExternalTrimmer</script>
         <locale_1033>RebaseFile</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Try to rebase the file center to new origin point, include all the views.</locale_1033>
+        <locale_1033>Rebase file geometry and views to new origin point.
+
+Key Features:
+- Interactive base point selection
+- Automatic object transformation
+- View camera adjustment
+- Named view preservation
+- Comprehensive coordinate system update</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Try to rebase the file center to new origin point, include all the views.</locale_1033>
+        <locale_1033>Rebase file geometry and views to new origin point.
+
+Key Features:
+- Interactive base point selection
+- Automatic object transformation
+- View camera adjustment
+- Named view preservation
+- Comprehensive coordinate system update</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RebaseFile</locale_1033>
@@ -3034,10 +3578,24 @@ EA_RedAlert</script>
         <locale_1033>SearchCommand</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Learn all the buttons functions.</locale_1033>
+        <locale_1033>Search and learn EnneadTab commands.
+
+Key Features:
+- Interactive command search
+- Function documentation
+- Command aliases
+- Tool location finder
+- Visual command preview</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Learn all the buttons functions.</locale_1033>
+        <locale_1033>Search and learn EnneadTab commands.
+
+Key Features:
+- Interactive command search
+- Function documentation
+- Command aliases
+- Tool location finder
+- Visual command preview</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SearchCommand</locale_1033>
@@ -3160,10 +3718,24 @@ EA_Turtorial</script>
         <locale_1033>ActivateEnneadTab</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>When things do not load, activate me.</locale_1033>
+        <locale_1033>Restore EnneadTab functionality.
+
+Key Features:
+- System path verification
+- Component activation
+- Path configuration
+- Startup script setup
+- Error recovery</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>When things do not load, activate me.</locale_1033>
+        <locale_1033>Restore EnneadTab functionality.
+
+Key Features:
+- System path verification
+- Component activation
+- Path configuration
+- Startup script setup
+- Error recovery</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ActivateEnneadTab</locale_1033>
@@ -3191,10 +3763,24 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\activate_enneadtab.button\\activat
         <locale_1033>GetLatest</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Get the lastest version of EnneadTab</locale_1033>
+        <locale_1033>Update EnneadTab to latest version.
+
+Key Features:
+- Automatic version detection
+- Core module updates
+- System path configuration
+- Component synchronization
+- Installation verification</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Get the lastest version of EnneadTab</locale_1033>
+        <locale_1033>Update EnneadTab to latest version.
+
+Key Features:
+- Automatic version detection
+- Core module updates
+- System path configuration
+- Component synchronization
+- Installation verification</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>GetLatest</locale_1033>
@@ -3222,10 +3808,24 @@ MODULE_HELPER.run_Rhino_button('Ennead+.menu\\get_latest.button\\get_latest_left
         <locale_1033>TellMeVersion</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Show current version of EnneadTab Rhino</locale_1033>
+        <locale_1033>Display current EnneadTab Rhino version.
+
+Key Features:
+- Version number display
+- Update status information
+- Installation verification
+- Component compatibility check
+- Release notes access</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Show current version of EnneadTab Rhino</locale_1033>
+        <locale_1033>Display current EnneadTab Rhino version.
+
+Key Features:
+- Version number display
+- Update status information
+- Installation verification
+- Component compatibility check
+- Release notes access</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>TellMeVersion</locale_1033>
@@ -3241,10 +3841,24 @@ EA_TellMeVersion</script>
         <locale_1033>RestartRhino</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Restart Rhino to test new core.</locale_1033>
+        <locale_1033>Restart Rhino to apply core updates.
+
+Key Features:
+- Safe application restart
+- Update implementation
+- Session state preservation
+- Automatic core reloading
+- System verification</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Restart Rhino to test new core.</locale_1033>
+        <locale_1033>Restart Rhino to apply core updates.
+
+Key Features:
+- Safe application restart
+- Update implementation
+- Session state preservation
+- Automatic core reloading
+- System verification</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RestartRhino</locale_1033>
@@ -3260,10 +3874,24 @@ EA_RestartRhino</script>
         <locale_1033>ResetAllConduit</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Reset all conduits</locale_1033>
+        <locale_1033>Reset all display conduits to default state.
+
+Key Features:
+- Complete conduit cleanup
+- Memory optimization
+- Display pipeline reset
+- System performance improvement
+- Debug assistance</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Reset all conduits</locale_1033>
+        <locale_1033>Reset all display conduits to default state.
+
+Key Features:
+- Complete conduit cleanup
+- Memory optimization
+- Display pipeline reset
+- System performance improvement
+- Debug assistance</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ResetAllConduit</locale_1033>
@@ -3279,10 +3907,24 @@ EA_ResetAllConduit</script>
         <locale_1033>HowToInstall</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Pull up installation guide for the rest of your team.</locale_1033>
+        <locale_1033>Access EnneadTab installation documentation.
+
+Key Features:
+- Step-by-step installation guide
+- System requirements
+- Troubleshooting tips
+- Configuration instructions
+- Team deployment guidance</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Pull up installation guide for the rest of your team.</locale_1033>
+        <locale_1033>Access EnneadTab installation documentation.
+
+Key Features:
+- Step-by-step installation guide
+- System requirements
+- Troubleshooting tips
+- Configuration instructions
+- Team deployment guidance</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>HowToInstall</locale_1033>
@@ -3298,10 +3940,16 @@ EA_HowToInstall</script>
         <locale_1033>YoutubePlaylist</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Checkout pre-recorded turtorials and demos about EnneadTab.</locale_1033>
+        <locale_1033>Access EnneadTab's video tutorial library.
+
+Opens the official EnneadTab YouTube playlist containing tutorials, 
+demonstrations and workflow guides.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Checkout pre-recorded turtorials and demos about EnneadTab.</locale_1033>
+        <locale_1033>Access EnneadTab's video tutorial library.
+
+Opens the official EnneadTab YouTube playlist containing tutorials, 
+demonstrations and workflow guides.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>YoutubePlaylist</locale_1033>
@@ -3317,10 +3965,24 @@ EA_YoutubePlaylist</script>
         <locale_1033>MakeANewButton</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Create new EnneadTab button components.
+
+Key Features:
+- Interactive button creation
+- Template generation
+- File structure setup
+- Icon integration support
+- Documentation templates</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>N/A</locale_1033>
+        <locale_1033>Create new EnneadTab button components.
+
+Key Features:
+- Interactive button creation
+- Template generation
+- File structure setup
+- Icon integration support
+- Documentation templates</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MakeANewButton</locale_1033>
@@ -3336,10 +3998,24 @@ EA_MakeANewButton</script>
         <locale_1033>ExtractPreviewImages</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>This button does ExtractPreviewImages when left click</locale_1033>
+        <locale_1033>Extract preview images from Rhino files.
+
+Key Features:
+- Batch image extraction
+- Multiple file support
+- Automatic naming convention
+- Progress tracking
+- Error logging</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>This button does ExtractPreviewImages when left click</locale_1033>
+        <locale_1033>Extract preview images from Rhino files.
+
+Key Features:
+- Batch image extraction
+- Multiple file support
+- Automatic naming convention
+- Progress tracking
+- Error logging</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>ExtractPreviewImages</locale_1033>
@@ -3355,10 +4031,24 @@ EA_ExtractPreviewImages</script>
         <locale_1033>OpenEcosystemFolder</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Open the Ecosystem folder.</locale_1033>
+        <locale_1033>Access the EnneadTab Ecosystem directory.
+
+Key Features:
+- Direct folder access
+- System file management
+- Resource exploration
+- Configuration access
+- Template management</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Open the Ecosystem folder.</locale_1033>
+        <locale_1033>Access the EnneadTab Ecosystem directory.
+
+Key Features:
+- Direct folder access
+- System file management
+- Resource exploration
+- Configuration access
+- Template management</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>OpenEcosystemFolder</locale_1033>
@@ -3374,16 +4064,24 @@ EA_OpenEcosystemFolder</script>
         <locale_1033>AppStore</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>EnneadTab App Store launcher.
+        <locale_1033>Access EnneadTab's centralized tool repository.
 
-Access the complete collection of EnneadTab tools and utilities
-through a centralized application store interface.</locale_1033>
+Key Features:
+- Complete tool collection
+- Category organization
+- Installation management
+- Update notifications
+- Tool documentation access</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>EnneadTab App Store launcher.
+        <locale_1033>Access EnneadTab's centralized tool repository.
 
-Access the complete collection of EnneadTab tools and utilities
-through a centralized application store interface.</locale_1033>
+Key Features:
+- Complete tool collection
+- Category organization
+- Installation management
+- Update notifications
+- Tool documentation access</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>AppStore</locale_1033>
@@ -3399,10 +4097,24 @@ EA_AppStore</script>
         <locale_1033>UnitTest</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Perform unit test on EnneadTab</locale_1033>
+        <locale_1033>Execute unit tests for EnneadTab components.
+
+Key Features:
+- Comprehensive module testing
+- Automated error detection
+- System integrity verification
+- Performance validation
+- Debug report generation</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Perform unit test on EnneadTab</locale_1033>
+        <locale_1033>Execute unit tests for EnneadTab components.
+
+Key Features:
+- Comprehensive module testing
+- Automated error detection
+- System integrity verification
+- Performance validation
+- Debug report generation</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>UnitTest</locale_1033>

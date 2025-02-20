@@ -1,6 +1,12 @@
-
 __title__ = "RandomTextureWalk"
-__doc__ = "Randomly walk the texture map a bit to avoid them lineup"
+__doc__ = """Randomize texture mapping positions.
+
+Key Features:
+- Texture offset randomization
+- Mapping preservation
+- Customizable range
+- Batch processing
+- Pattern variation"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

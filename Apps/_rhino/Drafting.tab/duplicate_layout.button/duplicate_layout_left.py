@@ -1,6 +1,12 @@
-
 __title__ = "DuplicateLayout"
-__doc__ = "Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space."
+__doc__ = """Duplicate layouts with customizable viewport offsets.
+
+Key Features:
+- Maintain layout settings and properties
+- Adjust viewport positions with X-Y offsets
+- Capture different model space views
+- Preserve viewport scales and display settings
+- Support for multiple layout selection"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

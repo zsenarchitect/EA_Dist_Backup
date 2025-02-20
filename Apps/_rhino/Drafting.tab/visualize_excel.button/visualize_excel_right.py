@@ -1,6 +1,12 @@
-
 __title__ = "OpenSampleExcel"
-__doc__ = "Open the sample excel with placeholder area size info."
+__doc__ = """Access sample Excel template for area visualization.
+
+Key Features:
+- Pre-formatted Excel template
+- Example data structure
+- Color coding guidelines
+- Area calculation formulas
+- Category organization samples"""
 
 import os
 import rhinoscriptsyntax as rs

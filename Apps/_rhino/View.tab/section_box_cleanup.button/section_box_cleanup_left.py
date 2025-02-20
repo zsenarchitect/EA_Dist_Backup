@@ -8,7 +8,7 @@ import rhinoscriptsyntax as rs
 
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)) + "\\section_box.button")
-import section_box_utility
+import section_box_utility # pyright: ignore
 from EnneadTab import LOG, ERROR_HANDLE
 
 

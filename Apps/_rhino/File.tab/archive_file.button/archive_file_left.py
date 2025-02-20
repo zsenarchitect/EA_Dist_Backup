@@ -1,6 +1,12 @@
-
 __title__ = "ArchiveFile"
-__doc__ = "Archive files based on today's date, creation date or last modifyed date."
+__doc__ = """Archive files with customizable date prefixes.
+
+Key Features:
+- Multiple date format options
+- Batch file processing
+- Custom destination selection
+- File opening options
+- Automatic naming convention"""
 
 
 import os

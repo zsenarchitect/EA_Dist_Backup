@@ -1,6 +1,9 @@
-
 __title__ = "EnscapeAssetLocator"
-__doc__ = "Help you find the Enscape asset folder by search name, so you can manipulate asset material."
+__doc__ = """Locates Enscape assets by name for material manipulation.
+
+Helps find and access Enscape asset folders to modify materials and properties.
+Launches the EnscapeAssetChanger application.
+"""
 
 __is_popular__ = True
 from EnneadTab import ERROR_HANDLE, LOG, EXE

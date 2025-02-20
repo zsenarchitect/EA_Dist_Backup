@@ -1,6 +1,16 @@
-
 __title__ = "RevitDrafterImport"
-__doc__ = "Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types."
+__doc__ = """Imports drafting content from Revit.
+
+Features:
+- Sets up layer structure for line styles
+- Supports filled region types
+- Maintains layer organization
+- Preserves object properties
+
+Usage:
+1. Export content from Revit
+2. Run command to import
+3. Content organized in layer tree"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

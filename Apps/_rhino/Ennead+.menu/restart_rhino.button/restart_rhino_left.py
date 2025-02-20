@@ -1,6 +1,12 @@
-
 __title__ = "RestartRhino"
-__doc__ = "Restart Rhino to test new core."
+__doc__ = """Restart Rhino to apply core updates.
+
+Key Features:
+- Safe application restart
+- Update implementation
+- Session state preservation
+- Automatic core reloading
+- System verification"""
 
 
 from EnneadTab import ERROR_HANDLE, LOG

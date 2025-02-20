@@ -1,7 +1,12 @@
-
 __title__ = "FindLayerInFiles"
-__doc__ = "In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file."
+__doc__ = """Search for layers across multiple files.
 
+Key Features:
+- Multi-file layer search
+- Case-insensitive matching
+- Progress tracking
+- Search result summary
+- File origin tracking"""
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

@@ -1,6 +1,12 @@
-
 __title__ = "ExternalTrimmer"
-__doc__ = "Update external link"
+__doc__ = """Update external linked references.
+
+Key Features:
+- External block updating
+- Link synchronization
+- Reference management
+- File dependency tracking
+- Automatic refresh handling"""
 
 
 import external_trimmer_left as ET

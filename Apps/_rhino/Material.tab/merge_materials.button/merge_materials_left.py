@@ -1,6 +1,12 @@
-
 __title__ = "MergeMaterials"
-__doc__ = "Merge multiple materials in the file to the same material. Work for object assigned materials as well."
+__doc__ = """Consolidate multiple materials into one.
+
+Key Features:
+- Material consolidation
+- Block-aware processing
+- Layer material handling
+- Object material updating
+- Automatic cleanup."""
 __is_popular__ = True
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

@@ -1,6 +1,12 @@
-
 __title__ = "ImportSelectedMaterial"
-__doc__ = "Import selected materials from a file."
+__doc__ = """Import materials from external files.
+
+Key Features:
+- Selective material import
+- Property preservation
+- Material preview
+- Name conflict handling
+- Multi-select support"""
 
 import scriptcontext as sc
 import rhinoscriptsyntax as rs

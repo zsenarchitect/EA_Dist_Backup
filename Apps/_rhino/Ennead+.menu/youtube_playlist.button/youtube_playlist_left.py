@@ -1,6 +1,8 @@
-
 __title__ = "YoutubePlaylist"
-__doc__ = "Checkout pre-recorded turtorials and demos about EnneadTab."
+__doc__ = """Access EnneadTab's video tutorial library.
+
+Opens the official EnneadTab YouTube playlist containing tutorials, 
+demonstrations and workflow guides."""
 
 import webbrowser
 from EnneadTab import LOG, ERROR_HANDLE

@@ -1,6 +1,12 @@
-
 __title__ = "VisualizeExcel"
-__doc__ = "Convert excel data to shape diagrams."
+__doc__ = """Convert Excel data into visual diagrams.
+
+Key Features:
+- Multiple shape options (circles, squares, bars)
+- Customizable colors and sizes
+- Automatic area calculations
+- Support for grouped data visualization
+- Dynamic layout adjustments."""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

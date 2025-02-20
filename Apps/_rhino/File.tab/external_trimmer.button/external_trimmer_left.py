@@ -1,6 +1,12 @@
-
 __title__ = "ExternalTrimmer"
-__doc__ = "Trim selected objs in external file and link back to Rhino"
+__doc__ = """Manage external file trimming operations.
+
+Key Features:
+- External file linking and updating
+- Boolean trimming operations
+- Layer-based filtering
+- Block instance management
+- Automatic file synchronization"""
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

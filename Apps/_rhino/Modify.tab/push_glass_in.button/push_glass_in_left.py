@@ -1,6 +1,9 @@
-
 __title__ = "PushGlassIn"
-__doc__ = "Make pushed in glass recess from selected srfs."
+__doc__ = """Creates recessed glass surfaces from selected surfaces.
+
+Generates inset glass surfaces with surrounding frame geometry.
+Useful for creating window/curtainwall details with depth.
+"""
 __is_popular__ = True
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

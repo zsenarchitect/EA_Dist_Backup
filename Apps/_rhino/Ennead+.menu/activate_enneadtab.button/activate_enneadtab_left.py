@@ -1,6 +1,12 @@
-
 __title__ = "ActivateEnneadTab"
-__doc__ = "When things do not load, activate me."
+__doc__ = """Restore EnneadTab functionality.
+
+Key Features:
+- System path verification
+- Component activation
+- Path configuration
+- Startup script setup
+- Error recovery"""
 __FONDATION__ = True
 
 import os

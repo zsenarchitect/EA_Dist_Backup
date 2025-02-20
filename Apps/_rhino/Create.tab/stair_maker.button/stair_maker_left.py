@@ -1,6 +1,12 @@
-
 __title__ = "StairMaker"
-__doc__ = "Interactively create linear stair."
+__doc__ = """Interactively create linear stairs in Rhino.
+
+Key Features:
+- Dynamic stair creation with real-time preview
+- Customizable riser height and tread width
+- Automatic step count calculation
+- Integrated error handling for invalid inputs
+- Support for multiple stair configurations"""
 __is_popular__ = True
 
 import Rhino # pyright: ignore

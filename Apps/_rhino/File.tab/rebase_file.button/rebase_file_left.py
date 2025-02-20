@@ -1,5 +1,12 @@
 __title__ = "RebaseFile"
-__doc__ = "Try to rebase the file center to new origin point, include all the views."
+__doc__ = """Rebase file geometry and views to new origin point.
+
+Key Features:
+- Interactive base point selection
+- Automatic object transformation
+- View camera adjustment
+- Named view preservation
+- Comprehensive coordinate system update"""
 __is_popular__ = True
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore

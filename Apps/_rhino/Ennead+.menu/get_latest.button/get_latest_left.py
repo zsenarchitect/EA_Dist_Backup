@@ -27,7 +27,14 @@ print ("\n".join(sys.path))
 
 
 __title__ = "GetLatest"
-__doc__ = "Get the lastest version of EnneadTab"
+__doc__ = """Update EnneadTab to latest version.
+
+Key Features:
+- Automatic version detection
+- Core module updates
+- System path configuration
+- Component synchronization
+- Installation verification"""
 __FONDATION__ = True
 from EnneadTab import ERROR_HANDLE
 from EnneadTab import VERSION_CONTROL, NOTIFICATION, ERROR_HANDLE

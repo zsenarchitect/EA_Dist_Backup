@@ -1,6 +1,16 @@
-
 __title__ = "RandomDeselect"
-__doc__ = "Ramdonly deselect objs by percentage"
+__doc__ = """Randomly deselects objects based on percentage.
+
+Features:
+- Deselects random subset of selected objects
+- Percentage-based deselection (1-99%)
+- Remembers last used percentage
+- Maintains object relationships
+
+Usage:
+1. Select objects
+2. Enter deselection percentage
+3. Random subset will be deselected"""
 __is_popular__ = True
 
 import random

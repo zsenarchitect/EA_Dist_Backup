@@ -309,7 +309,7 @@ def extract_global_variables(script_path):
                             var_value = ast.literal_eval(node.value)
                         except ValueError:
                             # For non-literals or complex cases, keep a representation of the code
-                            var_value = "Unsupported value for safe evaluation"
+                            var_value = "Unsupported value for safe evaluation, legacy version. See Sen Z to fix this for dynamic constant handling."
                     global_vars[var_name] = var_value
     
     return global_vars

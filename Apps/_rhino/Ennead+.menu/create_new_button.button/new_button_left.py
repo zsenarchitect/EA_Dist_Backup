@@ -1,5 +1,12 @@
-
 __title__ = "MakeANewButton"
+__doc__ = """Create new EnneadTab button components.
+
+Key Features:
+- Interactive button creation
+- Template generation
+- File structure setup
+- Icon integration support
+- Documentation templates"""
 import os
 from ui import UI
 """

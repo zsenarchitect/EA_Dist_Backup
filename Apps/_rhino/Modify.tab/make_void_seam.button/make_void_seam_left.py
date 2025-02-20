@@ -1,7 +1,9 @@
-
 __title__ = "MakeVoidSeam"
-__doc__ = "Make the void cut polysurface based on layer name."
+__doc__ = """Creates void cut polysurfaces based on layer name configuration.
 
+The script processes layers containing seam definitions to generate corresponding void cuts.
+Layer names should include width parameters in square brackets (e.g. 'seam[12]').
+"""
 
 import rhinoscriptsyntax as rs
 import re

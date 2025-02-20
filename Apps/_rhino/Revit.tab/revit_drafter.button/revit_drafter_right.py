@@ -1,6 +1,16 @@
-
 __title__ = "RevitDrafterExport"
-__doc__ = "Send the draft content back to Revit."
+__doc__ = """Exports drafting content to Revit.
+
+Features:
+- Processes curves and filled regions
+- Maintains layer organization
+- Supports multiple geometry types
+- Preserves object properties
+
+Usage:
+1. Create content in OUT layers
+2. Run command to export
+3. Import in Revit using companion tool"""
 import rhinoscriptsyntax as rs
 
 from EnneadTab import LOG, ERROR_HANDLE

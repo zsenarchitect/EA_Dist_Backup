@@ -1,6 +1,9 @@
-
 __title__ = "BatchRenameCamera"
-__doc__ = "Rename multiple cameras without activating them."
+__doc__ = """Enables bulk camera renaming operations.
+
+Provides interface for renaming multiple cameras without activation.
+Maintains camera properties while updating names efficiently.
+"""
 __is_popular__ = True
 import Rhino # pyright: ignore
 import Eto # pyright: ignore

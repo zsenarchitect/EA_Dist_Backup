@@ -136,7 +136,33 @@ class Deployer:
                     view.SetFilterVisibility (filter.Id, True)
         t.Commit()
 
+    def _get_textnote_type(self):
+        """Gets or creates text note type needed for labeling.
+        
+        Returns:
+            DB.TextNoteType: Text note type
+        """
+        pass
+        all_text_types = DB.FilteredElementCollector(self.doc).OfClass(DB.TextNoteType).WhereElementIsElementType().ToElements()
+        for label_text_type in all_text_types:
+            if label_text_type.LookupParameter("Type Name").AsString() == "Label":
+                return label_text_type
 
+
+        if not label_text_type:
+            t = DB.Transaction(self.doc, "Create Label Text Type")
+            t.Start()
+            sample_text_type_id = self.doc.GetDefaultElementTypeId(DB.ElementTypeGroup.TextNoteType)
+            label_text_type = self.doc.GetElement(sample_text_type_id).Duplicate("Label")
+            t.Commit()
+            
+        # Set label text type properties   
+        t = DB.Transaction(self.doc, "Set Label Text Type Properties")
+        t.Start()
+        label_text_type.LookupParameter("Text Font").Set("Impact")
+        label_text_type.LookupParameter("Text Size").Set(0.1)
+        t.Commit()
+        return label_text_type
     
     def _get_model_text_elements(self):
         """Gets or creates model text elements needed for labeling.
@@ -190,22 +216,20 @@ class Deployer:
         Args:
             family: Family to create label for
         """
-        pass
+
+        tnote_type = self._get_textnote_type()
         t = DB.Transaction(self.doc, "Add Label Text")
         t.Start()
-        tnote_typeid = self.doc.GetDefaultElementTypeId(DB.ElementTypeGroup.TextNoteType)
       
         title = family.Name
         new_note = DB.TextNote.Create(self.doc,
                             self.view.Id,
                             self.pointer,
                             title,
-                            tnote_typeid
+                            tnote_type.Id
                             )
         new_note.HorizontalAlignment = DB.HorizontalTextAlignment.Right
-        DB.ElementTransformUtils.MoveElement(self.doc, 
-                                            new_note.Id, 
-                                            self.pointer - new_note.Location.Point-DB.XYZ(5,0,0))
+        new_note.Location.Move(DB.XYZ(-1,0,0))
 
 
         t.Commit()
@@ -306,6 +330,12 @@ class Deployer:
                         .ToElements()
 
         # print ("purging {} elements of category {}".format(len(elements), category_or_class))
+        if category_or_class == DB.BuiltInCategory.OST_TextNotes:
+            for element in elements:
+                self.doc.Delete(element.Id)
+            return
+
+        
         for element in elements:
             try:
                 comment = element.LookupParameter("Comments").AsString()

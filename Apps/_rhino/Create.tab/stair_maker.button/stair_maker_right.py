@@ -1,6 +1,12 @@
-
 __title__ = "StairMakerSpiral"
-__doc__ = "Interactively create spiral stair."
+__doc__ = """Interactively create spiral stairs in Rhino.
+
+Key Features:
+- Dynamic spiral stair creation with preview
+- Customizable riser height and tread width
+- Adjustable spiral radius and rotation
+- Automatic step count calculation
+- Support for clockwise and counter-clockwise rotation"""
 
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs

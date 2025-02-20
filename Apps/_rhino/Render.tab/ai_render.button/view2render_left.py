@@ -1,6 +1,9 @@
-
 __title__ = "AiRenderingFromView"
-__doc__ = "Render captured Rhino view with Stable Diffusion."
+__doc__ = """Renders Rhino views using Stable Diffusion AI.
+
+Captures current viewport and processes it through selected AI models.
+Provides extensive control over rendering style, mood, and architectural context.
+"""
 
 
 import time

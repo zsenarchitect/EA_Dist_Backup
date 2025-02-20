@@ -1,8 +1,12 @@
 __title__ = "AppStore"
-__doc__ = """EnneadTab App Store launcher.
+__doc__ = """Access EnneadTab's centralized tool repository.
 
-Access the complete collection of EnneadTab tools and utilities
-through a centralized application store interface."""
+Key Features:
+- Complete tool collection
+- Category organization
+- Installation management
+- Update notifications
+- Tool documentation access"""
 
 
 from EnneadTab import ERROR_HANDLE, LOG, EXE

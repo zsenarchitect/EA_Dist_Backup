@@ -1,6 +1,12 @@
-
 __title__ = "IsolateLayerBySelection"
-__doc__ = "Isolcate objs from similar layers"
+__doc__ = """Show only objects on selected layers.
+
+Key Features:
+- Selection-based isolation
+- Layer visibility control
+- Quick view focusing
+- Multiple layer support
+- View organization"""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

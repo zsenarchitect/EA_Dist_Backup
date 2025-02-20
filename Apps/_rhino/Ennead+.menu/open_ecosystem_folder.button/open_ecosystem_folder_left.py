@@ -1,6 +1,12 @@
-
 __title__ = "OpenEcosystemFolder"
-__doc__ = "Open the Ecosystem folder."
+__doc__ = """Access the EnneadTab Ecosystem directory.
+
+Key Features:
+- Direct folder access
+- System file management
+- Resource exploration
+- Configuration access
+- Template management"""
 
 import os
 from EnneadTab import ERROR_HANDLE, LOG, ENVIRONMENT

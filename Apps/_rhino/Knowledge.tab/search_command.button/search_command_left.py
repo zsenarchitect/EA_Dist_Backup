@@ -1,7 +1,14 @@
 __title__ = ["SearchCommand",
              "LearnEnneadTabForRhino",
              "CommandList"]
-__doc__ = "Learn all the buttons functions."
+__doc__ = """Search and learn EnneadTab commands.
+
+Key Features:
+- Interactive command search
+- Function documentation
+- Command aliases
+- Tool location finder
+- Visual command preview"""
 __is_popular__ = True
 
 import Rhino # pyright: ignore

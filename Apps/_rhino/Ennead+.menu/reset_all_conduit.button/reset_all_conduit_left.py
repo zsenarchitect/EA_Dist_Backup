@@ -1,6 +1,12 @@
-
 __title__ = "ResetAllConduit"
-__doc__ = "Reset all conduits"
+__doc__ = """Reset all display conduits to default state.
+
+Key Features:
+- Complete conduit cleanup
+- Memory optimization
+- Display pipeline reset
+- System performance improvement
+- Debug assistance"""
 
 import scriptcontext as sc
 

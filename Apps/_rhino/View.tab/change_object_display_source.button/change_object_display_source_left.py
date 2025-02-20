@@ -1,6 +1,9 @@
-
 __title__ = "ChangeObjectDisplaySource"
-__doc__ = "Change the display source of the object for display color and/or material"
+__doc__ = """Modifies object display source settings.
+
+Controls whether objects inherit color and material properties from their layer.
+Provides batch modification capabilities for multiple objects.
+"""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

@@ -3,7 +3,7 @@
         "script": "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py",
         "icon": "Ennead+.menu\\activate_enneadtab.button\\icon.png",
         "alias": "ActivateEnneadTab",
-        "doc": "When things do not load, activate me.",
+        "doc": "Restore EnneadTab functionality.\n\nKey Features:\n- System path verification\n- Component activation\n- Path configuration\n- Startup script setup\n- Error recovery",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -12,7 +12,7 @@
         "script": "Ennead+.menu\\app_store.button\\app_store_left.py",
         "icon": "Ennead+.menu\\app_store.button\\icon.png",
         "alias": "AppStore",
-        "doc": "EnneadTab App Store launcher.\n\nAccess the complete collection of EnneadTab tools and utilities\nthrough a centralized application store interface.",
+        "doc": "Access EnneadTab's centralized tool repository.\n\nKey Features:\n- Complete tool collection\n- Category organization\n- Installation management\n- Update notifications\n- Tool documentation access",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -21,7 +21,7 @@
         "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
         "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
         "alias": "MakeANewButton",
-        "doc": "Doc string not set",
+        "doc": "Create new EnneadTab button components.\n\nKey Features:\n- Interactive button creation\n- Template generation\n- File structure setup\n- Icon integration support\n- Documentation templates",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -30,7 +30,7 @@
         "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
         "icon": "Ennead+.menu\\extract_preview_images.button\\icon.png",
         "alias": "ExtractPreviewImages",
-        "doc": "This button does ExtractPreviewImages when left click",
+        "doc": "Extract preview images from Rhino files.\n\nKey Features:\n- Batch image extraction\n- Multiple file support\n- Automatic naming convention\n- Progress tracking\n- Error logging",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -39,7 +39,7 @@
         "script": "Ennead+.menu\\get_latest.button\\get_latest_left.py",
         "icon": "Ennead+.menu\\get_latest.button\\icon.png",
         "alias": "GetLatest",
-        "doc": "Get the lastest version of EnneadTab",
+        "doc": "Update EnneadTab to latest version.\n\nKey Features:\n- Automatic version detection\n- Core module updates\n- System path configuration\n- Component synchronization\n- Installation verification",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -48,7 +48,7 @@
         "script": "Ennead+.menu\\how_to_install.button\\how_to_install_left.py",
         "icon": "Ennead+.menu\\how_to_install.button\\icon.png",
         "alias": "HowToInstall",
-        "doc": "Pull up installation guide for the rest of your team.",
+        "doc": "Access EnneadTab installation documentation.\n\nKey Features:\n- Step-by-step installation guide\n- System requirements\n- Troubleshooting tips\n- Configuration instructions\n- Team deployment guidance",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -57,7 +57,7 @@
         "script": "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
         "icon": "Ennead+.menu\\open_ecosystem_folder.button\\icon.png",
         "alias": "OpenEcosystemFolder",
-        "doc": "Open the Ecosystem folder.",
+        "doc": "Access the EnneadTab Ecosystem directory.\n\nKey Features:\n- Direct folder access\n- System file management\n- Resource exploration\n- Configuration access\n- Template management",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -66,7 +66,7 @@
         "script": "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
         "icon": "Ennead+.menu\\reset_all_conduit.button\\icon.png",
         "alias": "ResetAllConduit",
-        "doc": "Reset all conduits",
+        "doc": "Reset all display conduits to default state.\n\nKey Features:\n- Complete conduit cleanup\n- Memory optimization\n- Display pipeline reset\n- System performance improvement\n- Debug assistance",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -75,7 +75,7 @@
         "script": "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py",
         "icon": "Ennead+.menu\\restart_rhino.button\\icon.png",
         "alias": "RestartRhino",
-        "doc": "Restart Rhino to test new core.",
+        "doc": "Restart Rhino to apply core updates.\n\nKey Features:\n- Safe application restart\n- Update implementation\n- Session state preservation\n- Automatic core reloading\n- System verification",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -84,7 +84,7 @@
         "script": "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py",
         "icon": "Ennead+.menu\\tell_me_version.button\\icon.png",
         "alias": "TellMeVersion",
-        "doc": "Show current version of EnneadTab Rhino",
+        "doc": "Display current EnneadTab Rhino version.\n\nKey Features:\n- Version number display\n- Update status information\n- Installation verification\n- Component compatibility check\n- Release notes access",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -93,7 +93,7 @@
         "script": "Ennead+.menu\\unit_test.button\\unit_test_left.py",
         "icon": "Ennead+.menu\\unit_test.button\\icon.png",
         "alias": "UnitTest",
-        "doc": "Perform unit test on EnneadTab",
+        "doc": "Execute unit tests for EnneadTab components.\n\nKey Features:\n- Comprehensive module testing\n- Automated error detection\n- System integrity verification\n- Performance validation\n- Debug report generation",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -102,7 +102,7 @@
         "script": "Ennead+.menu\\youtube_playlist.button\\youtube_playlist_left.py",
         "icon": "Ennead+.menu\\youtube_playlist.button\\icon.png",
         "alias": "YoutubePlaylist",
-        "doc": "Checkout pre-recorded turtorials and demos about EnneadTab.",
+        "doc": "Access EnneadTab's video tutorial library.\n\nOpens the official EnneadTab YouTube playlist containing tutorials, \ndemonstrations and workflow guides.",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -267,7 +267,7 @@
         "script": "Create.tab\\stair_maker.button\\stair_maker_left.py",
         "icon": "Create.tab\\stair_maker.button\\icon.png",
         "alias": "StairMaker",
-        "doc": "Interactively create linear stair.",
+        "doc": "Interactively create linear stairs in Rhino.\n\nKey Features:\n- Dynamic stair creation with real-time preview\n- Customizable riser height and tread width\n- Automatic step count calculation\n- Integrated error handling for invalid inputs\n- Support for multiple stair configurations",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": true
@@ -276,7 +276,7 @@
         "script": "Create.tab\\stair_maker.button\\stair_maker_right.py",
         "icon": "Create.tab\\stair_maker.button\\icon.png",
         "alias": "StairMakerSpiral",
-        "doc": "Interactively create spiral stair.",
+        "doc": "Interactively create spiral stairs in Rhino.\n\nKey Features:\n- Dynamic spiral stair creation with preview\n- Customizable riser height and tread width\n- Adjustable spiral radius and rotation\n- Automatic step count calculation\n- Support for clockwise and counter-clockwise rotation",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": false
@@ -285,7 +285,7 @@
         "script": "Drafting.tab\\duplicate_layout.button\\duplicate_layout_left.py",
         "icon": "Drafting.tab\\duplicate_layout.button\\icon.png",
         "alias": "DuplicateLayout",
-        "doc": "Duplicate Layout while allowing X-Y offset, so your layout can capture something else in model space.",
+        "doc": "Duplicate layouts with customizable viewport offsets.\n\nKey Features:\n- Maintain layout settings and properties\n- Adjust viewport positions with X-Y offsets\n- Capture different model space views\n- Preserve viewport scales and display settings\n- Support for multiple layout selection",
         "tab": "Drafting.tab",
         "tab_icon": "Drafting.tab\\icon.png",
         "is_popular": false
@@ -294,7 +294,7 @@
         "script": "Drafting.tab\\export_selected_pages.button\\export_selected_pages_left.py",
         "icon": "Drafting.tab\\export_selected_pages.button\\icon.png",
         "alias": "ExportSelectedLayout",
-        "doc": "Export selected layout(s) to pdf",
+        "doc": "Export selected layouts to PDF format.\n\nKey Features:\n- Multiple layout selection support\n- Customizable output location\n- Maintains print settings and quality\n- Optional automatic PDF opening\n- Batch processing capability",
         "tab": "Drafting.tab",
         "tab_icon": "Drafting.tab\\icon.png",
         "is_popular": false
@@ -303,7 +303,7 @@
         "script": "Drafting.tab\\section_crowd.button\\section_crowd_left.py",
         "icon": "Drafting.tab\\section_crowd.button\\icon.png",
         "alias": "SectionCrowd",
-        "doc": "Populate people interactively in TOP view by providing two points.",
+        "doc": "Create section view crowd representations.\n\nKey Features:\n- Interactive crowd placement in TOP view\n- Customizable people spacing and density\n- Random variations for natural appearance\n- Support for multiple crowd patterns\n- Automatic group creation for easy management",
         "tab": "Drafting.tab",
         "tab_icon": "Drafting.tab\\icon.png",
         "is_popular": false
@@ -312,7 +312,7 @@
         "script": "Drafting.tab\\visualize_excel.button\\visualize_excel_left.py",
         "icon": "Drafting.tab\\visualize_excel.button\\icon.png",
         "alias": "VisualizeExcel",
-        "doc": "Convert excel data to shape diagrams.",
+        "doc": "Convert Excel data into visual diagrams.\n\nKey Features:\n- Multiple shape options (circles, squares, bars)\n- Customizable colors and sizes\n- Automatic area calculations\n- Support for grouped data visualization\n- Dynamic layout adjustments.",
         "tab": "Drafting.tab",
         "tab_icon": "Drafting.tab\\icon.png",
         "is_popular": true
@@ -321,7 +321,7 @@
         "script": "Drafting.tab\\visualize_excel.button\\visualize_excel_right.py",
         "icon": "Drafting.tab\\visualize_excel.button\\icon.png",
         "alias": "OpenSampleExcel",
-        "doc": "Open the sample excel with placeholder area size info.",
+        "doc": "Access sample Excel template for area visualization.\n\nKey Features:\n- Pre-formatted Excel template\n- Example data structure\n- Color coding guidelines\n- Area calculation formulas\n- Category organization samples",
         "tab": "Drafting.tab",
         "tab_icon": "Drafting.tab\\icon.png",
         "is_popular": false
@@ -330,7 +330,7 @@
         "script": "File.tab\\archive_file.button\\archive_file_left.py",
         "icon": "File.tab\\archive_file.button\\icon.png",
         "alias": "ArchiveFile",
-        "doc": "Archive files based on today's date, creation date or last modifyed date.",
+        "doc": "Archive files with customizable date prefixes.\n\nKey Features:\n- Multiple date format options\n- Batch file processing\n- Custom destination selection\n- File opening options\n- Automatic naming convention",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -339,7 +339,7 @@
         "script": "File.tab\\bind_worksession.button\\bind_worksession_left.py",
         "icon": "File.tab\\bind_worksession.button\\icon.png",
         "alias": "BindWorksession",
-        "doc": "Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out.",
+        "doc": "Convert worksession to single file with organized layers.\n\nKey Features:\n- Automatic layer organization\n- File hierarchy preservation\n- Progress tracking\n- Resource cleanup\n- Email notification support",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -348,7 +348,7 @@
         "script": "File.tab\\create_worksession.button\\create_worksession_left.py",
         "icon": "File.tab\\create_worksession.button\\icon.png",
         "alias": "CreateWorksession",
-        "doc": "Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files.",
+        "doc": "Create multi-file Rhino worksession.\n\nKey Features:\n- Multiple file selection support\n- Custom session naming\n- Automatic file linking\n- Performance optimization\n- Batch file processing",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -357,7 +357,7 @@
         "script": "File.tab\\external_trimmer.button\\external_trimmer_left.py",
         "icon": "File.tab\\external_trimmer.button\\icon.png",
         "alias": "ExternalTrimmer",
-        "doc": "Trim selected objs in external file and link back to Rhino",
+        "doc": "Manage external file trimming operations.\n\nKey Features:\n- External file linking and updating\n- Boolean trimming operations\n- Layer-based filtering\n- Block instance management\n- Automatic file synchronization",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -366,7 +366,7 @@
         "script": "File.tab\\external_trimmer.button\\external_trimmer_right.py",
         "icon": "File.tab\\external_trimmer.button\\icon.png",
         "alias": "ExternalTrimmer",
-        "doc": "Update external link",
+        "doc": "Update external linked references.\n\nKey Features:\n- External block updating\n- Link synchronization\n- Reference management\n- File dependency tracking\n- Automatic refresh handling",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -375,7 +375,7 @@
         "script": "File.tab\\rebase_file.button\\rebase_file_left.py",
         "icon": "File.tab\\rebase_file.button\\icon.png",
         "alias": "RebaseFile",
-        "doc": "Try to rebase the file center to new origin point, include all the views.",
+        "doc": "Rebase file geometry and views to new origin point.\n\nKey Features:\n- Interactive base point selection\n- Automatic object transformation\n- View camera adjustment\n- Named view preservation\n- Comprehensive coordinate system update",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": true
@@ -384,7 +384,7 @@
         "script": "File.tab\\save_small_and_close.button\\save_small_and_close_left.py",
         "icon": "File.tab\\save_small_and_close.button\\icon.png",
         "alias": "SaveSmallAndClose",
-        "doc": "Save small file and close document. You dont need to wait.",
+        "doc": "Save optimized file and close document.\n\nKey Features:\n- Automatic resource cleanup\n- Material purging\n- Block definition optimization\n- Layer cleanup\n- Quick document closure",
         "tab": "File.tab",
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
@@ -460,7 +460,7 @@
             "LearnEnneadTabForRhino",
             "CommandList"
         ],
-        "doc": "Learn all the buttons functions.",
+        "doc": "Search and learn EnneadTab commands.\n\nKey Features:\n- Interactive command search\n- Function documentation\n- Command aliases\n- Tool location finder\n- Visual command preview",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png",
         "is_popular": true
@@ -496,7 +496,7 @@
         "script": "Layer.tab\\find_layer_in_files.button\\find_layer_in_files_left.py",
         "icon": "Layer.tab\\find_layer_in_files.button\\icon.png",
         "alias": "FindLayerInFiles",
-        "doc": "In a given folder, find which rhino file contains the keyword layer name. Good for traceback a illustrator file.",
+        "doc": "Search for layers across multiple files.\n\nKey Features:\n- Multi-file layer search\n- Case-insensitive matching\n- Progress tracking\n- Search result summary\n- File origin tracking",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
@@ -505,7 +505,7 @@
         "script": "Layer.tab\\initiate_layers.button\\initiate_layers_left.py",
         "icon": "Layer.tab\\initiate_layers.button\\icon.png",
         "alias": "InitiateLayers",
-        "doc": "Initiate layer tree for quick start on programing or facade design.",
+        "doc": "Create standardized layer structures.\n\nKey Features:\n- Predefined layer schemes\n- Color-coded organization\n- Program-based grouping\n- Material-based grouping\n- Customizable hierarchy",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
@@ -514,7 +514,7 @@
         "script": "Layer.tab\\isolate_layer_by_selection.button\\isolate_layer_by_selection_left.py",
         "icon": "Layer.tab\\isolate_layer_by_selection.button\\icon.png",
         "alias": "IsolateLayerBySelection",
-        "doc": "Isolcate objs from similar layers",
+        "doc": "Show only objects on selected layers.\n\nKey Features:\n- Selection-based isolation\n- Layer visibility control\n- Quick view focusing\n- Multiple layer support\n- View organization",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": true
@@ -532,7 +532,7 @@
         "script": "Layer.tab\\layer_name_format.button\\layer_name_format_left.py",
         "icon": "Layer.tab\\layer_name_format.button\\icon.png",
         "alias": "LayerNameFormat",
-        "doc": "Format the spelling of layer name on selected layers.",
+        "doc": "Standardize layer naming conventions.\n\nKey Features:\n- Multiple format options\n- Case formatting\n- Pattern preservation\n- Batch renaming\n- Protected name handling",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
@@ -541,7 +541,7 @@
         "script": "Layer.tab\\merge_layer.button\\merge_layer_left.py",
         "icon": "Layer.tab\\merge_layer.button\\icon.png",
         "alias": "MergeLayer",
-        "doc": "Merge multiple layer to single layer. This process include merging layers owned by blocks.",
+        "doc": "Combine multiple layers into one.\n\nKey Features:\n- Layer consolidation\n- Block-aware merging\n- Property preservation\n- Layer cleanup\n- Batch processing",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": true
@@ -550,7 +550,7 @@
         "script": "Layer.tab\\nest_layer.button\\nest_layer_left.py",
         "icon": "Layer.tab\\nest_layer.button\\icon.png",
         "alias": "NestLayer",
-        "doc": "Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks.",
+        "doc": "Organize layers in hierarchical structure.\n\nKey Features:\n- Layer nesting automation\n- Block-aware processing\n- Duplicate name handling\n- Layer hierarchy preservation\n- Batch layer organization",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
@@ -559,7 +559,7 @@
         "script": "Layer.tab\\random_layer_color.button\\random_layer_color_left.py",
         "icon": "Layer.tab\\random_layer_color.button\\icon.png",
         "alias": "RandomLayerColor",
-        "doc": "Randomize the layer color.",
+        "doc": "Assign random colors to layers.\n\nKey Features:\n- Smart color assignment\n- Context-aware coloring\n- Desaturated color option\n- Color scheme preservation\n- Batch processing support",
         "tab": "Layer.tab",
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": true
@@ -577,7 +577,7 @@
         "script": "Material.tab\\import_selected_material.button\\import_selected_material_left.py",
         "icon": "Material.tab\\import_selected_material.button\\icon.png",
         "alias": "ImportSelectedMaterial",
-        "doc": "Import selected materials from a file.",
+        "doc": "Import materials from external files.\n\nKey Features:\n- Selective material import\n- Property preservation\n- Material preview\n- Name conflict handling\n- Multi-select support",
         "tab": "Material.tab",
         "tab_icon": "Material.tab\\icon.png",
         "is_popular": false
@@ -586,7 +586,7 @@
         "script": "Material.tab\\material_prefix.button\\material_prefix_left.py",
         "icon": "Material.tab\\material_prefix.button\\icon.png",
         "alias": "MaterialPrefix",
-        "doc": "Add prefix to material so when sessioning rhino the enscape can treat matreail seperately and not turn white.",
+        "doc": "Add file-specific prefixes to materials.\n\nKey Features:\n- Automatic prefix generation\n- Session compatibility\n- Name conflict resolution\n- Batch processing\n- Material tracking",
         "tab": "Material.tab",
         "tab_icon": "Material.tab\\icon.png",
         "is_popular": false
@@ -595,7 +595,7 @@
         "script": "Material.tab\\merge_materials.button\\merge_materials_left.py",
         "icon": "Material.tab\\merge_materials.button\\icon.png",
         "alias": "MergeMaterials",
-        "doc": "Merge multiple materials in the file to the same material. Work for object assigned materials as well.",
+        "doc": "Consolidate multiple materials into one.\n\nKey Features:\n- Material consolidation\n- Block-aware processing\n- Layer material handling\n- Object material updating\n- Automatic cleanup.",
         "tab": "Material.tab",
         "tab_icon": "Material.tab\\icon.png",
         "is_popular": true
@@ -604,7 +604,7 @@
         "script": "Material.tab\\random_texture_walk.button\\random_texture_walk_left.py",
         "icon": "Material.tab\\random_texture_walk.button\\icon.png",
         "alias": "RandomTextureWalk",
-        "doc": "Randomly walk the texture map a bit to avoid them lineup",
+        "doc": "Randomize texture mapping positions.\n\nKey Features:\n- Texture offset randomization\n- Mapping preservation\n- Customizable range\n- Batch processing\n- Pattern variation",
         "tab": "Material.tab",
         "tab_icon": "Material.tab\\icon.png",
         "is_popular": false
@@ -631,7 +631,7 @@
         "script": "Modify.tab\\make_void_seam.button\\make_void_seam_left.py",
         "icon": "Modify.tab\\make_void_seam.button\\icon.png",
         "alias": "MakeVoidSeam",
-        "doc": "Make the void cut polysurface based on layer name.",
+        "doc": "Creates void cut polysurfaces based on layer name configuration.\n\nThe script processes layers containing seam definitions to generate corresponding void cuts.\nLayer names should include width parameters in square brackets (e.g. 'seam[12]').\n",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
@@ -658,7 +658,7 @@
         "script": "Modify.tab\\push_glass_in.button\\push_glass_in_left.py",
         "icon": "Modify.tab\\push_glass_in.button\\icon.png",
         "alias": "PushGlassIn",
-        "doc": "Make pushed in glass recess from selected srfs.",
+        "doc": "Creates recessed glass surfaces from selected surfaces.\n\nGenerates inset glass surfaces with surrounding frame geometry.\nUseful for creating window/curtainwall details with depth.\n",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": true
@@ -667,7 +667,7 @@
         "script": "Modify.tab\\shape_mapper.button\\shape_mapper_left.py",
         "icon": "Modify.tab\\shape_mapper.button\\icon.png",
         "alias": "ShapeMapper",
-        "doc": "Help you map complex design over surface. Consider this as a improved flowAlongSurface",
+        "doc": "Maps complex designs over target surfaces.\n\nAdvanced surface mapping utility that provides enhanced control compared to FlowAlongSurface.\nAllows mapping of curves, surfaces and polysurfaces while maintaining design intent.\n",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
@@ -694,7 +694,7 @@
         "script": "Render.tab\\ai_render.button\\view2render_left.py",
         "icon": "Render.tab\\ai_render.button\\icon.png",
         "alias": "AiRenderingFromView",
-        "doc": "Render captured Rhino view with Stable Diffusion.",
+        "doc": "Renders Rhino views using Stable Diffusion AI.\n\nCaptures current viewport and processes it through selected AI models.\nProvides extensive control over rendering style, mood, and architectural context.\n",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": false
@@ -712,7 +712,7 @@
         "script": "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py",
         "icon": "Render.tab\\enscape_asset_locator.button\\icon.png",
         "alias": "EnscapeAssetLocator",
-        "doc": "Help you find the Enscape asset folder by search name, so you can manipulate asset material.",
+        "doc": "Locates Enscape assets by name for material manipulation.\n\nHelps find and access Enscape asset folders to modify materials and properties.\nLaunches the EnscapeAssetChanger application.\n",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": true
@@ -874,7 +874,7 @@
         "script": "Revit.tab\\revit_drafter.button\\revit_drafter_left.py",
         "icon": "Revit.tab\\revit_drafter.button\\icon.png",
         "alias": "RevitDrafterImport",
-        "doc": "Receive the drafting background from Revit and setup layer trees for supporting line style and filled region types.",
+        "doc": "Imports drafting content from Revit.\n\nFeatures:\n- Sets up layer structure for line styles\n- Supports filled region types\n- Maintains layer organization\n- Preserves object properties\n\nUsage:\n1. Export content from Revit\n2. Run command to import\n3. Content organized in layer tree",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png",
         "is_popular": false
@@ -883,7 +883,7 @@
         "script": "Revit.tab\\revit_drafter.button\\revit_drafter_right.py",
         "icon": "Revit.tab\\revit_drafter.button\\icon.png",
         "alias": "RevitDrafterExport",
-        "doc": "Send the draft content back to Revit.",
+        "doc": "Exports drafting content to Revit.\n\nFeatures:\n- Processes curves and filled regions\n- Maintains layer organization\n- Supports multiple geometry types\n- Preserves object properties\n\nUsage:\n1. Create content in OUT layers\n2. Run command to export\n3. Import in Revit using companion tool",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png",
         "is_popular": false
@@ -901,7 +901,7 @@
         "script": "Selection.tab\\random_deselect.button\\random_deselect_left.py",
         "icon": "Selection.tab\\random_deselect.button\\icon.png",
         "alias": "RandomDeselect",
-        "doc": "Ramdonly deselect objs by percentage",
+        "doc": "Randomly deselects objects based on percentage.\n\nFeatures:\n- Deselects random subset of selected objects\n- Percentage-based deselection (1-99%)\n- Remembers last used percentage\n- Maintains object relationships\n\nUsage:\n1. Select objects\n2. Enter deselection percentage\n3. Random subset will be deselected",
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png",
         "is_popular": true
@@ -910,7 +910,7 @@
         "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",
         "icon": "Selection.tab\\random_selection_to_group.button\\icon.png",
         "alias": "RandomSelectionToGroup",
-        "doc": "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering",
+        "doc": "Randomly distributes selected objects into groups.\n\nFeatures:\n- Creates specified number of groups\n- Randomly assigns objects to groups\n- Useful for applying varied materials/shading\n- Maintains object relationships\n\nUsage:\n1. Select objects to group\n2. Specify number of groups\n3. Objects will be randomly distributed",
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png",
         "is_popular": true
@@ -964,7 +964,7 @@
         "script": "View.tab\\batch_export_rhino_view.button\\batch_export_rhino_view_left.py",
         "icon": "View.tab\\batch_export_rhino_view.button\\icon.png",
         "alias": "BatchExportRhinoView",
-        "doc": "Batch export Rhino views to folder.",
+        "doc": "Exports multiple Rhino views in batch.\n\nAllows selection of multiple views for automated export.\nSupports customizable resolution and format settings.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -973,7 +973,7 @@
         "script": "View.tab\\batch_rename_camera.button\\batch_rename_camera_left.py",
         "icon": "View.tab\\batch_rename_camera.button\\icon.png",
         "alias": "BatchRenameCamera",
-        "doc": "Rename multiple cameras without activating them.",
+        "doc": "Enables bulk camera renaming operations.\n\nProvides interface for renaming multiple cameras without activation.\nMaintains camera properties while updating names efficiently.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -982,7 +982,7 @@
         "script": "View.tab\\change_object_display_source.button\\change_object_display_source_left.py",
         "icon": "View.tab\\change_object_display_source.button\\icon.png",
         "alias": "ChangeObjectDisplaySource",
-        "doc": "Change the display source of the object for display color and/or material",
+        "doc": "Modifies object display source settings.\n\nControls whether objects inherit color and material properties from their layer.\nProvides batch modification capabilities for multiple objects.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -991,7 +991,7 @@
         "script": "View.tab\\section_box.button\\section_box_left.py",
         "icon": "View.tab\\section_box.button\\icon.png",
         "alias": "SectionboxByBoundingBox",
-        "doc": "Similar to Revit SectionBox, this will crop the view to just around the selected elements region. In Rhino display mode all clipper is supported. In Enscape only one of the clipper will be recognized.",
+        "doc": "Creates section boxes around selected elements.\n\nSimilar to Revit's SectionBox, crops views to selected element boundaries.\nSupports all clipping modes in Rhino, with limited Enscape compatibility.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -1017,11 +1017,8 @@
     "View.tab\\toggle_GFA.button\\toggle_GFA_left.py": {
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_left.py",
         "icon": "View.tab\\toggle_GFA.button\\icon.png",
-        "alias": [
-            "ToggleGFADisplay",
-            "GFA"
-        ],
-        "doc": "Dynamically display GFA area by simply changing layer name.",
+        "alias": "ToggleGFA",
+        "doc": "Toggles Gross Floor Area visualization and calculation.\n\nProcesses layers marked with [GFA] to calculate and display area information.\nSupports real-time updates and Excel data export capabilities.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -1039,7 +1036,7 @@
         "script": "View.tab\\toggle_layer_pointer.button\\toggle_layer_pointer_left.py",
         "icon": "View.tab\\toggle_layer_pointer.button\\icon.png",
         "alias": "ToggleLayerPointer",
-        "doc": "Short list layers with objs that is visible on screen. This is a good way to quickly examine the layer structure in your model space.",
+        "doc": "Displays quick layer information for visible objects.\n\nCreates a filtered layer list showing only layers with visible objects.\nUseful for examining and understanding model layer structure.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": false
@@ -1048,7 +1045,7 @@
         "script": "View.tab\\view_toggle.button\\view_toggle_left.py",
         "icon": "View.tab\\view_toggle.button\\icon.png",
         "alias": "ViewToggle",
-        "doc": "Unsupported value for safe evaluation",
+        "doc": "Quick view navigation tool for Rhino.\n\nFeatures:\n- Toggles between Top and Perspective views\n- Left click to switch between views\n- Keyboard shortcut: {KEY}\n- Optimizes modeling workflow with rapid view changes\n\nUsage:\nClick button to toggle between views.",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": false

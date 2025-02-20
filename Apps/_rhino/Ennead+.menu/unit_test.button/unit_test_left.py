@@ -1,6 +1,12 @@
-
 __title__ = "UnitTest"
-__doc__ = "Perform unit test on EnneadTab"
+__doc__ = """Execute unit tests for EnneadTab components.
+
+Key Features:
+- Comprehensive module testing
+- Automated error detection
+- System integrity verification
+- Performance validation
+- Debug report generation"""
 
 
 from EnneadTab import ERROR_HANDLE, LOG, UNIT_TEST

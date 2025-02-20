@@ -1,6 +1,12 @@
-
 __title__ = "SaveSmallAndClose"
-__doc__ = "Save small file and close document. You dont need to wait."
+__doc__ = """Save optimized file and close document.
+
+Key Features:
+- Automatic resource cleanup
+- Material purging
+- Block definition optimization
+- Layer cleanup
+- Quick document closure"""
 import rhinoscriptsyntax as rs
 from EnneadTab import LOG, ERROR_HANDLE
 

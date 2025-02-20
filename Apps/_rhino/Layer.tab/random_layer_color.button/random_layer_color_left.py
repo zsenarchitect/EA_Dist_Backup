@@ -1,6 +1,12 @@
-
 __title__ = "RandomLayerColor"
-__doc__ = "Randomize the layer color."
+__doc__ = """Assign random colors to layers.
+
+Key Features:
+- Smart color assignment
+- Context-aware coloring
+- Desaturated color option
+- Color scheme preservation
+- Batch processing support"""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

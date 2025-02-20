@@ -1,6 +1,16 @@
-
 __title__ = "RandomSelectionToGroup"
-__doc__ = "Ramdonly package objs to groups, great if you are going to set slight different shade for them in rendering"
+__doc__ = """Randomly distributes selected objects into groups.
+
+Features:
+- Creates specified number of groups
+- Randomly assigns objects to groups
+- Useful for applying varied materials/shading
+- Maintains object relationships
+
+Usage:
+1. Select objects to group
+2. Specify number of groups
+3. Objects will be randomly distributed"""
 __is_popular__ = True
 import random
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION

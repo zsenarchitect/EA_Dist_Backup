@@ -1,6 +1,9 @@
-
 __title__ = "ShapeMapper"
-__doc__ = "Help you map complex design over surface. Consider this as a improved flowAlongSurface"
+__doc__ = """Maps complex designs over target surfaces.
+
+Advanced surface mapping utility that provides enhanced control compared to FlowAlongSurface.
+Allows mapping of curves, surfaces and polysurfaces while maintaining design intent.
+"""
 import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

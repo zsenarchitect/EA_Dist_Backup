@@ -159,6 +159,7 @@ def check_C_drive_space():
 
 
 def register_auto_update():
+    return
     try:# need pyrevit 5 or higher to work in revit 2025
         from pyrevit.userconfig import user_config
         user_config.check_updates = True

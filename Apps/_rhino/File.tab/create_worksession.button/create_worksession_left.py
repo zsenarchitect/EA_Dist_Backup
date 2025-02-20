@@ -1,6 +1,12 @@
-
 __title__ = "CreateWorksession"
-__doc__ = "Pick mutiple rhino files to create a session file instead of one after another. Good for dealing with heavy files."
+__doc__ = """Create multi-file Rhino worksession.
+
+Key Features:
+- Multiple file selection support
+- Custom session naming
+- Automatic file linking
+- Performance optimization
+- Batch file processing"""
 
 
 import rhinoscriptsyntax as rs

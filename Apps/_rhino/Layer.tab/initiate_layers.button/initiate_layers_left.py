@@ -1,6 +1,12 @@
-
 __title__ = "InitiateLayers"
-__doc__ = "Initiate layer tree for quick start on programing or facade design."
+__doc__ = """Create standardized layer structures.
+
+Key Features:
+- Predefined layer schemes
+- Color-coded organization
+- Program-based grouping
+- Material-based grouping
+- Customizable hierarchy"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

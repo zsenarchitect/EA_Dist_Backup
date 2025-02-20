@@ -1,6 +1,12 @@
-
 __title__ = "NestLayer"
-__doc__ = "Migrate multiple layers under same parent layer. The main benifit is that it can migrate even if same sublayer name exist. This process also handle layers inside blocks."
+__doc__ = """Organize layers in hierarchical structure.
+
+Key Features:
+- Layer nesting automation
+- Block-aware processing
+- Duplicate name handling
+- Layer hierarchy preservation
+- Batch layer organization"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

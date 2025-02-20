@@ -1,6 +1,12 @@
-
 __title__ = "BindWorksession"
-__doc__ = "Flatten the worksession to single file with named parent layer as file. Good for preparing files before sending out."
+__doc__ = """Convert worksession to single file with organized layers.
+
+Key Features:
+- Automatic layer organization
+- File hierarchy preservation
+- Progress tracking
+- Resource cleanup
+- Email notification support"""
 
 
 import Rhino # pyright: ignore
