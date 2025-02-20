@@ -1,5 +1,10 @@
 __title__ = "EditDistortedBlockRestoreView"
-__doc__ = "Go back to previous view stage"
+__doc__ = """Restore view after block editing.
+
+Features:
+- Restores previous camera position
+- Shows all hidden objects
+- Cleans up temporary editing blocks"""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

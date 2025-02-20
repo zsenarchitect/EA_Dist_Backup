@@ -1,6 +1,8 @@
-
 __title__ = "DVD"
-__doc__ = "When you are bored..."
+__doc__ = """Classic DVD screensaver animation for Rhino.
+
+A nostalgic entertainment feature that recreates the 
+bouncing DVD logo animation within Rhino viewport."""
 
 
 from EnneadTab import LOG, ERROR_HANDLE, JOKE

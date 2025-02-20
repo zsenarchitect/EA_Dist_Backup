@@ -1,6 +1,12 @@
-
 __title__ = "MatchTextureMappingInBlock"
-__doc__ = "Pick a source block, then apply the texture mapping of this block to other blocks selected."
+__doc__ = """Copy texture mapping between blocks.
+
+Features:
+- Transfers texture mapping from source block
+- Matches by layer correspondence
+- Preserves mapping parameters
+- Supports multiple target blocks
+- Layer-specific texture application"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

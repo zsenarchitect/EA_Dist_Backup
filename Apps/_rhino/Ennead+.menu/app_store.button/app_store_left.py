@@ -1,6 +1,8 @@
-
 __title__ = "AppStore"
-__doc__ = "Open the all apps avaibalie for enneadtab"
+__doc__ = """EnneadTab App Store launcher.
+
+Access the complete collection of EnneadTab tools and utilities
+through a centralized application store interface."""
 
 
 from EnneadTab import ERROR_HANDLE, LOG, EXE

@@ -1,6 +1,13 @@
 
 __title__ = "IsolateSimilarBlocks"
-__doc__ = "Isolate blocks of similar definitions from the selected blocks"
+__doc__ = """Isolate blocks of similar definitions from the selected blocks.
+
+Features:
+- Automatically identifies and isolates blocks with identical definitions
+- Supports multiple block definitions at once
+- Maintains original selection state
+- Keeps other objects visible and unchanged"""
+
 import rhinoscriptsyntax as rs
 
 from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE

@@ -1,5 +1,11 @@
 __title__ = "RelocateAll_1643"
-__doc__ = "Relocate all the cameras and models to new Revit location."
+__doc__ = """Batch relocation tool for Rhino content.
+
+Features:
+- Relocates all cameras and models to new Revit location
+- Maintains relative positions and orientations
+- Preserves camera views and model relationships
+- Automatically updates all named views"""
 
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore

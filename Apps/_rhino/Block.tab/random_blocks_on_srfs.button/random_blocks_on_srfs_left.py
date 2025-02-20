@@ -1,6 +1,21 @@
-
 __title__ = "RandomBlocksOnSrfs"
-__doc__ = "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides."
+__doc__ = """Advanced block distribution utility for surfaces.
+
+Features:
+- Distributes blocks randomly across target surfaces
+- Configurable edge distance and spacing controls
+- Optional edge-guided or curve-guided placement
+- Real-time preview of block placement
+- Supports multiple distribution patterns:
+  - Random interior placement
+  - Edge-aligned placement
+  - Even edge distribution
+
+Usage:
+1. Select target surfaces and sample blocks
+2. Configure placement parameters
+3. Choose distribution pattern
+4. Preview and adjust as needed"""
 __is_popular__ = True
 
 

@@ -1,6 +1,11 @@
-
 __title__ = "Turtorial"
-__doc__ = "Show tutorial for some useful trick in GH"
+__doc__ = """EnneadTab learning resources hub.
+
+Features:
+- Access to comprehensive GH tutorials
+- Local documentation and PDF guides
+- Video tutorials via YouTube playlist
+- Quick reference materials for common workflows"""
 import os
 import rhinoscriptsyntax as rs
 import subprocess

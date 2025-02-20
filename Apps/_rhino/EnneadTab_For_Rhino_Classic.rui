@@ -854,10 +854,22 @@
         <locale_1033>RandomizeBlockTransformation</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Randomly transform block transformation for rotation and scale.</locale_1033>
+        <locale_1033>Randomly transform block transformation for rotation and scale.
+
+Features:
+- Rotates blocks randomly
+- Scales blocks 1D height softly or taller
+- Scales 3D dimensions evenly
+- Animates transformation process</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Randomly transform block transformation for rotation and scale.</locale_1033>
+        <locale_1033>Randomly transform block transformation for rotation and scale.
+
+Features:
+- Rotates blocks randomly
+- Scales blocks 1D height softly or taller
+- Scales 3D dimensions evenly
+- Animates transformation process</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomizeBlockTransformation</locale_1033>
@@ -892,10 +904,24 @@ EA_UniformTransformGeos</script>
         <locale_1033>MakeBlockUnique</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Make a block unique on spot. Each unique original block become new unique block.</locale_1033>
+        <locale_1033>Create unique block definitions.
+
+Features:
+- Creates independent block definitions
+- Optional name tagging with creator info
+- Preserves block transformations
+- Handles nested block structures
+- Maintains layer assignments</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Make a block unique on spot. Each unique original block become new unique block.</locale_1033>
+        <locale_1033>Create unique block definitions.
+
+Features:
+- Creates independent block definitions
+- Optional name tagging with creator info
+- Preserves block transformations
+- Handles nested block structures
+- Maintains layer assignments</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MakeBlockUnique</locale_1033>
@@ -911,10 +937,22 @@ EA_MakeBlockUnique</script>
         <locale_1033>MakeBlockUniqueToOne</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Make a block unique on spot. All different types of block will merge to one new block</locale_1033>
+        <locale_1033>Consolidate blocks into single definition.
+
+Features:
+- Merges multiple block types into one
+- Creates new unified block definition
+- Preserves instance positions
+- Maintains transformation data</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Make a block unique on spot. All different types of block will merge to one new block</locale_1033>
+        <locale_1033>Consolidate blocks into single definition.
+
+Features:
+- Merges multiple block types into one
+- Creates new unified block definition
+- Preserves instance positions
+- Maintains transformation data</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MakeBlockUniqueToOne</locale_1033>
@@ -930,10 +968,24 @@ EA_MakeBlockUniqueToOne</script>
         <locale_1033>PackageBlockLayer</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Package blocks content layer under a single parent layer. This is very helpful if you want to test totally new material for the layers.</locale_1033>
+        <locale_1033>Organize block content layers.
+
+Features:
+- Creates unified layer structure
+- Optional layer flattening
+- Preserves layer colors and materials
+- Handles nested block hierarchies
+- Streamlines material testing workflow</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Package blocks content layer under a single parent layer. This is very helpful if you want to test totally new material for the layers.</locale_1033>
+        <locale_1033>Organize block content layers.
+
+Features:
+- Creates unified layer structure
+- Optional layer flattening
+- Preserves layer colors and materials
+- Handles nested block hierarchies
+- Streamlines material testing workflow</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>PackageBlockLayer</locale_1033>
@@ -949,10 +1001,24 @@ EA_PackageBlockLayer</script>
         <locale_1033>EditDistortedBlock</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Edit distorted block by editing a copy.</locale_1033>
+        <locale_1033>Block editing utility for distorted instances.
+
+Features:
+- Creates editable copy of distorted block
+- Maintains block definition relationships
+- Automatic camera positioning for editing
+- Temporary isolation of edited block
+- Right-click to restore previous view</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Edit distorted block by editing a copy.</locale_1033>
+        <locale_1033>Block editing utility for distorted instances.
+
+Features:
+- Creates editable copy of distorted block
+- Maintains block definition relationships
+- Automatic camera positioning for editing
+- Temporary isolation of edited block
+- Right-click to restore previous view</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>EditDistortedBlock</locale_1033>
@@ -968,10 +1034,20 @@ EA_EditDistortedBlock</script>
         <locale_1033>EditDistortedBlockRestoreView</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Go back to previous view stage</locale_1033>
+        <locale_1033>Restore view after block editing.
+
+Features:
+- Restores previous camera position
+- Shows all hidden objects
+- Cleans up temporary editing blocks</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Go back to previous view stage</locale_1033>
+        <locale_1033>Restore view after block editing.
+
+Features:
+- Restores previous camera position
+- Shows all hidden objects
+- Cleans up temporary editing blocks</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>EditDistortedBlockRestoreView</locale_1033>
@@ -1025,10 +1101,24 @@ EA_ToggleBlockColorDisplay_Setting</script>
         <locale_1033>MatchTextureMappingInBlock</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Pick a source block, then apply the texture mapping of this block to other blocks selected.</locale_1033>
+        <locale_1033>Copy texture mapping between blocks.
+
+Features:
+- Transfers texture mapping from source block
+- Matches by layer correspondence
+- Preserves mapping parameters
+- Supports multiple target blocks
+- Layer-specific texture application</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Pick a source block, then apply the texture mapping of this block to other blocks selected.</locale_1033>
+        <locale_1033>Copy texture mapping between blocks.
+
+Features:
+- Transfers texture mapping from source block
+- Matches by layer correspondence
+- Preserves mapping parameters
+- Supports multiple target blocks
+- Layer-specific texture application</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MatchTextureMappingInBlock</locale_1033>
@@ -1044,10 +1134,24 @@ EA_MatchTextureMappingInBlock</script>
         <locale_1033>FallGeosOnGeo</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox.</locale_1033>
+        <locale_1033>Project objects onto target geometry.
+
+Features:
+- Projects blocks using insertion points
+- Projects other objects using bounding box centers
+- Supports both top and bottom face projections
+- Works with surfaces and polysurfaces
+- Maintains object properties during projection</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox.</locale_1033>
+        <locale_1033>Project objects onto target geometry.
+
+Features:
+- Projects blocks using insertion points
+- Projects other objects using bounding box centers
+- Supports both top and bottom face projections
+- Works with surfaces and polysurfaces
+- Maintains object properties during projection</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>FallGeosOnGeo</locale_1033>
@@ -1063,10 +1167,34 @@ EA_FallGeosOnGeo</script>
         <locale_1033>BatchRenameBlocks</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Rename Block Names In a table</locale_1033>
+        <locale_1033>Block name batch editing utility for Rhino.
+
+Features:
+- Interactive table interface for block renaming
+- Real-time block preview in viewport
+- Double-click to isolate and inspect blocks
+- Validates name conflicts automatically
+- Preserves block definitions during renaming
+
+Usage:
+1. Edit desired names in the 'New Name' column
+2. Double-click entries to preview blocks
+3. Click 'Update Block Names' to apply changes</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Rename Block Names In a table</locale_1033>
+        <locale_1033>Block name batch editing utility for Rhino.
+
+Features:
+- Interactive table interface for block renaming
+- Real-time block preview in viewport
+- Double-click to isolate and inspect blocks
+- Validates name conflicts automatically
+- Preserves block definitions during renaming
+
+Usage:
+1. Edit desired names in the 'New Name' column
+2. Double-click entries to preview blocks
+3. Click 'Update Block Names' to apply changes</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>BatchRenameBlocks</locale_1033>
@@ -1082,10 +1210,24 @@ EA_BatchRenameBlocks</script>
         <locale_1033>FilterBlockByName</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Quick select multiple block by block names</locale_1033>
+        <locale_1033>Smart block selection utility.
+
+Features:
+- Filter blocks by name patterns
+- Multi-select support for block names
+- Sorted block name display
+- Real-time search filtering
+- Automatic selection of matching instances</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Quick select multiple block by block names</locale_1033>
+        <locale_1033>Smart block selection utility.
+
+Features:
+- Filter blocks by name patterns
+- Multi-select support for block names
+- Sorted block name display
+- Real-time search filtering
+- Automatic selection of matching instances</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>FilterBlockByName</locale_1033>
@@ -1101,10 +1243,42 @@ EA_FilterBlockByName</script>
         <locale_1033>RandomBlocksOnSrfs</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides.</locale_1033>
+        <locale_1033>Advanced block distribution utility for surfaces.
+
+Features:
+- Distributes blocks randomly across target surfaces
+- Configurable edge distance and spacing controls
+- Optional edge-guided or curve-guided placement
+- Real-time preview of block placement
+- Supports multiple distribution patterns:
+  - Random interior placement
+  - Edge-aligned placement
+  - Even edge distribution
+
+Usage:
+1. Select target surfaces and sample blocks
+2. Configure placement parameters
+3. Choose distribution pattern
+4. Preview and adjust as needed</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides.</locale_1033>
+        <locale_1033>Advanced block distribution utility for surfaces.
+
+Features:
+- Distributes blocks randomly across target surfaces
+- Configurable edge distance and spacing controls
+- Optional edge-guided or curve-guided placement
+- Real-time preview of block placement
+- Supports multiple distribution patterns:
+  - Random interior placement
+  - Edge-aligned placement
+  - Even edge distribution
+
+Usage:
+1. Select target surfaces and sample blocks
+2. Configure placement parameters
+3. Choose distribution pattern
+4. Preview and adjust as needed</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RandomBlocksOnSrfs</locale_1033>
@@ -1120,10 +1294,32 @@ EA_RandomBlocksOnSrfs</script>
         <locale_1033>SampleLayout</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Create sample block layout along crvs to quickly visualize design.</locale_1033>
+        <locale_1033>Create sample block layout along crvs to quickly visualize design.
+
+Features:
+- Quick block layout visualization
+- Flexible block size configuration
+- Multiple layout modes:
+  - Panel mode: Blocks span between divider points
+  - Post mode: Blocks oriented to local coordinate of divider points
+- User-friendly interface with clear step-by-step instructions
+- Real-time preview of block placement
+- Supports both open and closed curves
+- Automatically handles curve segmentation for accurate block placement</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Create sample block layout along crvs to quickly visualize design.</locale_1033>
+        <locale_1033>Create sample block layout along crvs to quickly visualize design.
+
+Features:
+- Quick block layout visualization
+- Flexible block size configuration
+- Multiple layout modes:
+  - Panel mode: Blocks span between divider points
+  - Post mode: Blocks oriented to local coordinate of divider points
+- User-friendly interface with clear step-by-step instructions
+- Real-time preview of block placement
+- Supports both open and closed curves
+- Automatically handles curve segmentation for accurate block placement</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SampleLayout</locale_1033>
@@ -1139,10 +1335,30 @@ EA_SampleLayout</script>
         <locale_1033>SelectSimilarBlocks</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Select blocks of similar definitions from the selected blocks</locale_1033>
+        <locale_1033>Selects all block instances that share the same block definition as the selected blocks.
+
+Usage:
+    1. Pre-select block instances (optional)
+    2. Run the command
+    3. Select additional blocks if none were pre-selected
+    
+Notes:
+    - Works with multiple block definitions at once
+    - Automatically filters for block objects only
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Select blocks of similar definitions from the selected blocks</locale_1033>
+        <locale_1033>Selects all block instances that share the same block definition as the selected blocks.
+
+Usage:
+    1. Pre-select block instances (optional)
+    2. Run the command
+    3. Select additional blocks if none were pre-selected
+    
+Notes:
+    - Works with multiple block definitions at once
+    - Automatically filters for block objects only
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SelectSimilarBlocks</locale_1033>
@@ -1158,10 +1374,22 @@ EA_SelectSimilarBlocks</script>
         <locale_1033>IsolateSimilarBlocks</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Isolate blocks of similar definitions from the selected blocks</locale_1033>
+        <locale_1033>Isolate blocks of similar definitions from the selected blocks.
+
+Features:
+- Automatically identifies and isolates blocks with identical definitions
+- Supports multiple block definitions at once
+- Maintains original selection state
+- Keeps other objects visible and unchanged</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Isolate blocks of similar definitions from the selected blocks</locale_1033>
+        <locale_1033>Isolate blocks of similar definitions from the selected blocks.
+
+Features:
+- Automatically identifies and isolates blocks with identical definitions
+- Supports multiple block definitions at once
+- Maintains original selection state
+- Keeps other objects visible and unchanged</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>IsolateSimilarBlocks</locale_1033>
@@ -1709,10 +1937,22 @@ EA_ShapeMapper</script>
         <locale_1033>SrfToPanel</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge.</locale_1033>
+        <locale_1033>Advanced surface panelization utility.
+
+Features:
+- Converts surfaces to detailed panel geometry
+- Configurable panel thickness and joint reveals
+- Automatic edge detail generation
+- Maintains design intent while adding construction detail</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge.</locale_1033>
+        <locale_1033>Advanced surface panelization utility.
+
+Features:
+- Converts surfaces to detailed panel geometry
+- Configurable panel thickness and joint reveals
+- Automatic edge detail generation
+- Maintains design intent while adding construction detail</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SrfToPanel</locale_1033>
@@ -1728,10 +1968,20 @@ EA_SrfToPanel</script>
         <locale_1033>TimeTravel</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Undo history on selected objs</locale_1033>
+        <locale_1033>Selective undo tool for Rhino objects.
+
+Features:
+- Undo history for selected objects only
+- Maintains other objects' current state
+- Precise history control for specific elements</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Undo history on selected objs</locale_1033>
+        <locale_1033>Selective undo tool for Rhino objects.
+
+Features:
+- Undo history for selected objects only
+- Maintains other objects' current state
+- Precise history control for specific elements</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>TimeTravel</locale_1033>
@@ -2602,10 +2852,22 @@ EA_ExportWithoutCrv_1643</script>
         <locale_1033>RelocateAll_1643</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Relocate all the cameras and models to new Revit location.</locale_1033>
+        <locale_1033>Batch relocation tool for Rhino content.
+
+Features:
+- Relocates all cameras and models to new Revit location
+- Maintains relative positions and orientations
+- Preserves camera views and model relationships
+- Automatically updates all named views</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Relocate all the cameras and models to new Revit location.</locale_1033>
+        <locale_1033>Batch relocation tool for Rhino content.
+
+Features:
+- Relocates all cameras and models to new Revit location
+- Maintains relative positions and orientations
+- Preserves camera views and model relationships
+- Automatically updates all named views</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RelocateAll_1643</locale_1033>
@@ -2678,10 +2940,16 @@ EA_2419_Facade move</script>
         <locale_1033>DVD</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>When you are bored...</locale_1033>
+        <locale_1033>Classic DVD screensaver animation for Rhino.
+
+A nostalgic entertainment feature that recreates the 
+bouncing DVD logo animation within Rhino viewport.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>When you are bored...</locale_1033>
+        <locale_1033>Classic DVD screensaver animation for Rhino.
+
+A nostalgic entertainment feature that recreates the 
+bouncing DVD logo animation within Rhino viewport.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>DVD</locale_1033>
@@ -2735,10 +3003,22 @@ EA_EnneadCity</script>
         <locale_1033>RedAlert</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Active game mode in Rhino</locale_1033>
+        <locale_1033>Command &amp; Conquer inspired game mode for Rhino.
+
+Features:
+- Real-time audio feedback for modeling operations
+- Classic RTS game sound effects
+- Dynamic response to object creation/deletion
+- Nostalgic gaming atmosphere while modeling</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Active game mode in Rhino</locale_1033>
+        <locale_1033>Command &amp; Conquer inspired game mode for Rhino.
+
+Features:
+- Real-time audio feedback for modeling operations
+- Classic RTS game sound effects
+- Dynamic response to object creation/deletion
+- Nostalgic gaming atmosphere while modeling</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>RedAlert</locale_1033>
@@ -2849,10 +3129,22 @@ EA_SlopeCalculator</script>
         <locale_1033>Turtorial</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Show tutorial for some useful trick in GH</locale_1033>
+        <locale_1033>EnneadTab learning resources hub.
+
+Features:
+- Access to comprehensive GH tutorials
+- Local documentation and PDF guides
+- Video tutorials via YouTube playlist
+- Quick reference materials for common workflows</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Show tutorial for some useful trick in GH</locale_1033>
+        <locale_1033>EnneadTab learning resources hub.
+
+Features:
+- Access to comprehensive GH tutorials
+- Local documentation and PDF guides
+- Video tutorials via YouTube playlist
+- Quick reference materials for common workflows</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>Turtorial</locale_1033>
@@ -3082,10 +3374,16 @@ EA_OpenEcosystemFolder</script>
         <locale_1033>AppStore</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Open the all apps avaibalie for enneadtab</locale_1033>
+        <locale_1033>EnneadTab App Store launcher.
+
+Access the complete collection of EnneadTab tools and utilities
+through a centralized application store interface.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Open the all apps avaibalie for enneadtab</locale_1033>
+        <locale_1033>EnneadTab App Store launcher.
+
+Access the complete collection of EnneadTab tools and utilities
+through a centralized application store interface.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>AppStore</locale_1033>

@@ -12,7 +12,7 @@
         "script": "Ennead+.menu\\app_store.button\\app_store_left.py",
         "icon": "Ennead+.menu\\app_store.button\\icon.png",
         "alias": "AppStore",
-        "doc": "Open the all apps avaibalie for enneadtab",
+        "doc": "EnneadTab App Store launcher.\n\nAccess the complete collection of EnneadTab tools and utilities\nthrough a centralized application store interface.",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -111,7 +111,7 @@
         "script": "Block.tab\\batch_rename_blocks.button\\batch_rename_blocks_left.py",
         "icon": "Block.tab\\batch_rename_blocks.button\\icon.png",
         "alias": "BatchRenameBlocks",
-        "doc": "Rename Block Names In a table",
+        "doc": "Block name batch editing utility for Rhino.\n\nFeatures:\n- Interactive table interface for block renaming\n- Real-time block preview in viewport\n- Double-click to isolate and inspect blocks\n- Validates name conflicts automatically\n- Preserves block definitions during renaming\n\nUsage:\n1. Edit desired names in the 'New Name' column\n2. Double-click entries to preview blocks\n3. Click 'Update Block Names' to apply changes",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
@@ -120,7 +120,7 @@
         "script": "Block.tab\\edit_distorted_block.button\\edit_distorted_block_left.py",
         "icon": "Block.tab\\edit_distorted_block.button\\icon.png",
         "alias": "EditDistortedBlock",
-        "doc": "Edit distorted block by editing a copy.",
+        "doc": "Block editing utility for distorted instances.\n\nFeatures:\n- Creates editable copy of distorted block\n- Maintains block definition relationships\n- Automatic camera positioning for editing\n- Temporary isolation of edited block\n- Right-click to restore previous view",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -129,7 +129,7 @@
         "script": "Block.tab\\edit_distorted_block.button\\edit_distorted_block_right.py",
         "icon": "Block.tab\\edit_distorted_block.button\\icon.png",
         "alias": "EditDistortedBlockRestoreView",
-        "doc": "Go back to previous view stage",
+        "doc": "Restore view after block editing.\n\nFeatures:\n- Restores previous camera position\n- Shows all hidden objects\n- Cleans up temporary editing blocks",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -138,7 +138,7 @@
         "script": "Block.tab\\fall_geos_on_geo.button\\fall_geos_on_geo_left.py",
         "icon": "Block.tab\\fall_geos_on_geo.button\\icon.png",
         "alias": "FallGeosOnGeo",
-        "doc": "Drop selected objs to a receiver geo. If it is block, drop using the insertion point. Otherwise using the center of buttom face of the boundingbox.",
+        "doc": "Project objects onto target geometry.\n\nFeatures:\n- Projects blocks using insertion points\n- Projects other objects using bounding box centers\n- Supports both top and bottom face projections\n- Works with surfaces and polysurfaces\n- Maintains object properties during projection",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -147,7 +147,7 @@
         "script": "Block.tab\\filter_block_by_name.button\\filter_block_by_name_left.py",
         "icon": "Block.tab\\filter_block_by_name.button\\icon.png",
         "alias": "FilterBlockByName",
-        "doc": "Quick select multiple block by block names",
+        "doc": "Smart block selection utility.\n\nFeatures:\n- Filter blocks by name patterns\n- Multi-select support for block names\n- Sorted block name display\n- Real-time search filtering\n- Automatic selection of matching instances",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -159,7 +159,7 @@
             "MakeBlockUnique",
             "MBU"
         ],
-        "doc": "Make a block unique on spot. Each unique original block become new unique block.",
+        "doc": "Create unique block definitions.\n\nFeatures:\n- Creates independent block definitions\n- Optional name tagging with creator info\n- Preserves block transformations\n- Handles nested block structures\n- Maintains layer assignments",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -168,7 +168,7 @@
         "script": "Block.tab\\make_block_unique.button\\make_block_unique_right.py",
         "icon": "Block.tab\\make_block_unique.button\\icon.png",
         "alias": "MakeBlockUniqueToOne",
-        "doc": "Make a block unique on spot. All different types of block will merge to one new block",
+        "doc": "Consolidate blocks into single definition.\n\nFeatures:\n- Merges multiple block types into one\n- Creates new unified block definition\n- Preserves instance positions\n- Maintains transformation data",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
@@ -177,7 +177,7 @@
         "script": "Block.tab\\match_texture_mapping_in_block.button\\match_texture_mapping_in_block_left.py",
         "icon": "Block.tab\\match_texture_mapping_in_block.button\\icon.png",
         "alias": "MatchTextureMappingInBlock",
-        "doc": "Pick a source block, then apply the texture mapping of this block to other blocks selected.",
+        "doc": "Copy texture mapping between blocks.\n\nFeatures:\n- Transfers texture mapping from source block\n- Matches by layer correspondence\n- Preserves mapping parameters\n- Supports multiple target blocks\n- Layer-specific texture application",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
@@ -186,7 +186,7 @@
         "script": "Block.tab\\package_block_layer.button\\package_block_layer_left.py",
         "icon": "Block.tab\\package_block_layer.button\\icon.png",
         "alias": "PackageBlockLayer",
-        "doc": "Package blocks content layer under a single parent layer. This is very helpful if you want to test totally new material for the layers.",
+        "doc": "Organize block content layers.\n\nFeatures:\n- Creates unified layer structure\n- Optional layer flattening\n- Preserves layer colors and materials\n- Handles nested block hierarchies\n- Streamlines material testing workflow",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
@@ -195,7 +195,7 @@
         "script": "Block.tab\\randomize_block_transformation.button\\randomize_block_transformation_left.py",
         "icon": "Block.tab\\randomize_block_transformation.button\\icon.png",
         "alias": "RandomizeBlockTransformation",
-        "doc": "Randomly transform block transformation for rotation and scale.",
+        "doc": "Randomly transform block transformation for rotation and scale.\n\nFeatures:\n- Rotates blocks randomly\n- Scales blocks 1D height softly or taller\n- Scales 3D dimensions evenly\n- Animates transformation process",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -204,7 +204,7 @@
         "script": "Block.tab\\random_blocks_on_srfs.button\\random_blocks_on_srfs_left.py",
         "icon": "Block.tab\\random_blocks_on_srfs.button\\icon.png",
         "alias": "RandomBlocksOnSrfs",
-        "doc": "Randomly create blocks on mutiple srfs, away from edge, along edge, or evenly on edge. It also allow pick guiding crv(s) or use edge as guides.",
+        "doc": "Advanced block distribution utility for surfaces.\n\nFeatures:\n- Distributes blocks randomly across target surfaces\n- Configurable edge distance and spacing controls\n- Optional edge-guided or curve-guided placement\n- Real-time preview of block placement\n- Supports multiple distribution patterns:\n  - Random interior placement\n  - Edge-aligned placement\n  - Even edge distribution\n\nUsage:\n1. Select target surfaces and sample blocks\n2. Configure placement parameters\n3. Choose distribution pattern\n4. Preview and adjust as needed",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -213,7 +213,7 @@
         "script": "Block.tab\\sample_layout.button\\sample_layout_left.py",
         "icon": "Block.tab\\sample_layout.button\\icon.png",
         "alias": "SampleLayout",
-        "doc": "Create sample block layout along crvs to quickly visualize design.",
+        "doc": "Create sample block layout along crvs to quickly visualize design.\n\nFeatures:\n- Quick block layout visualization\n- Flexible block size configuration\n- Multiple layout modes:\n  - Panel mode: Blocks span between divider points\n  - Post mode: Blocks oriented to local coordinate of divider points\n- User-friendly interface with clear step-by-step instructions\n- Real-time preview of block placement\n- Supports both open and closed curves\n- Automatically handles curve segmentation for accurate block placement",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -222,7 +222,7 @@
         "script": "Block.tab\\similar_blocks.button\\similar_blocks_left.py",
         "icon": "Block.tab\\similar_blocks.button\\icon.png",
         "alias": "SelectSimilarBlocks",
-        "doc": "Select blocks of similar definitions from the selected blocks",
+        "doc": "Selects all block instances that share the same block definition as the selected blocks.\n\nUsage:\n    1. Pre-select block instances (optional)\n    2. Run the command\n    3. Select additional blocks if none were pre-selected\n    \nNotes:\n    - Works with multiple block definitions at once\n    - Automatically filters for block objects only\n",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": true
@@ -231,7 +231,7 @@
         "script": "Block.tab\\similar_blocks.button\\similar_blocks_right.py",
         "icon": "Block.tab\\similar_blocks.button\\icon.png",
         "alias": "IsolateSimilarBlocks",
-        "doc": "Isolate blocks of similar definitions from the selected blocks",
+        "doc": "Isolate blocks of similar definitions from the selected blocks.\n\nFeatures:\n- Automatically identifies and isolates blocks with identical definitions\n- Supports multiple block definitions at once\n- Maintains original selection state\n- Keeps other objects visible and unchanged",
         "tab": "Block.tab",
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
@@ -393,7 +393,7 @@
         "script": "Fun.tab\\dvd.button\\dvd_left.py",
         "icon": "Fun.tab\\dvd.button\\icon.png",
         "alias": "DVD",
-        "doc": "When you are bored...",
+        "doc": "Classic DVD screensaver animation for Rhino.\n\nA nostalgic entertainment feature that recreates the \nbouncing DVD logo animation within Rhino viewport.",
         "tab": "Fun.tab",
         "tab_icon": "Fun.tab\\icon.png",
         "is_popular": false
@@ -420,7 +420,7 @@
         "script": "Fun.tab\\red_alert.button\\red_alert_left.py",
         "icon": "Fun.tab\\red_alert.button\\icon.png",
         "alias": "RedAlert",
-        "doc": "Active game mode in Rhino",
+        "doc": "Command & Conquer inspired game mode for Rhino.\n\nFeatures:\n- Real-time audio feedback for modeling operations\n- Classic RTS game sound effects\n- Dynamic response to object creation/deletion\n- Nostalgic gaming atmosphere while modeling",
         "tab": "Fun.tab",
         "tab_icon": "Fun.tab\\icon.png",
         "is_popular": false
@@ -478,7 +478,7 @@
         "script": "Knowledge.tab\\turtorial.button\\turtorial_left.py",
         "icon": "Knowledge.tab\\turtorial.button\\icon.png",
         "alias": "Turtorial",
-        "doc": "Show tutorial for some useful trick in GH",
+        "doc": "EnneadTab learning resources hub.\n\nFeatures:\n- Access to comprehensive GH tutorials\n- Local documentation and PDF guides\n- Video tutorials via YouTube playlist\n- Quick reference materials for common workflows",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png",
         "is_popular": false
@@ -676,7 +676,7 @@
         "script": "Modify.tab\\srf_to_panel.button\\srf_to_panel_left.py",
         "icon": "Modify.tab\\srf_to_panel.button\\icon.png",
         "alias": "SrfToPanel",
-        "doc": "Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge.",
+        "doc": "Advanced surface panelization utility.\n\nFeatures:\n- Converts surfaces to detailed panel geometry\n- Configurable panel thickness and joint reveals\n- Automatic edge detail generation\n- Maintains design intent while adding construction detail",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
@@ -685,7 +685,7 @@
         "script": "Modify.tab\\time_travel.button\\time_travel_left.py",
         "icon": "Modify.tab\\time_travel.button\\icon.png",
         "alias": "TimeTravel",
-        "doc": "Undo history on selected objs",
+        "doc": "Selective undo tool for Rhino objects.\n\nFeatures:\n- Undo history for selected objects only\n- Maintains other objects' current state\n- Precise history control for specific elements",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
@@ -928,7 +928,7 @@
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
         "icon": null,
         "alias": "RelocateAll_1643",
-        "doc": "Relocate all the cameras and models to new Revit location.",
+        "doc": "Batch relocation tool for Rhino content.\n\nFeatures:\n- Relocates all cameras and models to new Revit location\n- Maintains relative positions and orientations\n- Preserves camera views and model relationships\n- Automatically updates all named views",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png",
         "is_popular": false

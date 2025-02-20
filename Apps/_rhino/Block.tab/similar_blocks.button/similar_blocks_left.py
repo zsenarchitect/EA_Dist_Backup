@@ -1,6 +1,15 @@
-
 __title__ = "SelectSimilarBlocks"
-__doc__ = "Select blocks of similar definitions from the selected blocks"
+__doc__ = """Selects all block instances that share the same block definition as the selected blocks.
+
+Usage:
+    1. Pre-select block instances (optional)
+    2. Run the command
+    3. Select additional blocks if none were pre-selected
+    
+Notes:
+    - Works with multiple block definitions at once
+    - Automatically filters for block objects only
+"""
 
 __is_popular__ = True
 

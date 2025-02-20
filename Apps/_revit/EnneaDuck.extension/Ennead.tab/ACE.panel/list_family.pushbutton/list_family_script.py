@@ -177,6 +177,41 @@ class Deployer:
         return sample_model_text, label_text_type
 
     def add_label_text(self, family):
+        if self.view.ViewType == DB.ViewType.DraftingView:
+            new_title = self._add_label_text_2d(family)
+        else:
+            new_title = self._add_label_text_3d(family)
+
+        self.item_collection.append(new_title)
+
+    def _add_label_text_2d(self, family):
+        """Adds descriptive text label for a family in a drafting view.
+        
+        Args:
+            family: Family to create label for
+        """
+        pass
+        t = DB.Transaction(self.doc, "Add Label Text")
+        t.Start()
+        tnote_typeid = self.doc.GetDefaultElementTypeId(DB.ElementTypeGroup.TextNoteType)
+      
+        title = family.Name
+        new_note = DB.TextNote.Create(self.doc,
+                            self.view.Id,
+                            self.pointer,
+                            title,
+                            tnote_typeid
+                            )
+        new_note.HorizontalAlignment = DB.HorizontalTextAlignment.Right
+        DB.ElementTransformUtils.MoveElement(self.doc, 
+                                            new_note.Id, 
+                                            self.pointer - new_note.Location.Point-DB.XYZ(5,0,0))
+
+
+        t.Commit()
+        return new_note
+
+    def _add_label_text_3d(self, family):
         """Adds descriptive text label for a family.
         
         Args:
@@ -221,7 +256,8 @@ class Deployer:
 
         self.max_label_width = max(self.max_label_width, size_x)
         t.Commit()
-        self.item_collection.append(new_text_model)
+        return new_text_model
+        
     
     def purge_old_dump_family(self):
         """Purges all previously created elements from the view.
@@ -229,6 +265,8 @@ class Deployer:
         Removes all elements with internal comments to clean up before new placement.
         """
         elements_to_purge = [
+            (DB.BuiltInCategory.OST_TextNotes, INTERNAL_COMMENT, "equals"),
+            (DB.BuiltInCategory.OST_DetailComponents, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_ModelText, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_GenericModel, INTERNAL_COMMENT, "equals"),
             (DB.BuiltInCategory.OST_Walls, FAMILY_DUMP_WALL_COMMENT, "startswith"),
@@ -236,7 +274,6 @@ class Deployer:
             (DB.BuiltInCategory.OST_Roofs, FAMILY_DUMP_ROOF_COMMENT, "startswith"),
             (DB.BuiltInCategory.OST_Floors, FAMILY_DUMP_FLOOR_COMMENT, "startswith"),
             (DB.BuiltInCategory.OST_CurtainWallPanels, INTERNAL_COMMENT, "equals"),
-            (DB.BuiltInCategory.OST_DetailComponents, INTERNAL_COMMENT, "equals"),
             (DB.FamilyInstance, INTERNAL_COMMENT, "equals")
         ]
         

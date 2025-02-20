@@ -1,6 +1,12 @@
-
 __title__ = "PackageBlockLayer"
-__doc__ = "Package blocks content layer under a single parent layer. This is very helpful if you want to test totally new material for the layers."
+__doc__ = """Organize block content layers.
+
+Features:
+- Creates unified layer structure
+- Optional layer flattening
+- Preserves layer colors and materials
+- Handles nested block hierarchies
+- Streamlines material testing workflow"""
 
 import rhinoscriptsyntax as rs
 

@@ -1,5 +1,11 @@
 __title__ = "MakeBlockUniqueToOne"
-__doc__ = "Make a block unique on spot. All different types of block will merge to one new block"
+__doc__ = """Consolidate blocks into single definition.
+
+Features:
+- Merges multiple block types into one
+- Creates new unified block definition
+- Preserves instance positions
+- Maintains transformation data"""
 
 
 from EnneadTab import LOG, ERROR_HANDLE

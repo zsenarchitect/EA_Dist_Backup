@@ -1,5 +1,12 @@
 __title__ = "EditDistortedBlock"
-__doc__ = "Edit distorted block by editing a copy."
+__doc__ = """Block editing utility for distorted instances.
+
+Features:
+- Creates editable copy of distorted block
+- Maintains block definition relationships
+- Automatic camera positioning for editing
+- Temporary isolation of edited block
+- Right-click to restore previous view"""
 
 __is_popular__ = True
 

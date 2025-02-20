@@ -1,6 +1,18 @@
 
 __title__ = "SampleLayout"
-__doc__ = "Create sample block layout along crvs to quickly visualize design."
+__doc__ = """Create sample block layout along crvs to quickly visualize design.
+
+Features:
+- Quick block layout visualization
+- Flexible block size configuration
+- Multiple layout modes:
+  - Panel mode: Blocks span between divider points
+  - Post mode: Blocks oriented to local coordinate of divider points
+- User-friendly interface with clear step-by-step instructions
+- Real-time preview of block placement
+- Supports both open and closed curves
+- Automatically handles curve segmentation for accurate block placement"""
+
 __is_popular__ = True
 
 import Rhino # pyright: ignore

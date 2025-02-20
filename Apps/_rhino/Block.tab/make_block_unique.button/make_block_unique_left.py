@@ -1,6 +1,13 @@
 __title__ = ["MakeBlockUnique",
              "MBU"]
-__doc__ = "Make a block unique on spot. Each unique original block become new unique block."
+__doc__ = """Create unique block definitions.
+
+Features:
+- Creates independent block definitions
+- Optional name tagging with creator info
+- Preserves block transformations
+- Handles nested block structures
+- Maintains layer assignments"""
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs

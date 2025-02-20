@@ -1,6 +1,17 @@
-
 __title__ = "BatchRenameBlocks"
-__doc__ = "Rename Block Names In a table"
+__doc__ = """Block name batch editing utility for Rhino.
+
+Features:
+- Interactive table interface for block renaming
+- Real-time block preview in viewport
+- Double-click to isolate and inspect blocks
+- Validates name conflicts automatically
+- Preserves block definitions during renaming
+
+Usage:
+1. Edit desired names in the 'New Name' column
+2. Double-click entries to preview blocks
+3. Click 'Update Block Names' to apply changes"""
 
 
 import rhinoscriptsyntax as rs

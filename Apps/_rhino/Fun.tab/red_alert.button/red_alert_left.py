@@ -1,6 +1,11 @@
-
 __title__ = "RedAlert"
-__doc__ = "Active game mode in Rhino"
+__doc__ = """Command & Conquer inspired game mode for Rhino.
+
+Features:
+- Real-time audio feedback for modeling operations
+- Classic RTS game sound effects
+- Dynamic response to object creation/deletion
+- Nostalgic gaming atmosphere while modeling"""
 
 
 from EnneadTab import ERROR_HANDLE, LOG, SOUND

@@ -1,6 +1,11 @@
-
 __title__ = "SrfToPanel"
-__doc__ = "Convert well defined panelization of surfs to detailed polysrfs with thickness, joint reveal to edge."
+__doc__ = """Advanced surface panelization utility.
+
+Features:
+- Converts surfaces to detailed panel geometry
+- Configurable panel thickness and joint reveals
+- Automatic edge detail generation
+- Maintains design intent while adding construction detail"""
 
 
 import rhinoscriptsyntax as rs

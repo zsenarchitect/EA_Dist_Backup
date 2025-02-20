@@ -1,6 +1,12 @@
-
 __title__ = "FilterBlockByName"
-__doc__ = "Quick select multiple block by block names"
+__doc__ = """Smart block selection utility.
+
+Features:
+- Filter blocks by name patterns
+- Multi-select support for block names
+- Sorted block name display
+- Real-time search filtering
+- Automatic selection of matching instances"""
 
 __is_popular__ = True
 
