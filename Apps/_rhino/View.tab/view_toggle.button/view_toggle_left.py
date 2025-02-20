@@ -26,7 +26,8 @@ def view_toggle():
 
 
     keyboard_setting = Rhino.ApplicationSettings.ShortcutKeySettings
-    keyboard_setting.SetMacro(Rhino.ApplicationSettings.ShortcutKey[KEY], "EA_{}".format(__title__))
+    keyboard_setting.SetMacro(Rhino.ApplicationSettings.ShortcutKey[KEY], 
+                              "EA_{}".format(__title__))
 
     
 if __name__ == "__main__":
