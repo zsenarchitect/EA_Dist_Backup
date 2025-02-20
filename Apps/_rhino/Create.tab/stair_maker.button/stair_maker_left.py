@@ -13,7 +13,7 @@ import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import System # pyright: ignore
-import traceback
+
 import math
 
 
@@ -393,7 +393,7 @@ class GetDotPoint (Rhino.Input.Custom.GetPoint):
 
             #e.Display.DrawToBitmap (self.viewport, 300, 200)
         except:
-            print (traceback.format_exc())
+            print (ERROR_HANDLE.get_alternative_traceback())
 
         if mass_brep:
             bbox = mass_brep.GetBoundingBox(False)
@@ -455,7 +455,7 @@ class GetFlipPoint (Rhino.Input.Custom.GetPoint):
                 e.Display.DrawBrepWires  (mass_brep, System.Drawing.Color.White, -1)
                 e.Display.DrawBrepShaded (mass_brep, Rhino.Display.DisplayMaterial(System.Drawing.Color.Orange, 0))
         except:
-            print (traceback.format_exc())
+            print (ERROR_HANDLE.get_alternative_traceback())
         e.Display.DrawDot  (self.start_pt, "Start Pt")
         e.Display.DrawDot  (self.end_pt, "End Pt")
         e.Display.DrawDot  (current_pt, "Pick Side")

@@ -1,9 +1,12 @@
+import sys
+sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8
+
 """Utilities for showing tips and documentation for tools."""
 
 import io
 import os
 import random
-import traceback
+
 import json
 
 import ENVIRONMENT
@@ -223,7 +226,7 @@ def get_title_tip_from_file(lucky_file, is_random_single):
         except Exception as e:
             if USER.is_EnneadTab_developer:
                 print ("\n\nDeveloper visible only logging:")
-                print (traceback.format_exc())
+                print (ERROR_HANDLE.get_alternative_traceback())
             return module_name, None, icon_path
     except Exception as e:
         if USER.is_EnneadTab_developer:
@@ -337,7 +340,7 @@ def set_revit_knowledge():
                 global_vars = extract_global_variables(script_path)
             except:
                 print (script_path)
-                print (traceback.format_exc())
+                print (ERROR_HANDLE.get_alternative_traceback())
                 continue
             icon_path = get_icon_from_path(script_path)
             if ".panel" in script_path:
@@ -488,8 +491,11 @@ def show_tip_rhino():
 def tip_of_day():
     """Show a random tip of the day.
     """
-    if random.random() < 0.4:
-        return
+    if not USER.IS_DEVELOPER:
+        if random.random() < 0.4:
+            return
+
+        
     if ENVIRONMENT.is_Revit_environment():
         if random.random() < 0.95:
             show_tip_revit()

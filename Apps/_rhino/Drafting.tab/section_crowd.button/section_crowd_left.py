@@ -15,7 +15,7 @@ import System # pyright: ignore
 import sys
 import random
 import os
-import traceback
+
 from EnneadTab import DATA_FILE
 from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE
 
@@ -72,7 +72,7 @@ class GetPointUI(Rhino.Input.Custom.GetPoint):
                 block_definition = sc.doc.InstanceDefinitions.Find(BASIC_BLOCK_NAMES[0])
                 map(lambda transform: e.Display.DrawInstanceDefinition(block_definition, transform), self.transform_list)
             except:
-                print (traceback.format_exc())
+                print (ERROR_HANDLE.get_alternative_traceback())
                 self.transform_list = []
 
         else:

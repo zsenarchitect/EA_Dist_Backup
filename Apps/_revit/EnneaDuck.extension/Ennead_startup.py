@@ -4,7 +4,7 @@
 __title__ = "Startup"
 import os
 import sys
-import traceback
+
 
 """need to navigate to duckking lib first before it can auto detect further. 
 This is special treatment for te startup script only"""
@@ -34,8 +34,6 @@ try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    from pyrevit import forms, script
-    from pyrevit.coreutils import envvars
     from pyrevit import versionmgr
 
     import System # pyright: ignore
@@ -51,7 +49,7 @@ try:
     from System.IO import DriveInfo # pyright: ignore
 
 except:
-    print (traceback.format_exc())
+    print (ERROR_HANDLE.get_alternative_traceback())
 
     
 def check_minimal_version_for_enneadtab():
@@ -160,11 +158,13 @@ def check_C_drive_space():
 
 def register_auto_update():
     return
+    
     try:# need pyrevit 5 or higher to work in revit 2025
         from pyrevit.userconfig import user_config
         user_config.check_updates = True
         user_config.save_changes()
     except:
+        
         pass
 
 
@@ -300,8 +300,7 @@ def EnneadTab_startup():
     
     check_C_drive_space()
 
-    if random.random() > 0.2:
-        DOCUMENTATION.tip_of_day()
+    DOCUMENTATION.tip_of_day()
 
   
         

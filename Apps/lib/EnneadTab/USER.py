@@ -18,7 +18,6 @@ Note:
 
 import os
 
-import traceback
 
 import time
 import ENVIRONMENT
@@ -110,7 +109,8 @@ def get_autodesk_user_name():
     except Exception as e:
         # to-do: add try because Rhino 8 traceback is not working peoperly. This should be recheck in future Rhino 8.
         try:
-            print ("Cannot get Autodesk username becasue {}".format(traceback.format_exc()))
+            import ERROR_HANDLE
+            print ("Cannot get Autodesk username becasue {}".format(ERROR_HANDLE.get_alternative_traceback()))
         except:
             print (e)
         return None

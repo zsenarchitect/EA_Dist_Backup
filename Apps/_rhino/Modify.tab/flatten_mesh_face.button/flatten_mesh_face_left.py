@@ -13,7 +13,7 @@ from System.Drawing import Bitmap, Rectangle # pyright: ignore
 from System.Drawing.Imaging import PixelFormat, ImageFormat, FrameDimension, PropertyItem # pyright: ignore
 import System.Windows.Forms.Screen as Screen # pyright: ignore
 from System.IO import MemoryStream # pyright: ignore
-import traceback
+
 class MeshFlattener:
     def __init__(self):
         self.strength = 0.1

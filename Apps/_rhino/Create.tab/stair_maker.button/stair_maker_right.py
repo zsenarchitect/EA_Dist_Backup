@@ -12,7 +12,7 @@ import Rhino # pyright: ignore
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import System # pyright: ignore
-import traceback
+
 import math
 
 from EnneadTab import DATA_FILE, NOTIFICATION, LOG, ERROR_HANDLE,NOTIFICATION
@@ -217,7 +217,7 @@ class GetDotPoint (Rhino.Input.Custom.GetPoint):
 
             #e.Display.DrawToBitmap (self.viewport, 300, 200)
         except:
-            print (traceback.format_exc())
+            print (ERROR_HANDLE.get_alternative_traceback())
 
         if mass_brep:
             bbox = mass_brep.GetBoundingBox(False)

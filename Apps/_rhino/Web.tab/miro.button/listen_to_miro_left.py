@@ -8,7 +8,7 @@ import threading
 from EnneadTab import ERROR_HANDLE
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore
-import traceback
+
 import System # pyright: ignore
 
 from EnneadTab import LOG, ERROR_HANDLE

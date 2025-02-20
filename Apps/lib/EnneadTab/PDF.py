@@ -119,18 +119,18 @@ class PDFGenerator:
         self.tooltip_style = ParagraphStyle(
             'TooltipStyle',
             parent=self.styles['BodyText'],
-            fontSize=10,
+            fontSize=8,
             textColor=colors.darkgrey
         )
         self.tab_header_style = ParagraphStyle(
             'TabHeaderStyle',
-            fontSize=9,
+            fontSize=10,
             textColor=colors.lightgrey,
             alignment=2
         )
         self.sub_title_style = ParagraphStyle(
             'SubtitleStyle',
-            fontSize=9,
+            fontSize=10,
             textColor=colors.darkgray,
             alignment=1
         )
@@ -165,6 +165,10 @@ class PDFGenerator:
         canvas.restoreState()
 
         self.current_page_num += 1
+
+
+    def format_return_line(self, text):
+        return text.replace("\n", "<br/>")
     
     def generate_segment_pdf(self, segment_data, tab_name, tab_icon_path, temp_pdf_path):
         """Generate a temporary PDF for a single segment."""
@@ -181,7 +185,7 @@ class PDFGenerator:
             if isinstance(alias_info, list):
                 alias_info = " / ".join(alias_info)
             alias = Paragraph(alias_info, self.command_style)
-            tooltip_text = Paragraph("<b>Tooltip:</b> {}".format(doc_data.get('doc', 'No description available')), self.tooltip_style)
+            tooltip_text = Paragraph("<b>Tooltip:</b> {}".format(self.format_return_line(doc_data.get('doc', 'No description available'))), self.tooltip_style)
             if self.app == "Rhino":
                 access = "Left Click" if "_left" in doc_data.get("script") else "Right Click"
                 access_text = Paragraph("<b>Access:</b> {}".format(access), self.tooltip_style)
@@ -296,7 +300,7 @@ class PDFGenerator:
             style_2 = ParagraphStyle('y',fontSize=9,textColor=colors.darkgray,alignment=2)
             table_data.append([tab_icon, 
                                Paragraph(tab_name, style_1),
-                               Paragraph("~~~~~~~~~~~~~~~~~~~~~~", self.sub_title_style), 
+                               Paragraph("~~~~~~~~~~~~~~~~~~~~", self.sub_title_style), 
                                Paragraph("Page {}".format(page_number), style_2)])
         
         toc_table = Table(table_data, colWidths=[0.3 * inch, 1.2 * inch, 1.8 * inch, 1.2 * inch])

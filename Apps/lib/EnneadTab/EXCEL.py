@@ -16,7 +16,7 @@ SharePoint-hosted files.
 import os
 
 import sys
-import traceback
+
 import time
 import io
 try:
@@ -34,6 +34,7 @@ import FOLDER
 import UNIT_TEST
 import TEXT
 import DATA_FILE
+import ERROR_HANDLE
 import COPY
 sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
 import xlrd
@@ -194,7 +195,7 @@ def save_as_xls(filepath):
         return save_as_path
     except:
         print ("Cannot save as xls, see error below:")
-        print (traceback.format_exc())
+        print (ERROR_HANDLE.get_alternative_traceback())
     finally:
         try:    
             workbook.Close(False)
@@ -355,7 +356,7 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
                 OUT[(i - 1, j - 1)] = {"value": cell_value, "color": rgb_color}
 
     except:
-        print (traceback.format_exc())
+        print (ERROR_HANDLE.get_alternative_traceback())
     finally:
         try:
             workbook.Close(False)

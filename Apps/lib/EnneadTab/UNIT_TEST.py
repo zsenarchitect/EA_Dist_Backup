@@ -3,13 +3,13 @@ try:
 except:
     pass
 import os
-import traceback
+
 
 import ENVIRONMENT
 import NOTIFICATION
 import OUTPUT
 import TEXT
-
+import ERROR_HANDLE
 
 def print_boolean_in_color(bool):
     if not ENVIRONMENT.is_terminal_environment():
@@ -169,7 +169,7 @@ class UnitTest:
             return True
         except AssertionError as e:
             print("Assertion Error! There is some unexpected results in the test")
-            print(traceback.format_exc())
+            ERROR_HANDLE.print_note(ERROR_HANDLE.get_alternative_traceback())
             NOTIFICATION.messenger("[{}] has failed the unit test".format(module))
             return False
 
@@ -206,7 +206,7 @@ class UnitTest:
                     print(
                         "\n\nSomething is worng when importing [{}] becasue:\n\n++++++{}++++++\n\n\n".format(
                             print_text_in_highlight_color(module_name, ok=False),
-                            traceback.format_exc(),
+                            ERROR_HANDLE.get_alternative_traceback(),
                         )
                     )
                     continue

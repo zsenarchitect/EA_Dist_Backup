@@ -4,7 +4,6 @@ __doc__ = "Shrink/Expand the border of floor for input srf or polysrfs. The thic
 __is_popular__ = True
 
 import random
-import traceback
 
 
 import rhinoscriptsyntax as rs
@@ -294,7 +293,7 @@ def offset_floor_border():
                 new_obj = process_surf(obj, offset)
         except Exception as e:
             RHINO_FORMS.notification(main_text = "Something wrong with one of the selected objects. " + str(e), 
-                                     sub_text = traceback.format_exc(), 
+                                     sub_text = ERROR_HANDLE.get_alternative_traceback(), 
                                      height = 500)
             continue
 

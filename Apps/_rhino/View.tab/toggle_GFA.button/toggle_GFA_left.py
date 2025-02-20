@@ -16,7 +16,7 @@ import sys
 sys.path.append("..\lib")
 
 
-import traceback
+
 import time
 import random
 from EnneadTab.EXCEL import ExcelDataItem
@@ -35,7 +35,7 @@ def try_catch_error(func):
             return out
         except Exception as e:
             print ( str(e))
-            error = traceback.format_exc()
+            error = ERROR_HANDLE.get_alternative_traceback()
             print (error)
             if random.random() < 0.1:
                 NOTIFICATION.messenger(error)

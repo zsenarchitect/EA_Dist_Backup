@@ -2,7 +2,7 @@ __title__ = "EnneadTab_Startup"
 __doc__ = "Automatically run on every new rhino start session if bind to Rhino setting."
 import os
 import sys
-import traceback
+
 _app_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
@@ -60,7 +60,7 @@ def action_update_timesheet(doc):
         except:
             print ("Error updating timesheet")
             if USER.IS_DEVELOPER:
-                print (traceback.format_exc())
+                print (ERROR_HANDLE.get_alternative_traceback())
 
 
 ##################################################

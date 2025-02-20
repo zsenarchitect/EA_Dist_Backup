@@ -5,12 +5,13 @@ import sys
 import json
 import io
 import os
-import traceback
+
 from contextlib import contextmanager
 
 
 import COPY
 import FOLDER
+
 
 
 
@@ -287,7 +288,8 @@ def update_data(file_name, is_local=True, keep_holder_key=None):
    
     except Exception as e:
         print("Error in DATA_FILE.py at update_data function:", str(e))
-        print(traceback.format_exc())
+        import ERROR_HANDLE
+        print (ERROR_HANDLE.get_alternative_traceback())
         
 
 
