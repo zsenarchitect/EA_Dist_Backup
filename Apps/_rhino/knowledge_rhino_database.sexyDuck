@@ -1044,6 +1044,15 @@
         "tab_icon": "View.tab\\icon.png",
         "is_popular": false
     },
+    "View.tab\\view_toggle.button\\view_toggle_left.py": {
+        "script": "View.tab\\view_toggle.button\\view_toggle_left.py",
+        "icon": "View.tab\\view_toggle.button\\icon.png",
+        "alias": "ViewToggle",
+        "doc": "Unsupported value for safe evaluation",
+        "tab": "View.tab",
+        "tab_icon": "View.tab\\icon.png",
+        "is_popular": false
+    },
     "Web.tab\\miro.button\\listen_to_miro_left.py": {
         "script": "Web.tab\\miro.button\\listen_to_miro_left.py",
         "icon": "Web.tab\\miro.button\\icon.png",

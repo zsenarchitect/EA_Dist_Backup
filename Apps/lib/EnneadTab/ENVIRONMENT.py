@@ -1,7 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""Utility functions for checking the current application environment.
-Sets environment variables and paths for EnneadTab.
+"""Environment configuration and detection module for EnneadTab.
+
+This module handles environment setup, path configurations, and runtime environment detection
+for the EnneadTab ecosystem. It supports multiple applications including Revit, Rhino,
+and terminal environments.
+
+Key Features:
+- Path configuration for development and production environments
+- Application environment detection (Revit, Rhino, Grasshopper)
+- System environment checks (AVD, Python version)
+- Filesystem management for temp and dump folders
+- Network drive availability monitoring
+
+Note: 
+    Network drive connectivity is managed through GitHub distribution rather than 
+    direct network mapping to optimize IT infrastructure costs.
+
 
 
 Unfortunately IT department cannot make L drive and other drive to be connnected by default ever since the Azure dirve migration.
@@ -129,7 +144,13 @@ if os.path.exists(ONE_DRIVE_ECOSYS_FOLDER):
 
 
 def cleanup_dump_folder():
-    """Silently clean up files in DUMP_FOLDER older than 3 days, excluding .json and .sexyDuck files"""
+    """Clean up old temporary files from the dump folder.
+
+    Removes files older than 3 days from the DUMP_FOLDER, excluding protected file types:
+    .json, .sexyDuck, .txt, .lock, and .rui files.
+    
+    This function runs silently and handles file deletion errors gracefully.
+    """
     import os
     import time
 
@@ -156,10 +177,10 @@ def cleanup_dump_folder():
 cleanup_dump_folder()
 
 def is_avd():
-    """Check if current environment is an Azure Virtual Desktop.
+    """Detect if running in Azure Virtual Desktop environment.
 
     Returns:
-        bool: True if current environment is AVD.
+        bool: True if running in AVD or GPU-PD environment, False otherwise.
     """
     try:
         import clr  # pyright:ignore
@@ -195,10 +216,14 @@ def is_Rhino_7():
     return str(get_rhino_version()) == "7"
 
 def get_rhino_version(main_version_only=True):
-    """Get Rhino version.
+    """Retrieve the current Rhino version.
+
+    Args:
+        main_version_only (bool): If True, returns only the major version number.
+            If False, returns the full version string.
 
     Returns:
-        str: Rhino version.
+        str: Rhino version number, or None if not in Rhino environment.
     """
     if not IS_RHINO_ENVIRONMENT:
         return None
@@ -310,10 +335,10 @@ IS_REVIT_ENVIRONMENT = is_Revit_environment()
 IS_RHINOINSIDEREVIT_ENVIRONMENT = is_RhinoInsideRevit_environment()
 
 def get_app_name():
-    """Get the current application name.
+    """Determine the current application environment.
 
     Returns:
-        str: The current application name.
+        str: Application identifier - 'revit', 'rhino', or 'terminal'.
     """
     app_name = "terminal"
     if IS_REVIT_ENVIRONMENT:
@@ -323,6 +348,14 @@ def get_app_name():
     return app_name
 
 def alert_l_drive_not_available(play_sound = False):
+    """Check L drive availability and notify user if unavailable.
+
+    Args:
+        play_sound (bool): If True, plays an error sound when L drive is unavailable.
+
+    Returns:
+        bool: True if L drive is available, False otherwise.
+    """
     if  os.path.exists(L_DRIVE_HOST_FOLDER):
         return True
     try:

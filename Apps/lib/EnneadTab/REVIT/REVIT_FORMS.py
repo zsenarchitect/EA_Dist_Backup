@@ -21,8 +21,10 @@ import DATA_FILE
 
 
 class EnneadTabModeForm():
-    """This form will pause revit and wait for action to continoue
-    overload with more function method depanden t on your targetr."""
+    """A modal form that pauses Revit execution until user action.
+    
+    Intended to be subclassed with additional functionality specific to the target use case.
+    """
     pass
 
 
@@ -34,20 +36,24 @@ class EnneadTabModeForm():
 
 # A simple WPF form used to call the ExternalEvent
 class EnneadTabModelessForm(WPFWindow):
-    """
-    this form will NOT revit, it cannot return value directly
-    overload with more function depend on what you are loading
-
-example:
-    class MainSetting(REVIT_FORMS.EnneadTabModelessForm):
-        def __init__(self, title, summary, xaml_file_name, **kwargs):
-            super(MainSetting, self).__init__(title, summary, xaml_file_name, **kwargs)
-            # call supper first so can connect to xaml to get all compenent, 
-            # otherwise the load setting will have nothing to load
-
-            self.Height = 800
-            self.load_setting()
-
+    """A non-modal WPF form that allows Revit to continue running.
+    
+    This base class handles XAML loading, settings persistence, and basic window functionality.
+    Cannot return values directly - use external events for Revit API calls.
+    
+    Args:
+        title (str): Window title
+        summary (str): Description text
+        xaml_file_name (str): Name of XAML file to load
+        external_funcs (list, optional): List of external event functions
+        **kwargs: Additional keyword arguments
+        
+    Example:
+        class MainSetting(EnneadTabModelessForm):
+            def __init__(self, title, summary, xaml_file_name, **kwargs):
+                super(MainSetting, self).__init__(title, summary, xaml_file_name, **kwargs)
+                self.Height = 800
+                self.load_setting()
     """
 
     def pre_actions(self, *external_funcs):
@@ -222,23 +228,18 @@ class NotificationModelessForm(EnneadTabModelessForm):
 
 
 
-def notification(main_text = "",
-                sub_text = "",
-                window_title = "EnneadTab",
-                button_name = "Close",
-                self_destruct = 0,
-                window_width = 500,
-                window_height = 500):
-    """simple window that do not take any resonse from user.
-
+def notification(main_text="", sub_text="", window_title="EnneadTab",
+                button_name="Close", self_destruct=0, window_width=500, window_height=500):
+    """Display a simple notification window with optional auto-close functionality.
+    
     Args:
-        main_text (str, optional): _description_. Defaults to "".
-        sub_text (str, optional): _description_. Defaults to "".
-        window_title (str, optional): _description_. Defaults to "EnneadTab".
-        button_name (str, optional): _description_. Defaults to "Close".
-        self_destruct (int, optional): if value other than 0, will close after that many secs. Defaults to 0.
-        window_width (int, optional): _description_. Defaults to 500.
-        window_height (int, optional): _description_. Defaults to 500.
+        main_text (str): Primary message text
+        sub_text (str): Secondary message text  
+        window_title (str): Title of the window
+        button_name (str): Text for the close button
+        self_destruct (int): Number of seconds before auto-close (0 to disable)
+        window_width (int): Width of window in pixels
+        window_height (int): Height of window in pixels
     """
     
     output = OUTPUT.get_output()
@@ -261,45 +262,29 @@ def notification(main_text = "",
                             window_height)
 
 
-def dialogue( title = "EnneadTab",
-            main_text = "main_text",
-            sub_text = None,
-            options = None,
-            footer_link = "http://www.ennead.com",
-            footer_text = "EnneadTab",
-            use_progress_bar = False,
-            expended_content = None,
-            extra_check_box_text = None,
-            verification_check_box_text = None,
-            icon = "shield"):
-    """    
-    Basic windows that take up to 4 user selection option.
+def dialogue(title="EnneadTab", main_text="main_text", sub_text=None,
+            options=None, footer_link="http://www.ennead.com", footer_text="EnneadTab",
+            use_progress_bar=False, expended_content=None, extra_check_box_text=None,
+            verification_check_box_text=None, icon="shield"):
+    """Display a TaskDialog with customizable options and checkboxes.
     
-    extra check box appear before commands options
-    verification_check_box_text appear after commands options
-    is activaed, the result of dialogue will return a tuple of two values.
-
-    options = [["opt 1","description long long long long"], ["opt 2"]]   if options is a string, then used as main text, but if it is a list of two strings, the second string will be used as description. In either case, the command link will return main text
-
-
-    TaskDialogIconNone,    No icon.
-    TaskDialogIconShield,    Shield icon.
-    TaskDialogIconInformation,    Information icon.
-    TaskDialogIconError,    Error icon.
-    TaskDialogIconWarning, Warning icon
-
     Args:
-        title (str, optional): _description_. Defaults to "EnneadTab".
-        main_text (str, optional): _description_. Defaults to "main_text".
-        sub_text (_type_, optional): _description_. Defaults to None.
-        options (_type_, optional): _description_. Defaults to None.
-        footer_link (str, optional): _description_. Defaults to "http://www.ennead.com".
-        footer_text (str, optional): _description_. Defaults to "EnneadTab".
-        use_progress_bar (bool, optional): _description_. Defaults to False.
-        expended_content (_type_, optional): _description_. Defaults to None.
-        extra_check_box_text (_type_, optional): _description_. Defaults to None.
-        verification_check_box_text (_type_, optional): _description_. Defaults to None.
-        icon (str, optional): _description_. Defaults to "shield".
+        title (str): Dialog title
+        main_text (str): Primary instruction text
+        sub_text (str, optional): Additional content text
+        options (list, optional): Command link options. Each option can be either:
+            - str: Simple button text
+            - list[str, str]: Button text and description
+        footer_link (str, optional): URL for footer hyperlink
+        footer_text (str): Text for footer
+        use_progress_bar (bool): Show progress bar
+        expended_content (str, optional): Content shown when expanded
+        extra_check_box_text (str, optional): Text for checkbox above options
+        verification_check_box_text (str, optional): Text for checkbox below options
+        icon (str): Dialog icon type: "shield", "warning", "error", or "info"
+        
+    Returns:
+        str | tuple: Selected option text, or tuple of (option, checkbox_state) if checkboxes used
     """
     
 

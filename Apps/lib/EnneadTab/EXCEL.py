@@ -1,7 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""Utilities for working with Excel files.
-Check formulas, read data, save data, etc."""
+"""Excel file manipulation utilities for EnneadTab.
+
+This module provides comprehensive tools for Excel file operations including:
+- Reading and writing data from/to Excel files
+- Formula validation and visualization
+- Column/row manipulation and searching
+- Color and formatting management
+- Support for both local and online Excel files
+
+The module handles both .xls and .xlsx formats, with special handling for
+SharePoint-hosted files.
+"""
 
 import os
 
@@ -32,18 +42,26 @@ import xlsxwriter
 from collections import defaultdict
 
 def column_number_to_letter(number, is_upper=True):
+    """Convert numeric column index to Excel letter notation.
+
+    Args:
+        number (int): Column number (1-based index)
+        is_upper (bool): If True, returns uppercase letter
+
+    Returns:
+        str: Column letter (e.g., 1 -> 'A', 2 -> 'B')
+    """
     return chr(number + 64 + (0 if is_upper else 32))
 
 def letter_to_index(letter, start_from_zero=False):
-    """Get the index of a letter in the alphabet.
-    if start_from_zero is True, A -> 0, B -> 1, C -> 2, etc.
-    if start_from_zero is False, A -> 1, B -> 2, C -> 3, etc.
+    """Convert Excel column letter to numeric index.
 
     Args:
-        letter (str): A single letter.
+        letter (str): Column letter ('A' to 'Z')
+        start_from_zero (bool): If True, 'A' maps to 0; if False, 'A' maps to 1
 
     Returns:
-        int: The index of the letter in the alphabet.
+        int: Column index, or None if invalid input
     """
     if isinstance(letter, int):
         return letter
@@ -54,13 +72,16 @@ def letter_to_index(letter, start_from_zero=False):
 
 
 def get_column_index(letter, start_from_zero=False):
-    """Get the index of an Excel column.
+    """Convert Excel column reference to numeric index.
+
+    Handles both single ('A') and double ('AA') letter columns.
 
     Args:
-        letter (str): The column letter.
+        letter (str|int): Column reference or direct index
+        start_from_zero (bool): If True, 'A' maps to 0; if False, 'A' maps to 1
 
     Returns:
-        int: The column index.
+        int: Column index, or None if invalid input
     """
     if isinstance(letter, int):
         return letter
@@ -76,7 +97,21 @@ def get_column_index(letter, start_from_zero=False):
 
 
 class ExcelDataItem:
-    """ border style reference: https://xlsxwriter.readthedocs.io/format.html#set_border"""
+    """Container for Excel cell data and formatting.
+    
+    Reference for border styles: https://xlsxwriter.readthedocs.io/format.html#set_border
+
+    Attributes:
+        item: Cell content
+        row (int): Row index
+        column (int|str): Column index or letter
+        cell_color (tuple): RGB color for cell background
+        text_color (tuple): RGB color for text
+        border_style (str): Border style specification
+        border_color (tuple): RGB color for border
+        top_border_style (str): Top border style
+        side_border_style (str): Left/right border style
+    """
     def __init__(
         self,
         item,
@@ -108,26 +143,28 @@ class ExcelDataItem:
 
 
 def get_all_worksheets(filepath):
-    """List all the worksheets in an Excel file.
+    """List all worksheets in an Excel file.
 
     Args:
-        filepath (str): The path to the Excel file.
+        filepath (str): Path to Excel file
 
     Returns:
-        list: A list of worksheet names.
+        list: Names of all worksheets in the file
     """
 
     wb = xlrd.open_workbook(filepath, on_demand=True)
     return wb.sheet_names()
 
 def save_as_xls(filepath):
-    """Save an Excel file as .xls format.
+    """Convert Excel file to .xls format.
+
+    Creates a safe copy before conversion and handles cleanup.
 
     Args:
-        filepath (str): The path to the Excel file to convert.
+        filepath (str): Source Excel file path
 
     Returns:
-        str: The path to the saved .xls file, or None if conversion failed.
+        str: Path to converted .xls file, or None if conversion fails
     """
     _, file = os.path.split(filepath)
     safe_copy = FOLDER.get_EA_dump_folder_file("save_copy_" + file)
@@ -167,15 +204,19 @@ def save_as_xls(filepath):
 
 
 def read_data_from_excel(filepath, worksheet=None, return_dict=False, headless=True):
-    """Read data from an Excel file or URL.
+    """Read data from local or online Excel file.
+
+    Supports both local files and HTTP URLs. For .xlsx files, uses ExcelHandler
+    for improved performance.
 
     Args:
-        filepath (str): The path to the Excel file or URL.
-        worksheet (str, optional): The name of the worksheet. Defaults to None.
-        return_dict (bool, optional): Whether to return the data as a dictionary, otherwise by line. Defaults to False.
+        filepath (str): Local path or URL to Excel file
+        worksheet (str): Target worksheet name
+        return_dict (bool): If True, returns dict with (row,col) keys
+        headless (bool): If True, runs Excel operations without UI
 
     Returns:
-        list or dict: The data from the Excel
+        list|dict: Excel data in requested format
     """
     # Check if the filepath is a URL
     if filepath.startswith("http://"):
@@ -326,14 +367,15 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
 
 
 def get_column_values(data, column, start_from_zero=False):
-    """Get all unique values in a column and their corresponding row numbers.
-    
+    """Extract unique values and their row positions from a column.
+
     Args:
-        data (dict): Excel data dictionary with (row,col) tuple keys and value/color dicts
-        column (str/int): Column letter (e.g. 'A') or index number (0-based)
-        
+        data (dict): Excel data dictionary
+        column (str|int): Column identifier
+        start_from_zero (bool): If True, uses 0-based indexing
+
     Returns:
-        dict: Dictionary mapping unique values to lists of row numbers where they appear
+        dict: Mapping of unique values to their row numbers
     """
     column = get_column_index(column, start_from_zero)
     result = defaultdict(list)
@@ -377,14 +419,14 @@ def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, st
     return None
 
 def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row = None):
-    """Save data to an Excel file.
+    """Write data to Excel file with formatting.
 
     Args:
-        data (list): list of Excel Data item that has row, column, item attr.
-        the order is handled before the data entry
-        filepath (str): The path to the Excel file.
-        worksheet (str, optional): The name of the worksheet. Defaults to "EnneadTab".
-        open_after (bool, optional): Whether to open the Excel file after saving. Defaults to True.
+        data (list): List of ExcelDataItem objects
+        filepath (str): Target Excel file path
+        worksheet (str): Worksheet name
+        open_after (bool): If True, opens file after saving
+        freeze_row (int): Row number for freeze panes
     """
 
     # note to self: rework the format method in dataitem so can construct any combonation format
@@ -468,12 +510,12 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
 
 
 def check_formula(excel, worksheet, highlight_formula=True):
-    """Check the formulas in an Excel file.
+    """Analyze and optionally highlight Excel formulas.
 
     Args:
-        excel (str): The name of the Excel file.
-        worksheet (str): The name of the worksheet.
-        highlight_formula (bool, optional): Whether to highlight the formulas in the Excel file. Defaults to True.
+        excel (str): Excel file name
+        worksheet (str): Worksheet name
+        highlight_formula (bool): If True, visually marks cells containing formulas
     """
     # find all the cells with formula and print the formula like this:
     # B2 = A2 *1.4 + D4:D12
