@@ -233,8 +233,6 @@ def get_data(file_name_or_full_path, is_local=True):
         dict: The contents of the file as a dictionary.
     """
     if os.path.exists(file_name_or_full_path):
-        if "ENNEADTAB_DEVELOPERS.secret" not in file_name_or_full_path:
-            print("Using full path feature is allowed but not prefered.",file_name_or_full_path)
         return _read_json_as_dict(file_name_or_full_path, use_encode=True, create_if_not_exist=False)
 
     if is_local:

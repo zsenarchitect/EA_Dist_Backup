@@ -704,13 +704,14 @@ class Deployer:
         t = DB.Transaction(self.doc, "Create Host Wall")
         t.Start()
         line = DB.Line.CreateBound(self.pointer.Add(DB.XYZ(-3, 0, 0)),
-                                  self.pointer.Add(DB.XYZ(20, 0, 0)))
+                                  self.pointer.Add(DB.XYZ(10, 0, 0)))
         wall = DB.Wall.Create(self.doc,
                             line,
                             self.get_internal_dump_level().Id,
                             False)
         wall.LookupParameter("Comments").Set(wall_comment)
         wall.LookupParameter("Unconnected Height").Set(15)
+        wall.Flip()
         t.Commit()
         return wall
 
@@ -736,7 +737,7 @@ class Deployer:
                            .FirstElementId()
                            
         # Create rectangle points for ceiling boundary
-        short_side = 2
+        short_side = 5
         long_side = 10
         points = [
             self.pointer.Add(DB.XYZ(-short_side, -short_side, self.pointer.Z)),
@@ -803,7 +804,7 @@ class Deployer:
         
         # Create roof footprint
         level = self.get_internal_dump_level()
-        short_side = 2
+        short_side = 5
         long_side = 10
         
         points = [
@@ -856,7 +857,7 @@ class Deployer:
                         .WhereElementIsElementType()\
                         .FirstElementId()   
 
-        short_side = 2
+        short_side = 5
         long_side = 10
         points = [
             self.pointer.Add(DB.XYZ(-short_side, -short_side, self.pointer.Z)),
@@ -970,36 +971,6 @@ class Deployer:
             DB.Level: The internal dump level
         """
         return Deployer.get_internal_dump_level_externally()
-
-    def OLD_get_internal_dump_wall(self, family_name):
-        """Gets or creates a wall for hosting family instances
-        
-        Args:
-            family_ref_pt: Reference point for wall placement
-            family_name: Name of family for wall comment
-            
-        Returns:
-            DB.Wall: The host wall
-        """
-        all_walls = DB.FilteredElementCollector(self.doc).OfClass(DB.Wall).ToElements()
-        for wall in all_walls:
-            if wall.LookupParameter("Comments").AsString() == FAMILY_DUMP_WALL_COMMENT + "_" + family_name:
-                return wall
-                
-        level = self.get_internal_dump_level()
-        t = DB.Transaction(self.doc, "Create Internal Wall")
-        t.Start()
-        wall = DB.Wall.Create(self.doc, 
-                             DB.Line.CreateBound(DB.XYZ(self.pointer.X-3, self.pointer.Y, self.pointer.Z), 
-                                               DB.XYZ(self.pointer.X+20, self.pointer.Y, self.pointer.Z)), 
-                             level.Id, 
-                             False)
-        wall.LookupParameter("Comments").Set(FAMILY_DUMP_WALL_COMMENT + "_" + family_name)
-        wall.LookupParameter("Unconnected Height").Set(10) 
-
-        t.Commit()
-        return wall
-
 
 
     def secure_valid_wall_length(self, wall):

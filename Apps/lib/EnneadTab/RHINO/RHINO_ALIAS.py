@@ -1,13 +1,12 @@
-import json
+
+import os
 
 import ENVIRONMENT
 import DATA_FILE
 import DOCUMENTATION
-if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
-    import Rhino # pyright: ignore
-    import rhinoscriptsyntax as rs
 
-import os
+import rhinoscriptsyntax as rs
+
 
 def remove_invalid_alias():
     exisitng_alias = rs.AliasNames()

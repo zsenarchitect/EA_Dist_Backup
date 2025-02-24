@@ -1,5 +1,6 @@
 import sys
-sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8
+if hasattr(sys, "setdefaultencoding"):
+    sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8
 
 """Utilities for showing tips and documentation for tools."""
 
@@ -492,7 +493,7 @@ def tip_of_day():
     """Show a random tip of the day.
     """
     if not USER.IS_DEVELOPER:
-        if random.random() < 0.4:
+        if random.random() < 0.2:
             return
 
         

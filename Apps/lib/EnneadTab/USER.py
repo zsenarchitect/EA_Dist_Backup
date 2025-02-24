@@ -21,7 +21,7 @@ import os
 
 import time
 import ENVIRONMENT
-import SECRET
+
 import UNIT_TEST 
 
 
@@ -32,7 +32,13 @@ USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
 
 # note: why has seperate system key and autodesk keys? becasue some 
 # developer might only be handling one software, not both.
-EnneadTab_DEVELOPERS = SECRET.get_dev_dict() or []
+def user_get_dev_dict():
+    import SECRET
+    return SECRET.get_dev_dict()
+try:
+    EnneadTab_DEVELOPERS = user_get_dev_dict() or []
+except Exception as e:
+    EnneadTab_DEVELOPERS = []
 
 
 def get_EA_email_address(user_name=USER_NAME):

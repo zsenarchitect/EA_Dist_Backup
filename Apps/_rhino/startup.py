@@ -32,6 +32,14 @@ def main():
 
     DOCUMENTATION.tip_of_day()
 
+    handle_auto_start_command()
+
+
+def handle_auto_start_command():
+    if not rs.DocumentName():        
+        return
+
+    # this to help revit selection method.
     if "EnneadTabRevitSelectionHelper" in rs.DocumentName():
         rs.Command("EA_LiveSelection")
 

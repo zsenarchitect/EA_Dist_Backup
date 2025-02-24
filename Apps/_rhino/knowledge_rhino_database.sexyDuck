@@ -353,6 +353,15 @@
         "tab_icon": "File.tab\\icon.png",
         "is_popular": false
     },
+    "File.tab\\doc_data.button\\doc_data_left.py": {
+        "script": "File.tab\\doc_data.button\\doc_data_left.py",
+        "icon": "File.tab\\doc_data.button\\icon.png",
+        "alias": "DocData",
+        "doc": "Demonstrates usage of RHINO_PROJ_DATA module for document data management.\n\nThis script showcases how to:\n- Inspect existing document data\n- Set preferred Grasshopper file path\n- Store structured Grasshopper input parameters\n- Handle various data types (bool, int, float)\n\nExample Usage:\n    - Left-click to run the demonstration\n    - View results in Rhino command line\n",
+        "tab": "File.tab",
+        "tab_icon": "File.tab\\icon.png",
+        "is_popular": false
+    },
     "File.tab\\external_trimmer.button\\external_trimmer_left.py": {
         "script": "File.tab\\external_trimmer.button\\external_trimmer_left.py",
         "icon": "File.tab\\external_trimmer.button\\icon.png",
@@ -481,6 +490,24 @@
         "doc": "EnneadTab learning resources hub.\n\nFeatures:\n- Access to comprehensive GH tutorials\n- Local documentation and PDF guides\n- Video tutorials via YouTube playlist\n- Quick reference materials for common workflows",
         "tab": "Knowledge.tab",
         "tab_icon": "Knowledge.tab\\icon.png",
+        "is_popular": false
+    },
+    "Lab.tab\\text2script.button\\text2script_left.py": {
+        "script": "Lab.tab\\text2script.button\\text2script_left.py",
+        "icon": "Lab.tab\\text2script.button\\icon.png",
+        "alias": "Text2Script",
+        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Automatic error detection and code refinement\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 10 refinement attempts for optimal results\n",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png",
+        "is_popular": false
+    },
+    "Lab.tab\\text2script.button\\text2script_right.py": {
+        "script": "Lab.tab\\text2script.button\\text2script_right.py",
+        "icon": "Lab.tab\\text2script.button\\icon.png",
+        "alias": "Text2ScriptSetting",
+        "doc": "This button does Text2ScriptSetting when right click",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false
     },
     "Layer.tab\\destroy_layer.button\\destroy_layer_left.py": {

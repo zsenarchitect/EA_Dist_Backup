@@ -113,7 +113,7 @@ class Output:
         }
 
     # when in Reivit, do not print to pollute the nice pyrevit console
-    _is_print_out = not ENVIRONMENT.IS_REVIT_ENVIRONMENT
+    _is_print_out = not (ENVIRONMENT.IS_REVIT_ENVIRONMENT or ENVIRONMENT.IS_RHINO_ENVIRONMENT)
     
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
