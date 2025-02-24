@@ -134,6 +134,9 @@ class Deployer:
                     view.SetFilterVisibility (filter.Id, False)
                 else:
                     view.SetFilterVisibility (filter.Id, True)
+
+            # hide level category
+            view.SetCategoryHidden (DB.ElementId(DB.BuiltInCategory.OST_Levels), True)
         t.Commit()
 
     def _get_textnote_type(self):
@@ -673,15 +676,22 @@ class Deployer:
             
         t = DB.Transaction(self.doc, "Create Hosted Instance")
         t.Start()
-        try:
-            instance = self.doc.Create.NewFamilyInstance(self.pointer,
+        instance = self.doc.Create.NewFamilyInstance(self.pointer, 
                                                        family_type,
                                                        host,
                                                        DB.Structure.StructuralType.NonStructural)
-        except Exception as e:
-            print("Failed to create hosted instance: {}".format(str(e)))
-            t.RollBack()
-            return None
+
+        if "Wall" in host_type:
+            # mirror the instance on X and Y axis, so it host of the wall face facing south. This is for better visual inspection
+            DB.ElementTransformUtils.MirrorElement(self.doc, 
+                                                    instance.Id, 
+                                                    DB.Plane.CreateByNormalAndOrigin (DB.XYZ.BasisY, self.pointer))
+        
+            DB.ElementTransformUtils.MirrorElement(self.doc, 
+                                                    instance.Id, 
+                                                    DB.Plane.CreateByNormalAndOrigin(DB.XYZ.BasisX, self.pointer))
+           
+
         t.Commit()
         return instance
 
