@@ -5,33 +5,49 @@ __doc__ = "This button does PatternMaker when left click"
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 import rhinoscriptsyntax as rs
 
-import opt_true_random
-import opt_random_with_gradient
-import opt_vertical_consistency
-
 
 TYPE_DEFINITIONS = {
     "A1":{
         "color":(73, 95, 109),  # R:73, G:95, B:109
         "ratio":0.2,
+        "rank_from_bm":1, # darkest
     },
     "C1":{
         "color":(85, 111, 128),  # R:85, G:111, B:128
         "ratio":0.2,
+        "rank_from_bm":2,
     },
     "D2":{
         "color":(100, 130, 150),  # R:100, G:130, B:150
         "ratio":0.2,
+        "rank_from_bm":3,
     },
     "D4":{
         "color":(117, 152, 174),  # R:117, G:152, B:174
         "ratio":0.2,
+        "rank_from_bm":4,
     },
     "D7":{
         "color":(137, 173, 194),  # R:137, G:173, B:194
         "ratio":0.2,
+        "rank_from_bm":5, # lightest
     }
 }
+
+
+import opt_true_random
+import opt_random_with_gradient
+
+
+reload(opt_true_random) # pyright: ignore
+reload(opt_random_with_gradient) # pyright: ignore
+
+
+#make sure all ration add together is 1
+total_ratio = sum(TYPE_DEFINITIONS[t].get('ratio', 0) for t in TYPE_DEFINITIONS)
+if abs(total_ratio - 1.0) > 0.0001:  # Allow small floating point differences
+    NOTIFICATION.messenger("The sum of all ratios must be 1. Current sum: {:.4f}".format(total_ratio))
+    raise ValueError("The sum of all ratios must be 1, current sum: {:.4f}".format(total_ratio))
 
 def sorting_blocks(blocks, ref_surface):
     """Sort blocks based on their UV position on reference surface.
@@ -120,7 +136,12 @@ def pattern_maker():
         return
         
     blocks = rs.GetObjects("Select blocks", preselect=True, filter=rs.filter.instance)
-    options = ["option: true random", "option: random with gradient", "option: vertical consistency"]
+    if not blocks:
+        return
+    options = [
+        "option: true random", 
+        "option: random with gradient"
+        ]
     option = rs.ListBox(options, title="Select an option")
     
 
@@ -131,15 +152,19 @@ def pattern_maker():
         location_map = opt_true_random.get_location_map(x_limit, y_limit)
     elif option == "option: random with gradient":
         location_map = opt_random_with_gradient.get_location_map(x_limit, y_limit)
-    elif option == "option: vertical consistency":
-        location_map = opt_vertical_consistency.get_location_map(x_limit, y_limit)
+    else:
+        return
     
-
-    for location, block in block_dict.items():
+    rs.EnableRedraw(False)
+    for location in sorted(block_dict.keys(), key=lambda x: (x[1], x[0])): # row first, then column
+        block = block_dict[location]
         current_transform = rs.BlockInstanceXform(block)
-        rs.InsertBlock(location_map[location], current_transform)
+        block_type = location_map[location]
+        new_block = rs.InsertBlock2(block_type, current_transform)
         rs.DeleteObject(block)
+        rs.ObjectColorSource(new_block, 1)
+        rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
 
- 
+    NOTIFICATION.messenger("Pattern made")
 if __name__ == "__main__":
     pattern_maker()
