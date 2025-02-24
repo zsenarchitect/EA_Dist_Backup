@@ -1,0 +1,145 @@
+__title__ = "2128_PatternMaker"
+__doc__ = "This button does PatternMaker when left click"
+
+
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
+import rhinoscriptsyntax as rs
+
+import opt_true_random
+import opt_random_with_gradient
+import opt_vertical_consistency
+
+
+TYPE_DEFINITIONS = {
+    "A1":{
+        "color":(73, 95, 109),  # R:73, G:95, B:109
+        "ratio":0.2,
+    },
+    "C1":{
+        "color":(85, 111, 128),  # R:85, G:111, B:128
+        "ratio":0.2,
+    },
+    "D2":{
+        "color":(100, 130, 150),  # R:100, G:130, B:150
+        "ratio":0.2,
+    },
+    "D4":{
+        "color":(117, 152, 174),  # R:117, G:152, B:174
+        "ratio":0.2,
+    },
+    "D7":{
+        "color":(137, 173, 194),  # R:137, G:173, B:194
+        "ratio":0.2,
+    }
+}
+
+def sorting_blocks(blocks, ref_surface):
+    """Sort blocks based on their UV position on reference surface.
+    
+    Args:
+        blocks: List of block references to sort
+        ref_surface: Reference surface for UV mapping
+    
+    Returns:
+        - Dictionary with (x,y) indices as keys and block instances as values
+        - Number of unique x positions
+        - Number of unique y positions
+        
+    Note:
+        Blocks with identical normalized U values will receive the same x index.
+        Blocks with identical normalized V values will receive the same y index.
+    """
+    # Get surface domain for normalization
+    u_domain = rs.SurfaceDomain(ref_surface, 0)
+    v_domain = rs.SurfaceDomain(ref_surface, 1)
+    
+    # Round normalized values to handle floating point precision
+    def normalize_param(param, domain, precision=6):
+        normalized = (param - domain[0]) / (domain[1] - domain[0])
+        return round(normalized, precision)
+    
+    # Collect all UV parameters first
+    temp_uvs = []
+    for block in blocks:
+        point = rs.BlockInstanceInsertPoint(block)
+        uv_point = rs.SurfaceClosestPoint(ref_surface, point)
+        u_param, v_param = rs.SurfaceParameter(ref_surface, uv_point)
+        
+        u_normalized = normalize_param(u_param, u_domain)
+        v_normalized = normalize_param(v_param, v_domain)
+        temp_uvs.append((block, u_normalized, v_normalized))
+    
+    # Extract unique sorted coordinates
+    u_params = sorted(set(uv[1] for uv in temp_uvs))
+    v_params = sorted(set(uv[2] for uv in temp_uvs))
+    
+    # Create index mappings
+    u_indices = {val: idx for idx, val in enumerate(u_params)}
+    v_indices = {val: idx for idx, val in enumerate(v_params)}
+    
+    # Create final block dictionary
+    block_dict = {}
+    for block, u_norm, v_norm in temp_uvs:
+        x_index = u_indices[u_norm]
+        y_index = v_indices[v_norm]
+        block_dict[(x_index, y_index)] = block
+    
+    return block_dict, len(u_params), len(v_params)
+
+def get_reference_surface():
+    """Get the reference surface from the designated layer.
+    
+    Returns:
+        object: Single reference surface object if found
+        None: If validation fails
+    """
+    layer_name = "reference_surface"
+    
+    # Ensure layer exists
+    if not rs.IsLayer(layer_name):
+        rs.AddLayer(layer_name)
+        NOTIFICATION.messenger("Created new layer: {}".format(layer_name))
+        return None
+        
+    # Get and validate reference surface
+    ref_surfaces = rs.ObjectsByLayer(layer_name)
+    if not ref_surfaces:
+        NOTIFICATION.messenger("No surface found on layer: {}".format(layer_name))
+        return None
+    if len(ref_surfaces) > 1:
+        NOTIFICATION.messenger("Multiple surfaces found. Please keep only one reference surface on layer: {}".format(layer_name))
+        return None
+        
+    return ref_surfaces[0]
+
+@LOG.log(__file__, __title__)
+@ERROR_HANDLE.try_catch_error()
+def pattern_maker():
+    ref_srf = get_reference_surface()
+    if not ref_srf:
+        return
+        
+    blocks = rs.GetObjects("Select blocks", preselect=True, filter=rs.filter.instance)
+    options = ["option: true random", "option: random with gradient", "option: vertical consistency"]
+    option = rs.ListBox(options, title="Select an option")
+    
+
+    block_dict, x_limit, y_limit = sorting_blocks(blocks, ref_srf)
+
+    
+    if option == "option: true random":
+        location_map = opt_true_random.get_location_map(x_limit, y_limit)
+    elif option == "option: random with gradient":
+        location_map = opt_random_with_gradient.get_location_map(x_limit, y_limit)
+    elif option == "option: vertical consistency":
+        location_map = opt_vertical_consistency.get_location_map(x_limit, y_limit)
+    
+
+    for location, block in block_dict.items():
+        current_transform = rs.BlockInstanceXform(block)
+        rs.InsertBlock(location_map[location], current_transform)
+        rs.DeleteObject(block)
+
+ 
+if __name__ == "__main__":
+    pattern_maker()

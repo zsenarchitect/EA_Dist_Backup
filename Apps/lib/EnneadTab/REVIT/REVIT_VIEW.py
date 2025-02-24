@@ -74,7 +74,10 @@ def view_ids_to_views(elements, doc=DOC):
     if not isinstance(elements, list): elements = [elements]
     if not elements: return []
     elements = [x for x in elements if x != DB.ElementId.InvalidElementId]
-    return list(map(lambda x: doc.GetElement(x), elements))
+    try:
+        return list(map(lambda x: doc.GetElement(x), elements))
+    except:
+        return []
 
 def filter_archi_views(views):
     out = []

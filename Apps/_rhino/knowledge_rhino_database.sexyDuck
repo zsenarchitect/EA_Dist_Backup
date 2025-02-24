@@ -951,6 +951,15 @@
         "tab_icon": "Tailor.tab\\icon.png",
         "is_popular": false
     },
+    "Tailor.tab\\pattern_maker.button\\pattern_maker_left.py": {
+        "script": "Tailor.tab\\pattern_maker.button\\pattern_maker_left.py",
+        "icon": null,
+        "alias": "2128_PatternMaker",
+        "doc": "This button does PatternMaker when left click",
+        "tab": "Tailor.tab",
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
+    },
     "Tailor.tab\\relocate_file.button\\relocate_left.py": {
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
         "icon": null,
