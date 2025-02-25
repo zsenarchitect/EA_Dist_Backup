@@ -19,11 +19,9 @@ import sys
 
 import time
 import io
-try:
-    
+if hasattr(sys, "setdefaultencoding"):
     sys.setdefaultencoding("utf-8")
-except:
-    pass
+
 
 
 import ENVIRONMENT

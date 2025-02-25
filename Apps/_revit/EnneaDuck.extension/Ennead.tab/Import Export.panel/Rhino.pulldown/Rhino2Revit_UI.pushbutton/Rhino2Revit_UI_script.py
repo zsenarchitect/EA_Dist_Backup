@@ -2,9 +2,31 @@
 # -*- coding: utf-8 -*-
 
 
-__doc__ = "A window that allow you to convert .3dm file and .dwg files into native revit family elements.\n\nAllo subCategory assigning per file, you may also add new SubCateogry on the run or simply use the source file name as the subcategory.\n\nSupport all major curve convertion except nurbs curve when part of the control points are not on same CPlane.\n\nSee instruction in the window for more details and features. This tool works best with the EnneadTab for Rhino tool's Rhino2Revit exporter window."
+__doc__ = """Convert .3dm and .dwg files into native Revit family elements.
+
+Key Features:
+- Assign subcategories per file
+- Add new subcategories on the fly
+- Use source filename as subcategory
+- Support major curve conversion (except NURBS curves with control points on different CPlanes)
+
+Best used with EnneadTab for Rhino's Rhino2Revit exporter window.
+
+Format Support:
+.3dm Files:
+- Stable conversion to native Revit elements
+- Individual control of Boolean, Subcategory, Visibility, Dimensions
+- Requires clean source models
+
+.dwg Files:
+- More tolerant of model imperfections
+- Handles lines, arcs, circles and planar NURBS curves
+- Elements from same source file are grouped
+- Creates Import subcategories (auto-cleaned)
+"""
+
 __title__ = "Rhino2Revit"
-__tip__ = ["You can get crvs from Rhino into revit family as well, all you need to do to export as dwg in rhino side, and import as dwg in revit family side.\nSee EnneadTab for Rhino LayerPackagre for details",
+__tip__ = ["You can get curves from Rhino into Revit family - export as DWG in Rhino and import in Revit family.\nSee EnneadTab for Rhino LayerPackage for details",
            __doc__]
 __is_popular__ = True
 from pyrevit import forms

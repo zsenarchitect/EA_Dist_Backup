@@ -1054,7 +1054,7 @@
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_left.py",
         "icon": "View.tab\\toggle_GFA.button\\icon.png",
         "alias": "ToggleGFA",
-        "doc": "Toggles Gross Floor Area visualization and calculation.\n\nProcesses layers marked with [GFA] to calculate and display area information.\nSupports real-time updates and Excel data export capabilities.\n",
+        "doc": "Toggles Gross Floor Area (GFA) visualization and calculation.\n\nFeatures:\n- Processes layers marked with [GFA] to calculate and display area information\n- Real-time updates as geometry changes\n- Supports area factor multipliers using {factor} syntax in layer names\n- Excel data export capabilities\n- Automatic unit conversion (mm/m \u00e2\u2020\u2019 SQM, inch/ft \u00e2\u2020\u2019 SQFT)\n- Dynamic merging of coplanar surfaces at same elevation\n- Support for single surfaces and polysurfaces\n\nUsage:\n- Add [GFA] to layer names to include in calculation\n- Optional {factor} at end of layer name for area multipliers (e.g. {0.5})\n- Right-click to export to Excel or generate checking surfaces\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true

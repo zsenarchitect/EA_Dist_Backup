@@ -1,4 +1,3 @@
-
 __title__ = "Block2Family"
 __doc__ = "Convert rhino blocks to revit families and place them in project. This tool different from standard Rhino2Revit because you do not need to manage family creation and it can batch process."
 __is_popular__ = True
@@ -73,8 +72,15 @@ def block2family():
 
 def process_block_name(block_name,block_ids):
 
-    # create temp folder with geo files per layer and a json dict
+    # Check for illegal Windows filename characters
+    illegal_chars = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
+    for char in illegal_chars:
+        if char in block_name:
+            NOTIFICATION.messenger("Block name contains illegal character '{}'.\nPlease rename block to use valid filename characters and try again.".format(char))
+            return
+            
     working_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)
+    
     if not os.path.isdir(working_folder):
         os.makedirs(working_folder)
 

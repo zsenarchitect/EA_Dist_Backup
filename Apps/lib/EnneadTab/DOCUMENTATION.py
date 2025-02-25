@@ -1,6 +1,10 @@
 import sys
 if hasattr(sys, "setdefaultencoding"):
+<<<<<<< HEAD
     sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8
+=======
+    sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8, only need for some old py2
+>>>>>>> d217def5 (.)
 
 """Utilities for showing tips and documentation for tools."""
 

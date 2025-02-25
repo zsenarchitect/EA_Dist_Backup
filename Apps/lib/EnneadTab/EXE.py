@@ -1,4 +1,8 @@
-"""Run apps from the EnneadTab app library."""
+"""Run apps from the EnneadTab app library.
+
+This module provides functionality to safely execute applications from the EnneadTab library,
+with support for legacy versions and temporary file handling.
+"""
 
 import os
 import time
@@ -8,24 +12,33 @@ import NOTIFICATION
 import COPY
 
 def try_open_app(exe_name, legacy_name = None, safe_open = False):
-    """Attempt to open an exe file from the app libary.
+    """Attempt to open an executable file from the app library.
     
     Args:
-        exe_name (str): The name of the exe file to open.
-        legacy_name (str): The name of the legacy exe file to open (optional).
-        safe_open (bool): Whether to open the exe file using safe mode.
+        exe_name (str): Name of the executable file to open. Can include full path.
+        legacy_name (str, optional): Name of legacy executable as fallback.
+        safe_open (bool, optional): When True, creates a temporary copy before execution
+            to allow for updates while the app is running.
+    
+    Returns:
+        bool: True if application was successfully opened, False otherwise.
     
     Note:
-        When using safe open, a temporary copy of the exe file will be created in the dump folder.
-        This is to address the issue that the exe file cannot be updated while it is being used.
-        The temporary copy will be purged after a certain period of time.   
-    """ 
+        Safe mode creates temporary copies in the system temp folder with automatic cleanup:
+        - OS_Installer/AutoStartup files: cleaned up after 12 hours
+        - Other executables: cleaned up after 24 hours
+    """
 
+    # Handle non-executable files directly
     abs_name = exe_name.lower()
     if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg")):
-        
-        os.startfile(exe_name)
-        return True
+        try:
+            os.startfile(exe_name)
+            return True
+        except OSError:
+            if USER.IS_DEVELOPER:
+                NOTIFICATION.messenger("Failed to open file: {}".format(exe_name))
+            return False
     
 
 
