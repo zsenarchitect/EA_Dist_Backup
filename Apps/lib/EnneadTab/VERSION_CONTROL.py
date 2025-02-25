@@ -5,17 +5,18 @@
 import os
 import sys
 import io
-
+import time
 import EXE
 import ENVIRONMENT
 import NOTIFICATION
+import DATA_FILE
 
 import random
-from datetime import datetime
 
 def update_EA_dist():
     if not is_update_too_soon():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
+        DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time.sexyDuck")
 
 
 
@@ -26,11 +27,11 @@ def update_EA_dist():
 
 def is_update_too_soon():
     """sample time 2025-01-22_09-59-59,convert to timestamp, if it is within 3mins, return True"""
-    recent_update_time = get_last_update_time(return_file=False)
+    data = DATA_FILE.get_data("last_update_time.sexyDuck")
+    recent_update_time = data.get("last_update_time", None)
     if not recent_update_time:
         return False
-    recent_update_time = datetime.strptime(recent_update_time, "%Y-%m-%d_%H-%M-%S")
-    if (datetime.now() - recent_update_time).total_seconds() < 3 * 60:
+    if time.time() - recent_update_time < 60.0:
         return True
     return False
 
@@ -75,5 +76,3 @@ def unit_test():
 
 if __name__ == "__main__":
     update_EA_dist()
-
-    show_last_success_update_time()

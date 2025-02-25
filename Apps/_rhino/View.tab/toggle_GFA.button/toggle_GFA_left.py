@@ -1,8 +1,19 @@
 __title__ = "ToggleGFA"
-__doc__ = """Toggles Gross Floor Area visualization and calculation.
+__doc__ = """Toggles Gross Floor Area (GFA) visualization and calculation.
 
-Processes layers marked with [GFA] to calculate and display area information.
-Supports real-time updates and Excel data export capabilities.
+Features:
+- Processes layers marked with [GFA] to calculate and display area information
+- Real-time updates as geometry changes
+- Supports area factor multipliers using {factor} syntax in layer names
+- Excel data export capabilities
+- Automatic unit conversion (mm/m → SQM, inch/ft → SQFT)
+- Dynamic merging of coplanar surfaces at same elevation
+- Support for single surfaces and polysurfaces
+
+Usage:
+- Add [GFA] to layer names to include in calculation
+- Optional {factor} at end of layer name for area multipliers (e.g. {0.5})
+- Right-click to export to Excel or generate checking surfaces
 """
 __is_popular__ = True
 
@@ -43,8 +54,13 @@ def try_catch_error(func):
 
 
 class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
+    """Display conduit for real-time GFA visualization and calculation.
+    
+    Monitors document changes and updates area calculations automatically.
+    Handles layer changes, object modifications, additions and deletions.
+    """
+    
     def __init__(self):
-
         self.data = []
         self.cached_data = []
         sc.sticky["EA_GFA_IS_BAKING"] = False
@@ -65,22 +81,16 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         # So to ensure cached data is cleared after, need to add this. 
         # IF in furutre is there a reanother hook that monitor direct modification or replace geo event, can use that instead.
         self.cached_data = [] 
-
-        # self.reset_conduit_data("New obj added to document, recalculating...")
         self.reset_conduit_data("Document content changed, recalculating...")
   
     @ERROR_HANDLE.try_catch_error()
     def check_doc_updated_after_deleting(self,sender, e):
-
         layer = sc.doc.Layers.FindIndex(e.TheObject.Attributes.LayerIndex)
         if layer and layer.FullPath:
             if "[GFA]" not in layer.FullPath:
                 return
-        # print("deleted")
         
-        # self.reset_conduit_data("Obj deleted from document, recalculating...")
         self.reset_conduit_data("Document content changed, recalculating...")
-
 
     @ERROR_HANDLE.try_catch_error()
     def check_doc_updated_after_layertable_changed(self,sender, e):
@@ -112,127 +122,59 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         # self.is_reseted = True
     
     def add_hook(self):
-        # print "add hook"
-        # Rhino.RhinoDoc.SelectObjects  += self.check_doc_updated
         Rhino.RhinoDoc.AddRhinoObject  += self.check_doc_update_after_adding
         Rhino.RhinoDoc.DeleteRhinoObject  += self.check_doc_updated_after_deleting
         Rhino.RhinoDoc.UndeleteRhinoObject   += self.check_doc_update_after_adding
         Rhino.RhinoDoc.ModifyObjectAttributes  += self.check_doc_update_after_modifying
-        
         Rhino.RhinoDoc.LayerTableEvent   += self.check_doc_updated_after_layertable_changed
         
     def remove_hook(self):
-        # print "remove hook"
-        # Rhino.RhinoDoc.SelectObjects  -= self.check_doc_updated 
         Rhino.RhinoDoc.AddRhinoObject  -= self.check_doc_update_after_adding
         Rhino.RhinoDoc.DeleteRhinoObject  -= self.check_doc_updated_after_deleting
         Rhino.RhinoDoc.UndeleteRhinoObject   -= self.check_doc_update_after_adding
         Rhino.RhinoDoc.ModifyObjectAttributes  -= self.check_doc_update_after_modifying
-        
         Rhino.RhinoDoc.LayerTableEvent   -= self.check_doc_updated_after_layertable_changed
-        
-    """
-    def check_doc_updated(self,sender, e):
-        # print "Doc updated"
-        self.cached_data = []
-       
-    def add_hook(self):
-        # print "add hook"
-        Rhino.RhinoDoc.SelectObjects  += self.check_doc_updated
-        Rhino.RhinoDoc.AddRhinoObject  += self.check_doc_updated
-        Rhino.RhinoDoc.DeleteRhinoObject  += self.check_doc_updated
-        Rhino.RhinoDoc.UndeleteRhinoObject   += self.check_doc_updated
-        Rhino.RhinoDoc.ModifyObjectAttributes  += self.check_doc_updated
-        Rhino.RhinoDoc.DeselectObjects   += self.check_doc_updated
-        Rhino.RhinoDoc.LayerTableEvent   += self.check_doc_updated
-        
-    def remove_hook(self):
-        # print "remove hook"
-        Rhino.RhinoDoc.SelectObjects  -= self.check_doc_updated 
-        Rhino.RhinoDoc.AddRhinoObject  -= self.check_doc_updated
-        Rhino.RhinoDoc.DeleteRhinoObject  -= self.check_doc_updated
-        Rhino.RhinoDoc.UndeleteRhinoObject   -= self.check_doc_updated
-        Rhino.RhinoDoc.ModifyObjectAttributes  -= self.check_doc_updated
-        Rhino.RhinoDoc.DeselectObjects   -= self.check_doc_updated
-        Rhino.RhinoDoc.LayerTableEvent   -= self.check_doc_updated
-    
-    """
-
 
     @try_catch_error
     def PostDrawObjects(self, e):
         if self.current_objs != get_current_objs():
             self.reset_conduit_data(None)
-            
-        #debug
-
 
         if not self.cached_data:
-            # print (len(self.cached_data))
             self.data = [(x, get_area_and_crv_geo_from_layer(x))   for x in get_schedule_layers()]
             self.cached_data = self.data[:]
-            # self.is_reseted = False
         else:
-            # print (len(self.cached_data))
             self.data = self.cached_data
-        #print "start post draw"
 
         for data in self.data:
             layer, values = data
-            area, edges, faces, note = values
-
-
+            total_area, edges, faces, note = values
 
             if not rs.IsLayer(layer):
                 print ("!!!!!!!!!!!!!!!!!! This layer is no longer existing ....{}".format(layer))
                 self.data.remove(data)
                 continue
-            #print values
+
             color = rs.LayerColor(layer)
             thickness = 10
-            #print crv_geos
-            """
-            for crv_geo in joined_crvs:
-                #print crv_geo
-                #print color
-                #print thickness
-
-                for crv in crv_geo.DuplicateSegments():
-                    #print crv
-                    e.Display.DrawCurve(crv, color, thickness)
-            """
 
             for edge in edges:
                 e.Display.DrawCurve(edge, color, thickness)
-            #print "start to dot"
-            #tolerance = sc.doc.ModelAbsoluteTolerance * 2.1
-            #print tolerance
-            #joined_crvs = Rhino.Geometry.Curve.JoinCurves(crv_geos, tolerance)
-            #print joined_crvs
+
             for face in faces:
-                #print face
                 abstract_face = Rhino.Geometry.AreaMassProperties.Compute(face)
                 if abstract_face:
                     area = abstract_face.Area
-                    #print area
                     text = convert_area_to_good_unit(area)
                     
                     factor =  self.layer_factor(layer)
                     if factor != 1:
                         text = text + " x {} = {}".format(factor, convert_area_to_good_unit(area * factor))
                     
-                    #print text
                     pt3D = Rhino.Geometry.AreaMassProperties.Compute(face).Centroid
-                    #print pt3D
-                    e.Display.DrawDot(pt3D, text, color, System.Drawing.Color.White)# dot color and text color
-                    #print "dot finish"
+                    e.Display.DrawDot(pt3D, text, color, System.Drawing.Color.White)
                 else:
                     print ("!!! Check for geo cleanness in layer: " + layer)
-        #print "finish post draw"
-        """
-        ideas:
-        get live length dimension on selected massing. e.display.DrawAnnotation
-        """
 
     def layer_factor(self, layer):
         # if layer name contain syntax such as 'abcd{0.5}' or 'xyz{0}', extract 0.5 and 0 as the factor.
@@ -329,20 +271,20 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
                 sub_title = parent_layer
             """
 
-            area = values[0]
+            layer_tatal_area = values[0]
             note = values[3]
             #print note
-            if area == 0:
+            if layer_tatal_area == 0:
                 continue
             
             factor =  self.layer_factor(layer)
             if factor != 1:
-                area *= factor
+                layer_tatal_area *= factor
 
-            grand_total += area
+            grand_total += layer_tatal_area
             #sub_total += area
 
-            text = "{}: {}".format(RHINO_LAYER.rhino_layer_to_user_layer(layer), convert_area_to_good_unit(area))
+            text = "{}: {}".format(RHINO_LAYER.rhino_layer_to_user_layer(layer), convert_area_to_good_unit(layer_tatal_area))
             if note:
                 text += note
             pt = Rhino.Geometry.Point2d(pt[0], pt[1] + offset)
@@ -531,11 +473,9 @@ def get_merged_data(faces):
 
 
 def get_schedule_layers():
-    #print "geting good layers"
     layers = sorted(rs.LayerNames())
 
     def is_good_layer(x):
-        
         if not "[GFA]" in x:
             return False
         if not rs.IsLayerVisible(x):
@@ -543,7 +483,6 @@ def get_schedule_layers():
         return True
     good_layers = filter(is_good_layer, layers)
 
-    #print good_layers
     return good_layers
 
     pass
@@ -743,6 +682,6 @@ if __name__ == "__main__":
 
 
     """
-    ideas:
-    right click to set desired GFA to each layer name, save to external text. and live compare how much is off from target.
+    to-do:
+    right click to set desired GFA to each layer name, save to rhino doc data. and live compare how much is off from target.
     """
