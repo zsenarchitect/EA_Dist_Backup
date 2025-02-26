@@ -11,7 +11,7 @@ except:
 
 from EnneadTab import EXCEL, NOTIFICATION
 
-def get_location_map(max_x, max_y):
+def get_location_map(max_x, max_y, sheet_name):
     """Return a dict of location and type based on excel data, expanded to fill max dimensions.
     
     The function reads data from excel and expands it to fill the requested dimensions
@@ -27,7 +27,7 @@ def get_location_map(max_x, max_y):
     excel_path = "J:\\2128\\1_Study\\EA 2025-02-24 Tile Pattern\\Tile Study.xlsx"
 
     raw_data = EXCEL.read_data_from_excel(excel_path,
-                                      worksheet="option1",
+                                      worksheet=sheet_name,
                                       return_dict=True)
     # Process initial data
     base_pattern_data = {}

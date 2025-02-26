@@ -109,10 +109,18 @@ def load_family(file):
     else:
         NOTIFICATION.messenger("Wait, cannot use this unit [{}]".format(unit))
         return
+
+
+
     template = "{}\\BaseFamily_{}.rft".format(os.path.dirname(__file__), template_unit)
 
+    app = REVIT_APPLICATION.get_app()
     # create new family from path(loaded with shared parameter), 
-    family_doc = ApplicationServices.Application.NewFamilyDocument (REVIT_APPLICATION.get_app(), template)
+    if int(app.VersionNumber) >= 2024:
+        family_doc = ApplicationServices.Application.NewFamilyDocument (app, template)
+    else:
+        template = "{}\\old_special_compatible.rft".format(os.path.dirname(__file__))
+        family_doc = ApplicationServices.Application.NewFamilyDocument (app, template)
 
     block_name = get_block_name_from_data_file(file)
     geo_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)
@@ -283,7 +291,10 @@ def update_instances(file, use_UV_projection):
     type = REVIT_FAMILY.get_family_type_by_name(family_name=block_name, type_name=block_name, doc=doc)
     type.LookupParameter("Description").Set("EnneadTab Block Convert")
 
-    for id, info in geo_data.items():
+
+
+    def _work(id):
+        info = geo_data[id]
         if id in exisitng_instances_map:
             instance = exisitng_instances_map[id]
             doc.Delete(instance.Id)
@@ -299,8 +310,12 @@ def update_instances(file, use_UV_projection):
             if key in ["Panel_Width", "Panel_Height"]:
                 value = factor * float(value)
             instance.LookupParameter(key).Set(value)
-            
-        instance.LookupParameter("Rhino_Id").Set(id)
+
+        if instance.LookupParameter("Rhino_Id"):
+            instance.LookupParameter("Rhino_Id").Set(id)
+
+
+    UI.progress_bar(geo_data.keys(), _work, label_func=lambda x: "Working on [{}]".format(x))
     t.Commit()
 
         

@@ -82,6 +82,9 @@ def progress_bar(items, func, label_func = None, title="Iterating through items"
             func(item)
             progress.update()
 
+
+
+
 def kill_progressbar():
     DATA_FILE.set_data({"is_active":False}, DATA_FILE_NAME)
 

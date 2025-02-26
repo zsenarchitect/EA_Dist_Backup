@@ -154,7 +154,8 @@ def pattern_maker():
         "option: true random", 
         "option: random with gradient",
         "option: random with double gradient",
-        "option: from excel"
+        "option: from excel(option1)",
+        "option: from excel(option2)",
         ]
     option = rs.ListBox(options, title="Select an option")
     
@@ -168,8 +169,10 @@ def pattern_maker():
         location_map = opt_random_with_gradient.get_location_map(x_limit, y_limit)
     elif option == "option: random with double gradient":
         location_map = opt_random_with_double_gradient.get_location_map(x_limit, y_limit)
-    elif option == "option: from excel":
-        location_map = opt_from_excel.get_location_map(x_limit, y_limit)
+    elif option == "option: from excel(option1)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option1")
+    elif option == "option: from excel(option2)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option2")
     else:
         return
     
