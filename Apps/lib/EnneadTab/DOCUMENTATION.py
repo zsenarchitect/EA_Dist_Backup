@@ -1,10 +1,6 @@
 import sys
 if hasattr(sys, "setdefaultencoding"):
-<<<<<<< HEAD
-    sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8
-=======
     sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8, only need for some old py2
->>>>>>> d217def5 (.)
 
 """Utilities for showing tips and documentation for tools."""
 
@@ -224,9 +220,9 @@ def get_title_tip_from_file(lucky_file, is_random_single):
     except (ImportError, AttributeError):
         try:
             # Fallback to importlib if imp fails
-            import importlib.util
-            spec = importlib.util.spec_from_file_location(module_name, lucky_file)
-            ref_module = importlib.util.module_from_spec(spec)
+            from importlib import resources  # use resources instead of util
+            spec = resources.spec_from_file_location(module_name, lucky_file)
+            ref_module = resources.module_from_spec(spec)
             spec.loader.exec_module(ref_module)
         except Exception as e:
             if USER.is_EnneadTab_developer:

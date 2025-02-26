@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __title__ = "ToggleGFA"
 __doc__ = """Toggles Gross Floor Area (GFA) visualization and calculation.
 

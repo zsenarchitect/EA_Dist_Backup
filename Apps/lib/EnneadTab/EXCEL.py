@@ -34,23 +34,39 @@ import TEXT
 import DATA_FILE
 import ERROR_HANDLE
 import COPY
-sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
-import xlrd
-import xlsxwriter
+try:
+    import xlrd
+    import xlsxwriter
+except:
+    # r: xlrd
+    # r: xlsxwriter
+    pass
 
 from collections import defaultdict
 
 def column_number_to_letter(number, is_upper=True):
     """Convert numeric column index to Excel letter notation.
 
+    Handles both single-letter (A-Z) and multi-letter (AA-ZZ) column references.
+    Uses 1-based indexing to match Excel's column numbering system.
+
     Args:
         number (int): Column number (1-based index)
         is_upper (bool): If True, returns uppercase letter
 
     Returns:
-        str: Column letter (e.g., 1 -> 'A', 2 -> 'B')
+        str: Column letter (e.g., 1 -> 'A', 27 -> 'AA')
     """
-    return chr(number + 64 + (0 if is_upper else 32))
+    result = ""
+    while number > 0:
+        number -= 1
+        remainder = number % 26
+        result = chr(remainder + 65) + result
+        number //= 26
+    
+    if not is_upper:
+        result = result.lower()
+    return result
 
 def letter_to_index(letter, start_from_zero=False):
     """Convert Excel column letter to numeric index.

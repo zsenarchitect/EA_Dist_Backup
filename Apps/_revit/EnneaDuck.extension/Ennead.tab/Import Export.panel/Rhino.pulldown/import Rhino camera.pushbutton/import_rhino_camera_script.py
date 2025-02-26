@@ -19,7 +19,7 @@ __tip__ = True
 try:
     from rpw.extras.rhino import Rhino
 except Exception as e:
-    print(ERROR_HANDLE.get_alternative_traceback())
+    ERROR_HANDLE.print_note(ERROR_HANDLE.get_alternative_traceback())
 
 
 class CameraImporter:

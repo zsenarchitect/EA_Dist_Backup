@@ -163,9 +163,8 @@ def DWG_convert(doc, geo_file):
     for cad_import in current_cad_imports:
         if cad_import not in exisiting_cads:
             break
-
-    # in rare condition there is no cad import at this step, need investigation..
-    if not cad_import:
+    else:
+        # in rare condition there is no cad import at this step, need investigation..
         print("No CAD import found in the family document.")
         return
 

@@ -11,12 +11,23 @@ proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG
 from pyrevit.loader import sessionmgr
-
+from pyrevit.loader import sessioninfo
+from pyrevit import script
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def reload_EnneadTab():
+    try:
+        logger = script.get_logger()
+        results = script.get_results()
 
-    sessionmgr.reload_pyrevit()
+        # re-load pyrevit session.
+        logger.info('Reloading....')
+        sessionmgr.reload_pyrevit()
+
+        results.newsession = sessioninfo.get_session_uuid()
+    except Exception as e:
+        print ("Having issue reloading EnneadTab, please check company portal to update pyrevit.")
+        ERROR_HANDLE.print_note(e)
 
 
 

@@ -2091,7 +2091,7 @@
         "script": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py",
         "icon": "Ennead.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\icon.png",
         "alias": "Rhino2Revit",
-        "doc": "A window that allow you to convert .3dm file and .dwg files into native revit family elements.\n\nAllo subCategory assigning per file, you may also add new SubCateogry on the run or simply use the source file name as the subcategory.\n\nSupport all major curve convertion except nurbs curve when part of the control points are not on same CPlane.\n\nSee instruction in the window for more details and features. This tool works best with the EnneadTab for Rhino tool's Rhino2Revit exporter window.",
+        "doc": "Convert .3dm and .dwg files into native Revit family elements.\n\nKey Features:\n- Assign subcategories per file\n- Add new subcategories on the fly\n- Use source filename as subcategory\n- Support major curve conversion (except NURBS curves with control points on different CPlanes)\n\nBest used with EnneadTab for Rhino's Rhino2Revit exporter window.\n\nFormat Support:\n.3dm Files:\n- Stable conversion to native Revit elements\n- Individual control of Boolean, Subcategory, Visibility, Dimensions\n- Requires clean source models\n\n.dwg Files:\n- More tolerant of model imperfections\n- Handles lines, arcs, circles and planar NURBS curves\n- Elements from same source file are grouped\n- Creates Import subcategories (auto-cleaned)\n",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
@@ -2613,7 +2613,7 @@
         "script": "Ennead.tab\\UI.panel\\pick_absolute_similar.pushbutton\\pick_absolute_similar_script.py",
         "icon": "Ennead.tab\\UI.panel\\pick_absolute_similar.pushbutton\\icon.png",
         "alias": "Pick Absolute Similar",
-        "doc": "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one.",
+        "doc": "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one.\n\nNotes:\n    - Requires valid FamilySymbol that exists in current document\n    - Will exit gracefully if selected element is not found",
         "tab": "UI",
         "tab_icon": null,
         "is_popular": false

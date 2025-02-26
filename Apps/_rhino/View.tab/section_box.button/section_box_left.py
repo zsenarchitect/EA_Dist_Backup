@@ -57,7 +57,7 @@ def section_box():
     """future try BoundingBox.Inflate Method (Double)
     Inflates the box with equal amounts in all directions. Inflating with negative amounts may result in decreasing boxes."""
     bbox = rs.ScaleObject(bbox, RHINO_OBJ_DATA.get_center(bbox), scale)
-    print(bbox)
+
 
     SB.section_box(section_box_utility.GROUP_NAME_KEYWORD, predefined_polysurf = bbox)
 

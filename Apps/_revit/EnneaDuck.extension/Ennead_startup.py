@@ -279,6 +279,44 @@ def purge_dump_folder_families():
     FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".3dm", old_file_only=True)
     FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".dwg", old_file_only=True)
 
+def register_context_menu():
+
+    import traceback
+    try:
+        uiapp = REVIT_APPLICATION.get_uiapp()
+        if not hasattr(uiapp, "RegisterContextMenu"):
+            return
+        context_menu_maker = EnneadTabContextMenuMaker()
+        uiapp.RegisterContextMenu("EnneaDuck", context_menu_maker)
+
+        
+
+        print ("RegisterContextMenu is available")
+
+    except:
+        print (traceback.format_exc())
+
+
+class EnneadTabContextMenuMaker(UI.IContextMenuCreator):
+    def BuildContextMenu(self, context_menu):
+        try:
+            from pyrevit.loader import sessionmgr
+            for i, command in enumerate(filter(self.is_enneadtab_command, sessionmgr.find_all_available_commands())):
+                print (command.name, command.tooltip, command.script)
+                item = UI.CommandMenuItem(command.name, command.tooltip, command.script)
+                item.SetAvailabilityClassName(command.name) # this is important to call pyrevit
+                context_menu.AddItem(item)
+
+                if i > 4:
+                    break
+
+            print ("RegisterContextMenu is available")
+        except Exception as e:
+            import traceback
+            ERROR_HANDLE.print_note(traceback.format_exc())
+
+
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
@@ -288,17 +326,20 @@ def EnneadTab_startup():
     register_xaml_path()
     check_minimal_version_for_enneadtab()
 
-    try:
-        ENCOURAGING.warming_quote()
-    except:
-        pass
 
-    NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))
+    if random.random() < 0.2:
+        ENCOURAGING.warming_quote()
+    elif random.random() < 0.5:
+        JOKE.joke_quote()
+    else:
+        NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))
     
 
     HOLIDAY.festival_greeting()
     
     check_C_drive_space()
+
+    register_context_menu()
 
     DOCUMENTATION.tip_of_day()
 
@@ -335,7 +376,6 @@ def EnneadTab_startup():
     register_temp_graphic_server()
     register_selection_owner_checker()
     purge_dump_folder_families()
-
 
     if USER.IS_DEVELOPER:
         NOTIFICATION.messenger(main_text = "[Developer Only] startup run ok.")

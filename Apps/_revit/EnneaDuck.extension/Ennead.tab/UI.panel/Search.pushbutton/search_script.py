@@ -5,7 +5,7 @@ __title__ = "Search\nCommand"
 __tip__ = True
 __is_popular__ = True
 
-import clr
+import clr # pyright: ignore
 import System
 import time
 import traceback
@@ -14,8 +14,8 @@ import sys
 
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
 
 
 from pyrevit.revit import ErrorSwallower
@@ -60,7 +60,7 @@ def run_command_action(command, is_enneadtab):
                 forms.alert('This is a native Revit command.')
             else:
         """
-        __revit__.PostCommand(command.rvtobj)
+        __revit__.PostCommand(command.rvtobj) # pyright: ignore
 
 
 

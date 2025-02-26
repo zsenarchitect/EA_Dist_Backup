@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one."
+__doc__ = "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one.\n\nNotes:\n    - Requires valid FamilySymbol that exists in current document\n    - Will exit gracefully if selected element is not found"
 __title__ = "Pick\nAbsolute Similar"
 
 import proDUCKtion # pyright: ignore 
@@ -75,7 +75,11 @@ def pick_absolute_similar(doc):
     whole_selection = []
    
     # get all instance in the project that is the same family and type as instance
-    type_filter = DB.FamilyInstanceFilter (doc, selected_instance.GetTypeId())
+    try:
+        type_filter = DB.FamilyInstanceFilter (doc, selected_instance.GetTypeId())
+    except:
+        NOTIFICATION.messenger("Selected element is not a valid family instance")
+        return
     filtered_collector = DB.FilteredElementCollector(doc)
 
     all_raw_similar_instances = list(filtered_collector.OfClass(DB.FamilyInstance).WherePasses (type_filter).ToElements())

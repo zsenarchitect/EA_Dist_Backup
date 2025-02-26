@@ -83,8 +83,7 @@ def prank_dvd():
     EXE.try_open_app("Bouncer.exe")
     
 def joke_quote():
-    if is_hate_fun():
-        return
+
     emoji = EMOJI.random_emoji()
     quote = random_loading_message()
     
@@ -195,6 +194,7 @@ april_fool()
 
 if __name__ == "__main__":
 
-    prank_dvd()
-    print (give_me_a_joke(talk = True))
+
+ 
+    joke_quote()
 

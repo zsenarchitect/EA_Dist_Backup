@@ -8,40 +8,52 @@ import rhinoscriptsyntax as rs
 
 TYPE_DEFINITIONS = {
     "A1":{
-        "color":(73, 95, 109),  # R:73, G:95, B:109
+        "color":(129, 163, 154), 
         "ratio":0.2,
-        "rank_from_bm":1, # darkest
+        "rank_from_bm":1, 
     },
     "C1":{
-        "color":(85, 111, 128),  # R:85, G:111, B:128
+        "color":(84, 122, 130),  
         "ratio":0.2,
         "rank_from_bm":2,
     },
     "D2":{
-        "color":(100, 130, 150),  # R:100, G:130, B:150
+        "color":(137, 173, 194), 
         "ratio":0.2,
         "rank_from_bm":3,
     },
     "D4":{
-        "color":(117, 152, 174),  # R:117, G:152, B:174
+        "color":(100, 130, 150),  
         "ratio":0.2,
         "rank_from_bm":4,
     },
     "D7":{
-        "color":(137, 173, 194),  # R:137, G:173, B:194
+        "color":(73, 95, 109),  
         "ratio":0.2,
-        "rank_from_bm":5, # lightest
+        "rank_from_bm":5, 
     }
 }
 
 
+def get_type_by_color(color):
+    for key, value in TYPE_DEFINITIONS.items():
+        #make sure color is a tuple
+        if not isinstance(color, tuple):
+            color = tuple(color)
+        if value['color'] == color:
+            return key
+    return None
+
 import opt_true_random
 import opt_random_with_gradient
+import opt_random_with_double_gradient
+import opt_from_excel
 
 
 reload(opt_true_random) # pyright: ignore
 reload(opt_random_with_gradient) # pyright: ignore
-
+reload(opt_random_with_double_gradient) # pyright: ignore
+reload(opt_from_excel) # pyright: ignore
 
 #make sure all ration add together is 1
 total_ratio = sum(TYPE_DEFINITIONS[t].get('ratio', 0) for t in TYPE_DEFINITIONS)
@@ -70,7 +82,7 @@ def sorting_blocks(blocks, ref_surface):
     v_domain = rs.SurfaceDomain(ref_surface, 1)
     
     # Round normalized values to handle floating point precision
-    def normalize_param(param, domain, precision=6):
+    def normalize_param(param, domain, precision=3):
         normalized = (param - domain[0]) / (domain[1] - domain[0])
         return round(normalized, precision)
     
@@ -140,7 +152,9 @@ def pattern_maker():
         return
     options = [
         "option: true random", 
-        "option: random with gradient"
+        "option: random with gradient",
+        "option: random with double gradient",
+        "option: from excel"
         ]
     option = rs.ListBox(options, title="Select an option")
     
@@ -152,6 +166,10 @@ def pattern_maker():
         location_map = opt_true_random.get_location_map(x_limit, y_limit)
     elif option == "option: random with gradient":
         location_map = opt_random_with_gradient.get_location_map(x_limit, y_limit)
+    elif option == "option: random with double gradient":
+        location_map = opt_random_with_double_gradient.get_location_map(x_limit, y_limit)
+    elif option == "option: from excel":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit)
     else:
         return
     

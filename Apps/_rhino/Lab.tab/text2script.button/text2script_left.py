@@ -22,6 +22,7 @@ import sys
 
 for path in rs.SearchPathList():
     sys.path.append(path)
+    print(path)
 
 from EnneadTab import FOLDER, SECRET, NOTIFICATION, DATA_FILE, SOUND
 
@@ -195,7 +196,7 @@ class TextToScriptConverter:
                     self.save_script(generated_code, func_request, is_temporary=True)
                     
                     # Enhanced execution environment setup
-                    import clr
+                    import clr # pyright: ignore
                     clr.AddReference('RhinoCommon')
                     clr.AddReference('System.Drawing')
                     

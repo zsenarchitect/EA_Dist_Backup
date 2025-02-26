@@ -48,7 +48,7 @@ def random_deselect_left():
             NOTIFICATION.messenger  ("Try another valid input number.")
             
     if not percent: return
-    NOTIFICATION.messenger  ("{}\% deslected.".format(percent))
+    NOTIFICATION.messenger  ("{}% deslected.".format(percent))
     
     if not percent: return
 
