@@ -279,7 +279,7 @@ def update_instances(file, use_UV_projection):
     if unit == "ft":
         factor = 1
     elif unit == "in":
-        factor = 1/12
+        factor = 1.0/12
     elif unit == "mm":
         factor = REVIT_UNIT.mm_to_internal(1)
     else:
@@ -336,9 +336,12 @@ def place_new_instance(type, transform_data, factor, use_UV_projection):
     transform = transform_data['transform']
     rotation_tuple = transform_data["rotation"]
     reflection = transform_data["is_reflection"]
+
     X = transform[0][-1] * factor
     Y = transform[1][-1] * factor
     Z = transform[2][-1] * factor
+
+
 
     temp_instance = DB.AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance(doc, type)
     insert_pt = DB.AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(temp_instance)[0]
