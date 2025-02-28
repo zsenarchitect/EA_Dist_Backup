@@ -374,7 +374,9 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
             os.remove(file_path)
             os.rename(bw_file, file_path)
         except:
-            pass
+            import traceback
+            traceback.print_exc()
+            print (traceback.format_exc())
         
     return file_name + ".jpg"
 
