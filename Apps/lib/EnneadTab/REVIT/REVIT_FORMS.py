@@ -7,7 +7,6 @@ import time
 
 try:
     from pyrevit.forms import WPFWindow
-    import REVIT_EVENT
 except:
     WPFWindow = object
     # or globals()["WPFWindow"] = object # this is to trick that class can be used
@@ -18,6 +17,7 @@ import NOTIFICATION
 import IMAGE
 import DATA_FILE
 
+import REVIT_EVENT
 
 
 class EnneadTabModeForm():

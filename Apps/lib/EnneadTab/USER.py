@@ -4,7 +4,10 @@
 """User management and authentication module for EnneadTab.
 
 This module handles user identification, permissions, and developer status across
-different environments (Revit, Rhino, Terminal). Key features include:
+different environments (Revit, Rhino, Terminal). It provides a unified interface
+for user management across the EnneadTab ecosystem.
+
+Key Features:
 - User identification and email resolution
 - Developer status verification
 - Environment-specific username handling
@@ -33,6 +36,14 @@ USER_NAME = os.environ["USERPROFILE"].split("\\")[-1]
 # note: why has seperate system key and autodesk keys? becasue some 
 # developer might only be handling one software, not both.
 def user_get_dev_dict():
+    """Retrieve the developer configuration dictionary.
+
+    Accesses the secure developer configuration containing system and Autodesk
+    usernames for authorized developers.
+
+    Returns:
+        dict: Developer configuration mapping or empty list if access fails
+    """
     import SECRET
     return SECRET.get_dev_dict()
 try:
@@ -45,7 +56,8 @@ def get_EA_email_address(user_name=USER_NAME):
     """Convert system username to Ennead email address.
 
     Args:
-        user_name (str): System username, defaults to current user
+        user_name (str, optional): System username to convert. 
+            Defaults to current user.
 
     Returns:
         str: Ennead email address in format 'username@ennead.com'
@@ -61,9 +73,10 @@ def get_usernames_from_developers():
     Autodesk usernames for different environment authentications.
 
     Returns:
-        tuple: (list of system usernames, list of Autodesk usernames)
+        tuple: Contains (system_usernames, autodesk_usernames)
+            system_usernames (list): List of system usernames
+            autodesk_usernames (list): List of Autodesk usernames
     """
-    
     system_usernames = []
     autodesk_usernames = []
     for key in EnneadTab_DEVELOPERS:
@@ -105,7 +118,7 @@ def get_autodesk_user_name():
     when accessing Revit API.
 
     Returns:
-        str: Autodesk username if in Revit, None otherwise or on error
+        str or None: Autodesk username if in Revit, None otherwise
     """
     if not ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         return None
@@ -147,6 +160,9 @@ except Exception as e:
 def get_rhino_developer_emails():
     """Get email addresses for all Rhino developers.
 
+    Filters developer list to include only those with system access
+    permissions.
+
     Returns:
         list: Email addresses of developers with system access
     """
@@ -159,6 +175,9 @@ def get_rhino_developer_emails():
 
 def get_revit_developer_emails():
     """Get email addresses for all Revit developers.
+
+    Filters developer list to include only those with Autodesk access
+    permissions.
 
     Returns:
         list: Email addresses of developers with Autodesk access
@@ -180,6 +199,8 @@ def unit_test():
     - Developer status verification
     - Username resolution
     - Developer email list generation
+    
+    Prints results to console for verification.
     """
     import inspect
     import pprint

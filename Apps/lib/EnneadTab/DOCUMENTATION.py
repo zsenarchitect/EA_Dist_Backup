@@ -2,7 +2,19 @@ import sys
 if hasattr(sys, "setdefaultencoding"):
     sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8, only need for some old py2
 
-"""Utilities for showing tips and documentation for tools."""
+"""Utilities for showing tips and documentation for tools.
+
+This module provides functionality for managing and displaying documentation, tips,
+and knowledge base content across the EnneadTab ecosystem. It supports both Revit
+and Rhino environments.
+
+Key Features:
+- Documentation retrieval and display
+- Tip of the day functionality
+- Knowledge base management
+- Scott's tips integration from EI posts
+- Icon and resource management
+"""
 
 import io
 import os
@@ -20,13 +32,13 @@ KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database.sexyDuck".format(ENVIRONMEN
 KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database.sexyDuck".format(ENVIRONMENT.REVIT_FOLDER)
 
 def get_text_path_by_name(file_name):
-    """Get the full path of a text file in the documents library by its name.
+    """Get the full path of a text file in the documents library.
 
     Args:
-        file_name (str): _description
+        file_name (str): Name of the text file to locate
 
     Returns:
-        str: Full path of the text file
+        str: Full path to the text file if found, None otherwise
     """
     path = "{}\\text\\{}".format(ENVIRONMENT.DOCUMENT_FOLDER, file_name)
     if os.path.exists(path):
@@ -51,8 +63,11 @@ SCOTT_TIPS = ["https://ei.ennead.com/post/3046/revit-legends-legend-components",
               "https://ei.ennead.com/post/114/revit-short-subject-best-practice-for-new-views"]
 
 def show_scott_tip():
+    """Display a random tip from Scott's EI knowledge base.
     
-    """Show a random tip from Scott's EI posts."""
+    Opens the tip in the default web browser and displays it in the output window.
+    Tips are curated from Scott's posts on the Ennead Intranet.
+    """
     if ENVIRONMENT.is_Revit_environment():
         from pyrevit import script
         output = script.get_output()
@@ -85,14 +100,17 @@ def show_scott_tip():
     
 
 def get_files_with_keyword(keyword, folder):
-    """Find files containing a keyword in a folder.
+    """Search for files containing a specific keyword in the given folder.
     
     Args:
-        keyword (str): Keyword to search for.
-        folder (str): Folder to search in.
+        keyword (str): The keyword to search for in file contents
+        folder (str): Root folder path to begin the search
         
     Returns:
-        list: List of file paths containing the keyword.    
+        list: List of file paths containing the keyword
+        
+    Note:
+        Excludes certain system folders and template files from the search.
     """
     
     max_open = 10
@@ -164,14 +182,15 @@ def get_files_with_keyword(keyword, folder):
         pass
 
 def get_title_tip_from_folder(folder, is_random_single = True):
-    """Get title and tip from a folder.
+    """Retrieve title and tip information from files in a folder.
 
     Args:
-        folder (str): Folder to search in.
-        is_random_single (bool): If True, return only one random tip.
+        folder (str): The folder path to search for tips
+        is_random_single (bool, optional): If True, returns a single random tip. 
+            Defaults to True.
 
     Returns:
-        list: List of tuples containing title, tip, and icon
+        list: List of tuples containing (title, tip, icon_path) for each tip found
     """
     
     matching_files = get_files_with_keyword(TIP_KEY, folder)
@@ -183,13 +202,16 @@ def get_title_tip_from_folder(folder, is_random_single = True):
     return [get_title_tip_from_file(x, is_random_single) for x in matching_files]
 
 def get_icon_from_path(file_path):
-    """Get the icon path from a file path. Used within pyRevit folder structure.
+    """Locate the icon file associated with a given script path.
+
+    Searches for icon files named 'icon.png' or containing 'icon' in the
+    same directory as the script.
 
     Args:
-        file_path (str): File to get the icon for.
+        file_path (str): Path to the script file
 
     Returns:
-        str: Path to the corresponding icon.
+        str: Path to the icon file if found, None otherwise
     """
     button_folder = os.path.dirname(file_path)
     for file in os.listdir(button_folder):
@@ -201,14 +223,17 @@ def get_icon_from_path(file_path):
             return os.path.join(button_folder, file)
    
 def get_title_tip_from_file(lucky_file, is_random_single):
-    """Get title and tip from a file.
+    """Extract title and tip information from a Python script file.
 
     Args:
-        lucky_file (str): File to get the title and tip from.
-        is_random_single (bool): If True, return only one random tip.
+        lucky_file (str): Path to the Python script file
+        is_random_single (bool): If True, returns only one random tip
 
     Returns:
-        tuple: Tuple containing title, tip, and icon
+        tuple: Contains (module_name, tip_text, icon_path)
+            module_name (str): Name of the module
+            tip_text (str or None): The tip text if found
+            icon_path (str or None): Path to the module's icon
     """
     icon_path = get_icon_from_path(lucky_file)
         

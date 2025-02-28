@@ -1,7 +1,27 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Notifications for the user, such as popups and sounds."""
+"""
+EnneadTab Notification System
+
+A sophisticated notification system providing customizable user alerts through
+various channels including popups, sounds, and animated notifications. This module
+offers both standard message notifications and fun, interactive notifications like
+the signature duck popup.
+
+Key Features:
+    - Customizable popup notifications with animations
+    - Fun, interactive duck notifications with sound effects
+    - User preference management for notification styles
+    - Rich text formatting with custom fonts
+    - Animation timing control
+    - Position and size customization
+    - Background and font color customization
+
+Note:
+    All notifications respect user preferences and can be disabled through
+    configuration settings.
+"""
 
 import SOUND
 import DATA_FILE
@@ -10,18 +30,22 @@ import IMAGE
 import CONFIG
 
 def is_hate_messenger():
-    """Check to see if the user has disabled the messenger.
+    """Check if standard notifications are disabled.
+    
+    Retrieves user preference for minimal popup notifications from configuration.
 
     Returns:
-        bool: True if the user has disabled the messenger.
+        bool: True if user has opted for minimal notifications
     """
     return  CONFIG.get_setting("radio_bt_popup_minimal", False) 
 
 def is_hate_duck_pop():
-    """Check to see if the user has disabled the duck pop.
+    """Check if duck notifications are disabled.
+    
+    Retrieves user preference for duck popup notifications from configuration.
 
     Returns:
-        bool: True if the user has disabled the duck pop.
+        bool: True if duck notifications are disabled
     """
     return not CONFIG.get_setting("toggle_bt_is_duck_allowed", False)
 
@@ -42,32 +66,51 @@ FUNFONTS = [
     ]
 
 def get_random_font():
-    import random
+    """Select a random decorative font.
+    
+    Chooses from a curated list of fun, decorative fonts suitable for
+    notifications.
 
+    Returns:
+        str: Name of randomly selected font
+    """
+    import random
     return random.choice(FUNFONTS)
 
 def messenger(main_text,
-             width = None,
-             height = None,
-             image = None,
-             animation_in_duration = None,
-             animation_stay_duration = None,
-             animation_fade_duration = None,
-             x_offset = None,
-             background_color = None,
-             font_size = None,
-             font_color = None,
-             font_family = None):
-    """Pop a simple message to the user, which disappears after a few seconds. 
+             width=None,
+             height=None,
+             image=None,
+             animation_in_duration=None,
+             animation_stay_duration=None,
+             animation_fade_duration=None,
+             x_offset=None,
+             background_color=None,
+             font_size=None,
+             font_color=None,
+             font_family=None):
+    """Display a customizable popup notification.
     
-       It can be used in place of the Windows notification, which is more annoying and has a sound .
-
+    Creates an animated notification window with rich customization options
+    for appearance and timing. Notifications automatically fade after display.
 
     Args:
-        main_text (str): the message to show. Better within 2 return lines. If too long, please use line return.
-        width (int, optional): how width is the message max width. Defaults to 1200.
-        height (int, optional): how tall is the message max height. Defaults to 150.
-        font_family: Berlin Sans FB(default), Ravie, Small Fonts
+        main_text (str): Message to display (supports line breaks)
+        width (int, optional): Maximum width in pixels. Defaults to 1200.
+        height (int, optional): Maximum height in pixels. Defaults to 150.
+        image (str, optional): Path to image to display
+        animation_in_duration (int, optional): Fade-in duration in milliseconds
+        animation_stay_duration (int, optional): Display duration in milliseconds
+        animation_fade_duration (int, optional): Fade-out duration in milliseconds
+        x_offset (int, optional): Horizontal position offset
+        background_color (str, optional): Background color in hex or RGB format
+        font_size (int, optional): Text size in points
+        font_color (str, optional): Text color in hex or RGB format
+        font_family (str, optional): Font name from FUNFONTS or system fonts
+
+    Note:
+        If notifications are disabled via user preferences, this function
+        returns without action.
     """
 
     if is_hate_messenger():
@@ -108,11 +151,20 @@ def messenger(main_text,
     EXE.try_open_app("Messenger")
 
 
-def duck_pop(main_text = None):
-    """Pop a duck to the user, which disappears after a few seconds.
+def duck_pop(main_text=None):
+    """Display an animated duck notification with sound.
+    
+    Creates a fun, interactive notification featuring an animated duck
+    with sound effects. Falls back to standard notification if duck
+    notifications are disabled.
 
     Args:
-        main_text (str, optional): The message to show. Defaults to "Quack!".
+        main_text (str, optional): Message to display. Defaults to "Quack!"
+
+    Note:
+        - Uses randomly selected duck images and sounds
+        - Includes explosion animation effect
+        - Falls back to messenger() if duck notifications are disabled
     """
     if is_hate_duck_pop():
    
@@ -135,6 +187,10 @@ def duck_pop(main_text = None):
   
 
 def unit_test():
+    """Run comprehensive tests of notification system.
+    
+    Tests both standard and duck notifications with default settings.
+    """
     duck_pop("Hello, Ennead!")
     messenger("Hello Ennead!")
 

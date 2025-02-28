@@ -425,6 +425,15 @@
         "tab_icon": "Fun.tab\\icon.png",
         "is_popular": false
     },
+    "Fun.tab\\pet_duck.button\\pet_duck_left.py": {
+        "script": "Fun.tab\\pet_duck.button\\pet_duck_left.py",
+        "icon": "Fun.tab\\pet_duck.button\\icon.png",
+        "alias": "PetDuck",
+        "doc": "\nDuckiTect - Professional Architecture Assistant\n--------------------------------------------\n\nA sophisticated desktop companion integrating architectural expertise with advanced AI capabilities.\n\nCore Features:\n- Intelligent Interaction:\n    * Natural language processing\n    * Advanced GPT integration\n    * Professional formatting\n    * Context-aware responses\n\n- Architecture Tools:\n    * Building code library\n    * Design research portal\n    * Documentation helper\n    * Drawing analysis\n\n- Professional Tools:\n    * Rhino/Grasshopper tools\n    * BIM workflow aids\n    * Error tracking system\n    * Markdown support\n\nUsage:\nLeft click to activate DuckiTect\n",
+        "tab": "Fun.tab",
+        "tab_icon": "Fun.tab\\icon.png",
+        "is_popular": false
+    },
     "Fun.tab\\red_alert.button\\red_alert_left.py": {
         "script": "Fun.tab\\red_alert.button\\red_alert_left.py",
         "icon": "Fun.tab\\red_alert.button\\icon.png",
@@ -932,6 +941,15 @@
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png",
         "is_popular": true
+    },
+    "Selection.tab\\random_deselect_by_dist.button\\random_deselect_by_dist_left.py": {
+        "script": "Selection.tab\\random_deselect_by_dist.button\\random_deselect_by_dist_left.py",
+        "icon": "Selection.tab\\random_deselect_by_dist.button\\icon.png",
+        "alias": "RandomDeselectByDist",
+        "doc": "Randomly deselects blocks based on their distance from a curve.\n\nThe probability of keeping a block is proportional to its distance from the curve.\nBlocks closer to the curve have higher chance of being kept.\nDistance clamping is available to control the influence range.\n\nUsage:\n1. Pre-select blocks or select when prompted\n2. Select a base curve as attractor\n3. Adjust distance clamps in the dialog\n",
+        "tab": "Selection.tab",
+        "tab_icon": "Selection.tab\\icon.png",
+        "is_popular": false
     },
     "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py": {
         "script": "Selection.tab\\random_selection_to_group.button\\random_selection_to_group_left.py",

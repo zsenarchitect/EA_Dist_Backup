@@ -1,6 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""Defines the primary error handling function for EnneadTab."""
+"""Error handling and logging utilities for EnneadTab.
+
+This module provides comprehensive error handling, logging, and reporting
+functionality across the EnneadTab ecosystem. It includes automated error
+reporting, developer debugging tools, and user notification systems.
+
+Key Features:
+- Automated error catching and logging
+- Developer-specific debug messaging
+- Error email notifications
+- Stack trace formatting
+- Silent error handling options
+"""
 
 
 import ENVIRONMENT
@@ -13,6 +25,14 @@ import OUTPUT
 
 
 def get_alternative_traceback():
+    """Generate a formatted stack trace for the current exception.
+
+    Creates a human-readable stack trace including exception type,
+    message, and file locations. Output is visible to developers only.
+
+    Returns:
+        str: Formatted stack trace information
+    """
     import sys
     OUT = ""
     exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -29,9 +49,17 @@ def get_alternative_traceback():
 def try_catch_error(is_silent=False, is_pass = False):
     """Decorator for catching exceptions and sending automated error log emails.
 
+    Wraps functions to provide automated error handling, logging, and notification.
+    Can operate in silent mode or pass-through mode for different error handling needs.
+
     Args:
-        is_silent (bool, optional): If True, email will be sent but no e msg will be visible to user. Defaults to False.
-        is_pass (bool, optional): If True, the error will be ignored, user will not be paused and no email will be sent. Defaults to False.
+        is_silent (bool, optional): If True, sends error email without user notification.
+            Defaults to False.
+        is_pass (bool, optional): If True, ignores errors without notification or email.
+            Defaults to False.
+
+    Returns:
+        function: Decorated function with error handling
     """
     def decorator(func):
         def error_wrapper(*args, **kwargs):
@@ -91,15 +119,21 @@ def try_catch_error(is_silent=False, is_pass = False):
 
 
 def print_note(*args):
-    """For non-developers this is never printed.
-    Can handle one or more inputs and shows their types.
-    
+    """Print debug information visible only to developers.
+
+    Formats and displays debug information with type annotations.
+    Supports single or multiple arguments of any type.
+
+    Args:
+        *args: Variable number of items to display
+
     Example:
-    print_note("hello", 123, ["a", "b"])
-    -> [Dev Debug Only Note] 
-       str: hello
-       int: 123
-       list: ['a', 'b']
+        print_note("hello", 123, ["a", "b"])
+        Output:
+            [Dev Debug Only Note]
+            - str: hello
+            - int: 123
+            - list: ['a', 'b']
     """
     if not USER.is_EnneadTab_developer():
         return

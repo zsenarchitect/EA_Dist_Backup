@@ -89,7 +89,34 @@ function copyErrorCard(btn) {
 </script>
 """
 
+"""
+EnneadTab Output Module
+
+A sophisticated output management system for EnneadTab that provides HTML-based reporting and console output capabilities.
+This module handles the formatting, styling, and display of output content through a singleton Output class.
+
+Key Features:
+    - HTML report generation with modern styling and interactive features
+    - Search functionality within output content
+    - Error highlighting and formatting
+    - Support for different text styles (titles, subtitles, body text)
+    - Copy functionality for error messages
+    - Responsive design with animations
+    - Environment-aware output handling (Revit/Rhino/Terminal)
+
+Note:
+    The module uses a singleton pattern to ensure consistent output handling across the application.
+"""
+
 class Style:
+    """Style constants for output formatting.
+    
+    Defines the available text styles for output content:
+        MainBody: Standard paragraph text
+        Title: Main headings (h1)
+        Subtitle: Secondary headings (h2)
+        Footnote: Small text for additional information
+    """
     MainBody = "p"
     Title = "h1"
     Subtitle = "h2"
@@ -97,10 +124,21 @@ class Style:
     
 
 class Output:
-    """_summary_
+    """Singleton class managing EnneadTab's output system.
+    
+    This class handles the generation and display of formatted output through HTML reports
+    and console output. It supports rich text formatting, error highlighting, and
+    interactive features like search and copy functionality.
 
-    Returns:
-        _type_: _description_
+    Attributes:
+        _instance (Output): Singleton instance of the Output class
+        _out (list): Container for output content and styling
+        _report_path (str): Path to the HTML report file
+        _graphic_settings (dict): Visual styling configuration
+        _is_print_out (bool): Flag controlling console output based on environment
+
+    Note:
+        The class automatically detects the environment (Revit/Rhino) to adjust output behavior.
     """
 
     _instance = None
@@ -116,12 +154,27 @@ class Output:
     _is_print_out = not (ENVIRONMENT.IS_REVIT_ENVIRONMENT or ENVIRONMENT.IS_RHINO_ENVIRONMENT)
     
     def __new__(cls, *args, **kwargs):
+        """Implements the singleton pattern for Output class.
+
+        Returns:
+            Output: The single instance of the Output class.
+        """
         if not cls._instance:
             cls._instance = super().__new__(cls)
         return cls._instance
 
     def write(self, content, style = Style.MainBody, as_str=False):
+        """Writes content to the output buffer with specified styling.
 
+        Args:
+            content: The content to write (can be any type)
+            style: The style to apply (default: Style.MainBody)
+            as_str (bool): Whether to force convert content to string (default: False)
+
+        Note:
+            Content is stored in the output buffer and will be displayed when plot() is called.
+            If _is_print_out is True, content is also printed to console.
+        """
         if as_str:
             content = str(content)
         Output._out.append((style, content))
@@ -129,19 +182,43 @@ class Output:
             print (content)
 
     def reset_output(self):
+        """Clears the output buffer.
+        
+        Removes all content from the output buffer without affecting the HTML report.
+        """
         Output._out = []
 
     def is_empty(self):
+        """Checks if the output buffer is empty.
+
+        Returns:
+            bool: True if no content in output buffer, False otherwise.
+        """
         return not Output._out
 
     def plot(self):
+        """Generates and displays the HTML report if output buffer is not empty.
+        
+        This method:
+        1. Checks if there is content to display
+        2. Generates the HTML report with current content
+        3. Opens the report in the default web browser
+        """
         if self.is_empty():
             return
         self._generate_html_report()
         self._print_html_report()
-        
 
     def _generate_html_report(self):
+        """Generates the HTML report with current output content.
+        
+        Creates a styled HTML file with:
+            - Search functionality
+            - Error highlighting
+            - Copy buttons for error messages
+            - Responsive design
+            - EnneadTab branding
+        """
         with io.open(Output._report_path, 'w', encoding='utf-8') as report_file:
             report_file.write("<html><head><title>EnneadTab Output</title></head><body>")
             report_file.write("<style>")
@@ -256,13 +333,13 @@ class Output:
 
     @staticmethod
     def format_content(input):
-        """Format content for HTML output with special handling for images and buttons.
-        
+        """Formats input content for HTML display.
+
         Args:
-            input: Content to format, can be text, image path, or button command
-            
+            input: Content to be formatted (any type)
+
         Returns:
-            str: Formatted HTML content
+            str: HTML-safe formatted string representation of the input
         """
         if "bt_" in str(input):
             return "<button onclick='return sample_func(this)'>{}</button>".format(input.split("bt_")[1])
@@ -281,26 +358,36 @@ class Output:
             
         return str(input).replace("\n", "<br>")
 
-    # try to use a dummy top match pyrevit output method
     def print_md(self, content):
+        """Prints content in markdown format.
+
+        Args:
+            content: Content to be displayed in markdown format
+        """
         print (content)
 
-    # try to use a dummy top match pyrevit output method
     def print_html(self, content):
+        """Prints raw HTML content.
+
+        Args:
+            content: HTML content to be displayed directly
+        """
         print (content)
 
     def _print_html_report(self):
-        
+        """Opens the generated HTML report in the default web browser."""
         webbrowser.open("file://{}".format(Output._report_path))
 
-
     def insert_divider(self):
-        """Inserts a horizontal divider if one doesn't already exist at the end of output."""
+        """Inserts a horizontal line divider in the output."""
         if not Output._out or Output._out[-1][0] != "<hr>":
             self.write("<hr>")
 
     def reset(self):
-        """Resets the output to an empty state."""
+        """Resets the output system.
+        
+        Clears the output buffer and removes the existing HTML report file.
+        """
         Output._out = []
 
 
@@ -310,10 +397,25 @@ class Output:
 
 ####################################################
 def get_output():
+    """Returns the singleton instance of the Output class.
+
+    Returns:
+        Output: The single instance of the Output class
+    """
     return Output()
 
 
 def unit_test():
+    """Runs a comprehensive test of the output system.
+    
+    Tests:
+        - Basic output functionality
+        - Different style outputs
+        - Error message formatting
+        - List output
+        - Divider insertion
+        - HTML report generation
+    """
     output = get_output()
     output.write("Sample text in 'Title' style",Style.Title)
     output.write("Sample text in 'Subtitle' style",Style.Subtitle)
@@ -356,6 +458,12 @@ def unit_test():
 
 
 def display_output_on_browser():
+    """Forces the current output to be displayed in the browser.
+    
+    Note:
+        This is a convenience function that creates an Output instance
+        and calls its plot() method.
+    """
     if not ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         NOTIFICATION.messenger("currently only support Revit Env")
         return

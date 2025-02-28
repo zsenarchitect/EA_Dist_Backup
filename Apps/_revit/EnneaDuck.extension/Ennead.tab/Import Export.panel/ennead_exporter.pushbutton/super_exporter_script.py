@@ -46,7 +46,6 @@ from email_data import EmailData
 
 
 class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
-    #@ERROR_HANDLE.try_catch_error()
     @ERROR_HANDLE.try_catch_error()
     def __init__(self):
         xamlfile = script.get_bundle_file('SuperExporter_UI.xaml')

@@ -188,7 +188,8 @@ def april_fool():
 
         # FUN.EnneaDuck.quack()
 
-        
+def ennead_duck():
+    EXE.try_open_app("Pet.exe")
 
 april_fool()
 

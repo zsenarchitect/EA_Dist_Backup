@@ -1,4 +1,24 @@
-"""Logging functions for recording the usage of EnneadTab scripts."""
+"""
+EnneadTab Logging System
+
+A comprehensive logging system for tracking and analyzing EnneadTab script usage.
+This module provides detailed function execution logging with timing, arguments,
+and results tracking across different environments.
+
+Key Features:
+    - Detailed function execution logging
+    - Execution time tracking and formatting
+    - Cross-environment compatibility (Revit/Rhino)
+    - Automatic log file backup
+    - User-specific log files
+    - Context manager for temporary logging
+    - JSON-based log storage
+    - UTF-8 encoding support
+
+Note:
+    Log files are stored in the EA dump folder with user-specific naming
+    and automatic backup functionality.
+"""
 
 import time
 from contextlib import contextmanager
@@ -7,7 +27,6 @@ import io
 import USER
 import TIME
 import FOLDER
-import USER
 import DATA_FILE
 import ENVIRONMENT
 
@@ -16,22 +35,29 @@ LOG_FILE_NAME = "log_{}.sexyDuck".format(USER.USER_NAME)
 
 @contextmanager
 def log_usage(func, *args):
-    """Context manager to log the usage of a function.
+    """Context manager for temporary function usage logging.
+    
+    Creates a detailed log entry for a single function execution including
+    start time, duration, arguments, and results.
 
     Args:
-        func (_type_): The function to log.
-        *args (_type_): The arguments to pass to the function
+        func (callable): Function to log
+        *args: Arguments to pass to the function
 
     Yields:
-        _type_: The result of the function.
-        
+        Any: Result of the function execution
+
+    Example:
+        with log_usage(my_function, arg1, arg2) as result:
+            # Function execution is logged
+            process_result(result)
     """
     t_start = time.time()
     res = func(*args)
     yield res
     t_end = time.time()
     duration = TIME.get_readable_time(t_end - t_start)
-    with io.open(FOLDER.get_EA_dump_folder_file(LOG_FILE_NAME), "a", encoding = "utf-8") as f:
+    with io.open(FOLDER.get_EA_dump_folder_file(LOG_FILE_NAME), "a", encoding="utf-8") as f:
         f.writelines("\nRun at {}".format(TIME.get_formatted_time(t_start)))
         f.writelines("\nDuration: {}".format(duration))
         f.writelines("\nFunction name: {}".format(func.__name__))
@@ -49,16 +75,27 @@ whereas revit need to look at local func run"""
 
 @FOLDER.backup_data(LOG_FILE_NAME, "log")
 def log(script_path, func_name_as_record):
-    """Decorator to log the usage of a function.
+    """Decorator for persistent function usage logging.
+    
+    Creates a detailed JSON log entry for each function execution with
+    timing, environment, and execution details. Includes automatic backup
+    functionality.
 
     Args:
-        script_path (str): The path of the script.
-        func_name_as_record (str): The name of the function to record.
+        script_path (str): Full path to the script file
+        func_name_as_record (str|list): Function name or list of aliases
+            to record. If list provided, longest name is used.
 
     Returns:
-        function: The decorated function.        
+        callable: Decorated function with logging capability
+
+    Example:
+        @log("/path/to/script.py", "MyFunction")
+        def my_function(arg1, arg2):
+            # Function execution will be logged
+            return result
     """
-    # If a script has multiple aliases, just use the lonest one as the record.
+    # If a script has multiple aliases, just use the longest one as the record
     if isinstance(func_name_as_record, list):
         func_name_as_record = max(func_name_as_record, key=len)
 
@@ -93,10 +130,17 @@ def log(script_path, func_name_as_record):
 
 
 def read_log(user_name=USER.USER_NAME):
-    """Read the log file of a specific user.
+    """Display formatted log entries for a specific user.
+    
+    Retrieves and pretty prints the JSON log data for the specified user,
+    showing all recorded function executions and their details.
 
     Args:
-        user_name (str, optional): The name of the user. Defaults to current user.
+        user_name (str, optional): Username to read logs for.
+            Defaults to current user.
+
+    Note:
+        Output is formatted with proper indentation for readability.
     """
     data = DATA_FILE.get_data(LOG_FILE_NAME)
     print("Printing user log from <{}>".format(user_name))
@@ -106,6 +150,10 @@ def read_log(user_name=USER.USER_NAME):
 
 
 def unit_test():
+    """Run comprehensive tests of the logging system.
+    
+    Tests log creation, reading, and backup functionality.
+    """
     pass
 
 

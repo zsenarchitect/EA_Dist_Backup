@@ -1,4 +1,16 @@
-"""Utility functions for file and folder operations. Read and write to local and shared dump folders. Format filenames within a folder."""
+"""File and folder management utilities for EnneadTab.
+
+This module provides comprehensive file and folder operations across the EnneadTab
+ecosystem, including file copying, backup management, and path manipulation.
+
+Key Features:
+- Safe file copying and backup creation
+- Path manipulation and formatting
+- Folder security and creation
+- File extension management
+- Local and shared dump folder operations
+- Automated backup scheduling
+"""
 
 import time
 import os
@@ -7,17 +19,33 @@ from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 import COPY
 
 def get_safe_copy(filepath, include_metadata=False):
+    """Create a safe copy of a file in the dump folder.
+
+    Creates a timestamped copy of the file in the EA dump folder to prevent
+    file conflicts and data loss.
+
+    Args:
+        filepath (str): Path to the source file
+        include_metadata (bool, optional): If True, preserves file metadata.
+            Defaults to False.
+
+    Returns:
+        str: Path to the safe copy
+    """
     _, file = os.path.split(filepath)
     safe_copy = get_EA_dump_folder_file("save_copy_{}_".format(time.time()) + file)
     COPY.copyfile(filepath, safe_copy, include_metadata)
     return safe_copy
 
 def copy_file(original_path, new_path):
-    """Copy file from original path to new path. If the new path does not exist, it will be created.
+    """Copy file to new location, creating directories if needed.
 
     Args:
-        original_path (str): The path of the original file.
-        new_path (str): The path of the new file.
+        original_path (str): Source file path
+        new_path (str): Destination file path
+
+    Note:
+        Creates parent directories if they don't exist.
     """
     target_folder = os.path.dirname(new_path)
     if not os.path.exists(target_folder):
@@ -26,14 +54,17 @@ def copy_file(original_path, new_path):
 
 
 def copy_file_to_folder(original_path, target_folder):
-    """Copy a file to a specified folder. If the folder does not exist, it will be created.
+    """Copy file to target folder, preserving filename.
 
     Args:
-        original_path (str): The path of the original file.
-        target_folder (str): The path of the target folder.
+        original_path (str): Source file path
+        target_folder (str): Destination folder path
 
     Returns:
-        str: The new path of the copied file.
+        str: Path to the copied file
+
+    Note:
+        Creates target folder if it doesn't exist.
     """
 
     new_path = original_path.replace(os.path.dirname(original_path), target_folder)
@@ -46,13 +77,13 @@ def copy_file_to_folder(original_path, target_folder):
 
 
 def secure_folder(folder):
-    """Create a folder if it does not exist.
+    """Create folder if it doesn't exist.
 
     Args:
-        folder (str): The path of the folder to secure.
+        folder (str): Path to folder to create/verify
 
     Returns:
-        str: The path of the folder.
+        str: Path to secured folder
     """
 
     if not os.path.exists(folder):
@@ -61,23 +92,24 @@ def secure_folder(folder):
 
 
 def get_user_document_folder():
-    """Get the path of the current user's document folder.
+    """Get current user's Documents folder path.
 
     Returns:
-        str: The path of the document folder.
+        str: Path to user's Documents folder
     """
     return "{}\\Documents".format(os.environ["USERPROFILE"])
 
 
 def get_file_name_from_path(file_path, include_extension=True):
-    """Extract the file name from a full path.
+    """Extract filename from full path.
 
     Args:
-        file_path (str): The full path of the file.
-        include_extension (bool, optional): Whether to include the file extension. Defaults to True.
+        file_path (str): Full path to file
+        include_extension (bool, optional): If True, includes file extension.
+            Defaults to True.
 
     Returns:
-        str: The file name.
+        str: Extracted filename
     """
     head, tail = os.path.split(file_path)
     if not include_extension:
@@ -86,55 +118,59 @@ def get_file_name_from_path(file_path, include_extension=True):
 
 
 def get_file_extension_from_path(file_path):
-    """Extract the file extension from a full path.
+    """Extract file extension from path.
 
     Args:
-        file_path (str): The full path of the file.
+        file_path (str): Full path to file
 
     Returns:
-        str: The file extension.
+        str: File extension including dot (e.g. '.txt')
     """
     return os.path.splitext(file_path)[1]
 
 
 def get_EA_dump_folder_file(file_name):
-    """Get the path of a file in the EA dump folder.
+    """Get full path for file in EA dump folder.
 
     Args:
-        file_name (str): The name of the file, including the extension.
+        file_name (str): Name of file including extension
 
     Returns:
-        str: The full path of the file.
+        str: Full path in EA dump folder
     """
     return "{}\\{}".format(DUMP_FOLDER, file_name)
 
 
 def get_shared_dump_folder_file(file_name):
-    """Get the path of a file in the shared dump folder.
+    """Get full path for file in shared dump folder.
 
     Args:
-        file_name (str): The name of the file, including the extension.
+        file_name (str): Name of file including extension
 
     Returns:
-        str: The full path of the file.
+        str: Full path in shared dump folder
     """
     return "{}\\{}".format(SHARED_DUMP_FOLDER, file_name)
 
 
 def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning=False):
-    """Copy a file to the local EA dump folder.
+    """Copy file to local EA dump folder.
+
+    Creates a local copy of a file in the EA dump folder, optionally with
+    a new name.
 
     Args:
-        original_path (str): The path of the original file.
-        file_name (str, optional): The name of the file in the dump folder. If not provided, the original file name will be used. Defaults to None.
-        ignore_warning (bool, optional): Whether to ignore any warnings. Defaults to False.
-
-    Raises:
-        Error: If the file is being used by another process.
-        
+        original_path (str): Source file path
+        file_name (str, optional): New name for copied file.
+            Defaults to original filename.
+        ignore_warning (bool, optional): If True, suppresses file-in-use warnings.
+            Defaults to False.
 
     Returns:
-        str: The path of the copied file.
+        str: Path to copied file
+
+    Raises:
+        Exception: If file is in use and ignore_warning is False
     """
     if file_name is None:
         file_name = original_path.rsplit("\\", 1)[1]
@@ -153,14 +189,19 @@ def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning
 
 
 def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
-    """Backup data file to a specified folder. 
-    The backup folder is created if it does not exist.
-    The backup is only performed if the last backup is older than the specified time.
+    """Create scheduled backups of data files.
+
+    Decorator that creates timestamped backups of data files at specified intervals.
+    Backups are stored in a dedicated backup folder within the EA dump folder.
 
     Args:
-        data_file_name (str): The name of the data file to backup.
-        backup_folder_title (str): The title of the backup folder.
-        max_time (str, optional): The backup interval in seconds. Default is 1 day.
+        data_file_name (str): Name of file to backup
+        backup_folder_title (str): Name for backup folder
+        max_time (int, optional): Backup interval in seconds.
+            Defaults to 1 day (86400 seconds).
+
+    Returns:
+        function: Decorated function that performs backup
     """
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -205,15 +246,16 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
 
 
 def cleanup_folder_by_extension(folder, extension, old_file_only=False):
-    """Delete all files with the specified extension in the specified folder.
+    """Delete files with specified extension from folder.
 
     Args:
-        folder (str, optional): The path of the folder.
-        extension (str, optional): The extension of the files to delete. The dot can be included optionally.
-        old_file_only (bool, optional): Whether to delete files older than 10 days. Defaults to False.
+        folder (str): Target folder path
+        extension (str): File extension to match (with or without dot)
+        old_file_only (bool, optional): If True, only deletes files older than 10 days.
+            Defaults to False.
 
     Returns:
-        int: The number of files deleted.
+        int: Number of files deleted
     """
     filenames = os.listdir(folder)
 
@@ -240,13 +282,18 @@ def cleanup_folder_by_extension(folder, extension, old_file_only=False):
 
 
 def secure_filename_in_folder(output_folder, desired_name, extension):
-    """Ensure proper formatting of file name in output folder.
-    Commonly used with Revit jpg exports, as Revit will change the file names.
+    """Format and secure filename in output folder.
+
+    Ensures proper file naming in output folder, particularly useful for
+    Revit exports where filenames may be modified.
 
     Args:
-        output_folder (str): Folder to search.
-        desired_name (str): The desired name of the file. Will use this name in search pattern. Do not include extension!
-        extension (str): File extension to lock search to. Include DOT! (e.g. ".jpg")
+        output_folder (str): Target folder path
+        desired_name (str): Desired filename without extension
+        extension (str): File extension including dot (e.g. '.jpg')
+
+    Returns:
+        str: Properly formatted filename
     """
 
     try:

@@ -10,6 +10,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab.REVIT import REVIT_APPLICATION
 from pyrevit.loader import sessionmgr
 from pyrevit.loader import sessioninfo
 from pyrevit import script
@@ -33,7 +34,9 @@ def reload_EnneadTab():
 
 ################## main code below #####################
 if __name__ == "__main__":
-    reload_EnneadTab()
+    app = REVIT_APPLICATION.get_app()
+    if int(app.Version) <= 2024:
+        reload_EnneadTab()
 
 
 

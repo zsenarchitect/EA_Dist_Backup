@@ -13,7 +13,7 @@ Key Features:
 - Filesystem management for temp and dump folders
 - Network drive availability monitoring
 
-Note: 
+Note:
     Network drive connectivity is managed through GitHub distribution rather than 
     direct network mapping to optimize IT infrastructure costs.
 
@@ -144,7 +144,7 @@ if os.path.exists(ONE_DRIVE_ECOSYS_FOLDER):
 
 
 def cleanup_dump_folder():
-    """Clean up old temporary files from the dump folder.
+    """Clean up temporary files from the dump folder.
 
     Removes files older than 3 days from the DUMP_FOLDER, excluding protected file types:
     .json, .sexyDuck, .txt, .lock, and .rui files.
@@ -180,7 +180,7 @@ def is_avd():
     """Detect if running in Azure Virtual Desktop environment.
 
     Returns:
-        bool: True if running in AVD or GPU-PD environment, False otherwise.
+        bool: True if running in AVD or GPU-PD environment, False otherwise
     """
     try:
         import clr  # pyright:ignore
@@ -201,7 +201,7 @@ def is_Rhino_8():
     """Check if current environment is Rhino 8.
 
     Returns:
-        bool: True if current environment is Rhino 8.
+        bool: True if running in Rhino 8, False otherwise
     """
 
     return str(get_rhino_version()) == "8"
@@ -210,7 +210,7 @@ def is_Rhino_7():
     """Check if current environment is Rhino 7.
 
     Returns:
-        bool: True if current environment is Rhino 7.
+        bool: True if running in Rhino 7, False otherwise
     """
 
     return str(get_rhino_version()) == "7"
@@ -219,11 +219,11 @@ def get_rhino_version(main_version_only=True):
     """Retrieve the current Rhino version.
 
     Args:
-        main_version_only (bool): If True, returns only the major version number.
-            If False, returns the full version string.
+        main_version_only (bool, optional): If True, returns only the major version number.
+            Defaults to True.
 
     Returns:
-        str: Rhino version number, or None if not in Rhino environment.
+        str or None: Rhino version number if in Rhino environment, None otherwise
     """
     if not IS_RHINO_ENVIRONMENT:
         return None
@@ -235,7 +235,7 @@ def is_Rhino_environment():
     """Check if the current environment is Rhino.
 
     Returns:
-        bool: True if current environment is Rhino.
+        bool: True if running in Rhino environment, False otherwise
     """
     try:
         import rhinoscriptsyntax  # pyright: ignore
@@ -249,7 +249,7 @@ def is_Grasshopper_environment():
     """Check if current environment is Grasshopper.
 
     Returns:
-        bool: True if current environment is Grasshopper.
+        bool: True if running in Grasshopper environment, False otherwise
     """
     try:
         import Grasshopper  # pyright: ignore
