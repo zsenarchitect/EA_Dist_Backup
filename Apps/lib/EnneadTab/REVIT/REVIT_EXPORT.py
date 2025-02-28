@@ -407,6 +407,7 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
 
             doc.ExportImage(opts)
             # print ("Image export succesfully")
+
             break
         except Exception as e:
             if  "The files already exist!" in str(e):
@@ -420,6 +421,17 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
 
                 
     # FOLDER.secure_filename_in_folder(output_folder, file_name_naked, ".jpg")
+    # import time
+    # while True:
+    #     if os.path.exists(opts.FilePath):
+    #         try:
+    #             with open(opts.FilePath, "rb") as f:
+    #                 pass
+    #             break
+    #         except:
+    #             pass
+    #     time.sleep(0.5)
+ 
 
     if view_or_sheet.LookupParameter("Print_In_Color"):
         sheet_is_colored = view_or_sheet.LookupParameter("Print_In_Color").AsInteger() == 1
@@ -434,14 +446,14 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
             IMAGE.convert_image_to_greyscale(file_path)
         except:
             bw_file = "{}\\{}_BW.jpg".format(output_folder, file_name_naked)
-            IMAGE.convert_image_to_greyscale(file_path, bw_file)
             try:
+                IMAGE.convert_image_to_greyscale(file_path, bw_file)
                 os.remove(file_path)
                 os.rename(bw_file, file_path)
             except:
                 import traceback
-                traceback.print_exc()
-                print (traceback.format_exc())
+                ERROR_HANDLE.print_note(traceback.format_exc())
+                return "{}_BW.jpg".format(file_name_naked)
         
     return file_name_naked + ".jpg"
 
@@ -527,4 +539,4 @@ def dump_exported_files_to_copy_folder(output_folder, files_exported_for_this_is
             else:
                 new_folder = copy_folder[:]
 
-            FOLDER.copy_file_to_folder(file_path, new_folder)
+            FOLDER.copy_file_to_folder(file_path, new_folder, handle_BW_file = True)

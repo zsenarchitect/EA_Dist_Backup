@@ -1241,8 +1241,79 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
     def update_preview_image(self, view_or_sheet):
-        REVIT_EXPORT.export_image(view_or_sheet, "exporter_preview", FOLDER.DUMP_FOLDER, is_thumbnail = True)
-        self.set_image_source(self.preview_image, FOLDER.get_EA_dump_folder_file("exporter_preview.jpg"))
+        """Updates the preview image for a view or sheet with improved file handling.
+        
+        Args:
+            view_or_sheet: Revit ViewSheet or View object to preview
+        """
+        # Initialize preview image pool if not exists
+        if not hasattr(self, "preview_image_pool"):
+            self.preview_image_pool = []
+
+        # Get base name from view/sheet
+        base_name = view_or_sheet.SheetName if hasattr(view_or_sheet, "SheetName") else view_or_sheet.Name
+        preview_filename = "preview_image_{}.jpg".format(base_name)
+        
+        def is_file_accessible(filepath):
+            """Check if a file exists and is accessible.
+            
+            Args:
+                filepath: Path to file to check
+                
+            Returns:
+                bool: True if file is ready to use
+            """
+            if not os.path.exists(filepath):
+                return False
+            
+            try:
+                # Try to open file to verify accessibility
+                with open(filepath, "rb"):
+                    return True
+            except:
+                return False
+            
+        def try_set_preview(filename):
+            """Attempts to set preview image from file.
+            
+            Args:
+                filename: Name of image file to use
+                
+            Returns:
+                bool: True if successfully set preview
+            """
+            try:
+                full_path = FOLDER.get_EA_dump_folder_file(filename)
+                if is_file_accessible(full_path):
+                    self.set_image_source(self.preview_image, full_path)
+                    return True
+            except Exception as e:
+                print("Failed to set preview for {}: {}".format(filename, str(e)))
+                import traceback
+                print(traceback.format_exc())
+            return False
+
+        # Export new preview image
+        try:
+            real_preview_file_exported = REVIT_EXPORT.export_image(
+                                                        view_or_sheet,
+                                                        preview_filename,
+                                                        FOLDER.DUMP_FOLDER,
+                                                        is_thumbnail=True
+            )
+            # Add to pool for tracking
+            self.preview_image_pool.append(real_preview_file_exported)
+        except Exception as e:
+            print("Failed to export preview image: {}".format(str(e)))
+
+        # Try to set preview from pool, newest to oldest
+        for i in range(len(self.preview_image_pool) - 1, -1, -1):
+            filename = self.preview_image_pool[i]
+            if try_set_preview(filename):
+                # Successfully set preview, remove from pool
+                self.preview_image_pool.pop(i)
+                break
+
 
 
     def initiate_loading_message(self):
