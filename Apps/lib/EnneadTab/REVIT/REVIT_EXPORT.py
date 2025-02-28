@@ -1,6 +1,32 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+"""
+EnneadTab REVIT Export Module
+
+This module provides comprehensive export functionality for Revit documents, supporting:
+- PDF export with configurable color and paper size settings
+- DWG export with customizable export settings
+- Image export (JPG) with resolution control
+- Batch export capabilities with file organization
+
+Key Features:
+- Smart print setting detection based on sheet properties
+- Multiple export methods for PDF to handle different scenarios
+- Support for view-on-sheet exports
+- Automatic file naming and organization
+- PDF combination utilities
+- Robust error handling and retry mechanisms
+
+Dependencies:
+    - pyrevit
+    - Autodesk.Revit.DB
+    - EnneadTab modules: FOLDER, IMAGE, DATA_CONVERSION, PDF, ERROR_HANDLE
+
+Note:
+    This module is part of the EnneadTab toolkit and requires Revit API access.
+"""
+
 import os
 import sys
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -33,6 +59,17 @@ def print_time(title, time_end, time_start, use_minutes = False):
 
 
 def get_print_setting(doc, is_color_by_sheet, is_color = True, is_A1_paper = True):
+    """Retrieves appropriate print settings based on color and paper size preferences.
+
+    Args:
+        doc (DB.Document): Active Revit document
+        is_color_by_sheet (bool): Whether to use sheet-specific color settings
+        is_color (bool, optional): Use color printing. Defaults to True.
+        is_A1_paper (bool, optional): Use A1 paper size. Defaults to True.
+
+    Returns:
+        DB.PrintSetting: Selected print setting matching the specified criteria
+    """
 
 
     all_print_settings = DB.FilteredElementCollector(doc).OfClass(DB.PrintSetting)
@@ -57,8 +94,20 @@ def get_print_setting(doc, is_color_by_sheet, is_color = True, is_A1_paper = Tru
     return DB.FilteredElementCollector(doc).OfClass(DB.PrintSetting).FirstElement()
 
 def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
-    """
-    file_name exclude .pdf at end
+    """Exports a view or sheet to PDF using optimal export method.
+
+    The function attempts multiple export methods to ensure successful export:
+    - Method 1: Uses PrintManager with Bluebeam PDF printer
+    - Method 2: Uses native PDF export with custom naming rules
+
+    Args:
+        view_or_sheet (DB.View | DB.ViewSheet): View or sheet to export
+        file_name (str): Target filename (without .pdf extension)
+        output_folder (str): Output directory path
+        is_color_by_sheet (bool): Whether to use sheet-specific color settings
+
+    Returns:
+        str: Name of exported PDF file
     """
     doc = view_or_sheet.Document
 
@@ -215,19 +264,23 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
 
 def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_export_view_on_sheet = False):
-    """   
-    basic export funcs for DWG
-    
+    """Exports views or sheets to DWG format with specified settings.
+
+    Features:
+    - Supports both individual view/sheet export and view-on-sheet export
+    - Automatic file naming based on sheet information
+    - Retry mechanism for failed exports
+    - Cleanup of temporary files
 
     Args:
-        view_or_sheet (DB.View | DB.ViewSheet): _description_
-        file_name (str): file_name exclude .dwg at end
-        output_folder (str of path): _description_
-        dwg_setting_name (str): _description_
-        is_export_view_on_sheet (bool, optional): _description_. Defaults to False.
+        view_or_sheet (DB.View | DB.ViewSheet): View or sheet to export
+        file_name (str): Target filename (without .dwg extension)
+        output_folder (str): Output directory path
+        dwg_setting_name (str): Name of DWG export settings to use
+        is_export_view_on_sheet (bool, optional): Export individual views from sheets. Defaults to False.
 
     Returns:
-        list: list of files exported
+        list: List of exported DWG filenames
     """
     files_exported = []
     doc = view_or_sheet.Document
@@ -292,18 +345,25 @@ def export_dwg(view_or_sheet, file_name, output_folder, dwg_setting_name, is_exp
 
 
 
-def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, resolution = 6000, is_color_by_sheet = True):
-    """basic exporter func for JPG
+def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = False, resolution = 6000, is_color_by_sheet = True):
+    """Exports views or sheets to JPG format with configurable settings.
+
+    Features:
+    - Configurable resolution for both thumbnails and full-size exports
+    - Support for color/grayscale conversion based on sheet settings
+    - Automatic file management and cleanup
+    - Retry mechanism for failed exports
 
     Args:
-        view_or_sheet (DB.View |DB.ViewSheet): _description_
-        file_name (str): file_name exclude .jpg at end
-        output_folder (str of path): _description_
-        is_thumbnail (bool, optional): if true, set resolution to smaller jpg. This can override the resolution args. Defaults to False.
-        resolution (int, optional): _description_. Defaults to 6000.
+        view_or_sheet (DB.View | DB.ViewSheet): View or sheet to export
+        file_name (str): Target filename (without .jpg extension)
+        output_folder (str): Output directory path
+        is_thumbnail (bool, optional): Create smaller thumbnail version. Defaults to False.
+        resolution (int, optional): Image resolution in pixels. Defaults to 6000.
+        is_color_by_sheet (bool, optional): Use sheet-specific color settings. Defaults to True.
 
     Returns:
-        str: final jpg name exported if successful, otherwise return False
+        str: Name of exported JPG file if successful, False otherwise
     """
     
     doc = view_or_sheet.Document
@@ -312,9 +372,9 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
 
     opts = DB.ImageExportOptions()
     try:
-        opts.FilePath = output_folder + '\\{}.jpg'.format(file_name)
+        opts.FilePath = output_folder + '\\{}.jpg'.format(file_name_naked)
     except:
-        print ("Error in export_image: {}".format(file_name))
+        print ("Error in export_image: {}".format(file_name_naked))
         return False
     
 
@@ -338,7 +398,7 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
         
     while True:
         if attempt > max_attempt:
-            print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name))
+            print  ("Give up on <{}>, too many failed attempts, see reason above.".format(file_name_naked))
             return False
             
         attempt += 1
@@ -350,40 +410,51 @@ def export_image(view_or_sheet, file_name, output_folder, is_thumbnail = False, 
             break
         except Exception as e:
             if  "The files already exist!" in str(e):
-                file_name = file_name + "_same name"
-                opts.FilePath = output_folder + '\\{}.jpg'.format(file_name)
+                file_name_naked = file_name_naked + "_same name"
+                opts.FilePath = output_folder + '\\{}.jpg'.format(file_name_naked)
                 #new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
-                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name))
+                print("------**There is a file existing with same name, will attempt to save as {}**".format(file_name_naked))
 
             else:
                 print( e.message)
-    FOLDER.secure_filename_in_folder(output_folder, file_name, ".jpg")
+
+                
+    # FOLDER.secure_filename_in_folder(output_folder, file_name_naked, ".jpg")
 
     if view_or_sheet.LookupParameter("Print_In_Color"):
-        sheet_color_setting = view_or_sheet.LookupParameter("Print_In_Color").AsInteger()
+        sheet_is_colored = view_or_sheet.LookupParameter("Print_In_Color").AsInteger() == 1
     else:
-        sheet_color_setting = 0
+        sheet_is_colored = False
 
     if not is_color_by_sheet:
-        sheet_color_setting = 0
-    if sheet_color_setting:
-        file_path = "{}\\{}.jpg".format(output_folder, file_name)
-        bw_file = "{}\\{}_BW.jpg".format(output_folder, file_name)
-        IMAGE.convert_image_to_greyscale(file_path, bw_file)
+        sheet_is_colored = False
+    if not sheet_is_colored:
+        file_path = "{}\\{}.jpg".format(output_folder, file_name_naked)
         try:
-            os.remove(file_path)
-            os.rename(bw_file, file_path)
+            IMAGE.convert_image_to_greyscale(file_path)
         except:
-            import traceback
-            traceback.print_exc()
-            print (traceback.format_exc())
+            bw_file = "{}\\{}_BW.jpg".format(output_folder, file_name_naked)
+            IMAGE.convert_image_to_greyscale(file_path, bw_file)
+            try:
+                os.remove(file_path)
+                os.rename(bw_file, file_path)
+            except:
+                import traceback
+                traceback.print_exc()
+                print (traceback.format_exc())
         
-    return file_name + ".jpg"
+    return file_name_naked + ".jpg"
 
 
                     
 def combine_final_pdf(output_folder, files_exported_for_this_issue, combined_pdf_name, copy_folder = None):
-    """files_exported_for_this_issue --> list of file name with extension
+    """Combines multiple PDFs into a single document with optional backup.
+
+    Args:
+        output_folder (str): Directory containing source PDFs
+        files_exported_for_this_issue (list): List of PDF filenames to combine
+        combined_pdf_name (str): Name for combined PDF file
+        copy_folder (str, optional): Backup directory path. Defaults to None.
     """
 
     list_of_filepaths = []
@@ -405,6 +476,19 @@ def combine_final_pdf(output_folder, files_exported_for_this_issue, combined_pdf
 
 
 def dump_exported_files_to_copy_folder(output_folder, files_exported_for_this_issue, file_id_dict, copy_folder):
+    """Organizes exported files into a structured directory hierarchy.
+
+    Creates a organized directory structure based on file types and plot IDs:
+    - PDFs/[plot_id]/
+    - DWGs/[plot_id]/
+    - JPGs/[plot_id]/
+
+    Args:
+        output_folder (str): Source directory containing exported files
+        files_exported_for_this_issue (list): List of files to organize
+        file_id_dict (dict): Mapping of filenames to plot IDs
+        copy_folder (str): Root directory for organized file structure
+    """
 
 
     for file in os.listdir(output_folder):

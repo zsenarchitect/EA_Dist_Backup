@@ -297,7 +297,7 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
     """
 
     try:
-        os.remove(os.path.join(output_folder, desired_name + extension))
+        force_delete_file(os.path.join(output_folder, desired_name + extension))
     except:
         pass
 
@@ -312,7 +312,7 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
             old_path = "\\\\?\\{}\\{}".format(output_folder, file_name)
             new_path = "\\\\?\\{}\\{}".format(output_folder, new_name + extension)
             try:
-                os.rename(old_path, new_path)
+                force_rename_file(old_path, new_path)
 
             except:
                 try:
@@ -322,11 +322,51 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
                     )
 
                 except Exception as e:
-                    print(
-                        "filename clean up failed: skip {} becasue: {}".format(
-                            file_name, e
-                        )
-                    )
+                    import traceback
+                    print("filename clean up failed: skip {} becasue: ".format(file_name))
+                    print (traceback.format_exc())
+
+
+def force_delete_file(file_path, max_retries=5, delay=0.5):
+    """Force delete a file with retry mechanism.
+    
+    Args:
+        file_path: Path to file to delete
+        max_retries: Number of times to retry
+        delay: Delay between retries in seconds
+    """
+    for i in range(max_retries):
+        try:
+            if os.path.exists(file_path):
+                os.chmod(file_path, 0o777)  # Give all permissions
+                os.remove(file_path)
+            return True
+        except:
+            if i < max_retries - 1:
+                time.sleep(delay)
+    return False
+
+
+def force_rename_file(old_path, new_path, max_retries=5, delay=0.5):
+    """Force rename a file with retry mechanism.
+    
+    Args:
+        old_path: Current file path
+        new_path: New file path
+        max_retries: Number of times to retry
+        delay: Delay between retries in seconds
+    """
+    for i in range(max_retries):
+        try:
+            if os.path.exists(new_path):
+                force_delete_file(new_path)
+            os.rename(old_path, new_path)
+            return True
+        except:
+            if i < max_retries - 1:
+                time.sleep(delay)
+    return False
+
 
 if __name__ == "__main__":
     pass
