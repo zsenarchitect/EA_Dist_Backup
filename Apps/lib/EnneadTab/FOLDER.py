@@ -347,24 +347,17 @@ def wait_until_file_is_ready(file_path):
         bool: True if file is ready, False otherwise
     """
     max_attemp = 100
-
-    # Using a list as a mutable container for Python 2 compatibility
-    status = [False]  # [is_active]
-
-    def _work(i):
-        if not status[0]:
-            return
+    
+    for _ in range(max_attemp):
         if os.path.exists(file_path):
             try:
                 with open(file_path, "rb"):
-                    status[0] = True
+                    return True
             except:
                 time.sleep(0.15)
-                
-    import UI # import UI here to avoid circular import
-    UI.progress_bar(range(max_attemp), 
-                    _work, 
-                    label_func = lambda i: "Waiting for file to be ready...{}/{}".format(i, max_attemp))
+        else:
+            time.sleep(0.15)
+
     return False
 
 

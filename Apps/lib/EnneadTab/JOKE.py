@@ -84,8 +84,10 @@ def prank_dvd():
     
 def joke_quote():
 
-    emoji = EMOJI.random_emoji()
     quote = random_loading_message()
+    emoji = EMOJI.random_emoji()
+    if emoji:
+        quote = "{}\n{}".format(quote, emoji)
     
 
     import textwrap
@@ -94,7 +96,7 @@ def joke_quote():
     quote = wrapper.fill(text = quote)
 
 
-    NOTIFICATION.messenger(main_text = "{}\n{}".format(quote, emoji), animation_stay_duration = 10)
+    NOTIFICATION.messenger(main_text = quote, animation_stay_duration = 10)
 
 
 
