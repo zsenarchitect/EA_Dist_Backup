@@ -21,6 +21,7 @@ from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 import COPY
 
 
+
 def get_safe_copy(filepath, include_metadata=False):
     """Create a safe copy of a file in the dump folder.
 
@@ -56,7 +57,7 @@ def copy_file(original_path, new_path):
     COPY.copyfile(original_path, new_path)
 
 
-def copy_file_to_folder(original_path, target_folder):
+def copy_file_to_folder(original_path, target_folder, handle_BW_file = False):
     """Copy file to target folder, preserving filename.
 
     Args:
@@ -71,6 +72,8 @@ def copy_file_to_folder(original_path, target_folder):
     """
 
     new_path = original_path.replace(os.path.dirname(original_path), target_folder)
+    if handle_BW_file:
+        new_path = new_path.replace("_BW", "")
     try:
         COPY.copyfile(original_path, new_path)
     except Exception as e:
@@ -289,6 +292,8 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
 
     Ensures proper file naming in output folder, particularly useful for
     Revit exports where filenames may be modified.
+    Note that with the new Revit API PDF exporter, this is no longer needed since revit 2022.
+    But for image export, this is still needed. Becasue ti always export with e a -Sheet- thing in file name.
 
     Args:
         output_folder (str): Target folder path
@@ -343,15 +348,16 @@ def wait_until_file_is_ready(file_path):
     """
     max_attemp = 100
 
-    is_active = False
+    # Using a list as a mutable container for Python 2 compatibility
+    status = [False]  # [is_active]
 
     def _work(i):
-        if not is_active:
+        if not status[0]:
             return
         if os.path.exists(file_path):
             try:
                 with open(file_path, "rb"):
-                    is_active = True
+                    status[0] = True
             except:
                 time.sleep(0.15)
                 

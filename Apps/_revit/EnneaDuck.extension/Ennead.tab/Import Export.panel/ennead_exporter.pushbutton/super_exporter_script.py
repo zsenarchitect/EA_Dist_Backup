@@ -1241,8 +1241,29 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
     def update_preview_image(self, view_or_sheet):
-        REVIT_EXPORT.export_image(view_or_sheet, "exporter_preview", FOLDER.DUMP_FOLDER, is_thumbnail = True)
-        self.set_image_source(self.preview_image, FOLDER.get_EA_dump_folder_file("exporter_preview.jpg"))
+        """Updates the preview image for a view or sheet with improved file handling.
+        
+        Args:
+            view_or_sheet: Revit ViewSheet or View object to preview
+        """
+        
+        preview_filename_naked = "preview_image"
+    
+        real_preview_file_exported = REVIT_EXPORT.export_image(
+                                                    view_or_sheet,
+                                                    preview_filename_naked,
+                                                    FOLDER.DUMP_FOLDER,
+                                                    is_thumbnail=True)
+        full_path = FOLDER.get_EA_dump_folder_file(real_preview_file_exported)
+        try:
+            self.set_image_source(self.preview_image, full_path)
+        except:
+            print ("Failed to set preview image: {}".format(full_path))
+            import traceback
+            ERROR_HANDLE.print_note(traceback.format_exc())
+            pass
+      
+
 
 
     def initiate_loading_message(self):

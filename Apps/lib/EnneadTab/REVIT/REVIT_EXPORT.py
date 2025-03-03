@@ -93,7 +93,7 @@ def get_print_setting(doc, is_color_by_sheet, is_color = True, is_A1_paper = Tru
     print ("!!!Cannot find print setting that has 'COLOR/GRAYSCALE' or 'A1/A0' in it. Use default")
     return DB.FilteredElementCollector(doc).OfClass(DB.PrintSetting).FirstElement()
 
-def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
+def export_pdf(view_or_sheet, file_name_naked, output_folder, is_color_by_sheet):
     """Exports a view or sheet to PDF using optimal export method.
 
     The function attempts multiple export methods to ensure successful export:
@@ -102,7 +102,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
     Args:
         view_or_sheet (DB.View | DB.ViewSheet): View or sheet to export
-        file_name (str): Target filename (without .pdf extension)
+        file_name_naked (str): Target filename (without .pdf extension)
         output_folder (str): Output directory path
         is_color_by_sheet (bool): Whether to use sheet-specific color settings
 
@@ -155,7 +155,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
         #t.Commit()
         #"""
         print ("Print Setting Name = [{}]".format(print_manager.PrintSetup.CurrentPrintSetting.Name))
-        print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
+        print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name_naked)
         print_manager.PrintRange = DB.PrintRange.Select
         view_set = DB.ViewSet()
         view_set.Insert(view_or_sheet)
@@ -182,8 +182,8 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
                 break
             except Exception as e:
                 if  "The files already exist!" in e:
-                    raw_name = file_name + "_same name"
-                    new_name = print_manager.PrintToFileName = r"{}\{}.pdf".format(output_folder, file_name)
+                    raw_name = file_name_naked + "_same name"
+                    new_name = print_manager.PrintToFileName = "{}\\{}.pdf".format(output_folder, file_name_naked)
                     print ("------**There is a file existing with same name, will attempt to save as {}**".format(new_name))
 
                 elif "no views/sheets selected" in e:
@@ -203,7 +203,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
         """might be important again"""
         #cleanup_pdf_name()
-        FOLDER.secure_filename_in_folder(output_folder, file_name, ".pdf")
+        FOLDER.secure_filename_in_folder(output_folder, file_name_naked, ".pdf")
 
         print ("$$$ end method 1")
 
@@ -224,10 +224,10 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
         sheet_num_para_data = DB.TableCellCombinedParameterData.Create()
         sheet_num_para_data.ParamId = DB.ElementId(DB.BuiltInParameter.SHEET_NUMBER)
-        if len(file_name.split(view_or_sheet.SheetNumber)) == 1:
+        if len(file_name_naked.split(view_or_sheet.SheetNumber)) == 1:
             sheet_num_para_data.Prefix = ""
         else:
-            sheet_num_para_data.Prefix = file_name.split(view_or_sheet.SheetNumber)[0]
+            sheet_num_para_data.Prefix = file_name_naked.split(view_or_sheet.SheetNumber)[0]
         sheet_num_para_data.Separator = " - "
 
         sheet_name_para_data = DB.TableCellCombinedParameterData.Create()
@@ -258,7 +258,7 @@ def export_pdf(view_or_sheet, file_name, output_folder, is_color_by_sheet):
 
 
     pdf_method_2()
-    return file_name + ".pdf"
+    return file_name_naked + ".pdf"
 
 
 
@@ -419,18 +419,9 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
             else:
                 print( e.message)
 
-                
-    # FOLDER.secure_filename_in_folder(output_folder, file_name_naked, ".jpg")
-    # import time
-    # while True:
-    #     if os.path.exists(opts.FilePath):
-    #         try:
-    #             with open(opts.FilePath, "rb") as f:
-    #                 pass
-    #             break
-    #         except:
-    #             pass
-    #     time.sleep(0.5)
+
+    # this si still needed becasue exported image will add a -Sheet- thing in file name.
+    FOLDER.secure_filename_in_folder(output_folder, file_name_naked, ".jpg")
  
 
     if view_or_sheet.LookupParameter("Print_In_Color"):
@@ -442,18 +433,27 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
         sheet_is_colored = False
     if not sheet_is_colored:
         file_path = "{}\\{}.jpg".format(output_folder, file_name_naked)
+        FOLDER.wait_until_file_is_ready(file_path)
+
+        
         try:
             IMAGE.convert_image_to_greyscale(file_path)
+            return file_name_naked + ".jpg"
         except:
+            print ("Failed to convert image to greyscale in step 1")
+            import traceback
+            ERROR_HANDLE.print_note(traceback.format_exc())
             bw_file = "{}\\{}_BW.jpg".format(output_folder, file_name_naked)
             try:
                 IMAGE.convert_image_to_greyscale(file_path, bw_file)
                 os.remove(file_path)
                 os.rename(bw_file, file_path)
+                return file_name_naked + ".jpg"
             except:
+                print ("Failed to convert image to greyscale in step 2")
                 import traceback
                 ERROR_HANDLE.print_note(traceback.format_exc())
-        
+                return "{}_BW.jpg".format(file_name_naked)
     return file_name_naked + ".jpg"
 
 
@@ -538,4 +538,4 @@ def dump_exported_files_to_copy_folder(output_folder, files_exported_for_this_is
             else:
                 new_folder = copy_folder[:]
 
-            FOLDER.copy_file_to_folder(file_path, new_folder)
+            FOLDER.copy_file_to_folder(file_path, new_folder, handle_BW_file = True)
