@@ -5,15 +5,15 @@ __doc__ = """Toggles Gross Floor Area (GFA) visualization and calculation.
 Features:
 - Processes layers marked with [GFA] to calculate and display area information
 - Real-time updates as geometry changes
-- Supports area factor multipliers using {factor} syntax in layer names
+- Supports area factor multipliers using \{factor\} syntax in layer names
 - Excel data export capabilities
-- Automatic unit conversion (mm/m → SQM, inch/ft → SQFT)
+- Automatic unit conversion (mm/m -> SQM, inch/ft -> SQFT)
 - Dynamic merging of coplanar surfaces at same elevation
 - Support for single surfaces and polysurfaces
 
 Usage:
 - Add [GFA] to layer names to include in calculation
-- Optional {factor} at end of layer name for area multipliers (e.g. {0.5})
+- Optional \{factor\} at end of layer name for area multipliers (e.g. \{0.5\})
 - Right-click to export to Excel or generate checking surfaces
 """
 __is_popular__ = True

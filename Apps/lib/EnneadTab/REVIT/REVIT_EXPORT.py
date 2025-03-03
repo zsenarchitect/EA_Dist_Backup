@@ -453,7 +453,6 @@ def export_image(view_or_sheet, file_name_naked, output_folder, is_thumbnail = F
             except:
                 import traceback
                 ERROR_HANDLE.print_note(traceback.format_exc())
-                return "{}_BW.jpg".format(file_name_naked)
         
     return file_name_naked + ".jpg"
 
@@ -539,4 +538,4 @@ def dump_exported_files_to_copy_folder(output_folder, files_exported_for_this_is
             else:
                 new_folder = copy_folder[:]
 
-            FOLDER.copy_file_to_folder(file_path, new_folder, handle_BW_file = True)
+            FOLDER.copy_file_to_folder(file_path, new_folder)

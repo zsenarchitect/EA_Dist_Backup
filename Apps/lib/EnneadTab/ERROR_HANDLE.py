@@ -89,7 +89,7 @@ def try_catch_error(is_silent=False, is_pass = False):
                 try:
                     EMAIL.email_error(error_time + error, func.__name__, USER.USER_NAME, subject_line=subject_line)
                 except Exception as e:
-                    print_note("Cannot send email: {}".format(e))
+                    print_note("Cannot send email: {}".format(get_alternative_traceback()))
 
                 if not is_silent:
 
