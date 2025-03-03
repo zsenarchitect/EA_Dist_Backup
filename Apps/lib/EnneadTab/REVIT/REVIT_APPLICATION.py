@@ -4,6 +4,16 @@
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore
 
+def is_version_at_least(year_int = 2025):
+    """Checks if the current Revit version is at least the specified year.
+    Include the year if the version is exactly the year.
+    
+    Args:
+        year_int (int): The year to compare against. Defaults to 2025. becasue this year has significant change in a lot of things
+    """
+    return int(get_app().VersionNumber) >= year_int
+
+
 def get_app():
     """Returns the Revit Application instance.
     

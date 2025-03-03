@@ -9,7 +9,7 @@ __tip__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION
 from pyrevit.loader import sessionmgr
 from pyrevit.loader import sessioninfo
@@ -34,8 +34,9 @@ def reload_EnneadTab():
 
 ################## main code below #####################
 if __name__ == "__main__":
-    app = REVIT_APPLICATION.get_app()
-    if int(app.Version) <= 2024:
+    if REVIT_APPLICATION.is_version_at_least(2025):
+        NOTIFICATION.messenger("Please use pyrevit reload for Revit 2025 and above.")
+    else:
         reload_EnneadTab()
 
 

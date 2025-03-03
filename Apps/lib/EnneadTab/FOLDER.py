@@ -20,6 +20,7 @@ import os
 from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 import COPY
 
+
 def get_safe_copy(filepath, include_metadata=False):
     """Create a safe copy of a file in the dump folder.
 
@@ -329,6 +330,37 @@ def secure_filename_in_folder(output_folder, desired_name, extension):
                             file_name, e
                         )
                     )
+
+
+def wait_until_file_is_ready(file_path):
+    """Wait until a file is ready to use.
+
+    Args:
+        file_path (str): Path to the file to check
+
+    Returns:
+        bool: True if file is ready, False otherwise
+    """
+    max_attemp = 100
+
+    is_active = False
+
+    def _work(i):
+        if not is_active:
+            return
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, "rb"):
+                    is_active = True
+            except:
+                time.sleep(0.15)
+                
+    import UI # import UI here to avoid circular import
+    UI.progress_bar(range(max_attemp), 
+                    _work, 
+                    label_func = lambda i: "Waiting for file to be ready...{}/{}".format(i, max_attemp))
+    return False
+
 
 if __name__ == "__main__":
     file = get_EA_dump_folder_file("save_copy_{}_".format(time.time()) + "test.txt")

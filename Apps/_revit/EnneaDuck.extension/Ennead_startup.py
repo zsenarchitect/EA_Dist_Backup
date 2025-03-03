@@ -297,23 +297,24 @@ def register_context_menu():
         print (traceback.format_exc())
 
 
-class EnneadTabContextMenuMaker(UI.IContextMenuCreator):
-    def BuildContextMenu(self, context_menu):
-        try:
-            from pyrevit.loader import sessionmgr
-            for i, command in enumerate(filter(self.is_enneadtab_command, sessionmgr.find_all_available_commands())):
-                print (command.name, command.tooltip, command.script)
-                item = UI.CommandMenuItem(command.name, command.tooltip, command.script)
-                item.SetAvailabilityClassName(command.name) # this is important to call pyrevit
-                context_menu.AddItem(item)
+if REVIT_APPLICATION.is_version_at_least(2025):
+    class EnneadTabContextMenuMaker(UI.IContextMenuCreator):
+        def BuildContextMenu(self, context_menu):
+            try:
+                from pyrevit.loader import sessionmgr
+                for i, command in enumerate(filter(self.is_enneadtab_command, sessionmgr.find_all_available_commands())):
+                    print (command.name, command.tooltip, command.script)
+                    item = UI.CommandMenuItem(command.name, command.tooltip, command.script)
+                    item.SetAvailabilityClassName(command.name) # this is important to call pyrevit
+                    context_menu.AddItem(item)
 
-                if i > 4:
-                    break
+                    if i > 4:
+                        break
 
-            print ("RegisterContextMenu is available")
-        except Exception as e:
-            import traceback
-            ERROR_HANDLE.print_note(traceback.format_exc())
+                print ("RegisterContextMenu is available")
+            except Exception as e:
+                import traceback
+                ERROR_HANDLE.print_note(traceback.format_exc())
 
 
 
@@ -327,9 +328,9 @@ def EnneadTab_startup():
     check_minimal_version_for_enneadtab()
 
 
-    if random.random() < 0.2:
+    if random.random() < 0.5:
         ENCOURAGING.warming_quote()
-    elif random.random() < 0.5:
+    elif random.random() < 0.9:
         JOKE.joke_quote()
     else:
         NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))

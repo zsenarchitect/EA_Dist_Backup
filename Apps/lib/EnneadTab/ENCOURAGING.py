@@ -24,7 +24,7 @@ def get_all_warming_quotes():
     """Get all encouraging quotes from the quote library.
 
     Returns:
-        list: All encouraging quotes.
+        list: List of tuples containing (quote, author) pairs.
     """
     with io.open(DOCUMENTATION.get_text_path_by_name('_warming_quotes.txt'), "r", encoding = "utf-8") as f:
         lines = f.readlines()
@@ -43,14 +43,19 @@ def random_warming_quote():
 
 
 def warming_quote():
-    """Display a random encouraging quote.
+    """Display a random encouraging quote with author on a new line.
     """
-    quote = random_warming_quote()
+    quote, author = random_warming_quote().split("|")
     
-
-    # Wrap this text.
+    # Wrap the text
     wrapper = textwrap.TextWrapper(width = 100)
     quote = wrapper.fill(text = quote)
+    
+    # Combine quote and author with newline
+    message = "{}\n- {}".format(quote, author)
+    
+    NOTIFICATION.messenger(main_text = message, animation_stay_duration = 10)
 
 
-    NOTIFICATION.messenger(main_text = quote, animation_stay_duration = 10)
+if __name__ == "__main__":
+    warming_quote()
