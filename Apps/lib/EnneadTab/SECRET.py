@@ -70,11 +70,7 @@ def unit_test():
     import pprint
     
     app_names = [
-        "chatgpt_api_key",
-        "translator_api_key",
-        "reporter_api_key",
-        "clone_helper",
-        "miro_oauth",
+        "EnneadTabAPI"
     ]
 
     print("######### API KEY TEST #########")

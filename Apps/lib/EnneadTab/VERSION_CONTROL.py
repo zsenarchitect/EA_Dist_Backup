@@ -21,9 +21,10 @@ def update_EA_dist():
 
 
     if random.random() < 0.05:
-        EXE.try_open_app("RegisterAutoStartup", safe_open=True)
         EXE.try_open_app("AccAutoRestarter", safe_open=True)
 
+    if random.random() < 0.5:
+        EXE.try_open_app("RegisterAutoStartup", safe_open=True)
 
 def is_update_too_soon():
     """sample time 2025-01-22_09-59-59,convert to timestamp, if it is within 3mins, return True"""

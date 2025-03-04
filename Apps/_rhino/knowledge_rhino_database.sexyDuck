@@ -505,7 +505,7 @@
         "script": "Lab.tab\\text2script.button\\text2script_left.py",
         "icon": "Lab.tab\\text2script.button\\icon.png",
         "alias": "Text2Script",
-        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Automatic error detection and code refinement\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 10 refinement attempts for optimal results\n",
+        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Automatic error detection and code refinement\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 5 refinement attempts for optimal results\n- Always uses main() as the entry function\n- API quota usage checking\n",
         "tab": "Lab.tab",
         "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false

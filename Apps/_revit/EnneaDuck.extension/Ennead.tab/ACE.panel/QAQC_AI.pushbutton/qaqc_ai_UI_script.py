@@ -167,7 +167,7 @@ class AI_Report_modelessForm(WPFWindow):
                 return
             data["qaqc_text"] = self.report
         data["query"] = self.tbox_input.Text
-        data["api_key"] = SECRET.get_api_key("reporter_api_key")
+        data["api_key"] = SECRET.get_api_key("EnneadTabAPI")
         data["store_name"] = self.session_name
         data["response"] = "No results."
         

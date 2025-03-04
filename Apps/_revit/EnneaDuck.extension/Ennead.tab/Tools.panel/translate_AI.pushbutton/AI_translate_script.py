@@ -483,7 +483,7 @@ class AiTranslator(WPFWindow):
     #@ERROR_HANDLE.try_catch_error()
     def fire_AI_translator(self, new_prompt, request_count):
 
-        session_token = SECRET.get_api_key("translator_api_key")
+        session_token = SECRET.get_api_key("EnneadTabAPI")
 
 
 
