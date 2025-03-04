@@ -219,6 +219,8 @@ def set_revit_project_data(doc, data):
 
 ############### FILE OPERATIONS ###############
 def open_project_data_file(doc):
+    if not ENVIRONMENT.alert_l_drive_not_available(play_sound=True):
+        return 
     data_file = get_project_data_file(doc)
     file = FOLDER.get_shared_dump_folder_file(data_file)
     os.startfile(file)
@@ -272,6 +274,9 @@ class ProjectDataEditor:
         """Main entry point for editing project data"""
         if not self.project_data:
             NOTIFICATION.messenger("No project data found.")
+            return
+
+        if not ENVIRONMENT.alert_l_drive_not_available(play_sound=True):
             return
         
         while True:

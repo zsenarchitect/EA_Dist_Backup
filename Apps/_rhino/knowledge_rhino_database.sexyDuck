@@ -609,6 +609,15 @@
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
     },
+    "Material.tab\\assign_empty_material_to_layer.button\\assign_empty_material_to_layer_left.py": {
+        "script": "Material.tab\\assign_empty_material_to_layer.button\\assign_empty_material_to_layer_left.py",
+        "icon": "Material.tab\\assign_empty_material_to_layer.button\\icon.png",
+        "alias": "AssignEmptyMaterialToLayer",
+        "doc": "Same as EA_AssignEmptyMaterial",
+        "tab": "Material.tab",
+        "tab_icon": "Material.tab\\icon.png",
+        "is_popular": false
+    },
     "Material.tab\\import_selected_material.button\\import_selected_material_left.py": {
         "script": "Material.tab\\import_selected_material.button\\import_selected_material_left.py",
         "icon": "Material.tab\\import_selected_material.button\\icon.png",
@@ -740,6 +749,15 @@
         "icon": "Render.tab\\ai_render.button\\icon.png",
         "alias": "AiRenderUpscale",
         "doc": "Upscale AI generated images.",
+        "tab": "Render.tab",
+        "tab_icon": "Render.tab\\icon.png",
+        "is_popular": false
+    },
+    "Render.tab\\assign_empty_material.button\\assign_empty_material_left.py": {
+        "script": "Render.tab\\assign_empty_material.button\\assign_empty_material_left.py",
+        "icon": "Render.tab\\assign_empty_material.button\\icon.png",
+        "alias": "AssignEmptyMaterial",
+        "doc": "Assigns unique materials to layers without assigned materials.\n\nKey Features:\n- Creates a unique material for each layer without materials\n- Material names based on layer hierarchy (including parent layers)\n- Makes D5 material editing workflow more efficient\n- Use the layer color as the material diffuse color\n",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": false
