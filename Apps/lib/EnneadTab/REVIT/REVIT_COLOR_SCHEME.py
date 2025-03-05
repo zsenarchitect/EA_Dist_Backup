@@ -126,7 +126,7 @@ class ColorSchemeUpdater:
         Returns:
             str: HTML formatted text with color
         """
-        return '<span style="color:rgb{};">{}</span>'.format(str(colorRGB), text)
+        return '<span style="color:rgb{};">{}</span>'.format(str(tuple(colorRGB)), text)
 
 
     def remove_non_used_entry(self, color_scheme):

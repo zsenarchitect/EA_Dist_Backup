@@ -319,7 +319,7 @@ class ProjectDataEditor:
         while True:
             res = forms.pick_file(
                 title="Select Excel File",
-                files_filter="Excel Files (*.xls)|*.xls"
+                files_filter="Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx"
             )
             if res:
                 self.project_data["color_update"]["setting"]["excel_path"] = res

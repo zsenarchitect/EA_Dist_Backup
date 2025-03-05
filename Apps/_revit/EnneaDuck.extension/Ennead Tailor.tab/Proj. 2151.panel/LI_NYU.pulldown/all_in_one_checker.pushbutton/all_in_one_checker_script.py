@@ -478,4 +478,7 @@ output.close_others()
 
 
 if __name__ == "__main__":
-    all_in_one_checker(doc, show_log=True)
+    if USER.IS_DEVELOPER:
+        all_in_one_checker(doc, show_log=True)
+    else:
+        print("hello, this function has been migrated to the HealthCare Generic Tool")
