@@ -1767,7 +1767,7 @@
         "script": "Ennead.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\duplicate_area_scheme_script.py",
         "icon": "Ennead.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\icon.png",
         "alias": "Duplicate Area Scheme",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Duplicates a Revit area scheme to a new area scheme with all boundaries and areas.\n\nThis tool allows you to:\n1. Select an existing area scheme to duplicate\n2. Provide a new unique name for the duplicated scheme\n3. Choose which views to include in the duplication process\n4. Automatically transfer all boundaries and areas to the new scheme\n",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
