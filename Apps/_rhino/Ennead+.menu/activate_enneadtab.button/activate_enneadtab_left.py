@@ -5,8 +5,7 @@ Key Features:
 - System path verification
 - Component activation
 - Path configuration
-- Startup script setup
-- Error recovery"""
+- Startup script setup"""
 __FONDATION__ = True
 
 import os

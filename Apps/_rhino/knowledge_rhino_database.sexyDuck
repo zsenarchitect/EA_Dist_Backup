@@ -3,7 +3,7 @@
         "script": "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py",
         "icon": "Ennead+.menu\\activate_enneadtab.button\\icon.png",
         "alias": "ActivateEnneadTab",
-        "doc": "Restore EnneadTab functionality.\n\nKey Features:\n- System path verification\n- Component activation\n- Path configuration\n- Startup script setup\n- Error recovery",
+        "doc": "Restore EnneadTab functionality.\n\nKey Features:\n- System path verification\n- Component activation\n- Path configuration\n- Startup script setup",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -505,7 +505,7 @@
         "script": "Lab.tab\\text2script.button\\text2script_left.py",
         "icon": "Lab.tab\\text2script.button\\icon.png",
         "alias": "Text2Script",
-        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Automatic error detection and code refinement\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 5 refinement attempts for optimal results\n- Always uses main() as the entry function\n- API quota usage checking\n",
+        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 5 refinement attempts for optimal results\n- Always uses main() as the entry function\n- API quota usage checking\n",
         "tab": "Lab.tab",
         "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false

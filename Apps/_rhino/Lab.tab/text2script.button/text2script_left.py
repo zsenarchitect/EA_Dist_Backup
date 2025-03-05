@@ -15,7 +15,6 @@ Note: This is Rhino 8 only.
 
 Features:
 - Converts natural language to executable Python script
-- Automatic error detection and code refinement
 - Integrated with Rhino's rhinoscriptsyntax
 - Maximum 5 refinement attempts for optimal results
 - Always uses main() as the entry function

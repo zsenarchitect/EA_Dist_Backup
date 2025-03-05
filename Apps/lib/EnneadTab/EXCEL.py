@@ -41,6 +41,7 @@ import TEXT
 import DATA_FILE
 import ERROR_HANDLE
 import COPY
+import USER
 try:
     import xlrd
     import xlsxwriter
@@ -312,6 +313,11 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
             row, column = map(int, key.split(','))
             converted_data[(row, column)] = value
 
+        # if USER.IS_DEVELOPER:
+        #     import pprint
+        #     pprint.pprint(converted_data)
+
+            
         if not return_dict:
             # convert the converted_data to a list of lists, sorted by row, adding missing rows with empty strings. the coumn count need to match the max column count in the data
             max_column = max(column for row, column in converted_data.keys())
@@ -328,10 +334,18 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
                         row_data.append({})
                 OUT.append(row_data)
             return OUT
-        
+
+
         return converted_data
         NOTIFICATION.messenger(main_text="Excel file is xlsx, converting to xls, this will take a few moments.\nFor better performance, save as .xls instead of .xlsx.")   
         filepath = save_as_xls(filepath)
+
+    ##################################################
+    # due to the rhino 8 and revit 2025 core change, there will be no more running for xls files
+    if USER.IS_DEVELOPER:
+        print ("##################Excel: due to the rhino 8 and revit 2025 core change, there will be no more running for xls files")
+        NOTIFICATION.messenger(main_text="due to the rhino 8 and revit 2025 core change, there will be no more running for xls files")
+    ##################################################
 
     if not return_dict:
         wb = xlrd.open_workbook(

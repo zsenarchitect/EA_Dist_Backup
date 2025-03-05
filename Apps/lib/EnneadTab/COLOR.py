@@ -124,7 +124,15 @@ def tuple_to_color(tuple):
         System.Drawing.Color: The resulting color object.
     """
     red,green,blue = tuple
-    
+    if any([red is None, green is None, blue is None]):
+        print ("tuple_to_color: ", tuple)
+        if red is None:
+            red = 0
+        if green is None:
+            green = 0
+        if blue is None:
+            blue = 0
+            
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
         return DB_Color(red,green,blue)
     if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
@@ -215,49 +223,62 @@ def is_same_color(color1, color2):
 
 
 
-def _gather_data(raw_data, key_column):
-    """Gather color data from raw data.
+def _gather_data(raw_data, key_column, is_zero_indexed):
+    """Gather color data from raw data extracted from an Excel file.
+
+    This function processes raw Excel data to extract color information based on a specified
+    key column. It handles both zero-indexed and one-indexed data structures.
 
     Args:
-        raw_data (dict): The raw data.
-        key_column (int): The key column
+        raw_data (dict): Raw data from Excel structured as {(row,col): {"value": val, "color": color}}.
+        key_column (int): The column index to use for subject names/keys.
+        is_zero_indexed (bool): Whether the Excel data uses zero-based indexing.
 
     Returns:
-        dict: The resulting data.
+        dict: Structured color data in the format {subject_name: {"abbr": abbreviation, "color": color_value}}.
     """
-    temp_data = {}
-    for pointer in raw_data:
-        i,j = pointer # i = row, j = column
-        if j != key_column: 
+    out = {}
+    
+    # Determine the starting row based on indexing (skip 3 header rows)
+    start_row = 3 if is_zero_indexed else 4
+    
+    # Adjust key_column if needed
+    lookup_key_column = key_column if is_zero_indexed else key_column + 1
+    
+    for pointer in sorted(raw_data.keys()):
+        row, col = pointer
+        
+        # Skip non-key columns and header rows
+        if str(col) != str(lookup_key_column) or row < start_row:
             continue
         
-        if i <=2:
-            # ignore first two row, those rowsa re reserved for notes and header
-            continue
-        
-        
-        pointer_right_right = (i, j+2)
-        subject_color = raw_data[pointer_right_right].get("color")
-        
-        # skip row where color is not defined(maybe due to merged cell), only record by row that define.
-        if subject_color is None:
-            continue
-        
-        
-        
+        # Get subject name from key column
         subject = raw_data[pointer].get("value")
-        if subject in [""]:
+        if not subject:
             continue
         
-        pointer_right = (i, j+1)
-        subject_abbr = raw_data[pointer_right].get("value")
+        # Get abbreviation from next column
+        abbr_pointer = (row, col + 1)
+        subject_abbr = raw_data.get(abbr_pointer, {}).get("value", "")
         
-        # if no abbr(maybe due to merged cell), use subject name as abbr. 
-        subject_abbr = subject if subject_abbr == "" else subject_abbr
-                                                       
-        temp_data[subject] = {"abbr": subject_abbr, "color": subject_color}
+        # Get color from two columns to the right
+        color_pointer = (row, col + 2)
+        subject_color = raw_data.get(color_pointer, {}).get("color")
         
-    return temp_data
+        # Skip rows where color is not defined (may be due to merged cells)
+        if subject_color is None:
+            print ("subject_color is None: ", subject_color, " | for subject: ", subject)
+            continue
+        
+        # If abbreviation is empty, use subject name
+        subject_abbr = subject if not subject_abbr else subject_abbr
+        
+        # Store the data
+        out[subject] = {"abbr": subject_abbr, "color": subject_color}
+
+
+
+    return out
             
 def get_color_template_data(template = None):
     """Get color template data from department standards.
@@ -277,21 +298,30 @@ def get_color_template_data(template = None):
         with io.open(safe_template, "r", encoding = "utf-8") as f:
             return json.load(f)
         
-    if safe_template.endswith(".xlsx"):
-        NOTIFICATION.messenger(main_text="Please save as .xls instead of .xlsx")
-        return {}
     
-    
-    if safe_template.endswith(".xls"):
+    if safe_template.endswith(".xls") or safe_template.endswith(".xlsx"):
         import EXCEL
         raw_data = EXCEL.read_data_from_excel(safe_template, 
                                                 worksheet = "HEALTHCARE", 
                                                 return_dict=True)
 
         
-        #column A and D are 0, 3 for key column
-        department_data = _gather_data(raw_data, key_column = 0)
-        program_data = _gather_data(raw_data, key_column = 3)
-       
+
+
+        first_key = sorted(raw_data.keys())[0]
+        is_zero_indexed = first_key[0] == 0
+        # print ("is_zero_indexed", is_zero_indexed)
+
+
+        #column A and D are 0, 3 for key column in a 0-indexed system
+        department_data = _gather_data(raw_data, key_column = 0, is_zero_indexed = is_zero_indexed)
+        program_data = _gather_data(raw_data, key_column = 3, is_zero_indexed = is_zero_indexed)
+
+        # import pprint
+        # print ("department_data")
+        # pprint.pprint(department_data, indent = 4)
+        # print ("\n\nprogram_data")
+        # pprint.pprint(program_data, indent = 4)
+
             
         return {"department_color_map": department_data, "program_color_map": program_data}

@@ -65,45 +65,55 @@ class ColorSchemeUpdater:
             lookup_key (str): Key to find matching data in template
             color_scheme_name (str): Name of the color scheme to update
         """
+        if not data:
+            NOTIFICATION.messenger(main_text="No data found in the template excel file.")
+            print ("No data found in the template excel file.")
+            return
         if not color_scheme_name:
             return
-        color_scheme = get_color_scheme_by_name(color_scheme_name)
-        if not color_scheme:
+        color_schemes = get_color_schemes_by_name(color_scheme_name)
+        if not color_schemes:
             print ("cannot find color scheme {}".format(color_scheme_name))
             NOTIFICATION.messenger(main_text="Color Scheme [{}] not found!\nCheck spelling".format(color_scheme_name))
             return
-        
-        self.output.print_md("#Working on color scheme [{}]".format(color_scheme.Name))
 
-        is_abbr = False
-        if "abbr" in lookup_key:
-            lookup_key = lookup_key.replace("_abbr", "")
-            is_abbr = True
+        for color_scheme in color_schemes:
+            self.output.print_md("#Working on color scheme [{}]".format(color_scheme.Name))
+        
+            department_data = data[lookup_key]
+            if not department_data:
+                NOTIFICATION.messenger(main_text="No data found in the template excel file in [{}]".format(lookup_key))
+                print ("No data found in the template excel file in [{}]".format(lookup_key))
+                return
+
+            is_abbr = False
+            if "abbr" in lookup_key:
+                lookup_key = lookup_key.replace("_abbr", "")
+                is_abbr = True
+
+
+            #  is abbr, then use abbr as the driver key
+            if is_abbr:
+                temp_data = {}
+                for key, value in department_data.items():
+                    abbr = value["abbr"]
+                    temp_data[abbr] = value
+                department_data = temp_data
             
-        department_data = data[lookup_key]
+            try:
+                sample_entry = list(color_scheme.GetEntries())[0]
+            except:
+                NOTIFICATION.messenger("Please at least have one placeholder entry in the color scheme...")
+                return
+            storage_type = sample_entry.StorageType
 
-        #  is abbr, then use abbr as the driver key
-        if is_abbr:
-            temp_data = {}
-            for key, value in department_data.items():
-                abbr = value["abbr"]
-                temp_data[abbr] = value
-            department_data = temp_data
-        
+            current_entry_names = [x.GetStringValue() for x in color_scheme.GetEntries()]
+            if self.is_remove_unused:
+                self.remove_non_used_entry(color_scheme)
+            self.add_missing_entry(color_scheme, department_data, current_entry_names, storage_type)
+            self.update_entry_color(color_scheme, department_data)
 
-        
-        try:
-            sample_entry = list(color_scheme.GetEntries())[0]
-        except:
-            NOTIFICATION.messenger("Please at least have one placeholder entry in the color scheme...")
-            return
-        storage_type = sample_entry.StorageType
-
-        current_entry_names = [x.GetStringValue() for x in color_scheme.GetEntries()]
-        if self.is_remove_unused:
-            self.remove_non_used_entry(color_scheme)
-        self.add_missing_entry(color_scheme, department_data, current_entry_names, storage_type)
-        self.update_entry_color(color_scheme, department_data)
+            # end of updaing single color_scheme
 
     @staticmethod
     def markdown_text(text, colorRGB):
@@ -180,6 +190,17 @@ class ColorSchemeUpdater:
                                                                                            self.markdown_text("OLD COLOR RGB={}".format(old_color), old_color), 
                                                                                            self.markdown_text("NEW COLOR RGB={}".format(lookup_data["color"]), lookup_data["color"])))
 
+def get_color_schemes_by_name(scheme_name, doc = DOC):
+    """Retrieves a color scheme by its name.
+    
+    Args:
+        scheme_name (str): Name of the color scheme to find
+        doc (Document): The Revit document to query. Defaults to active document
+    """
+    color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
+    color_schemes = filter(lambda x: x.Name == scheme_name, color_schemes)
+    return color_schemes    
+    
 
 def get_color_scheme_by_name(scheme_name, doc = DOC):
     """Retrieves a color scheme by its name.
@@ -191,14 +212,18 @@ def get_color_scheme_by_name(scheme_name, doc = DOC):
     Returns:
         ColorFillScheme: The matching color scheme, or None if not found
     """
-    color_schemes = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_ColorFillSchema).WhereElementIsNotElementType().ToElements()
-    color_schemes = filter(lambda x: x.Name == scheme_name, color_schemes)
+    color_schemes = get_color_schemes_by_name(scheme_name, doc)
     if len(color_schemes)== 0:
+        print ("Cannot find the color scheme [{}].\nMaybe you renamed your color scheme recently? Talk to SZ for update.".format(scheme_name))
         NOTIFICATION.messenger(main_text = "Cannot find the color scheme [{}].\nMaybe you renamed your color scheme recently? Talk to SZ for update.".format(scheme_name))
         return
-    if len(color_schemes) > 1:
+
+    
+    if len(color_schemes) > 1 :
+        print ("Found more than one color scheme with the name [{}].\nNeed better naming.".format(scheme_name))
         NOTIFICATION.messenger(main_text = "Found more than one color scheme with the name [{}].\nNeed better naming.".format(scheme_name))
         return
+    
     return color_schemes[0]
 
 def pick_color_scheme(doc = DOC, title = "Select the color scheme", button_name = "Select", multiselect = False):

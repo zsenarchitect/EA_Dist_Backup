@@ -86,7 +86,7 @@ def joke_quote():
 
     quote = random_loading_message()
     emoji = EMOJI.random_emoji()
-    if emoji:
+    if emoji and len(emoji) > 0:
         quote = "{}\n{}".format(quote, emoji)
     
 

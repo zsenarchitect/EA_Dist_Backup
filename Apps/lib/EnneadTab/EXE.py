@@ -69,7 +69,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
                 try:
                     os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
                 except:
-                        pass
+                    pass
         return True
         
     

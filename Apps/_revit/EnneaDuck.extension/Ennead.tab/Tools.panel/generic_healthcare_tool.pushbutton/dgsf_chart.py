@@ -401,14 +401,14 @@ class OptionValidation:
         # set all digits to round to 10
         for field in self.option.FAMILY_PARA_COLLECTION:
             field = REVIT_SCHEDULE.get_field_by_name(view, field)
-            try:
-                format_option = field.GetFormatOptions()
-                format_option.UseDefault = False
-                format_option.Accuracy = 10.0
-                format_option.UseDigitGrouping = True
-                field.SetFormatOptions(format_option)
-            except Exception as e:
-                ERROR_HANDLE.print_note(e)
+        #     try:
+        #         format_option = field.GetFormatOptions()
+        #         format_option.UseDefault = False
+        #         format_option.Accuracy = 10.0
+        #         format_option.UseDigitGrouping = True
+        #         field.SetFormatOptions(format_option)
+        #     except Exception as e:
+        #         ERROR_HANDLE.print_note(e)
 
 
 

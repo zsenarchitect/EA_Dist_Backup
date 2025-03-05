@@ -10,13 +10,13 @@ def get_all_emojis():
     """Get all emojis from the emoji library.
 
     Returns:
-        list: List of emojis.
+        list: List of emojis. Returns empty list if there's an error reading the emoji file.
     """
     with io.open(DOCUMENTATION.get_text_path_by_name('_emoji_text.txt'), "r", encoding = "utf-8") as f:
         try:
             lines = f.readlines()
         except:
-            return 
+            return []
     return [x.replace("\n", "") for x  in lines if x != "\n"]
 
 
@@ -36,9 +36,15 @@ def pick_emoji_text():
 
 def random_emoji():
     """Pick a random emoji.
+    
+    Returns:
+        str: A random emoji character, or empty string if no emojis are available.
     """
     lines = get_all_emojis()
     
+    if not lines:
+        return ""
+        
     random.shuffle(lines)
     return lines[0].replace("\n", "")
     
