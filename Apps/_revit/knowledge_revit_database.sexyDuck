@@ -1763,6 +1763,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\duplicate_area_scheme_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\duplicate_area_scheme_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\icon.png",
+        "alias": "Duplicate Area Scheme",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\Excel Sheet Creator.pulldown\\excel_sheet_creator.pushbutton\\excel_sheet_creator_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Excel Sheet Creator.pulldown\\excel_sheet_creator.pushbutton\\excel_sheet_creator_script.py",
         "icon": "Ennead.tab\\ACE.panel\\Excel Sheet Creator.pulldown\\excel_sheet_creator.pushbutton\\icon.png",

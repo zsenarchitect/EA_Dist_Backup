@@ -37,9 +37,41 @@ def get_area_scheme_by_name(scheme_name, doc=DOC):
     Returns:
         AreaScheme: The matching area scheme element, or None if not found
     """
-    area_schemes = DB.FilteredElementCollector(doc)\
-            .OfCategory(DB.BuiltInCategory.OST_AreaSchemes)\
-            .WhereElementIsNotElementType()\
-            .ToElements()
+    area_schemes = get_all_area_schemes(doc)
     return next((x for x in area_schemes if x.Name == scheme_name), None)
 
+
+def get_all_area_schemes(doc=DOC):
+    """Retrieves all area schemes in the document.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        list: Collection of AreaScheme elements in the document
+    """
+    return list(DB.FilteredElementCollector(doc)\
+            .OfCategory(DB.BuiltInCategory.OST_AreaSchemes)\
+            .WhereElementIsNotElementType()\
+            .ToElements())
+
+def pick_area_scheme(doc=DOC):
+    """Picks an area scheme from the document.
+    
+    Args:
+        doc (Document): The Revit document to query. Defaults to active document
+        
+    Returns:
+        AreaScheme: The selected area scheme element, or None if no element is selected
+    """
+    from pyrevit import forms
+    class MyOption(forms.TemplateListItem):
+        @property
+        def name(self):
+            return self.item.Name
+    selected_element = forms.SelectFromList.show([MyOption(x) for x in get_all_area_schemes(doc)],
+                                              multiselect=False,
+                                              width=500,
+                                              title="Pick Area Scheme",
+                                              button_name='Select Area Scheme')
+    return selected_element

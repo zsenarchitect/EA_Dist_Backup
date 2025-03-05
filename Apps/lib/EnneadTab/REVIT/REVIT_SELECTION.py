@@ -698,6 +698,10 @@ def pick_color_scheme(doc = DOC):
     import REVIT_COLOR_SCHEME #pyright: ignore
     return REVIT_COLOR_SCHEME.pick_color_scheme(doc)
 
+def pick_area_scheme(doc = DOC):
+    import REVIT_AREA_SCHEME #pyright: ignore
+    return REVIT_AREA_SCHEME.pick_area_scheme(doc)
+
 def pick_category(doc=DOC):
     return REVIT_CATEGORY.pick_category(doc=doc)
 

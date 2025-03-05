@@ -32,3 +32,4 @@ layout:
   - batch_fix_family_name
   - wall_type_diagram
   - rename_nesting_family
+  - duplicate_area_scheme
