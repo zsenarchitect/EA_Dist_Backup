@@ -15,17 +15,27 @@ try:
 except:
     pass
 
+import GUID
 # Define the EnneadTabUpdater
 class EnneadTabUpdater(DB.IUpdater):
     def Execute(self, data):
+        """this is where the actual code will happen"""
         print("Updater was triggered!")
+        doc = data.GetDocument()
+        added_ids = data.GetAddedElementIds()
+        modded_ids = data.GetModifiedElementIds()
+        print("Added IDs: {}".format(added_ids))
+        print("Modified IDs: {}".format(modded_ids))
         
     def GetUpdaterId(self):
         # Return the unique identifier for this updater
         return self.updater_id
 
     def GetUpdaterName(self):
-        return 'EnneadTabUpdaterName'
+        if hasattr(self, "app_name"):
+            return self.app_name
+        else:
+            return 'EnneadTabUpdaterName'
 
     def GetAdditionalInformation(self):
         return 'A simple updater for testing purposes'
@@ -52,7 +62,7 @@ if __name__ == "__main__":
     updater = EnneadTabUpdater()
 
     # Create a unique Guid for the updater
-    guid = Guid.NewGuid()
+    guid =  GUID.get_guid("EnneadTab")
 
     # Create an UpdaterId using the AddInId of the current application and the unique Guid
     updater_id = DB.UpdaterId(app.ActiveAddInId, guid)

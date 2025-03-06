@@ -7,7 +7,7 @@ __title__ = "Transfer In Excel Target"
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, EXCEL, TEXT
+from EnneadTab import ERROR_HANDLE, LOG, EXCEL, TEXT, DATA_FILE
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
 from Autodesk.Revit import DB # pyright: ignore 
 import re
@@ -43,6 +43,41 @@ def formated_name(program_name):
     return program_name
 
 
+
+def process_area(area, program_target_dict):
+    """
+    This function will update the comments of the area based on the program target dict.
+    If the program target dict is not provided, it will be loaded from the DATA_FILE.
+    Doing this becasue i was planning on use IUpdater to monitor change of area. It will be better to pass quicker read.
+    """
+    if not program_target_dict:
+        return
+
+    program_assigned = area.LookupParameter("Area_$Department_Program Type").AsString()
+    if not program_assigned or program_assigned == "":
+        program_assigned = "No program assigned"
+
+    desired_program_area = program_target_dict.get(program_assigned)
+    if not desired_program_area:
+        comment = "Cannot find target value for program: [{}]".format(program_assigned)
+        fuzzy_searach = TEXT.fuzzy_search(program_assigned, program_target_dict.keys())
+        if fuzzy_searach:
+            comment += " Did you mean: [{}]?".format(fuzzy_searach)
+    else:   
+
+        current_area = area.Area
+        diff_number = current_area - desired_program_area
+        diff = pretty_print_area(abs(diff_number))
+        diff_note = "You are {} more than the target.".format(diff) if diff_number > 0 else "You are {} less than the target.".format(diff)
+        comment = "Target: {}. {}".format(pretty_print_area(desired_program_area), diff_note)
+
+    if REVIT_SELECTION.is_changable(area):
+        area.LookupParameter("Comments").Set(comment)
+    else:
+        output = script.get_output()
+        print ("Cannot change area {} due to ownership by {}".format(output.linkify(area.Id, title = program_assigned), REVIT_SELECTION.get_owner(area)))
+
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def transfer_in_excel_target(doc):
@@ -65,28 +100,7 @@ def transfer_in_excel_target(doc):
     all_areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
     for area in all_areas:
 
-        program_assigned = area.LookupParameter("Area_$Department_Program Type").AsString()
-        if not program_assigned or program_assigned == "":
-            program_assigned = "No program assigned"
-   
-        desired_program_area = program_target_dict.get(program_assigned)
-        if not desired_program_area:
-            comment = "Cannot find target value for program: [{}]".format(program_assigned)
-            fuzzy_searach = TEXT.fuzzy_search(program_assigned, program_target_dict.keys())
-            if fuzzy_searach:
-                comment += " Did you mean: [{}]?".format(fuzzy_searach)
-        else:   
-
-            current_area = area.Area
-            diff_number = current_area - desired_program_area
-            diff = pretty_print_area(abs(diff_number))
-            diff_note = "You are {} more than the target.".format(diff) if diff_number > 0 else "You are {} less than the target.".format(diff)
-            comment = "Target: {}. {}".format(pretty_print_area(desired_program_area), diff_note)
-
-        if REVIT_SELECTION.is_changable(area):
-            area.LookupParameter("Comments").Set(comment)
-        else:
-            print ("Cannot change area {} due to ownership by {}".format(output.linkify(area.Id, title = program_assigned), REVIT_SELECTION.get_owner(area)))
+        process_area(area, program_target_dict = program_target_dict)
 
     t.Commit()
 
@@ -129,7 +143,7 @@ def get_program_target_dict():
             # print (program_name, target_cell_value)
             # ignore some non-number cell such as target/Factor
 
-    
+    DATA_FILE.set_data(out, "excel_program_target_dict.sexyDuck")
     return out
 
 
