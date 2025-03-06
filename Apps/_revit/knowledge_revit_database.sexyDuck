@@ -1484,6 +1484,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\transfer_in_excel_target.pushbutton\\transfer_in_excel_target_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\transfer_in_excel_target.pushbutton\\transfer_in_excel_target_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\transfer_in_excel_target.pushbutton\\icon.png",
+        "alias": "Transfer In Excel Target",
+        "doc": "Extract program information from Excel and transfer target value based on program name.",
+        "tab": "Proj. 2151",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\update_dummy_patient_room.pushbutton\\update_dummy_patient_room_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\update_dummy_patient_room.pushbutton\\update_dummy_patient_room_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\update_dummy_patient_room.pushbutton\\icon.png",
