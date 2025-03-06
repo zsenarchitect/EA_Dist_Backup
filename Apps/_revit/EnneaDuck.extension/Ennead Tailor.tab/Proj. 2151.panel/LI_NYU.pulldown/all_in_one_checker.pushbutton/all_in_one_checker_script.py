@@ -3,7 +3,7 @@
 
 
 __doc__ = "Basic area summery checker that update the data in special calculator. \n\nThis is also hooked to the sync event for this project. Request by Gayatri"
-__title__ = "Detailed Program Chart Update"
+__title__ = "DEPRECIATED:Detailed Program Chart Update"
 
 # from pyrevit import forms #
 from pyrevit import script

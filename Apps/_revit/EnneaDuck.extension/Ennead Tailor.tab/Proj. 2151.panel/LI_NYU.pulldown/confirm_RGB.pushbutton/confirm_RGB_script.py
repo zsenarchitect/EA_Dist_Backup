@@ -4,7 +4,7 @@
 
 
 __doc__ = "Even when you type in the RGB value in excel, that might get changed by someone in the future and cannot be trusted. I suggest to NOT include RGB value in the excel so there is only one source of truth, but if the team REALLY nned to have RGB value in excel written out, run this to confirm the color of cell is matching the number in excel"
-__title__ = "Confirm RGB"
+__title__ = "DEPRECIATED: Confirm RGB"
 
 # from pyrevit import forms #
 from pyrevit import script #

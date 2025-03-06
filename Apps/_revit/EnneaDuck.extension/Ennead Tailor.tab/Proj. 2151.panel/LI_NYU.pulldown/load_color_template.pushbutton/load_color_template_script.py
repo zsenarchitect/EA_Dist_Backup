@@ -17,7 +17,7 @@ F: Program Color
 ANYTHING ELSE IN THE EXCEL FILE WILL BE IGNORED, including the hex code text on color cell and red, green, blue value number. 
 Those manual color text cannot be trusted on the long run.
 """
-__title__ = "Load Color Template"
+__title__ = "DEPRECIATED: Load Color Template"
 
 # from pyrevit import forms #
 from pyrevit import script #

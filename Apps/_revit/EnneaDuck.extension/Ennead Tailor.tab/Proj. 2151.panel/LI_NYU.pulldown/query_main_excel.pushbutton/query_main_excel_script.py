@@ -1,12 +1,12 @@
 __doc__ = "Use the shaed excel file to read the correct naming for department and program type. Provide solution to batch fix."
-__title__ = "Query Main Excel"
+__title__ = "DEPRECIATED: Query Main Excel"
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 import os
 import re
 
-from EnneadTab import ERROR_HANDLE, LOG, EXCEL, NOTIFICATION, TEXT
+from EnneadTab import ERROR_HANDLE, LOG, EXCEL, NOTIFICATION, TEXT, USER
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_AREA_SCHEME, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -417,7 +417,10 @@ def create_department_instances(data, excel_section_list):
 if __name__ == "__main__":
     from pyrevit import script
     output = script.get_output()
-    query_main_excel()
+    if USER.IS_DEVELOPER:
+        query_main_excel()
+    else:
+        NOTIFICATION.messenger("This function has been migrated tot he healthcare toolbox.")
 
 
 

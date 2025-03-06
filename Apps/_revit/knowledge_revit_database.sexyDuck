@@ -1397,7 +1397,7 @@
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\all_in_one_checker.pushbutton\\all_in_one_checker_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\all_in_one_checker.pushbutton\\all_in_one_checker_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\all_in_one_checker.pushbutton\\icon.png",
-        "alias": "Detailed Program Chart Update",
+        "alias": "DEPRECIATED:Detailed Program Chart Update",
         "doc": "Basic area summery checker that update the data in special calculator. \n\nThis is also hooked to the sync event for this project. Request by Gayatri",
         "tab": "Proj. 2151",
         "tab_icon": null,
@@ -1415,7 +1415,7 @@
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\confirm_RGB.pushbutton\\confirm_RGB_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\confirm_RGB.pushbutton\\confirm_RGB_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\confirm_RGB.pushbutton\\icon.png",
-        "alias": "Confirm RGB",
+        "alias": "DEPRECIATED: Confirm RGB",
         "doc": "Even when you type in the RGB value in excel, that might get changed by someone in the future and cannot be trusted. I suggest to NOT include RGB value in the excel so there is only one source of truth, but if the team REALLY nned to have RGB value in excel written out, run this to confirm the color of cell is matching the number in excel",
         "tab": "Proj. 2151",
         "tab_icon": null,
@@ -1460,7 +1460,7 @@
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\query_main_excel.pushbutton\\query_main_excel_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\query_main_excel.pushbutton\\query_main_excel_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\query_main_excel.pushbutton\\icon.png",
-        "alias": "Query Main Excel",
+        "alias": "DEPRECIATED: Query Main Excel",
         "doc": "Use the shaed excel file to read the correct naming for department and program type. Provide solution to batch fix.",
         "tab": "Proj. 2151",
         "tab_icon": null,

@@ -23,18 +23,26 @@ def ownership_inspect(doc):
 
     output = script.get_output()
     all_elements = []
-
-    categories = [DB.BuiltInCategory.OST_Rooms, 
-                  DB.BuiltInCategory.OST_Areas, 
-                  DB.BuiltInCategory.OST_Walls, 
-                  DB.BuiltInCategory.OST_Columns, 
-                  DB.BuiltInCategory.OST_Floors, 
-                  DB.BuiltInCategory.OST_Roofs,
-                  DB.BuiltInCategory.OST_Views,
-                  ]
+    
+    # Get all BuiltInCategory enum values using System.Enum.GetValues
+    import System # pyright: ignore 
+    categories = list(System.Enum.GetValues(DB.BuiltInCategory))
+    
+    # Alternatively, you can select specific categories if needed
+    # categories = [DB.BuiltInCategory.OST_Rooms, 
+    #               DB.BuiltInCategory.OST_Areas, 
+    #               DB.BuiltInCategory.OST_Walls, 
+    #               DB.BuiltInCategory.OST_Columns, 
+    #               DB.BuiltInCategory.OST_Floors, 
+    #               DB.BuiltInCategory.OST_Roofs,
+    #               DB.BuiltInCategory.OST_Views,
+    #              ]
+    
     for category in categories:
-        
-        all_elements.extend(list(DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().ToElements()))
+        try:
+            all_elements.extend(list(DB.FilteredElementCollector(doc).OfCategory(category).WhereElementIsNotElementType().ToElements()))
+        except Exception as e:
+            print ("Nothing found for category: {} with error: {}".format(category, e))
 
     for element in all_elements:
         owner = REVIT_SELECTION.get_owner(element)
