@@ -56,8 +56,18 @@ class AreaSchemeDuplicator:
     def _select_and_duplicate_scheme(self):
         """Select the original area scheme and create a duplicate with new name."""
         # Pick area scheme to duplicate
-        self.original_area_scheme = REVIT_SELECTION.pick_area_scheme(self.doc)
+        self.original_area_scheme = REVIT_SELECTION.pick_area_scheme(self.doc, 
+                                                                     title="Pick the area scheme to duplicate from", 
+                                                                     button_name="Select Area Scheme to Duplicate From")
 
+        self.new_area_scheme = REVIT_SELECTION.pick_area_scheme(self.doc, 
+                                                                 title="Pick the target area scheme", 
+                                                                 button_name="Pick Target AreaScheme")
+
+
+    def ARCHIVE_duplicate_area_scheme(self):
+
+        """this is archived method because you after duplication this new area shcme has not color fill scheme to duplicate from."""
         # Get a new name for the new area scheme, cannot be same as other area schemes
         new_name = forms.ask_for_unique_string(
             title="New Area Scheme Name",
@@ -78,7 +88,7 @@ class AreaSchemeDuplicator:
         """Let user select which views to duplicate."""
         # Get all views that use original area scheme
         all_views = DB.FilteredElementCollector(self.doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
-        views_using_original_scheme = [v for v in all_views if hasattr(v, "AreaScheme") and v.AreaScheme.Id == self.original_area_scheme.Id]
+        views_using_original_scheme = [v for v in all_views if hasattr(v, "AreaScheme") and v.AreaScheme and v.AreaScheme.Id == self.original_area_scheme.Id]
 
         self.selected_views = forms.SelectFromList.show(
             [self.ViewOption(v) for v in views_using_original_scheme],
@@ -120,6 +130,14 @@ class AreaSchemeDuplicator:
         """
         # Skip if parameter doesn't exist in either source or target
         source_param = source.LookupParameter(para_name)
+
+        # handle api change from 2024 to 2025
+        if hasattr(source_param, "HasValue") and not source_param.HasValue:
+            return
+        if hasattr(source_param, "ParameterHasValue") and not source_param.ParameterHasValue:
+            return
+
+
         target_param = target.LookupParameter(para_name)
         
         if not source_param or not target_param:

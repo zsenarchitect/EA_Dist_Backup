@@ -7,3 +7,4 @@ layout:
   - toggle_warning_mode
   - open_app_store
   - pick_absolute_similar
+  - ownership_inspect

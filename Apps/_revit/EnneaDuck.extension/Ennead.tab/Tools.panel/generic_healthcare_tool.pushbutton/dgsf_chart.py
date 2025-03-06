@@ -149,13 +149,15 @@ class OptionValidation:
 
 
         container_view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc = self.doc)
-        note += "\nThe view used to contain all calculator is [{}]".format(output.linkify(container_view.Id, 
-                                                                                            title=self.option.CALCULATOR_CONTAINER_VIEW_NAME))
+        if container_view:
+            note += "\nThe view used to contain all calculator is [{}]".format(output.linkify(container_view.Id, 
+                                                                                                title=self.option.CALCULATOR_CONTAINER_VIEW_NAME))
 
         
         schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc = self.doc)
-        note += "\nThe view used to contain final schedule is [{}]".format(output.linkify(schedule_view.Id, 
-                                                                                            title=self.option.FINAL_SCHEDULE_VIEW_NAME))
+        if schedule_view:
+            note += "\nThe view used to contain final schedule is [{}]".format(output.linkify(schedule_view.Id, 
+                                                                                                title=self.option.FINAL_SCHEDULE_VIEW_NAME))
 
 
 
@@ -451,13 +453,13 @@ class OptionValidation:
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.OVERALL_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
 
-            print("Area scheme [{}] not found for overall area scheme, please create it first".format(self.option.OVERALL_AREA_SCHEME_NAME))
+            self.output.print_md("## Area scheme [{}] not found for overall area scheme, please create it first".format(self.option.OVERALL_AREA_SCHEME_NAME))
             return False
 
 
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.DEPARTMENT_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
-            print("Area scheme [{}] not found for departmental scheme, please create it first".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
+            self.output.print_md("## Area scheme [{}] not found for departmental scheme, please create it first".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
             return False
 
         return True

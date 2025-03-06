@@ -55,7 +55,7 @@ def get_all_area_schemes(doc=DOC):
             .WhereElementIsNotElementType()\
             .ToElements())
 
-def pick_area_scheme(doc=DOC):
+def pick_area_scheme(doc=DOC, title="Pick an area scheme", button_name="Select Area Scheme"):
     """Picks an area scheme from the document.
     
     Args:
@@ -72,6 +72,6 @@ def pick_area_scheme(doc=DOC):
     selected_element = forms.SelectFromList.show([MyOption(x) for x in get_all_area_schemes(doc)],
                                               multiselect=False,
                                               width=500,
-                                              title="Pick Area Scheme",
-                                              button_name='Select Area Scheme')
+                                              title=title,
+                                              button_name=button_name)
     return selected_element

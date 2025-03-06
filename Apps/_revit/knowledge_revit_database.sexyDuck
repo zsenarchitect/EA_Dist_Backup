@@ -2262,7 +2262,7 @@
         "script": "Ennead.tab\\Manage.panel\\remove not placed area.pushbutton\\remove not placed area_script.py",
         "icon": "Ennead.tab\\Manage.panel\\remove not placed area.pushbutton\\icon.png",
         "alias": "Remove Not Placed Area and Rooms",
-        "doc": "This gives you ability to remove rooms and areas that is not placed in the file to increase document accuracy.\n\nUnbounded/redundent area and rooms will be checked BUT NOT DELETED SO YOU CAN MAKE THE FINAL DECISION.(Mostly likely they are still important for you.)\n\nYou also havethe option to check room status by phase.",
+        "doc": "This tool allows you to manage room and area accuracy by identifying and removing elements that are not properly placed in the project.\n\nFeatures:\n- Remove unplaced rooms and areas\n- Identify unbounded/redundant elements for review\n- Phase-specific room inspection\n- Find elements with negative areas or missing department assignments",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true
@@ -2613,6 +2613,15 @@
         "script": "Ennead.tab\\UI.panel\\open_app_store.pushbutton\\open_app_store_script.py",
         "icon": "Ennead.tab\\UI.panel\\open_app_store.pushbutton\\icon.png",
         "alias": "Open App Store",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "UI",
+        "tab_icon": null,
+        "is_popular": false
+    },
+    "Ennead.tab\\UI.panel\\ownership_inspect.pushbutton\\ownership_inspect_script.py": {
+        "script": "Ennead.tab\\UI.panel\\ownership_inspect.pushbutton\\ownership_inspect_script.py",
+        "icon": "Ennead.tab\\UI.panel\\ownership_inspect.pushbutton\\icon.png",
+        "alias": "Ownership Inspect",
         "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
         "tab": "UI",
         "tab_icon": null,
