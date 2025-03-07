@@ -16,7 +16,7 @@ import xlsxwriter as xw
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, COLOR, EXE, DATA_FILE, LOG
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, COLOR, EXE, DATA_FILE, LOG, EXCEL
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
@@ -58,11 +58,30 @@ def export_color_scheme():
     #forms.save_excel_file()
 
 def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
+    if REVIT_APPLICATION.is_version_at_least():
+        export_using_new_method(color_scheme, is_ignore_non_used)
+    else:
+        export_using_old_method(color_scheme, is_ignore_non_used)
+
+
+def export_using_new_method(color_scheme, is_ignore_non_used):
+    print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sen is fixing this to be a dict")
+    data = []
+
+
+
+    # prepare the header
+    data.append(EXCEL.ExcelDataItem(color_scheme.Name, 0, 0))
+
+    
+def export_using_old_method(color_scheme, is_ignore_non_used):
     cate_name = DB.Category.GetCategory(doc, color_scheme.CategoryId).Name
     excel_name =  "[{}] {}".format(cate_name, color_scheme.Name)
     excel_name =  color_scheme.Name
     file_location = forms.save_file(file_ext='xlsx',
                                     default_name=excel_name)
+
+   
 
     workbook = xw.Workbook(file_location)
     worksheet = workbook.add_worksheet("Color Scheme")
@@ -110,6 +129,7 @@ def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
         
         
     DATA_FILE.set_data(alt_dict, "color_scheme_dict.sexyDuck")
+    EXCEL.save_data_to_excel(data, file_location, worksheet="Color Scheme")
 
     
     

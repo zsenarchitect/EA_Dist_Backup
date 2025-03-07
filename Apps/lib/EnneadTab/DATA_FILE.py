@@ -159,7 +159,9 @@ def _save_dict_to_json(data_dict, filepath, use_encode=True):
     """Save dictionary to JSON file with proper encoding.
     
     Handles both IronPython and CPython environments, ensuring proper UTF-8
-    encoding without BOM (Byte Order Mark).
+    encoding without BOM (Byte Order Mark). Includes automatic handling for
+    non-serializable objects by converting them through a cascade of types:
+    boolean -> integer -> float -> string.
 
     Args:
         data_dict (dict): Dictionary to save
@@ -171,8 +173,32 @@ def _save_dict_to_json(data_dict, filepath, use_encode=True):
         bool: True if save successful, False otherwise
     """
     try:
-        # Convert to JSON string first
-        json_str = json.dumps(data_dict, ensure_ascii=False, indent=4)
+        # Create a custom JSON encoder to handle non-serializable objects
+        class EnneadTabJSONEncoder(json.JSONEncoder):
+            def default(self, obj):
+                try:
+                    return super(EnneadTabJSONEncoder, self).default(obj)
+                except TypeError:
+                    # Try type conversion cascade: bool -> int -> float -> str
+                    str_obj = str(obj).lower()
+                    if str_obj == "true":
+                        return True
+                    elif str_obj == "false":
+                        return False
+                    
+                    try:
+                        return int(obj)
+                    except (ValueError, TypeError):
+                        try:
+                            return float(obj)
+                        except (ValueError, TypeError):
+                            return str(obj)
+        
+        try:
+            json_str = json.dumps(data_dict, ensure_ascii=False, indent=4, sort_keys=True, cls=EnneadTabJSONEncoder)
+        except Exception as e:
+            print("Failed to convert data_dict to json_str because of {}".format(str(e)))
+            json_str = json.dumps(data_dict, ensure_ascii=True, indent=4, sort_keys=True, cls=EnneadTabJSONEncoder)
         
         if sys.platform == "cli":  # IronPython
             from System.IO import File, StreamWriter

@@ -134,10 +134,10 @@ class ExcelDataItem:
         column (int|str): Column index or letter reference
         cell_color (tuple): RGB color tuple for cell background
         text_color (tuple): RGB color tuple for text
-        border_style (str): Border style specification
+        border_style (int): Border style specification
         border_color (tuple): RGB color tuple for border
-        top_border_style (str): Top border style specification
-        side_border_style (str): Left/right border style specification
+        top_border_style (int): Top border style specification
+        side_border_style (int): Left/right border style specification
     """
     def __init__(
         self,
@@ -153,6 +153,12 @@ class ExcelDataItem:
     ):
         if isinstance(column, str):
             column = letter_to_index(column, start_from_zero=True)
+
+        # Ensure all text data is properly encoded. This is a protection to Revit 2025 new CORE.
+        if isinstance(item, str):
+            # Replace or handle any problematic characters
+            item = item.replace('\x00', '') # remove any null character
+            
         self.item = item
         self.row = row
         self.column = column
@@ -167,6 +173,42 @@ class ExcelDataItem:
         if self.cell_color:
             info += " ({})".format(self.cell_color)
         return info
+
+    def as_dict(self):
+        return {
+            "item": self.item,
+            "row": self.row,
+            "column": self.column,
+            "cell_color": self.cell_color,
+            "text_color": self.text_color,
+            "border_style": self.border_style,
+            "border_color": self.border_color,
+            "top_border_style": self.top_border_style,
+            "side_border_style": self.side_border_style,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            item=data["item"],
+            row=data["row"],
+            column=data["column"],
+            cell_color=data["cell_color"],
+            text_color=data["text_color"],
+            border_style=data["border_style"],
+            border_color=data["border_color"],
+            top_border_style=data["top_border_style"],
+            side_border_style=data["side_border_style"]
+        )
+
+
+    @staticmethod
+    def convert_datas_to_dict(datas):
+        return {i: data.as_dict() for i, data in enumerate(datas)}
+
+    @staticmethod
+    def convert_dict_to_datas(data_dict):
+        return [ExcelDataItem.from_dict(data) for data in data_dict.values()]
 
 
 def get_all_worksheets(filepath):
@@ -479,6 +521,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         bool: True if save successful, False otherwise
     """
 
+
     # note to self: rework the format method in dataitem so can construct any combonation format
     # see doc here: https://xlsxwriter.readthedocs.io/format.html#format-set-border
     def write_data_item(worksheet, data):
@@ -526,9 +569,9 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
 
     workbook = xlsxwriter.Workbook(filepath)
 
-    worksheet = workbook.add_worksheet(worksheet)
+    worksheet_item = workbook.add_worksheet(worksheet)
     for data_entry in data:
-        write_data_item(worksheet, data_entry)
+        write_data_item(worksheet_item, data_entry)
 
     column_max_width_dict = dict()
     for entry in data:
@@ -540,22 +583,45 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         )
 
     for column in column_max_width_dict.keys():
-        worksheet.set_column(column, column, column_max_width_dict[column])
+        worksheet_item.set_column(column, column, column_max_width_dict[column])
 
     if freeze_row:
-        worksheet.freeze_panes(freeze_row, 0)
+        worksheet_item.freeze_panes(freeze_row, 0)
 
     try:
         workbook.close()
         if not open_after:
             NOTIFICATION.messenger(main_text="Excel saved at '{}'".format(filepath))
-    except:
+    except Exception as e:
+        # import ERROR_HANDLE
+        # print (ERROR_HANDLE.get_alternative_traceback())
         NOTIFICATION.messenger(
             main_text="the excel file you picked is still open, cannot override. Writing cancelled."
         )
-        return
 
-    if open_after:
+        if USER.IS_DEVELOPER:
+            job_data = {
+                "mode": "write",
+                "filepath": filepath,
+                "worksheet": worksheet,
+                "freeze_row": freeze_row,
+                "data": ExcelDataItem.convert_datas_to_dict(data)
+            }
+      
+            DATA_FILE.set_data(job_data, "excel_handler_input.sexyDuck")
+
+            EXE.try_open_app("ExcelHandler")
+            max_wait = 100
+            wait = 0
+            while wait<max_wait:
+                job_data = DATA_FILE.get_data("excel_handler_input.sexyDuck")
+                if job_data.get("status") == "done":
+                    break
+                time.sleep(0.1)
+                wait += 1
+        
+
+    if open_after and os.path.exists(filepath):
         os.startfile(filepath)
 
 

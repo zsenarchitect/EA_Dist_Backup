@@ -14,14 +14,16 @@ Key Features:
 - Silent error handling options
 """
 
-
-import ENVIRONMENT
-import FOLDER
-import EMAIL
-import USER
-import TIME
-import NOTIFICATION
-import OUTPUT
+try:
+    import ENVIRONMENT
+    import FOLDER
+    import EMAIL
+    import USER
+    import TIME
+    import NOTIFICATION
+    import OUTPUT
+except Exception as e:
+    print(e)
 
 
 def get_alternative_traceback():
