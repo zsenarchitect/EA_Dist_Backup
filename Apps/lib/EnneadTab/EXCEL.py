@@ -151,6 +151,19 @@ class ExcelDataItem:
         top_border_style=None,
         side_border_style=None,
     ):
+        """_summary_
+
+        Args:
+            item (_type_): _description_
+            row (_type_): _description_
+            column (_type_): _description_
+            cell_color (_type_, optional): _description_. Defaults to None.
+            text_color (_type_, optional): _description_. Defaults to None.
+            border_style (_type_, optional): _description_. Defaults to None.
+            border_color (_type_, optional): _description_. Defaults to None.
+            top_border_style (_type_, optional): _description_. Defaults to None.
+            side_border_style (_type_, optional): _description_. Defaults to None.
+        """
         if isinstance(column, str):
             column = letter_to_index(column, start_from_zero=True)
 

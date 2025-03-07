@@ -34,7 +34,7 @@ pyRevit Features:
 - Import/export keynote data
 - Track keynote usage within the project
 
-Advanced Functionality from EnneadTab TO-DO:
+Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
 - Batch operations for keynote management
 - Parent key renaming with automatic child references update
 - Actual translation function by openAI
@@ -66,6 +66,8 @@ from pyrevit.runtime.types import DocumentEventUtils
 from pyrevit.interop import adc
 
 import keynotesdb as kdb
+
+import additional_utils as AU
 
 logger = script.get_logger()
 output = script.get_output()

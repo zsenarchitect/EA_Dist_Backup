@@ -65,15 +65,44 @@ def export_color_scheme_to_excel(color_scheme, is_ignore_non_used):
 
 
 def export_using_new_method(color_scheme, is_ignore_non_used):
-    print ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Sen is fixing this to be a dict")
+    cate_name = DB.Category.GetCategory(doc, color_scheme.CategoryId).Name
+    excel_name =  "[{}] {}".format(cate_name, color_scheme.Name)
+    excel_name =  color_scheme.Name
+    file_location = forms.save_file(file_ext='xlsx',
+                                    default_name=excel_name)
+
     data = []
-
-
-
     # prepare the header
-    data.append(EXCEL.ExcelDataItem(color_scheme.Name, 0, 0))
-
+    data.append(EXCEL.ExcelDataItem("Parameter Value", 0, "A", cell_color=(120,120,120)))
+    data.append(EXCEL.ExcelDataItem("Is In Use", 0, "B", cell_color=(120,120,120)))
+    data.append(EXCEL.ExcelDataItem("Color", 0, "C", cell_color=(120,120,120)))
+    data.append(EXCEL.ExcelDataItem("Color R", 0, "D", cell_color=(120,120,120)))
+    data.append(EXCEL.ExcelDataItem("Color G", 0, "E", cell_color=(120,120,120)))
+    data.append(EXCEL.ExcelDataItem("Color B", 0, "F", cell_color=(120,120,120)))
     
+    if is_ignore_non_used:
+        entries = [entry for entry in color_scheme.GetEntries() if entry.IsInUse]
+    else:
+        entries = color_scheme.GetEntries()
+    
+    for i, entry in enumerate(entries):
+        if not entry.Color.IsValid:
+            print ("Color is not valid for <{}>".format(entry.GetStringValue ()))
+            continue
+
+        row = i + 1
+        data.append(EXCEL.ExcelDataItem(entry.GetStringValue(), row, "A"))
+        data.append(EXCEL.ExcelDataItem("Yes" if entry.IsInUse else "No", row, "B"))
+        color_pack = (entry.Color.Red, entry.Color.Green, entry.Color.Blue)
+        color_text = "{}-{}-{}".format(*color_pack)
+        data.append(EXCEL.ExcelDataItem(" ", row, "C", cell_color=color_pack))
+        data.append(EXCEL.ExcelDataItem(entry.Color.Red, row, "D"))
+        data.append(EXCEL.ExcelDataItem(entry.Color.Green, row, "E"))
+        data.append(EXCEL.ExcelDataItem(entry.Color.Blue, row, "F"))
+        
+    EXCEL.save_data_to_excel(data, file_location, worksheet="Color Scheme")
+    NOTIFICATION.messenger("Excel saved at '{}'".format(file_location))
+
 def export_using_old_method(color_scheme, is_ignore_non_used):
     cate_name = DB.Category.GetCategory(doc, color_scheme.CategoryId).Name
     excel_name =  "[{}] {}".format(cate_name, color_scheme.Name)
@@ -129,7 +158,6 @@ def export_using_old_method(color_scheme, is_ignore_non_used):
         
         
     DATA_FILE.set_data(alt_dict, "color_scheme_dict.sexyDuck")
-    EXCEL.save_data_to_excel(data, file_location, worksheet="Color Scheme")
 
     
     
