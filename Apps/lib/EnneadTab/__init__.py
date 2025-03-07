@@ -1,5 +1,13 @@
 package_name = "EnneadTab"
 version = "3.0"
+"""If encoounrting no custome encoding 0 issue, chec for the 
+ if hasattr(sys, "setdefaultencoding"):
+     reload(sys) 
+    sys.setdefaultencoding('utf-8')
+
+having this will make the encoding fail, so just do not have it. Deal.
+
+"""
 
 import os
 import sys

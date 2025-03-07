@@ -7,10 +7,11 @@ __title__ = "Transfer In Excel Target"
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, EXCEL, TEXT, DATA_FILE
+from EnneadTab import ERROR_HANDLE, LOG, EXCEL, TEXT, DATA_FILE, FOLDER
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION
 from Autodesk.Revit import DB # pyright: ignore 
 import re
+import os
 from pyrevit import script
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
@@ -69,6 +70,8 @@ def process_area(area, program_target_dict):
         diff_number = current_area - desired_program_area
         diff = pretty_print_area(abs(diff_number))
         diff_note = "You are {} more than the target.".format(diff) if diff_number > 0 else "You are {} less than the target.".format(diff)
+        off_percent = abs(diff_number / desired_program_area) * 100
+        diff_note += " ({:.2f}% off)".format(off_percent)
         comment = "Target: {}. {}".format(pretty_print_area(desired_program_area), diff_note)
 
     if REVIT_SELECTION.is_changable(area):
@@ -78,20 +81,17 @@ def process_area(area, program_target_dict):
         print ("Cannot change area {} due to ownership by {}".format(output.linkify(area.Id, title = program_assigned), REVIT_SELECTION.get_owner(area)))
 
 
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def transfer_in_excel_target(doc):
 
     program_target_dict = get_program_target_dict()
-    output = script.get_output()
 
-    output.print_md("## Program Target Dict")
-    table_data = []
-    for item in sorted(program_target_dict.keys()):
-        table_data.append([item, pretty_print_area(program_target_dict[item])])
-    output.print_table(table_data, columns = ["Program", "Target"])
+    print_data_as_table(program_target_dict)
+    
+
  
-    print ("If your parater use value other than those above, it cannot find the target value.")
 
 
     t = DB.Transaction(doc, __title__)
@@ -104,7 +104,7 @@ def transfer_in_excel_target(doc):
 
     t.Commit()
 
-    print ("Done! All areas comments have been updated.\nAt the moment, there is not couting for how many itme of this same program used. Need a solution to for scheme indepedent.")
+    print ("Done! All areas comments have been updated.")
     
 
 def get_program_target_dict():
@@ -144,7 +144,24 @@ def get_program_target_dict():
             # ignore some non-number cell such as target/Factor
 
     DATA_FILE.set_data(out, "excel_program_target_dict.sexyDuck")
+
+
     return out
+
+
+def print_data_as_table(data):
+    output = script.get_output()
+    output.print_md("## Program Target Dict")
+    table_data = []
+    for item in sorted(data.keys()):
+        table_data.append([item, pretty_print_area(data[item])])
+    output.print_table(table_data, columns = ["Program", "Target"])
+ 
+    print ("If your parater use value other than those above, it cannot find the target value.")
+    print ("At the moment, there is not couting for how many itme of this same program used. Need a solution to for scheme indepedent.")
+
+    output.save_contents(FOLDER.get_EA_dump_folder_file("Program Target Dict.html"))
+    os.startfile(FOLDER.get_EA_dump_folder_file("Program Target Dict.html"))
 
 
 def pretty_print_area(number):

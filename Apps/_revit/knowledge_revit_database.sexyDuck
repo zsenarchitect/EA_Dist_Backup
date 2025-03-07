@@ -1469,7 +1469,7 @@
     "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\register_area_comment_updater.pushbutton\\register_area_comment_updater_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\register_area_comment_updater.pushbutton\\register_area_comment_updater_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\register_area_comment_updater.pushbutton\\icon.png",
-        "alias": "(Un)Register Area Comment Updater",
+        "alias": "(Un)Register Area Comment Live Updater",
         "doc": "Registration tool for automatic Area comment updates from Excel data. Monitors area elements for changes and syncs with external data.",
         "tab": "Proj. 2151",
         "tab_icon": null,
