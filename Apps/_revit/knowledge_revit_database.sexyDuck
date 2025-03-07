@@ -1853,6 +1853,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\keynote_assistant_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\keynote_assistant_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\icon.png",
+        "alias": "Keynote Assistant",
+        "doc": "Clone from pyrevit keynote manager. But implement some Ennead Flavor.",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\lines_in_view_locator_script.py": {
         "script": "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\lines_in_view_locator_script.py",
         "icon": "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\icon.png",

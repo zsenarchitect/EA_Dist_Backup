@@ -32,7 +32,7 @@ def is_update_too_soon():
     recent_update_time = data.get("last_update_time", None)
     if not recent_update_time:
         return False
-    if time.time() - recent_update_time < 60.0:
+    if time.time() - recent_update_time < 1260.0:
         return True
     return False
 

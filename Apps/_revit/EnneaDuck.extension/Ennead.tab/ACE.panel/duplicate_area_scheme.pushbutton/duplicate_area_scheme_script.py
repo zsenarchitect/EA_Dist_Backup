@@ -48,6 +48,8 @@ class AreaSchemeDuplicator:
         t.Start()
         
         self._select_and_duplicate_scheme()
+        if not self.original_area_scheme or not self.new_area_scheme:
+            return
         self._select_views()
         self._process_views()
         
@@ -59,10 +61,13 @@ class AreaSchemeDuplicator:
         self.original_area_scheme = REVIT_SELECTION.pick_area_scheme(self.doc, 
                                                                      title="Pick the area scheme to duplicate from", 
                                                                      button_name="Select Area Scheme to Duplicate From")
-
+        if not self.original_area_scheme:
+            return
         self.new_area_scheme = REVIT_SELECTION.pick_area_scheme(self.doc, 
                                                                  title="Pick the target area scheme", 
                                                                  button_name="Pick Target AreaScheme")
+        if not self.new_area_scheme:
+            return
 
 
     def ARCHIVE_duplicate_area_scheme(self):

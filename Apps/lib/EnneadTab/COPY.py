@@ -5,7 +5,7 @@ This module also ensures that large files are completely copied before returning
 
 """
 
-import shutil
+
 import os
 import time
 
@@ -41,6 +41,7 @@ def copyfile_with_cpy(src, dst, include_metadata=True, verify=True, timeout=120)
         src: Source file path
         dst: Destination file path
     """
+    import shutil
      # Get source file size for verification
     if verify and os.path.exists(src):
         src_size = os.path.getsize(src)
@@ -168,6 +169,7 @@ def run_unittest():
             
         def tearDown(self):
             # Clean up test files
+            import shutil
             try:
                 shutil.rmtree(self.test_dir)
                 print("Test cleanup successful")
