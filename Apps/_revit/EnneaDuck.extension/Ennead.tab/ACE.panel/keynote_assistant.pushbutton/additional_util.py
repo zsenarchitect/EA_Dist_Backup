@@ -5,7 +5,7 @@ proDUCKtion.validify()
 #     print("{}: {}".format(i+1, path))
 
 
-# from EnneadTab import ERROR_HANDLE
+from EnneadTab import ERROR_HANDLE
 # from EnneadTab import LOG
 # from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
@@ -28,3 +28,6 @@ def export_keynote():
     pass
 
 
+
+if __name__ == "__main__":
+    pass

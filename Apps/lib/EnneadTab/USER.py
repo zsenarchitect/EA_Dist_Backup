@@ -25,7 +25,10 @@ import os
 import time
 import ENVIRONMENT
 
-import UNIT_TEST 
+try:
+    import UNIT_TEST 
+except:
+    pass
 
 
 

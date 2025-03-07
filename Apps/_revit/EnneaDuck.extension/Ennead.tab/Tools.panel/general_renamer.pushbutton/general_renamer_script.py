@@ -99,6 +99,9 @@ def remove_creator_mark(name):
     if "____from" in name:
         name = name.split("____from")[0]
 
+    if "____(" in name:
+        name = name.split("____(")[0]
+
     return name
 
 

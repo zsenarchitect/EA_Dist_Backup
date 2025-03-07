@@ -67,7 +67,7 @@ from pyrevit.interop import adc
 
 import keynotesdb as kdb
 
-import additional_utils as AU
+import additional_util as AU
 
 logger = script.get_logger()
 output = script.get_output()

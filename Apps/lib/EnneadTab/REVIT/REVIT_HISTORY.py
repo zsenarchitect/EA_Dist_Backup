@@ -6,9 +6,9 @@ import sys
 import time
 import io
 
-if hasattr(sys, "setdefaultencoding"):
-    reload(sys) # pyright: ignore # Required to set default encoding in Python 2
-    sys.setdefaultencoding('utf-8')
+# if hasattr(sys, "setdefaultencoding"):
+#     reload(sys) # pyright: ignore # Required to set default encoding in Python 2
+#     sys.setdefaultencoding('utf-8')
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)

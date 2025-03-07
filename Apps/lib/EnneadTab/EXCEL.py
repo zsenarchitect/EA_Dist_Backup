@@ -26,8 +26,8 @@ import sys
 
 import time
 import io
-if hasattr(sys, "setdefaultencoding"):
-    sys.setdefaultencoding("utf-8")
+# if hasattr(sys, "setdefaultencoding"):
+#     sys.setdefaultencoding("utf-8")
 
 
 

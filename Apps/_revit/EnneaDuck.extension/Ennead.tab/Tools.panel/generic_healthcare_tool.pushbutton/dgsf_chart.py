@@ -219,6 +219,11 @@ class OptionValidation:
                                       REVIT_VIEW.get_default_view_type("drafting").Id)
         view.Name = self.option.CALCULATOR_CONTAINER_VIEW_NAME
         view.Scale = 250
+        try:
+            view.LookupParameter("Views_$Group").Set("Ennead")
+            view.LookupParameter("Views_$Series").Set("Healthcare (´･ᆺ･`)")
+        except:
+            pass
         t.Commit()
         return True
 
