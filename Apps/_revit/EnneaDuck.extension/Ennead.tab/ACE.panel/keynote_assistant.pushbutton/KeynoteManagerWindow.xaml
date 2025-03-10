@@ -293,12 +293,22 @@
                             Click="export_visible_keynotes"/>
 
                 </Grid>
-                <Button Content="ExportKeynotesAsExcel"
-                            BorderThickness="1"
-                            Margin="0,5,0,0"
-                            Padding="8,4,8,4"
-                            Click="export_keynotes_enneadtab"/>
             </StackPanel>
+            
+            <GroupBox Header="EnneadTab Feature" DockPanel.Dock="Bottom" Margin="0,10,0,0" Padding="5">
+                <StackPanel>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            Click="export_keynotes_enneadtab">
+                        <TextBlock TextAlignment="Center">
+                            Export Exterior<LineBreak/>Interior Keynotes<LineBreak/>As Excel
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+            </GroupBox>
+            
             <StackPanel DockPanel.Dock="Top">
                 <Grid Height="26">
                     <Grid.ColumnDefinitions>
