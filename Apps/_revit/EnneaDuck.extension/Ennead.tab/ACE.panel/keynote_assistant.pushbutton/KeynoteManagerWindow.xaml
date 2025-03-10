@@ -291,7 +291,13 @@
                             Padding="8,4,8,4"
                             ToolTip = "{DynamicResource ExportVisibleKeynotesInfo}"
                             Click="export_visible_keynotes"/>
+
                 </Grid>
+                <Button Content="ExportKeynotesAsExcel"
+                            BorderThickness="1"
+                            Margin="0,5,0,0"
+                            Padding="8,4,8,4"
+                            Click="export_keynotes_enneadtab"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Top">
                 <Grid Height="26">

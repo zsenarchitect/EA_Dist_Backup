@@ -36,7 +36,6 @@ pyRevit Features:
 
 Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
 - Batch operations for keynote management
-- Parent key renaming with automatic child references update
 - Actual translation function by openAI
 - Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
 - This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.
@@ -107,6 +106,9 @@ def get_keynote_pcommands():
 
 
 class EditRecordWindow(forms.WPFWindow):
+
+
+        
     def __init__(self,
                  owner,
                  conn, mode,
@@ -408,6 +410,15 @@ class EditRecordWindow(forms.WPFWindow):
 
 
 class KeynoteManagerWindow(forms.WPFWindow):
+    ################## group EnneadTab item at top for furtuer replacement ease ########################
+    def export_keynotes_enneadtab(self, sender, args):
+        AU.export_keynote(keynote_data_conn = self._conn)
+
+
+
+    ################## end of EnneadTab group ########################
+
+    
     def __init__(self, xaml_file_name, reset_config=False):
         forms.WPFWindow.__init__(self, xaml_file_name)
 
