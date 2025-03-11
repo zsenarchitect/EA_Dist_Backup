@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         ShowInTaskbar="False"
-        Width="850" Height="750"
+        Width="850" Height="950"
         MinWidth="650" MinHeight="435"
         ResizeMode="CanResizeWithGrip"
         HorizontalContentAlignment="Center"
@@ -322,6 +322,14 @@
                             ToolTip="Batch attach keynotes to selected elements in Revit."
                             Click="batch_attach_keynotes">
                         <TextBlock TextAlignment="Center">Batch Reattach<LineBreak/>Keynotes Parent</TextBlock>
+                    </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            ToolTip="Edit the extended database Excel file."
+                            Click="edit_extended_db_excel">
+                        <TextBlock TextAlignment="Center">Edit Extended<LineBreak/>Database Excel</TextBlock>
                     </Button>
                 </StackPanel>
             </GroupBox>

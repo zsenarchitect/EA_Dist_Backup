@@ -58,7 +58,8 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > [!NOTE]
 > Attention, __Revit 2025__ users!
 > <br>
-> Due to the significant .Net framework changes from 2024 to 2025, pyRevit 4.x only support 2024 and below. pyRevit 5 will support all Revit version.<br>
+> Due to the significant .Net framework changes from 2024 to 2025, pyRevit 4.x only support 2024 and below. pyRevit 5 will support all Revit version.
+> Make sure you have COMPLETELY removed pyrevit 4.x before adaption version __5.0.1__<br>
 
 
 

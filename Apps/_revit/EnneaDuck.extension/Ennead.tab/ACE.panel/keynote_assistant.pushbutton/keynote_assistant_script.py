@@ -414,9 +414,12 @@ class EditRecordWindow(forms.WPFWindow):
 
 class KeynoteManagerWindow(forms.WPFWindow):
     ################## group EnneadTab item at top for furtuer replacement ease ########################
+
+    @ERROR_HANDLE.try_catch_error()
     def export_keynotes_enneadtab(self, sender, args):
         AU.export_keynote(keynote_data_conn = self._conn)
 
+    @ERROR_HANDLE.try_catch_error()
     def cleanup_quote_text(self, sender, args):
         AU.cleanup_quote_text(keynote_data_conn = self._conn)
         self.refresh(sender, args)
@@ -428,6 +431,9 @@ class KeynoteManagerWindow(forms.WPFWindow):
         self.refresh(sender, args)
 
 
+    @ERROR_HANDLE.try_catch_error()
+    def edit_extended_db_excel(self, sender, args):
+        AU.edit_extended_db_excel(keynote_data_conn = self._conn)
 
 
     ################## end of EnneadTab group ########################

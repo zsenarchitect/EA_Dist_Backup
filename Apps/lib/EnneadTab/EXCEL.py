@@ -121,6 +121,11 @@ def get_column_index(letter, start_from_zero=False):
     else:
         return None
 
+class TextAlignment:
+    Left = "left"
+    Right = "right"
+    Center = "center"
+    Justify = "justify"
 
 class ExcelDataItem:
     """Container for Excel cell data and formatting.
@@ -128,18 +133,6 @@ class ExcelDataItem:
     Stores cell content, position, and formatting properties including colors and borders.
     Reference for border styles: https://xlsxwriter.readthedocs.io/format.html#set_border
 
-    Attributes:
-        item: Cell content (any type)
-        row (int): Row index
-        column (int|str): Column index or letter reference
-        is_bold (bool): If True, the text will be bold
-        cell_color (tuple): RGB color tuple for cell background
-        text_color (tuple): RGB color tuple for text
-        border_style (int): Border style specification
-        border_color (tuple): RGB color tuple for border
-        top_border_style (int): Top border style specification
-        bottom_border_style (int): Bottom border style specification
-        side_border_style (int): Left/right border style specification
     """
     def __init__(
         self,
@@ -147,13 +140,19 @@ class ExcelDataItem:
         row,
         column,
         is_bold = False,
+        is_read_only = False,
         cell_color=None,
         text_color=None,
+        text_alignment = TextAlignment.Left,
+        font_size=None,
+        font_name=None,
+        col_width=None,
         border_style=None,
         border_color=None,
         top_border_style=None,
         bottom_border_style=None,
         side_border_style=None,
+        merge_with=None,
     ):
         """_summary_
 
@@ -162,13 +161,19 @@ class ExcelDataItem:
             row (_type_): _description_
             column (_type_): _description_
             is_bold (bool, optional): If True, the text will be bold. Defaults to False.
+            is_read_only (bool, optional): If True, the cell will be read only. Defaults to False.
             cell_color (_type_, optional): _description_. Defaults to None.
             text_color (_type_, optional): _description_. Defaults to None.
+            text_alignment (TextAlignment, optional): _description_. Defaults to TextAlignment.Left.
+            font_size (_type_, optional): _description_. Defaults to None.
+            font_name (_type_, optional): _description_. Defaults to None.
+            col_width (_type_, optional): _description_. Defaults to None.
             border_style (_type_, optional): _description_. Defaults to None.
             border_color (_type_, optional): _description_. Defaults to None.
             top_border_style (_type_, optional): _description_. Defaults to None.
             bottom_border_style (_type_, optional): _description_. Defaults to None.
             side_border_style (_type_, optional): _description_. Defaults to None.
+            merge_with (_type_, optional): _description_. Defaults to None.
         """
         if isinstance(column, str):
             column = letter_to_index(column, start_from_zero=True)
@@ -182,13 +187,19 @@ class ExcelDataItem:
         self.row = row
         self.column = column
         self.is_bold = is_bold
+        self.is_read_only = is_read_only
         self.cell_color = cell_color
         self.text_color = text_color
+        self.text_alignment = text_alignment
+        self.font_size = font_size
+        self.font_name = font_name
+        self.col_width = col_width
         self.border_style = border_style
         self.border_color = border_color
         self.top_border_style = top_border_style
         self.bottom_border_style = bottom_border_style
         self.side_border_style = side_border_style
+        self.merge_with = merge_with
     def __str__(self):
         info = "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
         if self.cell_color:
@@ -201,13 +212,19 @@ class ExcelDataItem:
             "row": self.row,
             "column": self.column,
             "is_bold": self.is_bold,
+            "is_read_only": self.is_read_only,
             "cell_color": self.cell_color,
             "text_color": self.text_color,
+            "text_alignment": self.text_alignment,
+            "font_size": self.font_size,
+            "font_name": self.font_name,
+            "col_width": self.col_width,
             "border_style": self.border_style,
             "border_color": self.border_color,
             "top_border_style": self.top_border_style,
             "side_border_style": self.side_border_style,
             "bottom_border_style": self.bottom_border_style,
+            "merge_with": self.merge_with,
         }
 
     @classmethod
@@ -217,13 +234,19 @@ class ExcelDataItem:
             row=data["row"],
             column=data["column"],
             is_bold=data["is_bold"],
+            is_read_only=data["is_read_only"],
             cell_color=data["cell_color"],
             text_color=data["text_color"],
+            text_alignment=data["text_alignment"],
+            font_size=data["font_size"],
+            font_name=data["font_name"],
+            col_width=data["col_width"],
             border_style=data["border_style"],
             border_color=data["border_color"],
             top_border_style=data["top_border_style"],
             bottom_border_style=data["bottom_border_style"],
-            side_border_style=data["side_border_style"]
+            side_border_style=data["side_border_style"],
+            merge_with=data["merge_with"],
         )
 
 
@@ -652,6 +675,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         return True
     
     if not new_method():
+        print ("new method failed, using legacy method")
         legacy_method()
     
     if open_after and os.path.exists(filepath):

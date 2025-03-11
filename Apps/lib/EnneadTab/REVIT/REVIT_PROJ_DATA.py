@@ -102,7 +102,6 @@ def is_setup_project_data_para_exist(doc):
 
 def setup_project_data(doc):
     if is_setup_project_data_para_exist(doc):
-        NOTIFICATION.messenger("Project data already setup.")
         return
 
     proj_data = get_revit_project_data(doc)
