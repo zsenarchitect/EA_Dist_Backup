@@ -77,6 +77,11 @@ TEMPLATE_DATA = {
                 "program_color_map":["Department Program Type_Primary"]
             }
         }
+    },
+    "keynote_assistant": {
+        "setting": {
+            "extended_db_excel_path": None
+        }
     }
 }
 
@@ -95,8 +100,33 @@ def is_setup_project_data_para_exist(doc):
     return False
 
 
+def setup_project_data(doc):
+    if is_setup_project_data_para_exist(doc):
+        NOTIFICATION.messenger("Project data already setup.")
+        return
+
+    proj_data = get_revit_project_data(doc)
+    if not proj_data:
+        proj_data = TEMPLATE_DATA
 
 
+
+    setup_schedule_update_date_parameter(doc)
+
+
+    set_revit_project_data(doc, proj_data)
+    mark_doc_to_project_data_file(doc)
+
+
+    NOTIFICATION.messenger("Healthcare project setup complete.")
+
+def setup_schedule_update_date_parameter(doc):
+    para_name = "Last_Update_Date"
+    if not REVIT_PARAMETER.confirm_shared_para_exist_on_category(doc, 
+                                                                 para_name,
+                                                                 DB.BuiltInCategory.OST_Schedules):
+        return False
+    return True
 
 def get_project_data_name(doc):
     """Get or create the project data identifier parameter.

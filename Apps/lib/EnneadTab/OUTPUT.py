@@ -6,7 +6,7 @@ import webbrowser
 
 import FOLDER 
 import ENVIRONMENT
-import NOTIFICATION
+
 import TIME 
 import IMAGE
 
@@ -465,6 +465,7 @@ def display_output_on_browser():
         and calls its plot() method.
     """
     if not ENVIRONMENT.IS_REVIT_ENVIRONMENT:
+        import NOTIFICATION
         NOTIFICATION.messenger("currently only support Revit Env")
         return
     try:

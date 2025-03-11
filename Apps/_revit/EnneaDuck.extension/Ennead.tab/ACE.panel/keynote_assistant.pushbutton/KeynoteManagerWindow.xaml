@@ -301,10 +301,27 @@
                             Margin="0,0,0,0"
                             Padding="8,4,8,4"
                             Background="Orange"
+                            ToolTip="Export Exterior and Interior Keynotes as two separate Excel files that you can link abck to Revit using Ideate sticky."
                             Click="export_keynotes_enneadtab">
                         <TextBlock TextAlignment="Center">
                             Export Exterior<LineBreak/>Interior Keynotes<LineBreak/>As Excel
                         </TextBlock>
+                    </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            ToolTip="Remove leading and trailing quotes from keynote text if you import old keynote files."
+                            Click="cleanup_quote_text">
+                        <TextBlock TextAlignment="Center">Cleanup Quote<LineBreak/>Around Description</TextBlock>
+                    </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            ToolTip="Batch attach keynotes to selected elements in Revit."
+                            Click="batch_attach_keynotes">
+                        <TextBlock TextAlignment="Center">Batch Reattach<LineBreak/>Keynotes Parent</TextBlock>
                     </Button>
                 </StackPanel>
             </GroupBox>

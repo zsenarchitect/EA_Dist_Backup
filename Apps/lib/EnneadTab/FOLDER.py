@@ -18,7 +18,10 @@ import time
 import os
 
 from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
-import COPY
+try:
+    import COPY
+except Exception as e:
+    print(e)
 
 
 

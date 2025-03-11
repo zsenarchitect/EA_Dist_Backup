@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <system:String x:Key="Title">Keynotes Assistant - EnneadTab</system:String>
+    <system:String x:Key="Title">Keynotes Assistant - EnneadTab Flavored</system:String>
     
     <system:String x:Key="ImportKeynotes">Import Keynotes</system:String>
     <system:String x:Key="ImportKeynotesInfo">Import keynotes from Revit standard keynote file</system:String>

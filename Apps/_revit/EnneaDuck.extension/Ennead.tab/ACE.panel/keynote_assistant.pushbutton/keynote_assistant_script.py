@@ -35,13 +35,14 @@ pyRevit Features:
 - Track keynote usage within the project
 
 Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
-- Batch operations for keynote management
 - Actual translation function by openAI
 - Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
 - This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.
 
 Advanced Functionality from EnneadTab implemented    in additional_utils.py:
 - Export capabilities as new formatted EXCEL file for both INTERIOR and EXTERIOR sticky linking in Revit.
+- Cleanup quote text in keynote text if you import old keynote files.
+- Batch reattach keynotes to a new parent.
 
 This implementation maintains compatibility with the core pyRevit functionality
 while adding Ennead-specific enhancements.
@@ -83,7 +84,7 @@ proDUCKtion.validify()
 #     print("{}: {}".format(i+1, path))
 
 
-# from EnneadTab import ERROR_HANDLE
+from EnneadTab import NOTIFICATION, ERROR_HANDLE
 # from EnneadTab import LOG
 # from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
@@ -416,6 +417,17 @@ class KeynoteManagerWindow(forms.WPFWindow):
     def export_keynotes_enneadtab(self, sender, args):
         AU.export_keynote(keynote_data_conn = self._conn)
 
+    def cleanup_quote_text(self, sender, args):
+        AU.cleanup_quote_text(keynote_data_conn = self._conn)
+        self.refresh(sender, args)
+
+    @ERROR_HANDLE.try_catch_error()
+    def batch_attach_keynotes(self, sender, args):
+
+        AU.batch_reattach_keynotes(keynote_data_conn = self._conn)
+        self.refresh(sender, args)
+
+
 
 
     ################## end of EnneadTab group ########################
@@ -493,6 +505,9 @@ class KeynoteManagerWindow(forms.WPFWindow):
 
     @property
     def selected_keynote(self):
+        # if hasattr(self.keynotes_tv, "SelectedItems"):
+        #     if len(self.keynotes_tv.SelectedItems) > 0:
+        #         return self.keynotes_tv.SelectedItems[0]
         return self.keynotes_tv.SelectedItem
 
     @property

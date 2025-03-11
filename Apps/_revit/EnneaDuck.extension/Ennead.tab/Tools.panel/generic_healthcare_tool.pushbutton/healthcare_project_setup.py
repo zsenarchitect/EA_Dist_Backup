@@ -8,35 +8,27 @@ from pyrevit import forms
 
 ############### MAIN SETUP FUNCTIONS ###############
 def setup_healthcare_project(doc):
+    t = DB.Transaction(doc, "setup ennedtab project data")
+    t.Start()
+    REVIT_PROJ_DATA.setup_project_data(doc)
+    t.Commit()
+
+    
     t = DB.Transaction(doc, "setup healthcare project")
     t.Start()
-
     proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
-    if not proj_data:
-        proj_data = REVIT_PROJ_DATA.TEMPLATE_DATA
 
     update_project_levels_in_project_data(doc, proj_data)
     setup_pim_number_parameter(doc)
     if not setup_area_tracking_parameters(doc, proj_data):
         return t.RollBack()
 
-    if not setup_schedule_update_date_parameter(doc):
-        return t.RollBack()
-
-
     REVIT_PROJ_DATA.set_revit_project_data(doc, proj_data)
-    REVIT_PROJ_DATA.mark_doc_to_project_data_file(doc)
     t.Commit()
 
     NOTIFICATION.messenger("Healthcare project setup complete.")
 
-def setup_schedule_update_date_parameter(doc):
-    para_name = "Last_Update_Date"
-    if not REVIT_PARAMETER.confirm_shared_para_exist_on_category(doc, 
-                                                                 para_name,
-                                                                 DB.BuiltInCategory.OST_Schedules):
-        return False
-    return True
+
 
 def setup_pim_number_parameter(doc):
     """Sets up PIM Number parameter in project info"""
