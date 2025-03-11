@@ -36,10 +36,10 @@ pyRevit Features:
 
 Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
 - Actual translation function by openAI
-- Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
 - This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.
 
 Advanced Functionality from EnneadTab implemented    in additional_utils.py:
+- Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
 - Export capabilities as new formatted EXCEL file for both INTERIOR and EXTERIOR sticky linking in Revit.
 - Cleanup quote text in keynote text if you import old keynote files.
 - Batch reattach keynotes to a new parent.

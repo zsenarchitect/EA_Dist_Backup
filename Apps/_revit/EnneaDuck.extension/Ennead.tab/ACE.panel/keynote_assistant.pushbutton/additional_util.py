@@ -17,7 +17,7 @@ from Autodesk.Revit import DB # pyright: ignore
 
 import keynotesdb as kdb
 from natsort import natsorted # pyright: ignore 
-from collections import defaultdict
+
 
 from pyrevit import forms
 
@@ -142,7 +142,17 @@ def export_keynote(keynote_data_conn):
                                              worksheet="Keynote Extended DB", 
                                              return_dict=True)
 
- 
+        db_data = EXCEL.parse_excel_data(db_data, "KEYNOTE ID")
+
+        # for item in db_data.values():
+        #     print ("###############")
+        #     print (item.KEYNOTE_ID)
+        #     print (item.KEYNOTE_DESCRIPTION)
+        #     print (item.get("KEYNOTE ID"))
+        #     print (item.get("KEYNOTE DESCRIPTION"))
+
+    else:
+        db_data = {}
 
 
 
@@ -200,6 +210,29 @@ def export_keynote(keynote_data_conn):
                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
                 data_collection.append(EXCEL.ExcelDataItem(leaf.text, pointer_row, "C",
                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+
+                extend_db_item = db_data.get(leaf.key)
+                if extend_db_item:
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.SOURCE, pointer_row, "D",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.PRODUCT, pointer_row, "E",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("CAT.NO"), pointer_row, "F",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("COLOR"), pointer_row, "G",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("FINISH"), pointer_row, "H",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("SIZE"), pointer_row, "I",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("CONTACT"), pointer_row, "J",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("SPEC SECTION"), pointer_row, "K",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("REMARKS"), pointer_row, "L",
+                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    
+                    
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
                 
 
@@ -246,7 +279,7 @@ def edit_extended_db_excel(keynote_data_conn):
     color_dark_grey = (200, 200, 200)
     data_collection = []
     pointer_row = 0
-    data_collection.append(EXCEL.ExcelDataItem("KEYNOTE ID", pointer_row, "B", cell_color=color_dark_grey, col_width=10,
+    data_collection.append(EXCEL.ExcelDataItem("KEYNOTE ID", pointer_row, "B", cell_color=color_dark_grey, col_width=15,
                                                 top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
     data_collection.append(EXCEL.ExcelDataItem("KEYNOTE DESCRIPTION", pointer_row, "C", cell_color=color_dark_grey, 
                                                 top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))

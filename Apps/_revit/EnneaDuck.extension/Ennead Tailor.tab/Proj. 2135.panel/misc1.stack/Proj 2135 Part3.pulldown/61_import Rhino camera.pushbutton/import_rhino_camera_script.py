@@ -15,7 +15,10 @@ proDUCKtion.validify()
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
-from rpw.extras.rhino import Rhino
+try:
+    from rpw.extras.rhino import Rhino
+except:
+    pass
 """
 >>> pt1 = rc.Geometry.Point3d(0,0,0)
 >>> pt2 = rc.Geometry.Point3d(10,10,0)

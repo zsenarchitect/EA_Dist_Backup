@@ -250,9 +250,10 @@ def update_wall_data(data_grid_source):
 def load_EA_family(title):
     try:
         options = ["Use Ennead Office Version", "Use HeathCare Version(not there yet)"]
-        res = REVIT_FORMS.dialogue(main_text = "Which version of EA Fire Rating family you want to load?",
-                                sub_text = "This family is required for the fire rating graphic to work.",
-                                options = options)
+        # res = REVIT_FORMS.dialogue(main_text = "Which version of EA Fire Rating family you want to load?",
+        #                         sub_text = "This family is required for the fire rating graphic to work.",
+        #                         options = options)
+        res = options[0] # always use office version
         if res == options[0]:
             family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
         elif res == options[1]:
