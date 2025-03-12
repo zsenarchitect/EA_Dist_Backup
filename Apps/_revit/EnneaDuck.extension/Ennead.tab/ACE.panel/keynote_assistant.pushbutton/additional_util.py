@@ -19,7 +19,7 @@ import keynotesdb as kdb
 from natsort import natsorted # pyright: ignore 
 
 
-from pyrevit import forms
+from pyrevit import forms, script
 
 
 def batch_reattach_keynotes(keynote_data_conn):
@@ -40,7 +40,7 @@ def batch_reattach_keynotes(keynote_data_conn):
             return "[{}]<{}>: {}".format(self.parent_key, self.key, self.text)
     
     selected_keynotes = forms.SelectFromList.show(
-        [MyOption(x) for x in kdb.get_keynotes(keynote_data_conn)],
+        [MyOption(x) for x in get_leaf_keynotes(keynote_data_conn)],
         title='Select Keynote',
         multiselect=True,
         button_name="Pick keynotes to attach..."
@@ -122,7 +122,19 @@ def cleanup_quote_text(keynote_data_conn):
 
 
 
-def export_keynote(keynote_data_conn):
+def get_leaf_keynotes(keynote_data_conn):
+    OUT = []
+    all_keynotes = kdb.get_keynotes(keynote_data_conn)
+    all_categories = kdb.get_categories(keynote_data_conn)
+    for category in all_categories:
+        top_branch = [x for x in all_keynotes if x.parent_key == category.key]
+        for branch in top_branch:
+            leafs = [x for x in all_keynotes if x.parent_key == branch.key]
+            for leaf in leafs:
+                OUT.append(leaf)
+    return OUT
+
+def export_keynote_as_exterior_and_interior(keynote_data_conn):
     """
     Export keynotes from 'Exterior' and 'Interior' categories to separate Excel files.
     
@@ -147,7 +159,7 @@ def export_keynote(keynote_data_conn):
                                              worksheet="Keynote Extended DB", 
                                              return_dict=True)
 
-        db_data = EXCEL.parse_excel_data(db_data, "KEYNOTE ID")
+        db_data = EXCEL.parse_excel_data(db_data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
 
         # for item in db_data.values():
         #     print ("###############")
@@ -155,7 +167,7 @@ def export_keynote(keynote_data_conn):
         #     print (item.KEYNOTE_DESCRIPTION)
         #     print (item.get("KEYNOTE ID"))
         #     print (item.get("KEYNOTE DESCRIPTION"))
-
+        
     else:
         db_data = {}
 
@@ -236,7 +248,15 @@ def export_keynote(keynote_data_conn):
                                                             top_border_style=1, side_border_style=1, bottom_border_style=1))
                     data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("REMARKS"), pointer_row, "L",
                                                             top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    
+                else:
+                    # if cannot find a matching DB item by keynote key, it problly means DB item is lost or user have give a new keynote key.
+                    # override the color to light red to make it notice
+                    data_collection.append(EXCEL.ExcelDataItem(leaf.key, pointer_row, "B", cell_color=(255, 200, 200),
+                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem(leaf.text, pointer_row, "C", cell_color=(255, 200, 200),
+                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    data_collection.append(EXCEL.ExcelDataItem("Cannot find this item in extended DB", pointer_row, "D", cell_color=(211, 211, 211), merge_with=[(pointer_row, "E"), (pointer_row, "F"), (pointer_row, "G"), (pointer_row, "H"), (pointer_row, "I"), (pointer_row, "J"), (pointer_row, "K"), (pointer_row, "L")],
+                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
                     
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
                 
@@ -260,7 +280,31 @@ def export_keynote(keynote_data_conn):
 
         EXCEL.save_data_to_excel(data_collection, excel_out_path, worksheet=cate.key, freeze_row=2)
 
+    if db_data:
+        output = script.get_output()
+        output.print_md("## =====Please check the following=====")
+        # Get keynotes once to avoid multiple database calls
+        leaf_keynotes = get_leaf_keynotes(keynote_data_conn)
+        diff = set(db_data.keys()) - set([x.key for x in leaf_keynotes])
+        if diff:
+            output.print_md("Warning: some keys in extended DB are not in keynote file:")
+            for i, x in enumerate(diff):
+                output.print_md("-{}: [{}]{}".format(i+1, x, db_data[x].KEYNOTE_DESCRIPTION))
 
+        keynote_keys = {keynote.key: keynote for keynote in leaf_keynotes}
+        
+        reverse_diff = set(keynote_keys.keys()) - set(db_data.keys())
+        if reverse_diff:
+            output.print_md("Warning: some keys in keynote file are not in extended DB:")
+            for i, key in enumerate(reverse_diff):
+                output.print_md("-{}: [{}]{}".format(i+1, key, keynote_keys[key].text))
+
+        if diff or reverse_diff:
+            print ("\n\n")
+            output.print_md("This is usually due to one of the following reasons:")
+            output.print_md("1. You have renamed the key in keynote file but did not update the same item in the DB excel file: Please update the same item in the DB excel file")
+            output.print_md("2. You have added a new keynote in keynote file, but not in extended DB: Please add the same item in the DB excel file")
+            output.print_md("3. You have added a new keynote in extended DB, but not in keynote file: Please add the same item in the keynote file")
 
 def edit_extended_db_excel(keynote_data_conn):
     doc = REVIT_APPLICATION.get_doc()
@@ -355,6 +399,7 @@ def edit_extended_db_excel(keynote_data_conn):
     EXCEL.save_data_to_excel(data_collection, keynote_excel_extend_db, worksheet="Keynote Extended DB", freeze_row=1)
 
     os.startfile(keynote_excel_extend_db)
+
 
 
 if __name__ == "__main__":

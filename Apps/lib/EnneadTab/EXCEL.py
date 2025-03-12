@@ -23,6 +23,7 @@ Key Features:
 import os
 
 
+import re
 import time
 import io
 # if hasattr(sys, "setdefaultencoding"):
@@ -739,62 +740,67 @@ def check_formula(excel, worksheet, highlight_formula=True):
         EXE.try_open_app(excel)
 
 
-def parse_excel_data(data, key_name, header_row=1):
+def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     """Parse Excel data into a structured format with dot notation access.
     
-    Converts raw Excel data into a dictionary of objects where:
-    - Each row becomes a data entry
-    - The value in the key_name column becomes the dictionary key
-    - All other columns become properties accessible via dot notation
+    Converts raw Excel data into a dictionary of objects where each row becomes a data entry.
+    The value in the key_name column becomes the dictionary key, and all other columns
+    become properties accessible via dot notation or dictionary-style access.
     
     Args:
         data (dict): Excel data as dict of coordinates and values
         key_name (str): Column header to use as key for each entry
-        header_row (int, optional): Row number of the header row. Defaults to 1. This is 1-based index.
+        header_row (int, optional): Row number of the header row (1-based index). Defaults to 1.
+        ignore_keywords (list, optional): List of keywords to ignore when creating entries. Defaults to None.
     
     Returns:
         dict: Dictionary of data objects with property access via dot notation
     """
-    # Get all column headers from the header row
+    # Initialize variables
+    ignore_keywords = ignore_keywords or []
     header_dict = {}
     header_indices = {}
     
     # First pass: collect headers
-    for key in data.keys():
+    for key, value_dict in data.items():
         row, column = key
         if row == header_row:
-            header = data[key]["value"]
-            if header is None or header == "None" or header == "":
+            header = value_dict["value"]
+            if not header or header == "None":
                 continue
             header_dict[column] = header
             header_indices[header] = column
     
-    # Check if key_name exists in headers
+    # Validate key column exists
     if key_name not in header_indices:
         print("Error: Key column '{}' not found in headers".format(key_name))
         return {}
     
-    # Create a class to hold row data with dot notation access
+    # Define the RowData class for dot notation access
     class RowData:
+        """Container for row data with both dot notation and dictionary-style access."""
+        
         def __init__(self, properties):
+            """Initialize with column data from a row."""
             # Store both original and sanitized versions of properties
             self._original_keys = {}
-            self._data = {}  # Store all values in a backing dictionary too
+            self._data = {}
+            
             for key, value in properties.items():
-                # Create a Python-friendly attribute name (replace spaces with underscores)
+                # Create a Python-friendly attribute name
                 safe_key = key.replace(" ", "_")
                 if value == "None":
                     value = None
+                    
+                # Set the attribute and track mappings
                 setattr(self, safe_key, value)
-                # Map sanitized key back to original
                 self._original_keys[safe_key] = key
-                # Store in the backing dictionary with both keys
                 self._data[key] = value
                 self._data[safe_key] = value
         
         def __getattr__(self, name):
-            """Handle attribute access errors with helpful messages"""
-            # Check if this might be a case where space was replaced with underscore
+            """Handle attribute access with helpful error messages."""
+            # Try case-insensitive matching for keys with spaces
             original_spaces = name.replace("_", " ")
             for key in self._original_keys.values():
                 if key.lower() == original_spaces.lower():
@@ -803,24 +809,19 @@ def parse_excel_data(data, key_name, header_row=1):
             
             # Show available attributes in error message
             attrs = [k for k in self.__dict__.keys() if not k.startswith('_')]
-            raise AttributeError("'RowData' object has no attribute '{}'. Available attributes: {}".format(
-                name, ", ".join(attrs)))
+            raise AttributeError(
+                "'RowData' object has no attribute '{}'. Available attributes: {}".format(
+                    name, ", ".join(attrs)
+                )
+            )
         
         def get(self, key, default=None):
-            """Access data dictionary-style with the get method.
-            
-            Args:
-                key (str): Original column name or attribute name
-                default: Value to return if key is not found
-                
-            Returns:
-                The value for the key if found, otherwise the default value
-            """
-            # Try the key directly first
+            """Access data dictionary-style with fallback support."""
+            # Try direct access
             if key in self._data:
                 return self._data[key]
             
-            # Try converting spaces to underscores
+            # Try with spaces converted to underscores
             safe_key = key.replace(" ", "_")
             if safe_key in self._data:
                 return self._data[safe_key]
@@ -833,52 +834,68 @@ def parse_excel_data(data, key_name, header_row=1):
             return default
         
         def __str__(self):
-            """Generate a readable, formatted representation of the row data."""
+            """Generate a readable representation of the row data."""
             attrs = []
             for key, value in sorted(self.__dict__.items()):
                 if key.startswith('_'):  # Skip internal attributes
                     continue
                     
-                # Format the value based on type
-                if isinstance(value, str):
-                    formatted_value = value
-                elif value is None:
-                    formatted_value = "None"
-                else:
-                    formatted_value = str(value)
+                # Format based on type
+                formatted_value = str(value) if value is not None else "None"
                 
                 # Show both access methods for keys with spaces
                 orig_key = self._original_keys.get(key, key)
-                if " " in orig_key:
-                    key_info = "{} ('{}')".format(key, orig_key)
-                else:
-                    key_info = key
-                    
+                key_info = "{} ('{}')".format(key, orig_key) if " " in orig_key else key
                 attrs.append("  {}: {}".format(key_info, formatted_value))
             
             return "{\n" + "\n".join(attrs) + "\n}"
         
         def __repr__(self):
-            """Return the same formatted string as __str__ for consistency."""
+            """Return the same formatted string as __str__."""
             return self.__str__()
-    
+
+    # Function to check if a key should be ignored
+    def should_ignore(key_value):
+        """Check if key contains any ignore keywords."""
+        if not ignore_keywords:
+            return False
+        return any(keyword in key_value for keyword in ignore_keywords)
+
     # Process rows into structured data
-    OUT = {}
+    result = {}
     current_row = None
     row_data = {}
+    # Use a list for flag variables that need to be modified in nested functions
+    duplicate_keys = [False]
+    
+    # Helper function to process each row's data - MOVED HERE before it's used
+    def _process_row_data(row_data, result_dict):
+        if key_name not in row_data:
+            return
+            
+        key_value = row_data[key_name]
+        if not key_value or key_value == "" or should_ignore(key_value):
+            return
+        if key_value == "None":
+            return
+                    
+        if key_value in result_dict:
+            print("Warning: Key '{}' already exists in output dictionary".format(key_value))
+            duplicate_keys[0] = True
+        
+        result_dict[key_value] = RowData(row_data)
     
     # Sort keys to process row by row
-    for location_key in sorted(data.keys()):
+    sorted_keys = sorted(data.keys())
+    
+    for location_key in sorted_keys:
         row, column = location_key
         if row <= header_row:
             continue
             
-        # If we've moved to a new row, add the previous row data
+        # If we've moved to a new row, process the previous row
         if current_row is not None and current_row != row and row_data:
-            if key_name in row_data:
-                key_value = row_data[key_name]
-                if key_value is not None and key_value != "":
-                    OUT[key_value] = RowData(row_data)
+            _process_row_data(row_data, result)
             row_data = {}
         
         current_row = row
@@ -889,14 +906,16 @@ def parse_excel_data(data, key_name, header_row=1):
             value = data[location_key]["value"]
             row_data[header] = value
     
-    # Add the last row if it exists
+    # Process the last row if it exists
     if current_row is not None and row_data:
-        if key_name in row_data:
-            key_value = row_data[key_name]
-            if key_value is not None and key_value != "":
-                OUT[key_value] = RowData(row_data)
+        _process_row_data(row_data, result)
     
-    return OUT
+    # Report duplicate keys if found
+    if duplicate_keys[0]:
+        NOTIFICATION.messenger("Warning: some keys already exist in output dictionary. See details in console.")
+
+
+    return result
 
 def flip_dict(dict):
     output = {}
@@ -972,11 +991,12 @@ if __name__ == "__main__":
     # filename = __file__
     # UNIT_TEST.pretty_test(test_dict, filename)
     data = read_data_from_excel("J:\\2142\\0_BIM\\10_BIM Management\\10_BIM Resources\\Extended_DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
-    data = parse_excel_data(data, "KEYNOTE ID")
+    data = parse_excel_data(data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
 
-    for item in data.values():
-        print ("###############")
-        print (item.KEYNOTE_ID)
-        print (item.KEYNOTE_DESCRIPTION)
-        print (item.get("KEYNOTE ID"))
-        print (item.get("KEYNOTE DESCRIPTION"))
+    # print (data)
+    # for item in data.values():
+        # print ("###############")
+        # print (item.KEYNOTE_ID)
+        # print (item.KEYNOTE_DESCRIPTION)
+        # print (item.get("KEYNOTE ID"))
+        # print (item.get("KEYNOTE DESCRIPTION"))
