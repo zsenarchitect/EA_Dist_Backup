@@ -8,7 +8,8 @@ _lib_path = os.path.join(_app_folder, "lib" )
 sys.path.append(_lib_path)
 
 # print ("\n".join(sys.path))
-from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, VERSION_CONTROL, USER, EXE, CONFIG, DOCUMENTATION
+from EnneadTab import ERROR_HANDLE, NOTIFICATION, ENVIRONMENT
+from EnneadTab import VERSION_CONTROL, USER, EXE, CONFIG, DOCUMENTATION, HOLIDAY
 from EnneadTab.RHINO import RHINO_ALIAS
 
 
@@ -33,6 +34,8 @@ def main():
     DOCUMENTATION.tip_of_day()
 
     handle_auto_start_command()
+
+    HOLIDAY.festival_greeting()
 
 
 def handle_auto_start_command():
