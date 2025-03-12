@@ -35,7 +35,6 @@ pyRevit Features:
 - Track keynote usage within the project
 
 Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
-- Actual translation function by openAI
 
 Advanced Functionality from EnneadTab implemented    in additional_utils.py:
 - Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
@@ -43,6 +42,7 @@ Advanced Functionality from EnneadTab implemented    in additional_utils.py:
 - Cleanup quote text in keynote text if you import old keynote files.
 - Batch reattach keynotes to a new parent.
 - This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.
+- Actual translation function by openAI
 
 This implementation maintains compatibility with the core pyRevit functionality
 while adding Ennead-specific enhancements.
@@ -381,7 +381,8 @@ class EditRecordWindow(forms.WPFWindow):
             self.active_text = template
 
     def translate(self, sender, args):
-        forms.alert(self.get_locale_string("ComingSoon"))
+        # use Enneadatb transaltor
+        self.recordText.Text = AU.translate_keynote(self.active_text)
 
     def apply_changes(self, sender, args):
         logger.debug('Applying changes...')
@@ -426,7 +427,6 @@ class KeynoteManagerWindow(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def batch_attach_keynotes(self, sender, args):
-
         AU.batch_reattach_keynotes(keynote_data_conn = self._conn)
         self.refresh(sender, args)
 
@@ -435,6 +435,10 @@ class KeynoteManagerWindow(forms.WPFWindow):
     def edit_extended_db_excel(self, sender, args):
         AU.edit_extended_db_excel(keynote_data_conn = self._conn)
 
+    @ERROR_HANDLE.try_catch_error()
+    def batch_translate_keynote(self, sender, args):
+        AU.batch_translate_keynote(keynote_data_conn = self._conn)
+        self.refresh(sender, args)
 
     ################## end of EnneadTab group ########################
 

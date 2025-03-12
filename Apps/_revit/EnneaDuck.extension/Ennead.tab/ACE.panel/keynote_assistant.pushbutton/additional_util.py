@@ -7,7 +7,7 @@ proDUCKtion.validify()
 # for i, path in enumerate(sys.path):
 #     print("{}: {}".format(i+1, path))
 
-from EnneadTab import    EXCEL , NOTIFICATION
+from EnneadTab import    EXCEL , NOTIFICATION, AI, TEXT
 # from EnneadTab import LOG
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_PROJ_DATA
 from Autodesk.Revit import DB # pyright: ignore 
@@ -83,8 +83,25 @@ def batch_reattach_keynotes(keynote_data_conn):
 
 
 
-def translate_keynote():
-    pass
+def batch_translate_keynote(keynote_data_conn):
+    all_keynotes = kdb.get_keynotes(keynote_data_conn)
+    input_texts = [TEXT.strip_chinese(x.text) for x in all_keynotes if x.text]
+    print ("Going to translate those descriptions:")
+    for x in input_texts:
+        print (x)
+    result_dict = AI.translate_multiple(input_texts)
+    print ("\n\n\n\n\nResult:")
+    for x in result_dict:
+        print ("\t{} --> {}".format(TEXT.strip_chinese(x), result_dict[x]))
+    with kdb.BulkAction(keynote_data_conn):
+        for keynote in all_keynotes:
+            if result_dict.get(keynote.text):
+                final_text = TEXT.strip_chinese(keynote.text) + " " + result_dict.get(keynote.text)
+                kdb.update_keynote_text(keynote_data_conn, keynote.key, final_text)
+    
+
+def translate_keynote(input):
+    return input + " " + AI.translate(input)
 
 def cleanup_quote_text(keynote_data_conn):
     """

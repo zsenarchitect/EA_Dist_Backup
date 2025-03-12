@@ -1,11 +1,30 @@
 import ENVIRONMENT
-
+import re
 import sys
 sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
 
 from termcolor import colored # pyright: ignore
 from COLOR import TextColorEnum
 
+
+
+def strip_chinese(text):
+    """
+    Remove Chinese characters from a string while preserving all other characters.
+    
+    Args:
+        text (str): The input text that may contain Chinese characters
+        
+    Returns:
+        str: The text with only Chinese characters removed. All other characters,
+             including special characters (punctuation, brackets, etc.), are preserved.
+             If no Chinese characters are found, returns the original text.
+    """
+    # Check if text contains Chinese characters
+    pattern = r'[\u4e00-\u9fff]'
+    if re.search(pattern, text):
+        return re.sub(pattern, '', text)
+    return text
 
 def fuzzy_search(keyword, words):
     """Search from a list of words, return the best likely match, there could be case insensitive, and wrong spelling"""

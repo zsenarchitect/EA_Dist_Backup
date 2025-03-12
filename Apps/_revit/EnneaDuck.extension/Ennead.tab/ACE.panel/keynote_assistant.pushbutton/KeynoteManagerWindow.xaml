@@ -331,6 +331,14 @@
                             Click="edit_extended_db_excel">
                         <TextBlock TextAlignment="Center">Edit Extended<LineBreak/>Database Excel</TextBlock>
                     </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            ToolTip="Batch translate keynote text."
+                            Click="batch_translate_keynote">
+                        <TextBlock TextAlignment="Center">Batch Translate<LineBreak/>Keynote Text</TextBlock>
+                    </Button>
                 </StackPanel>
             </GroupBox>
             

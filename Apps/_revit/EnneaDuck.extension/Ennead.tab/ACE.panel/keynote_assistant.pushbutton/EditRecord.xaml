@@ -77,7 +77,7 @@
                 <Button Height="24" Content="tt" Margin="0,5,0,0" FontWeight="Medium" ToolTip="{DynamicResource LowerInfo}" Click="to_lower"/>
                 <Button Height="24" Content="Ti" Margin="0,5,0,0" FontWeight="Medium" ToolTip="{DynamicResource TitleCaseInfo}" Click="to_title"/>
                 <Button Height="24" Content="Se" Margin="0,5,0,0" FontWeight="Medium" ToolTip="{DynamicResource SentenceCaseInfo}" Click="to_sentence"/>
-                <Button Height="24" Content="{StaticResource translateIcon}" Margin="0,5,0,0" ToolTip="{DynamicResource TranslateInfo}" Click="translate"/>
+                <Button Height="24" Content="{StaticResource translateIcon}" Margin="0,5,0,0" ToolTip="{DynamicResource TranslateInfo}" Click="translate" Background="Orange"/>
                 <Button Height="24" Content="{StaticResource templatesIcon}" Margin="0,5,0,0" FontWeight="Medium" ToolTip="{DynamicResource TemplatesInfo}" Click="select_template"/>
             </StackPanel>
         </Grid>

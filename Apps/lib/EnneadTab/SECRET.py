@@ -10,11 +10,12 @@ import NOTIFICATION
 def get_api_key(app_name):
     """Returns the API key for the specified app.
     Accepted keys:
-    "chatgpt_api_key"
-    "translator_api_key"
-    "reporter_api_key"
-    "clone_helper"
-    "miro_oauth"
+    "EnneadTabAPI"
+    # "chatgpt_api_key"
+    # "translator_api_key"
+    # "reporter_api_key"
+    # "clone_helper"
+    # "miro_oauth"
 
     Args:
         app_name (string): The name of the app to get the API key for.
