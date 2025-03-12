@@ -5,8 +5,7 @@ Key Features:
 - Batch image extraction
 - Multiple file support
 - Automatic naming convention
-- Progress tracking
-- Error logging"""
+- Progress tracking"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

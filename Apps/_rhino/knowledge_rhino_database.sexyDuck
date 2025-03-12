@@ -30,7 +30,7 @@
         "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
         "icon": "Ennead+.menu\\extract_preview_images.button\\icon.png",
         "alias": "ExtractPreviewImages",
-        "doc": "Extract preview images from Rhino files.\n\nKey Features:\n- Batch image extraction\n- Multiple file support\n- Automatic naming convention\n- Progress tracking\n- Error logging",
+        "doc": "Extract preview images from Rhino files.\n\nKey Features:\n- Batch image extraction\n- Multiple file support\n- Automatic naming convention\n- Progress tracking",
         "tab": "Ennead+.menu",
         "tab_icon": null,
         "is_popular": false
@@ -977,6 +977,15 @@
         "tab": "Selection.tab",
         "tab_icon": "Selection.tab\\icon.png",
         "is_popular": true
+    },
+    "Tailor.tab\\2425_replace_blocks.button\\2425_replace_blocks_left.py": {
+        "script": "Tailor.tab\\2425_replace_blocks.button\\2425_replace_blocks_left.py",
+        "icon": null,
+        "alias": "2425ReplaceBlocks",
+        "doc": "This button does 2425ReplaceBlocks when left click",
+        "tab": "Tailor.tab",
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
     },
     "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py": {
         "script": "Tailor.tab\\export_without_crv.button\\export_without_crv_left.py",
