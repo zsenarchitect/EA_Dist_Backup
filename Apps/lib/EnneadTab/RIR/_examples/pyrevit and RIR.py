@@ -1,5 +1,5 @@
 from pyrevit import clr, revit, DB  # pyright: ignore
-from pyrevit.framework import Enumerable
+from pyrevit.framework import Enumerable # pyright: ignore
 from pyrevit import script
 
 
@@ -7,8 +7,8 @@ clr.AddReference('RhinoCommon')
 clr.AddReference('RhinoInside.Revit')
 
 
-from Rhino import Geometry
-from RhinoInside.Revit import Revit, Convert
+from Rhino import Geometry # pyright: ignore
+from RhinoInside.Revit import Revit, Convert # pyright: ignore
 
 
 logger = script.get_logger()

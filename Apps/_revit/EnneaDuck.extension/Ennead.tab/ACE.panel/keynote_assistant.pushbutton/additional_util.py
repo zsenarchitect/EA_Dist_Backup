@@ -7,7 +7,7 @@ proDUCKtion.validify()
 # for i, path in enumerate(sys.path):
 #     print("{}: {}".format(i+1, path))
 
-from EnneadTab import ERROR_HANDLE, EXCEL, TEXT, FOLDER
+from EnneadTab import    EXCEL , NOTIFICATION
 # from EnneadTab import LOG
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_PROJ_DATA
 from Autodesk.Revit import DB # pyright: ignore 
@@ -135,8 +135,13 @@ def export_keynote(keynote_data_conn):
     Returns:
         Path to generated Excel file
     """
-
-    extend_db_path = REVIT_PROJ_DATA.get_revit_project_data(REVIT_APPLICATION.get_doc()).get("keynote_assistant", {}).get("setting", {}).get("extended_db_excel_path")
+    doc = REVIT_APPLICATION.get_doc()
+    t = DB.Transaction(doc, "edit extended db excel")
+    t.Start()
+    REVIT_PROJ_DATA.setup_project_data(doc)
+    t.Commit()
+    project_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
+    extend_db_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("extended_db_excel_path")
     if extend_db_path and os.path.exists(extend_db_path):
         db_data = EXCEL.read_data_from_excel(extend_db_path, 
                                              worksheet="Keynote Extended DB", 
@@ -236,14 +241,24 @@ def export_keynote(keynote_data_conn):
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
                 
 
-        # Create output directory
-        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_dir = os.path.join(os.path.expanduser("~"), "Desktop", "EnneadTab_KeynoteExport")
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+        excel_out_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("excel_path_{}".format(cate.key))
+        if not excel_out_path:
+            NOTIFICATION.messenger("Pick excel output path for [{}]".format(cate.key))
+            
+            excel_out_path = forms.pick_excel_file(title="Pick Extended Keynote Database Excel File for [{}]".format(cate.key),
+                                                    save = True,
+                                                    )
+            if "keynote_assistant" not in project_data:
+                project_data["keynote_assistant"] = {}
+            if "setting" not in project_data["keynote_assistant"]:
+                project_data["keynote_assistant"]["setting"] = {}
         
-        excel_file = os.path.join(output_dir, "Keynotes_{}_{}.xlsx".format(cate.key, timestamp))
-        EXCEL.save_data_to_excel(data_collection, excel_file, worksheet=cate.key, freeze_row=2)
+            project_data["keynote_assistant"]["setting"]["excel_path_{}".format(cate.key)] = excel_out_path
+            REVIT_PROJ_DATA.set_revit_project_data(doc, project_data)
+
+
+
+        EXCEL.save_data_to_excel(data_collection, excel_out_path, worksheet=cate.key, freeze_row=2)
 
 
 
@@ -341,55 +356,6 @@ def edit_extended_db_excel(keynote_data_conn):
 
     os.startfile(keynote_excel_extend_db)
 
-class KeynoteExtendedData:
-    def __init__(self, 
-                 key,
-                 keynote_text,
-                 format = None,
-                 division_number = None,
-                 division_name = None,
-                 section_number = None,
-                 section_name = None,
-                 product_number = None,
-                 source = None,
-                 product = None,
-                 color = None,
-                 finish = None,
-                 size = None,
-                 contact = None,
-                 remarks = None,
-                 ):
-        self.key = key
-        self.keynote_text = keynote_text
-        self.format = format
-        self.division_number = division_number
-        self.division_name = division_name
-        self.section_number = section_number
-        self.section_name = section_name
-        self.product_number = product_number
-        self.source = source
-        self.product = product
-        self.color = color
-        self.finish = finish
-        self.size = size
-        self.contact = contact
-        self.remarks = remarks
-
-    @staticmethod   
-    def get_cloest_match(key, text, all_keys):
-        """
-        Get the closest match between a key and text.
-        
-        Args:
-            key: The key to match against
-            text: The text to match against
-            
-        Returns:
-            The closest match between the key and text
-        """
-        # to-do: this need more consideration, like which direct to search from....
-        return TEXT.fuzzy_search("{}:{}".format(key, text), all_keys)
-    
 
 if __name__ == "__main__":
     pass

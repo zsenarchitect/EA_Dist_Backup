@@ -1,6 +1,6 @@
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
-import Rhino
+import Rhino # type: ignore
 
 def replace_block(block_name_old, block_name_new):
     """Replace all instances of block_name_old with block_name_new in the active document.

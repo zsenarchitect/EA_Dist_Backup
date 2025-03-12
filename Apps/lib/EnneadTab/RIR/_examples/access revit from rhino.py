@@ -20,7 +20,7 @@ clr.AddReference('RevitAPIUI')
 clr.AddReference('RhinoInside.Revit')
 
 # now we can import symbols from various APIs
-from System import Enum
+from System import Enum # pyright: ignore
 
 # rhinoscript
 import rhinoscriptsyntax as rs
@@ -35,8 +35,8 @@ import Grasshopper # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore
 
 # rhino.inside utilities
-import RhinoInside
-from RhinoInside.Revit import Revit, Convert
+import RhinoInside # pyright: ignore
+from RhinoInside.Revit import Revit, Convert # pyright: ignore
 # add extensions methods as well
 # this allows calling .ToXXX() convertor methods on Revit objects
 clr.ImportExtensions(Convert.Geometry)
