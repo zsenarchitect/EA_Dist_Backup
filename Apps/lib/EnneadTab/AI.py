@@ -18,6 +18,8 @@ def translate(input_text,
         Translated text or error message if translation fails
     """
     api = SECRET.get_api_key("EnneadTabAPI")
+    if not api:
+        return ""
     data = {"input_text":input_text, 
             "target_language":target_language, 
             "personality":personality,
@@ -65,9 +67,18 @@ def translate_multiple(input_texts,
                   please just focus on translating the English part and ignore Chinese part"):
 
     input = "\n".join([str(x).strip() for x in input_texts if len(str(x).strip()) != 0])
+
     
     result = translate(input, target_language, personality)
-    return {k: v.strip() for k, v in zip(input_texts, result.split("\n"))}
+    if not result or result == "":  # If translation is empty
+        return {}  # Return original texts
+        
+    result_list = result.split("\n")
+    # Ensure we have enough translations by padding with original texts if needed
+    while len(result_list) < len(input_texts):
+        result_list.append("")
+        
+    return {k: v.strip() or k for k, v in zip(input_texts, result_list)}
 
 
 if __name__ == "__main__":

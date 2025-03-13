@@ -549,7 +549,7 @@ def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, st
                 return data_row
     return None
 
-def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row=None):
+def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row=None, freeze_column=None):
     """Save data to a new Excel file with formatting.
 
     Creates a new Excel workbook and writes data with preserved formatting.
@@ -561,7 +561,9 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         worksheet (str, optional): Name for the worksheet. Defaults to "EnneadTab".
         open_after (bool, optional): If True, opens file after saving.
             Defaults to True.
-        freeze_row (int, optional): Row number to freeze panes at.
+        freeze_row (int, optional): 0-based row number to freeze panes at.
+            Defaults to None.
+        freeze_column (str | int, optional): Excel column letter or 0-based column number to freeze panes at.
             Defaults to None.
 
     Returns:
@@ -655,6 +657,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
             "filepath": filepath,
             "worksheet": worksheet,
             "freeze_row": freeze_row,
+            "freeze_column": freeze_column,
             "data": ExcelDataItem.convert_datas_to_dict(data)
         }
     

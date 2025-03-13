@@ -1,48 +1,46 @@
 # How to Install EnneadTab
 
 ## Table of Contents
-- [1. Setup Basic](#1-setup-basic)
-  - [1.1 Download Installer](#11-download-installer)
-  - [1.2 Install Ecosystem Folder](#12-install-ecosystem-folder)
-- [2. EnneadTab-For-Revit](#2-ennneadtab-for-revit)
-  - [2.0 Prerequisite](#20-prerequisite)
-  - [2.1 EnneadTab-For-Revit](#21-ennneadtab-for-revit)
-  - [2.2 Uninstall Ennead-For-Revit](#22-uninstall-ennead-for-revit)
-- [3. EnneadTab-For-Rhino](#3-ennneadtab-for-rhino)
-  - [3.1 EnneadTab-For-Rhino](#31-ennneadtab-for-rhino)
-  - [3.2 Unistall Ennead-For-Rhino](#32-unistall-ennead-for-rhino)
-- [4. Configure Notification Level](#4-configure-notification-level)
-- [5. EnneadTab-for-CAD](#5-ennneadtab-for-cad)
-  - [5.1 EnneadTab-for-CAD](#51-ennneadtab-for-cad)
+- [1. Overall Introduction](#1-overall-introduction)
+- [2. Basic Setup](#2-basic-setup)
+  - [2.1 Download OS Installer](#21-download-os-installer)
+  - [2.2 Install Ecosystem Folder](#22-install-ecosystem-folder)
+- [3. EnneadTab for Revit](#3-enneadtab-for-revit)
+  - [3.0 Prerequisite](#30-prerequisite)
+  - [3.1 Install EnneadTab for Revit](#31-install-enneadtab-for-revit)
+  - [3.2 Uninstall EnneadTab for Revit](#32-uninstall-enneadtab-for-revit)
+- [4. EnneadTab for Rhino](#4-enneadtab-for-rhino)
+  - [4.1 Install EnneadTab for Rhino](#41-install-enneadtab-for-rhino)
+  - [4.2 Uninstall EnneadTab for Rhino Legacy](#42-uninstall-enneadtab-for-rhino-legacy)
+- [5. Configure Notification Level](#5-configure-notification-level)
+- [6. EnneadTab for CAD](#6-enneadtab-for-cad)
+  - [6.1 Install EnneadTab for CAD](#61-install-enneadtab-for-cad)
 
+## 1. Overall Introduction
+Overall, you will need Ecosystem downloaded as foundation. <br>
+For Rhino, there is no additional requirement.<br>
+For Revit, you will need pyrevit as well. (Min version 5.0.1 if planning on use for Revit 2025 and above.)
 
-
-
-
-
-## 1. Setup Basic
-
+## 2. Basic Setup
 
 > [!IMPORTANT]
 > If you are using One-Drive, please note that you usually have __two__ Documents folders at your computer, see samples below. For all future reference, we will be talking about the non-One-Drive folder.
 > - C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem :thumbsup:
 > - C:\Users\\[USER_NAME]\OneDrive - Ennead Architects\Documents\EnneadTab Ecosystem :thumbsdown: This should not exist, if so, delete it.
 
-
 <br>
 <br>
 
-
-### 1.1 Download Installer
+### 2.1 Download OS Installer
 Depending on your network access, you can use the installer from Ennead Network or download from GitHub. __You do not need to do both__.
-#### 1.1.a From inside Ennead Network
+#### 2.1.a From inside Ennead Network
 Run this installer from L drive.
 > - L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe
 
 <br>
 <br>
 
-#### 1.1.b From GitHub
+#### 2.1.b From GitHub
 See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this method for computer without access to Ennead Network, such as your traveling laptop.
 
 - https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_OS_Installer.exe
@@ -52,27 +50,25 @@ See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this
 > [!TIP]
 > Unconfirmed.crdownload file is a partial download file. Your chrome is working hard to download, do not attempt to unzip it, run it, or drag it to Rhino. Just wait for it to be fully downloaded and become __EnneadTab_OS_Installer.exe__
 
-
 > [!NOTE]
 > Some computer's firewall(such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file. 
 
 <br>
 <br>
 
-### 1.2 Install Ecosystem Folder
+### 2.2 Install Ecosystem Folder
 Run the installer by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
-Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow __step 2.1 or 3.1__ below.
-
+Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow __step 3.1 or 4.1__ below.
 
 <br>
 <br>
 
-## 2. EnneadTab-For-Revit
+## 3. EnneadTab for Revit
 For a complete command list of this plugin, please check [EnneadTab For Revit Handbook](https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_For_Revit_HandBook.pdf)
 
-### 2.0 Prerequisite
+### 3.0 Prerequisite
 EnneadTab-For-Revit run over __pyRevit__ framework. Make sure you have pyrevit installed before everything else.
 You can get pyrevit from here and pick the first one under "Download" section. There is no admin restriction to install: https://github.com/pyrevitlabs/pyRevit/releases
 > [!NOTE]
@@ -81,9 +77,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 > Due to the significant .Net framework changes from 2024 to 2025, pyRevit 4.x only support 2024 and below. pyRevit 5 will support all Revit version.
 > Make sure you have COMPLETELY removed pyrevit 4.x before adaption version __5.0.1__<br>
 
-
-
-### 2.1. EnneadTab-For-Revit
+### 3.1. Install EnneadTab for Revit
 
 1. No need to uninstall old version of EnneadTab-For-Revit, it will be handled automatically.
 
@@ -97,11 +91,9 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 
 5. You can now open Revit.
 
-6. __(Optional)__ Configure your Revit's notification level at chapter 4 below.
+6. __(Optional)__ Configure your Revit's notification level at chapter 5 below.
 
-
-
-### 2.2 Uninstall Ennead-For-Revit
+### 3.2 Uninstall EnneadTab for Revit
 
 1. Revit is not open.
 
@@ -116,11 +108,11 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 <br>
 <br>
 
-## 3 EnneadTab-For-Rhino
+## 4. EnneadTab for Rhino
 For a complete command list of this plugin, please check [EnneadTab For Rhino Handbook](https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_For_Rhino_HandBook.pdf)
 
-### 3.1 EnneadTab-For-Rhino
-0. __(Important!)__ Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 3.3__, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
+### 4.1 Install EnneadTab for Rhino
+0. __(Important!)__ Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 4.3__, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
@@ -129,8 +121,6 @@ For a complete command list of this plugin, please check [EnneadTab For Rhino Ha
 ![screenshot of toggle r8 sidebar](/Apps/lib/EnneadTab/images/Instruction_toggle_r8_sidebar.png)
 5. Restart Rhino.
 
-
-
 > [!IMPORTANT]
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick. 
 
@@ -138,23 +128,21 @@ For a complete command list of this plugin, please check [EnneadTab For Rhino Ha
 > After restart, every button should work just fine, but if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __ActivateEnneadTab__ from dropdown menu usually fix it.<br>
 > ![screenshot of activation](/Apps/lib/EnneadTab/images/instruction_activate_rhino.png)
 
-
-### 3.2 Unistall Ennead-For-Rhino
-With __only one Rhino__ is open, remove any old EnneadTab Rhino by using command "_Toolbar", then close any toolbar that mentions "EnneadTab". Most cases there should be only one mentioning, but certain OG users might see two. Close them all. No need to save any toolbar. __RESTART RHINO__ so any trace of it is completely removed from session. Now you have completely removed EnneadTab-Rhino.
+### 4.2 Uninstall EnneadTab for Rhino Legacy
+With __only one Rhino__ is open, drag in the installer.rui, use the uninstall buttom from the menu. Follow instruction. __RESTART RHINO__ so any trace of it is completely removed from session. Now you have completely removed EnneadTab-Rhino.
 
 ![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_remove_old_rui.png)
 
-## 4. Configure Notification Level
+## 5. Configure Notification Level
 EnneadTab comes with many functions to help with your tasks. It also provides many notifications for long process time events, such as heavy exporting and family loading, so you are more aware of the status of the workflow.
 
 By default, EnneadTab sets a default amount of notifications. But you can set it to __no notifications__ or __more notifications__ by going to __Settings__ in EnneadTab Revit. 
 
 ![screenshot of EnneadTab Revit Setting](/Apps/lib/EnneadTab/images/Instruction_setting.png)
 
-
 Those setting will affect both Revit and Rhino, but since the majority notification happens from Revit side, this setting is only configerable in Revit side.
 
-## 5. EnneadTab-for-CAD
+## 6. EnneadTab for CAD
 
 It is not recommended in this office to use CAD as production tool, but some time we have to work with CAD files sent from consaltants. EnneadTab-for-CAD is a tool to help you work with those CAD files. All Command begin with "EA_" prefix.
 
@@ -164,7 +152,6 @@ It is not recommended in this office to use CAD as production tool, but some tim
 > Explode all blocks including nesting blocks.<br>
 > If you want to import to Rhino you may consider flatterning the CAD dynamic block by this command. Otherwise you will see all version of block overlaping in Rhino.<br>
 > If you are planning to import to Revit, this step is not needed.
-
 
 > [!NOTE]
 > __EA_DELETE_ALL_SOLID_HATCH__
@@ -197,8 +184,7 @@ It is not recommended in this office to use CAD as production tool, but some tim
 > <br>
 > Quick alias for: DELETE_ALL_SOLID_HATCH + ALL_COLOR_BY_LAYER + EA_REMOVE_ALL_DIM + EA_EXPLODE_ALL_BLOCKS + EA_EXPLODE_NON_SOLID_HATCH
 
-
-### 5.1 EnneadTab-for-CAD
+### 6.1 Install EnneadTab for CAD
 
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"

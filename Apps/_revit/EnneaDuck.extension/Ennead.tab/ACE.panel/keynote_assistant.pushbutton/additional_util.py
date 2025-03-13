@@ -90,6 +90,9 @@ def batch_translate_keynote(keynote_data_conn):
     for x in input_texts:
         print (x)
     result_dict = AI.translate_multiple(input_texts)
+    if not result_dict:
+        print ("No result from translation, usally due to missing api key, please check your api key")
+        return
     print ("\n\n\n\n\nResult:")
     for x in result_dict:
         print ("\t{} --> {}".format(TEXT.strip_chinese(x), result_dict[x]))
@@ -413,7 +416,7 @@ def edit_extended_db_excel(keynote_data_conn):
             
     
 
-    EXCEL.save_data_to_excel(data_collection, keynote_excel_extend_db, worksheet="Keynote Extended DB", freeze_row=1)
+    EXCEL.save_data_to_excel(data_collection, keynote_excel_extend_db, worksheet="Keynote Extended DB", freeze_row=1, freeze_column="C")
 
     os.startfile(keynote_excel_extend_db)
 
