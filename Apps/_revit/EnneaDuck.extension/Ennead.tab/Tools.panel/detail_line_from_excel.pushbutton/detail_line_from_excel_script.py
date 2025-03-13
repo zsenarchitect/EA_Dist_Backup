@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Generate detail line from the Excel survey pt data. Best used for property line geneation."
+__doc__ = "Precision detail line generator that imports survey point data directly from Excel spreadsheets. Automatically converts coordinate data into properly positioned Revit detail lines, creating grouped elements for easy manipulation. Ideal for property line creation, site boundaries, and other survey-based linework that requires exact positioning."
 __title__ = "Detail Line By Excel"
 __tip__ = True
 

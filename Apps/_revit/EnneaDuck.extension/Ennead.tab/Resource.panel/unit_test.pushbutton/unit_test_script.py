@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Test the core modules"
+__doc__ = "Diagnostic validation tool that verifies core EnneadTab modules are functioning correctly. This utility runs a comprehensive series of tests on critical system components to ensure proper operation across the entire extension ecosystem. Perfect for troubleshooting after updates, when experiencing unexpected behavior, or when developing new functionality that depends on core services."
 __title__ = "Unit Test"
 __context__ = "zero-doc"
 

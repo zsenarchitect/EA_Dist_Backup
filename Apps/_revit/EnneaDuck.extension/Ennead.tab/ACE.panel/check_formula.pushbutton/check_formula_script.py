@@ -3,9 +3,7 @@
 
 
 
-__doc__ = """Are you having trouble trusting the excel when it is past to you from someone else? What if the formula is incorrect and is citing the wrong cell? You could not know it unless you click each one of the cell and see if there is a hidden formula. 
-Now this formula checker will help you find every hidden formula so you can see for yourself.
-It highlight the cells as dash."""
+__doc__ = "Excel formula validation tool that reveals hidden calculation relationships. This quality control utility inspects spreadsheets for embedded formulas, highlighting cells with dependencies to help verify calculation accuracy. Perfect for validating critical data before importing into Revit or when reviewing calculations from external sources to prevent errors in your documentation."
 __title__ = "Inspect Excel\nFormula"
 __tip__ = True
 __is_popular__ = True

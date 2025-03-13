@@ -1,8 +1,13 @@
 __title__ = "EnscapeAssetLocator"
-__doc__ = """Locates Enscape assets by name for material manipulation.
+__doc__ = """Your personal detective for hunting down elusive Enscape assets!
 
-Helps find and access Enscape asset folders to modify materials and properties.
-Launches the EnscapeAssetChanger application.
+This handy tool launches the EnscapeAssetChanger application that helps you:
+- Locate hidden Enscape asset folders across your system
+- Access and modify materials on Enscape objects
+- Customize properties of those beautiful Enscape trees, furniture and people
+- Save hours of searching through obscure file directories
+
+Perfect for visualization specialists who need precise control over their Enscape assets.
 """
 
 __is_popular__ = True

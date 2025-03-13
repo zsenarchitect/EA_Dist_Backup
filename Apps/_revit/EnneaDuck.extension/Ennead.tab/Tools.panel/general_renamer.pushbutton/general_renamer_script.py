@@ -3,11 +3,14 @@
 
 
 
-__doc__ = """A floating window that give you quick access to all kinds of renamer function.
-    - Add/Remove a prefix for selected views.
-    - Change Views/SHeets to upper case.
-    - Format view names based on detail number and sheet number.
-    - Rename family on spot without going thru the project broswer."""
+__doc__ = """A powerful floating window that provides efficient access to a comprehensive suite of renaming functions.
+    - Add or remove prefixes for selected views with a single click
+    - Convert Views and Sheets to uppercase for consistent documentation
+    - Format view names based on detail number and sheet number with customizable patterns
+    - Rename families directly without navigating through the project browser
+    - Toggle between different naming conventions with ease
+    
+This tool streamlines the tedious process of maintaining naming consistency throughout your project."""
 __title__ = "Super\nRenamer"
 __tip__ = True
 

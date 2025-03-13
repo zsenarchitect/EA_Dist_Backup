@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that give you quick access to review un-sheeted views, ranked by creator, view group, view type and more. View name can be prefixed to make it more informative the author even from project broswer.\n\n The review process can be quick becasue the view have been exported as jpgs and reviewed quickly. You can also directly open actual view, or delete view in the same window after reviewing.\n\nIf you want to limit how much to see, you can show only views from you."
+__doc__ = "Powerful working view management system that helps maintain a clean project environment. This interactive interface allows you to quickly identify, review, and organize unsheeted views with intelligent filtering by creator, view type, and more. Features include thumbnail previews for rapid visual assessment, batch view name prefixing to identify creators, and direct view deletion capabilities - all without leaving the interface. Perfect for project cleanup before submissions or when transitioning between project phases."
 __title__ = "Manage\nWorking Views"
 __tip__ = True
 __is_popular__ = True

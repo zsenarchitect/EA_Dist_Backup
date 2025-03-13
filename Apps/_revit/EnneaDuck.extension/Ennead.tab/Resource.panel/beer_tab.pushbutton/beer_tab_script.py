@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Go get a drink!"
+__doc__ = "Designer's break companion that helps you maintain proper work-life balance. This essential utility provides quick access to local refreshment options when you need a mental reset. Perfect for those moments when architectural inspiration requires a change of scenery and a cold beverage."
 __title__ = "Beer\nTab"
 __context__ = "zero-doc"
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Good for batch cutting many curtain panels at once with same void."
+__doc__ = "Powerful batch cutting utility that streamlines the process of creating multiple void cuts in curtain panels. Select curtain walls or individual panels and apply the same void geometry to all elements simultaneously. Perfect for creating consistent openings across curtain systems without tedious individual operations."
 __title__ = "Batch Cut\nElements"
 __is_popular__ = True
 import proDUCKtion # pyright: ignore 

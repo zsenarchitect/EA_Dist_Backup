@@ -3,7 +3,7 @@
 
 
 
-__doc__ = """Manager fire rating in wall property, and apply/update rating graphic across multiple views."""
+__doc__ = "Comprehensive fire rating management system that streamlines code compliance documentation. This powerful utility helps you assign, track, and visualize fire ratings throughout your project with intelligent graphics that update automatically across multiple views. Perfect for maintaining consistent fire separation documentation and ensuring building code requirements are clearly communicated in your drawings."
 __title__ = "Fire Rating\nGraphic"
 __tip__ = True
 __is_popular__ = True

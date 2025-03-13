@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Troubleshooting utility for element join and cut relationships. Analyzes selected elements and removes all cutting and joining relationships, providing a detailed report of each operation. Perfect for resolving geometry conflicts or starting fresh with clean element connections."
 __title__ = "Reset Join/Cut"
 
 import proDUCKtion # pyright: ignore 

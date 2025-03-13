@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Translate sheet names, view names, and maybe one day annotations."
+__doc__ = "Intelligent translation assistant for your Revit project. Seamlessly translate sheet names, view names, and project text elements between languages. The AI-powered engine handles context-appropriate translations with approval workflow to ensure accuracy before implementation."
 __title__ = "AI\nTranslate"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29679"
 __youtube__ = "https://youtu.be/7dlOneO2Mts"

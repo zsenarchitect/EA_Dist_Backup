@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Pick curtain panel type and apply host wall radius to panel radius on parameter defined by user."
+__doc__ = "Advanced curtain panel radius management tool that automatically applies host wall curvature to panel elements. Intelligently identifies curved curtain walls and transfers radius values to panel parameters, ensuring consistent curvature throughout the facade system. Customizable parameter mapping allows for flexible implementation across different panel families."
 __title__ = "Apply Panel\nRadius"
 __tip__ = True
 __is_popular__ = True

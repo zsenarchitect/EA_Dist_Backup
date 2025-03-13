@@ -4,6 +4,7 @@
 __doc__ = "Load family from linked revit file without open those links."
 __title__ = "Load Family\nFrom Link"
 __tip__ = True
+__is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 

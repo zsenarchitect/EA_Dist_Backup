@@ -3,10 +3,10 @@
 
 
 
-__doc__ = "This will be the foundation for all future health care tools"
+__doc__ = "Your ultimate healthcare project companion! Provides a comprehensive suite of tools for managing healthcare projects in Revit - from design guidelines and project setup to DGSF chart management and color palette customization. Access all healthcare-related functionality from this centralized command center."
 __title__ = "HealthCare\nHelper"
 __tip__ = True
-
+__is_popular__ = True
 # from pyrevit import forms #
 from pyrevit import script #
 from pyrevit import forms #

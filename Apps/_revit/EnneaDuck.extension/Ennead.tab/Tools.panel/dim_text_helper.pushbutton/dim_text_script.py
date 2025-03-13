@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that give you quick access to add dim text below your selected dim or dims.\nYou can use any of the popular dim text, or use your own by typing in the user bar.\nYou may also pick the relative position on the text to the default numbering.(Up, Down, Prefix, Surfix)"
+__doc__ = "Floating dimension annotation assistant that enhances documentation productivity. Quickly add industry-standard dimension text (FOG, EOS, FTF, etc.) to selected dimensions with precise control over text positioning. Create custom annotations on-the-fly and save frequently used dimension texts for future use. Streamlines the tedious task of dimension annotation across your project."
 __title__ = "Dim Text\nHelper"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=29672"
 __youtube__ = "https://youtu.be/WYs-_k5IV48"
@@ -247,7 +247,7 @@ class CustomizableEvent:
         self.kwargs = {}
 
     def _raised_method(self):
-        """ !!! DO NOT USE THIS METHOD IN YOUR SCRIPT !!!
+        """ !!! DO NOT USE THIS METHOD IN YOUR SCRIPT !!!
         Method executed by IExternalEventHandler.Execute when ExternalEvent is raised by ExternalEvent.Raise.
         """
         self.function_or_method(*self.args, **self.kwargs)

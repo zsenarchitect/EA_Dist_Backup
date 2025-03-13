@@ -4,6 +4,15 @@ from Autodesk.Revit import DB # pyright: ignore
 
 from pyrevit import forms
 
+__doc__ = """Healthcare project configuration wizard that transforms your Revit project into a well-organized healthcare documentation powerhouse! 
+
+This setup utility:
+- Establishes essential project data tracking
+- Configures PIM numbering parameters
+- Sets up area tracking parameters
+- Synchronizes project level information
+
+Run this at the beginning of your healthcare project to ensure smooth documentation workflow and standards compliance."""
 
 
 ############### MAIN SETUP FUNCTIONS ###############

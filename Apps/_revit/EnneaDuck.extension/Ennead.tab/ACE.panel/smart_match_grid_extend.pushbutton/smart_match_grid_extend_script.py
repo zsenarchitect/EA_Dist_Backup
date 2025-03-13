@@ -1,13 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ =  """Get all floor plans and area plans
-for each view, find all grids. Then for each end of 
-the grid decide if it should show bubble or not based 
-on the status of same bubble from same level in REF dict."""
+__doc__ =  """Get all floor plans and area plans for each view, find all grids. Then for each end of the grid decide if it should show bubble or not based on the status of same bubble from same level in REF dict."""
     
 __title__ = "Smart Match\nGrid Extend"
 __tip__ = True
+__is_popular__ = True
 import proDUCKtion # pyright: ignore 
 from pyrevit import script # pyright: ignore 
 proDUCKtion.validify()

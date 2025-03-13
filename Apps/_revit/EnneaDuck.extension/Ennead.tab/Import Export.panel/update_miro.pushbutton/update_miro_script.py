@@ -3,17 +3,7 @@
 
 
 
-__doc__ = """Using bluebeam for markup is tricky when your old markup cannot transfer to new PDF background.
-
-Now you have many version of the markup and you need to repeatively markup same content if they are not picked up.
-
-With review Revit on miro, you can export the sheets as images and push them to a dedicated Miro board.
-New sheets will be marked with blue cross, updated sheets will be marked with orange star.
-
-You are free to reorganize sheets however you want and mark as much as you like. The updated image will find the replace background image and your markup will continously live untill they are picked up.
-
-
-Note: Due to CBI account restriction, I can only use a personal miro account for it. Feel free to just ask me for a board."""
+__doc__ = "Intelligent Miro integration for continuous design review workflows. This powerful utility exports sheets directly to Miro with automatic version tracking - new sheets get blue crosses, updated sheets get orange stars. Allows for persistent markup across document revisions, eliminating the need to recreate comments on each iteration. Perfect for maintaining feedback history when traditional PDF markup would be lost with new backgrounds."
 __title__ = "Review\nOn Miro"
 __tip__ = True
 import shutil

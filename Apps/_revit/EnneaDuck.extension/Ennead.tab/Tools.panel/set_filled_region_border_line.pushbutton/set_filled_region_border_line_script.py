@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Set the filled region border line to a specific line style. You cannot access this tool while inside group editor, but you can still access each filled region by tabing and then use this button."
+__doc__ = "Specialized filled region styling tool that allows precise control over border line appearance. Quickly apply consistent line styles to multiple filled regions simultaneously, enhancing drawing clarity and graphical standards. Works with individual selections even when regions are nested within groups by using tab-selection technique."
 __title__ = "Set FilledRegion\nBorder Style"
 
 from pyrevit import forms #

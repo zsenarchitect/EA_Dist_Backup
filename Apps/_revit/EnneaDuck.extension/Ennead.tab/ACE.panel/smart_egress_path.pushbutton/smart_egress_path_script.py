@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """
-Update smart egress path maker family data.
-"""
+__doc__ = "Intelligent egress path creation tool that automates code-compliant exit routing. This utility helps you create and maintain accurate egress paths with smart dynamic updating capabilities, ensuring proper path widths and distances to exits are maintained as the design evolves. Perfect for life safety documentation and code compliance verification."
 __title__ = "Smart\nEgress Path"
 __tip__ = True
 __is_popular__ = True

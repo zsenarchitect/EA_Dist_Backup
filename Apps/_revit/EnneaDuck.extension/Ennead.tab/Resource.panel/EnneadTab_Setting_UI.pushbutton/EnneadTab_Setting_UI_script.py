@@ -1,13 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """All basic setting for the EnneadTab for Revit.
-+Tabs avaliablity
-+Tab Color.
-+Switching between Lite and Pro version.
-+Notification Setting.
-+Duck Setting.
-etc"""
+__doc__ = "Personalization control center for your EnneadTab experience. This comprehensive settings manager allows you to customize tab visibility, color schemes, notification preferences, and duck behavior. Includes options to toggle between Lite and Pro versions, manage extension visibility, and fine-tune your workflow preferences to match your project needs."
 __title__ = "EnneadTab\nSetting"
 __context__ = "zero-doc"
 __tip__ = [__doc__,

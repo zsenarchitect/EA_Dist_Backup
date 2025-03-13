@@ -3,6 +3,7 @@
 
 __doc__ = "Generate walltype legand view as well as view filter. The color is picked based on related filled region type, if not avaibale then pick new color for you."
 __title__ = "Wall Type\nDiagram"
+__is_popular__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

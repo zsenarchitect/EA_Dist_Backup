@@ -766,7 +766,7 @@
         "script": "Render.tab\\enscape_asset_locator.button\\enscape_asset_locator_left.py",
         "icon": "Render.tab\\enscape_asset_locator.button\\icon.png",
         "alias": "EnscapeAssetLocator",
-        "doc": "Locates Enscape assets by name for material manipulation.\n\nHelps find and access Enscape asset folders to modify materials and properties.\nLaunches the EnscapeAssetChanger application.\n",
+        "doc": "Your personal detective for hunting down elusive Enscape assets!\n\nThis handy tool launches the EnscapeAssetChanger application that helps you:\n- Locate hidden Enscape asset folders across your system\n- Access and modify materials on Enscape objects\n- Customize properties of those beautiful Enscape trees, furniture and people\n- Save hours of searching through obscure file directories\n\nPerfect for visualization specialists who need precise control over their Enscape assets.\n",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": true
@@ -820,7 +820,7 @@
         "script": "Render.tab\\material_shop.button\\material_shop_left.py",
         "icon": "Render.tab\\material_shop.button\\icon.png",
         "alias": "MaterialShop",
-        "doc": "Find good material and asset.",
+        "doc": "Your gateway to a treasure trove of high-quality materials! Opens AmbientCG, a fantastic resource offering hundreds of free PBR materials perfect for architectural visualization. Quickly find textures, HDRIs, and 3D models to elevate your renderings without spending a penny.",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": false
@@ -1153,7 +1153,7 @@
         "script": "startup.py",
         "icon": null,
         "alias": "EnneadTab_Startup",
-        "doc": "Automatically run on every new rhino start session if bind to Rhino setting.",
+        "doc": "The friendly welcome wagon for EnneadTab in Rhino! This startup script springs into action with each new Rhino session, quietly setting up your environment with all the EnneadTab goodness. It registers aliases, checks for updates, sets up event hooks, and ensures all your favorite tools are ready to use - so you can focus on creating amazing designs.",
         "tab": null,
         "tab_icon": null,
         "is_popular": false

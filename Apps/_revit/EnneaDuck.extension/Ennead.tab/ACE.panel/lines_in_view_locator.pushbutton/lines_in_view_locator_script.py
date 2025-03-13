@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Locate the heavy usage view for detail line and model line in current Revit file.\n\nThis is inspired by the orginal pyrevit tool."
+__doc__ = "Line usage analysis tool that helps identify views with excessive detail and model lines. This diagnostic utility generates a ranked report of views containing the most line elements, helping pinpoint potential performance bottlenecks or documentation management issues. Perfect for troubleshooting slow performance or when establishing documentation standards for line usage."
 __title__ = "Lines-In-View\nLocator"
 __tip__ = True
 import proDUCKtion # pyright: ignore 

@@ -1,16 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """Control some pin and unpin status, or hide un hide status, or bubble head.
-
-You can play with many different categories to control."""
+__doc__ = """Master visibility controller for Revit elements. Efficiently manage pin/unpin status, visibility settings, and annotation bubble heads across multiple categories and views. Perfect for cleaning up views, preparing documentation, and enforcing standards across your project."""
 __title__ = "Toggle\nContents"
 __tip__ = True
 __is_popular__ = True
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
 
 
 

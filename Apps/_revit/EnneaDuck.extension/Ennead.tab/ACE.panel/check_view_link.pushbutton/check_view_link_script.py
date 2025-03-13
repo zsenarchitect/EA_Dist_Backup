@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Check all the linked_views in the project"
+__doc__ = "View dependency analyzer that identifies all linked-view relationships throughout your project. This diagnostic tool generates a comprehensive report showing which views reference others, helping identify potential circular dependencies or visualization issues. Perfect for troubleshooting views that unexpectedly display or hide content, or when preparing to delete views that might be referenced elsewhere."
 __title__ = "Check Linked-View\nRelationship"
 
 import proDUCKtion # pyright: ignore 

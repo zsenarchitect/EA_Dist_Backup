@@ -1,20 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """All resource and documentation to help. 
-+Turtorials
-+Youtube playlist
-+Family fomula cheatsheet
-+Bugs reports
-+Feedbacks
-+EA websites
-+Autodesk health websites
-+Rhino and Revit cache folder
-+Decoding the GUID name for BIM360 folder
-+Installation for other enneadtab products
-+Force kill sync monitor record.
-+Training Videos: Scott's Friday training videos.
-+Time sheet helper: Help you remember what you worked on each date."""
+__doc__ = """Your all-in-one resource center for EnneadTab and Revit mastery! 
+
+This comprehensive assistant provides quick access to:
+- Learning resources and tutorials for Revit, Rhino, and CAD
+- YouTube training playlists and Friday session recordings
+- Family formula cheat sheets and reference guides
+- Bug reporting and feedback submission tools
+- Important Ennead and Autodesk websites
+- Cache folder management to optimize C: drive space
+- BIM360 GUID decoder to make sense of cryptic folder names
+- Timesheet helper to track your daily activities
+- Installation guides for other EnneadTab products
+
+Perfect for both beginners and power users who want to maximize their productivity!"""
 __context__ = 'zero-doc'
 __title__ = "Assistant"
 __tip__ = [__doc__,

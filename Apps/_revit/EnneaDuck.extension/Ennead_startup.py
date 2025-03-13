@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 __title__ = "Startup"
+__doc__ = "The magical kickstarter for EnneadTab! This script initializes all the wonderful EnneadTab tools and features when Revit launches. It handles essential setup tasks like path registration, version checking, context menu creation, and graphic server registration - quietly working behind the scenes so all your favorite tools are ready to use."
+
 import os
 import sys
 

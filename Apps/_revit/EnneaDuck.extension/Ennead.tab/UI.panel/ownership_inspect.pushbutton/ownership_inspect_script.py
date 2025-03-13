@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Element ownership detective that reveals who's controlling what in your model! This comprehensive scanner examines all categories of elements and reports which team members have ownership of various objects. Perfect for troubleshooting editing conflicts, identifying workset patterns, and understanding collaboration dynamics across your project."
 __title__ = "Ownership\nInspect"
 
 import proDUCKtion # pyright: ignore 

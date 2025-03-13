@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Move the vertical curtain grids on a curtain wall to nearest intersecting Detail Lines/Grids.\n\nDo this on plan view."
+__doc__ = "Precision curtain grid alignment tool that automatically snaps vertical curtain grids to intersecting detail lines and datum grids. Perfect for quickly coordinating facade layouts with architectural planning grids without tedious manual adjustments. Run this command in a plan view for best results."
 __title__ = "Align V. Curtain Grid To Detail Lines/Grids(Plan)"
 __youtube__ = "https://youtu.be/iiAy-Gxl5ZU"
 __tip__ = True

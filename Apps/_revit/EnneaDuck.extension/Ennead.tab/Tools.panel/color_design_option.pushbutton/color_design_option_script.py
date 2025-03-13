@@ -3,9 +3,10 @@
 
 
 
-__doc__ = "Give elements in selected design options a color in selected views, so you can visualize what is inside each option."
+__doc__ = "Visual design option manager that transforms how you work with alternatives. Automatically color-codes elements belonging to different design options across selected views, making it instantly clear which elements belong to which option. Perfect for presentations, design reviews, and maintaining clarity when working with complex option sets."
 __title__ = "Color-Code\nDesign Option"
 __tip__ = True
+__is_popular__ = True
 import random
 from pyrevit import forms #
 from pyrevit import script #

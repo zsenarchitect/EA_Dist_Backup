@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Allow you to generate basic QAQC report based on current document, and use human language to chat with the report to get QAQC status.\nThis tool features openAI in the background for the chatbot part."
+__doc__ = "AI-powered quality control assistant that transforms complex model data into actionable insights. This innovative tool generates comprehensive QAQC reports for your current document and features a natural language interface powered by OpenAI, allowing you to interrogate the results through simple conversation. Perfect for project milestones, coordination reviews, or when preparing deliverables that require rigorous quality verification."
 __title__ = "QAQC\nReporter"
 __is_popular__ = True
 

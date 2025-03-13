@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Sen Zhang has not writed documentation for this tool, but he should!"
+__doc__ = "Automates the tedious task of joining columns and floors throughout your model. This time-saving utility identifies all column and floor elements and applies join geometry operations between them, providing a detailed completion report of successful and failed joins."
 __title__ = "Join All Column/Floor"
 
 import proDUCKtion # pyright: ignore 

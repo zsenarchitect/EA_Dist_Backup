@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 #pylint: disable=undefined-variable,import-error,invalid-name
-__doc__ = "Commandline for Revit\n\nFind those button function you might not know where to find.\nThe search result is ranked as follow:\n-Tool name begins with user input text.\n-Tool name contains user input text.\n-Tool help documentation contains user input text.\n\nThe main info panel shows the button icon image, which panel to find it, the full documentation, any hyper link to EI post and Youtube Demo video if available. \nYou can also directly activate the tool with the 'GO' button or 'Enter' key.\n\nYou also have the option to search only EnneadTab buttons or Native Revit buttons.\nOn top left corner there is a minimize button, so you can keep it small when not using it."
+__doc__ = "Intelligent command search engine for Revit. This powerful search utility helps you locate tools across both EnneadTab and native Revit interfaces with ranked results based on name and documentation matches. Features include visual previews of tool locations, direct activation capability, and detailed documentation display with links to help resources. Perfect for quickly accessing functions without navigating through ribbon panels or when you can't remember where tools are located."
 __title__ = "Search\nCommand"
 __tip__ = True
 __is_popular__ = True

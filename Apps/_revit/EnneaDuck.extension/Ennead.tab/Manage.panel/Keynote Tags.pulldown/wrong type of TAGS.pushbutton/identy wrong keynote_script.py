@@ -7,6 +7,7 @@ The same go for the element keynote types.
 User keynote, since no one should really use it, will be highlighted as blue."""
 __title__ = "Identify Wrong Type\nOf KeynoteTAG"
 __tip__ = True
+__is_popular__ = True
 from pyrevit import DB, revit, script
 
 

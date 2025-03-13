@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Fire UP ChatGPT in Revit.\n\nIt can answer any questions you might have."
+__doc__ = "Integrated AI assistant that brings ChatGPT directly into your Revit environment. This powerful tool provides instant answers to Revit-related questions, code compliance inquiries, design challenges, or general information needs without leaving your modeling interface. Perfect for quickly solving problems or exploring design alternatives without disrupting your workflow."
 __title__ = "ChatGPT"
 __context__ = 'zero-doc'
 __youtube__ = "https://youtu.be/NoJmQ7GFzMs"

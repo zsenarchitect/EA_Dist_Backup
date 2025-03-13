@@ -1,4 +1,3 @@
-
 from pyrevit import revit, DB
 from pyrevit import script
 from pyrevit import forms
@@ -8,7 +7,7 @@ proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_APPLICATION
 from EnneadTab import ERROR_HANDLE, LOG
 
-__doc__ = 'Need at leat one model line as refference, and one scopebox to play with. Becasue the initial oriteation of the scopebox can be unpredicatable so i cannot ganrantee it finish in one go, but by large it can find the angle within 3 clicks.'
+__doc__ = "Intelligent scopebox alignment tool that precisely orients view boundaries to match model geometry. Using reference model lines as guides, this utility automatically calculates and applies the optimal rotation angle to selected scopeboxes. The smart algorithm typically finds the correct orientation within three iterations, even with complex angles or unusual initial positions."
 __tip__ = True
 __title__ = "Orient\nScopebox"
 __youtube__ = "https://youtu.be/NBQQd-GXGRQ"

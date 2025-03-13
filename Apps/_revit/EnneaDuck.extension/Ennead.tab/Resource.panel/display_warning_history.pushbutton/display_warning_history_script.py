@@ -3,12 +3,7 @@
 
 
 
-__doc__ = """
-This shows the history of warnings for file(s) that had been recorded by EnneadTab
-
-Left Click: Check current document.
-Shift Click: Check results from a selection of projects. 
-"""
+__doc__ = "Warning tracking system that reveals error trends across your project history. This powerful diagnostic tool displays comprehensive warning logs that have been automatically recorded by EnneadTab, allowing you to analyze warning patterns over time. Left-click to analyze the current document, or Shift-click to compare multiple projects."
 __title__ = "Display Revit\nWarning History"
 __tip__ = True
 import os

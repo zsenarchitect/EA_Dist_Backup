@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that give you quick access to align tags horitiontally or verticaly after picking a ref tag."
+__doc__ = "Precision tag alignment assistant that brings order to your documentation. This floating interface allows you to quickly align multiple tags horizontally or vertically based on a reference tag. Perfect for creating clean, professional drawings with consistently aligned annotations that improve readability and presentation quality."
 __title__ = "Tag\nAligner"
 __tip__ = True
 

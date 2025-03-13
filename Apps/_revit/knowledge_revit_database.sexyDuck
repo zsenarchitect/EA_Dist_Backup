@@ -1758,7 +1758,7 @@
         "script": "Ennead.tab\\ACE.panel\\check_formula.pushbutton\\check_formula_script.py",
         "icon": "Ennead.tab\\ACE.panel\\check_formula.pushbutton\\icon.png",
         "alias": "Inspect Excel Formula",
-        "doc": "Are you having trouble trusting the excel when it is past to you from someone else? What if the formula is incorrect and is citing the wrong cell? You could not know it unless you click each one of the cell and see if there is a hidden formula. \nNow this formula checker will help you find every hidden formula so you can see for yourself.\nIt highlight the cells as dash.",
+        "doc": "Excel formula validation tool that reveals hidden calculation relationships. This quality control utility inspects spreadsheets for embedded formulas, highlighting cells with dependencies to help verify calculation accuracy. Perfect for validating critical data before importing into Revit or when reviewing calculations from external sources to prevent errors in your documentation.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": true
@@ -1776,7 +1776,7 @@
         "script": "Ennead.tab\\ACE.panel\\check_view_link.pushbutton\\check_view_link_script.py",
         "icon": "Ennead.tab\\ACE.panel\\check_view_link.pushbutton\\icon.png",
         "alias": "Check Linked-View Relationship",
-        "doc": "Check all the linked_views in the project",
+        "doc": "View dependency analyzer that identifies all linked-view relationships throughout your project. This diagnostic tool generates a comprehensive report showing which views reference others, helping identify potential circular dependencies or visualization issues. Perfect for troubleshooting views that unexpectedly display or hide content, or when preparing to delete views that might be referenced elsewhere.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
@@ -1848,7 +1848,7 @@
         "script": "Ennead.tab\\ACE.panel\\family_tree.pushbutton\\family_tree_script.py",
         "icon": "Ennead.tab\\ACE.panel\\family_tree.pushbutton\\icon.png",
         "alias": "Family Tree",
-        "doc": "Quick display of family tree for current and all nesting family of the current family.",
+        "doc": "Family hierarchy visualization tool that reveals the complete nesting structure of complex Revit families. This utility generates a clear, hierarchical display of all nested components within the current family, showing parent-child relationships and dependency chains. Perfect for understanding complex families, troubleshooting parameter inheritance, or documenting family architecture.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
@@ -1860,22 +1860,22 @@
         "doc": "For views on selected sheets, inspect if there are local graphic override or local hidden objects that is not controlled by template.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\keynote_assistant_script.py": {
         "script": "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\keynote_assistant_script.py",
         "icon": "Ennead.tab\\ACE.panel\\keynote_assistant.pushbutton\\icon.png",
         "alias": "Keynote Assistant",
-        "doc": "Keynote Assistant - Enhanced keynote management tool for Revit\n\nThis tool extends the functionality of the pyRevit keynote manager with additional features \nspecific to Ennead's workflow. It provides a comprehensive interface for creating, editing, \nand managing keynotes within your Revit project.\n\nTechnical Information:\n- Revit keynotes use UTF-16 LE encoding\n- Keynote data structure follows the format: key | description | parent_key\n- Hierarchical organization:\n  * Top-level keynotes have no parent key\n  * Child keynotes reference their parent via parent_key\n  * Hierarchies can be nested to any depth (A -> B -> C)\n  * For example: \n    - A | xxx | \n    - B | xxx | A\n    - C | xxx | B\n    - D | xxx | A\n    - A -> B -> C\n    - A -> D\n\n\npyRevit Features:\n- Create and manage keynote categories and entries\n- Maintain hierarchical organization of keynotes\n- Search and filter keynote database\n- Place keynotes directly in the active view\n- Import/export keynote data\n- Track keynote usage within the project\n\nAdvanced Functionality from EnneadTab TO-DO in additional_utils.py:\n\nAdvanced Functionality from EnneadTab implemented    in additional_utils.py:\n- Extended data storage for additional keynote properties, such as product, source, color, spec, etc.\n- Export capabilities as new formatted EXCEL file for both INTERIOR and EXTERIOR sticky linking in Revit.\n- Cleanup quote text in keynote text if you import old keynote files.\n- Batch reattach keynotes to a new parent.\n- This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.\n- Actual translation function by openAI\n\nThis implementation maintains compatibility with the core pyRevit functionality\nwhile adding Ennead-specific enhancements.\n",
+        "doc": "Comprehensive keynote management system that extends Revit's standard functionality. This powerful utility provides an intuitive interface for creating, editing, and organizing keynotes with additional features for categorization, search, batch operations, and translation capabilities. Perfect for maintaining consistent documentation standards and streamlining the keynoting workflow across complex projects.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\lines_in_view_locator_script.py": {
         "script": "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\lines_in_view_locator_script.py",
         "icon": "Ennead.tab\\ACE.panel\\lines_in_view_locator.pushbutton\\icon.png",
         "alias": "Lines-In-View Locator",
-        "doc": "Locate the heavy usage view for detail line and model line in current Revit file.\n\nThis is inspired by the orginal pyrevit tool.",
+        "doc": "Line usage analysis tool that helps identify views with excessive detail and model lines. This diagnostic utility generates a ranked report of views containing the most line elements, helping pinpoint potential performance bottlenecks or documentation management issues. Perfect for troubleshooting slow performance or when establishing documentation standards for line usage.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": false
@@ -1929,7 +1929,7 @@
         "script": "Ennead.tab\\ACE.panel\\QAQC_AI.pushbutton\\qaqc_ai_UI_script.py",
         "icon": "Ennead.tab\\ACE.panel\\QAQC_AI.pushbutton\\icon.png",
         "alias": "QAQC Reporter",
-        "doc": "Allow you to generate basic QAQC report based on current document, and use human language to chat with the report to get QAQC status.\nThis tool features openAI in the background for the chatbot part.",
+        "doc": "AI-powered quality control assistant that transforms complex model data into actionable insights. This innovative tool generates comprehensive QAQC reports for your current document and features a natural language interface powered by OpenAI, allowing you to interrogate the results through simple conversation. Perfect for project milestones, coordination reviews, or when preparing deliverables that require rigorous quality verification.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": true
@@ -1938,10 +1938,10 @@
         "script": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\rename_nesting_family_script.py",
         "icon": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\icon.png",
         "alias": "Rename Nesting Family",
-        "doc": "Scans through project families and their nested components to remove '*ConflictingName' string.\n            \nPROCESS:\n- Iterates through all families in current project\n- Opens each family document\n- Checks nested families for '*ConflictingName' string\n- Renames affected nested families by removing the conflicting string\n- Loads modified families back to project\n- Logs all changes made during the process\n",
+        "doc": "Scans through project families and their nested components to remove '*ConflictingName' string.\n            \nPROCESS:\n- Iterates through all families in current project\n- Opens each family document\n- Checks nested families for '*ConflictingName' string\n- Renames affected nested families by removing the conflicting string\n- Loads modified families back to project\n- Logs all changes made during the process\n\nYou can also requist to locate and rename based on other rules.\n",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py": {
         "script": "Ennead.tab\\ACE.panel\\repath_dwg_drive_letter.pushbutton\\repath_dwg_drive_letter_script.py",
@@ -1956,7 +1956,7 @@
         "script": "Ennead.tab\\ACE.panel\\smart_egress_path.pushbutton\\smart_egress_path_script.py",
         "icon": "Ennead.tab\\ACE.panel\\smart_egress_path.pushbutton\\icon.png",
         "alias": "Smart Egress Path",
-        "doc": "\nUpdate smart egress path maker family data.\n",
+        "doc": "Intelligent egress path creation tool that automates code-compliant exit routing. This utility helps you create and maintain accurate egress paths with smart dynamic updating capabilities, ensuring proper path widths and distances to exits are maintained as the design evolves. Perfect for life safety documentation and code compliance verification.",
         "tab": "ACE",
         "tab_icon": null,
         "is_popular": true
@@ -1965,10 +1965,10 @@
         "script": "Ennead.tab\\ACE.panel\\smart_match_grid_extend.pushbutton\\smart_match_grid_extend_script.py",
         "icon": "Ennead.tab\\ACE.panel\\smart_match_grid_extend.pushbutton\\icon.png",
         "alias": "Smart Match Grid Extend",
-        "doc": "Get all floor plans and area plans\nfor each view, find all grids. Then for each end of \nthe grid decide if it should show bubble or not based \non the status of same bubble from same level in REF dict.",
+        "doc": "Get all floor plans and area plans for each view, find all grids. Then for each end of the grid decide if it should show bubble or not based on the status of same bubble from same level in REF dict.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\transfer_parameter_data.pushbutton\\transfer_parameter_data_script.py": {
         "script": "Ennead.tab\\ACE.panel\\transfer_parameter_data.pushbutton\\transfer_parameter_data_script.py",
@@ -1995,7 +1995,7 @@
         "doc": "Generate walltype legand view as well as view filter. The color is picked based on related filled region type, if not avaibale then pick new color for you.",
         "tab": "ACE",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\ACE.panel\\Worksets.pulldown\\create 3D view of workset.pushbutton\\3d workset view_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Worksets.pulldown\\create 3D view of workset.pushbutton\\3d workset view_script.py",
@@ -2046,7 +2046,7 @@
         "script": "Ennead.tab\\Import Export.panel\\ennead_exporter.pushbutton\\super_exporter_script.py",
         "icon": "Ennead.tab\\Import Export.panel\\ennead_exporter.pushbutton\\icon.png",
         "alias": "Ennead Exporter",
-        "doc": "A great helper for your print on deadline. Feastures include:\n  -pdf, dwg, jpg export together\n  -Package export files to subfolders in destination folder by assigned prefix and file type\n  -Prefix for auto numbering\n  -Email result as a link to folder.\n  -Time esitmation, with increasing accuracy the more you export\n  -Identify color setting per parameter on sheet. So you can mix color and BW export together.\n  -Option to sync and close files after exporting done.\n  -Export sheets by revision mark instead of printSet, and allow selective export without desrupting shared printSet.\n  -Export views on sheet seperatedly for dwg.\n  -Export from links or open docs.\n  -Merge pdf after export.\n  -JOKE while exporting.",
+        "doc": "Professional export solution that handles multiple file formats and workflows. This comprehensive utility manages PDF, DWG, and JPG exports simultaneously with intelligent organization by prefix and file type. Features include email notifications with folder links, accurate time estimation, color/BW export control, revision-based filtering, and option to sync and close after completion. Perfect for meeting tight deadlines while maintaining project organization.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": true
@@ -2181,7 +2181,7 @@
         "script": "Ennead.tab\\Import Export.panel\\update_miro.pushbutton\\update_miro_script.py",
         "icon": "Ennead.tab\\Import Export.panel\\update_miro.pushbutton\\icon.png",
         "alias": "Review On Miro",
-        "doc": "Using bluebeam for markup is tricky when your old markup cannot transfer to new PDF background.\n\nNow you have many version of the markup and you need to repeatively markup same content if they are not picked up.\n\nWith review Revit on miro, you can export the sheets as images and push them to a dedicated Miro board.\nNew sheets will be marked with blue cross, updated sheets will be marked with orange star.\n\nYou are free to reorganize sheets however you want and mark as much as you like. The updated image will find the replace background image and your markup will continously live untill they are picked up.\n\n\nNote: Due to CBI account restriction, I can only use a personal miro account for it. Feel free to just ask me for a board.",
+        "doc": "Intelligent Miro integration for continuous design review workflows. This powerful utility exports sheets directly to Miro with automatic version tracking - new sheets get blue crosses, updated sheets get orange stars. Allows for persistent markup across document revisions, eliminating the need to recreate comments on each iteration. Perfect for maintaining feedback history when traditional PDF markup would be lost with new backgrounds.",
         "tab": "Import Export",
         "tab_icon": null,
         "is_popular": false
@@ -2226,7 +2226,7 @@
         "script": "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\fire_rating_script.py",
         "icon": "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\icon.png",
         "alias": "Fire Rating Graphic",
-        "doc": "Manager fire rating in wall property, and apply/update rating graphic across multiple views.",
+        "doc": "Comprehensive fire rating management system that streamlines code compliance documentation. This powerful utility helps you assign, track, and visualize fire ratings throughout your project with intelligent graphics that update automatically across multiple views. Perfect for maintaining consistent fire separation documentation and ensuring building code requirements are clearly communicated in your drawings.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true
@@ -2238,7 +2238,7 @@
         "doc": "In the standalone window, you can zoom in with section box to a region that have a warning.\n\nAs you are fixing it, you will see the warning count going down. When you sync baack after all the fix, the EA coins will be rewarded..",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\Keynote Tags.pulldown\\wrong type of TAGS.pushbutton\\identy wrong keynote_script.py": {
         "script": "Ennead.tab\\Manage.panel\\Keynote Tags.pulldown\\wrong type of TAGS.pushbutton\\identy wrong keynote_script.py",
@@ -2247,7 +2247,7 @@
         "doc": "You should avoid using user keynotes, but if someone already did in the project, you can find them here.\n\nAlso, element keynote and material keynote should be used by it repsected types. \nIf there is mismatch, this tool will attempt to find them. The rule as as such, if there is 'material' mentioned in the type name or family name, and the tag is pointing to a element key data, it will warn you. \nThe same go for the element keynote types.\n\nUser keynote, since no one should really use it, will be highlighted as blue.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\Keynote Tags.pulldown\\z_reset all tag to default color.pushbutton\\reset tag color_script.py": {
         "script": "Ennead.tab\\Manage.panel\\Keynote Tags.pulldown\\z_reset all tag to default color.pushbutton\\reset tag color_script.py",
@@ -2274,7 +2274,7 @@
         "doc": "Load family from linked revit file without open those links.",
         "tab": "Manage",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Manage.panel\\Merge Family.pushbutton\\Merge_Family_script.py": {
         "script": "Ennead.tab\\Manage.panel\\Merge Family.pushbutton\\Merge_Family_script.py",
@@ -2316,7 +2316,7 @@
         "script": "Ennead.tab\\Manage.panel\\track_detail_group.pushbutton\\track_detail_group_script.py",
         "icon": "Ennead.tab\\Manage.panel\\track_detail_group.pushbutton\\icon.png",
         "alias": "Track Detail Group",
-        "doc": "Location the usage of detail groups by view or by group type.",
+        "doc": "Detail group detective that helps you track down where groups are used throughout your project. This bidirectional search tool allows you to find all instances of a specific detail group across views, or identify all detail groups used within selected views. Perfect for understanding dependencies before making changes to detail groups or when cleaning up unused content.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true
@@ -2325,7 +2325,7 @@
         "script": "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py",
         "icon": "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\icon.png",
         "alias": "Manage Working Views",
-        "doc": "A floating window that give you quick access to review un-sheeted views, ranked by creator, view group, view type and more. View name can be prefixed to make it more informative the author even from project broswer.\n\n The review process can be quick becasue the view have been exported as jpgs and reviewed quickly. You can also directly open actual view, or delete view in the same window after reviewing.\n\nIf you want to limit how much to see, you can show only views from you.",
+        "doc": "Powerful working view management system that helps maintain a clean project environment. This interactive interface allows you to quickly identify, review, and organize unsheeted views with intelligent filtering by creator, view type, and more. Features include thumbnail previews for rapid visual assessment, batch view name prefixing to identify creators, and direct view deletion capabilities - all without leaving the interface. Perfect for project cleanup before submissions or when transitioning between project phases.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true
@@ -2334,7 +2334,7 @@
         "script": "Ennead.tab\\Manage.panel\\workset_fixer.pushbutton\\fix_workset_script.py",
         "icon": "Ennead.tab\\Manage.panel\\workset_fixer.pushbutton\\icon.png",
         "alias": "WorkSet Manager",
-        "doc": "A floating window that help you correct worksets by category, by host or by type.\n\nContents inside design option can also change workset as long as they are not in group.",
+        "doc": "Advanced workset organization tool that brings order to collaborative projects. This floating interface provides multiple ways to reassign elements to appropriate worksets - by category, by host element, or by type. Even handles elements inside design options (as long as they're not in groups). Perfect for cleaning up workset assignments after imports or when standardizing project collaboration structure.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true
@@ -2352,7 +2352,7 @@
         "script": "Ennead.tab\\Resource.panel\\beer_tab.pushbutton\\beer_tab_script.py",
         "icon": "Ennead.tab\\Resource.panel\\beer_tab.pushbutton\\icon.png",
         "alias": "Beer Tab",
-        "doc": "Go get a drink!",
+        "doc": "Designer's break companion that helps you maintain proper work-life balance. This essential utility provides quick access to local refreshment options when you need a mental reset. Perfect for those moments when architectural inspiration requires a change of scenery and a cold beverage.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2361,7 +2361,7 @@
         "script": "Ennead.tab\\Resource.panel\\ChatGPT.pushbutton\\ChatGPT_script.py",
         "icon": "Ennead.tab\\Resource.panel\\ChatGPT.pushbutton\\icon.png",
         "alias": "ChatGPT",
-        "doc": "Fire UP ChatGPT in Revit.\n\nIt can answer any questions you might have.",
+        "doc": "Integrated AI assistant that brings ChatGPT directly into your Revit environment. This powerful tool provides instant answers to Revit-related questions, code compliance inquiries, design challenges, or general information needs without leaving your modeling interface. Perfect for quickly solving problems or exploring design alternatives without disrupting your workflow.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2370,7 +2370,7 @@
         "script": "Ennead.tab\\Resource.panel\\display_warning_history.pushbutton\\display_warning_history_script.py",
         "icon": "Ennead.tab\\Resource.panel\\display_warning_history.pushbutton\\icon.png",
         "alias": "Display Revit Warning History",
-        "doc": "\nThis shows the history of warnings for file(s) that had been recorded by EnneadTab\n\nLeft Click: Check current document.\nShift Click: Check results from a selection of projects. \n",
+        "doc": "Warning tracking system that reveals error trends across your project history. This powerful diagnostic tool displays comprehensive warning logs that have been automatically recorded by EnneadTab, allowing you to analyze warning patterns over time. Left-click to analyze the current document, or Shift-click to compare multiple projects.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2379,7 +2379,7 @@
         "script": "Ennead.tab\\Resource.panel\\EnneadTab_Setting_UI.pushbutton\\EnneadTab_Setting_UI_script.py",
         "icon": "Ennead.tab\\Resource.panel\\EnneadTab_Setting_UI.pushbutton\\icon.png",
         "alias": "EnneadTab Setting",
-        "doc": "All basic setting for the EnneadTab for Revit.\n+Tabs avaliablity\n+Tab Color.\n+Switching between Lite and Pro version.\n+Notification Setting.\n+Duck Setting.\netc",
+        "doc": "Personalization control center for your EnneadTab experience. This comprehensive settings manager allows you to customize tab visibility, color schemes, notification preferences, and duck behavior. Includes options to toggle between Lite and Pro versions, manage extension visibility, and fine-tune your workflow preferences to match your project needs.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2388,7 +2388,7 @@
         "script": "Ennead.tab\\Resource.panel\\external_links_UI.pushbutton\\external_links_UI_script.py",
         "icon": "Ennead.tab\\Resource.panel\\external_links_UI.pushbutton\\icon.png",
         "alias": "Assistant",
-        "doc": "All resource and documentation to help. \n+Turtorials\n+Youtube playlist\n+Family fomula cheatsheet\n+Bugs reports\n+Feedbacks\n+EA websites\n+Autodesk health websites\n+Rhino and Revit cache folder\n+Decoding the GUID name for BIM360 folder\n+Installation for other enneadtab products\n+Force kill sync monitor record.\n+Training Videos: Scott's Friday training videos.\n+Time sheet helper: Help you remember what you worked on each date.",
+        "doc": "Your all-in-one resource center for EnneadTab and Revit mastery! \n\nThis comprehensive assistant provides quick access to:\n- Learning resources and tutorials for Revit, Rhino, and CAD\n- YouTube training playlists and Friday session recordings\n- Family formula cheat sheets and reference guides\n- Bug reporting and feedback submission tools\n- Important Ennead and Autodesk websites\n- Cache folder management to optimize C: drive space\n- BIM360 GUID decoder to make sense of cryptic folder names\n- Timesheet helper to track your daily activities\n- Installation guides for other EnneadTab products\n\nPerfect for both beginners and power users who want to maximize their productivity!",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2397,7 +2397,7 @@
         "script": "Ennead.tab\\Resource.panel\\mini_bank.pushbutton\\mini_bank_script.py",
         "icon": "Ennead.tab\\Resource.panel\\mini_bank.pushbutton\\icon.png",
         "alias": "MiniBank",
-        "doc": "A floating window that check the Ennead Minibank record for user ranking and recent event.",
+        "doc": "Virtual achievement system that tracks your productivity and EnneadTab usage. This floating window displays your current MiniBank balance and leaderboard ranking, celebrating your contributions to the firm's digital ecosystem. Earn coins through regular tool usage, submitting bug reports, and helping colleagues. Perfect for encouraging healthy competition while building a culture of technology adoption.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2442,7 +2442,7 @@
         "script": "Ennead.tab\\Resource.panel\\tell_me_version.pushbutton\\tell_me_version_script.py",
         "icon": "Ennead.tab\\Resource.panel\\tell_me_version.pushbutton\\icon.png",
         "alias": "Tell Me Version",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Version information utility that displays the current build details for all EnneadTab components. This diagnostic tool provides complete version numbers, build dates, and update status for your installation - essential for troubleshooting, submitting bug reports, or verifying you have the latest features. Perfect for confirming compatibility when working with team members or when communicating with EnneadTab support.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2451,7 +2451,7 @@
         "script": "Ennead.tab\\Resource.panel\\unit_test.pushbutton\\unit_test_script.py",
         "icon": "Ennead.tab\\Resource.panel\\unit_test.pushbutton\\icon.png",
         "alias": "Unit Test",
-        "doc": "Test the core modules",
+        "doc": "Diagnostic validation tool that verifies core EnneadTab modules are functioning correctly. This utility runs a comprehensive series of tests on critical system components to ensure proper operation across the entire extension ecosystem. Perfect for troubleshooting after updates, when experiencing unexpected behavior, or when developing new functionality that depends on core services.",
         "tab": "Resource",
         "tab_icon": null,
         "is_popular": false
@@ -2460,7 +2460,7 @@
         "script": "Ennead.tab\\Tools.panel\\AlignScopebox.pushbutton\\alignscopbox_script.py",
         "icon": "Ennead.tab\\Tools.panel\\AlignScopebox.pushbutton\\icon.png",
         "alias": "Orient Scopebox",
-        "doc": "Need at leat one model line as refference, and one scopebox to play with. Becasue the initial oriteation of the scopebox can be unpredicatable so i cannot ganrantee it finish in one go, but by large it can find the angle within 3 clicks.",
+        "doc": "Intelligent scopebox alignment tool that precisely orients view boundaries to match model geometry. Using reference model lines as guides, this utility automatically calculates and applies the optimal rotation angle to selected scopeboxes. The smart algorithm typically finds the correct orientation within three iterations, even with complex angles or unusual initial positions.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2469,7 +2469,7 @@
         "script": "Ennead.tab\\Tools.panel\\apply_panel_radius_UI.pushbutton\\apply_panel_radius_UI_script.py",
         "icon": "Ennead.tab\\Tools.panel\\apply_panel_radius_UI.pushbutton\\icon.png",
         "alias": "Apply Panel Radius",
-        "doc": "Pick curtain panel type and apply host wall radius to panel radius on parameter defined by user.",
+        "doc": "Advanced curtain panel radius management tool that automatically applies host wall curvature to panel elements. Intelligently identifies curved curtain walls and transfers radius values to panel parameters, ensuring consistent curvature throughout the facade system. Customizable parameter mapping allows for flexible implementation across different panel families.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2478,7 +2478,7 @@
         "script": "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py",
         "icon": "Ennead.tab\\Tools.panel\\batch_cut.pushbutton\\icon.png",
         "alias": "Batch Cut Elements",
-        "doc": "Good for batch cutting many curtain panels at once with same void.",
+        "doc": "Powerful batch cutting utility that streamlines the process of creating multiple void cuts in curtain panels. Select curtain walls or individual panels and apply the same void geometry to all elements simultaneously. Perfect for creating consistent openings across curtain systems without tedious individual operations.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2487,16 +2487,16 @@
         "script": "Ennead.tab\\Tools.panel\\color_design_option.pushbutton\\color_design_option_script.py",
         "icon": "Ennead.tab\\Tools.panel\\color_design_option.pushbutton\\icon.png",
         "alias": "Color-Code Design Option",
-        "doc": "Give elements in selected design options a color in selected views, so you can visualize what is inside each option.",
+        "doc": "Visual design option manager that transforms how you work with alternatives. Automatically color-codes elements belonging to different design options across selected views, making it instantly clear which elements belong to which option. Perfect for presentations, design reviews, and maintaining clarity when working with complex option sets.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\detail_line_from_excel.pushbutton\\detail_line_from_excel_script.py": {
         "script": "Ennead.tab\\Tools.panel\\detail_line_from_excel.pushbutton\\detail_line_from_excel_script.py",
         "icon": "Ennead.tab\\Tools.panel\\detail_line_from_excel.pushbutton\\icon.png",
         "alias": "Detail Line By Excel",
-        "doc": "Generate detail line from the Excel survey pt data. Best used for property line geneation.",
+        "doc": "Precision detail line generator that imports survey point data directly from Excel spreadsheets. Automatically converts coordinate data into properly positioned Revit detail lines, creating grouped elements for easy manipulation. Ideal for property line creation, site boundaries, and other survey-based linework that requires exact positioning.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2505,7 +2505,7 @@
         "script": "Ennead.tab\\Tools.panel\\dim_text_helper.pushbutton\\dim_text_script.py",
         "icon": "Ennead.tab\\Tools.panel\\dim_text_helper.pushbutton\\icon.png",
         "alias": "Dim Text Helper",
-        "doc": "A floating window that give you quick access to add dim text below your selected dim or dims.\nYou can use any of the popular dim text, or use your own by typing in the user bar.\nYou may also pick the relative position on the text to the default numbering.(Up, Down, Prefix, Surfix)",
+        "doc": "Floating dimension annotation assistant that enhances documentation productivity. Quickly add industry-standard dimension text (FOG, EOS, FTF, etc.) to selected dimensions with precise control over text positioning. Create custom annotations on-the-fly and save frequently used dimension texts for future use. Streamlines the tedious task of dimension annotation across your project.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2514,7 +2514,7 @@
         "script": "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py",
         "icon": "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\icon.png",
         "alias": "Super Renamer",
-        "doc": "A floating window that give you quick access to all kinds of renamer function.\n    - Add/Remove a prefix for selected views.\n    - Change Views/SHeets to upper case.\n    - Format view names based on detail number and sheet number.\n    - Rename family on spot without going thru the project broswer.",
+        "doc": "A powerful floating window that provides efficient access to a comprehensive suite of renaming functions.\n    - Add or remove prefixes for selected views with a single click\n    - Convert Views and Sheets to uppercase for consistent documentation\n    - Format view names based on detail number and sheet number with customizable patterns\n    - Rename families directly without navigating through the project browser\n    - Toggle between different naming conventions with ease\n    \nThis tool streamlines the tedious process of maintaining naming consistency throughout your project.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2523,16 +2523,16 @@
         "script": "Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\generic_healthcare_tool_script.py",
         "icon": "Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\icon.png",
         "alias": "HealthCare Helper",
-        "doc": "This will be the foundation for all future health care tools",
+        "doc": "Your ultimate healthcare project companion! Provides a comprehensive suite of tools for managing healthcare projects in Revit - from design guidelines and project setup to DGSF chart management and color palette customization. Access all healthcare-related functionality from this centralized command center.",
         "tab": "Tools",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\inspect_cutter_script.py": {
         "script": "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\inspect_cutter_script.py",
         "icon": "Ennead.tab\\Tools.panel\\inspect_cutter.pushbutton\\icon.png",
         "alias": "Reset Join/Cut",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Troubleshooting utility for element join and cut relationships. Analyzes selected elements and removes all cutting and joining relationships, providing a detailed report of each operation. Perfect for resolving geometry conflicts or starting fresh with clean element connections.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2541,7 +2541,7 @@
         "script": "Ennead.tab\\Tools.panel\\join_all_coln_floor.pushbutton\\join_all_coln_floor_script.py",
         "icon": "Ennead.tab\\Tools.panel\\join_all_coln_floor.pushbutton\\icon.png",
         "alias": "Join All Column/Floor",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Automates the tedious task of joining columns and floors throughout your model. This time-saving utility identifies all column and floor elements and applies join geometry operations between them, providing a detailed completion report of successful and failed joins.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2550,7 +2550,7 @@
         "script": "Ennead.tab\\Tools.panel\\move_curtain_grids.stack\\move_curtain_grid_hori.pushbutton\\move_curtain_grid_hori_script.py",
         "icon": "Ennead.tab\\Tools.panel\\move_curtain_grids.stack\\move_curtain_grid_hori.pushbutton\\icon.png",
         "alias": "Align H. Curtain Grid To Detail Lines/Levels(Elevation)",
-        "doc": "Move the horitiontal curtain grids on a curtain wall to nearest intersecting Detail Lines/Levels.\n\nDo this on elevation view.",
+        "doc": "Horizontal curtain grid alignment wizard that saves hours of manual adjustments. This tool automatically snaps horizontal curtain grids to the nearest intersecting detail lines or level datums in elevation views. Perfect for aligning mullions with floor levels or coordinating with other building elements for a cleaner, more integrated facade design.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2559,7 +2559,7 @@
         "script": "Ennead.tab\\Tools.panel\\move_curtain_grids.stack\\move_curtain_grid_verti.pushbutton\\move_curtain_grid_verti_script.py",
         "icon": "Ennead.tab\\Tools.panel\\move_curtain_grids.stack\\move_curtain_grid_verti.pushbutton\\icon.png",
         "alias": "Align V. Curtain Grid To Detail Lines/Grids(Plan)",
-        "doc": "Move the vertical curtain grids on a curtain wall to nearest intersecting Detail Lines/Grids.\n\nDo this on plan view.",
+        "doc": "Precision curtain grid alignment tool that automatically snaps vertical curtain grids to intersecting detail lines and datum grids. Perfect for quickly coordinating facade layouts with architectural planning grids without tedious manual adjustments. Run this command in a plan view for best results.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2568,7 +2568,7 @@
         "script": "Ennead.tab\\Tools.panel\\open_doc_silently.pushbutton\\open_doc_silently_script.py",
         "icon": "Ennead.tab\\Tools.panel\\open_doc_silently.pushbutton\\icon.png",
         "alias": "Open Doc(s) Siliently",
-        "doc": "Open many docs siliently, meaning any warning will be swallowed so the opening will not be stopped, and a summery is returned at final stage.\n\nAlso support audit and no-workset opening option.",
+        "doc": "Batch opener for Revit files with enhanced reliability. Opens multiple documents while automatically handling warnings that would normally interrupt the process. Includes support for audit mode and detached/no-workset opening options. A comprehensive summary report is provided upon completion.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2577,7 +2577,7 @@
         "script": "Ennead.tab\\Tools.panel\\set_filled_region_border_line.pushbutton\\set_filled_region_border_line_script.py",
         "icon": "Ennead.tab\\Tools.panel\\set_filled_region_border_line.pushbutton\\icon.png",
         "alias": "Set FilledRegion Border Style",
-        "doc": "Set the filled region border line to a specific line style. You cannot access this tool while inside group editor, but you can still access each filled region by tabing and then use this button.",
+        "doc": "Specialized filled region styling tool that allows precise control over border line appearance. Quickly apply consistent line styles to multiple filled regions simultaneously, enhancing drawing clarity and graphical standards. Works with individual selections even when regions are nested within groups by using tab-selection technique.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2586,7 +2586,7 @@
         "script": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\see you later.pushbutton\\schedule_reopen_script.py",
         "icon": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\see you later.pushbutton\\icon.png",
         "alias": "See You Again",
-        "doc": "Schedule current revit(s) to reopen as current files. \nYou can set to reopen in a few minutes, or 8 am tomorrow, or next monday morning.\n\nThis si especially helpful for team taking long time to open files everyday.",
+        "doc": "Smart session scheduler that prepares your Revit environment for your next work session. \n\nThis time-saving utility allows you to:\n- Schedule your current Revit files to reopen automatically\n- Choose when they reopen: in minutes, tomorrow morning, or next Monday\n- Skip the lengthy file loading process when you return to work\n- Maintain your exact workspace configuration between sessions\n\nPerfect for teams working with large projects that take significant time to open each day.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2595,7 +2595,7 @@
         "script": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects and close.pushbutton\\sycn all proj_script.py",
         "icon": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects and close.pushbutton\\icon.png",
         "alias": "Sync All Open Proj and Close",
-        "doc": "for every open document(except family document), it sync with central. Then Close",
+        "doc": "End-of-day project synchronization tool that tidies up your work environment with one click. This utility automatically synchronizes all open project documents with their central files, then cleanly closes everything. Perfect for when you're heading home and want to make sure all your work is safely submitted to the central model.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2604,7 +2604,7 @@
         "script": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects.pushbutton\\sycn all proj_script.py",
         "icon": "Ennead.tab\\Tools.panel\\Sync All.pulldown\\sync all projects.pushbutton\\icon.png",
         "alias": "Sync All Open Proj",
-        "doc": "for every open document(except family document), it sync with central",
+        "doc": "Project synchronization tool that keeps all your work up-to-date with a single click. This utility automatically synchronizes every open Revit project with its central file while keeping them open for continued work. Perfect for regular syncing throughout the day to prevent data loss and ensure changes are visible to your team.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2613,7 +2613,7 @@
         "script": "Ennead.tab\\Tools.panel\\tag_align.pushbutton\\tag_align_script.py",
         "icon": "Ennead.tab\\Tools.panel\\tag_align.pushbutton\\icon.png",
         "alias": "Tag Aligner",
-        "doc": "A floating window that give you quick access to align tags horitiontally or verticaly after picking a ref tag.",
+        "doc": "Precision tag alignment assistant that brings order to your documentation. This floating interface allows you to quickly align multiple tags horizontally or vertically based on a reference tag. Perfect for creating clean, professional drawings with consistently aligned annotations that improve readability and presentation quality.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": false
@@ -2622,7 +2622,7 @@
         "script": "Ennead.tab\\Tools.panel\\toggle content_UI.pushbutton\\toggle content_UI_script.py",
         "icon": "Ennead.tab\\Tools.panel\\toggle content_UI.pushbutton\\icon.png",
         "alias": "Toggle Contents",
-        "doc": "Control some pin and unpin status, or hide un hide status, or bubble head.\n\nYou can play with many different categories to control.",
+        "doc": "Master visibility controller for Revit elements. Efficiently manage pin/unpin status, visibility settings, and annotation bubble heads across multiple categories and views. Perfect for cleaning up views, preparing documentation, and enforcing standards across your project.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2631,7 +2631,7 @@
         "script": "Ennead.tab\\Tools.panel\\translate_AI.pushbutton\\AI_translate_script.py",
         "icon": "Ennead.tab\\Tools.panel\\translate_AI.pushbutton\\icon.png",
         "alias": "AI Translate",
-        "doc": "Translate sheet names, view names, and maybe one day annotations.",
+        "doc": "Intelligent translation assistant for your Revit project. Seamlessly translate sheet names, view names, and project text elements between languages. The AI-powered engine handles context-appropriate translations with approval workflow to ensure accuracy before implementation.",
         "tab": "Tools",
         "tab_icon": null,
         "is_popular": true
@@ -2658,7 +2658,7 @@
         "script": "Ennead.tab\\UI.panel\\ownership_inspect.pushbutton\\ownership_inspect_script.py",
         "icon": "Ennead.tab\\UI.panel\\ownership_inspect.pushbutton\\icon.png",
         "alias": "Ownership Inspect",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Element ownership detective that reveals who's controlling what in your model! This comprehensive scanner examines all categories of elements and reports which team members have ownership of various objects. Perfect for troubleshooting editing conflicts, identifying workset patterns, and understanding collaboration dynamics across your project.",
         "tab": "UI",
         "tab_icon": null,
         "is_popular": false
@@ -2667,7 +2667,7 @@
         "script": "Ennead.tab\\UI.panel\\pick_absolute_similar.pushbutton\\pick_absolute_similar_script.py",
         "icon": "Ennead.tab\\UI.panel\\pick_absolute_similar.pushbutton\\icon.png",
         "alias": "Pick Absolute Similar",
-        "doc": "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one.\n\nNotes:\n    - Requires valid FamilySymbol that exists in current document\n    - Will exit gracefully if selected element is not found",
+        "doc": "Advanced element matching wizard that finds truly identical elements throughout your model. Unlike Revit's built-in selection tools, this utility performs deep parameter comparison to identify elements that are genuinely identical in all important aspects. Perfect for finding all instances that share specific parameter values when you need precise selection control.",
         "tab": "UI",
         "tab_icon": null,
         "is_popular": false
@@ -2679,13 +2679,13 @@
         "doc": "Just like the prefilter selection in Rhino, this allow you to narrow down selection beofre heavy window selection and post filter.\nVery helpful when the drawing is very crowded.\n\nYou can enable multiple category at same time.\n\nLet Sen.Z know if you would like to add more to the category list.",
         "tab": "UI",
         "tab_icon": null,
-        "is_popular": false
+        "is_popular": true
     },
     "Ennead.tab\\UI.panel\\Search.pushbutton\\search_script.py": {
         "script": "Ennead.tab\\UI.panel\\Search.pushbutton\\search_script.py",
         "icon": "Ennead.tab\\UI.panel\\Search.pushbutton\\icon.png",
         "alias": "Search Command",
-        "doc": "Commandline for Revit\n\nFind those button function you might not know where to find.\nThe search result is ranked as follow:\n-Tool name begins with user input text.\n-Tool name contains user input text.\n-Tool help documentation contains user input text.\n\nThe main info panel shows the button icon image, which panel to find it, the full documentation, any hyper link to EI post and Youtube Demo video if available. \nYou can also directly activate the tool with the 'GO' button or 'Enter' key.\n\nYou also have the option to search only EnneadTab buttons or Native Revit buttons.\nOn top left corner there is a minimize button, so you can keep it small when not using it.",
+        "doc": "Intelligent command search engine for Revit. This powerful search utility helps you locate tools across both EnneadTab and native Revit interfaces with ranked results based on name and documentation matches. Features include visual previews of tool locations, direct activation capability, and detailed documentation display with links to help resources. Perfect for quickly accessing functions without navigating through ribbon panels or when you can't remember where tools are located.",
         "tab": "UI",
         "tab_icon": null,
         "is_popular": true

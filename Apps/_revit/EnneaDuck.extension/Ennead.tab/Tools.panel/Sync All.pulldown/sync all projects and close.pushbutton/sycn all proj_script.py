@@ -1,4 +1,4 @@
-__doc__ = "for every open document(except family document), it sync with central. Then Close"
+__doc__ = "End-of-day project synchronization tool that tidies up your work environment with one click. This utility automatically synchronizes all open project documents with their central files, then cleanly closes everything. Perfect for when you're heading home and want to make sure all your work is safely submitted to the central model."
 __title__ = "Sync All Open Proj and Close"
 __post_link__ = "https://ei.ennead.com/_layouts/15/Updates/ViewPost.aspx?ItemID=28744"
 __tip__ = True

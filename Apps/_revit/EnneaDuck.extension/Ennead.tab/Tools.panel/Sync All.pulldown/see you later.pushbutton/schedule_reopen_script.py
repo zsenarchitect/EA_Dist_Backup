@@ -1,10 +1,13 @@
-
-
 __title__ = "See You Again"
-__doc__ = """Schedule current revit(s) to reopen as current files. 
-You can set to reopen in a few minutes, or 8 am tomorrow, or next monday morning.
+__doc__ = """Smart session scheduler that prepares your Revit environment for your next work session. 
 
-This si especially helpful for team taking long time to open files everyday."""
+This time-saving utility allows you to:
+- Schedule your current Revit files to reopen automatically
+- Choose when they reopen: in minutes, tomorrow morning, or next Monday
+- Skip the lengthy file loading process when you return to work
+- Maintain your exact workspace configuration between sessions
+
+Perfect for teams working with large projects that take significant time to open each day."""
 
 
 __tip__ = True

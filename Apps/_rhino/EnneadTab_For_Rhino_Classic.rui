@@ -2533,17 +2533,27 @@ EA_AssignEmptyMaterial</script>
         <locale_1033>EnscapeAssetLocator</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Locates Enscape assets by name for material manipulation.
+        <locale_1033>Your personal detective for hunting down elusive Enscape assets!
 
-Helps find and access Enscape asset folders to modify materials and properties.
-Launches the EnscapeAssetChanger application.
+This handy tool launches the EnscapeAssetChanger application that helps you:
+- Locate hidden Enscape asset folders across your system
+- Access and modify materials on Enscape objects
+- Customize properties of those beautiful Enscape trees, furniture and people
+- Save hours of searching through obscure file directories
+
+Perfect for visualization specialists who need precise control over their Enscape assets.
 </locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Locates Enscape assets by name for material manipulation.
+        <locale_1033>Your personal detective for hunting down elusive Enscape assets!
 
-Helps find and access Enscape asset folders to modify materials and properties.
-Launches the EnscapeAssetChanger application.
+This handy tool launches the EnscapeAssetChanger application that helps you:
+- Locate hidden Enscape asset folders across your system
+- Access and modify materials on Enscape objects
+- Customize properties of those beautiful Enscape trees, furniture and people
+- Save hours of searching through obscure file directories
+
+Perfect for visualization specialists who need precise control over their Enscape assets.
 </locale_1033>
       </help_text>
       <button_text>
@@ -2655,10 +2665,10 @@ EA_MakeCrvPipe</script>
         <locale_1033>MaterialShop</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Find good material and asset.</locale_1033>
+        <locale_1033>Your gateway to a treasure trove of high-quality materials! Opens AmbientCG, a fantastic resource offering hundreds of free PBR materials perfect for architectural visualization. Quickly find textures, HDRIs, and 3D models to elevate your renderings without spending a penny.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Find good material and asset.</locale_1033>
+        <locale_1033>Your gateway to a treasure trove of high-quality materials! Opens AmbientCG, a fantastic resource offering hundreds of free PBR materials perfect for architectural visualization. Quickly find textures, HDRIs, and 3D models to elevate your renderings without spending a penny.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>MaterialShop</locale_1033>

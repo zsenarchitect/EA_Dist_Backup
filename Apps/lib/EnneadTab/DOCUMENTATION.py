@@ -581,7 +581,9 @@ def generate_app_documentation(debug, app):
             tab = "no tab"
 
 
-        delayed_item_keywords = ["proj",
+        delayed_item_keywords = ["browser",
+                                 "contents",
+                                 "proj",
                                  "personal",
                                  "tester"]
         def is_in_delayed_category(x):

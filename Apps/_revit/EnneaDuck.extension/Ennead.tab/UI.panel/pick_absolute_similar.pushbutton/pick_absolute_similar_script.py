@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "PIck one element, and this tool will pick all the elements that are absolutely similar to the first one.\n\nNotes:\n    - Requires valid FamilySymbol that exists in current document\n    - Will exit gracefully if selected element is not found"
+__doc__ = "Advanced element matching wizard that finds truly identical elements throughout your model. Unlike Revit's built-in selection tools, this utility performs deep parameter comparison to identify elements that are genuinely identical in all important aspects. Perfect for finding all instances that share specific parameter values when you need precise selection control."
 __title__ = "Pick\nAbsolute Similar"
 
 import proDUCKtion # pyright: ignore 

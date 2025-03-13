@@ -10,8 +10,11 @@ PROCESS:
 - Renames affected nested families by removing the conflicting string
 - Loads modified families back to project
 - Logs all changes made during the process
+
+You can also requist to locate and rename based on other rules.
 """
 __title__ = "Rename\nNesting Family"
+__is_popular__ = True
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()

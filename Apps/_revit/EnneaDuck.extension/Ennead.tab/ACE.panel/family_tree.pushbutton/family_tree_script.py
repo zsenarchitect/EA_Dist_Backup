@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Quick display of family tree for current and all nesting family of the current family."
+__doc__ = "Family hierarchy visualization tool that reveals the complete nesting structure of complex Revit families. This utility generates a clear, hierarchical display of all nested components within the current family, showing parent-child relationships and dependency chains. Perfect for understanding complex families, troubleshooting parameter inheritance, or documenting family architecture."
 __title__ = "Family\nTree"
 __context__ = "doc-family"
 __tip__ = True

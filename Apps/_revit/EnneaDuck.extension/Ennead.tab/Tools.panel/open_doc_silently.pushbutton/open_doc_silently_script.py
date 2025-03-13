@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Open many docs siliently, meaning any warning will be swallowed so the opening will not be stopped, and a summery is returned at final stage.\n\nAlso support audit and no-workset opening option."
+__doc__ = "Batch opener for Revit files with enhanced reliability. Opens multiple documents while automatically handling warnings that would normally interrupt the process. Includes support for audit mode and detached/no-workset opening options. A comprehensive summary report is provided upon completion."
 __title__ = "Open Doc(s)\nSiliently"
 __context__ = "zero-doc"
 __tip__ = True

@@ -4,50 +4,9 @@
 #pylint: disable=raise-missing-from
 
 
-__doc__ = """Keynote Assistant - Enhanced keynote management tool for Revit
-
-This tool extends the functionality of the pyRevit keynote manager with additional features 
-specific to Ennead's workflow. It provides a comprehensive interface for creating, editing, 
-and managing keynotes within your Revit project.
-
-Technical Information:
-- Revit keynotes use UTF-16 LE encoding
-- Keynote data structure follows the format: key | description | parent_key
-- Hierarchical organization:
-  * Top-level keynotes have no parent key
-  * Child keynotes reference their parent via parent_key
-  * Hierarchies can be nested to any depth (A -> B -> C)
-  * For example: 
-    - A | xxx | 
-    - B | xxx | A
-    - C | xxx | B
-    - D | xxx | A
-    - A -> B -> C
-    - A -> D
-
-
-pyRevit Features:
-- Create and manage keynote categories and entries
-- Maintain hierarchical organization of keynotes
-- Search and filter keynote database
-- Place keynotes directly in the active view
-- Import/export keynote data
-- Track keynote usage within the project
-
-Advanced Functionality from EnneadTab TO-DO in additional_utils.py:
-
-Advanced Functionality from EnneadTab implemented    in additional_utils.py:
-- Extended data storage for additional keynote properties, such as product, source, color, spec, etc.
-- Export capabilities as new formatted EXCEL file for both INTERIOR and EXTERIOR sticky linking in Revit.
-- Cleanup quote text in keynote text if you import old keynote files.
-- Batch reattach keynotes to a new parent.
-- This data will be stored in project schema or parameter parsing so it can travel with the project. Consider Revit Schema or json parsing.
-- Actual translation function by openAI
-
-This implementation maintains compatibility with the core pyRevit functionality
-while adding Ennead-specific enhancements.
-"""
+__doc__ = "Comprehensive keynote management system that extends Revit's standard functionality. This powerful utility provides an intuitive interface for creating, editing, and organizing keynotes with additional features for categorization, search, batch operations, and translation capabilities. Perfect for maintaining consistent documentation standards and streamlining the keynoting workflow across complex projects."
 __title__ = "Keynote\nAssistant"
+__is_popular__ = True
 import os
 import os.path as op
 import shutil

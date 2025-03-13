@@ -14,7 +14,7 @@ Let Sen.Z know if you would like to add more to the category list."""
 
 __title__ = "Prefilter\nSelection"
 __tip__ = True
-
+__is_popular__ = True
 
 # from pyrevit import forms #
 from pyrevit import script #
