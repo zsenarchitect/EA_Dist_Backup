@@ -49,25 +49,17 @@ INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
 APP_FOLDER = os.path.join(ROOT, "Apps")
 
-# note to self: this is a mess, but it works...becasue need to giveup encoding issue on revit 2025 and rhino 8  new core netframework
-# "_" char can no longer be used in folder name, so we need to use "revit" and "rhino" instead.
-for key in ["revitApp", "_revit"]:
-    if os.path.exists(os.path.join(APP_FOLDER, key)):
-        REVIT_FOLDER_KEYNAME = key
-        REVIT_FOLDER = os.path.join(APP_FOLDER, REVIT_FOLDER_KEYNAME)
-        break
+# Simplified folder detection for Revit, Rhino, and InDesign applications
+# Using consistent naming convention with underscore prefix for all applications
 
-for key in ["rhinoApp", "_rhino"]:
-    if os.path.exists(os.path.join(APP_FOLDER, key)):
-        RHINO_FOLDER_KEYNAME = key
-        RHINO_FOLDER = os.path.join(APP_FOLDER, RHINO_FOLDER_KEYNAME)
-        break
+REVIT_FOLDER_KEYNAME = "_revit"
+REVIT_FOLDER = os.path.join(APP_FOLDER, REVIT_FOLDER_KEYNAME)
 
-for key in ["indesignApp", "_indesign"]:
-    if os.path.exists(os.path.join(APP_FOLDER, key)):
-        INDESIGN_FOLDER_KEYNAME = key
-        INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
-        break
+RHINO_FOLDER_KEYNAME = "_rhino"
+RHINO_FOLDER = os.path.join(APP_FOLDER, RHINO_FOLDER_KEYNAME)
+
+INDESIGN_FOLDER_KEYNAME = "_indesign"
+INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
 
 
 
@@ -79,9 +71,11 @@ REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead.tab")
 REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Library.tab")
 REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Tailor.tab")
 
-L_DRIVE_HOST_FOLDER = "L:\\4b_Applied Computing"
+L_DRIVE_HOST_FOLDER = "L:\\4b_Design Technology"
 if not os.path.exists(L_DRIVE_HOST_FOLDER):
-    L_DRIVE_HOST_FOLDER = "L:\\4b_Design Technology"
+    L_DRIVE_HOST_FOLDER = "L:\\4b_Applied Computing"
+
+
 DB_FOLDER = "{}\\EnneadTab-DB".format(L_DRIVE_HOST_FOLDER)
 if not os.path.exists(DB_FOLDER):
     DB_FOLDER = "{}\\05_EnneadTab\\EnneadTab-DB".format(L_DRIVE_HOST_FOLDER)
@@ -360,9 +354,9 @@ def alert_l_drive_not_available(play_sound = False):
         return True
     try:
         import NOTIFICATION
-        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection or activate L drive manually.")
+        NOTIFICATION.messenger(main_text = "L drive is not available, please check your network connection or activate L drive manually.\nEnneadTab will still work, just without some public asset.")
     except:
-        print("L drive is not available, please check your network connection or activate L drive manually.")
+        print("L drive is not available, please check your network connection or activate L drive manually.\nEnneadTab will still work, just without some public asset.")
     if play_sound:
         try:
             import SOUND
