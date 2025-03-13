@@ -1,14 +1,55 @@
-package_name = "EnneadTab"
-version = "3.0"
-"""If encoounrting no custome encoding 0 issue, chec for the 
- if hasattr(sys, "setdefaultencoding"):
-     reload(sys) 
+# -*- coding: utf-8 -*-
+
+__dream__ = u'''
+Despite everything, I still believe in the goodness of people.
+
+The core concept of EnneadTab is to help people.
+It is against the spirit of open source to restrict usage to certain group of people.
+It wants to help and inspire more people to be creative and build their own tools.
+The richness comes from the service I provided to others, not from owning a asset.
+I work for the smile on people's face, and nothing else.
+Don't you agree? 
+Don't be a owner, be a giver.
+
+Please spread the word and help me make this happen.
+You are better than what is asked from you, despite everything.
+
+Have a nice day, my friend, good and kind.
+
+Sen.Z
+
+
+尽管发生了一切，我仍相信人间的善良.
+
+EnneadTab的本质是帮助人们.
+开源的精神不应使其限制于某些人的使用.
+它想激励更多的人变得有创造力并构建自己的工具.
+财富来自为他人提供的服务,而不是拥有资产.
+我为人们的笑容而工作,除此之外别无他求.
+你同意吗?
+不要成为拥有者,要做给予者.
+
+请传播这个消息并帮助我实现这个目标.
+你好过你被迫成为的样子,不论发生什么.
+
+祝你有美好的一天,我的朋友,善良和美好.
+
+森.Z
+'''
+
+
+
+__package_name__ = "EnneadTab"
+__version__  = "3.0"
+"""
+To avoid custom encoding issues, ensure the following is not present:
+    if hasattr(sys, "setdefaultencoding"):
+        reload(sys) 
     sys.setdefaultencoding('utf-8')
 
-having this will make the encoding fail, so just do not have it. Deal.
+This code can cause encoding failures, so it's best to avoid it. Got it?!
 
 """
-
 import os
 import sys
 import traceback
@@ -55,7 +96,7 @@ def import_special_modules(module_name):
         return False
         
     try:
-        __import__("{}.{}".format(package_name, module_name), fromlist=['*'])
+        __import__("{}.{}".format(__package_name__, module_name), fromlist=['*'])
     except Exception:
         pass  # Silently skip if special module import fails
     return True
@@ -88,7 +129,7 @@ def import_module(module_name):
             
         # Import the module (strip .py extension if present)
         base_name = module_name[:-3] if module_name.endswith('.py') else module_name
-        __import__("{}.{}".format(package_name, base_name), fromlist=['*'])
+        __import__("{}.{}".format(__package_name__, base_name), fromlist=['*'])
     except Exception as e:
         try:
             print("Cannot import {} because\n\n{}".format(
@@ -120,5 +161,9 @@ def initialize_package():
 # Execute package initialization
 initialize_package()
 
+
+def dream():
+    print(__dream__)
+    return __dream__
 
 

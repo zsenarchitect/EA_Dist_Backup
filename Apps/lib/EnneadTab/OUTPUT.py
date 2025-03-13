@@ -86,6 +86,79 @@ function copyErrorCard(btn) {
         }, 2000);
     });
 }
+
+// Mouse tracking and logo animation system
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup floating logo animation
+    const floatingLogoContainer = document.createElement('div');
+    floatingLogoContainer.id = 'floating-logo-container';
+    document.body.appendChild(floatingLogoContainer);
+    
+    const floatingLogo = document.createElement('img');
+    floatingLogo.id = 'floating-logo';
+    floatingLogo.src = document.querySelector('img[src*="logo_ennead-e_outline white.png"]').src;
+    floatingLogo.height = 80;
+    floatingLogoContainer.appendChild(floatingLogo);
+    
+    // Variables for tracking mouse and animation
+    let mouseX = 0, mouseY = 0;
+    let logoX = window.innerWidth / 2;
+    let logoY = window.innerHeight / 2;
+    let prevLogoX = logoX;
+    let prevLogoY = logoY;
+    let angle = 0;
+    let targetAngle = 0;
+    let lastMoveTime = Date.now();
+    let isRotatingToUpright = false;
+    
+    // Track mouse movement
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.pageX;
+        mouseY = e.pageY;
+    });
+    
+    // Animation function
+    function updateLogoPosition() {
+        // Store previous position for direction calculation
+        prevLogoX = logoX;
+        prevLogoY = logoY;
+        
+        // Calculate new position with easing for delay effect
+        logoX += (mouseX - logoX) * 0.08;
+        logoY += (mouseY - logoY) * 0.08;
+        
+        // Calculate direction of movement
+        const dx = logoX - prevLogoX;
+        const dy = logoY - prevLogoY;
+        
+        // Check if there's significant movement
+        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+            targetAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+            lastMoveTime = Date.now();
+            isRotatingToUpright = false;
+        } else {
+            // If no movement for 0.5 seconds, start rotating back to upright
+            const currentTime = Date.now();
+            if (currentTime - lastMoveTime > 500 && !isRotatingToUpright) {
+                isRotatingToUpright = true;
+                targetAngle = 0; // Upright orientation
+            }
+        }
+        
+        // Smoothly interpolate current angle to target angle
+        const rotationSpeed = isRotatingToUpright ? 0.03 : 0.2; // Slower rotation when returning to upright
+        angle += (targetAngle - angle) * rotationSpeed;
+        
+        // Apply position and rotation transform
+        floatingLogo.style.transform = `translate(${logoX - 40}px, ${logoY - 40}px) rotate(${angle}deg)`;
+        
+        // Continue animation loop
+        requestAnimationFrame(updateLogoPosition);
+    }
+    
+    // Start animation
+    updateLogoPosition();
+});
 </script>
 """
 
@@ -230,6 +303,41 @@ class Output:
             report_file.write("li {{ margin-left: 40px; color: #E1D4C1; }}") 
             report_file.write(".foot_note {{ font-size: 8px; color: #987284; }}") 
             report_file.write("""
+                #floating-logo-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    overflow: hidden;
+                }
+                #floating-logo {
+                    position: absolute;
+                    transition: transform 0.1s ease-out;
+                    opacity: 0.8;
+                    filter: drop-shadow(0 0 10px rgba(152,114,132,0.5));
+                    transform-origin: center center;
+                }
+                .floating-footer {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 0;
+                    width: 100%;
+                    text-align: center;
+                    color: 	#b89eab;
+                    font-size: 24px;
+                    opacity: 0;
+                    animation: fadeFloat 4s ease-in-out 1s infinite;
+                    z-index: 1000;
+                }
+                @keyframes fadeFloat {
+                    0% { opacity: 0; transform: translateY(10px); }
+                    20% { opacity: 0.7; transform: translateY(0); }
+                    80% { opacity: 0.7; transform: translateY(0); }
+                    100% { opacity: 0; transform: translateY(-10px); }
+                }
                 .error-card {
                     background: #6E493A;
                     border-radius: 10px;
@@ -300,14 +408,16 @@ class Output:
             </div>
             """)
 
-            report_file.write("<h1 style='text-align: center;'>{}</h1>".format("EnneadTab Console"))
-            report_file.write("<div style='text-align: center;'>")
-            report_file.write("<img src='file://{}/logo_ennead-e_outline white.png' height='120'>".format(ENVIRONMENT.IMAGE_FOLDER))
-            report_file.write("</div>")
-            report_file.write("<p style='text-align: center;' class='foot_note'>{}</p>".format(TIME.get_formatted_current_time()))
 
+            # Add the floating logo that follows mouse cursor
+            report_file.write("""
+            <div id="floating-logo-container">
+                <img id="floating-logo" src="file://{}/logo_ennead-e_outline white.png" height="80">
+            </div>
+            """.format(ENVIRONMENT.IMAGE_FOLDER))
+            
             if Output._out and Output._out[0][1] != "<hr>":
-                report_file.write("<hr>") 
+                report_file.write("<hr>")
 
             for header_style, content in Output._out:
                 if isinstance(content, list):
@@ -329,6 +439,8 @@ class Output:
                             header_style, Output.format_content(content)))
                     
                 
+            # Add floating footer that always shows at bottom
+            report_file.write("<div class='floating-footer'>EnneadTab | Made with Love and Duck<br>{}</div>".format(TIME.get_formatted_current_time()))
             report_file.write("</body></html>")
 
     @staticmethod

@@ -19,6 +19,7 @@ import SOUND
 import ENVIRONMENT
 import NOTIFICATION
 import OUTPUT
+from __init__ import dream
 
 # Python 2/3 compatibility
 try:
@@ -187,6 +188,9 @@ def display_greeting(image_name, title_text="Greeting from EnneadTab",
 
 def festival_greeting():
     """Check current date and display appropriate holiday greetings."""
+    
+
+    
     year = datetime.datetime.now().year
     checker = HolidayDateChecker()
     
@@ -212,6 +216,13 @@ def festival_greeting():
     for (start, end), greeting_func in holiday_checks:
         if start and checker.is_valid_date(start, end):
             greeting_func()
+            return
+
+    # ramdon print dream
+    if random.random() < 0.0005:
+        output = OUTPUT.get_output()
+        output.write(dream(), OUTPUT.Style.MainBody)
+        output.plot()
 
 
 def greeting_april_fools():
