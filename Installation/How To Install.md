@@ -1,7 +1,7 @@
 # How to Install EnneadTab
 
 ## Table of Contents
-- [1. Overall Introduction](#1-overall-introduction)
+- [1. Overall Introduction - Read Me First](#1-overall-introduction)
 - [2. Basic Setup](#2-basic-setup)
   - [2.1 Download OS Installer](#21-download-os-installer)
   - [2.2 Install Ecosystem Folder](#22-install-ecosystem-folder)
@@ -17,7 +17,7 @@
   - [6.1 Install EnneadTab for CAD](#61-install-enneadtab-for-cad)
 
 ## 1. Overall Introduction
-Overall, you will need Ecosystem downloaded as foundation. <br>
+Overall, you will need Ecosystem downloaded as foundation(Chapter 2). <br>
 For Rhino, there is no additional requirement.<br>
 For Revit, you will need pyrevit as well. (Min version 5.0.1 if planning on use for Revit 2025 and above.)
 
@@ -117,21 +117,17 @@ For a complete command list of this plugin, please check [EnneadTab For Rhino Ha
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
 3. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".
-4. (Rhino 8 only)You might see that the side bar is not showing up, this is becasue Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly, such as click and unclick 'Block' collection to trigger activation and make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
+4. (__Rhino 8 only__)You might see that the side bar is not showing up, this is becasue Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly, such as click and unclick 'Block' collection to trigger activation and make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
 ![screenshot of toggle r8 sidebar](/Apps/lib/EnneadTab/images/Instruction_toggle_r8_sidebar.png)
 5. Restart Rhino.
 
 > [!IMPORTANT]
 > Rhino only remember the setting of most recent closed Rhino. Using only one rhino help to make installation stick. 
 
-> [!TIP]
-> After restart, every button should work just fine, but if you see error message such as "Cannot find EnneadTab" or "No module named Ennead.xxx", hit __ActivateEnneadTab__ from dropdown menu usually fix it.<br>
-> ![screenshot of activation](/Apps/lib/EnneadTab/images/instruction_activate_rhino.png)
 
 ### 4.2 Uninstall EnneadTab for Rhino Legacy
 With __only one Rhino__ is open, drag in the installer.rui, use the uninstall buttom from the menu. Follow instruction. __RESTART RHINO__ so any trace of it is completely removed from session. Now you have completely removed EnneadTab-Rhino.
 
-![screenshot of downloading page](/Apps/lib/EnneadTab/images/Instruction_remove_old_rui.png)
 
 ## 5. Configure Notification Level
 EnneadTab comes with many functions to help with your tasks. It also provides many notifications for long process time events, such as heavy exporting and family loading, so you are more aware of the status of the workflow.

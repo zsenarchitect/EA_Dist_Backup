@@ -94,6 +94,16 @@ def letter_to_index(letter, start_from_zero=False):
         return None
 
 
+def letter_next(letter, offset = 1):
+    """Get the next column letter in the sequence.
+
+    Args:
+        letter (str): Current column letter
+        offset (int, optional): Number of positions to move forward. Defaults to 1.
+    """
+    return column_number_to_letter(letter_to_index(letter) + offset)
+
+
 def get_column_index(letter, start_from_zero=False):
     """Convert Excel column reference to numeric index.
 
@@ -126,6 +136,113 @@ class TextAlignment:
     Center = "center"
     Justify = "justify"
 
+class BorderStyle:
+    Thin = "thin"
+    Medium = "medium"
+    Thick = "thick"
+
+class ExcelDataCollection:
+    """
+    there are stored in a list and a dict at same time
+    use list for final save excel, so later definitation can override previous one
+    use dict for pointer, so can track the position of the pointer if using a ovverride condition.
+    """
+    def __init__(self):
+        self.data = []
+        self.row = 0
+        self.column = 0
+        self.used_coord = {}
+        self.has_warning = False
+
+    def set_pointer_lower_right(self):
+        largest_row = max(item.row for item in self.data)
+        largest_col = max(item.column for item in self.data)
+        self.row = largest_row
+        self.column = largest_col
+
+    def add(self, item):
+        """Add an item to the collection.
+        NOTE that it will not move pointer after added.
+        
+        Args:
+            item (ExcelDataItem | str ): The item to add.
+
+        """
+        
+        if isinstance(item, ExcelDataItem):
+            if (item.row, item.column) in self.used_coord:
+                print ("!!! Item already exists at ({}, {}): {}".format(item.row, item.column, self.used_coord[(item.row, item.column)].item))
+                self.has_warning = True
+            self.data.append(item)
+            self.used_coord[(item.row, item.column)] = item
+        else:
+            if (self.row, self.column) in self.used_coord:
+                print ("!!! Item already exists at ({}, {}): {}".format(self.row, self.column, self.used_coord[(self.row, self.column)].item))
+                self.has_warning = True
+            item = ExcelDataItem(item, self.row, self.column)
+            self.data.append(item)
+            self.used_coord[(self.row, self.column)] = item
+
+        print (self.pointer)
+
+    def add_row(self, row):
+        self.row += 1
+        self.column = 0
+        for item in row:
+            self.add(ExcelDataItem(item, self.row, self.column))
+            self.next_col()
+
+    @property
+    def pointer(self):
+        return "Pointer is at cell({}{})".format(column_number_to_letter(self.column+1),self.row+1)  
+
+    def next_row(self):
+        self.row += 1
+
+    def next_col(self):
+        self.column += 1
+
+    def prev_col(self):
+        self.column -= 1
+
+    def prev_row(self):
+        self.row -= 1
+
+    def set_col_by_header(self, header):
+        """Set the current column to the column with the given header text.
+        
+        Args:
+            header (str): Header text to search for
+        """
+        # Find the header item in the first row
+        for item in self.data:
+            if item.row == self.header_row and item.item == header:
+                self.column = item.column
+                return
+        print("Warning: Header '{}' not found".format(header))
+
+    def set_headers(self, headers, width_list = None, starting_col = "A", header_row = 0):
+
+        self.starting_col = starting_col
+        self.header_row = header_row
+        for i, header in enumerate(headers):
+            item = ExcelDataItem(header, self.header_row, letter_next(self.starting_col, i),
+                                 cell_color=(200, 200, 200),
+                                 is_bold=True,
+                                 col_width=width_list[i] if width_list and i < len(width_list) else None,
+                                 text_alignment=TextAlignment.Center,
+                                 top_border_style=BorderStyle.Thick,
+                                 bottom_border_style=BorderStyle.Thick,
+                                 side_border_style=BorderStyle.Thick)
+            self.add(item)
+
+    def save(self, filepath, worksheet="EnneadTab", open_after=True, freeze_column=None):
+        if self.has_warning:
+            NOTIFICATION.messenger(main_text="There are warnings related to cell override, see console for details")
+        save_data_to_excel(self.data, filepath, worksheet=worksheet, open_after=open_after, freeze_row=self.header_row+1, freeze_column=freeze_column)
+
+
+        
 class ExcelDataItem:
     """Container for Excel cell data and formatting.
     
@@ -206,47 +323,49 @@ class ExcelDataItem:
         return info
 
     def as_dict(self):
-        return {
-            "item": self.item,
-            "row": self.row,
-            "column": self.column,
-            "is_bold": self.is_bold,
-            "is_read_only": self.is_read_only,
-            "cell_color": self.cell_color,
-            "text_color": self.text_color,
-            "text_alignment": self.text_alignment,
-            "font_size": self.font_size,
-            "font_name": self.font_name,
-            "col_width": self.col_width,
-            "border_style": self.border_style,
-            "border_color": self.border_color,
-            "top_border_style": self.top_border_style,
-            "side_border_style": self.side_border_style,
-            "bottom_border_style": self.bottom_border_style,
-            "merge_with": self.merge_with,
-        }
+        """Convert ExcelDataItem to dictionary, excluding internal attributes.
+        
+        Returns:
+            dict: Dictionary containing all non-internal attributes
+        """
+        return {k: v for k, v in self.__dict__.items() if not k.startswith('_')}
+
 
     @classmethod
     def from_dict(cls, data):
-        return cls(
-            item=data["item"],
-            row=data["row"],
-            column=data["column"],
-            is_bold=data["is_bold"],
-            is_read_only=data["is_read_only"],
-            cell_color=data["cell_color"],
-            text_color=data["text_color"],
-            text_alignment=data["text_alignment"],
-            font_size=data["font_size"],
-            font_name=data["font_name"],
-            col_width=data["col_width"],
-            border_style=data["border_style"],
-            border_color=data["border_color"],
-            top_border_style=data["top_border_style"],
-            bottom_border_style=data["bottom_border_style"],
-            side_border_style=data["side_border_style"],
-            merge_with=data["merge_with"],
-        )
+        """Create an ExcelDataItem instance from a dictionary.
+        
+        Args:
+            data (dict): Dictionary containing ExcelDataItem attributes
+            
+        Returns:
+            ExcelDataItem: New instance with attributes from dictionary
+        """
+        # Define all possible attributes with their defaults
+        attrs = {
+            'item': None,
+            'row': None,
+            'column': None,
+            'is_bold': False,
+            'is_read_only': False,
+            'cell_color': None,
+            'text_color': None,
+            'text_alignment': TextAlignment.Left,
+            'font_size': None,
+            'font_name': None,
+            'col_width': None,
+            'border_style': None,
+            'border_color': None,
+            'top_border_style': None,
+            'bottom_border_style': None,
+            'side_border_style': None,
+            'merge_with': None
+        }
+        
+        # Update with provided values
+        attrs.update({k: data.get(k) for k in attrs if k in data})
+        
+        return cls(**attrs)
 
 
     @staticmethod
@@ -358,16 +477,9 @@ def _read_data_from_excel_online(url, worksheet, return_dict, headless):
     with io.open(temp_filepath, 'wb', encoding="utf-8") as f:
         f.write(data)
 
-    # Clean up temp file
-    print ("temp file is at: {}".format(temp_filepath))
-    os.startfile(temp_filepath)
+
     # Read the data using the local file reader
     result = _read_data_from_excel_locally(temp_filepath, worksheet, return_dict, headless)
-
-    # try:
-    #     os.remove(temp_filepath)
-    # except:
-    #     pass
 
     return result
 
@@ -401,11 +513,6 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
         for key, value in raw_data.items():
             row, column = map(int, key.split(','))
             converted_data[(row, column)] = value
-
-        # if USER.IS_DEVELOPER:
-        #     import pprint
-        #     pprint.pprint(converted_data)
-
             
         if not return_dict:
             # convert the converted_data to a list of lists, sorted by row, adding missing rows with empty strings. the coumn count need to match the max column count in the data
@@ -561,7 +668,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
         worksheet (str, optional): Name for the worksheet. Defaults to "EnneadTab".
         open_after (bool, optional): If True, opens file after saving.
             Defaults to True.
-        freeze_row (int, optional): 0-based row number to freeze panes at.
+        freeze_row (int, optional): 1-based row number to freeze panes at.
             Defaults to None.
         freeze_column (str | int, optional): Excel column letter or 0-based column number to freeze panes at.
             Defaults to None.
@@ -993,8 +1100,8 @@ test_dict = {
 if __name__ == "__main__":
     # filename = __file__
     # UNIT_TEST.pretty_test(test_dict, filename)
-    data = read_data_from_excel("J:\\2142\\0_BIM\\10_BIM Management\\10_BIM Resources\\Extended_DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
-    data = parse_excel_data(data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
+    # data = read_data_from_excel("J:\\2142\\0_BIM\\10_BIM Management\\10_BIM Resources\\Extended_DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
+    # data = parse_excel_data(data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
 
     # print (data)
     # for item in data.values():
@@ -1003,3 +1110,21 @@ if __name__ == "__main__":
         # print (item.KEYNOTE_DESCRIPTION)
         # print (item.get("KEYNOTE ID"))
         # print (item.get("KEYNOTE DESCRIPTION"))
+
+    collection = ExcelDataCollection()
+    collection.set_headers(["Name", "Age", "City"], width_list=[10, 10])
+    collection.add_row(["John", 30, "New York"])
+    collection.add_row(["Jane", 25, "Los Angeles"])
+    collection.add_row(["Jim", 35, "Chicago"])
+    collection.add_row(["Jill", 28, "San Francisco"])
+    collection.set_pointer_lower_right()
+    collection.next_row()
+    collection.add("That is many cities")
+    collection.set_col_by_header("Age")
+    collection.add(35)
+    collection.prev_col()
+    collection.add("Average age")
+    collection.prev_row()
+    collection.add("will override")
+    collection.add(ExcelDataItem("as dedicated item", 10, "B"))
+    collection.save("output.xlsx")

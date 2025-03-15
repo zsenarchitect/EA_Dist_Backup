@@ -10,11 +10,12 @@ Features:
 - Automatic unit conversion (mm/m -> SQM, inch/ft -> SQFT)
 - Dynamic merging of coplanar surfaces at same elevation
 - Support for single surfaces and polysurfaces
+- Live comparison of how much is off from target.
 
 Usage:
 - Add [GFA] to layer names to include in calculation
 - Optional \{factor\} at end of layer name for area multipliers (e.g. \{0.5\})
-- Right-click to export to Excel or generate checking surfaces
+- Right-click to export to Excel or generate checking surfaces or set target area for each keyword.
 """
 __is_popular__ = True
 
@@ -22,8 +23,8 @@ __is_popular__ = True
 import re
 import Rhino # pyright: ignore
 import System # pyright: ignore
-import scriptcontext as sc
-import rhinoscriptsyntax as rs
+import scriptcontext as sc # pyright: ignore
+import rhinoscriptsyntax as rs # pyright: ignore
 import sys
 sys.path.append("..\lib")
 
@@ -31,12 +32,11 @@ sys.path.append("..\lib")
 
 import time
 import random
-from EnneadTab.EXCEL import ExcelDataItem
 
 
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, TIME, EXCEL
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, TIME
-from EnneadTab.RHINO import RHINO_LAYER, RHINO_OBJ_DATA
+from EnneadTab.RHINO import RHINO_LAYER, RHINO_OBJ_DATA, RHINO_PROJ_DATA
 
 def try_catch_error(func):
     
@@ -67,6 +67,13 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         sc.sticky["EA_GFA_IS_BAKING"] = False
         sc.sticky["reset_timestamp"] = time.time()
         self.current_objs = get_current_objs()
+        
+        data = RHINO_PROJ_DATA.get_enneadtab_data()
+        try: #TO-DO remove this try catch later after 2025-03-20
+            self.target_dict = data.get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})
+        except:
+            self.target_dict = {}
+
 
        
     @ERROR_HANDLE.try_catch_error()
@@ -135,6 +142,10 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         Rhino.RhinoDoc.UndeleteRhinoObject   -= self.check_doc_update_after_adding
         Rhino.RhinoDoc.ModifyObjectAttributes  -= self.check_doc_update_after_modifying
         Rhino.RhinoDoc.LayerTableEvent   -= self.check_doc_updated_after_layertable_changed
+
+        
+    def get_layer_target(self, layer):
+        return next((value for key, value in self.target_dict.items() if key in layer), None)
 
     @try_catch_error
     def PostDrawObjects(self, e):
@@ -234,11 +245,13 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 10)
         e.Display.Draw2dText("For clarity reason, the generated checking srf layer will be purged.", color, pt, False, 10)
         pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 15)
-        e.Display.Draw2dText("Area unit auto-mapped from your Rhino unit: mm--> SQM, m--> SQM, inch--> SQFT, ft--> SQFT", color_hightlight, pt, False, 10)
+        e.Display.Draw2dText("Area unit auto-mapped from your Rhino unit: mm--> m" + u"\u00B2" + ", m--> m" + u"\u00B2" + ", inch--> ft" + u"\u00B2" + ", ft--> ft" + u"\u00B2" + "", color_hightlight, pt, False, 10)
         pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 10)
         e.Display.Draw2dText("Areas from same layer will try to merge dynamically if on same elevation.", color_hightlight, pt, False, 10)
         pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 10)
         e.Display.Draw2dText("Accepting single surface(Z+ or Z- normal) and polysurface(open or enclosed, only check the face with Z- normal). ", color, pt, False, 10)
+        pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 10)
+        e.Display.Draw2dText("Target area can be set for each keyword in the right toggle button.", color_hightlight, pt, False, 10)
 
 
         pt = Rhino.Geometry.Point2d(pt[0], pt[1] + 10)
@@ -284,10 +297,14 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
 
             grand_total += layer_tatal_area
             #sub_total += area
-
             text = "{}: {}".format(RHINO_LAYER.rhino_layer_to_user_layer(layer), convert_area_to_good_unit(layer_tatal_area))
             if note:
                 text += note
+            target = self.get_layer_target(layer)
+            if target:
+                area_num, area_unit = convert_area_to_good_unit(layer_tatal_area, use_commas = False).split(" ", maxsplit = 1)
+                diff = float(target) - float(area_num)
+                text += " (Target: {:,.2f}{})[{:,.2f}{} {}]".format(float(target), area_unit, abs(diff), area_unit, "over" if diff < 0 else "under")
             pt = Rhino.Geometry.Point2d(pt[0], pt[1] + offset)
             color = rs.LayerColor(layer)
             e.Display.Draw2dText(text, color, pt, False, size)
@@ -322,7 +339,21 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         if sc.sticky["EA_GFA_IS_BAKING_EXCEL"]:
             import toggle_GFA_right
             data_collection = []
-            i = 0
+            row = 0
+            data_collection.append(EXCEL.ExcelDataItem("Layer", row, "A", is_bold = True, text_alignment = EXCEL.TextAlignment.Center, cell_color = (200, 200, 200), 
+                                                        top_border_style = EXCEL.BorderStyle.Thick,
+                                                        bottom_border_style = EXCEL.BorderStyle.Thick,
+                                                        side_border_style = EXCEL.BorderStyle.Thick))
+            data_collection.append(EXCEL.ExcelDataItem("Area", row, "B", is_bold = True, text_alignment = EXCEL.TextAlignment.Center, cell_color = (200, 200, 200),
+                                                        top_border_style = EXCEL.BorderStyle.Thick,
+                                                        bottom_border_style = EXCEL.BorderStyle.Thick,
+                                                        side_border_style = EXCEL.BorderStyle.Thick,))
+            data_collection.append(EXCEL.ExcelDataItem("Unit", row, "C", is_bold = True, text_alignment = EXCEL.TextAlignment.Center, cell_color = (200, 200, 200),
+                                                        top_border_style = EXCEL.BorderStyle.Thick,
+                                                        bottom_border_style = EXCEL.BorderStyle.Thick,
+                                                        side_border_style = EXCEL.BorderStyle.Thick))
+            row += 1
+
             for data in self.data:
                 layer, values = data
                 if root_layer in layer:
@@ -340,13 +371,13 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
                 #print area_num
                 layer = RHINO_LAYER.rhino_layer_to_user_layer(layer)
                 
-                cell_layer = ExcelDataItem(layer, i, 0)
-                cell_area = ExcelDataItem(float(area_num), i, 1)
-                cell_unit = ExcelDataItem(area_unit, i, 2)
+                cell_layer = EXCEL.ExcelDataItem(layer, row, "A", is_bold = True, bottom_border_style=EXCEL.BorderStyle.Thin)
+                cell_area = EXCEL.ExcelDataItem(float(area_num), row, "B", bottom_border_style=EXCEL.BorderStyle.Thin)
+                cell_unit = EXCEL.ExcelDataItem(area_unit, row, "C", bottom_border_style=EXCEL.BorderStyle.Thin)
                 data_collection.append(cell_layer)
                 data_collection.append(cell_area)
                 data_collection.append(cell_unit)
-                i += 1
+                row += 1
 
             toggle_GFA_right.bake_action(data_collection)
             sc.sticky["EA_GFA_IS_BAKING_EXCEL"] = False
@@ -385,6 +416,15 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
             sc.sticky["EA_GFA_IS_BAKING_CRV"] = False
             sc.doc.Views.Redraw()
 
+
+        if "EA_GFA_IS_SETTING_TARGET_DICT" not in sc.sticky:
+            sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"] = False
+        if sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"]:
+            import toggle_GFA_right
+            self.target_dict = toggle_GFA_right.set_target_dict()
+            NOTIFICATION.messenger("Target dictionary updated.")
+            print (self.target_dict)
+            sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"] = False
 
 
 
@@ -489,6 +529,7 @@ def get_schedule_layers():
     pass
 
 
+
 #"{:,}".format(total_amount)
 # "Total cost is: ${:,.2f}".format(total_amount)
 # Total cost is: $10,000.00
@@ -499,13 +540,13 @@ def convert_area_to_good_unit(area, use_commas = True):
 
     def get_factor(unit):
         if unit == "millimeter":
-            return 1.0/(1000 * 1000), "SQM"
+            return 1.0/(1000**2), "m" + u"\u00B2"
         if unit == "meter":
-            return 1.0, "SQM"
+            return 1.0, "m" + u"\u00B2"
         if unit == "inch":
-            return 1.0/(12 * 12), "SQFT"
+            return 1.0/(12 * 12), "ft" + u"\u00B2"
         if unit == "foot":
-            return 1.0, "SQFT"
+            return 1.0, "ft" + u"\u00B2"
         return 1, "{0} x {0}".format(unit)
     factor, unit_text = get_factor(unit)
 

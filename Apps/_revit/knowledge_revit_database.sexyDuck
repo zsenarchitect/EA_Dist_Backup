@@ -170,9 +170,9 @@
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_section_in_elev_by_orientation.pushbutton\\hide_section_in_elev_by_orientation_script.py": {
-        "script": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_section_in_elev_by_orientation.pushbutton\\hide_section_in_elev_by_orientation_script.py",
-        "icon": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_section_in_elev_by_orientation.pushbutton\\icon.png",
+    "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_sectionmark.pushbutton\\hide_sectionmark_script.py": {
+        "script": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_sectionmark.pushbutton\\hide_sectionmark_script.py",
+        "icon": "Ennead Tailor.tab\\Personal.panel\\Generic Order.pulldown\\hide_sectionmark.pushbutton\\icon.png",
         "alias": "Hide Section in Elevation by Orientation",
         "doc": "Hide the wall section marks in elevations if its defined orientation does not match the orienation of the elevation. \n\nThis will resolve the issue of seeing wall section mark from the other side of the building, but you cannot change view depth per design reason.",
         "tab": "Personal",

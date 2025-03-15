@@ -46,6 +46,10 @@ def handle_auto_start_command():
     if "EnneadTabRevitSelectionHelper" in rs.DocumentName():
         rs.Command("EA_LiveSelection")
 
+    # this to help revit selection method.
+    if "EA_DRAFTER" in rs.DocumentName():
+        rs.Command("EA_RevitDrafterImport")
+
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)
 def add_hook(): 

@@ -131,8 +131,10 @@ def revit_drafter():
         units = "Feet"
     elif revit_unit in ["inches, feet & inches", "inches"]:
         units = "Inches"
+    elif revit_unit == "meters":
+        units = "Meters"
     else:
-        NOTIFICATION.messenger(main_text = " bad unit, talk to SZ")
+        NOTIFICATION.messenger(main_text = "bad unit, talk to SZ")
         return
 
     rs.EnableRedraw(False)

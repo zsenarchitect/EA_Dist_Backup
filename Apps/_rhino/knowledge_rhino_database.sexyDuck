@@ -519,6 +519,15 @@
         "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false
     },
+    "Lab.tab\\view_prettifier.button\\view_prettifier_left.py": {
+        "script": "Lab.tab\\view_prettifier.button\\view_prettifier_left.py",
+        "icon": "Lab.tab\\view_prettifier.button\\icon.png",
+        "alias": "ViewPrettifier",
+        "doc": "Generate AI renderings from architectural images.\nFeatures:\n- Processes existing architectural images\n- Detects edges in the image to preserve model structure\n- Allows use of style reference images\n- Modern dark-themed GUI for configuration\n- Model and ControlNet selection\n- Progress tracking with step indicators\n- Generates AI renderings using Stable Diffusion with ControlNet\n- Shows real-time progress during generation\n- Automatically installs required dependencies\n- Monitors for stalled processes and provides diagnostics\n",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png",
+        "is_popular": false
+    },
     "Layer.tab\\destroy_layer.button\\destroy_layer_left.py": {
         "script": "Layer.tab\\destroy_layer.button\\destroy_layer_left.py",
         "icon": "Layer.tab\\destroy_layer.button\\icon.png",
@@ -1099,7 +1108,7 @@
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_left.py",
         "icon": "View.tab\\toggle_GFA.button\\icon.png",
         "alias": "ToggleGFA",
-        "doc": "Toggles Gross Floor Area (GFA) visualization and calculation.\n\nFeatures:\n- Processes layers marked with [GFA] to calculate and display area information\n- Real-time updates as geometry changes\n- Supports area factor multipliers using \\{factor\\} syntax in layer names\n- Excel data export capabilities\n- Automatic unit conversion (mm/m -> SQM, inch/ft -> SQFT)\n- Dynamic merging of coplanar surfaces at same elevation\n- Support for single surfaces and polysurfaces\n\nUsage:\n- Add [GFA] to layer names to include in calculation\n- Optional \\{factor\\} at end of layer name for area multipliers (e.g. \\{0.5\\})\n- Right-click to export to Excel or generate checking surfaces\n",
+        "doc": "Toggles Gross Floor Area (GFA) visualization and calculation.\n\nFeatures:\n- Processes layers marked with [GFA] to calculate and display area information\n- Real-time updates as geometry changes\n- Supports area factor multipliers using \\{factor\\} syntax in layer names\n- Excel data export capabilities\n- Automatic unit conversion (mm/m -> SQM, inch/ft -> SQFT)\n- Dynamic merging of coplanar surfaces at same elevation\n- Support for single surfaces and polysurfaces\n- Live comparison of how much is off from target.\n\nUsage:\n- Add [GFA] to layer names to include in calculation\n- Optional \\{factor\\} at end of layer name for area multipliers (e.g. \\{0.5\\})\n- Right-click to export to Excel or generate checking surfaces or set target area for each keyword.\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": true
@@ -1108,7 +1117,7 @@
         "script": "View.tab\\toggle_GFA.button\\toggle_GFA_right.py",
         "icon": "View.tab\\toggle_GFA.button\\icon.png",
         "alias": "BakeGFADataToExcel",
-        "doc": "Export displayed GFA area to excel. Also you can set checker geo.",
+        "doc": "Export GFA (Gross Floor Area) data to Excel and manage area targets.\n\nFeatures:\n- Export area calculations to formatted Excel spreadsheet\n- Generate checking surfaces for visual verification \n- Set and manage target areas for different GFA categories\n- Compare actual vs target areas with variance analysis\n\nUsage:\n- Click to export current GFA data to Excel\n- Right-click to access additional options:\n  - Generate checking surfaces\n  - Set target areas for GFA categories\n  - Edit existing target values\n",
         "tab": "View.tab",
         "tab_icon": "View.tab\\icon.png",
         "is_popular": false

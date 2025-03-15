@@ -44,6 +44,9 @@ def convert_unit(x):
     if RHINO_UNIT == "Millimeters" or  RHINO_UNIT == "Millimeter":
         return REVIT_UNIT.mm_to_internal(float(x))
 
+    if RHINO_UNIT == "Meters" or RHINO_UNIT == "Meter":
+        return REVIT_UNIT.m_to_internal(float(x))
+
     if RHINO_UNIT == "Feet" or RHINO_UNIT == "Foot":
         return float(x)
 
@@ -544,6 +547,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         feet
         inches
         millimeters
+        meters
         """
 
         """
@@ -553,6 +557,7 @@ class RhinoDraft_UI(forms.WPFWindow):
         feet
         inches
         millimeters
+        meters
         """
         if "feet_fractional_inches" == revit_unit or "feetFractionalInches" == revit_unit:
             revit_unit = "feet, feet & inches"
@@ -619,6 +624,8 @@ class RhinoDraft_UI(forms.WPFWindow):
             rhino_unit = "Feet"
         elif self.revit_unit in ["inches, feet & inches", "inches"]:
             rhino_unit = "Inches"
+        elif self.revit_unit == "meters":
+            rhino_unit = "Meters"
         else:
             NOTIFICATION.messenger(main_text = " bad unit, talk to SZ")
             return

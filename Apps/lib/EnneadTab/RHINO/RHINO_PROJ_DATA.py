@@ -16,6 +16,7 @@ class DocKeys:
     """standardlize the keys for the document data"""
     PreferredGrasshopperFile = "Preferred Grasshopper File"
     GrasshopperInput = "Grasshopper Input"
+    GFA_TARGET_DICT = "GFA Target Dict"
     
 
 def inspect_document_data():

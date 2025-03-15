@@ -90,7 +90,21 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         print ("[Developer only log]No exe found in the location.")
         print (exe)
         print (foldered_exe)
-        NOTIFICATION.messenger("No exe found!!!\n{}".format(exe_name))
+        NOTIFICATION.messenger("No exe found!!!\n{}\n Will try to open legacy app.".format(exe_name))
+
+    if try_open_legacy_app(exe_name):
+        return True
+    NOTIFICATION.messenger("No legacy app found!!!\n{}".format(exe_name))
+    return False
+
+def try_open_legacy_app(exe_name):
+    head = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe"
+    if os.path.exists(head + "\\" + exe_name + ".exe"):
+        os.startfile(head + "\\" + exe_name + ".exe")
+        return True
+    if os.path.exists(head + "\\" + exe_name + "\\" + exe_name + ".exe"):
+        os.startfile(head + "\\" + exe_name + "\\" + exe_name + ".exe")
+        return True
     return False
 
 

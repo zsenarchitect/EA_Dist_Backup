@@ -22,7 +22,7 @@ from EnneadTab.RHINO import RHINO_UI
 
 MODEL_DICT = {0: "runwayml/stable-diffusion-v1-5"}
 # get all file in a folder
-MODEL_FOLDER = "L:\\4b_Applied Computing\SD-Model"  # "S:\SD-Model"
+MODEL_FOLDER = "L:\\4b_Applied Computing\\04_AI\\Stable Diffusion_Model"  # "S:\SD-Model"
 files = [file for file in os.listdir(MODEL_FOLDER) if file != "source"]
 
 # https://civitai.com/?tag=buildings
@@ -247,7 +247,7 @@ class ViewCaptureDialog(Eto.Forms.Form):
     def CreateLogoImage(self):
         self.logo = Eto.Forms.ImageView()
 
-        self.FOLDER_PRIMARY = r"L:\4b_Applied Computing\00_Asset Library"
+        self.FOLDER_PRIMARY = r"L:\4b_Applied Computing\03_Rhino\00_Asset Library"
         self.FOLDER_APP_IMAGES = r"{}\Database\app images".format(
             self.FOLDER_PRIMARY)
         self.LOGO_IMAGE = r"{}\Ennead_Architects_Logo.png".format(
@@ -607,7 +607,7 @@ def view2render():
         if is_testing_new_engine:
             return
 
-    EXE.try_open_app("EA_AI_CONVERTER")
+    EXE.try_open_app("EA_AI_CONVERTER_0.2.6")
 
 
 

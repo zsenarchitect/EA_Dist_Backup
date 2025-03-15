@@ -609,8 +609,15 @@ def generate_app_documentation(debug, app):
     # WEB.documentation2html(rhino_knowledge,output)
     # os.startfile(output)
 
-    
+def write_dream():
+    output = OUTPUT.Output()
+    output.write("the font of Dream", OUTPUT.Style.Title)
+    from __init__ import __dream__
+    output.write(__dream__)
+    save_path = FOLDER.get_EA_dump_folder_file("dream.html")
+    output._generate_html_report(save_path)
     
 if __name__ == "__main__":
     
-    generate_documentation(debug=True)
+    # generate_documentation(debug=True)
+    write_dream()

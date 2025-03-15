@@ -282,7 +282,7 @@ class Output:
         self._generate_html_report()
         self._print_html_report()
 
-    def _generate_html_report(self):
+    def _generate_html_report(self, save_path = None):
         """Generates the HTML report with current output content.
         
         Creates a styled HTML file with:
@@ -292,7 +292,9 @@ class Output:
             - Responsive design
             - EnneadTab branding
         """
-        with io.open(Output._report_path, 'w', encoding='utf-8') as report_file:
+        if save_path is None:
+            save_path = Output._report_path
+        with io.open(save_path, 'w', encoding='utf-8') as report_file:
             report_file.write("<html><head><title>EnneadTab Output</title></head><body>")
             report_file.write("<style>")
             report_file.write("body {{ background-color: #2B1C10; font-family: {}; color: #F4E1D2; margin-left:10%;margin-right:10%;}}"
