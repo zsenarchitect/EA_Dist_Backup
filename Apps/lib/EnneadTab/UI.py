@@ -203,7 +203,7 @@ def unit_test():
         "HomeStyle Premium"
     ]
     def test_func(item):
-        run_time = random.randint(1,10)/10
+        run_time = random.randint(1,10)/10.0
         time.sleep(run_time)
         print("simluate running product [{}] took {:.1f}s".format(item, run_time))
 

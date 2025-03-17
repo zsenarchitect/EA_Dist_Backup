@@ -1,8 +1,6 @@
-try:
-    import imp
-except:
-    pass
+
 import os
+import sys
 
 
 import ENVIRONMENT
@@ -196,20 +194,22 @@ class UnitTest:
             if module_name in IGNORE_LIST:
                 continue
             try:
-                module = imp.load_source(module_name, module_path)
-            except:
-                try:
-                    import importlib
-
-                    module = importlib.import_module(module_name)
-                except Exception as e:
-                    print(
-                        "\n\nSomething is worng when importing [{}] becasue:\n\n++++++{}++++++\n\n\n".format(
-                            print_text_in_highlight_color(module_name, ok=False),
-                            ERROR_HANDLE.get_alternative_traceback(),
-                        )
+                if sys.version_info[0] < 3:
+                    import imp
+                    module = imp.load_source(module_name, module_path)
+                else:
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location(module_name, module_path)
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+            except Exception as e:
+                print(
+                    "\n\nSomething is wrong when importing [{}] because:\n\n++++++{}++++++\n\n\n".format(
+                        print_text_in_highlight_color(module_name, ok=False),
+                        ERROR_HANDLE.get_alternative_traceback(),
                     )
-                    continue
+                )
+                continue
 
             if not self.try_run_unit_test(module):
                 self.failed_module.append(module_name)
