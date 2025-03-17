@@ -445,22 +445,44 @@ def purge_layer_and_sub_layers(root_layer):
     return
     
 
+
+def merge_as_crv_bool_union(breps):
+    crvs = [x.Loops[0].To3dCurve() for x in breps]
+    factors = [1, 1.5]
+    for factor in factors:
+        union_crvs = Rhino.Geometry.Curve.CreateBooleanUnion(crvs, sc.doc.ModelAbsoluteTolerance * factor)
+        if union_crvs:
+            union_breps = Rhino.Geometry.Brep.CreatePlanarBreps (union_crvs)
+            return union_breps
+    # print ("Failed to boolean union as Curve. Returning original breps.")
+    return None
+
 def merge_coplaner_srf(breps):
-    #print breps
     for brep in breps:
         param = rs.SurfaceClosestPoint(brep, RHINO_OBJ_DATA.get_center(brep))
         normal = rs.SurfaceNormal(brep, param)
         if normal[2] < 0:
             brep.Flip()
 
-    union_breps = Rhino.Geometry.Brep.CreateBooleanUnion (breps, sc.doc.ModelAbsoluteTolerance * 1.5)
-    if not union_breps:
-        note = " #Warning! Check your geometry cleanness."
-        return breps, note
+    # print ("original breps: ", breps)
+    factors = [1, 1.5]
+    for factor in factors:
+        union_breps = Rhino.Geometry.Brep.CreateBooleanUnion(breps, sc.doc.ModelAbsoluteTolerance * factor, False)
+        if union_breps:
+            # print ("unioined breps: ", union_breps)
+            break
+    else:
+        # print ("Failed to boolean union as Brep. Trying as Curve.")
+        union_breps = merge_as_crv_bool_union(breps)
+        if not union_breps:
+            note = " #Warning! Cannot merge coplanar faces. Check your geometry cleanness."
+            return breps, note
     #print breps
     for brep in union_breps:
-        brep.MergeCoplanarFaces (sc.doc.ModelAbsoluteTolerance ,
-                                sc.doc.ModelAngleToleranceRadians * 1.5)
+        success = brep.MergeCoplanarFaces(sc.doc.ModelAbsoluteTolerance, sc.doc.ModelAngleToleranceRadians * 1.5)
+        if not success:
+            success = brep.MergeCoplanarFaces(sc.doc.ModelAbsoluteTolerance * 1.5, sc.doc.ModelAngleToleranceRadians * 3)
+
     return union_breps, None
 
 # @lru_cache(maxsize=None)
@@ -547,7 +569,7 @@ def convert_area_to_good_unit(area, use_commas = True):
             return 1.0/(12 * 12), "ft" + u"\u00B2"
         if unit == "foot":
             return 1.0, "ft" + u"\u00B2"
-        return 1, "{0} x {0}".format(unit)
+        return 1.0, "{0} x {0}".format(unit)
     factor, unit_text = get_factor(unit)
 
     area *= factor
