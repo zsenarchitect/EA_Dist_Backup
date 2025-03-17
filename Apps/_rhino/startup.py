@@ -29,6 +29,8 @@ def main():
     RHINO_ALIAS.register_alias_set()
     add_hook()
 
+    rs.Command("EA_ActivateEnneadTab")
+    
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
 
     DOCUMENTATION.tip_of_day()

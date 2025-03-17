@@ -414,7 +414,7 @@ class Output:
             # Add the floating logo that follows mouse cursor
             report_file.write("""
             <div id="floating-logo-container">
-                <img id="floating-logo" src="file://{}/logo_ennead-e_outline white.png" height="80">
+                <img id="floating-logo" src="file://{}/logo_ennead-e_outline white.png" height="0">
             </div>
             """.format(ENVIRONMENT.IMAGE_FOLDER))
             

@@ -219,7 +219,7 @@ def festival_greeting():
             return
 
     # ramdon print dream
-    if random.random() < 0.0005:
+    if random.random() < 0.00005:
         output = OUTPUT.get_output()
         output.write(dream(), OUTPUT.Style.MainBody)
         output.plot()
