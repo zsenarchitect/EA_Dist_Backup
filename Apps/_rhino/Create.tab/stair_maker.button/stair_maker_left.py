@@ -343,8 +343,10 @@ def stair_maker():
         return Rhino.Result.Failure
 
 
-
-    create_stair_block_from_pts(start_pt, end_pt, max_riser, stair_width, flip_pt )
+    try:
+        create_stair_block_from_pts(start_pt, end_pt, max_riser, stair_width, flip_pt )
+    except:
+        NOTIFICATION.messenger("Invalid Stair Input.")
     return
     radius = start_pt.DistanceTo(get_dot_pt_instance.Point())
     cplane = sc.doc.Views.ActiveView.ActiveViewport.ConstructionPlane()
