@@ -1727,6 +1727,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\fire_door_checker_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\fire_door_checker_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\icon.png",
+        "alias": "Fire Door Checker",
+        "doc": "Find rated walls and doors in the model and highlight them in schedules.\n\nMain Steps:\n1. Locate all rated walls based on fire rating parameter\n2. Find doors hosted on rated walls\n3. Cross reference with door schedule\n4. Highlight rated doors in schedule by changing text color to red\n\nOptional:\n- Creates a report of findings\n- Allows for parameter verification\n",
+        "tab": "Proj. Princeton",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Tester.panel\\associate_para.pushbutton\\associate_para_script.py": {
         "script": "Ennead Tailor.tab\\Tester.panel\\associate_para.pushbutton\\associate_para_script.py",
         "icon": "Ennead Tailor.tab\\Tester.panel\\associate_para.pushbutton\\icon.png",
