@@ -126,7 +126,7 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         self.cached_data = []
         self.current_objs = get_current_objs()
         sc.sticky["reset_timestamp"] = time.time()
-        print ("cached data is now empty")
+        # print ("cached data is now empty")
         # self.is_reseted = True
     
     def add_hook(self):
@@ -272,18 +272,6 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
                 continue
             
 
-            """
-            parent_layer = rs.ParentLayer(layer)
-            if sub_title != parent_layer:
-                if sub_title != "X" * 10:
-                    text = "Sub Total for {}: {}".format(parent_layer, convert_area_to_good_unit(sub_total))
-                    pt = Rhino.Geometry.Point2d(pt[0], pt[1] + offset)
-                    color = rs.CreateColor([87, 85, 83])
-                    e.Display.Draw2dText(text, color, pt, False, size)
-
-                sub_total = 0
-                sub_title = parent_layer
-            """
 
             layer_tatal_area = values[0]
             note = values[3]
@@ -301,14 +289,34 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
             if note:
                 text += note
             target = self.get_layer_target(layer)
+            diff = 0
             if target:
                 area_num, area_unit = convert_area_to_good_unit(layer_tatal_area, use_commas = False).split(" ", maxsplit = 1)
                 diff = float(target) - float(area_num)
-                text += " (Target: {:,.2f}{})[{:,.2f}{} {}]".format(float(target), area_unit, abs(diff), area_unit, "over" if diff < 0 else "under")
+                text += " (Target: {:,.2f}{})".format(float(target), area_unit)
+                if diff != 0:
+                    text += " [{:,.2f}{} {}]".format(abs(diff), area_unit, "over" if diff < 0 else "under")
             pt = Rhino.Geometry.Point2d(pt[0], pt[1] + offset)
             color = rs.LayerColor(layer)
             e.Display.Draw2dText(text, color, pt, False, size)
-
+            
+            if diff:  # Only process if there's a difference
+                # Pre-calculate common values
+                temp_pt = Rhino.Geometry.Point2d(pt[0]-20, pt[1])
+                
+                if diff > 0:
+                    e.Display.Draw2dText(u"\u25BC", 
+                                       System.Drawing.Color.FromArgb(255, 145, 145),  # Soft red
+                                       temp_pt, 
+                                       False, 
+                                       size)
+                else:
+                    e.Display.Draw2dText(u"\u25B2", 
+                                       System.Drawing.Color.FromArgb(145, 255, 145),  # Soft green
+                                       temp_pt, 
+                                       False, 
+                                       size)
+ 
 
             # draw curve from crv geo
 
