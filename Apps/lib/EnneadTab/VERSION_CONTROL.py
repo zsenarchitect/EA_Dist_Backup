@@ -10,6 +10,7 @@ import EXE
 import ENVIRONMENT
 import NOTIFICATION
 import DATA_FILE
+import FOLDER
 
 import random
 
@@ -17,7 +18,7 @@ def update_EA_dist():
     if not is_update_too_soon():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
         DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time.sexyDuck")
-
+        FOLDER.purge_powershell_folder()
 
 
     if random.random() < 0.05:

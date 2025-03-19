@@ -1727,6 +1727,33 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_loading.pushbutton\\chained_family_loading_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_loading.pushbutton\\chained_family_loading_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_loading.pushbutton\\icon.png",
+        "alias": "Chained Family Loading",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "Proj. 2419",
+        "tab_icon": null,
+        "is_popular": false
+    },
+    "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_opening.pushbutton\\chained_family_opening_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_opening.pushbutton\\chained_family_opening_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_opening.pushbutton\\icon.png",
+        "alias": "Chained Family Opening",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "Proj. 2419",
+        "tab_icon": null,
+        "is_popular": false
+    },
+    "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\print_all_family_name.pushbutton\\print_all_family_name_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\print_all_family_name.pushbutton\\print_all_family_name_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\print_all_family_name.pushbutton\\icon.png",
+        "alias": "Print All Family Name",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "tab": "Proj. 2419",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\fire_door_checker_script.py": {
         "script": "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\fire_door_checker_script.py",
         "icon": "Ennead Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\icon.png",
@@ -2235,7 +2262,7 @@
         "script": "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\fire_rating_script.py",
         "icon": "Ennead.tab\\Manage.panel\\fire_rating_UI.pushbutton\\icon.png",
         "alias": "Fire Rating Graphic",
-        "doc": "Comprehensive fire rating management system that streamlines code compliance documentation. This powerful utility helps you assign, track, and visualize fire ratings throughout your project with intelligent graphics that update automatically across multiple views. Perfect for maintaining consistent fire separation documentation and ensuring building code requirements are clearly communicated in your drawings.",
+        "doc": "Fire Rating Graphic Manager\n\nA comprehensive fire rating management system that streamlines code compliance documentation.\nThis powerful utility helps you:\n- Assign and track fire ratings across wall types\n- Generate intelligent graphics that update automatically across multiple views\n- Maintain consistent fire separation documentation\n- Ensure building code requirements are clearly communicated\n\nKey Features:\n- Intuitive UI for managing wall type fire ratings\n- Batch updates across selected views\n- Support for linked models\n- Smart graphic family (EA_Fire Rating) with customizable appearance\n- Real-time wall instance counting and preview\n\nPerfect for maintaining consistent fire separation documentation and ensuring \nbuilding code requirements are clearly communicated in your drawings.",
         "tab": "Manage",
         "tab_icon": null,
         "is_popular": true

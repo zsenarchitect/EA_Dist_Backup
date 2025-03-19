@@ -87,7 +87,20 @@ def get_active_view():
     return getattr(get_uidoc(), 'ActiveView', None)
 
 
-
+def switch_away_from_family(family_name_to_avoid):
+    """Switches away from the current family document.
+    """
+    all_family_docs = get_all_family_docs()
+    if len(all_family_docs) == 0:
+        return
+    if len(all_family_docs) == 1:
+        return
+    for family_doc in all_family_docs:
+        if family_doc.Title == family_name_to_avoid:
+            continue
+        ui_doc = get_uiapp().OpenAndActivateDocument(family_doc.PathName)
+        return ui_doc
+    return None
 
 def open_safety_doc_family():
     filepath = SAMPLE_FILE.get_file("EnneadTab Safety Doc.rfa")
@@ -184,6 +197,12 @@ def get_top_revit_docs():
         OUT.append(doc)
     return OUT
 
+def get_document_by_name(doc_name):
+    docs = get_app().Documents
+    for doc in docs:
+        if doc.Title == doc_name:
+            return doc
+    return None
 
 def get_all_family_docs(including_current_doc = False):
     """Retrieves all open family documents.

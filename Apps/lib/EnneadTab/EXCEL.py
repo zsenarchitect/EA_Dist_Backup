@@ -42,8 +42,8 @@ import ERROR_HANDLE
 import COPY
 import USER
 try:
-    import xlrd
-    import xlsxwriter
+    import xlrd # pyright: ignore
+    import xlsxwriter # pyright: ignore
 except:
     # r: xlrd
     # r: xlsxwriter

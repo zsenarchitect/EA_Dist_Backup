@@ -1,9 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+__doc__ = """Fire Rating Graphic Manager
 
+A comprehensive fire rating management system that streamlines code compliance documentation.
+This powerful utility helps you:
+- Assign and track fire ratings across wall types
+- Generate intelligent graphics that update automatically across multiple views
+- Maintain consistent fire separation documentation
+- Ensure building code requirements are clearly communicated
 
-__doc__ = "Comprehensive fire rating management system that streamlines code compliance documentation. This powerful utility helps you assign, track, and visualize fire ratings throughout your project with intelligent graphics that update automatically across multiple views. Perfect for maintaining consistent fire separation documentation and ensuring building code requirements are clearly communicated in your drawings."
+Key Features:
+- Intuitive UI for managing wall type fire ratings
+- Batch updates across selected views
+- Support for linked models
+- Smart graphic family (EA_Fire Rating) with customizable appearance
+- Real-time wall instance counting and preview
+
+Perfect for maintaining consistent fire separation documentation and ensuring 
+building code requirements are clearly communicated in your drawings."""
+
 __title__ = "Fire Rating\nGraphic"
 __tip__ = True
 __is_popular__ = True
@@ -22,7 +38,7 @@ from pyrevit import script
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_GEOMETRY, REVIT_FAMILY
-from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER, IMAGE, LOG
+from EnneadTab import NOTIFICATION, DATA_CONVERSION, ENVIRONMENT, ERROR_HANDLE, FOLDER, IMAGE, LOG, SAMPLE_FILE
 from Autodesk.Revit import DB # pyright: ignore 
 
 uidoc = REVIT_APPLICATION.get_uidoc()
@@ -33,6 +49,13 @@ FAMILY_NAME = "EA_Fire Rating"
 
 
 class FireRatingGraphicMaker:
+    """Handles creation and update of fire rating graphics in views.
+    
+    Args:
+        views: List of views to process
+        rating_list: List of valid fire ratings
+        allow_link: Whether to process walls in linked models
+    """
     def __init__(self, views, rating_list, allow_link):
         self.rating_list = rating_list
         self.rating_type_map = self.map_detail_family_type()
@@ -40,23 +63,27 @@ class FireRatingGraphicMaker:
         self.views = views
         self.allow_link = allow_link
 
-
     def update_log(self, string):
+        """Append message to log with newline."""
         self.log += "\n" + string
 
     def print_log(self):
         print (self.log)
 
     def get_wall_rating(self, wall):
+        """Get fire rating parameter value from wall type."""
         return wall.WallType.LookupParameter("Fire Rating").AsString()
 
-
     def map_detail_family_type(self):
+        """Map fire rating values to family symbol types.
+        
+        Returns:
+            Dict mapping rating strings to family symbol types
+        """
         OUT = dict()
-        types = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol ).ToElements()
-        #print types
+        types = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol).ToElements()
         types = filter(lambda x: "EA_Fire Rating" in x.FamilyName, types)
-        #print types
+        
         if not types:
             return OUT
 
@@ -248,40 +275,43 @@ def update_wall_data(data_grid_source):
 
 @ERROR_HANDLE.try_catch_error()
 def load_EA_family(title):
-    try:
-        options = ["Use Ennead Office Version", "Use HeathCare Version(not there yet)"]
-        # res = REVIT_FORMS.dialogue(main_text = "Which version of EA Fire Rating family you want to load?",
-        #                         sub_text = "This family is required for the fire rating graphic to work.",
-        #                         options = options)
-        res = options[0] # always use office version
-        if res == options[0]:
-            family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
-        elif res == options[1]:
-            family_sub_path = "EA_Fire Rating_HealthCare.content\\EA_Fire Rating_HealthCare_content.rfa"
-        else:
-            return "User chose not to load EA Fire Rating family"
-
-        # Construct path to library family
-        lib_family = os.path.join(ENVIRONMENT.REVIT_LIBRARY_TAB, 
-                                  "Contents.panel", 
-                                  "2D Contents.pulldown", 
-                                  family_sub_path)
+    """Load the EA Fire Rating family into current document.
+    
+    Args:
+        title: Title string for transaction name
         
-        # Verify source file exists
+    Returns:
+        str: Success/failure message
+    """
+    try:
+        # options = ["Use Ennead Office Version", "Use HeathCare Version(not there yet)"]
+        # res = options[0]  # always use office version
+        
+        # if res == options[0]:
+        #     family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
+        # elif res == options[1]:
+        #     family_sub_path = "EA_Fire Rating_HealthCare.content\\EA_Fire Rating_HealthCare_content.rfa"
+        # else:
+        #     return "User chose not to load EA Fire Rating family"
 
-            
-        # Create local copy
+        # lib_family = os.path.join(ENVIRONMENT.REVIT_LIBRARY_TAB,
+        #                        "Contents.panel",
+        #                        "2D Contents.pulldown",
+        #                        family_sub_path)
+        lib_family_path = SAMPLE_FILE.get_file(FAMILY_NAME + ".rfa")
+        fam_ref = REVIT_FAMILY.load_family_by_path(lib_family_path, doc)
+        return "Successfully loaded EA Fire Rating family"
+
+        
         local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "{}.rfa".format(FAMILY_NAME))
-      
 
-        # Load family into project
         t = DB.Transaction(doc, __title__)
         t.Start()
         family_loaded = doc.LoadFamily(local_copy)
         if not family_loaded:
             raise Exception("Family failed to load into project")
         t.Commit()
-        
+
         return "Successfully loaded EA Fire Rating family"
 
     except Exception as e:
@@ -289,8 +319,8 @@ def load_EA_family(title):
             t.RollBack()
         error_msg = "Failed to load family: {}".format(str(e))
         print(error_msg)
+        print (traceback.format_exc())
         return error_msg
-
 # Create a subclass of IExternalEventHandler
 class fire_rating_SimpleEventHandler(IExternalEventHandler):
     """
@@ -489,8 +519,17 @@ class fire_rating_ModelessForm(WPFWindow):
         else:
             self.debug_textbox.Text = "Debug Output:"
 
+    @ERROR_HANDLE.try_catch_error()
+    def force_reload_family_click(self, sender, args):
+        self.load_family_event_handler.kwargs = __title__,
+        self.ext_event_load_family.Raise()
+        res = self.load_family_event_handler.OUT
+        if res:
+            self.debug_textbox.Text = res
+        else:
+            self.debug_textbox.Text = "Debug Output:"
 
-
+            
     @ERROR_HANDLE.try_catch_error()
     def update_wall_type_data_click(self, sender, args):
 

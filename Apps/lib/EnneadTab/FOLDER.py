@@ -16,12 +16,95 @@ Compatible with Python 2.7 and Python 3.x
 
 import time
 import os
+import re
+from datetime import datetime
+import shutil
 
 from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
 try:
     import COPY
 except Exception as e:
     print(e)
+
+def purge_powershell_folder():
+    """Clean up PowerShell transcript folders that match YYYYMMDD pattern.
+    
+    This function:
+    1. Scans Documents folder for YYYYMMDD pattern folders
+    2. Checks for PowerShell_transcript files inside
+    3. Deletes matching folders
+    4. Runs once per day using timestamp check
+    """
+    # Get the documents folder path
+    docs_folder = get_user_document_folder()
+    
+    # Check if we already ran today
+    timestamp_file = get_EA_dump_folder_file("last_ps_cleanup.txt")
+    
+    try:
+        with open(timestamp_file, 'r') as f:
+            last_run = f.read().strip()
+            if last_run == datetime.now().strftime("%Y%m%d"):
+                # print("Already ran cleanup today")
+                return
+    except:
+        pass
+        
+    # Pattern for YYYYMMDD folders
+    date_pattern = re.compile(r"^\d{8}$")
+    
+    folders_to_delete = []
+    
+    # Scan for matching folders
+    for folder_name in os.listdir(docs_folder):
+        folder_path = os.path.join(docs_folder, folder_name)
+        
+        # Check if it's a directory and matches date pattern
+        if os.path.isdir(folder_path) and date_pattern.match(folder_name):
+            # Check if contains PowerShell transcripts
+            has_ps_transcript = False
+            for file in os.listdir(folder_path):
+                if "PowerShell_transcript" in file:
+                    has_ps_transcript = True
+                    break
+                    
+            if has_ps_transcript:
+                folders_to_delete.append(folder_path)
+                # print("Found matching folder: {}".format(folder_path))
+    
+    # Actual deletion
+    # print("\nDeleting these folders:")
+    deleted_count = 0
+    for folder in folders_to_delete:
+        try:
+            # Try to delete entire folder tree first
+            shutil.rmtree(folder)
+            deleted_count += 1
+        except Exception as e:
+            # If folder deletion fails, try deleting individual files
+            try:
+                files = os.listdir(folder)
+                for file in files:
+                    file_path = os.path.join(folder, file)
+                    try:
+                        if os.path.isfile(file_path):
+                            os.remove(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception:
+                        continue
+                # Try deleting empty folder again
+                os.rmdir(folder)
+                deleted_count += 1
+            except Exception:
+                continue
+    # print("\nSuccessfully deleted {} out of {} folders".format(deleted_count, len(folders_to_delete)))
+        
+    # Update timestamp file
+    with open(timestamp_file, 'w') as f:
+        f.write(datetime.now().strftime("%Y%m%d"))
+    
+    return folders_to_delete
 
 
 
@@ -365,5 +448,4 @@ def wait_until_file_is_ready(file_path):
 
 
 if __name__ == "__main__":
-    file = get_EA_dump_folder_file("save_copy_{}_".format(time.time()) + "test.txt")
-    print(file)
+    purge_powershell_folder()
