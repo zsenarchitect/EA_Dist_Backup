@@ -30,6 +30,7 @@ def view_toggle():
         rs.CurrentView("Perspective")
 
 
+
     keyboard_setting = Rhino.ApplicationSettings.ShortcutKeySettings
     keyboard_setting.SetMacro(Rhino.ApplicationSettings.ShortcutKey[KEY], 
                               "EA_{}".format(__title__))

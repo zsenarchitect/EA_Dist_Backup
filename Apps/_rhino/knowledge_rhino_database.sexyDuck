@@ -1014,6 +1014,15 @@
         "tab_icon": "Tailor.tab\\icon.png",
         "is_popular": false
     },
+    "Tailor.tab\\register_mirror.button\\register_mirror_left.py": {
+        "script": "Tailor.tab\\register_mirror.button\\register_mirror_left.py",
+        "icon": null,
+        "alias": "RegisterMirror",
+        "doc": "Help Jazzy to register mirror command shortcut with and without copy",
+        "tab": "Tailor.tab",
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
+    },
     "Tailor.tab\\relocate_file.button\\relocate_left.py": {
         "script": "Tailor.tab\\relocate_file.button\\relocate_left.py",
         "icon": null,

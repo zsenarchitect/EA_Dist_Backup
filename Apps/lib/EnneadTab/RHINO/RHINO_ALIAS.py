@@ -6,7 +6,7 @@ import DATA_FILE
 import DOCUMENTATION
 
 import rhinoscriptsyntax as rs
-
+import Rhino # pyright: ignore
 
 def remove_invalid_alias():
     exisitng_alias = rs.AliasNames()
@@ -60,3 +60,14 @@ def register_alias_set():
                         else:
                             rs.AddAlias("EA_" + alias, script_content)
 
+
+def register_shortcut(key, command):
+    """for full list
+    https://developer.rhino3d.com/api/rhinocommon/rhino.applicationsettings.shortcutkey
+    """
+    keyboard_setting = Rhino.ApplicationSettings.ShortcutKeySettings
+    keyboard_setting.SetMacro(Rhino.ApplicationSettings.ShortcutKey[key], 
+                              command)
+
+    
+    
