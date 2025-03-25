@@ -283,44 +283,13 @@ def load_EA_family(title):
     Returns:
         str: Success/failure message
     """
-    try:
-        # options = ["Use Ennead Office Version", "Use HeathCare Version(not there yet)"]
-        # res = options[0]  # always use office version
-        
-        # if res == options[0]:
-        #     family_sub_path = "EA_Fire Rating.content\\EA_Fire Rating_content.rfa"
-        # elif res == options[1]:
-        #     family_sub_path = "EA_Fire Rating_HealthCare.content\\EA_Fire Rating_HealthCare_content.rfa"
-        # else:
-        #     return "User chose not to load EA Fire Rating family"
 
-        # lib_family = os.path.join(ENVIRONMENT.REVIT_LIBRARY_TAB,
-        #                        "Contents.panel",
-        #                        "2D Contents.pulldown",
-        #                        family_sub_path)
-        lib_family_path = SAMPLE_FILE.get_file(FAMILY_NAME + ".rfa")
-        fam_ref = REVIT_FAMILY.load_family_by_path(lib_family_path, doc)
-        return "Successfully loaded EA Fire Rating family"
+    lib_family_path = SAMPLE_FILE.get_file(FAMILY_NAME + ".rfa")
+    fam_ref = REVIT_FAMILY.load_family_by_path(lib_family_path, doc)
+    return "Successfully loaded EA Fire Rating family"
 
-        
-        local_copy = FOLDER.copy_file_to_local_dump_folder(lib_family, "{}.rfa".format(FAMILY_NAME))
 
-        t = DB.Transaction(doc, __title__)
-        t.Start()
-        family_loaded = doc.LoadFamily(local_copy)
-        if not family_loaded:
-            raise Exception("Family failed to load into project")
-        t.Commit()
 
-        return "Successfully loaded EA Fire Rating family"
-
-    except Exception as e:
-        if 't' in locals() and t.HasStarted():
-            t.RollBack()
-        error_msg = "Failed to load family: {}".format(str(e))
-        print(error_msg)
-        print (traceback.format_exc())
-        return error_msg
 # Create a subclass of IExternalEventHandler
 class fire_rating_SimpleEventHandler(IExternalEventHandler):
     """
