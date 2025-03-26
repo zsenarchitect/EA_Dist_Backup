@@ -1032,6 +1032,15 @@
         "tab_icon": "Tailor.tab\\icon.png",
         "is_popular": false
     },
+    "Tailor.tab\\secret_key_binding.button\\secret_key_binding_left.py": {
+        "script": "Tailor.tab\\secret_key_binding.button\\secret_key_binding_left.py",
+        "icon": null,
+        "alias": "SecretKeyBinding",
+        "doc": "Setup some secrete shortcut based on Sen's preference.",
+        "tab": "Tailor.tab",
+        "tab_icon": "Tailor.tab\\icon.png",
+        "is_popular": false
+    },
     "Tailor.tab\\stack_enscape.button\\stack_enscape_left.py": {
         "script": "Tailor.tab\\stack_enscape.button\\stack_enscape_left.py",
         "icon": "Tailor.tab\\stack_enscape.button\\icon.png",

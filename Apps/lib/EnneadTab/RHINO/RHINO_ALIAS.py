@@ -70,4 +70,3 @@ def register_shortcut(key, command):
                               command)
 
     
-    
