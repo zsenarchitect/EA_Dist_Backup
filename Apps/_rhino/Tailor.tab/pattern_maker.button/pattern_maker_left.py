@@ -154,8 +154,9 @@ def pattern_maker():
         "option: true random", 
         "option: random with gradient",
         "option: random with double gradient",
-        "option: from excel(option1)",
-        "option: from excel(option2)",
+        "option: from excel(option 1.1)",
+        "option: from excel(option 1.2)",
+        "option: from excel(option 2.1)",
         ]
     option = rs.ListBox(options, title="Select an option")
     
@@ -169,10 +170,15 @@ def pattern_maker():
         location_map = opt_random_with_gradient.get_location_map(x_limit, y_limit)
     elif option == "option: random with double gradient":
         location_map = opt_random_with_double_gradient.get_location_map(x_limit, y_limit)
-    elif option == "option: from excel(option1)":
-        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option1")
-    elif option == "option: from excel(option2)":
-        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option2")
+    elif option == "option: from excel(option 1.1)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 1.1")
+    elif option == "option: from excel(option 1.2)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 1.2")
+    elif option == "option: from excel(option 2.1)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 2.1")
+        header_blocks = rs.ObjectsByName("header")
+        header_block_dict, header_x_limit, header_y_limit = sorting_blocks(header_blocks, ref_srf)
+        header_location_map = opt_from_excel.get_location_map(header_x_limit, header_y_limit, "option 2.1", is_header=True)
     else:
         return
     
@@ -185,6 +191,16 @@ def pattern_maker():
         rs.DeleteObject(block)
         rs.ObjectColorSource(new_block, 1)
         rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
+
+    if "header_blocks" in locals():
+        for location in sorted(header_block_dict.keys(), key=lambda x: (x[1], x[0])): # row first, then column
+            block = header_block_dict[location]
+            current_transform = rs.BlockInstanceXform(block)
+            block_type = header_location_map[location]
+            new_block = rs.InsertBlock2(block_type, current_transform)
+            rs.DeleteObject(block)
+            rs.ObjectColorSource(new_block, 1)
+            rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
 
     NOTIFICATION.messenger("Pattern made")
 if __name__ == "__main__":

@@ -36,6 +36,7 @@ import sys
 
 IS_PY3 = sys.version.startswith("3")
 IS_PY2 = not IS_PY3
+IS_IRONPYTHON = sys.platform == "cli"
 
 
 # this is the repo folder if you are a developer, or EA_dist if you are a normal user

@@ -11,7 +11,7 @@ except:
 
 from EnneadTab import EXCEL, NOTIFICATION
 
-def get_location_map(max_x, max_y, sheet_name):
+def get_location_map(max_x, max_y, sheet_name, is_header=False):
     """Return a dict of location and type based on excel data, expanded to fill max dimensions.
     
     The function reads data from excel and expands it to fill the requested dimensions
@@ -37,9 +37,19 @@ def get_location_map(max_x, max_y, sheet_name):
     def is_color_same(color1, color2):
         return color1[0] == color2[0] and color1[1] == color2[1] and color1[2] == color2[2]
 
+    def is_process_zone(row, col):
+        if is_header:
+            if 120 >= col >= 59 and row <= 3:
+                return True
+            return False
+        else:
+            if 57 >= col and row <= 14:  # column "BE" max
+                return True
+            return False
+
     for key in sorted(raw_data.keys()):
         row, col = key
-        if 57 >= col and row <= 14:  # column "BE" max
+        if is_process_zone(row, col):
             raw_key = (row, col)
             human_key = (row, EXCEL.column_number_to_letter(col))
             # print ("%%%%%%")
@@ -63,8 +73,12 @@ def get_location_map(max_x, max_y, sheet_name):
                 bad_data_found = True
                 looked_up_type = TYPE_DEFINITIONS.keys()[0]
 
+            # flip the pattern upside down
+            if is_header:
+                row = 4-row 
+            else:
+                row = 15-row
                 
-            row = 15-row # flip the pattern upside down
             new_key = (col-1, row-1)
             base_pattern_data[new_key] = looked_up_type
     
