@@ -43,7 +43,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     
     @ERROR_HANDLE.try_catch_error()
     def __init__(self):
-        logger.info("Initializing EnneadSearchDialog")
+        #logger.info("Initializing EnneadSearchDialog")
         # Eto initials
         self.Title = "EnneadTab For Rhino. Searcher"
         self.Resizable = True
@@ -118,7 +118,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # collect data for list
     def InitializeScriptList(self):
-        logger.info("Initializing script list and get base knowledge")
+        #logger.info("Initializing script list and get base knowledge")
 
         with io.open(DOCUMENTATION.KNOWLEDGE_RHINO_FILE, "r", encoding = "utf-8") as f:
             knowledge_pool = json.load(f)
@@ -228,7 +228,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     
     def update_info_panel(self):
         try:
-            logger.info("Updating info panel")
+            #logger.info("Updating info panel")
             if len(list(self.lb.SelectedItems)) == 0:
                 return
             self.selected_button_name = list(self.lb.SelectedItems)[0][0]
@@ -342,7 +342,11 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         self.btn_Run.Text = "Pretty Print Dictionary!"
         self.btn_Run.Click += self.btn_Run_Clicked
         user_buttons.append(self.btn_Run)
-        
+
+        self.btn_command = Eto.Forms.Button()
+        self.btn_command.Text = "Run as Command"
+        self.btn_command.Click += self.btn_command_Clicked
+        user_buttons.append(self.btn_command)
 
 
         self.btn_Cancel = Eto.Forms.Button()
@@ -361,7 +365,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # create a search function
     def Search(self, text):
-        logger.info("Performing search with text: '{}'".format(text))
+        #logger.info("Performing search with text: '{}'".format(text))
         """
         Searches self.ScriptList with a given string
         Supports wildCards
@@ -405,7 +409,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # Gridview SelectedRows Changed Event
     def RowsChanged (self,sender,e):
-        logger.info("Selection changed in grid view")
+        #logger.info("Selection changed in grid view")
         self.update_info_panel()
         return self.lb.SelectedRows
 
@@ -428,11 +432,34 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     def checkbox_search_in_tooltip_CheckedChanged(self, sender, e):
         self.Search(self.tB_Search.Text)
 
+    def btn_command_Clicked(self, sender, e):
+        #logger.info("Run button clicked")
+        # close window after double click action. Otherwise, run with error
+        self.Close(True)
 
+        # print self.knowledge
+        data = self.knowledge[self.selected_button_name]
+       
 
+    
+
+        commands = data.get("alias", None)
+        if not isinstance(commands, list):
+            commands = [commands]
+        final_commands = []
+        for command in commands:
+            if command is None:
+                continue
+            if command.upper() == command:
+                final_commands.append(command)
+            else:
+                final_commands.append("EA_{}".format(command))
+      
+        rs.Command(final_commands[0])
+        
     # event handler handling clicking on the 'run' button
     def btn_Run_Clicked(self, sender, e):
-        logger.info("Run button clicked")
+        #logger.info("Run button clicked")
         # close window after double click action. Otherwise, run with error
 
         #print sender
@@ -457,7 +484,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # event handler handling clicking on the 'cancel' button
     def btn_Cancel_Clicked(self, sender, e):
-        logger.info("Cancel button clicked")
+        #logger.info("Cancel button clicked")
         self.Close(False)
 
 
@@ -465,7 +492,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def search_command():
-    logger.info("Starting search command")
+    #logger.info("Starting search command")
     RHINO_ALIAS.register_alias_set()
     
     dlg = EnneadSearchDialog()

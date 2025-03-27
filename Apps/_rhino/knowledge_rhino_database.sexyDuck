@@ -80,6 +80,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead+.menu\\secret_key_binding.button\\secret_key_binding_left.py": {
+        "script": "Ennead+.menu\\secret_key_binding.button\\secret_key_binding_left.py",
+        "icon": null,
+        "alias": "SecretKeyBinding",
+        "doc": "Setup some secrete shortcut based on Sen's preference.",
+        "tab": "Ennead+.menu",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py": {
         "script": "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py",
         "icon": "Ennead+.menu\\tell_me_version.button\\icon.png",
@@ -1028,15 +1037,6 @@
         "icon": null,
         "alias": "RelocateAll_1643",
         "doc": "Batch relocation tool for Rhino content.\n\nFeatures:\n- Relocates all cameras and models to new Revit location\n- Maintains relative positions and orientations\n- Preserves camera views and model relationships\n- Automatically updates all named views",
-        "tab": "Tailor.tab",
-        "tab_icon": "Tailor.tab\\icon.png",
-        "is_popular": false
-    },
-    "Tailor.tab\\secret_key_binding.button\\secret_key_binding_left.py": {
-        "script": "Tailor.tab\\secret_key_binding.button\\secret_key_binding_left.py",
-        "icon": null,
-        "alias": "SecretKeyBinding",
-        "doc": "Setup some secrete shortcut based on Sen's preference.",
         "tab": "Tailor.tab",
         "tab_icon": "Tailor.tab\\icon.png",
         "is_popular": false

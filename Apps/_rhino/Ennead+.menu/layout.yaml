@@ -3,6 +3,7 @@ layout:
   - get_latest
   - tell_me_version
   - restart_rhino
+  - secret_key_binding
   - reset_all_conduit
   - '---'
   - how_to_install
