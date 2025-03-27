@@ -52,13 +52,13 @@ def show_warnings(sender, args):
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def toggle_warning_mode():
+
+    if doc.ActiveView.ViewType not in [DB.ViewType.AreaPlan, DB.ViewType.ThreeD, DB.ViewType.FloorPlan, DB.ViewType.Section, DB.ViewType.Elevation]:
+        NOTIFICATION.messenger("Please toggle it in one of the following views:\nArea Plan, 3D, Floor Plan, Section, Elevation")
+        return
+
     new_state = not script.get_envvar(KEY_NAME)
-    """
-    t = DB.Transaction(doc, __title__)
-    t.Start()
-    $$$$$$$$$$$$$$$$$$$
-    t.Commit()
-    """
+
     if new_state:
         __revit__.ViewActivated += EventHandler[ViewActivatedEventArgs](show_warnings) # pyright: ignore
         NOTIFICATION.messenger("Warning mode activated!")
