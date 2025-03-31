@@ -20,7 +20,7 @@ import re
 from datetime import datetime
 import shutil
 
-from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER
+from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER, ONE_DRIVE_DOCUMENTS_FOLDER
 try:
     import COPY
 except Exception as e:
@@ -36,12 +36,15 @@ def purge_powershell_folder():
     4. Runs once per day using timestamp check
     """
     # Get the documents folder path
-    docs_folder = get_user_document_folder()
+    docs_folder = ONE_DRIVE_DOCUMENTS_FOLDER
+    if not os.path.exists(docs_folder):
+        return
     
     # Check if we already ran today
     timestamp_file = get_EA_dump_folder_file("last_ps_cleanup.txt")
     
     try:
+        
         with open(timestamp_file, 'r') as f:
             last_run = f.read().strip()
             if last_run == datetime.now().strftime("%Y%m%d"):
@@ -67,6 +70,9 @@ def purge_powershell_folder():
                 if "PowerShell_transcript" in file:
                     has_ps_transcript = True
                     break
+            if len(os.listdir(folder_path)) == 0:
+                folders_to_delete.append(folder_path)
+                # print("Found empty folder: {}".format(folder_path))
                     
             if has_ps_transcript:
                 folders_to_delete.append(folder_path)
@@ -96,7 +102,9 @@ def purge_powershell_folder():
                 # Try deleting empty folder again
                 os.rmdir(folder)
                 deleted_count += 1
-            except Exception:
+            except Exception as e:
+                # If folder deletion fails, skip it
+                # print("Failed to delete folder {}: {}".format(folder, e))
                 continue
     # print("\nSuccessfully deleted {} out of {} folders".format(deleted_count, len(folders_to_delete)))
         

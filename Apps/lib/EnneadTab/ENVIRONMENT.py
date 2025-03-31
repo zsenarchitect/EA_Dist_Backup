@@ -112,6 +112,7 @@ USER_DOWNLOAD_FOLDER = "{}\\downloads".format(USER_PROFILE_FOLDER)
 
 USER_DESKTOP_FOLDER = "{}\\Desktop".format(USER_PROFILE_FOLDER)
 ONE_DRIVE_DESKTOP_FOLDER = "{}\\OneDrive - Ennead Architects\\Desktop".format(USER_PROFILE_FOLDER)
+ONE_DRIVE_DOCUMENTS_FOLDER = "{}\\OneDrive - Ennead Architects\\Documents".format(USER_PROFILE_FOLDER)
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = "{}\\AppData".format(USER_PROFILE_FOLDER)
@@ -353,12 +354,9 @@ def alert_l_drive_not_available(play_sound = False):
     """
     if  os.path.exists(L_DRIVE_HOST_FOLDER):
         return True
-    try:
-        note = "L drive is not available, please check your network connection or activate L drive manually.\nEnneadTab will still work, just without some public asset, such as AI related features."
-        import NOTIFICATION
-        NOTIFICATION.messenger(main_text = note)
-    except:
-        print(note)
+
+    note = "L drive is not available, please check your network connection or activate L drive manually.\nEnneadTab will still work, just without some public asset, such as AI related features."
+    print(note)
     if play_sound:
         try:
             import SOUND

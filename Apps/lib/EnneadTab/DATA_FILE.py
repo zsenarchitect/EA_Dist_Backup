@@ -24,7 +24,7 @@ import sys
 import json
 import io
 import os
-
+import time
 from contextlib import contextmanager
 
 
@@ -423,12 +423,27 @@ def update_data(file_name, is_local=True, keep_holder_key=None):
 
 
 #######################################
+class DataType:
+    INT = "int"
+    FLOAT = "float"
+    STR = "str"
+    BOOL = "bool"
+    def __str__(self):
+        return self.value
+    def __repr__(self):
+        return self.value
+    def __json__(self):
+        return self.value
+
+    def __eq__(self, other):
+        return self.value == other.value
 
 
 STICKY_FILE = "sticky.SexyDuck"
 
 
-def get_sticky(sticky_name, default_value_if_no_sticky=None):
+def get_sticky(sticky_name, default_value_if_no_sticky=None, 
+               data_type_if_no_sticky=None, tiny_wait=False):
     """Retrieve persistent sticky data.
     
     Access sticky data that persists across sessions.
@@ -438,6 +453,9 @@ def get_sticky(sticky_name, default_value_if_no_sticky=None):
         sticky_name (str): Identifier for sticky data
         default_value_if_no_sticky (any, optional): Default value if not found.
             Defaults to None.
+        data_type_if_no_sticky (str, optional): Type of data to store.
+            "int" for integer, "float" for float, "str" for string, "bool" for boolean.
+            Defaults to None.
 
     Returns:
         any: Sticky data value or default
@@ -445,12 +463,30 @@ def get_sticky(sticky_name, default_value_if_no_sticky=None):
 
     data = get_data(STICKY_FILE)
     if sticky_name not in data.keys():
-        set_sticky(sticky_name, default_value_if_no_sticky)
+        set_sticky(sticky_name, default_value_if_no_sticky, data_type_if_no_sticky)
+        if tiny_wait:
+            time.sleep(0.05)
         return default_value_if_no_sticky
-    return data[sticky_name]
+    value = data[sticky_name]
+    if tiny_wait:
+        time.sleep(0.05)
+    if isinstance(value, dict):
+        data_type = value["type"]
+        if data_type == DataType.INT:
+            return int(value["value"])
+        elif data_type == DataType.FLOAT:
+            return float(value["value"])
+        elif data_type == DataType.STR:
+            return str(value["value"])
+        elif data_type == DataType.BOOL:
+            return bool(value["value"])
+    else:
+        return value
 
 
-def set_sticky(sticky_name, value_to_write):
+    
+def set_sticky(sticky_name, value_to_write, 
+               data_type=None, tiny_wait=False):
     """Save persistent sticky data.
     
     Store data that persists across sessions.
@@ -459,13 +495,27 @@ def set_sticky(sticky_name, value_to_write):
     Args:
         sticky_name (str): Identifier for sticky data
         value_to_write (any): Value to store
-
+        data_type (str, optional): Type of data to store.
+            "int" for integer, "float" for float, "str" for string, "bool" for boolean.
+            Defaults to None.
     Returns:
         bool: True if save successful
     """
     with update_data(STICKY_FILE) as data:
-        data[sticky_name] = value_to_write
+        if data_type == None:
+            data[sticky_name] = value_to_write
 
+        elif data_type == DataType.INT:
+            data[sticky_name] = {"type": DataType.INT, "value": int(value_to_write)}
+        elif data_type == DataType.FLOAT:
+            data[sticky_name] = {"type": DataType.FLOAT, "value": float(value_to_write)}
+        elif data_type == DataType.STR:
+            data[sticky_name] = {"type": DataType.STR, "value": str(value_to_write)}
+        elif data_type == DataType.BOOL:
+            data[sticky_name] = {"type": DataType.BOOL, "value": bool(value_to_write)}
+
+    if tiny_wait:
+        time.sleep(0.05)
 
 
 if __name__ == "__main__":

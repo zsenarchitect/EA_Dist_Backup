@@ -510,6 +510,15 @@
         "tab_icon": "Knowledge.tab\\icon.png",
         "is_popular": false
     },
+    "Lab.tab\\dockpane.button\\dockpane_left.py": {
+        "script": "Lab.tab\\dockpane.button\\dockpane_left.py",
+        "icon": null,
+        "alias": "Dockpane",
+        "doc": "A dockpane with text input and selection controls",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png",
+        "is_popular": false
+    },
     "Lab.tab\\text2script.button\\text2script_left.py": {
         "script": "Lab.tab\\text2script.button\\text2script_left.py",
         "icon": "Lab.tab\\text2script.button\\icon.png",
@@ -725,6 +734,15 @@
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": true
+    },
+    "Modify.tab\\quick_massing.button\\quick_massing_left.py": {
+        "script": "Modify.tab\\quick_massing.button\\quick_massing_left.py",
+        "icon": null,
+        "alias": "QuickMassing",
+        "doc": "This button does QuickMassing when left click",
+        "tab": "Modify.tab",
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
     },
     "Modify.tab\\shape_mapper.button\\shape_mapper_left.py": {
         "script": "Modify.tab\\shape_mapper.button\\shape_mapper_left.py",
