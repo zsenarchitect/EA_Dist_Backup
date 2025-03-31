@@ -10,6 +10,7 @@ import ENVIRONMENT
 if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
     import rhinoscriptsyntax as rs
     import scriptcontext as sc
+    import Rhino # type: ignore
 
 
 def sort_pts_by_Z(pts):
@@ -204,3 +205,41 @@ def get_instance_geo(block_instance):
     [x.Transform(transform) for x in geo_contents]
     return geo_contents
 
+
+def geo_to_obj(geo, name = None):
+    """Convert a Rhino geometry object to a native Rhino object.
+
+    Parameters
+    ----------
+    geo : Rhino.Geometry.GeometryBase
+        The geometry object to convert
+
+    Returns
+    -------
+    Rhino.Geometry.GeometryBase
+        The converted geometry object
+    """
+    if isinstance(geo, Rhino.Geometry.Point3d):
+        out_obj =  Rhino.RhinoDoc.Objects.AddPoint(geo)
+    elif isinstance(geo, Rhino.Geometry.Curve):
+        out_obj = Rhino.RhinoDoc.Objects.AddCurve(geo)
+    elif isinstance(geo, Rhino.Geometry.Brep):
+        out_obj = Rhino.RhinoDoc.Objects.AddBrep(geo)
+    elif isinstance(geo, Rhino.Geometry.Mesh):
+        out_obj = Rhino.RhinoDoc.Objects.AddMesh(geo)
+    elif isinstance(geo, Rhino.Geometry.Surface):
+        out_obj = Rhino.RhinoDoc.Objects.AddSurface(geo)
+    elif isinstance(geo, Rhino.Geometry.Hatch):
+        out_obj = Rhino.RhinoDoc.Objects.AddHatch(geo)
+    elif isinstance(geo, Rhino.Geometry.Text):
+        out_obj = Rhino.RhinoDoc.Objects.AddText(geo)
+    elif isinstance(geo, Rhino.Geometry.TextDot):
+        out_obj = Rhino.RhinoDoc.Objects.AddTextDot(geo)
+    else:
+        print("Unsupported geometry type: {}".format(type(geo)))
+        return None
+
+    if name:
+        out_obj.Attributes.Name = name
+        out_obj.CommitChanges()
+    return out_obj

@@ -12,6 +12,7 @@ from EnneadTab.RHINO import RHINO_UI
 FORM_KEY = 'quick_massing_modeless_form'
 
 class QuickMassingDialog(Forms.Form):
+    @ERROR_HANDLE.try_catch_error()
     def __init__(self):
         self.Title = "Quick Massing Settings"
         self.Resizable = True
@@ -62,15 +63,14 @@ class QuickMassingDialog(Forms.Form):
         self.Content = layout
         RHINO_UI.apply_dark_style(self)
 
-
-    def check_input(self):
+    @ERROR_HANDLE.try_catch_error()
+    def check_input(self, sender, e):
         def validate_input(input_text, input_type, error_message):
-            while True:
-                try:
-                    return True, input_type(input_text)
-                except ValueError:
-                    NOTIFICATION.messenger(error_message)
-                    return False, None
+            try:
+                return True, input_type(input_text)
+            except ValueError:
+                NOTIFICATION.messenger(error_message)
+                return False, None
 
         status, self.first_level = validate_input(self.first_level_input.Text, float, "Please enter a valid number for first level")
         if not status:
@@ -84,10 +84,9 @@ class QuickMassingDialog(Forms.Form):
 
         return True
 
-                
-
+    @ERROR_HANDLE.try_catch_error()
     def on_ok_clicked(self, sender, e):
-        if not self.check_input():
+        if not self.check_input(sender, e):
             return
         self.first_level = float(self.first_level_input.Text)
         self.typical_level = float(self.typical_level_input.Text)

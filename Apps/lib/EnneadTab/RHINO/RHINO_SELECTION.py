@@ -7,6 +7,8 @@ sys.path.append(root_folder)
 import NOTIFICATION
 try:
     import rhinoscriptsyntax as rs
+    import Rhino
+    import RHINO_OBJ_DATA
 except:
     pass
 
@@ -35,3 +37,67 @@ def pay_attention(objs, time = 25, visibility = True, selection = True, zoom_sel
             for i in range(time):
                 rs.FlashObject(objs, style = True)
     rs.EnableRedraw(original_state)
+
+
+def select_subelements(include_face = True, 
+                       include_edge = True, 
+                       include_vertex = True, 
+                       return_doc_objs = False):
+    """Selects sub-objects from a polysurface.
+
+    Args:
+        include_face (bool, optional): Include face sub-objects. Defaults to True.
+        include_edge (bool, optional): Include edge sub-objects. Defaults to True.
+        include_vertex (bool, optional): Include vertex sub-objects. Defaults to True.
+        return_obj (bool, optional): Return the selected sub-objects as document objects(with name "TEMP_subelement_selection"), otherwise return as native Rhino geometry. Defaults to False.
+    Returns:
+        dict: A dictionary containing the selected sub-objects in native Rhino geometry objects.
+    """
+    # Initialize an empty list to store selected sub-object indices
+    selected_subobjects = {"face": [], "edge": [], "vertex": []}
+    
+    # Prompt the user to select sub-objects (with sub-object selection enabled)
+    go = Rhino.Input.Custom.GetObject()
+    note = "Select multiple sub-objects from a polysurface"
+    if include_face:
+        note += " (faces)"
+    if include_edge:
+        note += " (edges)"
+    if include_vertex:
+        note += " (vertices)"
+    go.SetCommandPrompt(note)
+    go.SubObjectSelect = True  # Enable sub-object selection
+
+
+    
+    go.GetMultiple(1, 0)  
+    # minimumNumber
+    # Type: int
+    # minimum number of objects to select.
+    # maximumNumber
+    # Type: int
+    # maximum number of objects to select. If 0, then the user must press enter to finish object selection. If -1, then object selection stops as soon as there are at least minimumNumber of object selected. If >0, then the picking stops when there are maximumNumber objects. If a window pick, crossing pick, or Sel* command attempts to add more than maximumNumber, then the attempt is ignored.
+        
+    if go.CommandResult() != Rhino.Commands.Result.Success:
+        print("No sub-objects were selected.")
+        return
+    
+    # Loop through the selected sub-objects
+    for obj_ref in go.Objects():
+        # Get the sub-object type
+        subobject_type = obj_ref.GeometryComponentIndex.ComponentIndexType
+        
+        if subobject_type == Rhino.Geometry.ComponentIndexType.BrepFace and include_face:
+            # Store only face sub-object indices
+            selected_subobjects["face"].append(obj_ref.Brep())
+
+        elif subobject_type == Rhino.Geometry.ComponentIndexType.BrepEdge and include_edge:
+            selected_subobjects["edge"].append(obj_ref.Curve())
+
+        elif subobject_type == Rhino.Geometry.ComponentIndexType.BrepVertex and include_vertex:
+            selected_subobjects["vertex"].append(obj_ref.Point())
+
+    if return_doc_objs:
+        for key in selected_subobjects:
+            selected_subobjects[key] = [RHINO_OBJ_DATA.geo_to_obj(obj, name = "TEMP_subelement_selection") for obj in selected_subobjects[key]]
+    return selected_subobjects
