@@ -30,7 +30,7 @@ def documentation2html(doc_data_list, html_path):
         icon_path = doc_data.get('icon')
         
         if icon_path and os.path.exists(icon_path):
-            with io.open(icon_path, "rb", encoding="utf-8") as img_file:
+            with io.open(icon_path, "rb") as img_file:  # Removed `encoding` for binary read
                 base64_img = base64.b64encode(img_file.read()).decode('utf-8')
             icon_html = "<img src=\"data:image/png;base64,{0}\" alt=\"{1} icon\">".format(base64_img, alias)
         else:
@@ -77,7 +77,10 @@ if IS_IRONPYTHON:
     import hmac
     import hashlib
 else:
-    pass
+    import socket
+    import threading
+    import platform  # Add this import for non-IronPython environments
+    import json  # Add this import for non-IronPython environments
 
 class NetworkBase:
     """Base networking functionality shared between IronPython and CPython implementations.
@@ -284,6 +287,8 @@ if IS_IRONPYTHON:
 else:
     import socket
     import threading
+    import platform  # Add this import for non-IronPython environments
+    import json  # Add this import for non-IronPython environments
     
     class NetworkRoleSystem(NetworkBase):
         """CPython-specific networking implementation."""
