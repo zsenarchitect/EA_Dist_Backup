@@ -30,6 +30,7 @@ def main():
     add_hook()
 
     rs.Command("EA_ActivateEnneadTab")
+    RHINO_ALIAS.register_shortcut("F12", "EA_SearchCommand")
     
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
 

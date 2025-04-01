@@ -14,7 +14,7 @@ def secret_key_binding():
         "Control + Q": ("Scale1D", "CtrlQ", "_scale1d"),
         "Control + R": ("Rotate", "CtrlR", "_rotate"),
         "Control + 1": ("Polyline", "Ctrl1", "_polyline"),  
-        "F12": ("Search All Commands", "F12", " EA_SearchCommand"),
+        "F12": ("Search All Commands", "F12", "EA_SearchCommand"),
     }
     selections = RHINO_FORMS.select_from_list(message="Select a shortcut to bind", 
                                               options=sorted(["{}: {}".format(k, v[0]) for k, v in dict.items()]), 
