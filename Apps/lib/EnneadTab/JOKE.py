@@ -165,7 +165,7 @@ def april_fool():
 
     marker_file = FOLDER.get_EA_dump_folder_file("{}_april_fooled3.stupid".format(y))
     
-    if m == 4 and d in [1, 2] and random.random() < 0.02 :
+    if m == 4 and d in [1] and random.random() < 0.02 :
 
 
         if os.path.exists(marker_file):
