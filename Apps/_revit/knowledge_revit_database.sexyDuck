@@ -503,6 +503,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\window_wall_ratio_sum_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\window_wall_ratio_sum_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\icon.png",
+        "alias": "Window Wall Ratio Sum",
+        "doc": "Facade Glass vs Opaque Study for Cost estimation",
+        "tab": "Proj. 2001",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Proj. 2108.panel\\OBO.pulldown\\Block2Family.pushbutton\\Block2Family_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2108.panel\\OBO.pulldown\\Block2Family.pushbutton\\Block2Family_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2108.panel\\OBO.pulldown\\Block2Family.pushbutton\\icon.png",
