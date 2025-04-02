@@ -45,6 +45,9 @@ def list_to_system_list(list, type=DataType.ElementId, use_IList=False):
                 list
             )
 
+        if type == DataType.ElementId:
+            return System.Collections.Generic.IList[DB.ElementId](list)
+
         return System.Collections.Generic.IList[type](list)
 
     if type == DataType.Point3d:

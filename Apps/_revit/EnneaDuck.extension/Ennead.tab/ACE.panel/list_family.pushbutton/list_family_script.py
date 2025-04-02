@@ -274,7 +274,7 @@ class Deployer:
 
         if REVIT_FAMILY.is_family_shared(family.Name):
             new_text_model.Text += "   [Shared]"
-        new_text_model.LookupParameter("Comments").Set(INTERNAL_COMMENT)
+        self._set_instance_comments(new_text_model)
         size_x, size_y = self._calculate_instance_size(new_text_model)
         DB.ElementTransformUtils.MoveElement(self.doc, 
                                             new_text_model.Id, 
@@ -570,10 +570,13 @@ class Deployer:
     def _set_instance_comments(self, instance):
         if not instance.LookupParameter("Comments"):
             return
-        t = DB.Transaction(self.doc, "Update Comments")
-        t.Start()
-        instance.LookupParameter("Comments").Set(INTERNAL_COMMENT)
-        t.Commit()
+        try:
+            t = DB.Transaction(self.doc, "Update Comments")
+            t.Start()
+            instance.LookupParameter("Comments").Set(INTERNAL_COMMENT)
+            t.Commit()
+        except Exception as e:
+            instance.LookupParameter("Comments").Set(INTERNAL_COMMENT)
 
     def _get_instance_size(self, instance):
         t = DB.Transaction(self.doc, "Isolate Element To Zoom and get size")
@@ -683,14 +686,30 @@ class Deployer:
 
         if "Wall" in host_type:
             # mirror the instance on X and Y axis, so it host of the wall face facing south. This is for better visual inspection
-            DB.ElementTransformUtils.MirrorElement(self.doc, 
-                                                    instance.Id, 
-                                                    DB.Plane.CreateByNormalAndOrigin (DB.XYZ.BasisY, self.pointer))
-        
-            DB.ElementTransformUtils.MirrorElement(self.doc, 
-                                                    instance.Id, 
-                                                    DB.Plane.CreateByNormalAndOrigin(DB.XYZ.BasisX, self.pointer))
-           
+            mirrored_ids = DB.ElementTransformUtils.MirrorElements(self.doc, 
+                                                            DATA_CONVERSION.list_to_system_list([instance.Id], 
+                                                                                            type=DATA_CONVERSION.DataType.ElementId, 
+                                                                                            use_IList=False), 
+                                                            DB.Plane.CreateByNormalAndOrigin(DB.XYZ.BasisY, self.pointer),
+                                                            True)
+            if len(list(mirrored_ids)) > 0:
+              
+                temp_instance = self.doc.GetElement(list(mirrored_ids)[0])
+                if temp_instance:
+                    self.doc.Delete(instance.Id)
+                    instance = temp_instance
+            
+            mirrored_ids = DB.ElementTransformUtils.MirrorElements(self.doc, 
+                                                            DATA_CONVERSION.list_to_system_list([instance.Id], 
+                                                                                            type=DATA_CONVERSION.DataType.ElementId, 
+                                                                                            use_IList=False), 
+                                                            DB.Plane.CreateByNormalAndOrigin(DB.XYZ.BasisX, self.pointer),
+                                                            True)
+            if len(list(mirrored_ids)) > 0:
+                temp_instance = self.doc.GetElement(list(mirrored_ids)[0])
+                if temp_instance:
+                    self.doc.Delete(instance.Id)
+                    instance = temp_instance
 
         t.Commit()
         return instance

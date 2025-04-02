@@ -106,6 +106,7 @@ class NetworkBase:
     and CPython environments. It handles connection tracking, logging, and authentication.
     
     Key Design Principles:
+    - Uses FQDN (Fully Qualified Domain Name) for addressing
     - Platform-agnostic core functionality
     - Shared authentication and logging mechanisms
     - Consistent interface across implementations
@@ -114,6 +115,8 @@ class NetworkBase:
     
     Attributes:
         computer_name (str): The name of the current computer in uppercase
+        fqdn (str): The Fully Qualified Domain Name of the current computer
+        domain (str): The domain part of the FQDN
         is_server (bool): True if this instance should act as a server
         HOST (str): The host address to bind to (default: '0.0.0.0')
         PORT (int): The port number to use (default: 12345)
@@ -128,8 +131,10 @@ class NetworkBase:
         and starts the periodic connection statistics thread.
         """
         self.computer_name = platform.node().upper()
+        self.fqdn = socket.getfqdn()
+        self.domain = self.fqdn.split('.', 1)[1] if '.' in self.fqdn else None
         self.is_server = self.computer_name == "SZHANG"
-        self.HOST = '0.0.0.0'
+        self.HOST = '0.0.0.0' if self.is_server else None
         self.PORT = 12345
         self.connection_log_path = os.path.join(
             os.path.expanduser('~'), 
@@ -141,6 +146,8 @@ class NetworkBase:
         logger.info("="*50)
         logger.info("NetworkBase Initialization")
         logger.info("Computer Name: {}".format(self.computer_name))
+        logger.info("FQDN: {}".format(self.fqdn))
+        logger.info("Domain: {}".format(self.domain))
         logger.info("Server Mode: {}".format(self.is_server))
         logger.info("Host: {}".format(self.HOST))
         logger.info("Port: {}".format(self.PORT))
@@ -282,42 +289,40 @@ class NetworkBase:
         """Primary entry point with flexible behavior for server/client initialization.
         
         This method serves as the main entry point for the networking system,
-        determining whether to start a server or client based on configuration
-        and command-line arguments.
-        
-        Handles:
-        - Server initialization in appropriate mode (IronPython/CPython)
-        - Client connection attempts
-        - Optional parameter processing
+        determining whether to start a server or client based on configuration.
         
         Args:
             **kwargs: Optional keyword arguments
-                server_ip (str): IP address of the server to connect to (for client mode)
+                server_ip (str): Server address (for client mode)
+                port (int): Port number to use (overrides default)
         
         The method automatically determines whether to run as server or client
         based on the computer name and available arguments.
         """
-        if not kwargs:
-            # Default initialization behavior
-            if self.is_server:
-                logger.info("Starting server in {} mode".format("IronPython" if IS_IRONPYTHON else "CPython"))
-                if IS_IRONPYTHON:
-                    # Start server in separate thread for IronPython
-                    System.Threading.Thread(
-                        System.Threading.ThreadStart(self.server_listener)
-                    ).Start()
-                else:
-                    # Start server in separate thread for CPython
-                    thread = threading.Thread(target=self.server_listener)
-                    thread.start()
+        if 'port' in kwargs:
+            self.PORT = kwargs['port']
+            logger.info("Using custom port: {}".format(self.PORT))
+
+        if self.is_server:
+            logger.info("Starting server in {} mode".format("IronPython" if IS_IRONPYTHON else "CPython"))
+            if IS_IRONPYTHON:
+                System.Threading.Thread(
+                    System.Threading.ThreadStart(self.server_listener)
+                ).Start()
             else:
-                # Attempt connection to server
-                self.client_connection()
+                thread = threading.Thread(target=self.server_listener)
+                thread.daemon = True
+                thread.start()
         else:
-            # Process specific kwargs
             server_ip = kwargs.get('server_ip')
-            if server_ip:
-                self.client_connection(server_ip)
+            if not server_ip:
+                # If no server IP provided, construct it using domain
+                if self.domain:
+                    server_ip = "SZHANG.{}".format(self.domain)
+                else:
+                    server_ip = "SZHANG"
+            logger.info("Client connecting to server: {}".format(server_ip))
+            self.client_connection(server_ip)
 
 if IS_IRONPYTHON:
     class NetworkRoleSystem(NetworkBase):
@@ -616,6 +621,11 @@ def call_me(**kwargs):
     """
     network_system = NetworkRoleSystem()
     network_system.call_me(**kwargs)
+
+def start_server():
+    """Convenience method to start the server."""
+    network_system = NetworkRoleSystem()
+    network_system.call_me()
 
 if __name__ == '__main__':
     call_me()
