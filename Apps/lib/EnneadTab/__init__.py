@@ -167,7 +167,4 @@ def dream():
     print(__dream__)
     return __dream__
 
-# Minimal __init__.py for network testing
-from . import WEB
-
 

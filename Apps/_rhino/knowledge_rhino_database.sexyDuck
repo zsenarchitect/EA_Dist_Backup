@@ -272,6 +272,15 @@
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
     },
+    "Create.tab\\slab_edge.button\\slab_edge_left.py": {
+        "script": "Create.tab\\slab_edge.button\\slab_edge_left.py",
+        "icon": "Create.tab\\slab_edge.button\\icon.png",
+        "alias": "SlabEdge",
+        "doc": "This button does SlabEdge when left click",
+        "tab": "Create.tab",
+        "tab_icon": "Create.tab\\icon.png",
+        "is_popular": false
+    },
     "Create.tab\\stair_maker.button\\stair_maker_left.py": {
         "script": "Create.tab\\stair_maker.button\\stair_maker_left.py",
         "icon": "Create.tab\\stair_maker.button\\icon.png",

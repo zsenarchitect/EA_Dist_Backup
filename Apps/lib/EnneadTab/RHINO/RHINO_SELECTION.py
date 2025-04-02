@@ -42,6 +42,7 @@ def pay_attention(objs, time = 25, visibility = True, selection = True, zoom_sel
 def select_subelements(include_face = True, 
                        include_edge = True, 
                        include_vertex = True, 
+                       include_edgeloop = True,
                        return_doc_objs = False):
     """Selects sub-objects from a polysurface.
 
@@ -54,17 +55,19 @@ def select_subelements(include_face = True,
         dict: A dictionary containing the selected sub-objects in native Rhino geometry objects.
     """
     # Initialize an empty list to store selected sub-object indices
-    selected_subobjects = {"face": [], "edge": [], "vertex": []}
+    selected_subobjects = {"face": [], "edge": [], "vertex": [], "edge_loop":[]}
     
     # Prompt the user to select sub-objects (with sub-object selection enabled)
     go = Rhino.Input.Custom.GetObject()
-    note = "Select multiple sub-objects from a polysurface"
+    note = "Select multiple sub-objects from a polysurface by holding ctrl+shift and click"
     if include_face:
         note += " (faces)"
     if include_edge:
         note += " (edges)"
     if include_vertex:
         note += " (vertices)"
+    if include_edgeloop:
+        note += " (edgeLoops)"
     go.SetCommandPrompt(note)
     go.SubObjectSelect = True  # Enable sub-object selection
 
@@ -97,7 +100,19 @@ def select_subelements(include_face = True,
         elif subobject_type == Rhino.Geometry.ComponentIndexType.BrepVertex and include_vertex:
             selected_subobjects["vertex"].append(obj_ref.Point())
 
+        elif subobject_type == Rhino.Geometry.ComponentIndexType.BrepTrim and include_edge:
+            selected_subobjects["edge"].append(obj_ref.Edge().ToNurbsCurve())
+            
+        elif subobject_type == Rhino.Geometry.ComponentIndexType.BrepLoop and include_edgeloop:
+            selected_subobjects["edge_loop"].append(obj_ref.Curve().ToNurbsCurve())
+        else:
+            print ("{} is not a valid sub-object type".format(subobject_type))
+
     if return_doc_objs:
         for key in selected_subobjects:
             selected_subobjects[key] = [RHINO_OBJ_DATA.geo_to_obj(obj, name = "TEMP_subelement_selection") for obj in selected_subobjects[key]]
     return selected_subobjects
+
+
+if __name__ == "__main__":
+    print (select_subelements(include_face=False, include_edge=True, include_vertex=False))
