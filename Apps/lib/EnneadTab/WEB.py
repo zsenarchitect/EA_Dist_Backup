@@ -73,7 +73,6 @@ def documentation2html(doc_data_list, html_path):
 
 
 ###########################################################
-from ENVIRONMENT import IS_IRONPYTHON
 # Common imports
 import json
 import datetime
@@ -82,10 +81,18 @@ import platform
 import uuid
 import hmac
 import hashlib
+import socket
+import threading
+
+# Determine if running in IronPython
+try:
+    import clr
+    IS_IRONPYTHON = True
+except ImportError:
+    IS_IRONPYTHON = False
 
 if IS_IRONPYTHON:
     import sys
-    import clr # pyright: ignore
     clr.AddReference("System")
     clr.AddReference("System.Net") 
     clr.AddReference("System.Windows.Forms")
@@ -124,16 +131,16 @@ class NetworkBase:
         total_connections (int): Counter for connections in the current period
         connection_counter_lock (threading.Lock): Lock for thread-safe counter updates
     """
-    def __init__(self):
+    def __init__(self, is_server=False):
         """Initialize the network base with configuration and logging setup.
         
-        Sets up the basic networking configuration, initializes logging,
-        and starts the periodic connection statistics thread.
+        Args:
+            is_server (bool): Force server mode if True
         """
         self.computer_name = platform.node().upper()
         self.fqdn = socket.getfqdn()
         self.domain = self.fqdn.split('.', 1)[1] if '.' in self.fqdn else None
-        self.is_server = self.computer_name == "SZHANG"
+        self.is_server = is_server or self.computer_name == "SZHANG"
         self.HOST = '0.0.0.0' if self.is_server else None
         self.PORT = 12345
         self.connection_log_path = os.path.join(
@@ -619,12 +626,12 @@ def call_me(**kwargs):
     The function automatically determines which implementation to use
     based on the IS_IRONPYTHON environment variable.
     """
-    network_system = NetworkRoleSystem()
+    network_system = NetworkRoleSystem(is_server=kwargs.get('is_server', False))
     network_system.call_me(**kwargs)
 
 def start_server():
     """Convenience method to start the server."""
-    network_system = NetworkRoleSystem()
+    network_system = NetworkRoleSystem(is_server=True)
     network_system.call_me()
 
 if __name__ == '__main__':
