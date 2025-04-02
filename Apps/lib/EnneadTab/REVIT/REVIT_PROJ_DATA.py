@@ -28,7 +28,7 @@ TEMPLATE_DATA = {
         "setting": {}
     },
     "area_tracking": {
-        "auto_update_enabled": True,
+        "auto_update_enabled": False,
         "para_dict": {
             "DEPARTMENT_KEY_PARA": "Area_$Department",
             "PROGRAM_TYPE_KEY_PARA": "Area_$Department_Program Type",
