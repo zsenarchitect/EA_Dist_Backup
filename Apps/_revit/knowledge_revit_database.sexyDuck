@@ -1952,6 +1952,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead.tab\\ACE.panel\\monitor_link_status.pushbutton\\monitor_link_status_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\monitor_link_status.pushbutton\\monitor_link_status_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\monitor_link_status.pushbutton\\icon.png",
+        "alias": "Monitor Link Status",
+        "doc": "Monitor and compare grid and level elements between current document and linked documents.\nThis tool helps track differences in grids and levels between the host document and its linked models.\nIt identifies elements that exist in one document but not in others, and checks monitoring status.",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py": {
         "script": "Ennead.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py",
         "icon": "Ennead.tab\\ACE.panel\\Project Starter.pushbutton\\icon.png",
