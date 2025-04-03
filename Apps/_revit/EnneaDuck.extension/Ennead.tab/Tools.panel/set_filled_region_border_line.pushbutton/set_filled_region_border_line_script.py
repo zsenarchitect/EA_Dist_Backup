@@ -6,7 +6,7 @@
 __doc__ = "Specialized filled region styling tool that allows precise control over border line appearance. Quickly apply consistent line styles to multiple filled regions simultaneously, enhancing drawing clarity and graphical standards. Works with individual selections even when regions are nested within groups by using tab-selection technique."
 __title__ = "Set FilledRegion\nBorder Style"
 
-from pyrevit import forms #
+
 from pyrevit import script #
 from pyrevit.revit import ErrorSwallower
 

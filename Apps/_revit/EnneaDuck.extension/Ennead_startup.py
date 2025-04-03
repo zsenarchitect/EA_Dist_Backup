@@ -281,22 +281,6 @@ def purge_dump_folder_families():
     FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".3dm", old_file_only=True)
     FOLDER.cleanup_folder_by_extension(FOLDER.DUMP_FOLDER, ".dwg", old_file_only=True)
 
-def register_context_menu():
-
-    import traceback
-    try:
-        uiapp = REVIT_APPLICATION.get_uiapp()
-        if not hasattr(uiapp, "RegisterContextMenu"):
-            return
-        context_menu_maker = EnneadTabContextMenuMaker()
-        uiapp.RegisterContextMenu("EnneaDuck", context_menu_maker)
-
-        
-
-        print ("RegisterContextMenu is available")
-
-    except:
-        print (traceback.format_exc())
 
 
 if REVIT_APPLICATION.is_version_at_least(2025):
@@ -308,24 +292,52 @@ if REVIT_APPLICATION.is_version_at_least(2025):
                         tooltips = command.tooltip.lower()
                         if "legacy" in tooltips or "not in use" in tooltips:
                             return False
+                    if command.script:
+                        script_path = command.script.lower()
+                        if "tailor" in script_path or "library" in script_path:
+                            return False
                     return True
                 return False
+
+            
             try:
                 from pyrevit.loader import sessionmgr
                 for i, command in enumerate(filter(is_enneadtab_command, sessionmgr.find_all_available_commands())):
                     print (command.name, command.tooltip, command.script)
-                    item = UI.CommandMenuItem(command.name, command.tooltip, command.script)
-                    item.SetAvailabilityClassName(command.name) # this is important to call pyrevit
+                    item = UI.CommandMenuItem("some menu button name TBD", "EACommand", command.script)
+                    item.SetAvailabilityClassName("Autodesk.Revit.DB.View") # this is important to call pyrevit
                     context_menu.AddItem(item)
 
-                    if i > 4:
-                        print ("RegisterContextMenu is available")
-                        break
+                    return
 
             except Exception as e:
                 import traceback
                 ERROR_HANDLE.print_note(traceback.format_exc())
 
+    class EACommand(UI.IExternalCommand):
+        def Execute(self, command_data, message, elements):
+            print("Custom context menu action executed!")
+            return DB.Result.Succeeded
+        
+def register_context_menu():
+    return
+
+    import traceback
+    try:
+        uiapp = REVIT_APPLICATION.get_uiapp()
+        if not hasattr(uiapp, "RegisterContextMenu"):
+            return
+        
+        context_menu_maker = EnneadTabContextMenuMaker()
+        uiapp.RegisterContextMenu("EnneaDuck", context_menu_maker)
+
+        print ("context menu registered")
+
+
+        
+
+    except:
+        print (traceback.format_exc())
 
 
 @LOG.log(__file__, __title__)
@@ -333,6 +345,11 @@ if REVIT_APPLICATION.is_version_at_least(2025):
 def EnneadTab_startup():
     if ENVIRONMENT.IS_AVD:
         set_RIR_clicker()
+
+        
+    register_context_menu()
+
+    
     VERSION_CONTROL.update_EA_dist()
     register_xaml_path()
     check_minimal_version_for_enneadtab()
@@ -350,7 +367,6 @@ def EnneadTab_startup():
     
     check_C_drive_space()
 
-    register_context_menu()
 
     DOCUMENTATION.tip_of_day()
 
