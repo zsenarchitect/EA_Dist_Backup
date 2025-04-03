@@ -54,7 +54,7 @@ def email(
     data["body_folder_link_list"] = body_folder_link_list
     data["body_image_link_list"] = body_image_link_list
     data["attachment_list"] = attachment_list
-    data["logo_image_path"] = IMAGE.get_image_path_by_name("logo_ennead-e.png")
+    data["logo_image_path"] = IMAGE.get_image_path_by_name("logo.png")
     DATA_FILE.set_data(data, "email_data.sexyDuck")
 
     EXE.try_open_app("Emailer")

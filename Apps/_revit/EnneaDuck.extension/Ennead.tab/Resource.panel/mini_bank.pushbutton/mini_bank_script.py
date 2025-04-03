@@ -55,7 +55,7 @@ class MiniBank(WPFWindow):
 
         self.Title = "EnneadTab MiniBank UI"
 
-        self.set_image_source(self.logo_img, "{}\icon_ennead_logo_dark_background.png".format(ENVIRONMENT.IMAGE_FOLDER))
+        self.set_image_source(self.logo_img, "{}\icon_logo_dark_background.png".format(ENVIRONMENT.IMAGE_FOLDER))
         self.set_image_source(self.duck_img, "happy_duck.png")
         self.manual_click = 0
 

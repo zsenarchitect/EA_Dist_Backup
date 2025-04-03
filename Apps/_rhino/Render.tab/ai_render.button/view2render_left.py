@@ -22,7 +22,7 @@ from EnneadTab.RHINO import RHINO_UI
 
 MODEL_DICT = {0: "runwayml/stable-diffusion-v1-5"}
 # get all file in a folder
-MODEL_FOLDER = "L:\\4b_Applied Computing\\04_AI\\Stable Diffusion_Model"  # "S:\SD-Model"
+MODEL_FOLDER = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "04_AI", "Stable Diffusion_Model")  # "S:\SD-Model"
 files = [file for file in os.listdir(MODEL_FOLDER) if file != "source"]
 
 # https://civitai.com/?tag=buildings
@@ -543,7 +543,7 @@ class ViewCaptureDialog(Eto.Forms.Form):
 
         # <<<<>>>><<<<>>>> change this to the address of python<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         data["controlnet_model"] = "lllyasviel/sd-controlnet-canny"
-        #data["controlnet_model"] = "L:\\4b_Applied Computing\\SD-Model\\sd-controlnet-canny"
+        #data["controlnet_model"] = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "SD-Model", "sd-controlnet-canny")
 
         data["pipeline_model"] = MODEL_DICT.get(self.cb_model.SelectedIndex, None)
         if data["pipeline_model"] is None:

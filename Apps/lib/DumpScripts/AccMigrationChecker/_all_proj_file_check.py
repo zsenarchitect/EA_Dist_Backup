@@ -72,7 +72,7 @@ class ACCMigrationChecker:
     def save_text_report(self, drive_letter, job_folder, report_content, status):
         """Save a text report for the job folder"""
         job_number = os.path.basename(job_folder)
-        report_folder = f"L:\\4b_Applied Computing\\EnneadTab-DB\\ACC Migrate Path Length Report\\{drive_letter} Drive Report"
+        report_folder = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "EnneadTab-DB", "ACC Migrate Path Length Report", f"{drive_letter} Drive Report")
         if not os.path.exists(report_folder):
             os.makedirs(report_folder)
         

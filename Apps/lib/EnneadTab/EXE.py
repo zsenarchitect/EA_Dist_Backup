@@ -98,12 +98,12 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
     return False
 
 def try_open_legacy_app(exe_name):
-    head = "L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Exe"
-    if os.path.exists(head + "\\" + exe_name + ".exe"):
-        os.startfile(head + "\\" + exe_name + ".exe")
+    head = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "01_Revit", "04_Tools", "08_EA Extensions", "Project Settings", "Exe")
+    if os.path.exists(os.path.join(head, exe_name + ".exe")):
+        os.startfile(os.path.join(head, exe_name + ".exe"))
         return True
-    if os.path.exists(head + "\\" + exe_name + "\\" + exe_name + ".exe"):
-        os.startfile(head + "\\" + exe_name + "\\" + exe_name + ".exe")
+    if os.path.exists(os.path.join(head, exe_name, exe_name + ".exe")):
+        os.startfile(os.path.join(head, exe_name, exe_name + ".exe"))
         return True
     return False
 

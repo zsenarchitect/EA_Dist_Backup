@@ -22,7 +22,7 @@ if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
 
 def apply_dark_style(UI):
     
-    logo_dark_path = IMAGE.get_image_path_by_name("icon_ennead_logo_dark_background.png")
+    logo_dark_path = IMAGE.get_image_path_by_name("icon_logo_dark_background.png")
     temp_bitmap = Eto.Drawing.Bitmap(logo_dark_path)
     if hasattr(UI, "logo"):
         UI.logo.Image = temp_bitmap.WithSize(200,30)

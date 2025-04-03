@@ -1,4 +1,3 @@
-
 __title__ = "PlaceAsset"
 __doc__ = "Place Asset from asset library"
 
@@ -42,7 +41,7 @@ def insert_ref_block(block_name, is_ref_block_method):
     obj = Rhino.RhinoDoc.ActiveDoc.Objects.AddInstanceObject(indexOfAddedBlock,Rhino.Geometry.Transform.Identity)
 
     if not is_ref_block_method:
-        sys.path.append('L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Source Codes\\Blocks')
+        sys.path.append(os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "03_Rhino", "12_EnneadTab for Rhino", "Source Codes", "Blocks"))
         import block_layer_packaging
         block_layer_packaging.pack_block_layers(blocks = [obj], flatten_layer = True)
 
@@ -50,7 +49,7 @@ def insert_ref_block(block_name, is_ref_block_method):
 
         import imp
         MAKE_BLOCK_UNIQUE = imp.load_source('make block unique', 
-                                            'L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Source Codes\\Blocks\\make block unique.py')
+                                            os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "03_Rhino", "12_EnneadTab for Rhino", "Source Codes", "Blocks", "make block unique.py"))
 
         MAKE_BLOCK_UNIQUE.make_block_unique(add_name_tag = False, original_blocks = [obj], treat_nesting = True)
         rs.DeleteBlock(block_name)
@@ -60,7 +59,7 @@ def insert_ref_block(block_name, is_ref_block_method):
 
 def get_external_filepath(block_name):
 
-    folder = "L:\\4b_Applied Computing\\00_Asset Library"
+    folder = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "00_Asset Library")
     if folder in block_name:
         return block_name
 
@@ -75,7 +74,7 @@ def get_external_filepath(block_name):
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def place_asset():
-    folder = "L:\\4b_Applied Computing\\00_Asset Library"
+    folder = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "00_Asset Library")
     files = os.listdir(folder)
 
     def is_good_file(name):

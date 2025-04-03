@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const floatingLogo = document.createElement('img');
     floatingLogo.id = 'floating-logo';
-    floatingLogo.src = document.querySelector('img[src*="logo_ennead-e_outline white.png"]').src;
+    floatingLogo.src = document.querySelector('img[src*="logo_outline_white.png"]').src;
     floatingLogo.height = 80;
     floatingLogoContainer.appendChild(floatingLogo);
     
@@ -414,7 +414,7 @@ class Output:
             # Add the floating logo that follows mouse cursor
             report_file.write("""
             <div id="floating-logo-container">
-                <img id="floating-logo" src="file://{}/logo_ennead-e_outline white.png" height="0">
+                <img id="floating-logo" src="file://{}/logo_outline_white.png" height="0">
             </div>
             """.format(ENVIRONMENT.IMAGE_FOLDER))
             

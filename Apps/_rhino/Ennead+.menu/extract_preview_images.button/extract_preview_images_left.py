@@ -18,10 +18,10 @@ def extract_preview_images():
 
     
 
-    main_folder = "L:\\4b_Applied Computing\\00_Asset Library"
+    main_folder = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "00_Asset Library")
     file_paths = ["{}\{}".format(main_folder,x) for x in os.listdir(main_folder) if ".3dm" in x[-4:].lower()]
    
-    target_folder = "L:\\4b_Applied Computing\\00_Asset Library\\Database\\data"
+    target_folder = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "00_Asset Library", "Database", "data")
 
     total_count = len(file_paths)
     LOG = ""

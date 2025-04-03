@@ -16,9 +16,10 @@ import os
 import sys
 import time
 
-from EnneadTab import NOTIFICATION, SOUND, EMAIL, FOLDER, TIME
+from EnneadTab import NOTIFICATION, SOUND, EMAIL, FOLDER, TIME, ENVIRONMENT
 from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_CLEANUP
+
 
 
 @LOG.log(__file__, __title__)
@@ -89,7 +90,7 @@ def bind_worksession():
     EMAIL.email_to_self(subject="EnneadTab Auto Email: Session Binding Finished!",
                                 body="After {}, Your binding file is saved, check below:".format(TIME.get_readable_time(time_used)),
                                 body_folder_link_list=[final_path],
-                                body_image_link_list=["L:\\4b_Applied Computing\\03_Rhino\\12_EnneadTab for Rhino\\Source Codes\\Fun\\work_session_friend.jpg"])
+                                body_image_link_list=[os.path.join(ENVIRONMENT.IMAGE_FOLDER, "meme_work_session_friend.jpg")])
     
 
     rs.DocumentModified(False)

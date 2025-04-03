@@ -241,7 +241,7 @@ def confirm_shared_para_exist_on_category(doc, para_name, category, para_type = 
     return True
 
 def __override_L_drive_shared_para_file_to_OS_shared_para_file():
-    L_drive_shared_para_file = "L:\\4b_Applied Computing\\01_Revit\\03_Library\\EA_SharedParam.txt"
+    L_drive_shared_para_file = os.path.join(ENVIRONMENT.L_DRIVE_HOST_FOLDER, "01_Revit", "03_Library", "EA_SharedParam.txt")
     OS_shared_para_file = "Apps\\lib\\EnneadTab\\documents\\revit\\DefaultSharedParameter.txt"
     
 
