@@ -1,19 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
-import sys
 import random
 import io
-
-
-
 
 
 import FOLDER
 import NOTIFICATION
 import SPEAK
-import ENVIRONMENT
-import USER
 import EXE
 import TIME
 import SOUND
@@ -199,5 +193,7 @@ if __name__ == "__main__":
 
 
  
-    joke_quote()
+    # joke_quote()
+    for x in get_all_loading_screen_message():
+        print (x)
 

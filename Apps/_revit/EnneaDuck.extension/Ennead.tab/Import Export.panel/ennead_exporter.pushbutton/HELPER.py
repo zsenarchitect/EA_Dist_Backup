@@ -2,6 +2,7 @@
 import os
 from EnneadTab import ENVIRONMENT, NOTIFICATION
 from Autodesk.Revit import DB # pyright: ignore
+from EnneadTab.REVIT import REVIT_PARAMETER
 
 
 def find_definition_by_name(doc, name):
@@ -51,7 +52,7 @@ def create_color_setting_to_sheet(doc):
     binding = DB.InstanceBinding()
     binding.Categories = cate_sets
 
-    doc.ParameterBindings.Insert(definition, binding, DB.BuiltInParameterGroup.PG_DATA)
+    doc.ParameterBindings.Insert(definition, binding, REVIT_PARAMETER.get_para_group())
 
     
     for sheet in DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements():
@@ -107,7 +108,7 @@ def create_issue_para_to_sheet(doc, issue_name):
     binding = DB.InstanceBinding()
     binding.Categories = cate_sets
 
-    doc.ParameterBindings.Insert(definition, binding, DB.BuiltInParameterGroup.PG_DATA)
+    doc.ParameterBindings.Insert(definition, binding, REVIT_PARAMETER.get_para_group())
 
     
     for sheet in DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements():

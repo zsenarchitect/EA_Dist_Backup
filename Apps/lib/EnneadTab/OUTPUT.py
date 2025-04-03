@@ -1,5 +1,7 @@
 import os
 import io
+import random
+import json
 
 import webbrowser
 
@@ -9,6 +11,7 @@ import ENVIRONMENT
 
 import TIME 
 import IMAGE
+
 
 FUNCS = """
 <script>
@@ -159,6 +162,54 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start animation
     updateLogoPosition();
 });
+
+// Rotating message system
+let currentMessageIndex = 0;
+const rotationInterval = 6000; 
+
+function rotateMessages() {
+    const footer = document.querySelector('.floating-footer');
+    if (!footer) return;
+    
+    const messages = JSON.parse(footer.dataset.messages);
+    
+    // Remove old animation class
+    footer.classList.remove('message-animate');
+    
+    // Update content
+    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    footer.innerHTML = messages[currentMessageIndex];
+    
+    // Force a reflow to restart animation
+    void footer.offsetWidth;
+    
+    // Add animation class
+    footer.classList.add('message-animate');
+}
+
+// Start rotation when document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const footer = document.querySelector('.floating-footer');
+    if (footer) {
+        // Show first message immediately
+        const messages = JSON.parse(footer.dataset.messages);
+        footer.innerHTML = messages[0];
+        footer.classList.add('message-animate');
+        
+        // Start rotation after first animation
+        setInterval(rotateMessages, rotationInterval);
+    }
+});
+
+// Add format method to String prototype if not exists
+if (!String.prototype.format) {
+    String.prototype.format = function() {
+        const args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined' ? args[number] : match;
+        });
+    };
+}
 </script>
 """
 
@@ -181,6 +232,12 @@ Note:
     The module uses a singleton pattern to ensure consistent output handling across the application.
 """
 
+
+# Sanitize all footer messages
+def sanitize_message(msg):
+    # Convert to string and replace quotes with HTML entities
+    return str(msg).replace('"', '&quot;').replace("'", '&#39;')
+    
 class Style:
     """Style constants for output formatting.
     
@@ -209,9 +266,7 @@ class Output:
         _report_path (str): Path to the HTML report file
         _graphic_settings (dict): Visual styling configuration
         _is_print_out (bool): Flag controlling console output based on environment
-
-    Note:
-        The class automatically detects the environment (Revit/Rhino) to adjust output behavior.
+        _footer_messages (list): List of messages to rotate in the footer
     """
 
     _instance = None
@@ -222,7 +277,25 @@ class Output:
             'font_family': 'Helvetica, Arial, sans-serif',
             'text_color': 'white'
         }
+    input_1 = [
+        "EnneadTab | Made with Love and Duck",
+        "Generated at {}".format(TIME.get_formatted_current_time())
+    ]
+    try:
+        import JOKE
+        input_2 = JOKE.get_all_loading_screen_message()
+    except:
+        input_2 = input_1[:]
+    random.shuffle(input_2)
+    _footer_messages = []
+    for x in input_2:
+        _footer_messages.extend(input_1)
+        _footer_messages.append(x)
 
+
+    
+    _footer_messages = [sanitize_message(msg) for msg in _footer_messages]
+    
     # when in Reivit, do not print to pollute the nice pyrevit console
     _is_print_out = not (ENVIRONMENT.IS_REVIT_ENVIRONMENT or ENVIRONMENT.IS_RHINO_ENVIRONMENT)
     
@@ -328,12 +401,16 @@ class Output:
                     left: 0;
                     width: 100%;
                     text-align: center;
-                    color: 	#b89eab;
+                    color: #b89eab;
                     font-size: 24px;
                     opacity: 0;
-                    animation: fadeFloat 4s ease-in-out 1s infinite;
                     z-index: 1000;
                 }
+
+                .message-animate {
+                    animation: fadeFloat 4s ease-in-out forwards;
+                }
+
                 @keyframes fadeFloat {
                     0% { opacity: 0; transform: translateY(10px); }
                     20% { opacity: 0.7; transform: translateY(0); }
@@ -442,8 +519,10 @@ class Output:
                     
                 
             # Add floating footer that always shows at bottom
-            report_file.write("<div class='floating-footer'>EnneadTab | Made with Love and Duck<br>{}</div>".format(TIME.get_formatted_current_time()))
+            sanitized_messages = json.dumps(Output._footer_messages, ensure_ascii=False)
+            report_file.write("<div class='floating-footer' data-messages='{}'></div>".format(sanitized_messages))
             report_file.write("</body></html>")
+
 
     @staticmethod
     def format_content(input):

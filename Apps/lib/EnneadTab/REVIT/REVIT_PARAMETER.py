@@ -21,7 +21,7 @@ import ENVIRONMENT
 try:
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
-    from pyrevit import forms
+    import REVIT_UNIT
 except:
     pass
 
@@ -179,7 +179,7 @@ def add_shared_parameter_to_project_doc(project_doc,
     return True
 
 
-def get_para_group(group_name):
+def get_para_group(group_name = "Data"):
     """Gets the built-in parameter group by name.
 
     Args:
@@ -249,6 +249,43 @@ def __override_L_drive_shared_para_file_to_OS_shared_para_file():
     import shutil
     shutil.copy(L_drive_shared_para_file, OS_shared_para_file)
 
+
+
+def get_parameter_group(para_group = "General"):
+    """_summary_
+
+    Args:
+        para_group (_type_): General, Data, AdskModelProperties
+
+    Returns:
+        _type_: _description_
+    """
+    print ("DEPRECIATED func")
+    try:
+        para_group = getattr(DB.BuiltInParameterGroup, "PG_{}".format(para_group.upper()))
+    except:
+        para_group = getattr(DB.GroupTypeId, para_group.title())
+
+    return para_group
+
+
+def get_parameter_type(para_type = "YesNo"):
+    """_summary_
+
+    Args:
+        para_type (_type_): YesNo, Length, Text
+
+    Returns:
+        _type_: _description_
+    """
+    try:
+        
+        parameter_type = getattr(DB.ParameterType, para_type)
+        
+    except:
+        
+        parameter_type = REVIT_UNIT.lookup_unit_spec_id(para_type.lower())
+    return parameter_type
 
 if __name__ == "__main__":
     __override_L_drive_shared_para_file_to_OS_shared_para_file()
