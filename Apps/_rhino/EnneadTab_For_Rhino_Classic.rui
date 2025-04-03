@@ -2086,10 +2086,28 @@ EA_ViewToggle</script>
         <locale_1033>SlabEdge</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>This button does SlabEdge when left click</locale_1033>
+        <locale_1033>Create custom slab edges by sweeping a profile block along selected edges.
+
+This tool allows users to:
+- Select individual edges or edge loops from a slab
+- Choose a profile block to use as the edge detail
+- Preview the result before finalizing
+- Flip the profile orientation if needed
+
+The tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.
+</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>This button does SlabEdge when left click</locale_1033>
+        <locale_1033>Create custom slab edges by sweeping a profile block along selected edges.
+
+This tool allows users to:
+- Select individual edges or edge loops from a slab
+- Choose a profile block to use as the edge detail
+- Preview the result before finalizing
+- Flip the profile orientation if needed
+
+The tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.
+</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SlabEdge</locale_1033>

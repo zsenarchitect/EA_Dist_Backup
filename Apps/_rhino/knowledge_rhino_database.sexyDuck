@@ -276,7 +276,7 @@
         "script": "Create.tab\\slab_edge.button\\slab_edge_left.py",
         "icon": "Create.tab\\slab_edge.button\\icon.png",
         "alias": "SlabEdge",
-        "doc": "This button does SlabEdge when left click",
+        "doc": "Create custom slab edges by sweeping a profile block along selected edges.\n\nThis tool allows users to:\n- Select individual edges or edge loops from a slab\n- Choose a profile block to use as the edge detail\n- Preview the result before finalizing\n- Flip the profile orientation if needed\n\nThe tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.\n",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": false
