@@ -7,7 +7,7 @@ __title__ = "View Reference\nTree"
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION, EXE
+from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION, EXE, UI
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_VIEW, REVIT_SHEET
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -66,14 +66,39 @@ def get_sheet_data():
     data = {}
    
     all_views = REVIT_VIEW.ViewFilter().filter_archi_views().filter_sheeted_views().filter_non_viewsheet_views().to_views()
-    for view in all_views:
 
+
+    # def inner_func(view):
+    #     sheet = REVIT_SHEET.get_sheet_by_view(view)
+                
+    #     data[view.Name] = {
+    #         'type': str(view.ViewType),
+    #         'sheet': sheet.SheetNumber if sheet else None,
+    #         'references': get_view_references(view)
+    #     }
+
+    # def label_func(view):
+    #     return "Processing view: {}".format(view.Name)
+
+    # UI.progress_bar(all_views, inner_func, label_func=label_func)
+
+
+
+    for i, view in enumerate(all_views):
+        print ("{}/{}: {}".format(i+1, len(all_views), view.Name))
         # Get the sheet number if view is placed on a sheet
         sheet = REVIT_SHEET.get_sheet_by_view(view)
+        if sheet:
+            sheet_number = sheet.SheetNumber
+            detail_number = REVIT_VIEW.get_detail_number(view)
+        else:
+            sheet_number = None
+            detail_number = None
                 
         data[view.Name] = {
             'type': str(view.ViewType),
-            'sheet': sheet.SheetNumber if sheet else None,
+            'sheet': sheet_number,
+            'detail': detail_number,
             'references': get_view_references(view)
         }
 

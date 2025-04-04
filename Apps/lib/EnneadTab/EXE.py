@@ -46,13 +46,10 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
     exe = ENVIRONMENT.EXE_PRODUCT_FOLDER + "\\{}.exe".format(exe_name)
 
 
-    def get_ignore_age(file):
-        if "OS_Installer" in file or "AutoStartup" in file:
-            return 60*60*12
-        return 60*60*24
+
     if safe_open:
-        if not os.path.exists(exe):
-            raise Exception("Only work for standalone exe, not for foldered exe.[{}] not exist".format(exe))
+        # if not os.path.exists(exe):
+        #     raise Exception("Only work for standalone exe, not for foldered exe.[{}] not exist".format(exe))
         temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
         temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
         # print (temp_exe)
@@ -61,15 +58,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
             os.startfile(temp_exe)
         else:
             print ("temp exe not found, maybe failed to copy due to permission issue.")
-        for file in os.listdir(ENVIRONMENT.WINDOW_TEMP_FOLDER):
-            if file.startswith("_temp_exe_"):
-                # ignore if this temp file is less than 1 day old, unless it is OS_installer or AutoStartup
-                if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file)) < get_ignore_age(file):
-                    continue
-                try:
-                    os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
-                except:
-                    pass
+        clean_temporary_executables()
         return True
         
     
@@ -108,3 +97,17 @@ def try_open_legacy_app(exe_name):
     return False
 
 
+def clean_temporary_executables():
+    def get_ignore_age(file):
+        if "OS_Installer" in file or "AutoStartup" in file:
+            return 60*60*12
+        return 60*60*24
+    for file in os.listdir(ENVIRONMENT.WINDOW_TEMP_FOLDER):
+        if file.startswith("_temp_exe_"):
+            # ignore if this temp file is less than 1 day old, unless it is OS_installer or AutoStartup
+            if time.time() - os.path.getmtime(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file)) < get_ignore_age(file):
+                continue
+            try:
+                os.remove(os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, file))
+            except:
+                pass
