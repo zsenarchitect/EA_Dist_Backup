@@ -9,6 +9,7 @@ import traceback
 try:
     from Autodesk.Revit import DB #pyright: ignore
     import REVIT_APPLICATION  # Level 2: Import our module
+    import REVIT_SHEET
 
     DOC = REVIT_APPLICATION.get_doc()
 
@@ -88,7 +89,7 @@ def filter_archi_views(views):
             continue
         if view.IsTemplate:
             continue
-        if view.ViewType.ToString() in ["Legend", "Schedule"]:
+        if view.ViewType.ToString() in ["Legend", "Schedule", "ProjectBrowser", "SystemBrowser"]:
             continue
         out.append(view)
     return out
@@ -111,6 +112,18 @@ class ViewFilter:
 
     def filter_archi_views(self):
         self.views = filter_archi_views(self.views)
+        return self
+
+    def filter_non_sheeted_views(self):
+        self.views = filter(lambda x: not REVIT_SHEET.get_sheet_by_view(x), self.views)
+        return self
+
+    def filter_sheeted_views(self):
+        self.views = filter(lambda x: REVIT_SHEET.get_sheet_by_view(x), self.views)
+        return self
+
+    def filter_non_viewsheet_views(self):
+        self.views = filter(lambda x: x.ViewType != DB.ViewType.DrawingSheet, self.views)
         return self
 
     def filter_non_template_views(self):

@@ -18,23 +18,27 @@ DOC = REVIT_APPLICATION.get_doc()
 def self_update_region_area(piece_type):
     if piece_type.LookupParameter("_GlassTargetIds").HasValue:
         ids =  piece_type.LookupParameter("_GlassTargetIds").AsString().split(";")
-        elements = [DOC.GetElement(DB.ElementId(id)) for id in ids]
+        elements = [DOC.GetElement(id) for id in ids]
         area = 0
         for element in elements:
+            if element is None:
+                continue
             area += element.LookupParameter("Area").AsDouble()
-
-        print ("Based on the glass targets, the region area is {}".format(area))
-        # piece_type.LookupParameter("Glass Area").Set(area)
+        if area > 0:    
+            print ("Based on the glass targets, the region area is {}".format(area))
+            piece_type.LookupParameter("Glass Area").Set(area)
 
     if piece_type.LookupParameter("_OpaqueTargetIds").HasValue:
         ids =  piece_type.LookupParameter("_OpaqueTargetIds").AsString().split(";")
-        elements = [DOC.GetElement(DB.ElementId(id)) for id in ids]
+        elements = [DOC.GetElement(id) for id in ids]
         area = 0
         for element in elements:
+            if element is None:
+                continue
             area += element.LookupParameter("Area").AsDouble()  
-
-        print ("Based on the opaque targets, the region area is {}".format(area))
-        # piece_type.LookupParameter("Opaque Area").Set(area)
+        if area > 0:
+            print ("Based on the opaque targets, the region area is {}".format(area))
+            piece_type.LookupParameter("Opaque Area").Set(area)
 
 FMILY_NAME = "Area Percentages_Annotation Symbol"
 @LOG.log(__file__, __title__)
@@ -48,6 +52,10 @@ def window_wall_ratio_sum(doc):
     
     # get all types of the family
     all_types = REVIT_FAMILY.get_all_types_by_family_name(FMILY_NAME)
+
+    for type in all_types:
+        self_update_region_area(type)
+
 
 
     order = 0

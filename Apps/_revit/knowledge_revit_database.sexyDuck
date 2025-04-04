@@ -2015,6 +2015,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead.tab\\ACE.panel\\sheet_tree.pushbutton\\sheet_tree_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\sheet_tree.pushbutton\\sheet_tree_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\sheet_tree.pushbutton\\icon.png",
+        "alias": "View Reference Tree",
+        "doc": "Generate sheet and view relationship data for visualization. Data is saved to DUMP folder for later use with visualization tools.",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\smart_egress_path.pushbutton\\smart_egress_path_script.py": {
         "script": "Ennead.tab\\ACE.panel\\smart_egress_path.pushbutton\\smart_egress_path_script.py",
         "icon": "Ennead.tab\\ACE.panel\\smart_egress_path.pushbutton\\icon.png",
