@@ -503,6 +503,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\assign_target.pushbutton\\assign_target_script.py": {
+        "script": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\assign_target.pushbutton\\assign_target_script.py",
+        "icon": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\assign_target.pushbutton\\icon.png",
+        "alias": "Assign Target",
+        "doc": "Assign targets for symbol families. Pick a symbol family and assign glass/opaque targets.",
+        "tab": "Proj. 2001",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\window_wall_ratio_sum_script.py": {
         "script": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\window_wall_ratio_sum_script.py",
         "icon": "Ennead Tailor.tab\\Proj. 2001.panel\\ucsc.pulldown\\window_wall_ratio_sum.pushbutton\\icon.png",

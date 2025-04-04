@@ -14,6 +14,28 @@ from Autodesk.Revit import DB # pyright: ignore
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
 
+
+def self_update_region_area(piece_type):
+    if piece_type.LookupParameter("_GlassTargetIds").HasValue:
+        ids =  piece_type.LookupParameter("_GlassTargetIds").AsString().split(";")
+        elements = [DOC.GetElement(DB.ElementId(id)) for id in ids]
+        area = 0
+        for element in elements:
+            area += element.LookupParameter("Area").AsDouble()
+
+        print ("Based on the glass targets, the region area is {}".format(area))
+        # piece_type.LookupParameter("Glass Area").Set(area)
+
+    if piece_type.LookupParameter("_OpaqueTargetIds").HasValue:
+        ids =  piece_type.LookupParameter("_OpaqueTargetIds").AsString().split(";")
+        elements = [DOC.GetElement(DB.ElementId(id)) for id in ids]
+        area = 0
+        for element in elements:
+            area += element.LookupParameter("Area").AsDouble()  
+
+        print ("Based on the opaque targets, the region area is {}".format(area))
+        # piece_type.LookupParameter("Opaque Area").Set(area)
+
 FMILY_NAME = "Area Percentages_Annotation Symbol"
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()

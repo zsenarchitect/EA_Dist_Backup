@@ -528,6 +528,8 @@ def get_selection(uidoc = UIDOC):
     selection = [doc.GetElement(x) for x in selection_ids]
     return selection
 
+def clear_selection():
+    set_selection([])
 
 def set_selection(elements):
     if not isinstance(elements, list):

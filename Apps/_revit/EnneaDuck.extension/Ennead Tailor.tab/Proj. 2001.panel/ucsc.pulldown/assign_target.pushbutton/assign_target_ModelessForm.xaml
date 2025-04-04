@@ -1,0 +1,73 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EnneadTab"
+        Foreground="#000"
+        Margin="0"
+        SizeToContent="WidthAndHeight"
+        ShowInTaskbar="True"
+        BorderThickness="0"
+        Background="{x:Null}"
+        WindowStartupLocation="CenterScreen"
+        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        HorizontalContentAlignment="Center"
+        UseLayoutRounding="False"
+        FontFamily="RomanD"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseLeftButtonDown="mouse_down_main_panel"
+        Cursor="ScrollAll">
+    <Window.Resources>
+        <SolidColorBrush x:Key="AboutWindowTextColor" Color="#FFDAE8FD"/>
+        <SolidColorBrush x:Key="AboutWindowHightlightColor" Color="#f39c12"/>
+        <SolidColorBrush x:Key="AboutWindowMainPanelColor" Color="#FF464646"/>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource AboutWindowTextColor}"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="{StaticResource AboutWindowHightlightColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="{StaticResource AboutWindowMainPanelColor}" 
+            CornerRadius="5" 
+            Padding="10">
+        <StackPanel>
+            <TextBlock x:Name="title_text" 
+                      Text="Target Assignment" 
+                      FontSize="16" 
+                      Margin="0,0,0,10"/>
+            
+            <TextBlock x:Name="sub_text" 
+                      Text="Assign targets for symbol families" 
+                      TextWrapping="Wrap" 
+                      Margin="0,0,0,20"/>
+            
+            <Button x:Name="pick_symbol_btn" 
+                    Content="Pick Symbol Family" 
+                    Click="pick_symbol_click"/>
+            
+            <Button x:Name="pick_glass_btn" 
+                    Content="Pick Glass Target" 
+                    Click="pick_glass_click"/>
+            
+            <Button x:Name="pick_opaque_btn" 
+                    Content="Pick Opaque Target" 
+                    Click="pick_opaque_click"/>
+            
+            <TextBlock x:Name="note" 
+                      Text="No selections made yet" 
+                      TextWrapping="Wrap" 
+                      Margin="0,20,0,0"/>
+            
+            <Button x:Name="close_btn" 
+                    Content="Close" 
+                    Click="close_Click" 
+                    Margin="0,20,0,0"/>
+        </StackPanel>
+    </Border>
+</Window> 
