@@ -45,7 +45,11 @@ def show_warnings(sender, args):
     REVIT_VIEW.show_warnings_in_view(active_view, doc)
 
 
-
+@ERROR_HANDLE.try_catch_error(is_silent=True)
+def clear_warnings(sender, args):
+    active_view = args.CurrentActiveView
+    from EnneadTab.REVIT import REVIT_VIEW
+    REVIT_VIEW.clear_warnings_in_view(active_view)
 
 
 
@@ -60,14 +64,15 @@ def toggle_warning_mode():
     new_state = not script.get_envvar(KEY_NAME)
 
     if new_state:
+        __revit__.ViewActivated -= EventHandler[ViewActivatedEventArgs](clear_warnings) # pyright: ignore
         __revit__.ViewActivated += EventHandler[ViewActivatedEventArgs](show_warnings) # pyright: ignore
         NOTIFICATION.messenger("Warning mode activated!")
         REVIT_VIEW.show_warnings_in_view(doc.ActiveView, doc)
     else:
+        __revit__.ViewActivated += EventHandler[ViewActivatedEventArgs](clear_warnings) # pyright: ignore
         __revit__.ViewActivated -= EventHandler[ViewActivatedEventArgs](show_warnings) # pyright: ignore
         NOTIFICATION.messenger("Warning mode De-activated!")
         manager = DB.TemporaryGraphicsManager.GetTemporaryGraphicsManager(doc)
-    
         manager.Clear()
 
     script.set_envvar(KEY_NAME, new_state)

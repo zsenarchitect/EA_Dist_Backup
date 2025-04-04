@@ -7,7 +7,7 @@ proDUCKtion.validify()
 # for i, path in enumerate(sys.path):
 #     print("{}: {}".format(i+1, path))
 
-from EnneadTab import    EXCEL , NOTIFICATION, AI, TEXT
+from EnneadTab import    EXCEL , NOTIFICATION, AI, TEXT, OUTPUT
 # from EnneadTab import LOG
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_PROJ_DATA
 from Autodesk.Revit import DB # pyright: ignore 
@@ -21,6 +21,57 @@ from natsort import natsorted # pyright: ignore
 
 from pyrevit import forms, script
 
+
+
+
+def show_help():
+
+    output = OUTPUT.get_output()
+    output.write("What to do if:", OUTPUT.Style.Title)
+    output.insert_divider()
+    output.write("1. You are about to setup on a new project:", OUTPUT.Style.Subtitle)
+    output.write("   - 1. Make sure your current keynote file is pointed at project folder, not from public template folder.")
+    output.write("   - 2. (Optional, if you have existing keynote file you want to merge to the current list)Click on \"Import Keynote\" button to merge another file into current file.")
+    output.write("   - 3. (Optional, if you have some legacy quote mark around the description.)Click on \"Cleanup quota mark around description\" button to cleanup them.")
+    output.write("   - 4. Click on \"Edit Extend DB Excel\" button to pick a loocation for the extended DB excel file. This will be the file storing all your ohter product information. The address will be recorded for future use.")
+    output.write("   - 5. Click on \"Export Keynote as Excel\" button to pick a loaction to save your keynote as two separate excel files, one for exterior and one for interior. Those locations will be recorded for future use.")
+    output.write("      - You can use those two excel file to sticky link as schedule in Revit.")
+    output.insert_divider()
+
+    
+    output.write("2. You are about to work with existing keynote setup:", OUTPUT.Style.Subtitle)
+    output.write("   - 1. How to add a new keynote:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Add Keynote\" button to add a new keynote to the current list.")
+    output.write("      - Click on \"Pick Parent\" button to attach it to a new parent.")
+    output.write("   - 2. How to edit an exsiting keynote:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Edit Keynote\" button to edit an exsiting keynote.")
+    output.write("      - Click on \"Pick Parent\" button to attach it to a new parent.")
+    output.write("   - 3. How to reattach multiple keynotes to a new parent:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Reattach Keynotes\" button to reattach multiple keynotes to a new parent.")
+    output.write("      - Select the keynotes you want to reattach.")
+    output.write("      - Select the new parent to attach to.")
+    output.write("   - 4. How to translate single keynote description:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Edit Keynote\" button to open the keynote description.")
+    output.write("      - Click on \"Translate Keynote\" button to translate the keynote description.")
+    output.write("   - 5. How to translate all keynote descriptions:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Batch Translate Keynote\" button to translate the keynote description.")
+    output.write("   - 6. How to export for Exterior and Interior excel:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Export Keynote as Excel\" button to export the keynote as two separate excel files, one for exterior and one for interior.")
+    output.write("   - 7. How to edit extended DB excel:", OUTPUT.Style.SubSubtitle)
+    output.write("      - Click on \"Edit Extend DB Excel\" button to open the extended DB excel file.")
+    output.write("      - Edit as you prefer, the primary area to change is the Exterior and Interior category.")
+
+    output.insert_divider()
+    output.write("Why this way?", OUTPUT.Style.Subtitle)
+    output.write("   - Revit keynote file is organized in a tree structure by autodesk, for each keynote item, it will looks like this:")
+    output.write("   - KEY | DESCRIPTION | PARENT KEY")
+    output.write("   - So when you want to organize under a 'folder', you are really just assigning many keynote items to the same parent.")
+    
+
+    
+
+    
+    output.plot()
 
 def batch_reattach_keynotes(keynote_data_conn):
     """
@@ -106,6 +157,10 @@ def batch_translate_keynote(keynote_data_conn):
 def translate_keynote(input):
     return input + " " + AI.translate(input)
 
+
+
+
+
 def cleanup_quote_text(keynote_data_conn):
     """
     Clean up quote text in the keynote database.
@@ -180,14 +235,7 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
                                              return_dict=True)
 
         db_data = EXCEL.parse_excel_data(db_data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
-
-        # for item in db_data.values():
-        #     print ("###############")
-        #     print (item.KEYNOTE_ID)
-        #     print (item.KEYNOTE_DESCRIPTION)
-        #     print (item.get("KEYNOTE ID"))
-        #     print (item.get("KEYNOTE DESCRIPTION"))
-        
+       
     else:
         db_data = {}
 

@@ -250,6 +250,7 @@ class Style:
     MainBody = "p"
     Title = "h1"
     Subtitle = "h2"
+    SubSubtitle = "h3"
     Footnote = "foot_note"
     
 
@@ -374,6 +375,7 @@ class Output:
                               .format(Output._graphic_settings['font_family']))
             report_file.write("h1 {{ font-size: 35px; font-weight: bold; color: #E1D4C1; }}")
             report_file.write("h2 {{ font-size: 20px; color: #987284; }}")
+            report_file.write("h3 {{ font-size: 15px; color: #987284; }}")
             report_file.write("ul {{ list-style-type: none; margin: 20; padding: 10; }}")
             report_file.write("li {{ margin-left: 40px; color: #E1D4C1; }}") 
             report_file.write(".foot_note {{ font-size: 8px; color: #987284; }}") 

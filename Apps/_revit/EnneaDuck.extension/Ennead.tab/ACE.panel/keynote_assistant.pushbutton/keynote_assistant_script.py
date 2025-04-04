@@ -43,7 +43,7 @@ proDUCKtion.validify()
 #     print("{}: {}".format(i+1, path))
 
 
-from EnneadTab import NOTIFICATION, ERROR_HANDLE
+from EnneadTab import ERROR_HANDLE
 # from EnneadTab import LOG
 # from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
@@ -374,6 +374,10 @@ class EditRecordWindow(forms.WPFWindow):
 
 class KeynoteManagerWindow(forms.WPFWindow):
     ################## group EnneadTab item at top for furtuer replacement ease ########################
+
+    @ERROR_HANDLE.try_catch_error()
+    def show_help(self, sender, args):
+        AU.show_help()
 
     @ERROR_HANDLE.try_catch_error()
     def export_keynotes_enneadtab(self, sender, args):

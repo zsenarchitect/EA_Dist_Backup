@@ -264,6 +264,10 @@ def show_in_convas_graphic(graphic_datas, doc = DOC, view = None):
         temp_graphic_data.update(temp_data)
 
 
+def clear_warnings_in_view(view):
+    graphic_datas = []
+    show_in_convas_graphic(graphic_datas, view = view)
+    
 
 def show_warnings_in_view(view, doc):
     # redo inmport becasue the isolated func need structure.....
