@@ -1997,6 +1997,15 @@
         "tab_icon": null,
         "is_popular": true
     },
+    "Ennead.tab\\ACE.panel\\relationship_diagram.pushbutton\\relationship_diagram_script.py": {
+        "script": "Ennead.tab\\ACE.panel\\relationship_diagram.pushbutton\\relationship_diagram_script.py",
+        "icon": "Ennead.tab\\ACE.panel\\relationship_diagram.pushbutton\\icon.png",
+        "alias": "Relationship Diagram",
+        "doc": "Interactive convas to draw relationship diagram.",
+        "tab": "ACE",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\rename_nesting_family_script.py": {
         "script": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\rename_nesting_family_script.py",
         "icon": "Ennead.tab\\ACE.panel\\rename_nesting_family.pushbutton\\icon.png",

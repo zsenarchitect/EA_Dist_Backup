@@ -119,7 +119,7 @@ def sheet_tree(doc):
     DATA_FILE.set_data(data, "sheet_tree_data.sexyDuck")
     # DATA_FILE.pretty_print_dict(data)
     NOTIFICATION.messenger("Sheet tree data generated successfully!")
-    EXE.try_open_app("VizSheetTree", safe_open=True)
+    EXE.try_open_app("VizSheetTree")
 
 ################## main code below #####################
 if __name__ == "__main__":
