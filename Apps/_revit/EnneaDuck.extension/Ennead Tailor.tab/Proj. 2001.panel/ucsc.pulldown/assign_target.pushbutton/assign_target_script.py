@@ -28,15 +28,15 @@ class AssignTargetForm(WPFWindow):
         symbol.Symbol.LookupParameter("_GlassTargetIds").Set(";".join(ids))
         t.Commit()
 
-    def update_opaque_targets(self, symbol, ids):
-        t = self.DB.Transaction(self.doc, "Assign Opaque Targets")
+    def update_total_targets(self, symbol, ids):
+        t = self.DB.Transaction(self.doc, "Assign Total Targets")
         t.Start()
-        symbol.Symbol.LookupParameter("_OpaqueTargetIds").Set(";".join(ids))
+        symbol.Symbol.LookupParameter("_TotalTargetIds").Set(";".join(ids))
         t.Commit()
 
         
     def register_events(self):
-        self.func_list = ["update_glass_targets", "update_opaque_targets"]
+        self.func_list = ["update_glass_targets", "update_total_targets"]
         for func_name in self.func_list:
             
             setattr(self, "{}_event_handler".format(func_name), REVIT_EVENT.SimpleEventHandler(getattr(self, func_name)))
@@ -95,8 +95,8 @@ class AssignTargetForm(WPFWindow):
         return x.Category.Name == "Detail Items" and hasattr(x, "IsMasking")
     
     @ERROR_HANDLE.try_catch_error()
-    def pick_opaque_click(self, sender, args):
-        """Pick an opaque target from the model"""
+    def pick_total_click(self, sender, args):
+        """Pick a total target from the model"""
        
         from EnneadTab.REVIT import REVIT_SELECTION
         from EnneadTab import NOTIFICATION
@@ -108,10 +108,10 @@ class AssignTargetForm(WPFWindow):
                 if self.is_filled_region(x):
                     ids.append(x.UniqueId)
             if self.selected_symbol:
-                handler, ext_event = self.get_handler_event_by_keyword("update_opaque_targets")
+                handler, ext_event = self.get_handler_event_by_keyword("update_total_targets")
                 handler.args = self.selected_symbol, ids
                 ext_event.Raise()
-                NOTIFICATION.messenger("Assigned {} Filled Region Opaque Targets".format(len(ids)))
+                NOTIFICATION.messenger("Assigned {} Filled Region Total Targets".format(len(ids)))
             REVIT_SELECTION.clear_selection()
 
     def get_handler_event_by_keyword(self, keyword):

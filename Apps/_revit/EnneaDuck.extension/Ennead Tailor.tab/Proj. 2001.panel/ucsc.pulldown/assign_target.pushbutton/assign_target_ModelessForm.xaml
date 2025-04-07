@@ -56,8 +56,8 @@
                     Click="pick_glass_click"/>
             
             <Button x:Name="pick_opaque_btn" 
-                    Content="Pick Opaque Target" 
-                    Click="pick_opaque_click"/>
+                    Content="Pick Total Target" 
+                    Click="pick_total_click"/>
             
             <TextBlock x:Name="note" 
                       Text="No selections made yet" 
