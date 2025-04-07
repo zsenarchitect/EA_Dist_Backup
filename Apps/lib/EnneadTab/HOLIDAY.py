@@ -7,7 +7,6 @@ This module provides customized holiday greetings for office employees based on 
 Supports multiple cultural and seasonal celebrations with images and sound effects.
 """
 
-from __future__ import print_function, division, absolute_import
 
 import datetime
 import os

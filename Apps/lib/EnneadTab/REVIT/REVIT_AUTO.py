@@ -93,7 +93,3 @@ class RevitUpdater:
 
 
 
-
-u"""https://mp.weixin.qq.com/s/c3DL1sb0gCifj-VtSN0nrw
-使用模型内容协议在Revit和其他应用程序之间传输数据
-"""

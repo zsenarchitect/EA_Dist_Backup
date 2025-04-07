@@ -8,11 +8,12 @@ root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(_
 sys.path.append(root_folder)
 import DATA_CONVERSION #pyright: ignore
 import NOTIFICATION #pyright: ignore
-import REVIT_APPLICATION, REVIT_CATEGORY
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
     from Autodesk.Revit import UI # pyright: ignore
+    import REVIT_APPLICATION
+    import REVIT_CATEGORY
     UIDOC = REVIT_APPLICATION.get_uidoc() 
     DOC = REVIT_APPLICATION.get_doc()
 
