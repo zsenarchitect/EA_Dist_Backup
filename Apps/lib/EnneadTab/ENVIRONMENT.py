@@ -72,15 +72,15 @@ REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead.tab")
 REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Library.tab")
 REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Tailor.tab")
 
-L_DRIVE_HOST_FOLDER = "L:\\4b_Design Technology"
+L_DRIVE_HOST_FOLDER = os.path.join("L:", "4b_Design Technology")
 if not os.path.exists(L_DRIVE_HOST_FOLDER):
-    L_DRIVE_HOST_FOLDER = "L:\\4b_Applied Computing"
+    L_DRIVE_HOST_FOLDER = os.path.join("L:", "4b_Applied Computing")
 
 
-DB_FOLDER = "{}\\EnneadTab-DB".format(L_DRIVE_HOST_FOLDER)
+DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "EnneadTab-DB")
 if not os.path.exists(DB_FOLDER):
-    DB_FOLDER = "{}\\05_EnneadTab\\EnneadTab-DB".format(L_DRIVE_HOST_FOLDER)
-SHARED_DUMP_FOLDER = DB_FOLDER + "\\Shared Data Dump"
+    DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "05_EnneadTab", "EnneadTab-DB")
+SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 
 LIB_FOLDER = os.path.join(APP_FOLDER, "lib")
@@ -91,7 +91,7 @@ DOCUMENT_FOLDER = os.path.join(CORE_FOLDER, "documents")
 
 
 EXE_PRODUCT_FOLDER = os.path.join(LIB_FOLDER, "ExeProducts")
-WINDOW_TEMP_FOLDER = "C:\\temp\\EnneadTab Dump"
+WINDOW_TEMP_FOLDER = os.path.join("C:", "temp", "EnneadTab Dump")
 if not os.path.exists(WINDOW_TEMP_FOLDER):
     try:
         os.makedirs(WINDOW_TEMP_FOLDER)
@@ -100,24 +100,25 @@ if not os.path.exists(WINDOW_TEMP_FOLDER):
 
 DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency")
 if IS_PY2:
-    DEPENDENCY_FOLDER += "\\py2"
+    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py2")
 else:
-    DEPENDENCY_FOLDER += "\\py3"
-PY3_DEPENDENCY_FOLDER =  os.path.join(LIB_FOLDER, "dependency", "py3")
+    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py3")
+PY3_DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency", "py3")
 
 
 USER_PROFILE_FOLDER = os.environ["USERPROFILE"]
-USER_DOCUMENT_FOLDER = "{}\\Documents".format(USER_PROFILE_FOLDER)
-USER_DOWNLOAD_FOLDER = "{}\\downloads".format(USER_PROFILE_FOLDER)
+USER_DOCUMENT_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Documents")
+USER_DOWNLOAD_FOLDER = os.path.join(USER_PROFILE_FOLDER, "downloads")
 
-USER_DESKTOP_FOLDER = "{}\\Desktop".format(USER_PROFILE_FOLDER)
-ONE_DRIVE_DESKTOP_FOLDER = "{}\\OneDrive - Ennead Architects\\Desktop".format(USER_PROFILE_FOLDER)
-ONE_DRIVE_DOCUMENTS_FOLDER = "{}\\OneDrive - Ennead Architects\\Documents".format(USER_PROFILE_FOLDER)
+USER_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Desktop")
+ONE_DRIVE_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Desktop")
+ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents")
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
-USER_APPDATA_FOLDER = "{}\\AppData".format(USER_PROFILE_FOLDER)
-ECO_SYS_FOLDER = "{}\\EnneadTab Ecosystem".format(USER_DOCUMENT_FOLDER)
-DUMP_FOLDER = ECO_SYS_FOLDER + "\\Dump"
+USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
+ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "EnneadTab Ecosystem")
+DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
+INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
 for _folder in [ECO_SYS_FOLDER, DUMP_FOLDER]:
     if not os.path.exists(_folder):
@@ -130,11 +131,13 @@ IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:
     SHARED_DUMP_FOLDER = DUMP_FOLDER
 
-ONE_DRIVE_ECOSYS_FOLDER = "{}\\OneDrive - Ennead Architects\\Documents\\EnneadTab Ecosystem".format(USER_PROFILE_FOLDER)
-if os.path.exists(ONE_DRIVE_ECOSYS_FOLDER):
+
+# this is to remove any transitional folder from IT transition, not intented to be ussed anywhere else
+__legacy_one_drive_folder = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "EnneadTab Ecosystem")
+if os.path.exists(__legacy_one_drive_folder):
     import shutil
     try:
-        shutil.rmtree(ONE_DRIVE_ECOSYS_FOLDER)
+        shutil.rmtree(__legacy_one_drive_folder)
     except:
         pass
 
