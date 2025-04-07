@@ -1,5 +1,5 @@
 __title__ = "QuickMassing"
-__doc__ = "This button does QuickMassing when left click"
+__doc__ = "Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options."
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
@@ -45,11 +45,22 @@ class QuickMassingDialog(Forms.Form):
         self.level_count_input.Text = str(DATA_FILE.get_sticky("quick_massing_typical_level_count", 4, DATA_FILE.DataType.INT))
         self.level_count_input.TextChanged += self.check_input
 
-     
+        basement_height_label = Forms.Label(Text="Basement Level Height:")
+        self.basement_height_input = Forms.TextBox()
+        self.basement_height_input.Text = str(DATA_FILE.get_sticky("quick_massing_basement_height", 4.5, DATA_FILE.DataType.FLOAT, tiny_wait=True))
+        self.basement_height_input.TextChanged += self.check_input
+
+        basement_count_label = Forms.Label(Text="Basement Level Count:")
+        self.basement_count_input = Forms.TextBox()
+        self.basement_count_input.Text = str(DATA_FILE.get_sticky("quick_massing_basement_count", 0, DATA_FILE.DataType.INT))
+        self.basement_count_input.TextChanged += self.check_input
+
         # Add rows to layout
         layout.AddRow(first_level_label, self.first_level_input)
         layout.AddRow(typical_level_label, self.typical_level_input)
         layout.AddRow(level_count_label, self.level_count_input)
+        layout.AddRow(basement_height_label, self.basement_height_input)
+        layout.AddRow(basement_count_label, self.basement_count_input)
         
         # Create buttons
         self.ok_button = Forms.Button(Text="Create Massing")
@@ -69,16 +80,22 @@ class QuickMassingDialog(Forms.Form):
             try:
                 return True, input_type(input_text)
             except ValueError:
-                NOTIFICATION.messenger(error_message)
+                NOTIFICATION.messenger("Invalid input: {}".format(error_message))
                 return False, None
 
-        status, self.first_level = validate_input(self.first_level_input.Text, float, "Please enter a valid number for first level")
+        status, self.first_level = validate_input(self.first_level_input.Text, float, "First level height must be a number")
         if not status:
             return False
-        status, self.typical_level = validate_input(self.typical_level_input.Text, float, "Please enter a valid number for typical level")
+        status, self.typical_level = validate_input(self.typical_level_input.Text, float, "Typical level height must be a number")
         if not status:
             return False
-        status, self.typical_level_count = validate_input(self.level_count_input.Text, int, "Please enter a valid number for typical level count")
+        status, self.typical_level_count = validate_input(self.level_count_input.Text, int, "Typical level count must be a whole number")
+        if not status:
+            return False
+        status, self.basement_height = validate_input(self.basement_height_input.Text, float, "Basement level height must be a number")
+        if not status:
+            return False
+        status, self.basement_count = validate_input(self.basement_count_input.Text, int, "Basement level count must be a whole number")
         if not status:
             return False
 
@@ -91,29 +108,34 @@ class QuickMassingDialog(Forms.Form):
         self.first_level = float(self.first_level_input.Text)
         self.typical_level = float(self.typical_level_input.Text)
         self.typical_level_count = int(self.level_count_input.Text)
+        self.basement_height = float(self.basement_height_input.Text)
+        self.basement_count = int(self.basement_count_input.Text)
        
-                
         self.Close()
 
         self.create_massing()
-
         
         DATA_FILE.set_sticky("quick_massing_first_level", self.first_level, DATA_FILE.DataType.FLOAT, tiny_wait=True)
         DATA_FILE.set_sticky("quick_massing_typical_level", self.typical_level, DATA_FILE.DataType.FLOAT, tiny_wait=True)
         DATA_FILE.set_sticky("quick_massing_typical_level_count", self.typical_level_count, DATA_FILE.DataType.INT)
-
+        DATA_FILE.set_sticky("quick_massing_basement_height", self.basement_height, DATA_FILE.DataType.FLOAT, tiny_wait=True)
+        DATA_FILE.set_sticky("quick_massing_basement_count", self.basement_count, DATA_FILE.DataType.INT)
 
     def create_massing(self):
-            
-
-            
         objs = rs.GetObjects("Select objects to quick massing", preselect=True, filter=rs.filter.surface)
         if not objs:
             return
 
         rs.EnableRedraw(False)
 
-        levels = [self.first_level]
+        # Create basement levels first (below ground)
+        levels = []
+        for _ in range(self.basement_count):
+            levels.append(self.basement_height)  # Use basement height for basement levels
+            rs.MoveObjects(objs, [0,0,-self.basement_height])
+        
+        # Add ground level and above ground levels
+        levels.append(self.first_level)
         for _ in range(self.typical_level_count):
             levels.append(self.typical_level)
 
@@ -129,11 +151,9 @@ class QuickMassingDialog(Forms.Form):
                 rs.DeleteObject(crv)
                 obj = backup_obj
             rs.DeleteObject(obj)
-    
 
         rs.EnableRedraw(True)
 
-        
     def on_cancel_clicked(self, sender, e):
         self.Close()
         

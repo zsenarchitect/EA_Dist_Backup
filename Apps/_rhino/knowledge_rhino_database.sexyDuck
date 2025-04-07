@@ -272,6 +272,15 @@
         "tab_icon": "Block.tab\\icon.png",
         "is_popular": false
     },
+    "Create.tab\\quick_massing.button\\quick_massing_left.py": {
+        "script": "Create.tab\\quick_massing.button\\quick_massing_left.py",
+        "icon": null,
+        "alias": "QuickMassing",
+        "doc": "Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options.",
+        "tab": "Create.tab",
+        "tab_icon": "Create.tab\\icon.png",
+        "is_popular": false
+    },
     "Create.tab\\slab_edge.button\\slab_edge_left.py": {
         "script": "Create.tab\\slab_edge.button\\slab_edge_left.py",
         "icon": "Create.tab\\slab_edge.button\\icon.png",
@@ -743,15 +752,6 @@
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": true
-    },
-    "Modify.tab\\quick_massing.button\\quick_massing_left.py": {
-        "script": "Modify.tab\\quick_massing.button\\quick_massing_left.py",
-        "icon": null,
-        "alias": "QuickMassing",
-        "doc": "This button does QuickMassing when left click",
-        "tab": "Modify.tab",
-        "tab_icon": "Modify.tab\\icon.png",
-        "is_popular": false
     },
     "Modify.tab\\shape_mapper.button\\shape_mapper_left.py": {
         "script": "Modify.tab\\shape_mapper.button\\shape_mapper_left.py",

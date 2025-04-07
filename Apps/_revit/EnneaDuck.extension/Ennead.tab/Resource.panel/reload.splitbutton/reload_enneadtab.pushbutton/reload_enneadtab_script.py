@@ -34,7 +34,7 @@ def reload_EnneadTab():
 
 ################## main code below #####################
 if __name__ == "__main__":
-    if REVIT_APPLICATION.is_version_at_least(2025):
+    if False and REVIT_APPLICATION.is_version_at_least(2025):
         NOTIFICATION.messenger("Please use pyrevit reload for Revit 2025 and above.")
     else:
         reload_EnneadTab()
