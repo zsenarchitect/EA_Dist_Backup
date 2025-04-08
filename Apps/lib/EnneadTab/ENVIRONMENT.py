@@ -32,7 +32,8 @@ import os
 import sys
 
 
-
+PLUGIN_NAME = "EnneadTab"
+PLUGIN_EXTENSION = ".sexyDuck"
 
 IS_PY3 = sys.version.startswith("3")
 IS_PY2 = not IS_PY3
@@ -68,13 +69,13 @@ PRIMARY_EXTENSION_NAME = "EnneaDuck"
 REVIT_PRIMARY_EXTENSION = os.path.join(
     REVIT_FOLDER, "{}.extension".format(PRIMARY_EXTENSION_NAME)
 )
-REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead.tab")
-REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Library.tab")
-REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "Ennead Tailor.tab")
+REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{}.tab".format(PLUGIN_NAME))
+REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Library.tab".format(PLUGIN_NAME))
+REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Tailor.tab".format(PLUGIN_NAME))
 
-L_DRIVE_HOST_FOLDER = os.path.join("L:", "4b_Design Technology")
+L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
 if not os.path.exists(L_DRIVE_HOST_FOLDER):
-    L_DRIVE_HOST_FOLDER = os.path.join("L:", "4b_Applied Computing")
+    L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
 
 
 DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "EnneadTab-DB")
@@ -84,14 +85,14 @@ SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 
 LIB_FOLDER = os.path.join(APP_FOLDER, "lib")
-CORE_FOLDER = os.path.join(LIB_FOLDER, "EnneadTab")
+CORE_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME)
 IMAGE_FOLDER = os.path.join(CORE_FOLDER, "images")
 AUDIO_FOLDER = os.path.join(CORE_FOLDER, "audios")
 DOCUMENT_FOLDER = os.path.join(CORE_FOLDER, "documents")
 
 
 EXE_PRODUCT_FOLDER = os.path.join(LIB_FOLDER, "ExeProducts")
-WINDOW_TEMP_FOLDER = os.path.join("C:", "temp", "EnneadTab Dump")
+WINDOW_TEMP_FOLDER = os.path.join("C:\\", "temp", "{} Dump".format(PLUGIN_NAME))
 if not os.path.exists(WINDOW_TEMP_FOLDER):
     try:
         os.makedirs(WINDOW_TEMP_FOLDER)
@@ -116,7 +117,7 @@ ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennea
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
-ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "EnneadTab Ecosystem")
+ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "{} Ecosystem".format(PLUGIN_NAME))
 DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
@@ -133,7 +134,7 @@ if IS_OFFLINE_MODE:
 
 
 # this is to remove any transitional folder from IT transition, not intented to be ussed anywhere else
-__legacy_one_drive_folder = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "EnneadTab Ecosystem")
+__legacy_one_drive_folder = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{} Ecosystem".format(PLUGIN_NAME))
 if os.path.exists(__legacy_one_drive_folder):
     import shutil
     try:
@@ -146,7 +147,7 @@ def cleanup_dump_folder():
     """Clean up temporary files from the dump folder.
 
     Removes files older than 3 days from the DUMP_FOLDER, excluding protected file types:
-    .json, .sexyDuck, .txt, .lock, and .rui files.
+    .json, PLUGIN_EXTENSION, .txt, .lock, and .rui files.
     
     This function runs silently and handles file deletion errors gracefully.
     """
@@ -154,7 +155,7 @@ def cleanup_dump_folder():
     import time
 
     cutoff_time = time.time() - (3 * 24 * 60 * 60)  # 3 days
-    protected_extensions = {'.json', '.sexyDuck', ".txt", ".lock", ".rui"}
+    protected_extensions = {'.json', PLUGIN_EXTENSION, ".txt", ".lock", ".rui"}
 
     for filename in os.listdir(DUMP_FOLDER):
         file_path = os.path.join(DUMP_FOLDER, filename)

@@ -3,7 +3,6 @@
 # -*- coding: utf-8 -*-
 import os
 import threading
-import time
 import random
 import ENVIRONMENT
 import TEXT

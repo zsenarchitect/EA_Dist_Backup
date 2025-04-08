@@ -20,7 +20,7 @@ import re
 from datetime import datetime
 import shutil
 
-from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER, ONE_DRIVE_DOCUMENTS_FOLDER
+from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER, ONE_DRIVE_DOCUMENTS_FOLDER, PLUGIN_EXTENSION
 try:
     import COPY
 except Exception as e:
@@ -238,7 +238,7 @@ def get_EA_dump_folder_file(file_name):
     Returns:
         str: Full path in EA dump folder
     """
-    return "{}\\{}".format(DUMP_FOLDER, file_name)
+    return os.path.join(DUMP_FOLDER, _secure_file_name(file_name))
 
 
 def get_shared_dump_folder_file(file_name):
@@ -250,8 +250,13 @@ def get_shared_dump_folder_file(file_name):
     Returns:
         str: Full path in shared dump folder
     """
-    return "{}\\{}".format(SHARED_DUMP_FOLDER, file_name)
+    return os.path.join(SHARED_DUMP_FOLDER, _secure_file_name(file_name))
 
+
+def _secure_file_name(file_name):
+    if PLUGIN_EXTENSION not in file_name:
+        file_name = file_name + PLUGIN_EXTENSION
+    return file_name
 
 def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning=False):
     """Copy file to local EA dump folder.
@@ -313,7 +318,7 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
 
             latest_backup_date = None
             for filename in os.listdir(backup_folder):
-                if not filename.endswith(".sexyDuck"):
+                if not filename.endswith(PLUGIN_EXTENSION):
                     continue
                 backup_date_str = filename.split("_")[0]
                 backup_date = time.strptime(backup_date_str, "%Y-%m-%d")

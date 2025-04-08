@@ -53,11 +53,11 @@ def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False)
     """
     if not os.path.exists(filepath):
         return dict()
-    local_path = FOLDER.get_EA_dump_folder_file("temp.sexyDuck")
+    local_path = FOLDER.get_EA_dump_folder_file("temp_data")
     try:
         COPY.copyfile(filepath, local_path)
     except IOError:
-        local_path = FOLDER.get_EA_dump_folder_file("temp_additional.sexyDuck")
+        local_path = FOLDER.get_EA_dump_folder_file("temp_data_retry")
         COPY.copyfile(filepath, local_path)
 
     content = _read_json_as_dict(local_path, use_encode, create_if_not_exist)
