@@ -398,7 +398,7 @@ def set_revit_knowledge():
                         "is_popular": global_vars.get("__is_popular__", False)
                     }
 
-    DATA_FILE.set_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE, data_dict)
+    DATA_FILE.set_data(data_dict, ENVIRONMENT.KNOWLEDGE_REVIT_FILE )
 
 def get_revit_knowledge():
     knowledge_pool = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE)
@@ -615,5 +615,5 @@ def write_dream():
     
 if __name__ == "__main__":
     
-    # generate_documentation(debug=True)
-    write_dream()
+    generate_documentation(debug=True)
+    # write_dream()

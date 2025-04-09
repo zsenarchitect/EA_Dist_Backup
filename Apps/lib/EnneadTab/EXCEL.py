@@ -486,7 +486,8 @@ def _read_data_from_excel_online(url, worksheet, return_dict, headless):
 
 def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
     filepath = FOLDER.get_safe_copy(filepath)
-    
+
+
     if filepath.endswith(".xlsx"):
         if not worksheet:
             NOTIFICATION.messenger(main_text="Worksheet input is required for xlsx files")
@@ -498,7 +499,8 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
         }
         DATA_FILE.set_data(job_data, "excel_handler_input")
         EXE.try_open_app("ExcelHandler")
-        max_wait = 100
+        
+        max_wait = 100000
         wait = 0
         while wait<max_wait:
             job_data = DATA_FILE.get_data("excel_handler_input")
@@ -507,7 +509,6 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
             time.sleep(0.1)
             wait += 1
         raw_data = DATA_FILE.get_data("excel_handler_output")
-        
         # Convert string keys back to tuple keys
         converted_data = {}
         for key, value in raw_data.items():
@@ -1115,20 +1116,24 @@ if __name__ == "__main__":
         # print (item.get("KEYNOTE ID"))
         # print (item.get("KEYNOTE DESCRIPTION"))
 
-    collection = ExcelDataCollection()
-    collection.set_headers(["Name", "Age", "City"], width_list=[10, 10])
-    collection.add_row(["John", 30, "New York"])
-    collection.add_row(["Jane", 25, "Los Angeles"])
-    collection.add_row(["Jim", 35, "Chicago"])
-    collection.add_row(["Jill", 28, "San Francisco"])
-    collection.set_pointer_lower_right()
-    collection.next_row()
-    collection.add("That is many cities")
-    collection.set_col_by_header("Age")
-    collection.add(35)
-    collection.prev_col()
-    collection.add("Average age")
-    collection.prev_row()
-    collection.add("will override")
-    collection.add(ExcelDataItem("as dedicated item", 10, "B"))
-    collection.save("output.xlsx")
+    # collection = ExcelDataCollection()
+    # collection.set_headers(["Name", "Age", "City"], width_list=[10, 10])
+    # collection.add_row(["John", 30, "New York"])
+    # collection.add_row(["Jane", 25, "Los Angeles"])
+    # collection.add_row(["Jim", 35, "Chicago"])
+    # collection.add_row(["Jill", 28, "San Francisco"])
+    # collection.set_pointer_lower_right()
+    # collection.next_row()
+    # collection.add("That is many cities")
+    # collection.set_col_by_header("Age")
+    # collection.add(35)
+    # collection.prev_col()
+    # collection.add("Average age")
+    # collection.prev_row()
+    # collection.add("will override")
+    # collection.add(ExcelDataItem("as dedicated item", 10, "B"))
+    # collection.save("output.xlsx")
+
+    data = read_data_from_excel("J:\\2425\\0_BIM\\10_BIM Management\\10_BIM Resources\\AIEES DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
+    print (data)
+

@@ -359,31 +359,40 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
 
         EXCEL.save_data_to_excel(data_collection, excel_out_path, worksheet=cate.key, freeze_row=2)
 
-    if db_data:
+    if not db_data:
+        return
+
+    bug_coolection = []
+    
+    
+    # Get keynotes once to avoid multiple database calls
+    leaf_keynotes = get_leaf_keynotes(keynote_data_conn)
+    diff = set(db_data.keys()) - set([x.key for x in leaf_keynotes])
+    if diff:
+        bug_coolection.append("Warning: some keys in extended DB are not in keynote file:")
+        for i, x in enumerate(diff):
+            bug_coolection.append("-{}: [{}]{}".format(i+1, x, db_data[x].KEYNOTE_DESCRIPTION))
+
+    keynote_keys = {keynote.key: keynote for keynote in leaf_keynotes}
+    
+    reverse_diff = set(keynote_keys.keys()) - set(db_data.keys())
+    if reverse_diff:
+        bug_coolection.append("Warning: some keys in keynote file are not in extended DB:")
+        for i, key in enumerate(reverse_diff):
+            bug_coolection.append("-{}: [{}]{}".format(i+1, key, keynote_keys[key].text))
+
+    if diff or reverse_diff:
+        print ("\n\n")
+        bug_coolection.append("This is usually due to one of the following reasons:")
+        bug_coolection.append("1. You have renamed the key in keynote file but did not update the same item in the DB excel file: Please update the same item in the DB excel file")
+        bug_coolection.append("2. You have added a new keynote in keynote file, but not in extended DB: Please add the same item in the DB excel file")
+        bug_coolection.append("3. You have added a new keynote in extended DB, but not in keynote file: Please add the same item in the keynote file")
+
+    if bug_coolection:
         output = script.get_output()
         output.print_md("## =====Please check the following=====")
-        # Get keynotes once to avoid multiple database calls
-        leaf_keynotes = get_leaf_keynotes(keynote_data_conn)
-        diff = set(db_data.keys()) - set([x.key for x in leaf_keynotes])
-        if diff:
-            output.print_md("Warning: some keys in extended DB are not in keynote file:")
-            for i, x in enumerate(diff):
-                output.print_md("-{}: [{}]{}".format(i+1, x, db_data[x].KEYNOTE_DESCRIPTION))
-
-        keynote_keys = {keynote.key: keynote for keynote in leaf_keynotes}
-        
-        reverse_diff = set(keynote_keys.keys()) - set(db_data.keys())
-        if reverse_diff:
-            output.print_md("Warning: some keys in keynote file are not in extended DB:")
-            for i, key in enumerate(reverse_diff):
-                output.print_md("-{}: [{}]{}".format(i+1, key, keynote_keys[key].text))
-
-        if diff or reverse_diff:
-            print ("\n\n")
-            output.print_md("This is usually due to one of the following reasons:")
-            output.print_md("1. You have renamed the key in keynote file but did not update the same item in the DB excel file: Please update the same item in the DB excel file")
-            output.print_md("2. You have added a new keynote in keynote file, but not in extended DB: Please add the same item in the DB excel file")
-            output.print_md("3. You have added a new keynote in extended DB, but not in keynote file: Please add the same item in the keynote file")
+        for x in bug_coolection:
+            output.print_md(x)
 
 def edit_extended_db_excel(keynote_data_conn):
     doc = REVIT_APPLICATION.get_doc()
