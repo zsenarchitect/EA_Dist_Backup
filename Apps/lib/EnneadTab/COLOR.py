@@ -294,7 +294,7 @@ def get_color_template_data(template = None):
     else:
         safe_template = "OFFICE STANDARD FILE TO BE MADE"
     
-    if safe_template.endswith(".sexyDuck"):
+    if safe_template.endswith(ENVIRONMENT.PLUGIN_EXTENSION):
         with io.open(safe_template, "r", encoding = "utf-8") as f:
             return json.load(f)
         

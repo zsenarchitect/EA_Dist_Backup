@@ -24,13 +24,13 @@ def translate(input_text,
             "target_language":target_language, 
             "personality":personality,
             "api_key":api}
-    DATA_FILE.set_data(data, "translator_input.sexyDuck")
+    DATA_FILE.set_data(data, "translator_input")
     EXE.try_open_app("Translator.exe")
 
     max_wait = 900
     
     def check_status(iter):
-        status = DATA_FILE.get_data("translator_input.sexyDuck").get("status")
+        status = DATA_FILE.get_data("translator_input").get("status")
         if status == "done":
             # Signal progress bar to complete immediately
             return True
@@ -46,9 +46,9 @@ def translate(input_text,
     # Check final status outside the progress bar
     wait = 500
     while wait > 0:
-        status = DATA_FILE.get_data("translator_input.sexyDuck").get("status")
+        status = DATA_FILE.get_data("translator_input").get("status")
         if status == "done":
-            result = DATA_FILE.get_data("translator_output.sexyDuck")
+            result = DATA_FILE.get_data("translator_output")
             return result["output_text"]
         time.sleep(0.1)
         wait -= 1

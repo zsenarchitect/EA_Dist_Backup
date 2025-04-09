@@ -32,7 +32,7 @@ class Solution:
         output.print_md("**{}< {} >**".format(indent, doc.Title))
         self.process_family(family_doc = doc, indent = indent)
 
-        dest_file = FOLDER.get_EA_dump_folder_file("Family Tree of {}.html".format(doc.Title))
+        dest_file = FOLDER.get_local_dump_folder_file("Family Tree of {}.html".format(doc.Title))
         output.save_contents(dest_file)
         output.close()
         EXE.try_open_app(dest_file)

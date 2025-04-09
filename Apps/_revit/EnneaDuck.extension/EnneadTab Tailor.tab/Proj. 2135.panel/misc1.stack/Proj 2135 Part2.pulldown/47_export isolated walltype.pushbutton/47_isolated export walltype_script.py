@@ -44,11 +44,11 @@ def update_view_name():
         print(current_name)
         print(new_name)
         print (e)
-        EA_UTILITY.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
+        ARCHI_UTILITY.dialogue(main_text = "'\ : { } [ ] | ; < > ? ` ~' are not allowed in view name for Revit or Window OS.If you are exporting from default Revit 3D view, it will comes with '{}' in the view name which can casue error for window file naming.\nPlease rename your view first, just remove '{}'.", sub_text = "Original view name = {}\nError message: ".format(current_name) + str(e) + "\nSuggested new name = {}".format(current_name.replace("{", "").replace("}", "")))
 
 
 def isolate_elements_temporarily(element_ids):
-    doc.ActiveView.IsolateElementsTemporary(EA_UTILITY.list_to_system_list(element_ids))
+    doc.ActiveView.IsolateElementsTemporary(ARCHI_UTILITY.list_to_system_list(element_ids))
     pass
 
 
@@ -129,7 +129,7 @@ def get_wall_elements_ids(wall_type):
 
 
     wall_ids = [x.Id for x in my_walls]
-    #uidoc.Selection.SetElementIds (EA_UTILITY.list_to_system_list(wall_ids))
+    #uidoc.Selection.SetElementIds (ARCHI_UTILITY.list_to_system_list(wall_ids))
     for wall in my_walls:
         wall_ids.extend(get_element_ids_on_wall(wall))
 
@@ -217,7 +217,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                                                     button_name='use setting with this name for this export job', \
                                                     title = "Select existing Export Setting.")
             if sel_setting == None:
-                EA_UTILITY.dialogue(main_text = "You didn't select any export setting. Try again.")
+                ARCHI_UTILITY.dialogue(main_text = "You didn't select any export setting. Try again.")
                 attempt += 1
             else:
                 break
@@ -236,7 +236,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                 sel_setting = setting
                 break
         if sel_setting == None:
-            EA_UTILITY.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
+            ARCHI_UTILITY.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
             sel_setting = pick_from_setting()
 
 
@@ -248,8 +248,8 @@ def export_dwg_action(file_name, view_or_sheet, doc, output_folder, additional_m
         file_name = file_name.replace("/", "-")
         print("Windows file name cannot contain '/' in its name, i will replace it with '-'")
     print("preparing [{}].dwg".format(file_name))
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
-    view_as_collection = EA_UTILITY.list_to_system_list([view_or_sheet.Id])
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
+    view_as_collection = ARCHI_UTILITY.list_to_system_list([view_or_sheet.Id])
     max_attempt = 10
     attempt = 0
     #print view_as_collection
@@ -307,7 +307,7 @@ def OLD_process_wall_type(wall_type):
 
 
     wall_ids = [x.Id for x in my_walls]
-    #uidoc.Selection.SetElementIds (EA_UTILITY.list_to_system_list(wall_ids))
+    #uidoc.Selection.SetElementIds (ARCHI_UTILITY.list_to_system_list(wall_ids))
     for wall in my_walls:
         wall_ids.extend(get_element_ids_on_wall(wall))
 
@@ -338,7 +338,7 @@ if any([doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .RevealHidden
         doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .WorksharingDisplay),
         doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .TemporaryViewProperties),
         doc.ActiveView.IsInTemporaryViewMode (DB.TemporaryViewMode .RevealConstraints)]):
-    EA_UTILITY.dialogue(main_text = "Cannot use temporary view mode for this tool. You can apply changes to make it permanent before proceeding.")
+    ARCHI_UTILITY.dialogue(main_text = "Cannot use temporary view mode for this tool. You can apply changes to make it permanent before proceeding.")
     script.exit()
 #ideas:
 

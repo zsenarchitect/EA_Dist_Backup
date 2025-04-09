@@ -19,7 +19,7 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 
 
 def get_file_path():
-    folder = EA_UTILITY.get_EA_setting_folder()
+    folder = ARCHI_UTILITY.get_EA_setting_folder()
     file = "door_size_record.txt"
     return "{}\{}".format(folder, file)
 
@@ -28,7 +28,7 @@ def get_file_path():
 def update_current_door_size():
     doors = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 
-    data = EA_UTILITY.read_txt_as_list(filepath = get_file_path())
+    data = ARCHI_UTILITY.read_txt_as_list(filepath = get_file_path())
 
     door_size_dict = dict()
     for x in data:
@@ -69,13 +69,13 @@ def record_old_door_size():
         OUT.append("{}$${}".format(unique_ID, door_leaf))
 
     filepath = get_file_path()
-    EA_UTILITY.save_list_to_txt(OUT, filepath)
+    ARCHI_UTILITY.save_list_to_txt(OUT, filepath)
 
 
 
 def bring_size_from_old_door():
     opt = ["record old door size", "update current door size"]
-    res = EA_UTILITY.dialogue(options = opt)
+    res = ARCHI_UTILITY.dialogue(options = opt)
     if res == opt[0]:
         record_old_door_size()
     else:

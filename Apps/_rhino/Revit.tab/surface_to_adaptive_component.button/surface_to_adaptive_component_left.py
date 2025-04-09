@@ -185,7 +185,7 @@ class Srf2AdpDialog(Eto.Forms.Form):
         if not self.out_data:
             return
             
-        file = FOLDER.get_EA_dump_folder_file("SRF2ADP_DATA.sexyDuck")
+        file = FOLDER.get_local_dump_folder_file("SRF2ADP_DATA")
         DATA_FILE.set_data(self.out_data, file)
 
         SOUND.play_sound("sound_effect_mario_message.wav")

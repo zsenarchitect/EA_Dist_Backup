@@ -108,7 +108,7 @@ class AI_Report_modelessForm(WPFWindow):
     def __init__(self):
         run_exe()
         self.pre_actions()
-        xaml_file_name = "EA_QAQC_Reporter_ModelessForm.xaml" 
+        xaml_file_name = "QAQC_Reporter_ModelessForm.xaml" 
         WPFWindow.__init__(self, xaml_file_name)
 
         self.title_text.Text = "EnneadTab-GPT: Chat With Document (ft. openAI)"
@@ -116,7 +116,7 @@ class AI_Report_modelessForm(WPFWindow):
         self.sub_text.Text = "Use openai's AI_Report to answer all kinds of questions in current document or from exisitng QAQC report."
 
 
-        self.Title = "EnneadTab QAQC Reporter"
+        self.Title = "QAQC Reporter"
         #self.Width = 800
         self.Height = 1000
         logo_file = IMAGE.get_image_path_by_name("logo_vertical_light.png")
@@ -131,14 +131,14 @@ class AI_Report_modelessForm(WPFWindow):
 
     @property
     def log_file(self):
-        file_name = "EA_QAQC_REPORT_LOG.sexyDuck"
+        file_name = "EA_QAQC_REPORT_LOG"
         return file_name
 
-        return FOLDER.get_EA_dump_folder_file(file_name)
+        return FOLDER.get_local_dump_folder_file(file_name)
 
    
     def get_previous_conversation(self):
-        log_file_path = FOLDER.get_EA_dump_folder_file(self.log_file)
+        log_file_path = FOLDER.get_local_dump_folder_file(self.log_file)
         if os.path.exists(log_file_path):
             record = DATA_FILE.get_data(log_file_path)
             self.tbox_conversation.Text = record["conversation_history"]
@@ -171,7 +171,7 @@ class AI_Report_modelessForm(WPFWindow):
         data["store_name"] = self.session_name
         data["response"] = "No results."
         
-        self.data_file = FOLDER.get_EA_dump_folder_file("QAQC_REPORT_DATA.sexyDuck")
+        self.data_file = "QAQC_REPORT_DATA"
         DATA_FILE.set_data(data, self.data_file)
         
         run_exe()
@@ -192,7 +192,7 @@ class AI_Report_modelessForm(WPFWindow):
                 self.debug_textbox.Text = JOKE.random_loading_message()
             
             time.sleep(1)
-            temp_data = DATA_FILE.read_json_file_safely(self.data_file)
+            temp_data = DATA_FILE.get_data(self.data_file)
             if temp_data["direction"] == "OUT":
                  
                 SOUND.play_sound("sound_effect_popup_msg3.wav")

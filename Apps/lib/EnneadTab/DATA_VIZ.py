@@ -51,7 +51,7 @@ def show_data(data, title = "EnneadTab Data Visualization", show_axis=True):
 
 
 
-    DATA_FILE.set_data(data_package, "interactive_chart_data.sexyDuck")
+    DATA_FILE.set_data(data_package, "interactive_chart_data")
 
     EXE.try_open_app("Data_Viz")
 

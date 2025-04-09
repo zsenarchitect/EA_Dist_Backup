@@ -1,4 +1,4 @@
-DATA_FILE_NAME = "progressbar.sexyDuck"
+DATA_FILE_NAME = "progressbar"
 
 import DATA_FILE
 import EXE

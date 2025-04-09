@@ -59,7 +59,7 @@ def export_image_from_view(view, doc, adding_creator):
     opts.ExportRange = DB.ExportRange.SetOfViews
     opts.ZoomType = DB.ZoomFitType.FitToPage
     opts.PixelSize = 6000
-    opts.SetViewsAndSheets(EA_UTILITY.list_to_system_list([view.Id]))
+    opts.SetViewsAndSheets(ARCHI_UTILITY.list_to_system_list([view.Id]))
 
     attempt = 0
 
@@ -93,7 +93,7 @@ def export_image_from_view(view, doc, adding_creator):
 
 
 def cleanup_jpg_name(output_folder, desired_name, keyword):
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, desired_name + ".jpg")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, desired_name + ".jpg")
 
     #print keyword
 
@@ -132,7 +132,7 @@ output.close_others()
 
 
 opts = ["Yes", "No"]
-res = EA_UTILITY.dialogue(main_text = "Should it prefix the creator name?", options = opts)
+res = ARCHI_UTILITY.dialogue(main_text = "Should it prefix the creator name?", options = opts)
 if not res:
     script.exit()
 if res == opts[0]:
@@ -152,7 +152,7 @@ counter = 0
 
 t = DB.Transaction(doc, "export no sheet views")
 t.Start()
-will_sync_and_close = EA_UTILITY.do_you_want_to_sync_and_close_after_done()
+will_sync_and_close = ARCHI_UTILITY.do_you_want_to_sync_and_close_after_done()
 map(lambda x: export_image_from_view(x, doc, adding_creator), no_sheet_views)
 t.Commit()
 if will_sync_and_close:

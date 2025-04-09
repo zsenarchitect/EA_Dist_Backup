@@ -338,13 +338,13 @@ def action_3_inspect_mat_to_family():
 
 def action_9_export_map_OST_to_material():
     def get_rhino_material_name(revit_material_name):
-        if EA_UTILITY.string_contain_keywords(revit_material_name, ["glass"]):
+        if ARCHI_UTILITY.string_contain_keywords(revit_material_name, ["glass"]):
             return rhino_mat_name_glass(revit_material_name)
 
-        if EA_UTILITY.string_contain_keywords(revit_material_name, ["stone"]):
+        if ARCHI_UTILITY.string_contain_keywords(revit_material_name, ["stone"]):
             return rhino_mat_name_stone(revit_material_name)
 
-        if EA_UTILITY.string_contain_keywords(revit_material_name, ["mullion", "metal"]):
+        if ARCHI_UTILITY.string_contain_keywords(revit_material_name, ["mullion", "metal"]):
             return rhino_mat_name_metal(revit_material_name)
 
         return revit_material_name
@@ -360,7 +360,7 @@ def action_9_export_map_OST_to_material():
 
     def rhino_mat_name_glass(revit_material_name):
             """glass type"""
-            if EA_UTILITY.string_contain_keywords(revit_material_name, ["cable wall", "railing", "retail", "storefront"]):
+            if ARCHI_UTILITY.string_contain_keywords(revit_material_name, ["cable wall", "railing", "retail", "storefront"]):
             #if "cable wall" in revit_material_name.lower() or "railing" in revit_material_name.lower() or "retail" in revit_material_name.lower():
                 return "2135_Glass Clear"
 
@@ -415,10 +415,10 @@ def action_9_export_map_OST_to_material():
 
 
     filepath = r"I:\2135\0_BIM\10_BIM Management\10_BIM Resources\ost material mapping\ost material mapping_{}.txt".format(doc.Title)
-    EA_UTILITY.save_list_to_txt(OUT, filepath, use_encode = True)
+    ARCHI_UTILITY.save_list_to_txt(OUT, filepath, use_encode = True)
 
     filepath = r"I:\2135\0_3D\03_Working Models\##Master Shared_Rhino materials\Unique Rhino Material Usage\###Unique Rhino Material_{}.txt".format(doc.Title)
-    EA_UTILITY.save_list_to_txt(unique_rhino_mat_names, filepath, use_encode = True)
+    ARCHI_UTILITY.save_list_to_txt(unique_rhino_mat_names, filepath, use_encode = True)
 
 def display_list(list):
     for x in list:

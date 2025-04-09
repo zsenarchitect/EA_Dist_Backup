@@ -35,7 +35,7 @@ def make_3D_views_from_workset():
             view.SetWorksetVisibility(other_workset.Id, DB.WorksetVisibility.Hidden)
 
         try:
-            view.LookupParameter("Views_$Group").Set("00_EA's_Little Helper")
+            view.LookupParameter("Views_$Group").Set("00_Little Helper")
             view.LookupParameter("Views_$Series").Set("Workset Check")
         except:
             pass

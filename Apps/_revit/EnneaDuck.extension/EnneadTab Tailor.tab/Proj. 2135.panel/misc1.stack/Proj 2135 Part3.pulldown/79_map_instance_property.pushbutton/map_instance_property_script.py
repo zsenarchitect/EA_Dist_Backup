@@ -171,7 +171,7 @@ output.close_others()
 if __name__ == "__main__":
     DATA = dict()
     opt = ["Record panel instance info", "Assign panel instance info from record"]
-    res = EA_UTILITY.dialogue(options = opt, main_text = "I want to ...")
+    res = ARCHI_UTILITY.dialogue(options = opt, main_text = "I want to ...")
     if res == opt[0]:
         record_instance_property()
     elif res == opt[1]:

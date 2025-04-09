@@ -10,7 +10,7 @@ from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS
 def try_catch_error(func):
     def wrapper(*args, **kwargs):
         """
-        if not EA_UTILITY.is_SZ(pop_toast = False, additional_tester_ID = ["paula.gronda", "pnorcrossPYDAS", "laura.rodriguezEHAYS"]):#
+        if not ARCHI_UTILITY.is_SZ(pop_toast = False, additional_tester_ID = ["paula.gronda", "pnorcrossPYDAS", "laura.rodriguezEHAYS"]):#
             return False
         """
 
@@ -347,7 +347,7 @@ def update_account_by_local_warning_diff(doc):
                        history_added=tool_used, doc=doc)
 
     """
-    if not EA_UTILITY,IS_DEVELOPER:
+    if not ARCHI_UTILITY,IS_DEVELOPER:
         return
     """
 
@@ -382,7 +382,7 @@ def is_TTS_killed():
     dump_folder = FOLDER.DUMP_FOLDER
     file_name = "EA_TALKIE_KILL.kill"
 
-    if EA_UTILITY.is_file_exist_in_folder(file_name, dump_folder):
+    if ARCHI_UTILITY.is_file_exist_in_folder(file_name, dump_folder):
         return True
     return False
     """
@@ -789,7 +789,7 @@ def open_doc_with_warning_count(warning_count, doc):
                  "Knock knock. Who is there? {} warnings".format(
                      warning_count),
                  "{} warnings walks into a bar...".format(warning_count)]
-        EA_UTILITY.random_speak(lines)
+        ARCHI_UTILITY.random_speak(lines)
 
     else:
 
@@ -801,7 +801,7 @@ def open_doc_with_warning_count(warning_count, doc):
         lines = ["A clean revit is a happy revit.",
                  "It is always nice to see less warning.",
                  "Let's go! Keep the warning down!"]
-        EA_UTILITY.random_speak(lines)
+        ARCHI_UTILITY.random_speak(lines)
 
 
 @try_catch_error

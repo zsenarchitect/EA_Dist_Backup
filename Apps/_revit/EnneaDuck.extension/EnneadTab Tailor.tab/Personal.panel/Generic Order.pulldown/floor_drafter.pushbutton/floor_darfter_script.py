@@ -72,7 +72,7 @@ class Solution:
 
     def helper(self):
 
-        file = EnneadTab.FOLDER.get_EA_dump_folder_file("FLOOR2BREP_DATA.json")
+        file = EnneadTab.FOLDER.get_local_dump_folder_file("FLOOR2BREP_DATA.json")
         data = EnneadTab.DATA_FILE.read_json_as_dict(file)
 
 

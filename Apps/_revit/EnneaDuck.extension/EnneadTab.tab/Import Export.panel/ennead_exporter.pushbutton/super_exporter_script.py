@@ -55,7 +55,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
         # important data setup
-        self.setting_file = "super_exporter_setting.sexyDuck"
+        self.setting_file = "super_exporter_setting"
         self.output_folder = "{}\\EnneadTab Exporter".format(FOLDER.DUMP_FOLDER)
         FOLDER.secure_folder(self.output_folder)
 
@@ -676,8 +676,8 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
         #depress open hook
         REVIT_EVENT.set_open_hook_depressed(stage = True)
-        # EA_UTILITY.set_doc_change_hook_depressed(stage = True)
-        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ARCHI_UTILITY.set_doc_change_hook_depressed(stage = True)
+        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
         time_start = time.time()
         #open background doc that neeed to be opeend
@@ -852,8 +852,8 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
 
-        # EA_UTILITY.set_doc_change_hook_depressed(stage = False)
-        # ERROR_HANDLE.print_note("my doc change hook depress status = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ARCHI_UTILITY.set_doc_change_hook_depressed(stage = False)
+        # ERROR_HANDLE.print_note("my doc change hook depress status = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
         if self.is_copy_folder:
 
@@ -877,7 +877,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
         REVIT_EXPORT.print_time("Print {} sheets".format(len(self.files_exported_for_this_issue)), time_end, time_start, use_minutes = True)
         print ("#"*20)
         self.print_ranked_log()
-        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
         ERROR_HANDLE.print_note("###END OF TOOL###")
 
         time_obj = time.localtime()
@@ -1254,7 +1254,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
                                                     preview_filename_naked,
                                                     FOLDER.DUMP_FOLDER,
                                                     is_thumbnail=True)
-        full_path = FOLDER.get_EA_dump_folder_file(real_preview_file_exported)
+        full_path = FOLDER.get_local_dump_folder_file(real_preview_file_exported)
         try:
             self.set_image_source(self.preview_image, full_path)
         except:
@@ -1295,7 +1295,7 @@ class SuperExporter(REVIT_FORMS.EnneadTabModelessForm):
 
 
     def get_record_file_by_doc(self, doc):
-        return "EXPORT_RECORD_" + DataGridDocIdMapObj.get_central_doc_name(doc) + ".sexyDuck"
+        return "EXPORT_RECORD_" + DataGridDocIdMapObj.get_central_doc_name(doc) 
 
  
     

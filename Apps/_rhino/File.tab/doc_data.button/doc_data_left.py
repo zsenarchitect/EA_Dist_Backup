@@ -21,7 +21,7 @@ def doc_data():
     RHINO_PROJ_DATA.inspect_document_data()
 
     
-    data = RHINO_PROJ_DATA.get_enneadtab_data()
+    data = RHINO_PROJ_DATA.get_plugin_data()
     data[RHINO_PROJ_DATA.DocKeys.PreferredGrasshopperFile] = "C:/Users/szhang/Documents/sample.gh"
     data[RHINO_PROJ_DATA.DocKeys.GrasshopperInput] = {
         "option A": {
@@ -43,7 +43,7 @@ def doc_data():
     data["some_bool"] = True
     data["some_int"] = 123
     data["some_float"] = 123.456
-    RHINO_PROJ_DATA.set_enneadtab_data(data)
+    RHINO_PROJ_DATA.set_plugin_data(data)
 
     
 if __name__ == "__main__":

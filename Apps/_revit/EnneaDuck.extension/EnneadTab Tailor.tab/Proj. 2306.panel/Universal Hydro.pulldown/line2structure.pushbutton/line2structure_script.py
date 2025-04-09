@@ -118,7 +118,7 @@ if __name__ == "__main__":
     solution = Solution()
     T = DB.TransactionGroup(doc, __title__)
     T.Start()
-    file = EnneadTab.FOLDER.get_EA_dump_folder_file("LINE2STRUCTURE_DATA.json")
+    file = EnneadTab.FOLDER.get_local_dump_folder_file("LINE2STRUCTURE_DATA.json")
     data = EnneadTab.DATA_FILE.read_json_as_dict(file)
     index = 1
     for brep_name, brep_data in data.items():

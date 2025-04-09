@@ -43,7 +43,7 @@ def make_3D_views_for_warning_cleaning():
 
     except:
 
-        EA_UTILITY.print_note( traceback.format_exc())
+        ARCHI_UTILITY.print_note( traceback.format_exc())
 
     t.Commit()
 

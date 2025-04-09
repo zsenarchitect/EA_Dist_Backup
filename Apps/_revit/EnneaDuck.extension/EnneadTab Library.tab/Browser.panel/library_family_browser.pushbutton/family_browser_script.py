@@ -288,12 +288,7 @@ class family_browser_ModelessForm(WPFWindow):
         return preview_images
 
    
-
-
-
-
-
-    #@EnneadTab.TIME.timer
+    
     def set_search_results(self, *collections):
         """Set search results for returning."""
         self._result_index = 0
@@ -309,13 +304,8 @@ class family_browser_ModelessForm(WPFWindow):
                 temp.append(x)
         self._search_results = temp
         
-        # print temp
 
-
-
-
-
-    #@EnneadTab.TIME.timer
+    
     def find_direct_match(self, input_text):
         """Find direct text matches in search term."""
         results = []
@@ -326,7 +316,7 @@ class family_browser_ModelessForm(WPFWindow):
 
         return results
 
-    #@EnneadTab.TIME.timer
+    
     def find_word_match(self, input_text):
         """Find direct word matches in search term."""
         results = []
@@ -338,7 +328,7 @@ class family_browser_ModelessForm(WPFWindow):
 
         return results
 
-    #@EnneadTab.TIME.timer
+    
     def NOT_IN_USE_find_in_doc_match(self, input_text):
         """Find direct word matches in search term."""
         def has_keyword_in_doc(command_name, keywords):

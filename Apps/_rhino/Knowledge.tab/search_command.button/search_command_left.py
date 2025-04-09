@@ -26,7 +26,7 @@ graft = itertools.combinations
 
 import os
 import json
-from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION, ENVIRONMENT, DOCUMENTATION
+from EnneadTab import LOG, ERROR_HANDLE, NOTIFICATION, ENVIRONMENT
 from EnneadTab.RHINO import RHINO_ALIAS, RHINO_UI
 
 import logging
@@ -120,7 +120,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     def InitializeScriptList(self):
         #logger.info("Initializing script list and get base knowledge")
 
-        with io.open(DOCUMENTATION.KNOWLEDGE_RHINO_FILE, "r", encoding = "utf-8") as f:
+        with io.open(ENVIRONMENT.KNOWLEDGE_RHINO_FILE, "r", encoding = "utf-8") as f:
             knowledge_pool = json.load(f)
 
 
@@ -455,7 +455,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
             else:
                 final_commands.append("EA_{}".format(command))
       
-        rs.Command(final_commands[0])
+        rs.Command(final_commands[0], False)
         
     # event handler handling clicking on the 'run' button
     def btn_Run_Clicked(self, sender, e):

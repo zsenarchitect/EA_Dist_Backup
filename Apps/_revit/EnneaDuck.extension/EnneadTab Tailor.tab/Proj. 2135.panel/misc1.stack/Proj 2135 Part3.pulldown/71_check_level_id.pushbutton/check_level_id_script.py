@@ -21,12 +21,12 @@ def check_level_id():
 
     levels.sort(key = lambda x: x.Elevation, reverse = True)
     for level in levels:
-        print("{}:{}:{}".format(EA_UTILITY.internal_to_mm(level.Elevation), level.Name, level.Id))
+        print("{}:{}:{}".format(ARCHI_UTILITY.internal_to_mm(level.Elevation), level.Name, level.Id))
 
     print("\n\n\n")
     levels.sort(key = lambda x: x.Id, reverse = True)
     for level in levels:
-        print("{}:{}:{}".format(EA_UTILITY.internal_to_mm(level.Elevation), level.Name, level.Id))
+        print("{}:{}:{}".format(ARCHI_UTILITY.internal_to_mm(level.Elevation), level.Name, level.Id))
 
 ################## main code below #####################
 output = script.get_output()

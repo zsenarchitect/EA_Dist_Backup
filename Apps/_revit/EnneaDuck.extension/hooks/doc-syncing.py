@@ -39,7 +39,7 @@ def check_sync_queue(doc):
     return False is sync have been stopped
     """
 
-    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
+    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}". format(doc.Title))
     
     try:
         with io.open(log_file, "r", encoding = "utf-8"):
@@ -107,13 +107,13 @@ def check_sync_queue(doc):
                             sub_text = current_queue,
                             options = opts)
     if res == opts[1][0]:
-        # ENNEAD_LOG.sync_queue_cut_in_line(quene_length - 1)
+        # LEGACY_LOG.sync_queue_cut_in_line(quene_length - 1)
         return True
 
     # if after all checking you are this step, that means you want to cancel now
     EXEC_PARAMS.event_args.Cancel()
     # envvars.set_pyrevit_env_var("IS_SYNC_CANCELLED", True)
-    # ENNEAD_LOG.sync_queue_wait_in_line()
+    # LEGACY_LOG.sync_queue_wait_in_line()
 
     
     if CONFIG.get_setting("toggle_bt_is_duck_allowed", False):
@@ -178,7 +178,7 @@ def doc_syncing(doc):
 
     can_sync = check_sync_queue(doc)
     if can_sync:
-        # ENNEAD_LOG.update_account_by_local_warning_diff(doc)
+        # LEGACY_LOG.update_account_by_local_warning_diff(doc)
         pass
 
     if REVIT_EVENT.is_all_sync_closing():

@@ -59,7 +59,7 @@ class CameraImporter:
         new_view.SetOrientation(DB.ViewOrientation3D(rhino_camera_position, rhino_camera_up_direction, rhino_camera_direction))
 
     def import_rhino_camera(self):
-        filepath = FOLDER.get_EA_dump_folder_file("EA_CAMERA_TRANSFER.3dm")
+        filepath = FOLDER.get_local_dump_folder_file("EA_CAMERA_TRANSFER.3dm")
         self.RHINO_NAME = filepath.split("\\")[-1].split(".3dm")[0]
 
         file3dm = Rhino.FileIO.File3dm()

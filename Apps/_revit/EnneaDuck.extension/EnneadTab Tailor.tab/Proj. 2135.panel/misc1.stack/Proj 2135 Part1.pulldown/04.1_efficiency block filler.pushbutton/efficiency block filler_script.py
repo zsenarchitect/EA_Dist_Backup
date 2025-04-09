@@ -132,7 +132,7 @@ def get_function_area_by_level(level):
         """
         if level == str(9):
             print(area.LookupParameter("Name").AsString())
-            print(EA_UTILITY.sqft_to_sqm(area.Area))
+            print(ARCHI_UTILITY.sqft_to_sqm(area.Area))
         """
         area_function = area.LookupParameter("Area Layout Function").AsString()
         temp_area = area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble()
@@ -143,7 +143,7 @@ def get_function_area_by_level(level):
             core_area += temp_area
         else:
             other_area += temp_area
-    #EA_UTILITY.sqft_to_sqm(x)
+    #ARCHI_UTILITY.sqft_to_sqm(x)
 
     if net_office_area + core_area + other_area == 0:
         print("Level element not found in current file.")
@@ -171,9 +171,9 @@ def set_data_to_data_block(data_block):
     data_block.LookupParameter("placement count").Set(get_placement_count(data_block))
 
     net_office_area, core_area, other_area = get_function_area_by_level(level)
-    print("net_office_area = {}".format(EA_UTILITY.sqft_to_sqm(net_office_area)))
-    print("core_area = {}".format(EA_UTILITY.sqft_to_sqm(core_area)))
-    print("amenity_area = {}".format(EA_UTILITY.sqft_to_sqm(other_area)))
+    print("net_office_area = {}".format(ARCHI_UTILITY.sqft_to_sqm(net_office_area)))
+    print("core_area = {}".format(ARCHI_UTILITY.sqft_to_sqm(core_area)))
+    print("amenity_area = {}".format(ARCHI_UTILITY.sqft_to_sqm(other_area)))
     data_block.LookupParameter("net office area").Set(net_office_area)
     data_block.LookupParameter("core area").Set(core_area)
     data_block.LookupParameter("amenity area").Set(other_area)

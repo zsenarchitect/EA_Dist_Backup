@@ -30,7 +30,7 @@ from pyrevit import script
 from pyrevit.revit import ErrorSwallower
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import DATA_CONVERSION, NOTIFICATION, UI, SOUND, TIME
+from EnneadTab import ENVIRONMENT, DATA_CONVERSION, NOTIFICATION, UI, SOUND, TIME
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FILTER
 from EnneadTab import ERROR_HANDLE, LOG
 from EnneadTab.REVIT import REVIT_SELECTION, REVIT_VIEW, REVIT_FAMILY, REVIT_FORMS,REVIT_SYNC
@@ -39,16 +39,16 @@ from Autodesk.Revit import DB # pyright: ignore
 # from Autodesk.Revit import UI # pyright: ignore
 
 # View and level naming constants
-FAMILY_DUMP_2D_DUMP_VIEW = "EnneadTab_2D_Item_Dump"
-FAMILY_DUMP_3D_DUMP_VIEW = "EnneadTab_3D_Family_Dump"
-FAMILY_DUMP_LEVEL = "EnneadTab_Family_List_Internal_Level"
-INTERNAL_COMMENT = "EnneadTab_Family_List_Internal_Comment"
-FAMILY_DUMP_WALL_COMMENT = "EnneadTab_Family_List_Internal_Wall"
-FAMILY_DUMP_CEILING_COMMENT = "EnneadTab_Family_List_Internal_Ceiling"
-FAMILY_DUMP_FLOOR_COMMENT = "EnneadTab_Family_List_Internal_Floor"
-FAMILY_DUMP_ROOF_COMMENT = "EnneadTab_Family_List_Internal_Roof"
-FAMILY_LIST_CATEGORY_VIEW_KEY_NAME = "_EnneadTab_Family_List_Category"
-FAMILY_LIST_FILTER_KEY_NAME = "EnneadTab_Family_List_Filter_"
+FAMILY_DUMP_2D_DUMP_VIEW = "{}_2D_Item_Dump".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_3D_DUMP_VIEW = "{}_3D_Family_Dump".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_LEVEL = "{}_Family_List_Internal_Level".format(ENVIRONMENT.PLUGIN_NAME)
+INTERNAL_COMMENT = "{}_Family_List_Internal_Comment".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_WALL_COMMENT = "{}_Family_List_Internal_Wall".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_CEILING_COMMENT = "{}_Family_List_Internal_Ceiling".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_FLOOR_COMMENT = "{}_Family_List_Internal_Floor".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_DUMP_ROOF_COMMENT = "{}_Family_List_Internal_Roof".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_LIST_CATEGORY_VIEW_KEY_NAME = "_{}_Family_List_Category".format(ENVIRONMENT.PLUGIN_NAME)
+FAMILY_LIST_FILTER_KEY_NAME = "{}_Family_List_Filter_".format(ENVIRONMENT.PLUGIN_NAME)          
 
 class Deployer:
     """Handles deployment of families into views with optional tagging.
@@ -467,7 +467,7 @@ class Deployer:
         # Create unique filter name based on category
         filter_name = self.get_filter_name_by_category_name(self.current_category_header)
 
-        self.item_collection = [x for x in self.item_collection if x.IsValidObject]
+        self.item_collection = [x for x in self.item_collection if x is not None and x.IsValidObject]
         
         # get filter with this nmae
         try:
@@ -1159,7 +1159,7 @@ class List2DFamily(ListFamily):
         
     def get_tag_family(self):
         """Gets detail item tag family"""
-        family_name = "EA_DetailItem_Tag"
+        family_name = "{}_DetailItem_Tag".format(ENVIRONMENT.PLUGIN_ABBR)
         tag_family_path = "{}\\{}.rfa".format(os.path.dirname(__file__), family_name)
         tag_family = REVIT_FAMILY.get_family_by_name(family_name, load_path_if_not_exist=tag_family_path)
         if not tag_family:
@@ -1198,7 +1198,7 @@ class List3DFamily(ListFamily):
         
     def get_tag_family(self):
         """Gets 3D family tag family"""
-        family_name = "EA_Family_Tag"
+        family_name = "{}_Family_Tag".format(ENVIRONMENT.PLUGIN_ABBR)
         return REVIT_FAMILY.get_family_by_name(family_name, load_path_if_not_exist=None)
         
     def _get_view_type_from_user(self):

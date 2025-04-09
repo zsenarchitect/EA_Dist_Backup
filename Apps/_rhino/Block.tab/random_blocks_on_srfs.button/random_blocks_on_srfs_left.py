@@ -444,7 +444,7 @@ class ScatterBlockDialog(Eto.Forms.Form):
         return self.mode_list.SelectedValue == self.mode_list.DataStore[-1]
 
     def delete_preview_blocks(self):
-        obj_name = "EA_BLOCK_SCATTER_PREVIEW"
+        obj_name = "{}_BLOCK_SCATTER_PREVIEW".format(ENVIRONMENT.PLUGIN_ABBR)
         old_blocks = rs.ObjectsByName(obj_name)
         rs.DeleteObjects(old_blocks)
         
@@ -493,13 +493,13 @@ class ScatterBlockDialog(Eto.Forms.Form):
 
         # if preview_mode, need to remove preview crvs no matter what
         if is_preview:
-            self.obj_name = "EA_BLOCK_SCATTER_PREVIEW"
+            self.obj_name = "{}_BLOCK_SCATTER_PREVIEW".format(ENVIRONMENT.PLUGIN_ABBR)
             old_blocks = rs.ObjectsByName(self.obj_name)
             rs.DeleteObjects(old_blocks)
 
         else: 
             # is not preview, then can exist
-            self.obj_name = "EA_SCATTER_BLOCK"
+            self.obj_name = "{}_SCATTER_BLOCK".format(ENVIRONMENT.PLUGIN_ABBR)
             for collection in self.total_collection:
                 map(lambda x: rs.ObjectName(x, self.obj_name), collection)
             return
@@ -715,7 +715,7 @@ class ScatterBlockDialog(Eto.Forms.Form):
         self.clear_out()
 
     def clear_out(self):
-        obj_name = "EA_BLOCK_SCATTER_PREVIEW"
+        obj_name = "{}_BLOCK_SCATTER_PREVIEW".format(ENVIRONMENT.PLUGIN_ABBR)
         old_crvs = rs.ObjectsByName(obj_name)
         rs.DeleteObjects(old_crvs)
 

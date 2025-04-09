@@ -131,7 +131,7 @@ def fix_tag_in_view(view):
     tolerance = 50 #in mm unit
     # print view.Scale
     tolerance *= view.Scale
-    tolerance = EA_UTILITY.mm_to_internal(tolerance)
+    tolerance = ARCHI_UTILITY.mm_to_internal(tolerance)
 
     process_category(use_room = True)
     # print "fine"

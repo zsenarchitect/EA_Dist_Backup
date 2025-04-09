@@ -33,6 +33,7 @@ import sys
 
 
 PLUGIN_NAME = "EnneadTab"
+PLUGIN_ABBR = "EA"
 PLUGIN_EXTENSION = ".sexyDuck"
 
 IS_PY3 = sys.version.startswith("3")
@@ -45,25 +46,75 @@ ROOT = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 )
 
+USER_PROFILE_FOLDER = os.environ["USERPROFILE"]
+USER_DOCUMENT_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Documents")
+USER_DOWNLOAD_FOLDER = os.path.join(USER_PROFILE_FOLDER, "downloads")
 
+USER_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Desktop")
+ONE_DRIVE_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Desktop")
+ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents")
+if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
+    ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
+USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
+ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "{}-Ecosystem".format(PLUGIN_NAME))
+ECO_SYS_FOLDER_LEGACY = os.path.join(USER_DOCUMENT_FOLDER, "{} Ecosystem".format(PLUGIN_NAME))
+####################################
+# TO_DO: make commit change after May 1st
+ECO_SYS_FOLDER = ECO_SYS_FOLDER_LEGACY
+####################################
+DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
+def _secure_folder(folder):
+    if not os.path.exists(folder):
+        try:
+            os.makedirs(folder)
+        except Exception as e:
+            print("Cannot secure folder [{}] becasue {}".format(folder, e))
+
+map(_secure_folder, [ECO_SYS_FOLDER, DUMP_FOLDER])
 
 APP_FOLDER = os.path.join(ROOT, "Apps")
 
-# Simplified folder detection for Revit, Rhino, and InDesign applications
-# Using consistent naming convention with underscore prefix for all applications
+
+LIB_FOLDER = os.path.join(APP_FOLDER, "lib")
+CORE_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME)
+IMAGE_FOLDER = os.path.join(CORE_FOLDER, "images")
+AUDIO_FOLDER = os.path.join(CORE_FOLDER, "audios")
+DOCUMENT_FOLDER = os.path.join(CORE_FOLDER, "documents")
+
+
+EXE_PRODUCT_FOLDER = os.path.join(LIB_FOLDER, "ExeProducts")
+WINDOW_TEMP_FOLDER = os.path.join("C:\\", "temp", "{}_Dump".format(PLUGIN_NAME))
+_secure_folder(WINDOW_TEMP_FOLDER)
+
+DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency")
+if IS_PY2:
+    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py2")
+else:
+    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py3")
+PY3_DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency", "py3")
+
+
+
 
 REVIT_FOLDER_KEYNAME = "_revit"
 REVIT_FOLDER = os.path.join(APP_FOLDER, REVIT_FOLDER_KEYNAME)
 
 RHINO_FOLDER_KEYNAME = "_rhino"
 RHINO_FOLDER = os.path.join(APP_FOLDER, RHINO_FOLDER_KEYNAME)
+DIST_RUI_CLASSIC = os.path.join(RHINO_FOLDER, "{}_For_Rhino_Classic.rui".format(PLUGIN_NAME))
+DIST_RUI_MODERN = os.path.join(RHINO_FOLDER, "{}_For_Rhino_Modern.rui".format(PLUGIN_NAME))
+ACTIVE_MODERN_RUI = os.path.join(DUMP_FOLDER, "{}_For_Rhino_Modern.rui".format(PLUGIN_NAME))
+INSTALLATION_RUI = os.path.join(INSTALLATION_FOLDER, "{}_For_Rhino_Installer.rui".format(PLUGIN_NAME))
+RHINO_INSTALLER_SETUP_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME, "RHINO")
+
 
 INDESIGN_FOLDER_KEYNAME = "_indesign"
 INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
 
-
+KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database{}".format(RHINO_FOLDER, PLUGIN_EXTENSION)
+KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database{}".format(REVIT_FOLDER, PLUGIN_EXTENSION)
 
 PRIMARY_EXTENSION_NAME = "EnneaDuck"
 REVIT_PRIMARY_EXTENSION = os.path.join(
@@ -84,49 +135,8 @@ if not os.path.exists(DB_FOLDER):
 SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 
-LIB_FOLDER = os.path.join(APP_FOLDER, "lib")
-CORE_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME)
-IMAGE_FOLDER = os.path.join(CORE_FOLDER, "images")
-AUDIO_FOLDER = os.path.join(CORE_FOLDER, "audios")
-DOCUMENT_FOLDER = os.path.join(CORE_FOLDER, "documents")
 
 
-EXE_PRODUCT_FOLDER = os.path.join(LIB_FOLDER, "ExeProducts")
-WINDOW_TEMP_FOLDER = os.path.join("C:\\", "temp", "{} Dump".format(PLUGIN_NAME))
-if not os.path.exists(WINDOW_TEMP_FOLDER):
-    try:
-        os.makedirs(WINDOW_TEMP_FOLDER)
-    except Exception as e:
-        print("Cannot secure folder [{}] becasue {}".format(WINDOW_TEMP_FOLDER, e))
-
-DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency")
-if IS_PY2:
-    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py2")
-else:
-    DEPENDENCY_FOLDER = os.path.join(DEPENDENCY_FOLDER, "py3")
-PY3_DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency", "py3")
-
-
-USER_PROFILE_FOLDER = os.environ["USERPROFILE"]
-USER_DOCUMENT_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Documents")
-USER_DOWNLOAD_FOLDER = os.path.join(USER_PROFILE_FOLDER, "downloads")
-
-USER_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Desktop")
-ONE_DRIVE_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Desktop")
-ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents")
-if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
-    ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
-USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
-ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "{} Ecosystem".format(PLUGIN_NAME))
-DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
-INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
-
-for _folder in [ECO_SYS_FOLDER, DUMP_FOLDER]:
-    if not os.path.exists(_folder):
-        try:
-            os.makedirs(_folder)
-        except Exception as e:
-            print("Cannot secure folder [{}] becasue {}".format(_folder, e))
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:

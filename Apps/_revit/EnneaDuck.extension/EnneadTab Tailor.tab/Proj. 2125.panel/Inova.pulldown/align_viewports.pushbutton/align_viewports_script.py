@@ -29,7 +29,7 @@ def align_viewports():
     selection = filter(lambda x: type(x) == DB.Viewport, selection)
 
     opt = ["Align left", "Align right"]
-    res = EA_UTILITY.dialogue(options = opt, main_text = "Pick side..")
+    res = ARCHI_UTILITY.dialogue(options = opt, main_text = "Pick side..")
     if not res:
         return
     if res == opt[0]:
@@ -64,7 +64,7 @@ def align_viewports():
         elements_2D.extend(elements_levels)
         #print elements_2D
         elements_2D_ids = [x.Id for x in elements_2D]
-        view.HideElementsTemporary (EA_UTILITY.list_to_system_list(elements_2D_ids))
+        view.HideElementsTemporary (ARCHI_UTILITY.list_to_system_list(elements_2D_ids))
 
         #doc.Regenerate ()
 

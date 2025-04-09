@@ -83,7 +83,7 @@ class EnneadTabModelessForm(WPFWindow):
         self.Show()
 
     def get_xaml(self, xaml_file_name):
-        data = DATA_FILE.get_data("xaml_path.sexyDuck")
+        data = DATA_FILE.get_data("xaml_path")
 
         path = data.get(xaml_file_name)
         if path:
@@ -95,7 +95,7 @@ class EnneadTabModelessForm(WPFWindow):
         for folder, _, files in os.walk(ENVIRONMENT.REVIT_FOLDER):
             if xaml_file_name in files:
                 data[xaml_file_name] = os.path.join(folder, xaml_file_name)
-                DATA_FILE.set_data(data, "xaml_path.sexyDuck")
+                DATA_FILE.set_data(data, "xaml_path")
                 
                 return data[xaml_file_name]
                 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = """Batch rename Revit families by replacing '_INT' and '_EXT' suffixes with '_EA'.
+__doc__ = """Batch rename Revit families by replacing '_INT' and '_EXT' suffixes with company suffix.
 
 Key Features:
 - Processes all families in the current document
@@ -14,7 +14,7 @@ __title__ = "Rename All Fam"
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ENVIRONMENT, ERROR_HANDLE, LOG
 from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -25,7 +25,7 @@ DOC = REVIT_APPLICATION.get_doc()
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def rename_all_fam(doc):
-    """Rename all families in the document replacing INT/EXT with EA suffix.
+    """Rename all families in the document replacing INT/EXT with company suffix.
     
     Args:
         doc: Current Revit document
@@ -43,9 +43,9 @@ def rename_all_fam(doc):
         new_name = original_name
         
         if "_INT" in original_name:
-            new_name = original_name.replace("_INT", "_EA")
+            new_name = original_name.replace("_INT", "_" + ENVIRONMENT.PLUGIN_ABBR)
         elif "_EXT" in original_name:
-            new_name = original_name.replace("_EXT", "_EA")
+            new_name = original_name.replace("_EXT", "_" + ENVIRONMENT.PLUGIN_ABBR)
             
         if new_name != original_name:
             count = 0

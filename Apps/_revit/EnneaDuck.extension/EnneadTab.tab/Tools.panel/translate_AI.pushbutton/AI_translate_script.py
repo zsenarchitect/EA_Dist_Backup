@@ -371,7 +371,7 @@ class AiTranslator(WPFWindow):
             NOTIFICATION.messenger(main_text = "No recent translation found.")
             return
         
-        filepath = FOLDER.get_EA_dump_folder_file("EA Recent Translation.txt")
+        filepath = FOLDER.get_local_dump_folder_file("Recent Translation.txt")
         DATA_FILE.set_list(self.recent_translation, filepath, end_with_new_line = False)
         import os
         os.startfile(filepath)
@@ -490,7 +490,7 @@ class AiTranslator(WPFWindow):
         human_name = "You: "
         #print human_name
 
-        data_file_name = "AiTranslate.sexyDuck"
+        data_file_name = "AiTranslate"
         #print file_name
 
  

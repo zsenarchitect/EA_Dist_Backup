@@ -48,7 +48,7 @@ def process_floor(floor):
     finish_thickness, structural_thickness = get_info_from_floortype(floor.Name, checked_type_dict)
     #print finish_thickness, structural_thickness
 
-    copied_floor = DB.ElementTransformUtils.CopyElement(doc, floor.Id, DB.XYZ(0,0,-EA_UTILITY.mm_to_internal(finish_thickness)))[0]
+    copied_floor = DB.ElementTransformUtils.CopyElement(doc, floor.Id, DB.XYZ(0,0,-ARCHI_UTILITY.mm_to_internal(finish_thickness)))[0]
     copied_floor = doc.GetElement(copied_floor)
 
     finish_type_name = "Finish Floor_{}mm".format(finish_thickness)
@@ -61,7 +61,7 @@ def process_floor(floor):
     floor.FloorType = get_floor_type_by_name(finish_type_name)
     copied_floor.FloorType = get_floor_type_by_name("Structural Slab_{}mm".format(structural_thickness))
     #current_offset = copied_floor.LookupParameter("Height Offset From Level").AsDouble()
-    #copied_floor.LookupParameter("Height Offset From Level").Set(current_offset - EA_UTILITY.mm_to_internal(structural_thickness))
+    #copied_floor.LookupParameter("Height Offset From Level").Set(current_offset - ARCHI_UTILITY.mm_to_internal(structural_thickness))
 
 
 

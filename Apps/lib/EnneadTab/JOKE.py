@@ -157,7 +157,7 @@ def april_fool():
 
     y, m, d = TIME.get_date_as_tuple(return_string=False)
 
-    marker_file = FOLDER.get_EA_dump_folder_file("{}_april_fooled3.stupid".format(y))
+    marker_file = FOLDER.get_local_dump_folder_file("{}_april_fooled3.stupid".format(y))
     
     if m == 4 and d in [1] and random.random() < 0.02 :
 

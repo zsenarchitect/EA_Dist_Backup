@@ -30,7 +30,7 @@ from contextlib import contextmanager
 
 import COPY
 import FOLDER
-
+import ENVIRONMENT
 
 
 
@@ -53,11 +53,11 @@ def _read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False)
     """
     if not os.path.exists(filepath):
         return dict()
-    local_path = FOLDER.get_EA_dump_folder_file("temp_data")
+    local_path = FOLDER.get_local_dump_folder_file("temp_data")
     try:
         COPY.copyfile(filepath, local_path)
     except IOError:
-        local_path = FOLDER.get_EA_dump_folder_file("temp_data_retry")
+        local_path = FOLDER.get_local_dump_folder_file("temp_data_retry")
         COPY.copyfile(filepath, local_path)
 
     content = _read_json_as_dict(local_path, use_encode, create_if_not_exist)
@@ -129,7 +129,7 @@ def _read_json_as_dict_in_dump_folder(
     Returns:
         dict: File contents as dictionary
     """
-    filepath = FOLDER.get_EA_dump_folder_file(file_name)
+    filepath = FOLDER.get_local_dump_folder_file(file_name)
     return _read_json_as_dict(filepath, use_encode, create_if_not_exist)
 
 
@@ -240,7 +240,7 @@ def _save_dict_to_json_in_dump_folder(data_dict, file_name, use_encode=True):
     Returns:
         bool: True if save successful, False otherwise
     """
-    filepath = FOLDER.get_EA_dump_folder_file(file_name)
+    filepath = FOLDER.get_local_dump_folder_file(file_name)
     return _save_dict_to_json(data_dict, filepath, use_encode=use_encode)
 
 
@@ -277,7 +277,7 @@ def get_list(filepath):
     if not os.path.exists(filepath):
         return []
     extention = FOLDER.get_file_extension_from_path(filepath)
-    local_path = FOLDER.get_EA_dump_folder_file("temp{}".format(extention))
+    local_path = FOLDER.get_local_dump_folder_file("temp{}".format(extention))
     COPY.copyfile(filepath, local_path)
 
     with io.open(local_path,  "r", encoding="utf-8") as f:
@@ -331,7 +331,7 @@ def get_data(file_name_or_full_path, is_local=True):
     Creates file with empty dictionary if it doesn't exist.
 
     Args:
-        file_name_or_full_path (str): Filename or full path
+        file_name_or_full_path (str): Filename or full path, extension is optional, if missing, will add plugin extension instead.
         is_local (bool, optional): Use local dump folder if True,
             shared if False. Defaults to True.
 
@@ -367,7 +367,7 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
         bool: True if save successful
     """
     if os.path.exists(file_name_or_full_path):
-        if "ENNEADTAB_DEVELOPERS.secret" not in file_name_or_full_path:
+        if "{}_DEVELOPERS.secret".format(ENVIRONMENT.PLUGIN_NAME.upper()) not in file_name_or_full_path:
             print("Using full path feature is allowed but not prefered.", file_name_or_full_path)
         return _save_dict_to_json(data_dict, file_name_or_full_path, use_encode=True)
     
@@ -428,6 +428,7 @@ class DataType:
     FLOAT = "float"
     STR = "str"
     BOOL = "bool"
+    DICT = "dict"
     def __str__(self):
         return self.value
     def __repr__(self):
@@ -439,7 +440,7 @@ class DataType:
         return self.value == other.value
 
 
-STICKY_FILE = "sticky.SexyDuck"
+STICKY_FILE = "sticky"
 
 
 def get_sticky(sticky_name, default_value_if_no_sticky=None, 
@@ -454,7 +455,7 @@ def get_sticky(sticky_name, default_value_if_no_sticky=None,
         default_value_if_no_sticky (any, optional): Default value if not found.
             Defaults to None.
         data_type_if_no_sticky (str, optional): Type of data to store.
-            "int" for integer, "float" for float, "str" for string, "bool" for boolean.
+            "int" for integer, "float" for float, "str" for string, "bool" for boolean, "dict" for dictionary.
             Defaults to None.
 
     Returns:
@@ -471,15 +472,19 @@ def get_sticky(sticky_name, default_value_if_no_sticky=None,
     if tiny_wait:
         time.sleep(0.05)
     if isinstance(value, dict):
-        data_type = value["type"]
+        data_type = value.get("type", None)
         if data_type == DataType.INT:
-            return int(value["value"])
+            return int(value.get("value", default_value_if_no_sticky))
         elif data_type == DataType.FLOAT:
             return float(value["value"])
         elif data_type == DataType.STR:
             return str(value["value"])
         elif data_type == DataType.BOOL:
             return bool(value["value"])
+        elif data_type == DataType.DICT:
+            return value["value"]
+        else:
+            return value
     else:
         return value
 
@@ -513,15 +518,14 @@ def set_sticky(sticky_name, value_to_write,
             data[sticky_name] = {"type": DataType.STR, "value": str(value_to_write)}
         elif data_type == DataType.BOOL:
             data[sticky_name] = {"type": DataType.BOOL, "value": bool(value_to_write)}
+        elif data_type == DataType.DICT:
+            data[sticky_name] = {"type": DataType.DICT, "value": value_to_write}
 
     if tiny_wait:
         time.sleep(0.05)
 
 
 if __name__ == "__main__":
-    import time
-    with update_data("last_sync_record_data.sexyDuck") as data:
-        data["test1"] = time.time()
-        # print (data)
 
-    print (get_data("last_sync_record_data.sexyDuck"))
+
+    print (get_data("excel_handler_input"))

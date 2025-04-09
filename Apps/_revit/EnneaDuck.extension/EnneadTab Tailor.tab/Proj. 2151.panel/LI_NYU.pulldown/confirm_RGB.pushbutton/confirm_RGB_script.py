@@ -6,7 +6,7 @@
 __doc__ = "Even when you type in the RGB value in excel, that might get changed by someone in the future and cannot be trusted. I suggest to NOT include RGB value in the excel so there is only one source of truth, but if the team REALLY nned to have RGB value in excel written out, run this to confirm the color of cell is matching the number in excel"
 __title__ = "DEPRECIATED: Confirm RGB"
 
-# from pyrevit import forms #
+
 from pyrevit import script #
 
 import proDUCKtion # pyright: ignore 
@@ -15,8 +15,7 @@ proDUCKtion.validify()
 from EnneadTab import ERROR_HANDLE, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION
 from Autodesk.Revit import DB # pyright: ignore 
-# from Autodesk.Revit import UI # pyright: ignore
-# uidoc = EnneadTab.REVIT.REVIT_APPLICATION.get_uidoc()
+
 doc = REVIT_APPLICATION.get_doc()
 
 from EnneadTab import EXCEL

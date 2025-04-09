@@ -8,7 +8,7 @@ from Autodesk.Revit import UI # pyright: ignore
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_FORMS, REVIT_SYNC
-from EnneadTab import OUTPUT, ERROR_HANDLE, NOTIFICATION, LOG
+from EnneadTab import ENVIRONMENT, OUTPUT, ERROR_HANDLE, NOTIFICATION, LOG
 
 __doc__ = """Find family file path. And remap the path to a folder you picked. In this folder, families will be organised based on their category.
 This will also load the repathed families back to central model.
@@ -137,15 +137,8 @@ class FamilyRePath:
         if current_path != new_file_path:
             try:
                 family_manager = famDoc.FamilyManager
-                """
-                if "EA_Repath" in para_names:
-                    family_manager.DeleteParameter()
-                    para_name = "EA_Repath2"
-                elif "EA_Repath2" in para_names:
-                    family_manager.DeleteParameter()
-                    para_name = "EA_Repath"
-                """
-                para_name = "EA_Repath"
+
+                para_name = "{}_Repath".format(ENVIRONMENT.PLUGIN_ABBR)
                 try:
                     para_group = DB.BuiltInParameterGroup.PG_DATA
                     para_type = DB.ParameterType.Text

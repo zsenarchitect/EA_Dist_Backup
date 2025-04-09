@@ -12,7 +12,7 @@ Key features:
 - Supports both UV projection (flat-modeled) and standing geometry
 - Maintains Rhino block IDs for tracking
 
-Input: .sexyDuck files containing block data from Rhino
+Input: .internal data files containing block data from Rhino
 Output: Revit family instances with matching geometry and parameters
 """
 
@@ -48,7 +48,7 @@ from Autodesk.Revit import DB # pyright: ignore
 KEY_PREFIX = "BLOCKS2FAMILY"
 
 def get_block_name_from_data_file(data_file):
-    return data_file.replace(".sexyDuck", "").replace(KEY_PREFIX + "_", "")
+    return data_file.replace(ENVIRONMENT.PLUGIN_EXTENSION, "").replace(KEY_PREFIX + "_", "")
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -60,7 +60,7 @@ def block2family():
             except:
                 pass
 
-    data_files = [file for file in os.listdir(FOLDER.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(".sexyDuck")]
+    data_files = [file for file in os.listdir(FOLDER.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(ENVIRONMENT.PLUGIN_EXTENSION)]
 
     face_model_selection = forms.SelectFromList.show([get_block_name_from_data_file(x) for x in sorted(data_files)],
                                                      multiselect = True,
@@ -123,7 +123,7 @@ def load_family(file):
         family_doc = ApplicationServices.Application.NewFamilyDocument (app, template)
 
     block_name = get_block_name_from_data_file(file)
-    geo_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)
+    geo_folder = FOLDER.get_local_dump_folder_file(KEY_PREFIX + "_" + block_name)
     t = DB.Transaction(family_doc, __title__)
     t.Start()
     for file in os.listdir(geo_folder):
@@ -147,7 +147,7 @@ def load_family(file):
     # load to project
     option = DB.SaveAsOptions()
     option.OverwriteExistingFile = True
-    family_container_folder = ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER + "\\EnneadTab Temp Family Folder"
+    family_container_folder = ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER + "\\{} Temp Family Folder".format(ENVIRONMENT.PLUGIN_NAME)
     if not os.path.exists(family_container_folder):
         os.mkdir(family_container_folder)
     family_doc.SaveAs(family_container_folder + "\\" + block_name + ".rfa",

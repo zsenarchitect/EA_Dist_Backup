@@ -272,7 +272,7 @@ class Output:
 
     _instance = None
     _out = [] # the container for everything that iEnneadTabng
-    _report_path = FOLDER.get_EA_dump_folder_file("EnneadTab Output.html")
+    _report_path = FOLDER.get_local_dump_folder_file("EnneadTab Output.html")
     _graphic_settings = {
             'background_color': 'rgb(50, 50, 50)',
             'font_family': 'Helvetica, Arial, sans-serif',
@@ -665,7 +665,7 @@ def display_output_on_browser():
         return
     try:
         from pyrevit import script
-        dest_file = FOLDER.get_EA_dump_folder_file("EnneadTab Output.html")
+        dest_file = FOLDER.get_local_dump_folder_file("EnneadTab Output.html")
         output = script.get_output()
         output.save_contents(dest_file)
         output.close()

@@ -203,7 +203,7 @@ def process_within_scopebox(scopebox):
                 print(ID_para)
                 print(element.LookupParameter(ID_para).AsString())
                 """
-                if EA_UTILITY.is_owned(element):
+                if ARCHI_UTILITY.is_owned(element):
                     print("skipping {} due to ownership.")
                     continue
                 try:

@@ -157,7 +157,7 @@ def export_using_old_method(color_scheme, is_ignore_non_used):
         worksheet.write(i,5,entry.Color.Blue)
         
         
-    DATA_FILE.set_data(alt_dict, "color_scheme_dict.sexyDuck")
+    DATA_FILE.set_data(alt_dict, "color_scheme_dict")
 
     
     

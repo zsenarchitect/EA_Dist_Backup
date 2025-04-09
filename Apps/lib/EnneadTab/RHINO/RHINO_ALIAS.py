@@ -3,7 +3,7 @@ import os
 
 import ENVIRONMENT
 import DATA_FILE
-import DOCUMENTATION
+
 
 import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore
@@ -23,7 +23,7 @@ def register_alias_set():
 
     exisitng_alias = rs.AliasNames()
     
-    data = DATA_FILE.get_data(DOCUMENTATION.KNOWLEDGE_RHINO_FILE, is_local=True)
+    data = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_RHINO_FILE, is_local=True)
 
     for root, dirs, files in os.walk(ENVIRONMENT.RHINO_FOLDER):
         for file in files:
@@ -49,7 +49,7 @@ def register_alias_set():
                         continue
 
                     if rs.IsAlias(alias) and ENVIRONMENT.RHINO_FOLDER_KEYNAME not in exisitng_alias:
-                        #Skip setting alias for {} due to overlapping names, this is usually becasue user has setup their personal alias that happen to be same name as EA ones
+                        #Skip setting alias for {} due to overlapping names, this is usually becasue user has setup their personal alias that happen to be same name as plugin ones
                         continue
 
 
@@ -58,7 +58,7 @@ def register_alias_set():
                         if alias == alias.upper():
                             rs.AddAlias(alias, script_content)
                         else:
-                            rs.AddAlias("EA_" + alias, script_content)
+                            rs.AddAlias(ENVIRONMENT.PLUGIN_ABBR + "_" + alias, script_content)
 
 
 def register_shortcut(key, command):

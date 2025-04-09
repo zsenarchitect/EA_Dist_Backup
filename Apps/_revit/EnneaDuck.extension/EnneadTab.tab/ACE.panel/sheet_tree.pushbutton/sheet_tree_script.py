@@ -116,7 +116,7 @@ def sheet_tree(doc):
     """
     NOTIFICATION.messenger("Generating sheet tree data...Please hold tight!")
     data = get_sheet_data()
-    DATA_FILE.set_data(data, "sheet_tree_data.sexyDuck")
+    DATA_FILE.set_data(data, "sheet_tree_data")
     # DATA_FILE.pretty_print_dict(data)
     NOTIFICATION.messenger("Sheet tree data generated successfully!")
     EXE.try_open_app("VizSheetTree")

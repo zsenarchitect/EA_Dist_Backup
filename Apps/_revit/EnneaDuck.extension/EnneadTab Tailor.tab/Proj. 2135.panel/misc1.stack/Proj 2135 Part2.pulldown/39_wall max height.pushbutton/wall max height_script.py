@@ -45,7 +45,7 @@ def check_max_height(wall):
         wall.LookupParameter("Element_Max_Height_Result").Set("Bad")
     else:
         wall.LookupParameter("Element_Max_Height_Result").Set("Ok")
-    # print EA_UTILITY.internal_to_mm(predefined_max)
+    # print ARCHI_UTILITY.internal_to_mm(predefined_max)
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
@@ -59,5 +59,5 @@ t = DB.Transaction(doc, "check wall max height")
 t.Start()
 map(check_max_height, walls)
 t.Commit()
-# print EA_UTILITY.dialogue()
+# print ARCHI_UTILITY.dialogue()
 #ideas:

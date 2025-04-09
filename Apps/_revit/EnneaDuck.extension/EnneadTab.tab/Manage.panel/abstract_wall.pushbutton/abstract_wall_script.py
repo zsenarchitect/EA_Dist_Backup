@@ -58,7 +58,7 @@ def abstract_wall(current_only):
 class Solution:
     
     def __init__(self):
-        self.data_file_name = "ABSTRACT_WALL_{}.sexyDuck".format(doc.Title)
+        self.data_file_name = "ABSTRACT_WALL_{}".format(doc.Title)
         self.data = DATA_FILE.get_data(self.data_file_name)
         self.prefix = "EnneadTab Abstract Wall_"
         self.opts = [["Wall-->Diagram", "Generate abstract walls to review and update"],

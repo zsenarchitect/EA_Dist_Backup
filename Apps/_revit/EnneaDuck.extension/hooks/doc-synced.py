@@ -227,7 +227,7 @@ def update_sync_queue(doc):
         return
 
 
-    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}.sexyDuck". format(doc.Title))
+    log_file = FOLDER.get_shared_dump_folder_file("SYNC_QUEUE_{}". format(doc.Title))
   
 
     if not os.path.exists(log_file):
@@ -324,16 +324,16 @@ def doc_synced(doc):
 
 
 
-    ENNEAD_LOG.warn_revit_session_too_long(non_interuptive = False)
+    LEGACY_LOG.warn_revit_session_too_long(non_interuptive = False)
 
 
 
 
 
-    if ENNEAD_LOG.is_money_negative():
-        print ("Your Current balance is {}".format(ENNEAD_LOG.get_current_money()))
+    if LEGACY_LOG.is_money_negative():
+        print ("Your Current balance is {}".format(LEGACY_LOG.get_current_money()))
 
-    ENNEAD_LOG.update_local_warning(doc)
+    LEGACY_LOG.update_local_warning(doc)
 
 
 

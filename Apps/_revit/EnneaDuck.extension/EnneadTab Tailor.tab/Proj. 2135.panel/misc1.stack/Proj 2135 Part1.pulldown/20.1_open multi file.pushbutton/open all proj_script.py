@@ -79,13 +79,13 @@ def open_doc_and_activate(doc_name):
     # open_options = DB.OpenOptions()
     # new_doc = app.OpenDocumentFile(cloud_path,
     #                             open_options)
-    EA_UTILITY.open_and_active_project(cloud_path)
+    ARCHI_UTILITY.open_and_active_project(cloud_path)
 
     #output.print_md( "background open file {}".format(doc_name))
 
 
 def background_action():
-    open_without_workset_res = EA_UTILITY.dialogue(options = ["Yes, no worksets", "No, keep default open status"], main_text = "Open without worksets?")
+    open_without_workset_res = ARCHI_UTILITY.dialogue(options = ["Yes, no worksets", "No, keep default open status"], main_text = "Open without worksets?")
     if "Yes" in open_without_workset_res:
         open_without_workset = True
     else:
@@ -105,7 +105,7 @@ def background_action():
 
 
 
-    EA_UTILITY.set_open_hook_depressed(True)
+    ARCHI_UTILITY.set_open_hook_depressed(True)
 
     with ErrorSwallower() as swallower:
         for doc_name in docs_to_be_opened_by_API:
@@ -115,7 +115,7 @@ def background_action():
         open_doc_and_activate(doc_name)
 
 
-    EA_UTILITY.set_open_hook_depressed(False)
+    ARCHI_UTILITY.set_open_hook_depressed(False)
     #output.close_others(all_open_outputs = True)
     output.print_md( "tool finished")
 ################## main code below #####################
@@ -166,6 +166,6 @@ for doc in docs:
 #close_docs_by_name(close_all = True)
 #script.exit()
 
-use_audit = EA_UTILITY.dialogue(main_text = "open with audit?", options = ["yes", "no audit"])
+use_audit = ARCHI_UTILITY.dialogue(main_text = "open with audit?", options = ["yes", "no audit"])
 
 background_action()

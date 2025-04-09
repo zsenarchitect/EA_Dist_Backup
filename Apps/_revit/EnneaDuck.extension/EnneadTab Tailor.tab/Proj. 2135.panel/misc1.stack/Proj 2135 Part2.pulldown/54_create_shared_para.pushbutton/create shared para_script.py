@@ -50,8 +50,8 @@ def bind_para(doc, definition):
 
 
 def create_shared_para(doc):
-    definition = EA_UTILITY.pick_shared_para_definition(doc)
-    docs = EA_UTILITY.select_top_level_docs()
+    definition = ARCHI_UTILITY.pick_shared_para_definition(doc)
+    docs = ARCHI_UTILITY.select_top_level_docs()
     for doc in docs:
         t = DB.Transaction(doc, "add new shared para")
         t.Start()

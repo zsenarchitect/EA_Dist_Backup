@@ -37,7 +37,7 @@ def main():
     docs = [doc for doc in docs if not doc.IsLinked]
     docs = [doc.Title for doc in docs if not doc.IsFamilyDocument]
 
-    data_file = "schedule_opener_data.sexyDuck"
+    data_file = "schedule_opener_data"
 
     data = DATA_FILE.get_data(data_file)
         

@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "For many cateogries, set or recover the color and surface pattern status so the dwg can have non-solid hatch. Many LDI prefer the dwg this way, while EA pdf would prefer to show full foreground and background surface pattern."
+__doc__ = "For many cateogries, set or recover the color and surface pattern status so the dwg can have non-solid hatch. Many LDI prefer the dwg this way, while office pdf would prefer to show full foreground and background surface pattern."
 __title__ = "44_set/recover no color elevation/sections/plans"
 
 from pyrevit import forms #
@@ -412,22 +412,22 @@ def redefine_selection_set(set_name):
 def add_markup_dims_to_set(selection_set):
     all_dims = DB.FilteredElementCollector(doc).OfClass(DB.Dimension).WhereElementIsNotElementType().ToElements()
     markup_dims = filter(lambda x: x.DimensionType.LookupParameter("Type Name").AsString().lower() in ["markup", "sketch"], all_dims)
-    selection_set.SetElementIds(EA_UTILITY.list_to_system_list([x.Id for x in markup_dims]))
+    selection_set.SetElementIds(ARCHI_UTILITY.list_to_system_list([x.Id for x in markup_dims]))
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
 #ideas:
 
-#EA_UTILITY.dialogue(main_text = "At the moment, i have only setup the behavior map for plan templates. So it only set/recover plan template color.\n\nThis tool will be expanded to add behavior map for section and elevation template next week.")
+#ARCHI_UTILITY.dialogue(main_text = "At the moment, i have only setup the behavior map for plan templates. So it only set/recover plan template color.\n\nThis tool will be expanded to add behavior map for section and elevation template next week.")
 # do i want to set/recover
 options = ["Set No Color Fill", "Recover Color Fill"]
-is_no_color_fill = EA_UTILITY.dialogue(options = options,
+is_no_color_fill = ARCHI_UTILITY.dialogue(options = options,
                                         main_text = "I want to [...] to view templates",
                                         sub_text = "Dean wants to keep glass color instead of true blank. So we can set 'Print_In_Color' checkerbox and print elevations in greyscale from bili printer.")
 
 format_is_pdf = True
 options = ["PDF(for Dean)", "DWG(for LDI)"]
-res = EA_UTILITY.dialogue(options = options,
+res = ARCHI_UTILITY.dialogue(options = options,
                         main_text = "Note:\nFor PDF and DWG export, we will need to run this tool seperately for each run. What Dean wants and what LDI wants cannot be achievd in one version of template.\n\nWhich format are you exporting now?")
 if res == options[1]:
     format_is_pdf = False

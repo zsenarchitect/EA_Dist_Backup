@@ -5,7 +5,7 @@ import os
 import DATA_FILE
 
 
-GLOBAL_SETTING_FILE = "setting_{}.sexyDuck".format(
+GLOBAL_SETTING_FILE = "setting_{}".format(
     os.environ["USERPROFILE"].split("\\")[-1]
 )
 

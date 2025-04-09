@@ -50,7 +50,7 @@ def mark_RFR_detail():
 
     print("-"*50)
     if  VIEW_KEY_NAME not in doc.ActiveView.Name:
-        EA_UTILITY.dialogue(main_text = "Do it in view '{}' only.".format(VIEW_KEY_NAME))
+        ARCHI_UTILITY.dialogue(main_text = "Do it in view '{}' only.".format(VIEW_KEY_NAME))
 
         return
 

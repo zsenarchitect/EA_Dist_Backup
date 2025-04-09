@@ -108,7 +108,7 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
             try:
                 save_option = DB.SaveAsOptions()
                 save_option.OverwriteExistingFile = True
-                temp_path = FOLDER.get_EA_dump_folder_file( family_doc.Title + ".rfa")
+                temp_path = FOLDER.get_local_dump_folder_file( family_doc.Title + ".rfa")
                 family_doc.SaveAs(temp_path, save_option)
                 family_ref = clr.StrongBox[DB.Family](None)
                 success, family_ref = project_doc.LoadFamily.Overloads[str, DB.IFamilyLoadOptions](temp_path, loading_opt, family_ref)

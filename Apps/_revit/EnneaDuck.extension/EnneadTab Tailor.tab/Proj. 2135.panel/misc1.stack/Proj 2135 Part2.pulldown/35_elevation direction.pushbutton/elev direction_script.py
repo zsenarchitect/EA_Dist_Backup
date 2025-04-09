@@ -26,7 +26,7 @@ for grid in grids:
     print(grid.Name)
     angle_to_X = grid.Curve.Direction.AngleTo(DB.XYZ(1,0,0))
     angle_to_Y = grid.Curve.Direction.AngleTo(DB.XYZ(0,1,0))
-    print(EA_UTILITY.radian_to_degree(angle_to_X), EA_UTILITY.radian_to_degree(angle_to_Y))
+    print(ARCHI_UTILITY.radian_to_degree(angle_to_X), ARCHI_UTILITY.radian_to_degree(angle_to_Y))
 print("*"*20)
 
 views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
@@ -46,5 +46,5 @@ for view in elevations:
         print("*************************not orthoganal, {}".format(output.linkify(view.Id, title = "go to view")))
 
     angle_to_X = view.ViewDirection.AngleTo(DB.XYZ(1,0,0))
-    angle = EA_UTILITY.radian_to_degree(angle_to_X)
+    angle = ARCHI_UTILITY.radian_to_degree(angle_to_X)
     print("angle to X axis = {}".format(angle))

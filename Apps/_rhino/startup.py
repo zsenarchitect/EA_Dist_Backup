@@ -17,7 +17,7 @@ import rhinoscriptsyntax as rs
 import Rhino # pyright: ignore
 rs.AddSearchPath(_lib_path)
 
-sys.path.append(ENVIRONMENT.RHINO_FOLDER + "\\Ennead+.menu\\get_latest.button")
+sys.path.append(ENVIRONMENT.RHINO_FOLDER + "\\{}.menu\\get_latest.button".format(ENVIRONMENT.PLUGIN_NAME))
 import get_latest_left # pyright: ignore
 
 
@@ -29,8 +29,8 @@ def main():
     RHINO_ALIAS.register_alias_set()
     add_hook()
 
-    rs.Command("EA_ActivateEnneadTab")
-    RHINO_ALIAS.register_shortcut("F12", "EA_SearchCommand")
+    rs.Command("{}_Activate{}".format(ENVIRONMENT.PLUGIN_ABBR, ENVIRONMENT.PLUGIN_NAME))
+    RHINO_ALIAS.register_shortcut("F12", "{}_SearchCommand".format(ENVIRONMENT.PLUGIN_ABBR))
     
     NOTIFICATION.messenger(main_text = "Startup Script Completed")
 
@@ -46,12 +46,12 @@ def handle_auto_start_command():
         return
 
     # this to help revit selection method.
-    if "EnneadTabRevitSelectionHelper" in rs.DocumentName():
-        rs.Command("EA_LiveSelection")
+    if "{}RevitSelectionHelper".format(ENVIRONMENT.PLUGIN_NAME) in rs.DocumentName():
+        rs.Command("{}_LiveSelection".format(ENVIRONMENT.PLUGIN_ABBR))
 
     # this to help revit selection method.
-    if "EA_DRAFTER" in rs.DocumentName():
-        rs.Command("EA_RevitDrafterImport")
+    if "{}_DRAFTER".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
+        rs.Command("{}_RevitDrafterImport".format(ENVIRONMENT.PLUGIN_ABBR))
 
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)

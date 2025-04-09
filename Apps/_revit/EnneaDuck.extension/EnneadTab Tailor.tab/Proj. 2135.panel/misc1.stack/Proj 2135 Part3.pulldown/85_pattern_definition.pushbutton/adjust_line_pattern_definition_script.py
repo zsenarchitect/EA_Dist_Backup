@@ -30,7 +30,7 @@ def process_line_pattern_element(line_pattern_element):
         return
     for seg in segements:
         print(seg.Type)
-        length = EA_UTILITY.internal_to_mm(seg.Length)
+        length = ARCHI_UTILITY.internal_to_mm(seg.Length)
         print(length)
 
 

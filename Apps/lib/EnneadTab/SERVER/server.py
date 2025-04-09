@@ -1,4 +1,4 @@
-"""Server module for EnneadTab networking functionality.
+"""Server module for networking functionality.
 
 This module provides server-side networking capabilities including:
 - TCP socket server

@@ -295,7 +295,7 @@
                 </Grid>
             </StackPanel>
             
-            <GroupBox Header="EnneadTab Feature" DockPanel.Dock="Bottom" Margin="0,10,0,0" Padding="5">
+            <GroupBox Header="Brand New Feature" DockPanel.Dock="Bottom" Margin="0,10,0,0" Padding="5">
                 <StackPanel>
                     <Button BorderThickness="1"
                             Margin="0,0,0,0"

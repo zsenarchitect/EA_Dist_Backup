@@ -888,8 +888,8 @@ class EA_Printer_UI(WPFWindow):
 
         #depress open hook
         REVIT_EVENT.set_open_hook_depressed(stage = True)
-        # EA_UTILITY.set_doc_change_hook_depressed(stage = True)
-        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ARCHI_UTILITY.set_doc_change_hook_depressed(stage = True)
+        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
         time_start = time.time()
         #open background doc that neeed to be opeend
@@ -1072,8 +1072,8 @@ class EA_Printer_UI(WPFWindow):
 
 
 
-        # EA_UTILITY.set_doc_change_hook_depressed(stage = False)
-        # ERROR_HANDLE.print_note("my doc change hook depress status = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ARCHI_UTILITY.set_doc_change_hook_depressed(stage = False)
+        # ERROR_HANDLE.print_note("my doc change hook depress status = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
         if self.is_copy_folder:
 
@@ -1097,7 +1097,7 @@ class EA_Printer_UI(WPFWindow):
         REVIT_EXPORT.print_time("Print {} sheets".format(len(self.files_exported_for_this_issue)), time_end, time_start, use_minutes = True)
         print ("#"*20)
         self.print_ranked_log()
-        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+        # ERROR_HANDLE.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
         ERROR_HANDLE.print_note("###END OF TOOL###")
 
         time_obj = time.localtime()
@@ -1313,7 +1313,7 @@ class EA_Printer_UI(WPFWindow):
                                         sub_text = self.feature_sum_note)
         """
         file_path = script.get_bundle_file("fix bluebeam setting.pdf")
-        EA_UTILITY.try_open_app(file_path)
+        ARCHI_UTILITY.try_open_app(file_path)
         output.show()
         output.print_md( "open your **bluebeam administrator**(not the bluebeam viewer)")
         print("on the printer tab, \n\t-disable 'prompt for file name'\n\t-disable 'open in viewer\n\t-Set default output folder as ('User/Documents') in 'folder option'\n\nShould look like this below.")
@@ -1475,7 +1475,7 @@ class EA_Printer_UI(WPFWindow):
                                     file_name, 
                                     FOLDER.DUMP_FOLDER, 
                                     is_thumbnail = True)
-        self.set_image_source(self.preview_image, FOLDER.get_EA_dump_folder_file(file))
+        self.set_image_source(self.preview_image, FOLDER.get_local_dump_folder_file(file))
 
 
     def initiate_loading_message(self):
@@ -1542,7 +1542,7 @@ def get_doc_path(doc):
 @ERROR_HANDLE.try_catch_error()
 def ennead_printer():
 
-    # EA_UTILITY.show_loading_screen(display_text = "EnneadTab Printer is loading...", time = 2)
+    # ARCHI_UTILITY.show_loading_screen(display_text = "EnneadTab Printer is loading...", time = 2)
     window = EA_Printer_UI()
     window.ShowDialog()
 

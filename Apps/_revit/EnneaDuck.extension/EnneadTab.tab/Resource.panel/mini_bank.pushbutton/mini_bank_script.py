@@ -67,7 +67,7 @@ class MiniBank(WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def display_ranking(self):
-        ENNEAD_LOG.print_leader_board()
+        LEGACY_LOG.print_leader_board()
         
     @ERROR_HANDLE.try_catch_error()
     def bank_manager_Click(self, sender, e):
@@ -75,12 +75,12 @@ class MiniBank(WPFWindow):
             REVIT_FORMS.notification(main_text = "This function is only available to Sen Zhang.")
             return
 
-        ENNEAD_LOG.manual_transaction()
+        LEGACY_LOG.manual_transaction()
     
     @ERROR_HANDLE.try_catch_error()
     def check_account_click(self, sender, e):
 
-        ENNEAD_LOG.print_history()
+        LEGACY_LOG.print_history()
         
     @ERROR_HANDLE.try_catch_error()
     def manual_coin_Click(self, sender, e):
@@ -97,7 +97,7 @@ class MiniBank(WPFWindow):
     
     @ERROR_HANDLE.try_catch_error()
     def clear_data_click(self, sender, e):
-        ENNEAD_LOG.clear_user_data()
+        LEGACY_LOG.clear_user_data()
         NOTIFICATION.messenger(main_text = "Data has been cleared.")
     
     @ERROR_HANDLE.try_catch_error()
@@ -112,13 +112,13 @@ class MiniBank(WPFWindow):
 
 
     def update_maunal_coin(self):
-        my_name = ENNEAD_LOG.get_current_user_name()
-        data = ENNEAD_LOG.get_data_by_name(my_name)
+        my_name = LEGACY_LOG.get_current_user_name()
+        data = LEGACY_LOG.get_data_by_name(my_name)
         current_money = data["money"]
         change = self.manual_click
 
         data["money"] += int(change)
-        ENNEAD_LOG.set_data_by_name(my_name, data)
+        LEGACY_LOG.set_data_by_name(my_name, data)
 
 
 

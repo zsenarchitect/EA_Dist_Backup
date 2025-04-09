@@ -335,13 +335,13 @@ class PDFGenerator:
 
         story = [
             Spacer(1, 3 * inch),
-            Paragraph("<b>EnneadTab</b>", self.book_title_style),
+            Paragraph("<b>{}</b>".format(ENVIRONMENT.PLUGIN_NAME), self.book_title_style),
             Spacer(1, 0.5 * inch),
             Paragraph("<b>For</b>", self.book_title_style),
             Spacer(1, 0.5 * inch),
             Paragraph("<b>{}</b>".format(self.app), self.book_title_style),
             Spacer(1, 2 * inch),
-            Paragraph("Secret Documentation", style),
+            Paragraph("Shh... Secret Documentation", style),
             Paragraph("{}".format(TIME.get_YYYY_MM_DD()), style)
         ]
         def add_background(canvas, doc):

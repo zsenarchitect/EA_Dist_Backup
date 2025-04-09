@@ -1,28 +1,28 @@
 <?xml version="1.0" ?>
-<RhinoUI major_ver="3" minor_ver="0" guid="0cdda497-de37-4dbd-9993-bcbb4b6661ba" localize="False" default_language_id="1033" dpi_scale="100">
+<RhinoUI major_ver="3" minor_ver="0" guid="b69a7854-b2bd-4603-8ad4-ad37103bd210" localize="False" default_language_id="1033" dpi_scale="100">
   <extend_rhino_menus>
-    <menu guid="34ed9bd5-7036-48f1-b29c-405e8ab30a6e">
+    <menu guid="407af182-6367-41bb-b090-87b575587bee">
       <text>
         <locale_1033>Extend Rhino Menus</locale_1033>
       </text>
     </menu>
   </extend_rhino_menus>
   <menus>
-    <menu guid="bd6de3c3-c283-4bb1-a85c-4036c0dd9408">
+    <menu guid="c65ec3e7-9ab1-4a6a-87f1-aa9faa35da9b">
       <text>
         <locale_1033>Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad</locale_1033>
       </text>
-      <menu_item guid="3417933a-ce77-4f30-8b49-61ade25a2924">
+      <menu_item guid="5f572543-44c5-44c3-ac96-dda78294ddbd">
         <text>
           <locale_1033>Installation</locale_1033>
         </text>
-        <macro_id>854b1357-7b42-41d5-b9e9-208067d5e969</macro_id>
+        <macro_id>b0313637-0518-4d18-a440-26b9becbc583</macro_id>
       </menu_item>
-      <menu_item guid="d53d3d26-ca84-45d8-8294-41f1debf5e20">
+      <menu_item guid="ac030b28-9e71-44d2-b683-2d3887b6e076">
         <text>
           <locale_1033>uninstall_old_version</locale_1033>
         </text>
-        <macro_id>c25475b5-0156-48c9-ac03-be3278a208b4</macro_id>
+        <macro_id>7dbff87c-fee0-4ccb-ab07-8fb2fd2323ee</macro_id>
       </menu_item>
     </menu>
   </menus>
@@ -36,7 +36,7 @@
   </tool_bar_groups>
   <tool_bars/>
   <macros>
-    <macro_item guid="854b1357-7b42-41d5-b9e9-208067d5e969" bitmap_id="6647971f-321b-42ed-a5fd-d78e1347d6b8">
+    <macro_item guid="b0313637-0518-4d18-a440-26b9becbc583" bitmap_id="44977c6b-b3c8-4663-8dc9-d115141737fd">
       <text>
         <locale_1033>Install EnneadTab</locale_1033>
       </text>
@@ -67,7 +67,7 @@ MODULE_HELPER.run_Rhino_button('Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 )
 </script>
     </macro_item>
-    <macro_item guid="c25475b5-0156-48c9-ac03-be3278a208b4" bitmap_id="c17cdb09-a561-4b89-8967-469e1692dba8">
+    <macro_item guid="7dbff87c-fee0-4ccb-ab07-8fb2fd2323ee" bitmap_id="a0b4ae28-d09a-4a3a-8d51-87f21dfee4bc">
       <text>
         <locale_1033>UninstallOldVersion</locale_1033>
       </text>
@@ -105,8 +105,8 @@ MODULE_HELPER.run_Rhino_button('Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   </macros>
   <bitmaps>
     <small_bitmap item_width="16" item_height="16">
-      <bitmap_item guid="6647971f-321b-42ed-a5fd-d78e1347d6b8" index="0"/>
-      <bitmap_item guid="c17cdb09-a561-4b89-8967-469e1692dba8" index="1"/>
+      <bitmap_item guid="44977c6b-b3c8-4663-8dc9-d115141737fd" index="0"/>
+      <bitmap_item guid="a0b4ae28-d09a-4a3a-8d51-87f21dfee4bc" index="1"/>
       <bitmap>iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAFdUlEQVR4nI2TbYxU5RXH/+d5nntn
 BgZmF9ldYGW6IMHqKkKqNM2aFhvUShpebMc2vsSoUflgUFNjm2py1xo+NE1tTF9sa1qthCizybb0
 LaGAY4gWIi+CKALqrrDuzuwwO+9z586993lOPyxTIHatJzlfTs45z/+c83sAAPy7hywAyOfrC323
@@ -135,8 +135,8 @@ ax1olgpgUoogCTBMTDDEMlI8u/w7zx++fd7OCzSSPf1Z2m7PAaKJS2NtJ7sN73RtKp2WDiDofOT/
 uQOIVDotAeA/QS/4h3w1zxgAAAAASUVORK5CYII=</bitmap>
     </small_bitmap>
     <normal_bitmap item_width="24" item_height="24">
-      <bitmap_item guid="6647971f-321b-42ed-a5fd-d78e1347d6b8" index="0"/>
-      <bitmap_item guid="c17cdb09-a561-4b89-8967-469e1692dba8" index="1"/>
+      <bitmap_item guid="44977c6b-b3c8-4663-8dc9-d115141737fd" index="0"/>
+      <bitmap_item guid="a0b4ae28-d09a-4a3a-8d51-87f21dfee4bc" index="1"/>
       <bitmap>iVBORw0KGgoAAAANSUhEUgAAABgAAAAwCAYAAAALiLqjAAAKJUlEQVR4nKVXeXCU5Rn/Pe/37X7Z
 zR7ZTchFgXAlAhUREEWl4RgqhaGtaHC0dqrMaKVKdWotM702zGg7apXD1o46tXi1Q1JgFKFqqQlq
 USSoQMOhhoQjd/be/Xb3O96nf+QgXLahz8w3uzPv+/6e3/O8z/UShgkzE+rrRT2AxYvnryJpL3Zp
@@ -186,8 +186,8 @@ tPv3gEBsQnG1REpGvXhsHh0Y6ohn/wxW8PO/QRGXWL/I3tD5gwOz+IpGfr6mS0pNXZ0yHPwSh87v
 sYMN5L9NHhe2zP8AZQFunRjkT3UAAAAASUVORK5CYII=</bitmap>
     </normal_bitmap>
     <large_bitmap item_width="32" item_height="32">
-      <bitmap_item guid="6647971f-321b-42ed-a5fd-d78e1347d6b8" index="0"/>
-      <bitmap_item guid="c17cdb09-a561-4b89-8967-469e1692dba8" index="1"/>
+      <bitmap_item guid="44977c6b-b3c8-4663-8dc9-d115141737fd" index="0"/>
+      <bitmap_item guid="a0b4ae28-d09a-4a3a-8d51-87f21dfee4bc" index="1"/>
       <bitmap>iVBORw0KGgoAAAANSUhEUgAAACAAAABACAYAAAB7jnWuAAAP1klEQVR4nN1ZeZRcVZn/ffe+V6/2
 ruo9pNOdjZCEJISExcBo0ogKcSIetfvM5ujRI6M4OMLR0YlzrDTOTFAPntFRRpzjvnepEBFkwpIE
 BEMkCYGQjUAn3Um6q7uquvZ6273f/NHdIeksgMlf851T59V5d/l+91t+3733Ec4hzCyISJ84cWRx

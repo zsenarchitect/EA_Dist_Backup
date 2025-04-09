@@ -5,8 +5,7 @@ Key Features:
 - Comprehensive module testing
 - Automated error detection
 - System integrity verification
-- Performance validation
-- Debug report generation"""
+- Performance validation"""
 
 
 from EnneadTab import ERROR_HANDLE, LOG, UNIT_TEST

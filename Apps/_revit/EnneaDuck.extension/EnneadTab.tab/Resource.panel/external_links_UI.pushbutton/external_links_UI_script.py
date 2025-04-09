@@ -242,7 +242,7 @@ class AssistantUI(forms.WPFWindow):
         
         guid = self.textbox_cache_decoder.Text
         
-        data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+        data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
         note = "This Guid has not been recored in EnneadTab DataBase."
         for doc_title, value in data.items():
             if isinstance(value, dict):

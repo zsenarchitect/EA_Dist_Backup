@@ -1,118 +1,118 @@
 {
-    "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py": {
-        "script": "Ennead+.menu\\activate_enneadtab.button\\activate_enneadtab_left.py",
-        "icon": "Ennead+.menu\\activate_enneadtab.button\\icon.png",
+    "EnneadTab.menu\\activate_enneadtab.button\\activate_enneadtab_left.py": {
+        "script": "EnneadTab.menu\\activate_enneadtab.button\\activate_enneadtab_left.py",
+        "icon": "EnneadTab.menu\\activate_enneadtab.button\\icon.png",
         "alias": "ActivateEnneadTab",
         "doc": "Restore EnneadTab functionality.\n\nKey Features:\n- System path verification\n- Component activation\n- Path configuration\n- Startup script setup",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\app_store.button\\app_store_left.py": {
-        "script": "Ennead+.menu\\app_store.button\\app_store_left.py",
-        "icon": "Ennead+.menu\\app_store.button\\icon.png",
+    "EnneadTab.menu\\app_store.button\\app_store_left.py": {
+        "script": "EnneadTab.menu\\app_store.button\\app_store_left.py",
+        "icon": "EnneadTab.menu\\app_store.button\\icon.png",
         "alias": "AppStore",
         "doc": "Access EnneadTab's centralized tool repository.\n\nKey Features:\n- Complete tool collection\n- Category organization\n- Installation management\n- Update notifications\n- Tool documentation access",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\create_new_button.button\\new_button_left.py": {
-        "script": "Ennead+.menu\\create_new_button.button\\new_button_left.py",
-        "icon": "Ennead+.menu\\create_new_button.button\\icon.png",
+    "EnneadTab.menu\\create_new_button.button\\new_button_left.py": {
+        "script": "EnneadTab.menu\\create_new_button.button\\new_button_left.py",
+        "icon": "EnneadTab.menu\\create_new_button.button\\icon.png",
         "alias": "MakeANewButton",
         "doc": "Create new EnneadTab button components.\n\nKey Features:\n- Interactive button creation\n- Template generation\n- File structure setup\n- Icon integration support\n- Documentation templates",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
-        "script": "Ennead+.menu\\extract_preview_images.button\\extract_preview_images_left.py",
-        "icon": "Ennead+.menu\\extract_preview_images.button\\icon.png",
+    "EnneadTab.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
+        "script": "EnneadTab.menu\\extract_preview_images.button\\extract_preview_images_left.py",
+        "icon": "EnneadTab.menu\\extract_preview_images.button\\icon.png",
         "alias": "ExtractPreviewImages",
         "doc": "Extract preview images from Rhino files.\n\nKey Features:\n- Batch image extraction\n- Multiple file support\n- Automatic naming convention\n- Progress tracking",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\get_latest.button\\get_latest_left.py": {
-        "script": "Ennead+.menu\\get_latest.button\\get_latest_left.py",
-        "icon": "Ennead+.menu\\get_latest.button\\icon.png",
+    "EnneadTab.menu\\get_latest.button\\get_latest_left.py": {
+        "script": "EnneadTab.menu\\get_latest.button\\get_latest_left.py",
+        "icon": "EnneadTab.menu\\get_latest.button\\icon.png",
         "alias": "GetLatest",
         "doc": "Update EnneadTab to latest version.\n\nKey Features:\n- Automatic version detection\n- Core module updates\n- System path configuration\n- Component synchronization\n- Installation verification",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\how_to_install.button\\how_to_install_left.py": {
-        "script": "Ennead+.menu\\how_to_install.button\\how_to_install_left.py",
-        "icon": "Ennead+.menu\\how_to_install.button\\icon.png",
+    "EnneadTab.menu\\how_to_install.button\\how_to_install_left.py": {
+        "script": "EnneadTab.menu\\how_to_install.button\\how_to_install_left.py",
+        "icon": "EnneadTab.menu\\how_to_install.button\\icon.png",
         "alias": "HowToInstall",
         "doc": "Access EnneadTab installation documentation.\n\nKey Features:\n- Step-by-step installation guide\n- System requirements\n- Troubleshooting tips\n- Configuration instructions\n- Team deployment guidance",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
-        "script": "Ennead+.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
-        "icon": "Ennead+.menu\\open_ecosystem_folder.button\\icon.png",
+    "EnneadTab.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
+        "script": "EnneadTab.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
+        "icon": "EnneadTab.menu\\open_ecosystem_folder.button\\icon.png",
         "alias": "OpenEcosystemFolder",
         "doc": "Access the EnneadTab Ecosystem directory.\n\nKey Features:\n- Direct folder access\n- System file management\n- Resource exploration\n- Configuration access\n- Template management",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
-        "script": "Ennead+.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
-        "icon": "Ennead+.menu\\reset_all_conduit.button\\icon.png",
+    "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
+        "script": "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
+        "icon": "EnneadTab.menu\\reset_all_conduit.button\\icon.png",
         "alias": "ResetAllConduit",
         "doc": "Reset all display conduits to default state.\n\nKey Features:\n- Complete conduit cleanup\n- Memory optimization\n- Display pipeline reset\n- System performance improvement\n- Debug assistance",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py": {
-        "script": "Ennead+.menu\\restart_rhino.button\\restart_rhino_left.py",
-        "icon": "Ennead+.menu\\restart_rhino.button\\icon.png",
+    "EnneadTab.menu\\restart_rhino.button\\restart_rhino_left.py": {
+        "script": "EnneadTab.menu\\restart_rhino.button\\restart_rhino_left.py",
+        "icon": "EnneadTab.menu\\restart_rhino.button\\icon.png",
         "alias": "RestartRhino",
         "doc": "Restart Rhino to apply core updates.\n\nKey Features:\n- Safe application restart\n- Update implementation\n- Session state preservation\n- Automatic core reloading\n- System verification",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\secret_key_binding.button\\secret_key_binding_left.py": {
-        "script": "Ennead+.menu\\secret_key_binding.button\\secret_key_binding_left.py",
-        "icon": "Ennead+.menu\\secret_key_binding.button\\icon.png",
+    "EnneadTab.menu\\secret_key_binding.button\\secret_key_binding_left.py": {
+        "script": "EnneadTab.menu\\secret_key_binding.button\\secret_key_binding_left.py",
+        "icon": "EnneadTab.menu\\secret_key_binding.button\\icon.png",
         "alias": "SecretKeyBinding",
         "doc": "Setup some secrete shortcut based on Sen's preference.",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py": {
-        "script": "Ennead+.menu\\tell_me_version.button\\tell_me_version_left.py",
-        "icon": "Ennead+.menu\\tell_me_version.button\\icon.png",
+    "EnneadTab.menu\\tell_me_version.button\\tell_me_version_left.py": {
+        "script": "EnneadTab.menu\\tell_me_version.button\\tell_me_version_left.py",
+        "icon": "EnneadTab.menu\\tell_me_version.button\\icon.png",
         "alias": "TellMeVersion",
         "doc": "Display current EnneadTab Rhino version.\n\nKey Features:\n- Version number display\n- Update status information\n- Installation verification\n- Component compatibility check\n- Release notes access",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\unit_test.button\\unit_test_left.py": {
-        "script": "Ennead+.menu\\unit_test.button\\unit_test_left.py",
-        "icon": "Ennead+.menu\\unit_test.button\\icon.png",
+    "EnneadTab.menu\\unit_test.button\\unit_test_left.py": {
+        "script": "EnneadTab.menu\\unit_test.button\\unit_test_left.py",
+        "icon": "EnneadTab.menu\\unit_test.button\\icon.png",
         "alias": "UnitTest",
-        "doc": "Execute unit tests for EnneadTab components.\n\nKey Features:\n- Comprehensive module testing\n- Automated error detection\n- System integrity verification\n- Performance validation\n- Debug report generation",
-        "tab": "Ennead+.menu",
+        "doc": "Execute unit tests for EnneadTab components.\n\nKey Features:\n- Comprehensive module testing\n- Automated error detection\n- System integrity verification\n- Performance validation",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
-    "Ennead+.menu\\youtube_playlist.button\\youtube_playlist_left.py": {
-        "script": "Ennead+.menu\\youtube_playlist.button\\youtube_playlist_left.py",
-        "icon": "Ennead+.menu\\youtube_playlist.button\\icon.png",
+    "EnneadTab.menu\\youtube_playlist.button\\youtube_playlist_left.py": {
+        "script": "EnneadTab.menu\\youtube_playlist.button\\youtube_playlist_left.py",
+        "icon": "EnneadTab.menu\\youtube_playlist.button\\icon.png",
         "alias": "YoutubePlaylist",
         "doc": "Access EnneadTab's video tutorial library.\n\nOpens the official EnneadTab YouTube playlist containing tutorials, \ndemonstrations and workflow guides.",
-        "tab": "Ennead+.menu",
+        "tab": "EnneadTab.menu",
         "tab_icon": null,
         "is_popular": false
     },
@@ -274,7 +274,7 @@
     },
     "Create.tab\\quick_massing.button\\quick_massing_left.py": {
         "script": "Create.tab\\quick_massing.button\\quick_massing_left.py",
-        "icon": null,
+        "icon": "Create.tab\\quick_massing.button\\icon.png",
         "alias": "QuickMassing",
         "doc": "Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options.",
         "tab": "Create.tab",
@@ -541,7 +541,7 @@
         "script": "Lab.tab\\text2script.button\\text2script_left.py",
         "icon": "Lab.tab\\text2script.button\\icon.png",
         "alias": "Text2Script",
-        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 5 refinement attempts for optimal results\n- Always uses main() as the entry function\n- API quota usage checking\n",
+        "doc": "Utility script to convert text to script using AI.\n\nNote: This is Rhino 8 only.\n\nFeatures:\n- Converts natural language to executable Python script\n- Integrated with Rhino's rhinoscriptsyntax\n- Maximum 5 refinement attempts for optimal results\n- Always uses main() as the entry function\n- Modern error handling and user feedback\n",
         "tab": "Lab.tab",
         "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false

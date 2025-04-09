@@ -1,4 +1,4 @@
-"""Client module for EnneadTab networking functionality.
+"""Client module for networking functionality.
 
 This module provides client-side networking capabilities including:
 - TCP socket client

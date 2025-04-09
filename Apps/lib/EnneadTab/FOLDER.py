@@ -41,7 +41,7 @@ def purge_powershell_folder():
         return
     
     # Check if we already ran today
-    timestamp_file = get_EA_dump_folder_file("last_ps_cleanup.txt")
+    timestamp_file = get_local_dump_folder_file("last_ps_cleanup.txt")
     
     try:
         
@@ -131,7 +131,7 @@ def get_safe_copy(filepath, include_metadata=False):
         str: Path to the safe copy
     """
     _, file = os.path.split(filepath)
-    safe_copy = get_EA_dump_folder_file("save_copy_{}_".format(time.time()) + file)
+    safe_copy = get_local_dump_folder_file("save_copy_{}_".format(time.time()) + file)
     COPY.copyfile(filepath, safe_copy, include_metadata)
     return safe_copy
 
@@ -191,14 +191,6 @@ def secure_folder(folder):
     return folder
 
 
-def get_user_document_folder():
-    """Get current user's Documents folder path.
-
-    Returns:
-        str: Path to user's Documents folder
-    """
-    return "{}\\Documents".format(os.environ["USERPROFILE"])
-
 
 def get_file_name_from_path(file_path, include_extension=True):
     """Extract filename from full path.
@@ -211,7 +203,7 @@ def get_file_name_from_path(file_path, include_extension=True):
     Returns:
         str: Extracted filename
     """
-    head, tail = os.path.split(file_path)
+    _, tail = os.path.split(file_path)
     if not include_extension:
         tail = tail.split(".")[0]
     return tail
@@ -228,8 +220,31 @@ def get_file_extension_from_path(file_path):
     """
     return os.path.splitext(file_path)[1]
 
+def _secure_file_name(file_name):
+    """Ensure file has proper extension.
+    
+    If file has no extension, append PLUGIN_EXTENSION.
+    If file already has an extension, use it as is.
+    
+    Args:
+        file_name (str): Original filename
+        
+    Returns:
+        str: Filename with proper extension
+    """
+    current_extension = get_file_extension_from_path(file_name)
+    if current_extension:
+        return file_name
+    
+    return file_name + PLUGIN_EXTENSION
 
-def get_EA_dump_folder_file(file_name):
+
+def _get_internal_file_from_folder(folder, file_name):
+    """this construct the path but DO NOT garatee exist."""
+    return os.path.join(folder, _secure_file_name(file_name))
+  
+
+def get_local_dump_folder_file(file_name):
     """Get full path for file in EA dump folder.
 
     Args:
@@ -238,8 +253,7 @@ def get_EA_dump_folder_file(file_name):
     Returns:
         str: Full path in EA dump folder
     """
-    return os.path.join(DUMP_FOLDER, _secure_file_name(file_name))
-
+    return _get_internal_file_from_folder(DUMP_FOLDER, file_name)
 
 def get_shared_dump_folder_file(file_name):
     """Get full path for file in shared dump folder.
@@ -250,18 +264,14 @@ def get_shared_dump_folder_file(file_name):
     Returns:
         str: Full path in shared dump folder
     """
-    return os.path.join(SHARED_DUMP_FOLDER, _secure_file_name(file_name))
+    return _get_internal_file_from_folder(SHARED_DUMP_FOLDER, file_name)
 
 
-def _secure_file_name(file_name):
-    if PLUGIN_EXTENSION not in file_name:
-        file_name = file_name + PLUGIN_EXTENSION
-    return file_name
 
 def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning=False):
-    """Copy file to local EA dump folder.
+    """Copy file to local dump folder.
 
-    Creates a local copy of a file in the EA dump folder, optionally with
+    Creates a local copy of a file in the dump folder, optionally with
     a new name.
 
     Args:
@@ -280,7 +290,7 @@ def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning
     if file_name is None:
         file_name = original_path.rsplit("\\", 1)[1]
 
-    local_path = get_EA_dump_folder_file(file_name)
+    local_path = get_local_dump_folder_file(file_name)
     try:
         COPY.copyfile(original_path, local_path)
     except Exception as e:
@@ -312,7 +322,7 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
         def wrapper(*args, **kwargs):
             out = func(*args, **kwargs)
 
-            backup_folder = get_EA_dump_folder_file("backup_" + backup_folder_title)
+            backup_folder = get_local_dump_folder_file("backup_" + backup_folder_title)
             if not os.path.exists(backup_folder):
                 os.mkdir(backup_folder)
 
@@ -338,9 +348,9 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
                     backup_folder, "{}_{}".format(today, data_file_name)
                 )
 
-                if os.path.exists(get_EA_dump_folder_file(data_file_name)):
+                if os.path.exists(get_local_dump_folder_file(data_file_name)):
                     COPY.copyfile(
-                        get_EA_dump_folder_file(data_file_name), backup_file_path
+                        get_local_dump_folder_file(data_file_name), backup_file_path
                     )
 
             return out
@@ -462,3 +472,13 @@ def wait_until_file_is_ready(file_path):
 
 if __name__ == "__main__":
     purge_powershell_folder()
+    print( "input: test.txt, should return test.txt")
+    print ("actual return: {}".format(_secure_file_name("test.txt")))
+    print ("\n")
+    print( "input: test.sexyDuck, should return test.sexyDuck")
+    print ("actual return: {}".format(_secure_file_name("test.sexyDuck")))
+    print ("\n")
+    print( "input: test, should return test.sexyDuck")
+    print ("actual return: {}".format(_secure_file_name("test")))
+    print ("\n")
+    print( "PLUGIN_EXTENSION: {}".format(PLUGIN_EXTENSION))

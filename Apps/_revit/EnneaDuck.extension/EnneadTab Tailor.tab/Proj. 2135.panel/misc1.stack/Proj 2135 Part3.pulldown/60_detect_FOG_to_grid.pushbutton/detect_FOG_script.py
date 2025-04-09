@@ -75,7 +75,7 @@ def create_plan_view_from_walltype(walltype_name):
     for wall in walls:
         el_ids.extend(wall.CurtainGrid.GetPanelIds())
 
-    view.IsolateElementsTemporary (EA_UTILITY.list_to_system_list(el_ids))
+    view.IsolateElementsTemporary (ARCHI_UTILITY.list_to_system_list(el_ids))
 
 
 
@@ -133,7 +133,7 @@ def process_wall(wall, tolerance):
     dist = get_min_dist_to_grid(wall, grids)
     if dist:
         #print "wall_type = {}---->{}".format(wall.WallType.LookupParameter("Type Name").AsString(),output.linkify(wall.Id))
-        dist = EA_UTILITY.internal_to_mm(dist)
+        dist = ARCHI_UTILITY.internal_to_mm(dist)
         #print "{}mm to near grid.".format(dist)
 
 

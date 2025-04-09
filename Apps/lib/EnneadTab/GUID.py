@@ -14,7 +14,7 @@ def get_guid(app_name):
     Returns:
         System.Guid: A Guid object for the specified application
     """
-    guid_dict = DATA_FILE.get_data("guid_dict.sexyDuck")
+    guid_dict = DATA_FILE.get_data("guid_dict")
     if not guid_dict:
         guid_dict = {}
 
@@ -22,7 +22,7 @@ def get_guid(app_name):
         # Create new GUID, store as string, return as Guid object
         new_guid = Guid.NewGuid()
         guid_dict[app_name] = str(new_guid)
-        DATA_FILE.set_data(guid_dict, "guid_dict.sexyDuck")
+        DATA_FILE.set_data(guid_dict, "guid_dict")
         return new_guid
     else:
         # Return existing GUID as Guid object

@@ -79,7 +79,7 @@ class data_item():
                                                     self.area_obj.LookupParameter("Name").AsString(),
                                                     self.row,
                                                     self.column,
-                                                    EA_UTILITY.sqft_to_sqm(self.area_num)))
+                                                    ARCHI_UTILITY.sqft_to_sqm(self.area_num)))
 
 
 
@@ -123,7 +123,7 @@ def is_area_similar_to_data_item(area, data):
     return True
 
 def print_area_detail(area):
-    print("area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), EA_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble())))
+    print("area detail: {};{}:{}--{}".format(area.Level.Name, area.LookupParameter("Area Department").AsString(), area.LookupParameter("Name").AsString(), ARCHI_UTILITY.sqft_to_sqm(area.Area * area.LookupParameter("MC_$Discount Ratio").AsDouble())))
 
 
 def write_data_item(worksheet, data):
@@ -131,7 +131,7 @@ def write_data_item(worksheet, data):
     #cell_format = get_color_format(data)
     worksheet.write(data.row,
                     data.column,
-                    float("{:.2f}".format(EA_UTILITY.sqft_to_sqm(data.area_num))))
+                    float("{:.2f}".format(ARCHI_UTILITY.sqft_to_sqm(data.area_num))))
 
 def write_header(worksheet):
     global area_name_checklist

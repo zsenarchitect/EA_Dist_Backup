@@ -156,7 +156,7 @@ class Solution:
 def main():
     solution = Solution()
 
-    file = FOLDER.get_EA_dump_folder_file("BREP2MASS_DATA.sexyDuck")
+    file = "BREP2MASS_DATA"
     data = DATA_FILE.get_data(file)
     for brep_name, brep_data in data.items():
         

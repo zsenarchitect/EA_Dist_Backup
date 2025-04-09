@@ -30,7 +30,7 @@ import FOLDER
 import DATA_FILE
 import ENVIRONMENT
 
-LOG_FILE_NAME = "log_{}.sexyDuck".format(USER.USER_NAME)
+LOG_FILE_NAME = "log_{}".format(USER.USER_NAME)
 
 
 @contextmanager
@@ -57,7 +57,7 @@ def log_usage(func, *args):
     yield res
     t_end = time.time()
     duration = TIME.get_readable_time(t_end - t_start)
-    with io.open(FOLDER.get_EA_dump_folder_file(LOG_FILE_NAME), "a", encoding="utf-8") as f:
+    with io.open(FOLDER.get_local_dump_folder_file(LOG_FILE_NAME), "a", encoding="utf-8") as f:
         f.writelines("\nRun at {}".format(TIME.get_formatted_time(t_start)))
         f.writelines("\nDuration: {}".format(duration))
         f.writelines("\nFunction name: {}".format(func.__name__))

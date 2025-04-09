@@ -8,7 +8,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION
+from EnneadTab import ENVIRONMENT, ERROR_HANDLE, LOG, NOTIFICATION
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_SELECTION, REVIT_SYNC
 from Autodesk.Revit import DB, UI # pyright: ignore 
 from pyrevit import forms, script
@@ -51,9 +51,9 @@ def batch_cut():
 
 
     masses = DB.FilteredElementCollector(DOC).OfCategory(DB.BuiltInCategory.OST_Mass).WhereElementIsNotElementType().ToElements()
-    masses = filter(lambda x: x.Symbol.LookupParameter("Description").AsString() == "enneadtab void", list(masses))
+    masses = filter(lambda x: x.Symbol.LookupParameter("Description").AsString() == "{} void".format(ENVIRONMENT.PLUGIN_NAME), list(masses))
     if len(masses) == 0:
-        NOTIFICATION.messenger("No voids selected, please check description used.")
+        NOTIFICATION.messenger("No voids selected, please check description used. I expect it to be [{}] to be considered as a void".format("{} void".format(ENVIRONMENT.PLUGIN_NAME)))
         return
 
 

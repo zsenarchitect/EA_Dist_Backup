@@ -533,7 +533,7 @@ def export_bad_family_name_to_excel():
         return
     
 
-    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xlsx")
+    excel_file = FOLDER.get_local_dump_folder_file("FamilyRenameLittleHelper.xlsx")
 
 
     cate_color_dict = {}
@@ -585,7 +585,7 @@ def export_bad_family_name_to_excel():
 
 def import_family_name_from_excel():
     """Import family names from Excel file."""
-    excel_file = FOLDER.get_EA_dump_folder_file("FamilyRenameLittleHelper.xlsx")
+    excel_file = FOLDER.get_local_dump_folder_file("FamilyRenameLittleHelper.xlsx")
     if not excel_file:
         return
     

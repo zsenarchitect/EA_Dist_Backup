@@ -68,7 +68,7 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         sc.sticky["reset_timestamp"] = time.time()
         self.current_objs = get_current_objs()
         
-        data = RHINO_PROJ_DATA.get_enneadtab_data()
+        data = RHINO_PROJ_DATA.get_plugin_data()
         try: #TO-DO remove this try catch later after 2025-03-20
             self.target_dict = data.get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})
         except:

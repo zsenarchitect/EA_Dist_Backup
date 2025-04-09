@@ -100,27 +100,27 @@ def set_rhino_project_data(data):
 
 
 
-def get_enneadtab_data():
-    """Retrieve EnneadTab-specific data from the document dictionary.
+def get_plugin_data():
+    """Retrieve plugin-specific data from the document dictionary.
     
     Returns:
-        dict: Dictionary containing EnneadTab data.
-            Returns empty dict if no EnneadTab section exists.
+        dict: Dictionary containing plugin data.
+            Returns empty dict if no plugin section exists.
     """
     data = get_rhino_project_data()
-    return data.get("EnneadTab", dict())
+    return data.get(ENVIRONMENT.PLUGIN_NAME, dict())
 
 
-def set_enneadtab_data(data):
-    """Store EnneadTab-specific data in the document dictionary.
+def set_plugin_data(data):
+    """Store plugin-specific data in the document dictionary.
     
     Args:
-        data (dict): Dictionary containing EnneadTab data to save.
-            Data will be stored under the 'EnneadTab' section.
-            Existing EnneadTab data will be overwritten.
+        data (dict): Dictionary containing plugin data to save.
+            Data will be stored under the 'plugin_name' section.
+            Existing plugin data will be overwritten.
     """
     project_data = get_rhino_project_data()
-    project_data["EnneadTab"] = data
+    project_data[ENVIRONMENT.PLUGIN_NAME] = data
     set_rhino_project_data(project_data)
 
 

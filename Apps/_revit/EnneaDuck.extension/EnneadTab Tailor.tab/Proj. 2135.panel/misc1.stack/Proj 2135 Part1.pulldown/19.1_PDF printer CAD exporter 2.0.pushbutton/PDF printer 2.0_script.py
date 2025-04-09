@@ -29,7 +29,7 @@ import System
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
-import EA_UTILITY
+import ARCHI_UTILITY
 
 def legalize_filename(name):
     if r"/" in name:
@@ -65,7 +65,7 @@ def delete_extra_file(basefolder, key_ext):
                 os.remove(op.join(basefolder, current_file))
                 count += 1
             except Exception as e:
-                EA_UTILITY.print_note("Cannot delete file [{}] becasue error: {}".format(current_file, e))
+                ARCHI_UTILITY.print_note("Cannot delete file [{}] becasue error: {}".format(current_file, e))
     return count
 
 
@@ -160,13 +160,13 @@ def close_docs_by_name(names = [], close_all = False):
 def get_top_revit_docs():
 
     docs = app.Documents
-    EA_UTILITY.print_note("1/2, cuurent every docs in application, including links and family doc = {}".format(str([x.Title for x in docs])))
+    ARCHI_UTILITY.print_note("1/2, cuurent every docs in application, including links and family doc = {}".format(str([x.Title for x in docs])))
     OUT = []
     for doc in docs:
         if doc.IsLinked or doc.IsFamilyDocument:
             continue
         OUT.append(doc)
-    EA_UTILITY.print_note("2/2, cuurent every docs in application, without link and family doc = {}".format(str([x.Title for x in OUT])))
+    ARCHI_UTILITY.print_note("2/2, cuurent every docs in application, without link and family doc = {}".format(str([x.Title for x in OUT])))
     return OUT
 
 
@@ -178,7 +178,7 @@ def active_original_doc(doc_name):
 
     cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(System.Guid(data[1]), System.Guid(data[2]) )
     open_options = DB.OpenOptions()
-    EA_UTILITY.print_note( "setting active doc as {}".format(data[0]))
+    ARCHI_UTILITY.print_note( "setting active doc as {}".format(data[0]))
     return UI.UIApplication(app).OpenAndActivateDocument (cloud_path,
                                                         open_options,
                                                         False)
@@ -218,7 +218,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                                                     button_name='always use setting with this name for this export job', \
                                                     title = "Select existing Export Setting.")
             if sel_setting == None:
-                EA_UTILITY.dialogue(main_text = "You didn't select any export setting. Try again.")
+                ARCHI_UTILITY.dialogue(main_text = "You didn't select any export setting. Try again.")
                 attempt += 1
             else:
                 break
@@ -237,7 +237,7 @@ def get_export_setting(doc, setting_name = "Empty"):
                 sel_setting = setting
                 break
         if sel_setting == None:
-            EA_UTILITY.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
+            ARCHI_UTILITY.dialogue(main_text = "Cannot find setting with same name to match [{}], please manual select".format(setting_name))
             sel_setting = pick_from_setting()
 
 
@@ -297,7 +297,7 @@ def export_image_from_sheet(sheet, doc):
 
     file_name = legalize_filename(file_name)
     print("preparing [{}].jpg".format(file_name))
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".jpg")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".jpg")
 
     opts = DB.ImageExportOptions()
     opts.FilePath = output_folder + r'\{}.jpg'.format(file_name)
@@ -305,7 +305,7 @@ def export_image_from_sheet(sheet, doc):
     opts.ExportRange = DB.ExportRange.SetOfViews
     opts.ZoomType = DB.ZoomFitType.FitToPage
     opts.PixelSize = 6000
-    opts.SetViewsAndSheets(EA_UTILITY.list_to_system_list([sheet.Id]))
+    opts.SetViewsAndSheets(ARCHI_UTILITY.list_to_system_list([sheet.Id]))
 
     attempt = 0
     max_attempt = 10
@@ -372,7 +372,7 @@ def export_dwg_action(file_name, view_or_sheet, doc, additional_msg = ""):
         file_name = file_name.replace("/", "-")
         print("Windows file name cannot contain '/' in its name, i will replace it with '-'")
     print("preparing [{}].dwg".format(file_name))
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
     view_as_collection = System.Collections.Generic.List[DB.ElementId]([view_or_sheet.Id])
     max_attempt = 10
     attempt = 0
@@ -433,7 +433,7 @@ def export_DWG_from_sheet(sheet, doc):
     return
     """
     print("preparing [{}].dwg".format(file_name))
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".dwg")
 
     #print_manager.PrintToFileName = r"{}\{}.dwg".format(output_folder, file_name)
     #print print_manager.PrintToFileName
@@ -482,7 +482,7 @@ def print_PDF_from_sheet(sheet, print_manager, doc):
 
     file_name = legalize_filename(file_name)
     print("preparing [{}].pdf".format(file_name))
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".pdf")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, file_name + ".pdf")
 
 
     #"""
@@ -660,7 +660,7 @@ def is_sheet_in_current_issue_para(sheet):
         print(sheet.SheetNumber)
         print(sheet.Name)
         note = "Part A:" + str(e) + "____" + sheet.SheetNumber + "___" + sheet.Name
-        EA_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
+        ARCHI_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
         script.exit()
     #print key_para
     #print sheet.Name
@@ -685,7 +685,7 @@ def is_sheet_in_current_issue_para(sheet):
         print(sheet.SheetNumber)
         print(sheet.Name)
         note = "Part B:" + str(e) + "____" + sheet.SheetNumber + "___" + sheet.Name
-        EA_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
+        ARCHI_UTILITY.dialogue(main_text = "send SZ screenshot", sub_text = note )
         script.exit()
         return False
 
@@ -919,7 +919,7 @@ def set_export_job_setting():
     #select the sheets by which issue black squere satus?
 
     filepath = r"I:\2135\0_BIM\10_BIM Management\Revision and Para List.txt"
-    raw_data = EA_UTILITY.read_txt_as_list(filepath, use_encode = True)
+    raw_data = ARCHI_UTILITY.read_txt_as_list(filepath, use_encode = True)
     # revision_names = [x.split("-----")[0] for x in raw_data]
     para_names = [x.split("-----")[1] for x in raw_data]
     """
@@ -941,7 +941,7 @@ def set_export_job_setting():
 
     global has_index
     index_options = [["Plot_Index_SheetNum - SheetName", "(Recommended)"], "SheetNum - SheetName"]#"Index_SheetNum - SheetName",
-    index_opt = EA_UTILITY.dialogue(main_text = "Do you want to add index prefix to PDF name so you when you combine they go by order?", options = index_options)
+    index_opt = ARCHI_UTILITY.dialogue(main_text = "Do you want to add index prefix to PDF name so you when you combine they go by order?", options = index_options)
     """
     if index_opt == index_options[1]:
         has_index = True
@@ -963,7 +963,7 @@ def set_export_job_setting():
     global export_image
     global is_export_view_on_sheet
     file_types = ["pdf Only", "dwg Only", "pdf + dwg", "image Only(Always in Color)"] ### maybe add image as export option
-    file_export_type, is_export_view_on_sheet = EA_UTILITY.dialogue(main_text = "What to export", options = file_types, verification_check_box_text = "Check me to include views on sheet as independent dwgs when exporting DWG.")
+    file_export_type, is_export_view_on_sheet = ARCHI_UTILITY.dialogue(main_text = "What to export", options = file_types, verification_check_box_text = "Check me to include views on sheet as independent dwgs when exporting DWG.")
     if "pdf" in file_export_type:
         export_pdf = True
     if "dwg" in file_export_type:
@@ -977,14 +977,14 @@ def set_export_job_setting():
     FORCE_BW_PDF = False
     if export_pdf:
         bw_opts = ["Yes, Globally turn off color", ["No, keep color setting as defined on sheet parameter.", "Use this as default"]]
-        res = EA_UTILITY.dialogue(main_text = "For the PDF, do you want to ignore local defined 'Print_In_Color' setting?", options = bw_opts)
+        res = ARCHI_UTILITY.dialogue(main_text = "For the PDF, do you want to ignore local defined 'Print_In_Color' setting?", options = bw_opts)
         if res == bw_opts[0]:
             FORCE_BW_PDF = True
 
 
     if export_pdf:
         combine_opts = ["No, Thank you.", ["Yes, Combine all pdf to single PDF.", "(Handy!!))"]]
-        res = EA_UTILITY.dialogue(main_text = "For the PDF, do you want to create combined PDF after export?", options = combine_opts)
+        res = ARCHI_UTILITY.dialogue(main_text = "For the PDF, do you want to create combined PDF after export?", options = combine_opts)
         if res == combine_opts[1][0]:
             global IS_COMBINING_PDF
             IS_COMBINING_PDF = True
@@ -1039,18 +1039,18 @@ def proceed_all_sheets():
     if not exit_after_background_file_openning:
         set_export_job_setting()
 
-    temp_res = EA_UTILITY.dialogue(main_text = "process all sheets from selected files?",  options = ["All Sheets in this issue", ["Let me select a few", "use manual select to export selected sheets."]])
+    temp_res = ARCHI_UTILITY.dialogue(main_text = "process all sheets from selected files?",  options = ["All Sheets in this issue", ["Let me select a few", "use manual select to export selected sheets."]])
     is_using_all_sheets = True if temp_res == "All Sheets in this issue" else False
     pick_sheets(docs_to_process, is_using_all_sheets)
 
 
 
     global COPY_FOLDER
-    temp_res = EA_UTILITY.dialogue(main_text = "copy exported files to a folder after export?",  options = [["Yes, copy them","Handy if you are exporting things overnight"], "No need to copy files over"], sub_text = "If you used plot index naming format in previous step, it will create folder structure like this example.\n\nFolder you pick (example: record/2022-09-30 50% DD)\n    -N3\n        -PDFs\n            -A101_xx.pdf\n            -A102_xx.pdf\n        -DWGs\n            -A101_xx.dwg\n            -A102_xx.dwg\n\nDon't go too deep, for example above, the selection folder should say 'record/2022-09-30 50% DD', not 'N3'")
+    temp_res = ARCHI_UTILITY.dialogue(main_text = "copy exported files to a folder after export?",  options = [["Yes, copy them","Handy if you are exporting things overnight"], "No need to copy files over"], sub_text = "If you used plot index naming format in previous step, it will create folder structure like this example.\n\nFolder you pick (example: record/2022-09-30 50% DD)\n    -N3\n        -PDFs\n            -A101_xx.pdf\n            -A102_xx.pdf\n        -DWGs\n            -A101_xx.dwg\n            -A102_xx.dwg\n\nDon't go too deep, for example above, the selection folder should say 'record/2022-09-30 50% DD', not 'N3'")
     COPY_FOLDER = forms.pick_folder(title = "this is where the final output will be copied into.") if "yes" in temp_res.lower() else None
 
 
-    temp_res, will_abort = EA_UTILITY.dialogue(main_text = "sync and close doc after printing?", sub_text = "An additional Print-Log will autosave in your document folder regardless your choice below.", options = [["Sure", "All files will be closed after exporting"], ["No", "Files keep open after exporting"], "CANCEL THIS PRINT JOB NOW!"], verification_check_box_text = "..or click me to abort export. Last chance to cancel script in case you dont want to proceed anymore. When it is checked, all previous export setting is disgarded.")
+    temp_res, will_abort = ARCHI_UTILITY.dialogue(main_text = "sync and close doc after printing?", sub_text = "An additional Print-Log will autosave in your document folder regardless your choice below.", options = [["Sure", "All files will be closed after exporting"], ["No", "Files keep open after exporting"], "CANCEL THIS PRINT JOB NOW!"], verification_check_box_text = "..or click me to abort export. Last chance to cancel script in case you dont want to proceed anymore. When it is checked, all previous export setting is disgarded.")
     if temp_res is None or "CANCEL" in temp_res:
         return
     will_sync_and_close  = True if temp_res == "Sure" else False
@@ -1058,9 +1058,9 @@ def proceed_all_sheets():
         return
 
     #depress open hook
-    EA_UTILITY.set_open_hook_depressed(is_depressed = True)
-    EA_UTILITY.set_doc_change_hook_depressed(is_depressed = True)
-    EA_UTILITY.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+    ARCHI_UTILITY.set_open_hook_depressed(is_depressed = True)
+    ARCHI_UTILITY.set_doc_change_hook_depressed(is_depressed = True)
+    ARCHI_UTILITY.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
     time_start = time.time()
     #open background doc that neeed to be opeend
@@ -1080,7 +1080,7 @@ def proceed_all_sheets():
 
 
     #open hook depression re-enable
-    EA_UTILITY.set_open_hook_depressed(is_depressed = False)
+    ARCHI_UTILITY.set_open_hook_depressed(is_depressed = False)
 
 
     if exit_after_background_file_openning:
@@ -1130,8 +1130,8 @@ def proceed_all_sheets():
 
     #close daocs opeeedn by API
     close_docs_by_name(docs_to_be_opened_by_API)
-    EA_UTILITY.set_doc_change_hook_depressed(is_depressed = False)
-    EA_UTILITY.print_note("my doc change hook depress status = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
+    ARCHI_UTILITY.set_doc_change_hook_depressed(is_depressed = False)
+    ARCHI_UTILITY.print_note("my doc change hook depress status = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
 
 
     output.set_title("Export Assist")
@@ -1164,7 +1164,7 @@ def proceed_all_sheets():
             print("wait 15s so the reamining bluebeam PDF is outputed")
             time.sleep(20)
         """
-        if "yes" == EA_UTILITY.dialogue(main_text = "end of printing. \nSave a print log?", options = ["yes", "no"]):
+        if "yes" == ARCHI_UTILITY.dialogue(main_text = "end of printing. \nSave a print log?", options = ["yes", "no"]):
             output.save_contents(forms.save_file( file_ext = "html"))
         """
 
@@ -1176,7 +1176,7 @@ def proceed_all_sheets():
 
 
     if has_non_print_sheet and not is_skip_log:
-        EA_UTILITY.dialogue(main_text = "sheet from active doc not printed as PDF, check your documents folder")
+        ARCHI_UTILITY.dialogue(main_text = "sheet from active doc not printed as PDF, check your documents folder")
     #send_email()
 
     #new function
@@ -1186,8 +1186,8 @@ def proceed_all_sheets():
         EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
         cleanup_pdf_name()
         cleanup_jpg_name()
-    EA_UTILITY.print_note("my doc change hook depress satus = {}".format(EA_UTILITY.is_doc_change_hook_depressed()))
-    EA_UTILITY.print_note("###END OF TOOL###")
+    ARCHI_UTILITY.print_note("my doc change hook depress satus = {}".format(ARCHI_UTILITY.is_doc_change_hook_depressed()))
+    ARCHI_UTILITY.print_note("###END OF TOOL###")
 
     if IS_COMBINING_PDF:
         combine_final_pdf()
@@ -1223,7 +1223,7 @@ def print_ranked_log():
 
 
 def get_all_open_docs():
-    return EA_UTILITY.get_app().Documents
+    return ARCHI_UTILITY.get_app().Documents
 
 def get_full_docs():
 
@@ -1241,7 +1241,7 @@ def get_full_docs():
                 continue
 
 
-            WILL_IGNORE_LINKS = EA_UTILITY.dialogue(main_text = "There are revit link not loaded. This action will suggest to cancel.", sub_text = "Why links needed to be loaded?\n\nBackground link need to be loaded to correctly show views in the current file. They are also needed to properly indexing sheets across plot if you are printing other plot from current plot.\n\nBackground links such as:\n\t-Site File.\n\t-Bridge file.\n\t-Structure File.\n\t-N3 Special Geometry File", options = ["Exit", "Ignore Unloaded Links and continue"])
+            WILL_IGNORE_LINKS = ARCHI_UTILITY.dialogue(main_text = "There are revit link not loaded. This action will suggest to cancel.", sub_text = "Why links needed to be loaded?\n\nBackground link need to be loaded to correctly show views in the current file. They are also needed to properly indexing sheets across plot if you are printing other plot from current plot.\n\nBackground links such as:\n\t-Site File.\n\t-Bridge file.\n\t-Structure File.\n\t-N3 Special Geometry File", options = ["Exit", "Ignore Unloaded Links and continue"])
             if WILL_IGNORE_LINKS == "Exit":
                 script.exit()
         else:
@@ -1263,7 +1263,7 @@ def combine_final_pdf():
 
     import os.path as op
     list_of_filepaths = []
-    files = EA_UTILITY.get_filenames_in_folder(output_folder)
+    files = ARCHI_UTILITY.get_filenames_in_folder(output_folder)
     files_exported_this_round = [x[1] for x in main_log]
     for file in files:
         if ".dwg" in file.lower():
@@ -1276,16 +1276,16 @@ def combine_final_pdf():
             list_of_filepaths.append(file_path)
 
     combined_pdf_file_path = "{}\{}.pdf".format(output_folder, COMBINE_PDF_NAME)
-    EA_UTILITY.merge_pdfs(combined_pdf_file_path, list_of_filepaths, reorder = True)
+    ARCHI_UTILITY.merge_pdfs(combined_pdf_file_path, list_of_filepaths, reorder = True)
     if COPY_FOLDER:
-        EA_UTILITY.copy_file_to_folder(combined_pdf_file_path, COPY_FOLDER)
+        ARCHI_UTILITY.copy_file_to_folder(combined_pdf_file_path, COPY_FOLDER)
 
 
 def dump_exported_files_to_copy_folder():
     if COPY_FOLDER is None:
         return
     import os.path as op
-    files = EA_UTILITY.get_filenames_in_folder(output_folder)
+    files = ARCHI_UTILITY.get_filenames_in_folder(output_folder)
     files_exported_this_round = [x[1] for x in main_log]
     for file in files:
         if file in files_exported_this_round:
@@ -1317,20 +1317,20 @@ def dump_exported_files_to_copy_folder():
 
             if ".pdf" in file.lower():
                 new_folder = "{}\{}\PDFs".format(COPY_FOLDER, plot_id)
-                new_folder = EA_UTILITY.secure_folder(new_folder)
+                new_folder = ARCHI_UTILITY.secure_folder(new_folder)
 
             elif ".dwg" in file.lower():
                 new_folder = "{}\{}\DWGs".format(COPY_FOLDER, plot_id)
-                new_folder = EA_UTILITY.secure_folder(new_folder)
+                new_folder = ARCHI_UTILITY.secure_folder(new_folder)
 
             elif ".jpg" in file.lower():
                 new_folder = "{}\{}\JPGs".format(COPY_FOLDER, plot_id)
-                new_folder = EA_UTILITY.secure_folder(new_folder)
+                new_folder = ARCHI_UTILITY.secure_folder(new_folder)
 
             else:
                 new_folder = COPY_FOLDER[:]
 
-            EA_UTILITY.copy_file_to_folder(file_path, new_folder)
+            ARCHI_UTILITY.copy_file_to_folder(file_path, new_folder)
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
@@ -1390,14 +1390,14 @@ action_options = [ ["Exporting sheets from model(s)", "by clicking this it is as
                     "Tell me how to prevent bluebeam file name dialogue from showing up on every file",
                     "fix pdf name from RAM limit(beta)",
                     "cancel action"]
-action = EA_UTILITY.dialogue(main_text = "pick a action:", options = action_options, sub_text = "in version 3.3, script will open background file for document that is not open, you will not see the background revit file. This is to enssure nesting link loaded to upper level when exporting.\n\nIf PDF fail to come out, that might be bluebeam jam up the print queue. Open windows task manager. This can force the bluebeam glitch to clean out and all your backlog PDF will be released.")
+action = ARCHI_UTILITY.dialogue(main_text = "pick a action:", options = action_options, sub_text = "in version 3.3, script will open background file for document that is not open, you will not see the background revit file. This is to enssure nesting link loaded to upper level when exporting.\n\nIf PDF fail to come out, that might be bluebeam jam up the print queue. Open windows task manager. This can force the bluebeam glitch to clean out and all your backlog PDF will be released.")
 
 
 
 if action == action_options[0][0]:
 
     sync_current_session_opts = [["Sync all open documents now and try printing later...","(Especially before you are printing a lot of sheets)"], "Ignore syncing now and Continue..."]
-    if EA_UTILITY.dialogue(main_text = "Friendly reminder:\nBefore print do you want to sync all open document, just in case you crash?", options = sync_current_session_opts) == sync_current_session_opts[0][0]:
+    if ARCHI_UTILITY.dialogue(main_text = "Friendly reminder:\nBefore print do you want to sync all open document, just in case you crash?", options = sync_current_session_opts) == sync_current_session_opts[0][0]:
         EnneadTab.REVIT.REVIT_SYNC.sync_and_close(close_others = False)
 
 
@@ -1427,7 +1427,7 @@ elif action == action_options[3]:
     show_setting_helper()
     script.exit()
 elif action == action_options[4]:
-    EA_UTILITY.dialogue(main_text = "beta concept: if PDF print fail to give index name as desired, use me to replace file name by looking up index table.")
+    ARCHI_UTILITY.dialogue(main_text = "beta concept: if PDF print fail to give index name as desired, use me to replace file name by looking up index table.")
     script.exit()
 else:
     script.exit()

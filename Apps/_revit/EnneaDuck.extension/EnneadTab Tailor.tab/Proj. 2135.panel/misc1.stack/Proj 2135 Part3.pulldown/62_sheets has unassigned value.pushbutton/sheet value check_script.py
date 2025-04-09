@@ -24,7 +24,7 @@ def check_default_value(correct_error = True):
     all_sheets.sort(key = lambda x: x.SheetNumber)
     for sheet in all_sheets:
         para = sheet.LookupParameter(key_para)
-        if EA_UTILITY.parameter_has_unassigned_value(para):
+        if ARCHI_UTILITY.parameter_has_unassigned_value(para):
             print("not assigned Print In Color value at sheet:{}-{}".format(sheet.SheetNumber, sheet.Name))
             if correct_error:
                 para.Set(0)
@@ -81,7 +81,7 @@ output.close_others()
 
 
 if __name__ == "__main__":
-    docs = EA_UTILITY.select_top_level_docs()
+    docs = ARCHI_UTILITY.select_top_level_docs()
     for doc in docs:
         print("\n\n------------------- working on doc: " + doc.Title)
         t = DB.Transaction(doc, "fix unassigned value")

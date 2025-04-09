@@ -360,7 +360,7 @@ def greeting_mid_moon():
     if random.random() > 0.2:
         return
         
-    dest_file = FOLDER.get_EA_dump_folder_file("Moon Festival.html")
+    dest_file = FOLDER.get_local_dump_folder_file("Moon Festival.html")
     try:
         output.save_contents(dest_file)
         output.close()

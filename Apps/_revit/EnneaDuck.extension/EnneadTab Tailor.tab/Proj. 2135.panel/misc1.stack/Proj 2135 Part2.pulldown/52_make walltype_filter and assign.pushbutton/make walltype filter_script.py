@@ -27,7 +27,7 @@ def get_keynote(raw_name):
     return raw_name.split("<")[1].split(">")[0]
 
 def create_filter_by_name(name):
-    filter = DB.ParameterFilterElement.Create(doc, name, EA_UTILITY.list_to_system_list([DB.ElementId (DB.BuiltInCategory.OST_Walls)]) )
+    filter = DB.ParameterFilterElement.Create(doc, name, ARCHI_UTILITY.list_to_system_list([DB.ElementId (DB.BuiltInCategory.OST_Walls)]) )
     #rule_list = []
     return filter.Id
 
@@ -38,7 +38,7 @@ def create_filter_by_name(name):
     eq_rule = DB.ParameterFilterRuleFactory.CreateEqualsRule (paramId, check, False)
     # create parameter filter element
     #paramFilterElem = ParameterFilterElement.Create(doc, ifilter,CateIds,[eq_rule])
-    filter = DB.ParameterFilterElement.Create(doc, name, EA_UTILITY.list_to_system_list([DB.ElementId (DB.BuiltInCategory.OST_Walls)]), [eq_rule] )
+    filter = DB.ParameterFilterElement.Create(doc, name, ARCHI_UTILITY.list_to_system_list([DB.ElementId (DB.BuiltInCategory.OST_Walls)]), [eq_rule] )
     filter.SetElementFilter (eq_rule)
     """
     # set filter overrides (same with add filter to current)

@@ -48,7 +48,7 @@ def process_view(view):
         # get dist now those are parallel
         # DB.Line.CreateUnbound(dim.Curve.GetEndPoint(0), vector)
         dist = ohter_dim.Curve.Distance(dim.Curve.GetEndPoint(0))
-        print(EA_UTILITY.interal_to_mm(dist))
+        print(ARCHI_UTILITY.interal_to_mm(dist))
         return dist
 
 
@@ -75,7 +75,7 @@ def process_view(view):
 output = script.get_output()
 output.close_others()
 
-tolerance = EA_UTILITY.mm_to_internal(200)
+tolerance = ARCHI_UTILITY.mm_to_internal(200)
 # Pick a master view for reference
 master_view = doc.ActiveView
 

@@ -30,7 +30,7 @@ def redefine_selection_set(set_name):
 def add_markup_dims_to_set(selection_set):
     all_dims = DB.FilteredElementCollector(doc).OfClass(DB.Dimension).WhereElementIsNotElementType().ToElements()
     markup_dims = filter(lambda x: x.DimensionType.LookupParameter("Type Name").AsString().lower() in ["markup", "sketch"], all_dims)
-    selection_set.SetElementIds(EA_UTILITY.list_to_system_list([x.Id for x in markup_dims]))
+    selection_set.SetElementIds(ARCHI_UTILITY.list_to_system_list([x.Id for x in markup_dims]))
 ################## main code below #####################
 output = script.get_output()
 output.close_others()

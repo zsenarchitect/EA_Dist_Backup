@@ -81,7 +81,7 @@ def load_family_to_link(doc, family):
 def load_families():
     link_doc = get_link_doc()
     if link_doc is None:
-        EA_UTILITY.dialogue(main_text = "Detail containner link is not loadded or not found. This action will cancel.")
+        ARCHI_UTILITY.dialogue(main_text = "Detail containner link is not loadded or not found. This action will cancel.")
         return
 
 
@@ -101,7 +101,7 @@ def load_families():
         return
 
     options = [["Project Version",""], ["Family Doc Version","(Recommanded)"]]
-    res = EA_UTILITY.dialogue(main_text = "When shared componnet disovered, which version to use?", sub_text = "Shared component is not always loaded.", options = options)
+    res = ARCHI_UTILITY.dialogue(main_text = "When shared componnet disovered, which version to use?", sub_text = "Shared component is not always loaded.", options = options)
     global LOADING_SOURCE
     if res == options[0][0]:
         LOADING_SOURCE = DB.FamilySource.Project
@@ -121,7 +121,7 @@ def load_families():
     for line in LOG:
         print(line)
 
-    EA_UTILITY.tool_has_ended()
+    ARCHI_UTILITY.tool_has_ended()
 
 ################## main code below #####################
 output = script.get_output()

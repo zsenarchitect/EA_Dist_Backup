@@ -31,5 +31,5 @@ t = DB.Transaction(doc, "repeat ADP")
 t.Start()
 for el in selection:
     # print el.Name
-    DB.ComponentRepeater.RepeatElements(doc, EA_UTILITY.list_to_system_list([el.Id]))
+    DB.ComponentRepeater.RepeatElements(doc, ARCHI_UTILITY.list_to_system_list([el.Id]))
 t.Commit()

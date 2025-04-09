@@ -69,7 +69,7 @@ def cleanup_tag_in_view(view):
     status_reset = True
     tolerance = 100 #in mm unit
     tolerance *= view.Scale
-    tolerance = EA_UTILITY.mm_to_internal(tolerance)
+    tolerance = ARCHI_UTILITY.mm_to_internal(tolerance)
 
     while status_reset:
         status_reset = False

@@ -47,7 +47,7 @@ def update_log(string):
 
 
 def process_family():
-    docs = EA_UTILITY.get_app().Documents
+    docs = ARCHI_UTILITY.get_app().Documents
     OUT = []
     for doc in docs:
         if doc.IsFamilyDocument:
@@ -60,7 +60,7 @@ def process_family():
                                             title = "pick a family to load",
                                             button_name='pick family')
 
-    open_docs = EA_UTILITY.get_top_revit_docs()
+    open_docs = ARCHI_UTILITY.get_top_revit_docs()
     selected_docs = forms.SelectFromList.show(open_docs,
                                             name_attr = "Title",
                                             multiselect = True,
@@ -68,7 +68,7 @@ def process_family():
                                             button_name='load to docs')
 
     options = [["Project Version",""], ["Family Doc Version","(Recommanded)"]]
-    res = EA_UTILITY.dialogue(main_text = "When shared componnet disovered, which version to use?", sub_text = "Shared component is not always loaded.", options = options)
+    res = ARCHI_UTILITY.dialogue(main_text = "When shared componnet disovered, which version to use?", sub_text = "Shared component is not always loaded.", options = options)
     global LOADING_SOURCE
     if res == options[0][0]:
         LOADING_SOURCE = DB.FamilySource.Project
@@ -78,7 +78,7 @@ def process_family():
     global LOG
     LOG = []
 
-    will_sync_and_close = EA_UTILITY.do_you_want_to_sync_and_close_after_done()
+    will_sync_and_close = ARCHI_UTILITY.do_you_want_to_sync_and_close_after_done()
 
 
     for selected_family_doc in selected_family_docs:
@@ -95,7 +95,7 @@ def process_family():
             load_family_to_docs(doc, selected_family_doc)
 
 
-        EA_UTILITY.tool_has_ended()
+        ARCHI_UTILITY.tool_has_ended()
 
 
         doc_list = ""
@@ -112,7 +112,7 @@ def process_family():
         EnneadTab.REVIT.REVIT_SYNC.sync_and_close()
     """
     options = ["Yes", "No"]
-    res = EA_UTILITY.dialogue(main_text = "Loading finish, you want to close family doc?", options = options)
+    res = ARCHI_UTILITY.dialogue(main_text = "Loading finish, you want to close family doc?", options = options)
     if res == options[0]:
         try:
 

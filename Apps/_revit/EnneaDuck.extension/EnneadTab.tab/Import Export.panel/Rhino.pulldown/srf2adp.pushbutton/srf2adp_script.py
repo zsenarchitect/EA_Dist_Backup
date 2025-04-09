@@ -115,7 +115,7 @@ def main():
     solution = Solution()
     T = DB.TransactionGroup(doc, __title__)
     T.Start()
-    file = FOLDER.get_EA_dump_folder_file("SRF2ADP_DATA.sexyDuck")
+    file = FOLDER.get_local_dump_folder_file("SRF2ADP_DATA")
     data = DATA_FILE.get_data(file)
     index = 1
     for brep_name, brep_data in data.items():

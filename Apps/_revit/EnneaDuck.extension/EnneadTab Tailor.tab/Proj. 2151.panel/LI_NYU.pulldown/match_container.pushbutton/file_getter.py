@@ -15,7 +15,7 @@ def get_NYU_doc(doc_title):
             return opened_doc
 
     
-    data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+    data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
     if doc_title not in data:
         print ("[{}] has not been recorded by EnneadTab before in data".format(doc_title))
         return None

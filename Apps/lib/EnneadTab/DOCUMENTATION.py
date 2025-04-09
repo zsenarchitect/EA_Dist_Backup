@@ -27,9 +27,9 @@ import FOLDER
 import USER
 import OUTPUT
 import ERROR_HANDLE
+import DATA_FILE
 
-KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database.sexyDuck".format(ENVIRONMENT.RHINO_FOLDER)
-KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database.sexyDuck".format(ENVIRONMENT.REVIT_FOLDER)
+
 
 def get_text_path_by_name(file_name):
     """Get the full path of a text file in the documents library.
@@ -398,12 +398,10 @@ def set_revit_knowledge():
                         "is_popular": global_vars.get("__is_popular__", False)
                     }
 
-    with open(KNOWLEDGE_REVIT_FILE, 'w') as f:
-        json.dump(data_dict, f, indent=4)
+    DATA_FILE.set_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE, data_dict)
 
 def get_revit_knowledge():
-    with io.open(KNOWLEDGE_REVIT_FILE, "r", encoding="utf-8") as f:
-        knowledge_pool = json.load(f)
+    knowledge_pool = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE)
 
 
     knowledge = {}
@@ -420,10 +418,8 @@ def get_revit_knowledge():
 
 
 def get_rhino_knowledge():
-    with io.open(KNOWLEDGE_RHINO_FILE, "r", encoding="utf-8") as f:
-        knowledge_pool = json.load(f)
-
-
+    knowledge_pool = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_RHINO_FILE)
+ 
     knowledge = {}
     
     for value in knowledge_pool.values():
@@ -614,7 +610,7 @@ def write_dream():
     output.write("the font of Dream", OUTPUT.Style.Title)
     from __init__ import __dream__
     output.write(__dream__)
-    save_path = FOLDER.get_EA_dump_folder_file("dream.html")
+    save_path = FOLDER.get_local_dump_folder_file("dream.html")
     output._generate_html_report(save_path)
     
 if __name__ == "__main__":

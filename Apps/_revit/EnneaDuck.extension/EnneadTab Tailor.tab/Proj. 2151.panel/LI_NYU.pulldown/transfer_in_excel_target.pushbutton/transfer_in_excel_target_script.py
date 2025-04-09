@@ -143,7 +143,7 @@ def get_program_target_dict():
             # print (program_name, target_cell_value)
             # ignore some non-number cell such as target/Factor
 
-    DATA_FILE.set_data(out, "excel_program_target_dict.sexyDuck")
+    DATA_FILE.set_data(out, "excel_program_target_dict")
 
 
     return out
@@ -160,8 +160,8 @@ def print_data_as_table(data):
     print ("If your parater use value other than those above, it cannot find the target value.")
     print ("At the moment, there is not couting for how many itme of this same program used. Need a solution to for scheme indepedent.")
 
-    output.save_contents(FOLDER.get_EA_dump_folder_file("Program Target Dict.html"))
-    os.startfile(FOLDER.get_EA_dump_folder_file("Program Target Dict.html"))
+    output.save_contents(FOLDER.get_local_dump_folder_file("Program Target Dict.html"))
+    os.startfile(FOLDER.get_local_dump_folder_file("Program Target Dict.html"))
 
 
 def pretty_print_area(number):

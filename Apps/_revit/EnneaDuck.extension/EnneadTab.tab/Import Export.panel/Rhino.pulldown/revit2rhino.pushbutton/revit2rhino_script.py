@@ -34,7 +34,7 @@ except:
 import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, UI
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, UI, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_RHINO
 from Autodesk.Revit import DB  # pyright: ignore
 
@@ -56,7 +56,7 @@ def revit2rhino(doc):
 class RevitToRhinoExporter(object):
     def __init__(self, revit_doc):
         self.revit_doc = revit_doc
-        self.output_file = r"C:\\Temp\\EnneadTabRevitSelectionHelper.3dm"
+        self.output_file = r"C:\\Temp\\{}RevitSelectionHelper.3dm".format(ENVIRONMENT.PLUGIN_NAME)
         self.rhino_doc = None
 
     def export_family_instances(self):

@@ -23,7 +23,7 @@ from EnneadTab import CONFIG, EXE, DATA_FILE, NOTIFICATION, SPEAK
 import time
 
 
-SYNC_MONITOR_FILE = "last_sync_record_data.sexyDuck"
+SYNC_MONITOR_FILE = "last_sync_record_data"
 
 
 
@@ -127,7 +127,7 @@ def punish_long_gap_time(data):
             #print int( (now - value - 60 * min_max) / 60)
             try:
                 pass
-                # ENNEAD_LOG.sync_gap_too_long(mins_exceeded = int( (now - value - 60 * min_max) / 60), doc_name = key )
+                # LEGACY_LOG.sync_gap_too_long(mins_exceeded = int( (now - value - 60 * min_max) / 60), doc_name = key )
             except:
                 pass
                 # ENNEAD_LOG.sync_gap_too_long(mins_exceeded = int( (now - value - 60 * min_max) / 60) )

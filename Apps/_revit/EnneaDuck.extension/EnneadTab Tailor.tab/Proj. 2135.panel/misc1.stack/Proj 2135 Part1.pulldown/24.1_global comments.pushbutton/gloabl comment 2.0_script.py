@@ -92,7 +92,7 @@ def process_view(view_id, collection):
         return
     else:
         print("found {} related items".format(len(action_list)))
-        if EA_UTILITY.is_owned(view):
+        if ARCHI_UTILITY.is_owned(view):
             print("\n\n")
             return
         print("\n\n")
@@ -213,7 +213,7 @@ def save_template_to_file():
 
     templates.sort()
 
-    EA_UTILITY.save_list_to_txt(templates, template_checklist_filepath)
+    ARCHI_UTILITY.save_list_to_txt(templates, template_checklist_filepath)
 ################## main code below #####################
 output = script.get_output()
 output.close_others()
@@ -233,7 +233,7 @@ for template_checklist_filepath in template_checklist_filepaths:
 
 #ask if want to show, hide
 hidding_options = ["hide", ["show","2022-06-16 updates: It takes a lot longer than 'hide' option because it is also trying to unhide any manually hide elements"], "know where is the template checklist saved", "save all templates names to override checklist file"]
-res = EA_UTILITY.dialogue(main_text = "for all markup or office layout content, i want to [...]", options = hidding_options)
+res = ARCHI_UTILITY.dialogue(main_text = "for all markup or office layout content, i want to [...]", options = hidding_options)
 if res == hidding_options[0]:
     try_hidding_all = True
 elif res == hidding_options[1][0]:
@@ -302,11 +302,11 @@ process_collection(markup_collection)
 map(process_office_layout_template, all_templates)
 search_local_hide = False
 if not try_hidding_all:
-    search_res = EA_UTILITY.dialogue(main_text = "Search local hide? This will make unhide process much longer becasue it need to search thru every view.\nOtherwise it will just search thru templates.", options = ["Yes, search each views", "No, just search templates"])
+    search_res = ARCHI_UTILITY.dialogue(main_text = "Search local hide? This will make unhide process much longer becasue it need to search thru every view.\nOtherwise it will just search thru templates.", options = ["Yes, search each views", "No, just search templates"])
     search_local_hide = True if "Yes" in search_res else False
 
     if search_local_hide:
-        will_sync_and_close_res = EA_UTILITY.dialogue(main_text = "Sync and Close after done?", options = ["Yes", "No"])
+        will_sync_and_close_res = ARCHI_UTILITY.dialogue(main_text = "Sync and Close after done?", options = ["Yes", "No"])
         if will_sync_and_close_res == "Yes":
             will_sync_and_close = True
 

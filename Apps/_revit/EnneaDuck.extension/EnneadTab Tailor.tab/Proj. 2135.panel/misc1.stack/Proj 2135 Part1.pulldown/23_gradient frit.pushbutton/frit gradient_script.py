@@ -31,7 +31,7 @@ def process_frit(dot):
 
     intersection_result = crv.Project(dot.Location.Point)
     #print "***"
-    dist = EA_UTILITY.internal_to_mm(intersection_result.Distance)
+    dist = ARCHI_UTILITY.internal_to_mm(intersection_result.Distance)
     if dist > threshold:
         scale = 1.0
     else:
@@ -46,7 +46,7 @@ def process_frit(dot):
     ###consider standardise the scale to 0.2,0.4,0.6,0.8,0.9,1.0
     ##use number rounding
 
-    new_edge = EA_UTILITY.mm_to_internal(max_edge * scale)
+    new_edge = ARCHI_UTILITY.mm_to_internal(max_edge * scale)
     #print max_edge * scale
 
     dot.LookupParameter("edge").Set(new_edge)

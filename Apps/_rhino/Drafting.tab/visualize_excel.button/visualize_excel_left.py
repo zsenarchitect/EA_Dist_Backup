@@ -50,7 +50,7 @@ class ShapeWriter:
         # print type(input_text)
         
         if EnneadTab.USER.IS_DEVELOPER:
-            filepath = EnneadTab.FOLDER.get_EA_dump_folder_file("excel_area_data.txt")
+            filepath = EnneadTab.FOLDER.get_local_dump_folder_file("excel_area_data.txt")
             
        
             EnneadTab.DATA_FILE.set_list([input_text], filepath, end_with_new_line = False)
@@ -106,7 +106,7 @@ class ShapeWriter:
         self.datas = EXCEL.read_data_from_excel(path, worksheet = sheet)
         # print self.datas
         
-        # filepath = EnneadTab.FOLDER.get_EA_dump_folder_file("excel_area_data.txt")
+        # filepath = EnneadTab.FOLDER.get_local_dump_folder_file("excel_area_data.txt")
         # for i, entry in enumerate(self.datas):
         #     text, num = entry[:2], entry[2:]
         #     EnneadTab.DATA_FILE.set_list(text, filepath, end_with_new_line = False)

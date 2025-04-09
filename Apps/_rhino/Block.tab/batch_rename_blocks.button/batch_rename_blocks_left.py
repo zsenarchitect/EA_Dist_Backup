@@ -19,7 +19,7 @@ from scriptcontext import doc
 import Eto # pyright: ignore
 import Rhino # pyright: ignore
 
-from EnneadTab import SOUND, NOTIFICATION, LOG, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT, SOUND, NOTIFICATION, LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_UI
 
 
@@ -116,7 +116,7 @@ class rename_dialog(Eto.Forms.Dialog[bool]):
     def pre_closing_check(self):
 
         #clean_temp_blocks
-        temp_blocks = rs.ObjectsByName("EA_temp_block")
+        temp_blocks = rs.ObjectsByName("{}_temp_block".format(ENVIRONMENT.PLUGIN_ABBR))
         if len(temp_blocks) != 0:
             rs.DeleteObjects(temp_blocks)
 
@@ -146,7 +146,7 @@ class rename_dialog(Eto.Forms.Dialog[bool]):
         non_exist = False
         if len(instances) == 0:
             instance = rs.InsertBlock(current_name, (0,0,0))
-            rs.ObjectName(instance, name = "EA_temp_block")
+            rs.ObjectName(instance, name = "{}_temp_block".format(ENVIRONMENT.PLUGIN_ABBR))
             non_exist = True
         else:
             instance = instances[0]

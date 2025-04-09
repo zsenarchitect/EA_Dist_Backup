@@ -1,6 +1,5 @@
 
 
-# data_file = EnneadTab.read_json_as_dict_in_dump_folder("LI_NYU_area.json")
 import os
 DOC_LEVLEL_DICT = {
     "2151_A_EA_NYULI_Hospital_EXT": [

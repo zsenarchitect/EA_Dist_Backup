@@ -93,7 +93,7 @@ selected_materials_cut = forms.SelectFromList.show(my_materials_cut_problem,
 
 if selected_materials_surface is None and selected_materials_cut is None:
     script.exit()
-res = EA_UTILITY.dialogue(options = ["Yes", "No"], main_text = "close and sync after done?")
+res = ARCHI_UTILITY.dialogue(options = ["Yes", "No"], main_text = "close and sync after done?")
 doc.Save()
 # modify each template
 t = DB.Transaction(doc, "trnsfer materials")

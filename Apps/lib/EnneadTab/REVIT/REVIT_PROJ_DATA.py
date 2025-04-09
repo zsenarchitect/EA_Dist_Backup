@@ -165,7 +165,7 @@ def get_project_data_file(doc):
         str: Full filename for project data storage
     """
     project_data_name = get_project_data_name(doc)
-    return "{}{}.sexyDuck".format(PROJECT_DATA_PREFIX, project_data_name)
+    return "{}{}".format(PROJECT_DATA_PREFIX, project_data_name)
 
 
 def mark_doc_to_project_data_file(doc):
@@ -194,10 +194,10 @@ def reattach_project_data(doc):
     print("Current project data file: {}".format(current_data_name))
 
     # Get all project data files from shared dump folder
-    data_files = [f for f in os.listdir(FOLDER.SHARED_DUMP_FOLDER) if f.startswith(PROJECT_DATA_PREFIX) and f.endswith(".sexyDuck")]
+    data_files = [f for f in os.listdir(FOLDER.SHARED_DUMP_FOLDER) if f.startswith(PROJECT_DATA_PREFIX) and f.endswith(ENVIRONMENT.PLUGIN_EXTENSION)]
     
     # Extract XXX parts for display (without extension)
-    display_options = [f.replace(PROJECT_DATA_PREFIX, "").replace(".sexyDuck", "") for f in data_files]
+    display_options = [f.replace(PROJECT_DATA_PREFIX, "").replace(ENVIRONMENT.PLUGIN_EXTENSION, "") for f in data_files]
     
     if not display_options:
         NOTIFICATION.messenger("No project data files found in L drive.")

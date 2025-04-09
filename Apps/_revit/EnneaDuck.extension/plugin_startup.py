@@ -105,8 +105,8 @@ def open_scheduled_docs():
     """this will also require the exe to run a schedule to active the revit, with version required.
     """
 
-    data_file = "action_" + "schedule_opener_data.sexyDuck"
-    if not os.path.exists(FOLDER.get_EA_dump_folder_file(data_file)):
+    data_file = "action_" + "schedule_opener_data"
+    if not os.path.exists(FOLDER.get_local_dump_folder_file(data_file)):
         return
     data = DATA_FILE.get_data(data_file)
     if not data:
@@ -133,7 +133,7 @@ def open_scheduled_docs():
     
     # if so, check the GUID and open each one, use silent openner.
     
-    os.remove(FOLDER.get_EA_dump_folder_file(data_file))
+    os.remove(FOLDER.get_local_dump_folder_file(data_file))
     used_time = time.time() - begin_time
     REVIT_FORMS.notification(main_text = "{} have been preloaded to this revit session.\nIt took {}.".format(success_docs_note, TIME.get_readable_time(used_time)),
                                              sub_text = "Even you are not seeing them right now, they hare been openned in the background.\nTo show them, open those files as normal(click from 'recently open list') to see them instantly open.")
@@ -189,7 +189,7 @@ class TempGraphicServer(UI.ITemporaryGraphicsHandler):
 
 
 
-        temp_graphic_data = DATA_FILE.get_data("CANVAS_TEMP_GRAPHIC_DATA_{}.sexyDuck".format(data.Document.Title))
+        temp_graphic_data = DATA_FILE.get_data("CANVAS_TEMP_GRAPHIC_DATA_{}".format(data.Document.Title))
         record = temp_graphic_data.get(str(data.Index))
         if record and record.get("additional_info").get("description"):
             NOTIFICATION.messenger(record["additional_info"]["description"])
@@ -201,7 +201,7 @@ class TempGraphicServer(UI.ITemporaryGraphicsHandler):
         return "This is a graphics service"
         
     def GetVendorId(self):
-        return "EnneadTab"
+        return ENVIRONMENT.PLUGIN_NAME
         
     def GetServiceId(self):
         return DB.ExternalService.ExternalServices.BuiltInExternalServices.TemporaryGraphicsHandlerService
@@ -232,13 +232,13 @@ def register_xaml_path():
             if file.endswith(".xaml"):
                 data[file] = os.path.join(root, file)
 
-    DATA_FILE.set_data(data, "xaml_path.sexyDuck")
+    DATA_FILE.set_data(data, "xaml_path")
     
 def set_RIR_clicker():
     
     if not USER.IS_DEVELOPER:
         return
-    with DATA_FILE.update_data("auto_click_data.sexyDuck") as data:
+    with DATA_FILE.update_data("auto_click_data") as data:
         if "ref_images" not in data or data["ref_images"] is None:
             data["ref_images"] = []
             
@@ -304,7 +304,7 @@ if REVIT_APPLICATION.is_version_at_least(2025):
                 from pyrevit.loader import sessionmgr
                 for i, command in enumerate(filter(is_enneadtab_command, sessionmgr.find_all_available_commands())):
                     print (command.name, command.tooltip, command.script)
-                    item = UI.CommandMenuItem("some menu button name TBD", "EACommand", command.script)
+                    item = UI.CommandMenuItem("some menu button name TBD", "LocalCommand", command.script)
                     item.SetAvailabilityClassName("Autodesk.Revit.DB.View") # this is important to call pyrevit
                     context_menu.AddItem(item)
 
@@ -314,7 +314,7 @@ if REVIT_APPLICATION.is_version_at_least(2025):
                 import traceback
                 ERROR_HANDLE.print_note(traceback.format_exc())
 
-    class EACommand(UI.IExternalCommand):
+    class LocalCommand(UI.IExternalCommand):
         def Execute(self, command_data, message, elements):
             print("Custom context menu action executed!")
             return DB.Result.Succeeded
@@ -376,12 +376,12 @@ def EnneadTab_startup():
     
     
     # use this part to force clear a user from database, in case the file is corrupted
-    # ENNEAD_LOG.force_clear_user(target_user_names = ["fliu"])
+    # LEGACY_LOG.force_clear_user(target_user_names = ["fliu"])
     
-    # ENNEAD_LOG.open_revit_successful()
+    # LEGACY_LOG.open_revit_successful()
     
-    # if ENNEAD_LOG.is_money_negative():
-    #     print ("Your Current balance is {}".format(ENNEAD_LOG.get_current_money()))
+    # if LEGACY_LOG.is_money_negative():
+    #     print ("Your Current balance is {}".format(LEGACY_LOG.get_current_money()))
     
 
 

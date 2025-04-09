@@ -51,9 +51,9 @@ def get_XYZ_from_data(data):
     global UNIT_M
     global UNIT_INCH
     if UNIT_MM:
-        data = [EA_UTILITY.mm_to_internal(x) for x in data]
+        data = [ARCHI_UTILITY.mm_to_internal(x) for x in data]
     elif UNIT_M:
-        data = [EA_UTILITY.mm_to_internal(x / 1000.0) for x in data]
+        data = [ARCHI_UTILITY.mm_to_internal(x / 1000.0) for x in data]
     elif UNIT_FT:
         pass
     elif UNIT_INCH:

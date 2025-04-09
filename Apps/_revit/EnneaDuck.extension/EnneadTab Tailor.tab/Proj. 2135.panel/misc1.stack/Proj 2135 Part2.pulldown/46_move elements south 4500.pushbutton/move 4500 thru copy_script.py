@@ -26,6 +26,6 @@ selection_ids = uidoc.Selection.GetElementIds ()
 #print selection_ids
 t = DB.Transaction(doc, "move south 4500")
 t.Start()
-DB.ElementTransformUtils.CopyElements(doc, selection_ids, DB.XYZ(0,-EA_UTILITY.mm_to_internal(4500),0))
-doc.Delete(selection_ids) #EA_UTILITY.list_to_system_list(selection_ids)
+DB.ElementTransformUtils.CopyElements(doc, selection_ids, DB.XYZ(0,-ARCHI_UTILITY.mm_to_internal(4500),0))
+doc.Delete(selection_ids) #ARCHI_UTILITY.list_to_system_list(selection_ids)
 t.Commit()

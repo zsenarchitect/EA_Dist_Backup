@@ -69,7 +69,7 @@ def modify_creator_in_view_name(views, is_adding_creator):
             continue
         if "{" in view.Name:
             continue
-        if "enneadtab" in view.Name.lower():
+        if ENVIRONMENT.PLUGIN_NAME.lower() in view.Name.lower():
             continue
         creator = DB.WorksharingUtils.GetWorksharingTooltipInfo(doc, view.Id).Creator
         simple_creator = creator.split("@")[0] if "@" in creator else creator
@@ -445,7 +445,7 @@ class WorkingViewManager(WPFWindow):
 
 
         opts = DB.ImageExportOptions()
-        opts.FilePath = FOLDER.get_EA_dump_folder_file('{}.jpg'.format(file_name))
+        opts.FilePath = FOLDER.get_local_dump_folder_file('{}.jpg'.format(file_name))
         if os.path.exists(opts.FilePath):
             os.remove(opts.FilePath)
         opts.ImageResolution = DB.ImageResolution.DPI_300

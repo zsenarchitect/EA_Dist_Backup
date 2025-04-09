@@ -45,7 +45,7 @@ class MyOption(forms.TemplateListItem):
 opts = [MyOption(x) for x in collection]
 selected = forms.SelectFromList.show(opts, multiselect = True)
 
-EA_UTILITY.append_protected_elements_as_long_term_ID(doc, selected, override = False)
+ARCHI_UTILITY.append_protected_elements_as_long_term_ID(doc, selected, override = False)
 """
 also add to :
 

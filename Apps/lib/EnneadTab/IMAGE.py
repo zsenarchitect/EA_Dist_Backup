@@ -98,7 +98,7 @@ def create_bitmap_text_image(text, size = (64, 32), bg_color = (0, 0, 0), font_s
     text_x = (size[0] - text_size.Width) / 2
     text_y = (size[1] - text_size.Height) / 2
     graphics.DrawString(text, font, brush, text_x, text_y)
-    output_path = FOLDER.get_EA_dump_folder_file("_temp_text_bmp_{}_{}.bmp".format(text, time.time()))
+    output_path = FOLDER.get_local_dump_folder_file("_temp_text_bmp_{}_{}.bmp".format(text, time.time()))
     image.Save(output_path)
     return output_path
 

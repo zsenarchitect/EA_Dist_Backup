@@ -164,7 +164,7 @@ def import_revit_collection():
     rs.EnableRedraw(False)
     
     global OST_MATERIAL_MAP
-    OST_MATERIAL_MAP  = DATA_FILE.get_data("EA_OST_MATERIAL_MAP.sexyDuck")
+    OST_MATERIAL_MAP  = DATA_FILE.get_data("EA_OST_MATERIAL_MAP")
     if not OST_MATERIAL_MAP:
         NOTIFICATION.messenger("No mapping data found. Did you export setting from Revit side?")
         return

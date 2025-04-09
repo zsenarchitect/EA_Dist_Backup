@@ -40,7 +40,7 @@ def bake_action(data):
 
 
 def set_target_dict():
-    data = RHINO_PROJ_DATA.get_enneadtab_data()
+    data = RHINO_PROJ_DATA.get_plugin_data()
     gfa_dict = data.get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})
 
     while True:
@@ -71,7 +71,7 @@ def set_target_dict():
 
 
     data[RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT] = gfa_dict
-    RHINO_PROJ_DATA.set_enneadtab_data(data)
+    RHINO_PROJ_DATA.set_plugin_data(data)
     return gfa_dict
 
 @LOG.log(__file__, __title__)

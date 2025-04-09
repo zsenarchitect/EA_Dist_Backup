@@ -22,7 +22,7 @@ def create_revision(doc, description, revision_date):
     revision.RevisionDate = revision_date
 
 def main():
-    docs = EA_UTILITY.select_top_level_docs()
+    docs = ARCHI_UTILITY.select_top_level_docs()
     if docs is None:
         return
 

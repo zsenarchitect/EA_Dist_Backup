@@ -50,9 +50,9 @@ def user_get_dev_dict():
     import SECRET
     return SECRET.get_dev_dict()
 try:
-    EnneadTab_DEVELOPERS = user_get_dev_dict() or []
+    PLUGIN_DEVELOPERS = user_get_dev_dict() or []
 except Exception as e:
-    EnneadTab_DEVELOPERS = []
+    PLUGIN_DEVELOPERS = []
 
 
 def get_EA_email_address(user_name=USER_NAME):
@@ -65,14 +65,14 @@ def get_EA_email_address(user_name=USER_NAME):
     Returns:
         str: Ennead email address in format 'username@ennead.com'
     """
-    return "{}@ennead.com".format(user_name.replace(".EA",""))
+    return "{}@ennead.com".format(user_name.replace("." + ENVIRONMENT.PLUGIN_ABBR,""))
 
 
 
 def get_usernames_from_developers():
     """Extract all developer usernames from developer dictionary.
 
-    Processes the EnneadTab_DEVELOPERS dictionary to separate system and
+    Processes the PLUGIN_DEVELOPERS dictionary to separate system and
     Autodesk usernames for different environment authentications.
 
     Returns:
@@ -82,9 +82,9 @@ def get_usernames_from_developers():
     """
     system_usernames = []
     autodesk_usernames = []
-    for key in EnneadTab_DEVELOPERS:
-        system_usernames += EnneadTab_DEVELOPERS[key]["system_id"]
-        autodesk_usernames += EnneadTab_DEVELOPERS[key]["autodesk_id"]
+    for key in PLUGIN_DEVELOPERS:
+        system_usernames += PLUGIN_DEVELOPERS[key]["system_id"]
+        autodesk_usernames += PLUGIN_DEVELOPERS[key]["autodesk_id"]
     return system_usernames, autodesk_usernames
 
 
@@ -150,7 +150,7 @@ def update_user_log():
     File is stored in shared location for usage tracking.
     """
     import DATA_FILE
-    with DATA_FILE.update_data("USER_LOG_{}.sexyDuck".format(USER_NAME), is_local=False) as data:
+    with DATA_FILE.update_data("USER_LOG_{}".format(USER_NAME), is_local=False) as data:
         if "log" not in data.keys():
             data["log"] = []
         data["log"].append(time.time())
@@ -170,7 +170,7 @@ def get_rhino_developer_emails():
         list: Email addresses of developers with system access
     """
     out = []
-    for developer_data in EnneadTab_DEVELOPERS.values():
+    for developer_data in PLUGIN_DEVELOPERS.values():
         if len(developer_data["system_id"]) == 0:
             continue
         out += developer_data["email"]
@@ -186,7 +186,7 @@ def get_revit_developer_emails():
         list: Email addresses of developers with Autodesk access
     """
     out = []
-    for developer_data in EnneadTab_DEVELOPERS.values():
+    for developer_data in PLUGIN_DEVELOPERS.values():
         if len(developer_data["autodesk_id"]) == 0:
             continue
         out += developer_data["email"]

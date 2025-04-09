@@ -578,7 +578,7 @@ class ViewCaptureDialog(Eto.Forms.Form):
         data["direction"] = "IN"
 
         DATA_FILE.set_data(
-            data, "AI_RENDER_DATA_{}.sexyDuck".format(TIME.get_formatted_current_time()))
+            data, "AI_RENDER_DATA_{}".format(TIME.get_formatted_current_time()))
 
         NOTIFICATION.messenger(main_text="Render Job Enqueued!")
 

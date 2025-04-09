@@ -3,7 +3,7 @@
         
         Background="#FF464646" 
         FontFamily="RomanD" ResizeMode="NoResize"   
-        SizeToContent="WidthAndHeight" Title="EnneadTab Exporter" 
+        SizeToContent="WidthAndHeight" Title="Super Exporter" 
         Topmost="False" BorderBrush="#FF3F96FF" 
         MouseLeftButtonDown="mouse_down_main_panel"
         
@@ -31,7 +31,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1">
-                <TextBlock Text="[EnneadTab Exporter][RVT 2022+]" FontSize="16" FontWeight="Bold"/>
+                <TextBlock Text="[Super Exporter][RVT 2022+]" FontSize="16" FontWeight="Bold"/>
                 <Button Content="Show features." Click="show_feature_Clicked" FontSize="9" BorderBrush="#FF707070" Foreground="#FF7B7B7B" Background="{x:Null}" FontWeight="Bold">
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -183,7 +183,7 @@
                         <TextBlock Text="Receiver Emails, seperated by semi-colon(;)"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFDAE8FD" />
                         <TextBox x:Name="email_receivers" Text="xxx1@ennead.com; xxx2@ennead.com" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Foreground="#FFC5C5C5" VerticalContentAlignment="Center" Background="#FF5D5D5D" TextWrapping="Wrap"/>
                         <TextBlock Text="Subject Line:" Grid.Column="0" Grid.Row="3"  Foreground="#FFDAE8FD" VerticalAlignment="Center" />
-                        <TextBox x:Name="email_subject_line" Text="EnneadTab Exporter Notification" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3" Foreground="#FFC5C5C5" VerticalContentAlignment="Center" Background="#FF5D5D5D" TextWrapping="Wrap"/>
+                        <TextBox x:Name="email_subject_line" Text="Super Exporter Notification" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3" Foreground="#FFC5C5C5" VerticalContentAlignment="Center" Background="#FF5D5D5D" TextWrapping="Wrap"/>
                         <TextBlock Text="Body:" Grid.Column="0" Grid.Row="4"  Foreground="#FFDAE8FD" />
                         <TextBox x:Name="email_body" Text="Your export is finished. The print log is in the attachement." Margin="0,0,0,5" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Foreground="#FFC5C5C5" VerticalContentAlignment="Top" Background="#FF5D5D5D" TextWrapping="Wrap" AcceptsReturn="True"/>
                         <CheckBox x:Name ="checkbox_add_folder_link" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Content="Add Final Copy Folder Link" Click ="checkbox_additional_setting_changed" Background="#FFBBBBBB" IsChecked="True" BorderBrush="#FFFBD629" Foreground="#FFDAE8FD" Cursor="Hand"/>

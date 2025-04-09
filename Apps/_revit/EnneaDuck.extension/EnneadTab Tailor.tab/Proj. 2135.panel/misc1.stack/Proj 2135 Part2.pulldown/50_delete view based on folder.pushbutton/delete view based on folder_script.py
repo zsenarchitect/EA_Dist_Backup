@@ -22,7 +22,7 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 def delete_view(view):
     view_name = view.Name
     try:
-        if not EA_UTILITY.is_owned(view):
+        if not ARCHI_UTILITY.is_owned(view):
             doc.Delete(view.Id)
             print("Delete view [{}]".format(view_name))
             delete_jpg_in_folder(DELETE_FOLDER, view_name)
@@ -37,7 +37,7 @@ def delete_view(view):
 
 
 def delete_jpg_in_folder(output_folder, desired_name):
-    EA_UTILITY.remove_exisitng_file_in_folder(output_folder, desired_name + ".jpg")
+    ARCHI_UTILITY.remove_exisitng_file_in_folder(output_folder, desired_name + ".jpg")
 
 
 def is_no_sheet(view):

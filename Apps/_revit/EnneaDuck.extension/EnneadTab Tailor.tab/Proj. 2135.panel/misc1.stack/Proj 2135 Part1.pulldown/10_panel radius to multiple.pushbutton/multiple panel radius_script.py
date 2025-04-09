@@ -124,7 +124,7 @@ if missing_types:
         print(x)
         OUT += "\n" + x
 
-    EA_UTILITY.dialogue(main_text = "Following types not in the data set:",
+    ARCHI_UTILITY.dialogue(main_text = "Following types not in the data set:",
                         sub_text = OUT)
 
 

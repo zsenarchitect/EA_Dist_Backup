@@ -2,7 +2,7 @@ __doc__ = "Legacy, now in review panel"
 __title__ = "01_remove not placed area(Legacy)"
 
 from pyrevit import forms, DB, revit, script
-from EA_UTILITY import dialogue
+from ARCHI_UTILITY import dialogue
 
 ################## main code below #####################
 output = script.get_output()

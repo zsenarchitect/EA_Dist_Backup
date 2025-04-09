@@ -59,15 +59,15 @@ if len(revit_links) == 0:
     script.exit()
 for revit_link in revit_links:
     link_doc = revit_link.GetLinkDocument()
-    EA_UTILITY. print_note( "*"*20)
-    EA_UTILITY. print_note( link_doc.Title)
+    ARCHI_UTILITY. print_note( "*"*20)
+    ARCHI_UTILITY. print_note( link_doc.Title)
     if link_doc.Title == "2135_BiliBili SH HQ_Plot Connection":
-        EA_UTILITY. print_note( "skip 2135_BiliBili SH HQ_Plot Connection")
+        ARCHI_UTILITY. print_note( "skip 2135_BiliBili SH HQ_Plot Connection")
         continue
 
     """
     for x in get_main_grids_in_doc(link_doc):
-        EA_UTILITY.print_note(x.Name)
+        ARCHI_UTILITY.print_note(x.Name)
     """
 
     grids_in_links.extend(get_main_grids_in_doc(link_doc))
@@ -77,10 +77,10 @@ for revit_link in revit_links:
 
 my_grids = get_main_grids_in_doc(doc)
 """
-EA_UTILITY.print_note("*"*20)
-EA_UTILITY.print_note(doc.Title)
+ARCHI_UTILITY.print_note("*"*20)
+ARCHI_UTILITY.print_note(doc.Title)
 for x in get_main_grids_in_doc(doc):
-    EA_UTILITY.print_note(x.Name)
+    ARCHI_UTILITY.print_note(x.Name)
 """
 my_levels = get_levels_in_doc(doc)
 print("num of grids in current document = {}".format(len(my_grids)))

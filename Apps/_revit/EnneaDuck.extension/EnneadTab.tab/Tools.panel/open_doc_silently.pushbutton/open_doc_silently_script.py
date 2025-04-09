@@ -89,7 +89,7 @@ class Solution:
             self.use_audit = False
             self.open_without_workset = False
 
-        self.data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+        self.data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
    
 
         if not doc_names:

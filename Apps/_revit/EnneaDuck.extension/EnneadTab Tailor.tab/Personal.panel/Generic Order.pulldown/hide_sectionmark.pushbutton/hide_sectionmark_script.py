@@ -47,7 +47,7 @@ def process_view(view):
 
     count = len(sections)
     if count > 0:
-        view.HideElements (EA_UTILITY.list_to_system_list([x.Id for x in sections]))
+        view.HideElements (ARCHI_UTILITY.list_to_system_list([x.Id for x in sections]))
         for section in sections:
             print("\tHiding [{}]".format(section.Name))
 

@@ -41,10 +41,10 @@ def block2family():
     # purge old data folders
     for folder in os.listdir(FOLDER.DUMP_FOLDER):
         if folder.startswith(KEY_PREFIX):
-            if os.path.isdir(FOLDER.get_EA_dump_folder_file(folder)):
-                shutil.rmtree(FOLDER.get_EA_dump_folder_file(folder))
+            if os.path.isdir(FOLDER.get_local_dump_folder_file(folder)):
+                shutil.rmtree(FOLDER.get_local_dump_folder_file(folder))
             else:
-                os.remove(FOLDER.get_EA_dump_folder_file(folder))
+                os.remove(FOLDER.get_local_dump_folder_file(folder))
 
 
     
@@ -79,7 +79,7 @@ def process_block_name(block_name,block_ids):
             NOTIFICATION.messenger("Block name contains illegal character '{}'.\nPlease rename block to use valid filename characters and try again.".format(char))
             return
             
-    working_folder = FOLDER.get_EA_dump_folder_file(KEY_PREFIX + "_" + block_name)
+    working_folder = FOLDER.get_local_dump_folder_file(KEY_PREFIX + "_" + block_name)
     
     if not os.path.isdir(working_folder):
         os.makedirs(working_folder)
@@ -104,7 +104,7 @@ def process_block_name(block_name,block_ids):
 
 
     
-    with DATA_FILE.update_data("{}_{}.sexyDuck".format(KEY_PREFIX, block_name)) as data:
+    with DATA_FILE.update_data("{}_{}".format(KEY_PREFIX, block_name)) as data:
         geo_data = {}
         for block_id in block_ids:
             rs.SetUserText(block_id, "Projected_Area", area)

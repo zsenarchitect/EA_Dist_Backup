@@ -34,21 +34,6 @@ from LibGit2Sharp import Repository, CloneOptions
 def test_coloner():
 
 
-    # repo_url = "https://github.com/Ennead-Architects-LLP/EA_Dist.git"
-    # clone_dir = r"C:\Users\szhang\Documents\EnneadTab Ecosystem\DIST"
-    # print (clone_dir)
-    # if not os.path.exists(clone_dir):
-    #     os.makedirs(clone_dir)
-
-    # clone_dir = System.String(clone_dir)
-    # clone_ops = libgit.CloneOptions()
-
-    # try:
-    #     libgit.Repository.Clone(repo_url,clone_dir,clone_ops)
-    # except:
-    #     print (traceback.format_exc())
-
-
             
     import urllib2
     import os
@@ -84,7 +69,7 @@ def test_coloner():
             print("An error occurred: {}".format(e))
 
     # GitHub repository zip download URL
-    repo_url = "https://github.com/Ennead-Architects-LLP/EA_Dist/archive/refs/heads/master.zip"
+    repo_url = "https://github.com/Ennead-Architects-LLP/{}_Dist/archive/refs/heads/master.zip".format(ENVIRONMENT.PLUGIN_ABBR)
     clone_dir = r"C:\Users\szhang\Documents\EnneadTab Ecosystem\DIST"
 
     download_and_extract(repo_url, clone_dir)

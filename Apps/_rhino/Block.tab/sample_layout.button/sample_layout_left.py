@@ -23,7 +23,7 @@ import Rhino # pyright: ignore
 import Eto # pyright: ignore
 
 
-from EnneadTab import DATA_FILE, NOTIFICATION, SOUND, LOG, ERROR_HANDLE
+from EnneadTab import ENVIRONMENT, DATA_FILE, NOTIFICATION, SOUND, LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_UI, RHINO_OBJ_DATA
 
 
@@ -390,12 +390,12 @@ class SampleBlockDialog(Eto.Forms.Form):
 
 
         # need to remove preview crvs no matter what
-        self.obj_name = "EA_BLOCK_LAYOUT_PREVIEW"
+        self.obj_name = "{}_BLOCK_LAYOUT_PREVIEW".format(ENVIRONMENT.PLUGIN_ABBR)
         old_crvs = rs.ObjectsByName(self.obj_name)
         rs.DeleteObjects(old_crvs)
 
         if not is_preview:
-            self.obj_name = "EA_BLOCK_LAYOUT"
+            self.obj_name = "{}_BLOCK_LAYOUT".format(ENVIRONMENT.PLUGIN_ABBR)
             SOUND.play_sound("sound_effect_popup_msg3.wav")
         else:
             SOUND.play_sound("sound_effect_menu_tap.wav")
@@ -405,7 +405,7 @@ class SampleBlockDialog(Eto.Forms.Form):
         # get block name if using user block
 
         # create sampleblock to get insert_pt and ref_pt
-        block_name = "EA_layout block_{} x {} x {}".format(self.width, self.depth, self.height)
+        block_name = "{}_layout block_{} x {} x {}".format(ENVIRONMENT.PLUGIN_ABBR, self.width, self.depth, self.height)
         block_name = make_unique_block_name(block_name)
         if self.is_post_like:
             block_name, insert_pt, ref_pt = self.create_post_block(block_name)
@@ -634,13 +634,13 @@ class SampleBlockDialog(Eto.Forms.Form):
 
 
     def clear_out(self):
-        obj_name = "EA_BLOCK_LAYOUT_PREVIEW"
+        obj_name = "{}_BLOCK_LAYOUT_PREVIEW".format(ENVIRONMENT.PLUGIN_ABBR)
         old_crvs = rs.ObjectsByName(obj_name)
         rs.DeleteObjects(old_crvs)
         for name in rs.BlockNames():
             if not name:
                 continue
-            if "EA_layout block_" in name and not rs.IsBlockInUse(name):
+            if "{}_layout block_".format(ENVIRONMENT.PLUGIN_ABBR) in name and not rs.IsBlockInUse(name):
                 rs.DeleteBlock(name)
 
         self.selected_crvs = None

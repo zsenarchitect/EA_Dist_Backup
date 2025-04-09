@@ -16,7 +16,7 @@ def print_pattern_detail(pattern, show_name = False):
     #print get_definition_sequence(pattern_definition)
     data = get_definition_sequence(pattern_definition)
     for x, y in zip(data[::2], data[1::2]):
-        print("{} = {}mm = {}in".format(x,EA_UTILITY.ft_to_mm(y), EA_UTILITY.ft_to_inch(y)))
+        print("{} = {}mm = {}in".format(x,ARCHI_UTILITY.ft_to_mm(y), ARCHI_UTILITY.ft_to_inch(y)))
 
 def is_almost_equal(x,y):
     """
@@ -89,10 +89,10 @@ print("@%&"*10)
 
 collection = []
 for current_pattern in line_patterns:
-    EA_UTILITY.print_note( "^^^^new pattern to check")
+    ARCHI_UTILITY.print_note( "^^^^new pattern to check")
     current_pattern_definition = current_pattern.GetLinePattern()
     if len(collection) == 0:
-        EA_UTILITY.print_note( "add first item in collection")
+        ARCHI_UTILITY.print_note( "add first item in collection")
         collection.append(line_pattern_family(current_pattern_definition))
         continue
 
@@ -111,10 +111,10 @@ for current_pattern in line_patterns:
         pass#not find similar family, go to next collection item to check
 
     if found_status:
-        EA_UTILITY.print_note( "find similar pattern from collection")
+        ARCHI_UTILITY.print_note( "find similar pattern from collection")
         continue
     else:
-        EA_UTILITY.print_note( "cannot find similar pattern in collection, adding cuurent pattern to the collectyion")
+        ARCHI_UTILITY.print_note( "cannot find similar pattern in collection, adding cuurent pattern to the collectyion")
         collection.append(line_pattern_family(current_pattern_definition))
 
 

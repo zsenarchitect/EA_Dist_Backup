@@ -1,4 +1,4 @@
-"""Base networking functionality for EnneadTab.
+"""Base networking functionality.
 
 This module provides core networking capabilities shared between
 server and client implementations including:

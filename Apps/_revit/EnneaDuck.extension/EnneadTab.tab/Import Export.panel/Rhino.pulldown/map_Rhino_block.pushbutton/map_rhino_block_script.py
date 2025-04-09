@@ -181,7 +181,7 @@ def read_data(data):
     return block_name, transform, rotation_tuple, reflection
 
 def map_block():
-    file_path = FOLDER.get_EA_dump_folder_file("map_block_transform.txt")
+    file_path = FOLDER.get_local_dump_folder_file("map_block_transform.txt")
     raw_data = DATA_FILE.get_list(file_path)
     for data in raw_data:
         block_name, transform, rotation_tuple, reflection = read_data(data)

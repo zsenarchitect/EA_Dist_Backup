@@ -65,7 +65,7 @@ def set_revision_on_sheet(sheet):
         except Exception as e:
             #this para is not here, dont worry about it.
             pass
-    collection = EA_UTILITY.list_to_system_list([x.Id for x in new_revision_list])
+    collection = ARCHI_UTILITY.list_to_system_list([x.Id for x in new_revision_list])
     sheet.SetAdditionalRevisionIds(collection)
 
 
@@ -74,7 +74,7 @@ def process_sheet(sheet):
     if will_restore:
         set_revision_on_sheet(sheet)
     else:
-        sheet.SetAdditionalRevisionIds(EA_UTILITY.list_to_system_list([]))
+        sheet.SetAdditionalRevisionIds(ARCHI_UTILITY.list_to_system_list([]))
 
 
 ################## main code below #####################
@@ -96,7 +96,7 @@ else:
 all_sheets = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Sheets).WhereElementIsNotElementType().ToElements()
 
 filepath = r"I:\2135\0_BIM\10_BIM Management\Revision and Para List.txt"
-raw_data = EA_UTILITY.read_txt_as_list(filepath, use_encode = True)
+raw_data = ARCHI_UTILITY.read_txt_as_list(filepath, use_encode = True)
 revision_names = [x.split("-----")[0] for x in raw_data]
 para_names = [x.split("-----")[1] for x in raw_data]
 

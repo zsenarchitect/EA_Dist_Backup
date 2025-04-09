@@ -256,7 +256,7 @@ def register_silient_open(doc):
         return
 
 
-    data = DATA_FILE.get_data("DOC_OPENER_DATA.sexyDuck", is_local=False)
+    data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
     if doc.Title in data:
         return
 
@@ -273,7 +273,7 @@ def register_silient_open(doc):
     
 
 
-    DATA_FILE.set_data(data, "DOC_OPENER_DATA.sexyDuck", is_local=False)
+    DATA_FILE.set_data(data, "DOC_OPENER_DATA", is_local=False)
    
 
 
@@ -322,12 +322,9 @@ def warn_ignorance(doc, warning_cate):
         return 0
     
     
-    record_file = "{}_{}.sexyDuck".format(warning_cate,
+    record_file = "{}_{}".format(warning_cate,
                                       doc.Title)
-    if not os.path.exists(record_file):
-        record = dict()
-    else:
-        record = DATA_FILE.get_data(record_file)
+    record = DATA_FILE.get_data(record_file)
     
     import time
     if len(record.keys()) == 0:
@@ -345,7 +342,7 @@ def warn_ignorance(doc, warning_cate):
     return int(day_delta)
 
 def remove_ignorance(doc, warning_cate):
-    record_file = "{}_{}.sexyDuck".format(warning_cate,
+    record_file = "{}_{}".format(warning_cate,
                                       doc.Title)
     file = FOLDER.get_shared_dump_folder_file(record_file)
     if os.path.exists(file):
@@ -361,9 +358,9 @@ def check_group_usage(doc):
     all_group_types = DB.FilteredElementCollector(doc).OfClass(DB.GroupType).ToElements()
     for group_type in all_group_types:
         group_name = group_type.LookupParameter("Type Name").AsString()
-        if "ea" in group_name.lower():
+        if ENVIRONMENT.PLUGIN_ABBR.lower() in group_name.lower():
             continue
-        if "enneadtab" in group_name.lower():
+        if ENVIRONMENT.PLUGIN_NAME.lower() in group_name.lower():
             continue
 
         # cap max ducks/msg
@@ -441,15 +438,15 @@ def main():
         ask_to_unload_locally(doc)
     
 
-        #ENNEAD_LOG.open_doc_with_warning_count(warning_count = len(doc.GetWarnings()))
+        #LEGACY_LOG.open_doc_with_warning_count(warning_count = len(doc.GetWarnings()))
         basic_info(doc)
         pop_up_window(doc)
         
 
         
-        # ENNEAD_LOG.warn_revit_session_too_long(non_interuptive = True)
+        # LEGACY_LOG.warn_revit_session_too_long(non_interuptive = True)
         
-        # ENNEAD_LOG.update_local_warning(doc)
+        # LEGACY_LOG.update_local_warning(doc)
 
 
 

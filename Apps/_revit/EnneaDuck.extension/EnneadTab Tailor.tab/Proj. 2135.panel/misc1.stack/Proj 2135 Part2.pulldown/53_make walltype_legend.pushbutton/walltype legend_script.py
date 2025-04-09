@@ -88,7 +88,7 @@ def make_filledregion_element(base_point, fr_type):
     DB.FilledRegion.Create(doc,
                            fr_type.Id,
                            doc.ActiveView.Id,
-                           EA_UTILITY.list_to_system_list([cloop], type = "CurveLoop"))
+                           ARCHI_UTILITY.list_to_system_list([cloop], type = "CurveLoop"))
 
 
 def make_swatch(index, fr_type):
@@ -125,14 +125,14 @@ output.close_others()
 import imp
 ref_module = imp.load_source("make walltype filter_script", r'{}\ENNEAD.extension\Ennead.tab\Tailor Shop.panel\misc1.stack\Proj 2135 Part2.pulldown\52_make walltype_filter and assign.pushbutton\make walltype filter_script.py'.format(EnneadTab.ENVIRONMENT.REVIT_FOLDER))
 
-GAP = EA_UTILITY.mm_to_internal(500)
-SQUARE_EDGE_LENGTH = EA_UTILITY.mm_to_internal(3000)
+GAP = ARCHI_UTILITY.mm_to_internal(500)
+SQUARE_EDGE_LENGTH = ARCHI_UTILITY.mm_to_internal(3000)
 MAX_WIDTH = 1  # number count per row
 DIRECTION = 1 * SQUARE_EDGE_LENGTH       # OR -1
 
 
 if "Legend" not in str(doc.ActiveView.ViewType):
-    EA_UTILITY.dialogue(main_text = "Use it in a empty legend view only")
+    ARCHI_UTILITY.dialogue(main_text = "Use it in a empty legend view only")
     script.exit()
 
 if __name__ == "__main__":

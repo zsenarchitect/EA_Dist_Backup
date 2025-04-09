@@ -70,7 +70,7 @@ def update_miro():
     
     NOTIFICATION.duck_pop("Image Export done!\nPreparing to upload to Miro!")
     
-    with DATA_FILE.update_data("miro.sexyDuck") as data:
+    with DATA_FILE.update_data("miro") as data:
         data['url'] = miro_url
         data["images"] = [os.path.join(dump_folder, f) for f in sorted(os.listdir(dump_folder), key=lambda x: x.split("^")[1])]
         data["app"] = "revit_sheet"

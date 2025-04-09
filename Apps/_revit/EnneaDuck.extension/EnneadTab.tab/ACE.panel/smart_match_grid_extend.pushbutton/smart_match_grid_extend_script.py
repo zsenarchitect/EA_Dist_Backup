@@ -13,7 +13,7 @@ proDUCKtion.validify()
 import os
 import time
 
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, DATA_FILE
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, DATA_FILE, ENVIRONMENT
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_VIEW, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore 
 
@@ -63,7 +63,7 @@ def smart_match_grid_extend():
 
     script_folder = os.path.dirname(__file__)
     for file in os.listdir(script_folder):
-        if not file.endswith(".sexyDuck"):
+        if not file.endswith(ENVIRONMENT.PLUGIN_EXTENSION):
             continue
         if DOC.Title.lower() in file.lower():
             break

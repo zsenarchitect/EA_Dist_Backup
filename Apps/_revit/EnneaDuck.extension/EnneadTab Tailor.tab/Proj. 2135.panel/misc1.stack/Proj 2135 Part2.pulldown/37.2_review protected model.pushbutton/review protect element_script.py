@@ -16,13 +16,13 @@ doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 uidoc = __revit__.ActiveUIDocument
 
 def list_all_protected_els():
-    existing_protected_elements, missing_protected_elements = EA_UTILITY.get_protected_elements_from_long_term_ID(doc)
+    existing_protected_elements, missing_protected_elements = ARCHI_UTILITY.get_protected_elements_from_long_term_ID(doc)
     #print existing_protected_elements
     #print missing_protected_elements
 
     print("Showing existing protected elements")
     for item in existing_protected_elements:
-        category, record_name, local_session_id = item.Category.Name, EA_UTILITY.get_unique_name(doc,item), item.Id
+        category, record_name, local_session_id = item.Category.Name, ARCHI_UTILITY.get_unique_name(doc,item), item.Id
         #local_session_id = doc.GetElement(stableID).Id
         print("[{}][{}]-->{}".format(category, record_name, output.linkify(local_session_id, title = "Go to Element")))
 
@@ -35,7 +35,7 @@ def list_all_protected_els():
         print(item)
         #print "[{}]->{}".format(item,  output.linkify(item.Id, title = "Go to Element"))
 
-        #category, record_name = item.Category.Name, EA_UTILITY.get_unique_name(doc,item), item.Id
+        #category, record_name = item.Category.Name, ARCHI_UTILITY.get_unique_name(doc,item), item.Id
 
 
 def isolate_missing_elements():
@@ -46,9 +46,9 @@ output.close_others()
 
 opts = ["List all protected elements",
         "Isolate elements that is missing from the record."]
-res = EA_UTILITY.dialogue(options = opts)
+res = ARCHI_UTILITY.dialogue(options = opts)
 
-#protected_elements = EA_UTILITY.get_protection_items()
+#protected_elements = ARCHI_UTILITY.get_protection_items()
 if res == opts[0]:
     list_all_protected_els()
 if res == opts[1]:
@@ -58,7 +58,7 @@ if res == opts[1]:
 """
 collection_ids = uidoc.Selection.GetElementIds()
 collection = [doc.GetElement(x) for x in collection_ids]
-EA_UTILITY.append_protected_elements_as_long_term_ID(doc, collection, override = False)
+ARCHI_UTILITY.append_protected_elements_as_long_term_ID(doc, collection, override = False)
 """
 
 """

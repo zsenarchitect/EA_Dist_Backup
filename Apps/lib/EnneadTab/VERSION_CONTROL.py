@@ -17,7 +17,7 @@ import random
 def update_EA_dist():
     if not is_update_too_soon():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
-        DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time.sexyDuck")
+        DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time")
         FOLDER.purge_powershell_folder()
 
 
@@ -29,7 +29,7 @@ def update_EA_dist():
 
 def is_update_too_soon():
     """sample time 2025-01-22_09-59-59,convert to timestamp, if it is within 3mins, return True"""
-    data = DATA_FILE.get_data("last_update_time.sexyDuck")
+    data = DATA_FILE.get_data("last_update_time")
     recent_update_time = data.get("last_update_time", None)
     if not recent_update_time:
         return False

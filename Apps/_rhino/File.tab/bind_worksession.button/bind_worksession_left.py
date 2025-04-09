@@ -71,7 +71,7 @@ def bind_worksession():
     for file in session_paths:
         file_string_link += " Detach \"{}\"".format(file)
     rs.Command("-WorkSession   {}  Saveas \"{}\" Enter Enter".format(file_string_link, 
-                                                                     FOLDER.get_EA_dump_folder_file("temp_session.rws")))
+                                                                     FOLDER.get_local_dump_folder_file("temp_session.rws")))
     
     NOTIFICATION.messenger(main_text = "Purging Unused Layers, Materials and Blocks")
     RHINO_CLEANUP.purge_layer()

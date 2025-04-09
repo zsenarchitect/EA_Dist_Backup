@@ -231,7 +231,7 @@ class RenderUpscalerDialog(Eto.Forms.Form):
 
     @property
     def previous_data(self):
-        return DATA_FILE.get_data(os.path.join(self.session_folder, "EnneadTab AI Meta Data.sexyDuck"))
+        return DATA_FILE.get_data(os.path.join(self.session_folder, "EnneadTab AI Meta Data"))
 
     
     
@@ -401,7 +401,7 @@ class RenderUpscalerDialog(Eto.Forms.Form):
         data["direction"] = "IN"
 
 
-        DATA_FILE.set_data(data, "AI_RENDER_SCALER_{}.sexyDuck".format(TIME.get_formatted_current_time()))
+        DATA_FILE.set_data(data, "AI_RENDER_SCALER_{}".format(TIME.get_formatted_current_time()))
 
         NOTIFICATION.messenger(main_text = "Upscale Job Enqueued!") 
         call_exe()

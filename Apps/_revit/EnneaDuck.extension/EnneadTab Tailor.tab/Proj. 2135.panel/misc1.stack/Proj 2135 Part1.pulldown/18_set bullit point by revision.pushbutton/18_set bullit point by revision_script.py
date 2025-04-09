@@ -145,7 +145,7 @@ para_names = [r"Issue 2021/12/31",\
 """
 
 filepath = r"I:\2135\0_BIM\10_BIM Management\Revision and Para List.txt"
-raw_data = EA_UTILITY.read_txt_as_list(filepath, use_encode = True)
+raw_data = ARCHI_UTILITY.read_txt_as_list(filepath, use_encode = True)
 revision_names = [x.split("-----")[0] for x in raw_data]
 para_names = [x.split("-----")[1] for x in raw_data]
 

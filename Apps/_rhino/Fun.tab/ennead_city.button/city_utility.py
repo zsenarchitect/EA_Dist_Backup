@@ -7,7 +7,7 @@ from EnneadTab import ENVIRONMENT, DATA_FILE, FOLDER, USER
 
 
 MAIN_FOLDER = "{}\\EnneadCity".format(ENVIRONMENT.DB_FOLDER)
-USER_DATA_FILE = "{}\\city_setting.sexyDuck".format(MAIN_FOLDER)
+USER_DATA_FILE = "{}\\city_setting".format(MAIN_FOLDER)
 PLOT_FILES_FOLDER = "{}\\plots".format(MAIN_FOLDER)
 CITY_SOURCE_FILE = "{}\\City_Source.3dm".format(MAIN_FOLDER)
 CITY_BACKGROUND_FILES = ["{}\\City_Background_Road.3dm".format(MAIN_FOLDER)]

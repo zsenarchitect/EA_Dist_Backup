@@ -75,18 +75,18 @@ def link_dummy_callout_to_view():
     selection_ids = uidoc.Selection.GetElementIds ()
     selection = [doc.GetElement(x) for x in selection_ids]
     if len(selection) != 1:
-        EA_UTILITY.dialogue(main_text = "Pick one <Bili Cross Doc Callout> item only.")
+        ARCHI_UTILITY.dialogue(main_text = "Pick one <Bili Cross Doc Callout> item only.")
         return
 
     dummy = selection[0]
     if dummy.Symbol.FamilyName != "Bili_Cross Doc_Callout Dummy" :
-        EA_UTILITY.dialogue(main_text = "Pick one <Bili Cross Doc Callout> item only.")
+        ARCHI_UTILITY.dialogue(main_text = "Pick one <Bili Cross Doc Callout> item only.")
         return
 
 
     # pick from linked doc
 
-    link_doc = EA_UTILITY.select_revit_link_docs(select_multiple = False)
+    link_doc = ARCHI_UTILITY.select_revit_link_docs(select_multiple = False)
 
     # get view from link doc and select from list
     all_link_views = DB.FilteredElementCollector(link_doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()

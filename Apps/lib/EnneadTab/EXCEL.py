@@ -403,7 +403,7 @@ def save_as_xls(filepath):
         str or None: Path to converted .xls file if successful, None if conversion fails
     """
     _, file = os.path.split(filepath)
-    safe_copy = FOLDER.get_EA_dump_folder_file("save_copy_" + file)
+    safe_copy = FOLDER.get_local_dump_folder_file("save_copy_" + file)
     COPY.copyfile(filepath, safe_copy)
 
     
@@ -425,7 +425,7 @@ def save_as_xls(filepath):
             IgnoreReadOnlyRecommended=True,  # Suppress the read-only prompt
             CorruptLoad=Excel.XlCorruptLoad.xlRepairFile  # Try opening with repair options
         )
-        save_as_path = FOLDER.get_EA_dump_folder_file("local_save_as_{}.xls".format(time.time()))
+        save_as_path = FOLDER.get_local_dump_folder_file("local_save_as_{}.xls".format(time.time()))
         workbook.SaveAs(save_as_path, FileFormat=Excel.XlFileFormat.xlExcel8)
         return save_as_path
     except:
@@ -473,7 +473,7 @@ def _read_data_from_excel_online(url, worksheet, return_dict, headless):
     stream = MemoryStream(data)
 
     # Create a temporary file to save the downloaded data
-    temp_filepath = FOLDER.get_EA_dump_folder_file("_temp_excel_{}.xls".format(time.time()))
+    temp_filepath = FOLDER.get_local_dump_folder_file("_temp_excel_{}.xls".format(time.time()))
     with io.open(temp_filepath, 'wb', encoding="utf-8") as f:
         f.write(data)
 
@@ -496,17 +496,17 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
             "filepath": filepath,
             "worksheet": worksheet
         }
-        DATA_FILE.set_data(job_data, "excel_handler_input.sexyDuck")
+        DATA_FILE.set_data(job_data, "excel_handler_input")
         EXE.try_open_app("ExcelHandler")
         max_wait = 100
         wait = 0
         while wait<max_wait:
-            job_data = DATA_FILE.get_data("excel_handler_input.sexyDuck")
+            job_data = DATA_FILE.get_data("excel_handler_input")
             if job_data.get("status") == "done":
                 break
             time.sleep(0.1)
             wait += 1
-        raw_data = DATA_FILE.get_data("excel_handler_output.sexyDuck")
+        raw_data = DATA_FILE.get_data("excel_handler_output")
         
         # Convert string keys back to tuple keys
         converted_data = {}
@@ -768,14 +768,14 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
             "data": ExcelDataItem.convert_datas_to_dict(data)
         }
     
-        DATA_FILE.set_data(job_data, "excel_handler_input.sexyDuck")
-        DATA_FILE.set_data(job_data, "DEBUGER_excel_handler_input.sexyDuck")
+        DATA_FILE.set_data(job_data, "excel_handler_input")
+        DATA_FILE.set_data(job_data, "DEBUGER_excel_handler_input")
 
         EXE.try_open_app("ExcelHandler")
         max_wait = 100
         wait = 0
         while wait<max_wait:
-            job_data = DATA_FILE.get_data("excel_handler_input.sexyDuck")
+            job_data = DATA_FILE.get_data("excel_handler_input")
             if job_data.get("status") == "done":
                 break
             time.sleep(0.1)

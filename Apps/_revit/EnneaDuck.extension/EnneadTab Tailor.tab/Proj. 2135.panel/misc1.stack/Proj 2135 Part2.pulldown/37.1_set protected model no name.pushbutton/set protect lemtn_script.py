@@ -26,7 +26,7 @@ output.close_others()
 
 collection_ids = uidoc.Selection.GetElementIds()
 collection = [doc.GetElement(x) for x in collection_ids]
-EA_UTILITY.append_protected_elements_as_long_term_ID(doc, collection, override = False)
+ARCHI_UTILITY.append_protected_elements_as_long_term_ID(doc, collection, override = False)
 
 
 """

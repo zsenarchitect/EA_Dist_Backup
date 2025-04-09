@@ -45,59 +45,7 @@ def change_extension_folder(is_force_tester, include_game):
     from EnneadTab import NOTIFICATION # to be resolved, there is a scope leak so have to import again..
     NOTIFICATION.messenger("This feature is disabled for now")
     return
-    """this arg has no effect"""
-
-
-    from pyrevit.userconfig import user_config
-    from pyrevit.loader.sessionmgr import execute_command
-    """Reads the user extension folders and updates the list"""
-    current_external_folders = user_config.get_thirdparty_ext_root_dirs(include_default=False)
-    print (current_external_folders)
-
-
-
-    beta_version_extension_folder = filter(lambda x: "Published_Beta_Version"  in x, current_external_folders)
-    stable_version_extension_folder = filter(lambda x: x not in beta_version_extension_folder, current_external_folders)
-    print (beta_version_extension_folder)
-    print (stable_version_extension_folder)
-
-
-
-
-    enneadtab_stable_version_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published"
-    enneadtab_beta_tester_version_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Published_Beta_Version"
-    enneadtab_game_folder = r"L:\4b_Applied Computing\01_Revit\04_Tools\08_EA Extensions\Misc"
-
-    
-    from EnneadTab.REVIT import REVIT_APPLICATION
-    from EnneadTab import DATA_FILE, USER, NOTIFICATION, ENVIRONMENT, SPEAK, ERROR_HANDLE, FOLDER
-
-    if not USER.IS_DEVELOPER:
-            
-        
-        if enneadtab_beta_tester_version_folder  in current_external_folders:
-            current_external_folders.remove(enneadtab_beta_tester_version_folder)
-        if enneadtab_stable_version_folder not in current_external_folders:
-            current_external_folders.append(enneadtab_stable_version_folder)
-
-
-    if include_game:
-        if enneadtab_game_folder not in current_external_folders:
-            current_external_folders.append(enneadtab_game_folder)
-    else:
-        if enneadtab_game_folder in current_external_folders:
-            current_external_folders.remove(enneadtab_game_folder)
-            
-            
-    user_config.set_thirdparty_ext_root_dirs(current_external_folders)
-    from pyrevit.loader import sessionmgr
-    sessionmgr.reload_pyrevit()
-    return
-    import pyrevitcore_globals
-    execute_command(pyrevitcore_globals.PYREVIT_CORE_RELOAD_COMMAND_NAME)
-    return
-
-
+  
 
 
 # A simple WPF form used to call the ExternalEvent

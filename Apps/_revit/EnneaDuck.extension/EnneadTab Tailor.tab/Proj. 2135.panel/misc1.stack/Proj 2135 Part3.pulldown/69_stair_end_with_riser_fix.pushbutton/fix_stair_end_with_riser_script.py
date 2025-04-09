@@ -36,7 +36,7 @@ def fix():
     stairs = filter(lambda x: "DB.Architecture.Stairs " in str(x) , stairs)
 
     if len(stairs) == 0:
-        EA_UTILITY.dialogue(main_text = "Need to select at least one stair that you want to make 'end with riser' checked", sub_text = "Stair inside group must be fixed manually.")
+        ARCHI_UTILITY.dialogue(main_text = "Need to select at least one stair that you want to make 'end with riser' checked", sub_text = "Stair inside group must be fixed manually.")
         return
 
     print("{} stairs selected".format(len(stairs)))

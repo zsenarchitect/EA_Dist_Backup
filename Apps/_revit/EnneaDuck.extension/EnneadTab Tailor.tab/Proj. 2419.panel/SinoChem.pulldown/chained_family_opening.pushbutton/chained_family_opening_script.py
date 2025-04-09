@@ -35,7 +35,7 @@ def chained_family_opening(doc):
     for family in all_families:
         if family.Name in FAMILY_LIST:
             family_doc = doc.EditFamily(family)
-            save_path = FOLDER.get_EA_dump_folder_file(family.Name + ".rfa")
+            save_path = FOLDER.get_local_dump_folder_file(family.Name + ".rfa")
             option = DB.SaveAsOptions()
             option.OverwriteExistingFile = True
             family_doc.SaveAs(save_path, option)

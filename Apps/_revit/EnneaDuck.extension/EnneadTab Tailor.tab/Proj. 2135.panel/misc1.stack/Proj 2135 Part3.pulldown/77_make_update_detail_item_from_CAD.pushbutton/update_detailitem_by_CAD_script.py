@@ -47,14 +47,14 @@ class FamilyOption(DB.IFamilyLoadOptions):
 
 def make_update_detail_item_from_CAD():
     if doc.IsFamilyDocument:
-        EA_UTILITY.dialogue(main_text = "Should do this from a project document not a family document.")
+        ARCHI_UTILITY.dialogue(main_text = "Should do this from a project document not a family document.")
         return
 
 
 
     source_files = forms.pick_file(file_ext = "dwg", multi_file = True)
     opts = ["Always Override", "Let me decide one by one"]
-    res = EA_UTILITY.dialogue(main_text = "If encountering existing family, how should it handle?", options = opts)
+    res = ARCHI_UTILITY.dialogue(main_text = "If encountering existing family, how should it handle?", options = opts)
     is_always_override = True
     if res == opts[1]:
         is_always_override = False
@@ -74,7 +74,7 @@ def process_cad(source_file, is_always_override) :
     if op.isfile(family_path) :
         if not is_always_override:
             opts = ["Override", "Skip loading"]
-            res = EA_UTILITY.dialogue(main_text = "Family <{}> existing, Do you want to override?".format(content_name), options = opts)
+            res = ARCHI_UTILITY.dialogue(main_text = "Family <{}> existing, Do you want to override?".format(content_name), options = opts)
             if res == opts[1]:
                 return
         save_as_option = DB.SaveAsOptions()
@@ -82,12 +82,12 @@ def process_cad(source_file, is_always_override) :
         try:
             family_doc.SaveAs(family_path, save_as_option)
         except Exception as e:
-            EA_UTILITY.dialogue(main_text = str(e), sub_text = "Family: {}".format(content_name))
+            ARCHI_UTILITY.dialogue(main_text = str(e), sub_text = "Family: {}".format(content_name))
             return
     else:
         family_doc.SaveAs(family_path)
 
-    EA_UTILITY.open_and_active_project(family_path)
+    ARCHI_UTILITY.open_and_active_project(family_path)
     t = DB.Transaction(family_doc, "import DWG")
     t.Start()
     options = DB.DWGImportOptions()
@@ -107,7 +107,7 @@ def process_cad(source_file, is_always_override) :
 
 
 def get_project_doc():
-    for open_doc in EA_UTILITY.get_top_revit_docs():
+    for open_doc in ARCHI_UTILITY.get_top_revit_docs():
         if not open_doc.IsFamilyDocument:
             if open_doc.Title == doc.Title:
                 return open_doc

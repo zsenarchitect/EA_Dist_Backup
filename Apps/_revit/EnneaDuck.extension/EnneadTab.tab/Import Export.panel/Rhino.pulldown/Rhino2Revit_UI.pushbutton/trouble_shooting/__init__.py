@@ -63,7 +63,7 @@ def show_instruction(output):
     output.set_width(1000)
     output.set_height(800)
     output.center()
-    temp_file = FOLDER.get_EA_dump_folder_file("Rhino2Revit_instruction.html")
+    temp_file = FOLDER.get_local_dump_folder_file("Rhino2Revit_instruction.html")
     output.save_contents(temp_file)
     EXE.try_open_app(temp_file)
 
