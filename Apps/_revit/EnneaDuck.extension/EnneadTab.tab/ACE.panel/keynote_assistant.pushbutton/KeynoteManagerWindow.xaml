@@ -337,9 +337,9 @@
                             Margin="0,0,0,0"
                             Padding="8,4,8,4"
                             Background="Orange"
-                            ToolTip="Edit the extended database Excel file."
-                            Click="edit_extended_db_excel">
-                        <TextBlock TextAlignment="Center">Edit Extended<LineBreak/>Database Excel</TextBlock>
+                            ToolTip="Open the extended database Excel file."
+                            Click="open_extended_db_excel">
+                        <TextBlock TextAlignment="Center">Open Extended<LineBreak/>Database Excel</TextBlock>
                     </Button>
                     <Button BorderThickness="1"
                             Margin="0,0,0,0"

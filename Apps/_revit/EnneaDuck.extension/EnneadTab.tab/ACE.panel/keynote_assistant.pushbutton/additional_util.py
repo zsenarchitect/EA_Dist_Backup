@@ -394,7 +394,7 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
         for x in bug_coolection:
             output.print_md(x)
 
-def edit_extended_db_excel(keynote_data_conn):
+def open_extended_db_excel(keynote_data_conn):
     doc = REVIT_APPLICATION.get_doc()
     t = DB.Transaction(doc, "edit extended db excel")
     t.Start()

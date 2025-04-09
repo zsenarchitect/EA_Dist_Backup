@@ -1099,41 +1099,41 @@ test_dict = {
 #         row = sheet.row_values(row_num)
 #         print(row)
 
+def sample_excel_writer_by_pointer():
+    collection = ExcelDataCollection()
+    collection.set_headers(["Name", "Age", "City"], width_list=[10, 10])
+    collection.add_row(["John", 30, "New York"])
+    collection.add_row(["Jane", 25, "Los Angeles"])
+    collection.add_row(["Jim", 35, "Chicago"])
+    collection.add_row(["Jill", 28, "San Francisco"])
+    collection.set_pointer_lower_right()
+    collection.next_row()
+    collection.add("That is many cities")
+    collection.set_col_by_header("Age")
+    collection.add(35)
+    collection.prev_col()
+    collection.add("Average age")
+    collection.prev_row()
+    collection.add("will override")
+    collection.add(ExcelDataItem("as dedicated item", 10, "B"))
+    collection.save("output.xlsx")
 
+def update_excel_data(existing_excel, data, key_name, header_row=1, ignore_keywords=None):
+    """parse current excel first, just get a map of key and row"""
+    pass
 #################  MAIN  #################
 
 if __name__ == "__main__":
-    # filename = __file__
-    # UNIT_TEST.pretty_test(test_dict, filename)
-    # data = read_data_from_excel("J:\\2142\\0_BIM\\10_BIM Management\\10_BIM Resources\\Extended_DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
-    # data = parse_excel_data(data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
 
-    # print (data)
-    # for item in data.values():
-        # print ("###############")
-        # print (item.KEYNOTE_ID)
-        # print (item.KEYNOTE_DESCRIPTION)
-        # print (item.get("KEYNOTE ID"))
-        # print (item.get("KEYNOTE DESCRIPTION"))
+    data = read_data_from_excel("J:\\2425\\2_Master File\\B-23_Specifications\\30_Specifications\\02_SD Spec\\2025-04-01 SD Materials List Coord\\Maryville AIEES_SD_Materials Index_Draft.xlsx", worksheet="Interior", return_dict=True)
+    data = parse_excel_data(data, "KEY NOTE ID")
 
-    # collection = ExcelDataCollection()
-    # collection.set_headers(["Name", "Age", "City"], width_list=[10, 10])
-    # collection.add_row(["John", 30, "New York"])
-    # collection.add_row(["Jane", 25, "Los Angeles"])
-    # collection.add_row(["Jim", 35, "Chicago"])
-    # collection.add_row(["Jill", 28, "San Francisco"])
-    # collection.set_pointer_lower_right()
-    # collection.next_row()
-    # collection.add("That is many cities")
-    # collection.set_col_by_header("Age")
-    # collection.add(35)
-    # collection.prev_col()
-    # collection.add("Average age")
-    # collection.prev_row()
-    # collection.add("will override")
-    # collection.add(ExcelDataItem("as dedicated item", 10, "B"))
-    # collection.save("output.xlsx")
-
-    data = read_data_from_excel("J:\\2425\\0_BIM\\10_BIM Management\\10_BIM Resources\\AIEES DB.xlsx", worksheet="Keynote Extended DB", return_dict=True)
     print (data)
+    for item in data.values():
+        print ("###############")
+    
+        print (item.get("KEY NOTE ID"))
+        print (item.get("KEYNOTE DESCRIPTION"))
+        print (item.get("FUNCTION/LOCATION"))
+        print (item.get("SOURCE/MANUF."))
 

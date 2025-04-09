@@ -395,8 +395,8 @@ class KeynoteManagerWindow(forms.WPFWindow):
 
 
     @ERROR_HANDLE.try_catch_error()
-    def edit_extended_db_excel(self, sender, args):
-        AU.edit_extended_db_excel(keynote_data_conn = self._conn)
+    def open_extended_db_excel(self, sender, args):
+        AU.open_extended_db_excel(keynote_data_conn = self._conn)
 
     @ERROR_HANDLE.try_catch_error()
     def batch_translate_keynote(self, sender, args):
