@@ -67,9 +67,10 @@ def show_help():
     output.write("   - KEY | DESCRIPTION | PARENT KEY")
     output.write("   - So when you want to organize under a 'folder', you are really just assigning many keynote items to the same parent.")
     
-
-    
-
+    output.insert_divider()
+    pyrevit_help = "https://pyrevitlabs.notion.site/Manage-Keynotes-6f083d6f66fe43d68dc5d5407c8e19da"
+    output.write("Need more information about the original pyRevit keynote function?", OUTPUT.Style.Subtitle)
+    output.write(pyrevit_help, OUTPUT.Style.Link)
     
     output.plot()
 

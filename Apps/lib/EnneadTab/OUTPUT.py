@@ -252,7 +252,7 @@ class Style:
     Subtitle = "h2"
     SubSubtitle = "h3"
     Footnote = "foot_note"
-    
+    Link = "custom_link"
 
 class Output:
     """Singleton class managing EnneadTab's output system.
@@ -378,7 +378,10 @@ class Output:
             report_file.write("h3 {{ font-size: 15px; color: #987284; }}")
             report_file.write("ul {{ list-style-type: none; margin: 20; padding: 10; }}")
             report_file.write("li {{ margin-left: 40px; color: #E1D4C1; }}") 
-            report_file.write(".foot_note {{ font-size: 8px; color: #987284; }}") 
+            report_file.write("foot_note {{ font-size: 8px; color: #987284; }}") 
+            report_file.write("custom_link {{ color: white; text-decoration: none; transition: all 0.3s ease; display: inline-block; }}")
+            report_file.write("custom_link:hover {{ color: #A9B8C2; transform: translateY(-2px); text-shadow: 0 0 8px rgba(255,255,255,0.5); }}")
+            
             report_file.write("""
                 #floating-logo-container {
                     position: fixed;
@@ -477,6 +480,23 @@ class Output:
                     background: #E1D4C1;
                     color: #2B1C10;
                 }
+                .custom_link {
+                    color: white;
+                    text-decoration: underline; /* Added underline */
+                    transition: all 0.3s ease;
+                    display: inline-block;
+                }   
+                .custom_link:hover {
+                    color: #A9B8C2;
+                    transform: translateY(-2px);
+                    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+                    animation: jump 0.5s ease;
+                }
+                @keyframes jump {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-2px); }
+                }
+                
             """)
             report_file.write("</style>")
 
@@ -500,7 +520,7 @@ class Output:
             if Output._out and Output._out[0][1] != "<hr>":
                 report_file.write("<hr>")
 
-            for header_style, content in Output._out:
+            for item_style, content in Output._out:
                 if isinstance(content, list):
                     report_file.write("<ul>")
                     for i, item in enumerate(content):
@@ -516,8 +536,7 @@ class Output:
                         report_file.write("<div class='error-card'>{}<button class='copy-btn' onclick='copyErrorCard(this)'>Copy</button></div>".format(
                             Output.format_content(content)))
                     else:
-                        report_file.write("<{0}>{1}</{0}>".format(
-                            header_style, Output.format_content(content)))
+                        report_file.write("<{0}>{1}</{0}>".format(item_style, Output.format_content(content)))
                     
                 
             # Add floating footer that always shows at bottom
@@ -550,6 +569,11 @@ class Output:
             
             # Default case: full width with maintained aspect ratio
             return "<img src='file://{}' style='width: 100%; height: auto;'>".format(input)
+            
+        # Handle hyperlinks
+
+        if isinstance(input, str) and "http" in input:
+            return "<a href='{}' target='_blank' class='custom_link'>{}</a>".format(input, input)
             
         return str(input).replace("\n", "<br>")
 
@@ -630,8 +654,10 @@ def unit_test():
     output.insert_divider()
 
     
-    output.write("Trying to print a random meme image")
-    output.write(IMAGE.get_one_image_path_by_prefix("meme"))
+    # output.write("Trying to print a random meme image")
+    # output.write(IMAGE.get_one_image_path_by_prefix("meme"))
+
+    output.write("https://www.google.com", Style.Link)
 
 
     output.insert_divider()
