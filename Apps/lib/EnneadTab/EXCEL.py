@@ -511,8 +511,12 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
         # Convert string keys back to tuple keys
         converted_data = {}
         for key, value in raw_data.items():
-            row, column = map(int, key.split(','))
-            converted_data[(row, column)] = value
+            try:
+                row, column = map(int, key.split(','))
+                converted_data[(row, column)] = value
+            except:
+                print ("Error converting key: {}".format(key))
+                print (ERROR_HANDLE.get_alternative_traceback())
             
         if not return_dict:
             # convert the converted_data to a list of lists, sorted by row, adding missing rows with empty strings. the coumn count need to match the max column count in the data

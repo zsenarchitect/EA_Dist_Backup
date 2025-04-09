@@ -67,7 +67,7 @@ def DEPRECIATED_update_project_2151(doc):
     
 
 
-    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_parking_data"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False, is_from_sync_hook = True)
 
@@ -77,19 +77,19 @@ def DEPRECIATED_update_project_2151(doc):
     if USER.USER_NAME not in ["sha.li", "szhang"]:
         return
     
-    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "color_pills"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
     
     
     
-    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "all_in_one_checker"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
 
 
-    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "confirm_RGB"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
@@ -101,7 +101,7 @@ def update_project_2314(doc):
     if "2314_a-455 1st ave" not in doc.Title.lower():
         return
     
-    folder = "Ennead Tailor.tab\\Proj. 2314.panel\\First Ave.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2314.panel\\First Ave.pulldown"
     func_name = "all_in_one_checker"
     
 
@@ -121,12 +121,12 @@ def update_new(doc):
         return
 
 
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
     
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_keyplan"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
@@ -138,15 +138,15 @@ def update_existing(doc):
         return
 
 
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_grid_bldgId"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_level_relative_value"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
-    folder = "Ennead Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. Lenox Hill.panel\\Lenox Hill.pulldown"
     func_name = "update_keyplan"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
@@ -156,7 +156,7 @@ def update_existing(doc):
 
     
 def DEPRECIATED_update_DOB_numbering(doc):
-    folder = "Ennead.tab\\ACE.panel"
+    folder = "EnneadTab.tab\\ACE.panel"
     func_name = "update_DOB_page"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
 
@@ -174,7 +174,7 @@ def DEPRECIATED_update_sheet_name(doc):
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
-    script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+    script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
     func_name = "rename_views"
     sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
     is_default_format = True
@@ -191,7 +191,7 @@ def DEPRECIATED_update_working_view_name(doc):
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
-    script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+    script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
     func_name = "modify_creator_in_view_name"
 
     fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
@@ -213,7 +213,7 @@ def update_project_2306(doc):
     # if not USER.IS_DEVELOPER:
     #     return
 
-    folder = "Ennead Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown"
     func_name = "factory_internal_check"
     MODULE_HELPER.run_revit_script(folder, func_name, doc, show_log = False)
  
@@ -354,12 +354,12 @@ def run_legacy_updates(doc):
 def update_view_names(doc):
     """Update view names - because nobody likes unnamed views wandering around!"""
     # Update sheet views
-    script = "Ennead.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+    script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
     sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
     MODULE_HELPER.run_revit_script(script, "rename_views", doc, sheets, True, False)
 
     # Update working views
-    script = "Ennead.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+    script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
     fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
     ref_module = imp.load_source("manage_working_view_script", fullpath)
     
@@ -369,7 +369,7 @@ def update_view_names(doc):
 
 def update_area_tracking(doc):
     """Update area tracking - keeping those square feet in check!"""
-    fullpath = "{}\\Ennead.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\dgsf_chart.py".format(
+    fullpath = "{}\\EnneadTab.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\dgsf_chart.py".format(
         ENVIRONMENT.REVIT_PRIMARY_EXTENSION)
     ref_module = imp.load_source("dgsf_chart", fullpath)
     ref_module.dgsf_chart_update(doc, show_log=False)

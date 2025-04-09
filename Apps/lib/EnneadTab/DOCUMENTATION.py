@@ -120,7 +120,7 @@ def get_files_with_keyword(keyword, folder):
         
         
         
-        if "Ennead Tailor.tab" in root:
+        if "EnneadTab Tailor.tab" in root:
             continue
         
         if "lib" in root:

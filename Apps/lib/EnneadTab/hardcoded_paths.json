@@ -29,13 +29,13 @@
             ]
         },
         "Revit Apps": {
-            "_revit/EnneaDuck.extension/Ennead Tailor.tab/Proj. 2135.panel/misc1.stack/Proj 2135 Part3.pulldown/69_stair_end_with_riser_fix.pushbutton/fix_stair_end_with_riser_script.py": [
+            "_revit/EnneaDuck.extension/EnneadTab Tailor.tab/Proj. 2135.panel/misc1.stack/Proj 2135 Part3.pulldown/69_stair_end_with_riser_fix.pushbutton/fix_stair_end_with_riser_script.py": [
                 17
             ],
-            "_revit/EnneaDuck.extension/Ennead Tailor.tab/Proj. 2135.panel/misc1.stack/Proj 2135 Part3.pulldown/77_make_update_detail_item_from_CAD.pushbutton/update_detailitem_by_CAD_script.py": [
+            "_revit/EnneaDuck.extension/EnneadTab Tailor.tab/Proj. 2135.panel/misc1.stack/Proj 2135 Part3.pulldown/77_make_update_detail_item_from_CAD.pushbutton/update_detailitem_by_CAD_script.py": [
                 68
             ],
-            "_revit/EnneaDuck.extension/Ennead.tab/Resource.panel/EnneadTab_Setting_UI.pushbutton/EnneadTab_Setting_UI_script.py": [
+            "_revit/EnneaDuck.extension/EnneadTab.tab/Resource.panel/EnneadTab_Setting_UI.pushbutton/EnneadTab_Setting_UI_script.py": [
                 67,
                 68,
                 69

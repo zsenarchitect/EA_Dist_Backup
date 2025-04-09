@@ -32,7 +32,7 @@ def proj_initiation():
         return
     
     
-    folder = "Ennead.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py"
+    folder = "EnneadTab.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py"
     func_name = "project_starter"
 
     MODULE_HELPER.run_revit_script(folder, func_name, doc)

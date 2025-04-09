@@ -17,11 +17,11 @@ def update_2151(doc):
     if doc.Title.lower() in[ "2151_a_ea_nyuli_hospital_ext",
                             "2151_A_EA_NYU Melville_Hospital Existing"]:
 
-        folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+        folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
         func_name = "update_dummy_patient_room"
         MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
-        folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+        folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
         func_name = "dgsf_area_data_check"
         MODULE_HELPER.run_revit_script(folder, func_name, doc)
 
@@ -29,7 +29,7 @@ def update_2151(doc):
 
     if not doc.Title.lower().startswith("2151_"):
         return
-    folder = "Ennead Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
+    folder = "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown"
     func_name = "update_material_setting"
     MODULE_HELPER.run_revit_script(folder, func_name, doc)
 

@@ -1,10 +1,9 @@
 #! python3
 
 # r: openai
-# r: requests
 import rhinoscriptsyntax as rs
 import sys
-from typing import Optional, Tuple
+from typing import Optional
 from pathlib import Path
 from datetime import datetime
 import time
@@ -12,7 +11,6 @@ import traceback
 import os
 import subprocess
 import importlib.util
-import requests
 from openai import OpenAI
 
 def add_path():
@@ -21,7 +19,7 @@ def add_path():
         sys.path.append(path)
 
 add_path()
-from EnneadTab import FOLDER, SECRET, NOTIFICATION, DATA_FILE, SOUND
+from EnneadTab import FOLDER, SECRET, NOTIFICATION, DATA_FILE, SOUND, ERROR_HANDLE
 
 __title__ = "Text2Script"
 __doc__ = """Utility script to convert text to script using AI.
@@ -352,11 +350,13 @@ def text2script() -> None:
     converter.run()
     SOUND.play_finished_sound()
 
-def check_api_quota() -> None:
+
+@ERROR_HANDLE.try_catch_error()
+def text2script_left() -> None:
     """Standalone function to check OpenAI API key validity."""
     converter = TextToScriptConverter()
-    converter.check_api_quota()
+    if converter.check_api_quota():
+        converter.run()
 
 if __name__ == "__main__":
-    # If run with argument "check_quota", just check quota
-    check_api_quota()
+    text2script_left()

@@ -114,7 +114,7 @@ def open_scheduled_docs():
     
     begin_time = time.time()
     
-    folder = "Ennead.tab\\Tools.panel"
+    folder = "EnneadTab.tab\\Tools.panel"
     func_name = "open_doc_silently"
     
 
