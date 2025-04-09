@@ -330,10 +330,7 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
                 
 
-        excel_out_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("excel_path_{}".format(cate.key))
-        if not excel_out_path:
-            NOTIFICATION.messenger("Pick excel output path for [{}]".format(cate.key))
-            
+        def _pick_excel_out_path():
             excel_out_path = forms.pick_excel_file(title="Pick Extended Keynote Database Excel File for [{}]".format(cate.key),
                                                     save = True,
                                                     )
@@ -344,6 +341,19 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
         
             project_data["keynote_assistant"]["setting"]["excel_path_{}".format(cate.key)] = excel_out_path
             REVIT_PROJ_DATA.set_revit_project_data(doc, project_data)
+            return excel_out_path
+
+        
+        excel_out_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("excel_path_{}".format(cate.key))
+        if not excel_out_path:
+            note =  "Excel output path for [{}] is not defined, please pick one".format(cate.key)
+            NOTIFICATION.messenger(note)
+            print (note)
+            excel_out_path = _pick_excel_out_path()
+        elif not os.path.exists(excel_out_path):
+            print ("Excel output path for [{}] is not found, please pick one again.\nOriginal path: {}  is no longer valid".format(cate.key, excel_out_path))
+            excel_out_path = _pick_excel_out_path()
+
 
 
 
