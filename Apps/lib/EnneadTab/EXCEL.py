@@ -855,6 +855,25 @@ def check_formula(excel, worksheet, highlight_formula=True):
         EXE.try_open_app(excel)
 
 
+def get_header_map(data, header_row=1):
+    """Get a map of header to column index."""
+    header_dict = {}
+    
+    for key, value_dict in data.items():
+        try:
+            row, column = key
+        except:
+            print (ERROR_HANDLE.get_alternative_traceback())
+            raise Exception("key: {}".format(key))
+        if row == header_row:
+            header = value_dict["value"]
+            if not header or header == "None":
+                continue
+            header_dict[column] = header
+
+    
+    return header_dict
+
 def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     """Parse Excel data into a structured format with dot notation access.
     
@@ -873,21 +892,12 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     """
     # Initialize variables
     ignore_keywords = ignore_keywords or []
-    header_dict = {}
-    header_indices = {}
-    
-    # First pass: collect headers
-    for key, value_dict in data.items():
-        row, column = key
-        if row == header_row:
-            header = value_dict["value"]
-            if not header or header == "None":
-                continue
-            header_dict[column] = header
-            header_indices[header] = column
+
+
+    header_dict = get_header_map(data, header_row)
     
     # Validate key column exists
-    if key_name not in header_indices:
+    if key_name not in header_dict.values():
         print("Error: Key column '{}' not found in headers".format(key_name))
         return {}
     
@@ -895,11 +905,12 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     class RowData:
         """Container for row data with both dot notation and dictionary-style access."""
         
-        def __init__(self, properties):
+        def __init__(self, properties, row_number):
             """Initialize with column data from a row."""
             # Store both original and sanitized versions of properties
             self._original_keys = {}
             self._data = {}
+            self._row_number = row_number
             
             for key, value in properties.items():
                 # Create a Python-friendly attribute name
@@ -984,7 +995,7 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     duplicate_keys = [False]
     
     # Helper function to process each row's data - MOVED HERE before it's used
-    def _process_row_data(row_data, result_dict):
+    def _process_row_data(row_data, result_dict, row_number):
         if key_name not in row_data:
             return
             
@@ -998,7 +1009,7 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
             print("Warning: Key '{}' already exists in output dictionary".format(key_value))
             duplicate_keys[0] = True
         
-        result_dict[key_value] = RowData(row_data)
+        result_dict[key_value] = RowData(row_data, row_number)
     
     # Sort keys to process row by row
     sorted_keys = sorted(data.keys())
@@ -1010,7 +1021,7 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
             
         # If we've moved to a new row, process the previous row
         if current_row is not None and current_row != row and row_data:
-            _process_row_data(row_data, result)
+            _process_row_data(row_data, result, current_row)
             row_data = {}
         
         current_row = row
@@ -1023,7 +1034,7 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     
     # Process the last row if it exists
     if current_row is not None and row_data:
-        _process_row_data(row_data, result)
+        _process_row_data(row_data, result, current_row)
     
     # Report duplicate keys if found
     if duplicate_keys[0]:
@@ -1033,9 +1044,25 @@ def parse_excel_data(data, key_name, header_row=1, ignore_keywords=None):
     return result
 
 def flip_dict(dict):
+    """Flip a dictionary by swapping keys and values.
+    
+    Args:
+        dict (dict): Input dictionary to flip
+        
+    Returns:
+        dict: Flipped dictionary with original values as keys and keys as values
+    """
     output = {}
+    duplicate_keys = []
     for key in dict.keys():
+        if dict[key] in output:
+            duplicate_keys.append(dict[key])
         output[dict[key]] = key
+    
+    if duplicate_keys:
+        NOTIFICATION.messenger(main_text="Warning: Found duplicate keys in flipped dictionary: {}".format(", ".join(str(x) for x in duplicate_keys)))
+        for key in duplicate_keys:
+            print ("duplicate key: ", key)
     return output
 
 def num_and_letter(num, letter):
@@ -1043,7 +1070,100 @@ def num_and_letter(num, letter):
 
 
 
+def update_excel_data(existing_excel, 
+                      worksheet, new_data, 
+                      key_name, header_row=1, 
+                      ignore_keywords=None, open_after=True):
+    """Update existing Excel data with new data.
+    
+    Args:
+        existing_excel (str): Path to existing Excel file
+        worksheet (str): Name of worksheet to update
+        new_data (dict): New data to merge with existing data
+        key_name (str): Column name to use as key
+        header_row (int, optional): Row number containing headers. Defaults to 1.
+        ignore_keywords (list, optional): Keywords to ignore in data. Defaults to None.
+    """
+    import pprint
+    update_data_dict = {}
+    existing_data = read_data_from_excel(existing_excel, worksheet=worksheet, return_dict=True)
+    header_dict = get_header_map(existing_data, header_row)
+    header_dict = flip_dict(header_dict)
+    existing_data_parsed = parse_excel_data(existing_data, key_name, header_row, ignore_keywords)
 
+    # pprint.pprint(existing_data_parsed)
+    # for k, v in existing_data_parsed.items():
+    #     print (k, v._row_number)
+    # pprint.pprint(header_dict)
+
+
+    append_data = []
+    for key, new_value in new_data.items():
+        if key not in existing_data_parsed.keys():
+            append_data.append(new_value)
+        else:
+            existing_row_data = existing_data_parsed[key]
+            row_number = existing_row_data._row_number
+            for k, v in new_value._data.items():
+                # print (existing_row_data._data.keys())
+                if k in existing_row_data._data.keys() and k in header_dict.keys():
+                    column = header_dict[k]
+                    if v != existing_row_data._data[k]:
+                        update_data_dict[str(row_number) + "," + column_number_to_letter(column)] = {
+                            "value": v, 
+                            "row": row_number,
+                            "column": column
+                        }
+
+    # print ("going to update cells:")
+    for item in update_data_dict.keys():
+        pass
+        # print (item, update_data_dict[item])
+    # print ("going to append rows:")
+
+
+    last_row = max(existing_row_data._row_number for existing_row_data in existing_data_parsed.values()) + 20
+    append_data_dict = {}
+    for item in append_data:
+        for k, v in item._data.items():
+            if k not in header_dict.keys():
+                continue
+            location = str(last_row) + "," + column_number_to_letter(header_dict.get(k))
+            # print (location, v)
+            append_data_dict[location] = {
+                "value": v,
+                "row": last_row,
+                "column": header_dict.get(k)
+            }
+        last_row += 1
+
+    job_data = {
+            "mode": "update",
+            "filepath": existing_excel,
+            "worksheet": worksheet,
+            "data": {"update_data": update_data_dict, "append_data": append_data_dict}
+        }
+    
+    DATA_FILE.set_data(job_data, "excel_handler_input")
+    DATA_FILE.set_data(job_data, "DEBUGER_excel_handler_input")
+
+    EXE.try_open_app("ExcelHandler")
+    max_wait = 100
+    wait = 0
+    while wait<max_wait:
+        job_data = DATA_FILE.get_data("excel_handler_input")
+        if job_data.get("status") == "done":
+            break
+        time.sleep(0.1)
+        wait += 1
+
+
+
+    
+    if open_after and os.path.exists(existing_excel):
+        os.startfile(existing_excel)
+
+                    
 #################  UNIT TEST  #################
 
 test_dict = {
@@ -1116,24 +1236,64 @@ def sample_excel_writer_by_pointer():
     collection.prev_row()
     collection.add("will override")
     collection.add(ExcelDataItem("as dedicated item", 10, "B"))
-    collection.save("output.xlsx")
+    collection.save("output.xlsx")               
 
-def update_excel_data(existing_excel, data, key_name, header_row=1, ignore_keywords=None):
-    """parse current excel first, just get a map of key and row"""
-    pass
 #################  MAIN  #################
 
 if __name__ == "__main__":
 
-    data = read_data_from_excel("J:\\2425\\2_Master File\\B-23_Specifications\\30_Specifications\\02_SD Spec\\2025-04-01 SD Materials List Coord\\Maryville AIEES_SD_Materials Index_Draft.xlsx", worksheet="Interior", return_dict=True)
-    data = parse_excel_data(data, "KEY NOTE ID")
+    data = { 'WV-1': {
+        "CAT.NO": None,
+        "COLOR": None,
+        "CONTACT": None,
+        "FINISH": None,
+        "FUNCTION AND LOCATION": None,
+        "KEYNOTE DESCRIPTION": "happy new yearWOOD VENEER FLUSH WOOD PANELING",
+        "KEYNOTE ID": "WV-1",
+        "PRODUCT": None,
+        "REMARKS": None,
+        "SIZE": "9999999999999999999999999999",
+        "SOURCE": None,
+        "SPEC SECTION": None,
+},
+         'WV-999': {
+        "CAT.NO": None,
+        "COLOR": None,
+        "CONTACT": None,
+        "FINISH": None,
+        "FUNCTION AND LOCATION": None,
+        "KEYNOTE DESCRIPTION": "new new new",
+        "KEYNOTE ID": "WV-999",
+        "PRODUCT": None,
+        "REMARKS": None,
+        "SIZE": "new size",
+        "SOURCE": None,
+        "SPEC SECTION": None,
+},
+    }
 
-    print (data)
-    for item in data.values():
-        print ("###############")
-    
-        print (item.get("KEY NOTE ID"))
-        print (item.get("KEYNOTE DESCRIPTION"))
-        print (item.get("FUNCTION/LOCATION"))
-        print (item.get("SOURCE/MANUF."))
+    sheets = ["Interior", "Exterior"]
+    for sheet in sheets:
+        data = read_data_from_excel("J:\\2425\\0_BIM\\10_BIM Management\\10_BIM Resources\\Maryville AIEES_SD_Materials Index_Draft_OLD.xlsx", 
+                                    worksheet=sheet, return_dict=True)
+        data = parse_excel_data(data, "KEYNOTE ID")
+        update_excel_data("J:\\2425\\0_BIM\\10_BIM Management\\10_BIM Resources\\AIEES DB.xlsx", 
+                          "Keynote Extended DB", data, "KEYNOTE ID", 
+                          ignore_keywords=["Category", "Branch"], open_after=sheet == sheets[-1])
+
+    # # print (data)
+    # import pprint
+    # pprint.pprint(data)
+    # for item in data.values():
+    #     print ("###############")
+    #     print ("KEYNOTE ID: ", item.get("KEYNOTE ID"))
+    #     print ("KEYNOTE DESCRIPTION: ", item.get("KEYNOTE DESCRIPTION"))
+    #     print ("FUNCTION AND LOCATION: ", item.get("FUNCTION AND LOCATION"))
+    #     print ("SOURCE: ", item.get("SOURCE"))
+    #     print ("PRODUCT: ", item.get("PRODUCT"))
+    #     print ("COLOR: ", item.get("COLOR"))
+    #     print ("FINISH: ", item.get("FINISH"))
+    #     print ("SIZE: ", item.get("SIZE"))
+    #     print ("REMARKS: ", item.get("REMARKS"))
+        
 
