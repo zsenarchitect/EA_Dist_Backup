@@ -39,7 +39,7 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
 
     def is_process_zone(row, col):
         if is_header:
-            if 120 >= col >= 59 and row <= 3:
+            if 79 >= col >= 59 and row <= 3:
                 return True
             return False
         else:
@@ -60,7 +60,10 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
             # print ("excel_cell_color at {} is : ".format(human_key), excel_cell_color)
             excel_cell_value = raw_data[key]["value"]
             # print ("excel_cell_value at {} is : ".format(human_key), excel_cell_value)
-            type_lookup_data = TYPE_DEFINITIONS[excel_cell_value] # this is gettting the definition what excel claim the type to be 
+            try:
+                type_lookup_data = TYPE_DEFINITIONS[excel_cell_value] # this is gettting the definition what excel claim the type to be 
+            except:
+                raise Exception("Type lookup failed for {}, your excel is not correct at {}".format(excel_cell_value, human_key))
             if not is_color_same(type_lookup_data['color'], excel_cell_color):
                 print ("Color mismatch for {}, your excel is not correct at {}".format(excel_cell_value, human_key))
                 print ("type_lookup_data['color'] is : ", type_lookup_data['color'])
@@ -100,6 +103,14 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
     
     if bad_data_found:
         NOTIFICATION.messenger("Bad data found, please check your excel")
+
+
+    if is_header:
+        # shift the location map to the left by 58
+        for key in sorted(location_map.keys(), key=lambda x: (x[1], x[0])):
+            new_key = (key[0] - 58, key[1])
+            location_map[new_key] = location_map[key]
+            del location_map[key]
     return location_map
 
 if __name__ == "__main__":

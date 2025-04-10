@@ -173,17 +173,24 @@ def pattern_maker():
     elif option == "option: from excel(option 1.1)":
         location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 1.1")
     elif option == "option: from excel(option 1.2)":
-        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 1.2")
-    elif option == "option: from excel(option 2.1)":
-        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 2.1")
+        good_sheet = "option 1.2"
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, good_sheet)
+        
         header_blocks = rs.ObjectsByName("header")
         header_block_dict, header_x_limit, header_y_limit = sorting_blocks(header_blocks, ref_srf)
-        header_location_map = opt_from_excel.get_location_map(header_x_limit, header_y_limit, "option 2.1", is_header=True)
+        header_location_map = opt_from_excel.get_location_map(header_x_limit, header_y_limit, good_sheet, is_header=True)
+    elif option == "option: from excel(option 2.1)":
+        location_map = opt_from_excel.get_location_map(x_limit, y_limit, "option 2.1")
     else:
         return
     
     rs.EnableRedraw(False)
     for location in sorted(block_dict.keys(), key=lambda x: (x[1], x[0])): # row first, then column
+      
+        # if considering header blocks, then skip treatment of header blocks in first run so the guid stay
+        if "header_blocks" in locals():
+            if rs.ObjectName(block_dict[location]) == "header":
+                continue
         block = block_dict[location]
         current_transform = rs.BlockInstanceXform(block)
         block_type = location_map[location]
@@ -193,6 +200,11 @@ def pattern_maker():
         rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
 
     if "header_blocks" in locals():
+        import pprint
+        print ("header location map is : ")
+        print (pprint.pprint(header_location_map))
+        print ("################################")
+        
         for location in sorted(header_block_dict.keys(), key=lambda x: (x[1], x[0])): # row first, then column
             block = header_block_dict[location]
             current_transform = rs.BlockInstanceXform(block)
@@ -201,6 +213,7 @@ def pattern_maker():
             rs.DeleteObject(block)
             rs.ObjectColorSource(new_block, 1)
             rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
+            rs.ObjectName(new_block, "header")
 
     NOTIFICATION.messenger("Pattern made")
 if __name__ == "__main__":
