@@ -375,6 +375,15 @@ class EditRecordWindow(forms.WPFWindow):
 class KeynoteManagerWindow(forms.WPFWindow):
     ################## group EnneadTab item at top for furtuer replacement ease ########################
 
+
+    @ERROR_HANDLE.try_catch_error()
+    def regenerate_extended_db_excel(self, sender, args):
+        AU.regenerate_extended_db_excel(keynote_data_conn = self._conn)
+
+    @ERROR_HANDLE.try_catch_error()
+    def update_keynote_from_excel(self, sender, args):
+        AU.update_keynote_from_excel(keynote_data_conn = self._conn)
+
     @ERROR_HANDLE.try_catch_error()
     def show_help(self, sender, args):
         AU.show_help()

@@ -345,9 +345,25 @@
                             Margin="0,0,0,0"
                             Padding="8,4,8,4"
                             Background="Orange"
+                            ToolTip="Regenerate the extended database Excel file."
+                            Click="regenerate_extended_db_excel">
+                        <TextBlock TextAlignment="Center">Regenerate Extended<LineBreak/>Database Excel</TextBlock>
+                    </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
                             ToolTip="Batch translate keynote text."
                             Click="batch_translate_keynote">
                         <TextBlock TextAlignment="Center">Batch Translate<LineBreak/>Keynote Text</TextBlock>
+                    </Button>
+                    <Button BorderThickness="1"
+                            Margin="0,0,0,0"
+                            Padding="8,4,8,4"
+                            Background="Orange"
+                            ToolTip="Update keynote data from an Excel file."
+                            Click="update_keynote_from_excel">
+                        <TextBlock TextAlignment="Center">Update Keynote<LineBreak/>From Excel</TextBlock>
                     </Button>
                 </StackPanel>
             </GroupBox>

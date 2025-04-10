@@ -269,6 +269,7 @@ class ExcelDataItem:
         bottom_border_style=None,
         side_border_style=None,
         merge_with=None,
+        text_wrap=False,
     ):
         """_summary_
 
@@ -290,6 +291,7 @@ class ExcelDataItem:
             bottom_border_style (_type_, optional): _description_. Defaults to None.
             side_border_style (_type_, optional): _description_. Defaults to None.
             merge_with (_type_, optional): _description_. Defaults to None.
+            text_wrap (bool, optional): _description_. Defaults to False.
         """
         if isinstance(column, str):
             column = letter_to_index(column, start_from_zero=True)
@@ -316,6 +318,7 @@ class ExcelDataItem:
         self.bottom_border_style = bottom_border_style
         self.side_border_style = side_border_style
         self.merge_with = merge_with
+        self.text_wrap = text_wrap
     def __str__(self):
         info = "ExcelDataItem: {} @ ({}, {})".format(self.item, self.row, self.column)
         if self.cell_color:
@@ -359,7 +362,8 @@ class ExcelDataItem:
             'top_border_style': None,
             'bottom_border_style': None,
             'side_border_style': None,
-            'merge_with': None
+            'merge_with': None,
+            'text_wrap': False
         }
         
         # Update with provided values
