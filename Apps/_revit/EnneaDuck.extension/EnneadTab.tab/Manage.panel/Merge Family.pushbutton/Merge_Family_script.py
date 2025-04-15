@@ -542,7 +542,7 @@ class FamilyMerger(forms.WPFWindow):
 
 
 
-    def open_details_describtion(self, sender, args):
+    def open_details_description(self, sender, args):
         main_text = "How to use Family Merger?"
         sub_text = "Step 1: Pick two families for the source, you can use same family."
         sub_text += "\nStep 2: Pick types to merge from dropdown list. You can use zoom to see a sample instance of the element. You can also just create a new type in the good family based on bad type data."

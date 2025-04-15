@@ -10,7 +10,7 @@ import ENVIRONMENT
 import USER
 import NOTIFICATION
 import COPY
-
+import ERROR_HANDLE
 def open_document_file(file_path):
     """Open a document file using the system's default application.
     
@@ -169,5 +169,4 @@ def clean_temporary_executables():
                 elif os.path.isdir(file_path):
                     os.rmdir(file_path)
             except Exception as e:
-                if USER.IS_DEVELOPER:
-                    print("Error removing {}: {}".format(file_path, e))
+                ERROR_HANDLE.print_note("Error removing {}: {}".format(file_path, e))

@@ -126,7 +126,7 @@
                     <TextBlock Text="Accepting .3dm and .dwg files." 
                                VerticalAlignment="Center"/>
                     <Button Content="What is the difference?" 
-                            Click="open_details_describtion" Background="{x:Null}" 
+                            Click="open_details_description" Background="{x:Null}" 
                             Foreground="#FF8A8A8A" 
                             BorderThickness="1,0,1,0" FontStyle="Italic"/>
 
@@ -165,15 +165,19 @@
                                TextAlignment="Left"
                                TextWrapping="Wrap"
                                Text="Pick Available Objects from the family. If you don't like what you see, you can also add more object style by creating your own, or use object style name from opening docs." />
+
+        
                 </WrapPanel>
-
-
                 <WrapPanel HorizontalAlignment="Center">
                 <Button Content="Add More Object Style"
                             Click="add_OST_clicked"
                             Width="200"/>
                 <Button Content="Load Recent Output"
                         Click="load_recent_output_clicked"/>    
+                <Button Content="Purge Geo"
+                        Click="purge_geo_from_doc_clicked"
+                        BorderThickness="3"
+                        BorderBrush="#FF8A8A8A"/>
                 </WrapPanel>
 
                 <WrapPanel HorizontalAlignment="Center">

@@ -112,7 +112,7 @@ You can get pyrevit from here and pick the first one under "Download" section. T
 For a complete command list of this plugin, please check [EnneadTab For Rhino Handbook](https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/EnneadTab_For_Rhino_HandBook.pdf)
 
 ### 4.1 Install EnneadTab for Rhino
-0. __(Important!)__ Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 4.3__, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "Ennead+" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
+0. __(Important!)__ Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following __step 4.3__, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "EnneadTab" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
 1. Navigate to 
     - "C:\Users\\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation"
 2. Have __ONLY ONE__ Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.

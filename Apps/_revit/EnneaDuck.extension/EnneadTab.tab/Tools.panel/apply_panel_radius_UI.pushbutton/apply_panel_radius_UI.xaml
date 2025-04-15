@@ -134,7 +134,7 @@
                 <Separator/>
                 <Button Content="Instruction" 
                         HorizontalAlignment="Center"
-                            Click="open_details_describtion" Background="{x:Null}" 
+                            Click="open_details_description" Background="{x:Null}" 
                             Foreground="#FF8A8A8A" 
                             BorderThickness="1,0,1,0" FontStyle="Italic"/>
                 

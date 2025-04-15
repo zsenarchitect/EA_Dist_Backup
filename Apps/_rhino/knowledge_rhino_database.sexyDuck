@@ -735,6 +735,15 @@
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
     },
+    "Modify.tab\\move_fixed_dist.button\\move_fixed_dist_left.py": {
+        "script": "Modify.tab\\move_fixed_dist.button\\move_fixed_dist_left.py",
+        "icon": "Modify.tab\\move_fixed_dist.button\\icon.png",
+        "alias": "MoveFixedDist",
+        "doc": "Move selected objects a fixed distance in 6 directions.\n\nFeatures:\n- Simple modeless interface with 6 directional buttons\n- Persistent distance value between sessions\n- Input validation for numeric values\n- North/South/East/West/Up/Down movement\n- Safe window handling to prevent UI errors\n- Allows full interaction with Rhino while dialog is open\n- Gamepad-style button layout\n- Zoom to selected function",
+        "tab": "Modify.tab",
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
+    },
     "Modify.tab\\offset_floor_border.button\\offset_floor_border_left.py": {
         "script": "Modify.tab\\offset_floor_border.button\\offset_floor_border_left.py",
         "icon": "Modify.tab\\offset_floor_border.button\\icon.png",
