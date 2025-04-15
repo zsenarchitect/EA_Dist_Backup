@@ -22,6 +22,8 @@ def find_main_repo():
             return os.path.join(user_profile_folder, location, 'EnneadTab-OS')
 
     esosys_folder = "{}\\Documents\\EnneadTab Ecosystem".format(os.environ["USERPROFILE"])
+    if not os.path.exists(esosys_folder):
+        esosys_folder = "{}\\Documents\\EnneadTab-Ecosystem".format(os.environ["USERPROFILE"])
     return os.path.join(esosys_folder, 'EA_Dist')
 
 _repo = find_main_repo()
@@ -37,7 +39,7 @@ except ModuleNotFoundError:
     pass
 
 import sys
-sys.path.append(ENVIRONMENT.RHINO_FOLDER + "\\Ennead+.menu\\get_latest.button")
+sys.path.append(ENVIRONMENT.RHINO_FOLDER + "\\{}.menu\\get_latest.button".format(ENVIRONMENT.PLUGIN_NAME))
 import get_latest_left # pyright:ignore
 
 @LOG.log(__file__, __title__)

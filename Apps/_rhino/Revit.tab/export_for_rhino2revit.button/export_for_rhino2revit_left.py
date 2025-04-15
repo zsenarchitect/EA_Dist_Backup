@@ -1,4 +1,4 @@
-__title__ = "ExportForRhino2Revit"
+__title__ = "Rhino2Revit"
 __doc__ = "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit."
 __is_popular__ = True
 import Rhino # pyright: ignore
@@ -17,7 +17,7 @@ flatten = itertools.chain.from_iterable
 graft = itertools.combinations
 
 
-from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG, UI
+from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG, DATA_FILE
 from EnneadTab import LOG, ERROR_HANDLE
 from EnneadTab.RHINO import RHINO_LAYER, RHINO_UI
 
@@ -458,6 +458,7 @@ def export(output_folder, datas):
                                 embed_label = True,
                                 show_percent = True)
 
+    out_path_dict = {"3dm_out_paths": [], "dwg_out_paths": []}
     for i, data in enumerate(datas):
         rs.StatusBarProgressMeterUpdate(position = i, absolute = True)
         entry, check_3dm, check_dwg = data
@@ -467,14 +468,15 @@ def export(output_folder, datas):
         raw_objs = rs.ObjectsByLayer(layer, select = False)
         filter = rs.filter.instance
         objs = [obj for obj in raw_objs if rs.ObjectType(obj)!= filter]
-        if len(objs) == 0:
-            continue
+
 
         if check_3dm:
             # avoid situation where there are only non solid geo, such as curve and text, in the final export
             objs = [x for x in objs if rs.IsSurface(x) or rs.IsPolysurface(x)]
-            if len(objs) == 0:
-                continue
+
+            
+        if len(objs) == 0:
+            continue
             
         rs.SelectObjects(objs)
 
@@ -489,10 +491,12 @@ def export(output_folder, datas):
         if check_3dm:
             file = "{}.3dm".format(file_name_naked)
             filepath = "{}\{}".format(output_folder, file)
+            out_path_dict["3dm_out_paths"].append(filepath)
             rs.Command("!_-Export \"{}\" -Enter -Enter".format(filepath), echo = False)
         if check_dwg:
             file = "{}.dwg".format(file_name_naked)
             filepath = "{}\{}".format(output_folder, file)
+            out_path_dict["dwg_out_paths"].append(filepath)
             rs.Command("!_-Export \"{}\" Scheme  \"2007 Solids\" -Enter -Enter".format(filepath), echo = False)
 
 
@@ -506,6 +510,8 @@ def export(output_folder, datas):
     announcement = "{} layers content exported".format(len(datas))
     SPEAK.speak(announcement)
     SOUND.play_sound()
+
+    DATA_FILE.set_data(out_path_dict, "rhino2revit_out_paths")
 
 
 

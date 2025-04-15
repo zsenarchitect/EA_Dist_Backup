@@ -363,7 +363,8 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
             ("I", "SIZE", 35),
             ("J", "CONTACT", 35),
             ("K", "SPEC SECTION", 35),
-            ("L", "REMARKS", 70)
+            ("L", "REMARKS", 70),
+            ("M", "FUNCTION AND LOCATION", 70)
         ]:
             data_collection.append(EXCEL.ExcelDataItem(
                 title, pointer_row, col, 
@@ -385,7 +386,7 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
             pointer_row += 2  # skip 2 for adding empty line
             bran_name = branch.text
             if len(bran_name) == 0:
-                bran_name = "UnOrganized, please write some description to the branch."
+                bran_name = "UnOrganized, please write something to the branch keynote description."
             data_collection.append(EXCEL.ExcelDataItem(bran_name, pointer_row, "B", is_bold=True))
             print("\t\t{}: [{}] {}".format(i+1, branch.key, branch.text))
             
@@ -422,7 +423,8 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
                         ("I", "SIZE"),
                         ("J", "CONTACT"),
                         ("K", "SPEC SECTION"),
-                        ("L", "REMARKS")
+                        ("L", "REMARKS"),
+                        ("M", "FUNCTION AND LOCATION")
                     ]:
                         data_collection.append(EXCEL.ExcelDataItem(
                             extend_db_item.get(field), pointer_row, col, 
@@ -675,7 +677,8 @@ def open_extended_db_excel(keynote_data_conn):
         ("I", "SIZE", 10),
         ("J", "CONTACT", 10),
         ("K", "SPEC SECTION", 10),
-        ("L", "REMARKS", 30)
+        ("L", "REMARKS", 30),
+        ("M", "FUNCTION AND LOCATION", 30)
     ]
     
     for col, title, width in header_fields:
@@ -724,7 +727,7 @@ def open_extended_db_excel(keynote_data_conn):
             pointer_row += 1
             bran_name = branch.text
             if len(bran_name) == 0:
-                bran_name = "UnOrganized"
+                bran_name = "UnOrganized, please write something in the keynote description."
             
             # Add branch header
             data_collection.append(EXCEL.ExcelDataItem(
