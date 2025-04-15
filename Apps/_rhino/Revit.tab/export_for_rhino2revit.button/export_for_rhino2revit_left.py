@@ -223,6 +223,11 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         self.btn_Run.Click += self.btn_Run_Clicked
         user_buttons.append(self.btn_Run)
 
+        self.btn_select_all = Eto.Forms.Button()
+        self.btn_select_all.Text = "Select All"
+        self.btn_select_all.Click += self.btn_select_all_Clicked
+        user_buttons.append(self.btn_select_all)
+
         self.btn_Cancel = Eto.Forms.Button()
         self.btn_Cancel.Text = "Cancel"
         self.btn_Cancel.Click += self.btn_Cancel_Clicked
@@ -349,6 +354,11 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         self.Close(True)
         self.RunScript()
 
+
+    def btn_select_all_Clicked(self, sender, e):
+        # Select all items in the list box
+        for i in range(len(self.list_box.DataStore)):
+            self.list_box.SelectRow(i)
 
     # event handler handling clicking on the 'cancel' button
     def btn_Cancel_Clicked(self, sender, e):
@@ -508,12 +518,12 @@ def export(output_folder, datas):
     rs.DeleteObjects(trash_geo)
     rs.UnselectAllObjects()
 
+    DATA_FILE.set_data(out_path_dict, "rhino2revit_out_paths")
     NOTIFICATION.messenger(main_text = "{} layers exported!".format(len(datas)))
     announcement = "{} layers content exported".format(len(datas))
     SPEAK.speak(announcement)
     SOUND.play_sound()
 
-    DATA_FILE.set_data(out_path_dict, "rhino2revit_out_paths")
 
 
 
