@@ -60,7 +60,7 @@ def get_latest(is_silient = False):
 
     # this is always done in the background so no need to wait for it.,
     try:
-        VERSION_CONTROL.update_EA_dist()
+        VERSION_CONTROL.update_dist_repo()
     except Exception as e:
         print ("Error updating EA dist")
         print (e)

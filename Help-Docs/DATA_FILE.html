@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>DATA_FILE</h1><p>EnneadTab Data File Management Module
+
+A comprehensive data persistence system for EnneadTab that provides robust JSON file handling
+and sticky data management. This module handles reading, writing, and managing data across
+local and shared storage locations.
+
+Key Features:
+    - Safe JSON file operations with encoding support
+    - Local and shared dump folder management
+    - List-based file operations
+    - Sticky data persistence
+    - Context manager for safe data updates
+    - Cross-platform compatibility (IronPython/CPython)
+    - UTF-8 encoding support for international characters
+
+Note:
+    All file operations are designed to be safe and atomic, with proper error handling
+    and temporary file management to prevent data corruption.</p><h2>Functions</h2>
+                        <div class="function" id="_read_json_file_safely">
+                            <h3>_read_json_file_safely(filepath, use_encode=True, create_if_not_exist=False)</h3>
+                            <p>Safely read a JSON file by creating a temporary copy.
+    
+    Creates a temporary copy of the JSON file before reading to avoid file locking
+    issues and ensure data integrity.
+
+    Args:
+        filepath (str): Path to the JSON file
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+        create_if_not_exist (bool, optional): Create empty file if not found.
+            Defaults to False.
+
+    Returns:
+        dict: File contents as dictionary, empty dict if file doesn't exist</p>
+                        </div>
+                        
+                        <div class="function" id="_read_json_as_dict">
+                            <h3>_read_json_as_dict(filepath, use_encode=True, create_if_not_exist=False)</h3>
+                            <p>Read JSON file and return contents as dictionary.
+    
+    Handles both IronPython and CPython environments with proper encoding support.
+    Creates new file with empty dictionary if specified and file doesn't exist.
+
+    Args:
+        filepath (str): Path to the JSON file
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+        create_if_not_exist (bool, optional): Create empty file if not found.
+            Defaults to False.
+
+    Returns:
+        dict: File contents as dictionary, None if read error occurs</p>
+                        </div>
+                        
+                        <div class="function" id="_read_json_as_dict_in_dump_folder">
+                            <h3>_read_json_as_dict_in_dump_folder(
+    file_name, use_encode=True, create_if_not_exist=False
+)</h3>
+                            <p>Read JSON file from EA dump folder.
+    
+    Provides direct access to files in the EA dump folder with proper encoding
+    and file creation support.
+
+    Args:
+        file_name (str): Name of file in dump folder
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+        create_if_not_exist (bool, optional): Create empty file if not found.
+            Defaults to False.
+
+    Returns:
+        dict: File contents as dictionary</p>
+                        </div>
+                        
+                        <div class="function" id="_read_json_as_dict_in_shared_dump_folder">
+                            <h3>_read_json_as_dict_in_shared_dump_folder(
+    file_name, use_encode=True, create_if_not_exist=False
+)</h3>
+                            <p>Read JSON file from shared dump folder.
+    
+    Provides safe access to files in the shared dump folder with proper encoding
+    and file creation support.
+
+    Args:
+        file_name (str): Name of file in shared dump folder
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+        create_if_not_exist (bool, optional): Create empty file if not found.
+            Defaults to False.
+
+    Returns:
+        dict: File contents as dictionary</p>
+                        </div>
+                        
+                        <div class="function" id="_save_dict_to_json">
+                            <h3>_save_dict_to_json(data_dict, filepath, use_encode=True)</h3>
+                            <p>Save dictionary to JSON file with proper encoding.
+    
+    Handles both IronPython and CPython environments, ensuring proper UTF-8
+    encoding without BOM (Byte Order Mark). Includes automatic handling for
+    non-serializable objects by converting them through a cascade of types:
+    boolean -> integer -> float -> string.
+
+    Args:
+        data_dict (dict): Dictionary to save
+        filepath (str): Target file path
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+
+    Returns:
+        bool: True if save successful, False otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="default">
+                            <h3>default(self, obj)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="_save_dict_to_json_in_dump_folder">
+                            <h3>_save_dict_to_json_in_dump_folder(data_dict, file_name, use_encode=True)</h3>
+                            <p>Save dictionary to JSON file in EA dump folder.
+    
+    Direct storage of dictionary data to the EA dump folder with encoding support.
+
+    Args:
+        data_dict (dict): Dictionary to save
+        file_name (str): Target filename
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+
+    Returns:
+        bool: True if save successful, False otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="_save_dict_to_json_in_shared_dump_folder">
+                            <h3>_save_dict_to_json_in_shared_dump_folder(data_dict, file_name, use_encode=True)</h3>
+                            <p>Save dictionary to JSON file in shared dump folder.
+    
+    Direct storage of dictionary data to the shared dump folder with encoding support.
+
+    Args:
+        data_dict (dict): Dictionary to save
+        file_name (str): Target filename
+        use_encode (bool, optional): Enable UTF-8 encoding for international characters.
+            Defaults to True.
+
+    Returns:
+        bool: True if save successful, False otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="get_list">
+                            <h3>get_list(filepath)</h3>
+                            <p>Read file contents as list of strings.
+    
+    Each line in the file becomes an element in the returned list.
+    Creates a temporary copy to avoid file locking issues.
+
+    Args:
+        filepath (str): Path to text file
+
+    Returns:
+        list: List of strings, empty list if file doesn't exist</p>
+                        </div>
+                        
+                        <div class="function" id="set_list">
+                            <h3>set_list(list, filepath, end_with_new_line=False)</h3>
+                            <p>Write list of strings to file.
+    
+    Each element in the list becomes a line in the file.
+    Supports UTF-8 encoding for international characters.
+
+    Args:
+        list (list): List of strings to write
+        filepath (str): Target file path
+        end_with_new_line (bool, optional): Add newline at end of file.
+            Defaults to False.
+
+    Returns:
+        bool: True if write successful</p>
+                        </div>
+                        
+                        <div class="function" id="pretty_print_dict">
+                            <h3>pretty_print_dict(data_dict)</h3>
+                            <p>Print dictionary with formatted indentation.
+    
+    Useful for debugging and data inspection.
+
+    Args:
+        data_dict (dict): Dictionary to print</p>
+                        </div>
+                        
+                        <div class="function" id="get_data">
+                            <h3>get_data(file_name_or_full_path, is_local=True)</h3>
+                            <p>Retrieve data from JSON file.
+    
+    Supports both local and shared storage locations.
+    Creates file with empty dictionary if it doesn't exist.
+
+    Args:
+        file_name_or_full_path (str): Filename or full path, extension is optional, if missing, will add plugin extension instead.
+        is_local (bool, optional): Use local dump folder if True,
+            shared if False. Defaults to True.
+
+    Returns:
+        dict: File contents as dictionary</p>
+                        </div>
+                        
+                        <div class="function" id="set_data">
+                            <h3>set_data(data_dict, file_name_or_full_path, is_local=True)</h3>
+                            <p>Save dictionary to JSON file.
+    
+    Supports both local and shared storage locations.
+    Ensures proper encoding for international characters.
+
+    Args:
+        data_dict (dict): Dictionary to save
+        file_name_or_full_path (str): Filename or full path
+        is_local (bool, optional): Use local dump folder if True,
+            shared if False. Defaults to True.
+
+    Returns:
+        bool: True if save successful</p>
+                        </div>
+                        
+                        <div class="function" id="update_data">
+                            <h3>update_data(file_name, is_local=True, keep_holder_key=None)</h3>
+                            <p>Context manager for safe data updates.
+    
+    Provides atomic read-modify-write operations on JSON data files.
+    Automatically handles file loading and saving.
+
+    Example:
+        with update_data("config.json") as data:
+            data["setting"] = "new_value"
+
+    Args:
+        file_name (str): Name of JSON file
+        is_local (bool, optional): Use local dump folder if True,
+            shared if False. Defaults to True.
+        keep_holder_key (str, optional): Key to preserve during updates.
+            Defaults to None.
+
+    Yields:
+        dict: File contents for modification</p>
+                        </div>
+                        
+                        <div class="function" id="__str__">
+                            <h3>__str__(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="__repr__">
+                            <h3>__repr__(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="__json__">
+                            <h3>__json__(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="__eq__">
+                            <h3>__eq__(self, other)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_sticky">
+                            <h3>get_sticky(sticky_name, default_value_if_no_sticky=None, 
+               data_type_if_no_sticky=None, tiny_wait=False)</h3>
+                            <p>Retrieve persistent sticky data.
+    
+    Access sticky data that persists across sessions.
+    Returns default value if sticky doesn't exist.
+
+    Args:
+        sticky_name (str): Identifier for sticky data
+        default_value_if_no_sticky (any, optional): Default value if not found.
+            Defaults to None.
+        data_type_if_no_sticky (str, optional): Type of data to store.
+            "int" for integer, "float" for float, "str" for string, "bool" for boolean, "dict" for dictionary.
+            Defaults to None.
+
+    Returns:
+        any: Sticky data value or default</p>
+                        </div>
+                        
+                        <div class="function" id="set_sticky">
+                            <h3>set_sticky(sticky_name, value_to_write, 
+               data_type=None, tiny_wait=False)</h3>
+                            <p>Save persistent sticky data.
+    
+    Store data that persists across sessions.
+    Automatically handles JSON serialization.
+
+    Args:
+        sticky_name (str): Identifier for sticky data
+        value_to_write (any): Value to store
+        data_type (str, optional): Type of data to store.
+            "int" for integer, "float" for float, "str" for string, "bool" for boolean.
+            Defaults to None.
+    Returns:
+        bool: True if save successful</p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

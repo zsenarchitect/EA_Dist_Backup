@@ -223,7 +223,7 @@ class warning_fixer_ModelessForm(WPFWindow):
         self.sub_text.Text = "Current total warnings = {}".format(self.initial_count)
 
         self.primary_button.Content = "Randomly bring me to a warning area."
-        self.Title = "EA_wall and rm seperation line overlap fixer."
+        self.Title = "Wall and rm seperation line overlap fixer."
         self.Width = 600
         self.Height = 400
         self.Show()

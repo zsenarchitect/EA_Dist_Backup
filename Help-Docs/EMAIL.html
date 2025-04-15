@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>EMAIL</h1><p>This module is for sending email. It is a wrapper for the Emailer app.</p><h2>Functions</h2>
+                        <div class="function" id="email">
+                            <h3>email(
+    receiver_email_list,
+    body,
+    subject="EnneadTab Auto Email",
+    body_folder_link_list=None,
+    body_image_link_list=None,
+    attachment_list=None,
+)</h3>
+                            <p>Send email using the Emailer app.
+
+    Args:
+        receiver_email_list (list): List of email addresses.
+        body (str): Body of the email.
+        subject (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email".
+        body_folder_link_list (list, optional): List of folder links to be included in the email body. Defaults to None.
+        body_image_link_list (list, optional): List of image links to be included in the email body. Defaults to None.
+        attachment_list (list, optional): List of file paths to be attached to the email. Defaults to None.</p>
+                        </div>
+                        
+                        <div class="function" id="email_error">
+                            <h3>email_error(
+    traceback, tool_name, error_from_user, subject_line="EnneadTab Auto Email Error Log"
+)</h3>
+                            <p>Send automated email when an error occurs.
+
+    Args:
+        traceback (str): Traceback of the error.
+        tool_name (str): Name of the tool that caused the error.
+        error_from_user (str): Error message from the user.
+        subject_line (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email Error Log".</p>
+                        </div>
+                        
+                        <div class="function" id="email_to_self">
+                            <h3>email_to_self(
+    subject="EnneadTab Auto Email to Self",
+    body=None,
+    body_folder_link_list=None,
+    body_image_link_list=None,
+    attachment_list=None,
+)</h3>
+                            <p>Send email to self.
+
+    Args:
+        subject (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email to Self".
+        body (str, optional): Body of the email. Defaults to None.
+        body_folder_link_list (list, optional): List of folder links to be included in the email body. Defaults to None.
+        body_image_link_list (list, optional): List of image links to be included in the email body. Defaults to None.
+        attachment_list (list, optional): List of file paths to be attached to the email. Defaults to None</p>
+                        </div>
+                        
+                        <div class="function" id="unit_test">
+                            <h3>unit_test()</h3>
+                            <p></p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

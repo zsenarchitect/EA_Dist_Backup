@@ -37,7 +37,7 @@ from pyrevit.revit import ErrorSwallower
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
-from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG, UI
+from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG, UI, ENVIRONMENT
 
 from Autodesk.Revit import DB # pyright: ignore  
 import clr # pyright: ignore 
@@ -332,7 +332,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
     @ERROR_HANDLE.try_catch_error()
     def pick_files(self, sender, args):
         # print "pick files"
-        recent_output_folder = os.path.join(os.path.expanduser("~"), "Desktop")
+        recent_output_folder = ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER
             
             
         files = forms.pick_file(files_filter='Rhino and AutoCAD (*.3dm; *.dwg)|*.3dm; *.dwg|'

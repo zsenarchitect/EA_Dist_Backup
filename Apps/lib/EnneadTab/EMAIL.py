@@ -180,3 +180,7 @@ def unit_test():
         subject="Test Email for compiler",
         body="Happy Howdy. This is a quick email test to see if the base communication still working",
     )
+
+
+if __name__ == "__main__":
+    unit_test()

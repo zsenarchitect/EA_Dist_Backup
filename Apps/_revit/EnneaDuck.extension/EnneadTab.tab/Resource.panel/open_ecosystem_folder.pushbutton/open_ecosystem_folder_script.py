@@ -20,7 +20,7 @@ from Autodesk.Revit import DB # pyright: ignore
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
-def open_ecosystem_folder():
+def open_ECO_SYS_FOLDER():
     os.startfile(ENVIRONMENT.ECO_SYS_FOLDER)
 
 
@@ -28,7 +28,7 @@ def open_ecosystem_folder():
 
 ################## main code below #####################
 if __name__ == "__main__":
-    open_ecosystem_folder()
+    open_ECO_SYS_FOLDER()
 
 
 

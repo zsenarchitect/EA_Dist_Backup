@@ -7,7 +7,7 @@ proDUCKtion.validify()
 # for i, path in enumerate(sys.path):
 #     print("{}: {}".format(i+1, path))
 
-from EnneadTab import    EXCEL , NOTIFICATION, AI, TEXT, OUTPUT
+from EnneadTab import EXCEL, NOTIFICATION, AI, TEXT, OUTPUT
 # from EnneadTab import LOG
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_PROJ_DATA, REVIT_FORMS
 from Autodesk.Revit import DB # pyright: ignore 
@@ -30,10 +30,14 @@ def show_help():
     output.insert_divider()
     output.write("1. You are about to setup on a new project:", OUTPUT.Style.Subtitle)
     output.write("   - 1. Make sure your current keynote file is pointed at project folder, not from public template folder.")
-    output.write("   - 2. (Optional, if you have existing keynote file you want to merge to the current list)Click on \"Import Keynote\" button to merge another file into current file.")
-    output.write("   - 3. (Optional, if you have some legacy quote mark around the description.)Click on \"Cleanup quota mark around description\" button to cleanup them.")
-    output.write("   - 4. Click on \"Edit Extend DB Excel\" button to pick a loocation for the extended DB excel file. This will be the file storing all your ohter product information. The address will be recorded for future use.")
-    output.write("   - 5. Click on \"Export Keynote as Excel\" button to pick a loaction to save your keynote as two separate excel files, one for exterior and one for interior. Those locations will be recorded for future use.")
+    output.write("   - 2. (Optional, if you have existing keynote file you want to merge to the current list)"
+                 "Click on \"Import Keynote\" button to merge another file into current file.")
+    output.write("   - 3. (Optional, if you have some legacy quote mark around the description.)"
+                 "Click on \"Cleanup quota mark around description\" button to cleanup them.")
+    output.write("   - 4. Click on \"Edit Extend DB Excel\" button to pick a loocation for the extended DB excel file. "
+                 "This will be the file storing all your ohter product information. The address will be recorded for future use.")
+    output.write("   - 5. Click on \"Export Keynote as Excel\" button to pick a loaction to save your keynote as two separate excel files, "
+                 "one for exterior and one for interior. Those locations will be recorded for future use.")
     output.write("      - You can use those two excel file to sticky link as schedule in Revit.")
     output.insert_divider()
 
@@ -55,7 +59,8 @@ def show_help():
     output.write("   - 5. How to translate all keynote descriptions:", OUTPUT.Style.SubSubtitle)
     output.write("      - Click on \"Batch Translate Keynote\" button to translate the keynote description.")
     output.write("   - 6. How to export for Exterior and Interior excel:", OUTPUT.Style.SubSubtitle)
-    output.write("      - Click on \"Export Keynote as Excel\" button to export the keynote as two separate excel files, one for exterior and one for interior.")
+    output.write("      - Click on \"Export Keynote as Excel\" button to export the keynote as two separate excel files, "
+                 "one for exterior and one for interior.")
     output.write("   - 7. How to edit extended DB excel:", OUTPUT.Style.SubSubtitle)
     output.write("      - Click on \"Edit Extend DB Excel\" button to open the extended DB excel file.")
     output.write("      - Edit as you prefer, the primary area to change is the Exterior and Interior category.")
@@ -121,21 +126,37 @@ def batch_reattach_keynotes(keynote_data_conn):
         for keynote in selected_keynotes:
             try:
                 if keynote.parent_key == new_parent:
-                    print ("Forbidden to reattach [{}]:{} to same parent".format(keynote.key, keynote.text))
+                    print ("Forbidden to reattach [{}]:{} to same parent".format(
+                        keynote.key, keynote.text))
                     continue
                 if keynote.key == new_parent:
-                    print ("Forbidden to reattach [{}]:{} to itself".format(keynote.key, keynote.text))
+                    print ("Forbidden to reattach [{}]:{} to itself".format(
+                        keynote.key, keynote.text))
                     continue
                 original_parent = keynote.parent_key
                 kdb.move_keynote(keynote_data_conn, keynote.key, new_parent)
-                print ("Reattach [{}]:{} parent from [{}] to [{}]".format(keynote.key, keynote.text, original_parent, new_parent))
+                print ("Reattach [{}]:{} parent from [{}] to [{}]".format(
+                    keynote.key, keynote.text, original_parent, new_parent))
             except Exception as e:
-                print ("Error reattaching [{}]:{} from [{}] to [{}]".format(keynote.key, keynote.text, original_parent, new_parent))
+                print ("Error reattaching [{}]:{} from [{}] to [{}]".format(
+                    keynote.key, keynote.text, original_parent, new_parent))
                 print(e)
 
 
 
 def batch_translate_keynote(keynote_data_conn):
+    """
+    Translate keynote descriptions in batch.
+    
+    This function translates all keynote descriptions in the database by using AI translation
+    and appends the translation to the original text.
+    
+    Args:
+        keynote_data_conn: Database connection to the keynote data
+        
+    Returns:
+        None
+    """
     all_keynotes = kdb.get_keynotes(keynote_data_conn)
     input_texts = [TEXT.strip_chinese(x.text) for x in all_keynotes if x.text]
     print ("Going to translate those descriptions:")
@@ -156,6 +177,18 @@ def batch_translate_keynote(keynote_data_conn):
     
 
 def translate_keynote(input):
+    """
+    Translate a single keynote description.
+    
+    This function translates a single keynote description using AI translation
+    and appends the translation to the original text.
+    
+    Args:
+        input: The text to translate
+        
+    Returns:
+        String containing original text and translation
+    """
     return input + " " + AI.translate(input)
 
 
@@ -195,6 +228,18 @@ def cleanup_quote_text(keynote_data_conn):
 
 
 def get_leaf_keynotes(keynote_data_conn):
+    """
+    Get all leaf keynotes from the database.
+    
+    This function retrieves all leaf keynotes (keynotes that are not parents of other keynotes)
+    from the database.
+    
+    Args:
+        keynote_data_conn: Database connection to the keynote data
+        
+    Returns:
+        List of leaf keynotes
+    """
     OUT = []
     all_keynotes = kdb.get_keynotes(keynote_data_conn)
     all_categories = kdb.get_categories(keynote_data_conn)
@@ -227,109 +272,208 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
     project_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     extend_db_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("extended_db_excel_path")
     if extend_db_path and os.path.exists(extend_db_path):
-        db_data = EXCEL.read_data_from_excel(extend_db_path, 
-                                             worksheet="Keynote Extended DB", 
-                                             return_dict=True)
+        db_data = EXCEL.read_data_from_excel(
+            extend_db_path, 
+            worksheet="Keynote Extended DB", 
+            return_dict=True
+        )
 
-        db_data = EXCEL.parse_excel_data(db_data, "KEYNOTE ID", ignore_keywords=["[Branch]", "[Category]"])
+        db_data = EXCEL.parse_excel_data(
+            db_data, 
+            "KEYNOTE ID", 
+            ignore_keywords=["[Branch]", "[Category]"]
+        )
        
     else:
         db_data = {}
 
-
-
     # Get the full keynote tree
-    categorys = [x for x in kdb.get_categories(keynote_data_conn) if x.key.upper() in ["EXTERIOR", "INTERIOR"]]
+    categorys = [x for x in kdb.get_categories(keynote_data_conn) 
+                if x.key.upper() in ["EXTERIOR", "INTERIOR"]]
 
     all_keynotes = kdb.get_keynotes(keynote_data_conn)
     for cate in categorys:
         data_collection = []
         pointer_row = 0
-        data_collection.append(EXCEL.ExcelDataItem("Keynote ID", pointer_row, "B", cell_color=(200, 200, 200), col_width=10, merge_with=[(pointer_row+1, "B")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("Keynote Description", pointer_row, "C", cell_color=(200, 200, 200), col_width=50, merge_with=[(pointer_row+1, "C")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-
-        data_collection.append(EXCEL.ExcelDataItem("SOURCE", pointer_row+1, "D", cell_color=(200, 200, 200), text_alignment=EXCEL.TextAlignment.Center, col_width=20,
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("PRODUCT", pointer_row+1, "E", cell_color=(200, 200, 200), text_alignment=EXCEL.TextAlignment.Center, col_width=20,
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("BASE OF DESIGN", pointer_row, "D", cell_color=(200, 200, 200), merge_with=[(pointer_row, "E")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-
         
-        data_collection.append(EXCEL.ExcelDataItem("CAT.NO", pointer_row, "F", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "F")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("COLOR", pointer_row, "G", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "G")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("FINISH", pointer_row, "H", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "H")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("SIZE", pointer_row, "I", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "I")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("CONTACT", pointer_row, "J", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "J")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("SPEC SECTION", pointer_row, "K", cell_color=(200, 200, 200), col_width=35, merge_with=[(pointer_row+1, "K")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
-        data_collection.append(EXCEL.ExcelDataItem("REMARKS", pointer_row, "L", cell_color=(200, 200, 200), col_width=70, merge_with=[(pointer_row+1, "L")],
-                                                   top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True))
+        # Header Row - Keynote ID
+        data_collection.append(EXCEL.ExcelDataItem(
+            "Keynote ID", pointer_row, "B", 
+            cell_color=(200, 200, 200), 
+            col_width=10, 
+            merge_with=[(pointer_row+1, "B")],
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True
+        ))
+        
+        # Header Row - Keynote Description
+        data_collection.append(EXCEL.ExcelDataItem(
+            "Keynote Description", pointer_row, "C", 
+            cell_color=(200, 200, 200), 
+            col_width=50, 
+            merge_with=[(pointer_row+1, "C")],
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True
+        ))
 
+        # Header Row - Source
+        data_collection.append(EXCEL.ExcelDataItem(
+            "SOURCE", pointer_row+1, "D", 
+            cell_color=(200, 200, 200), 
+            text_alignment=EXCEL.TextAlignment.Center, 
+            col_width=20,
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True
+        ))
+        
+        # Header Row - Product
+        data_collection.append(EXCEL.ExcelDataItem(
+            "PRODUCT", pointer_row+1, "E", 
+            cell_color=(200, 200, 200), 
+            text_alignment=EXCEL.TextAlignment.Center, 
+            col_width=20,
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True
+        ))
+        
+        # Header Row - Base of Design
+        data_collection.append(EXCEL.ExcelDataItem(
+            "BASE OF DESIGN", pointer_row, "D", 
+            cell_color=(200, 200, 200), 
+            merge_with=[(pointer_row, "E")],
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True
+        ))
+
+        # More header columns
+        for col, title, width in [
+            ("F", "CAT.NO", 35),
+            ("G", "COLOR", 35),
+            ("H", "FINISH", 35),
+            ("I", "SIZE", 35),
+            ("J", "CONTACT", 35),
+            ("K", "SPEC SECTION", 35),
+            ("L", "REMARKS", 70)
+        ]:
+            data_collection.append(EXCEL.ExcelDataItem(
+                title, pointer_row, col, 
+                cell_color=(200, 200, 200), 
+                col_width=width, 
+                merge_with=[(pointer_row+1, col)],
+                top_border_style=1, 
+                side_border_style=1, 
+                bottom_border_style=1, 
+                is_bold=True
+            ))
         
         pointer_row += 2
         print("\n== CATEGORY: {} ==".format(cate.key))
         top_branch = [x for x in all_keynotes if x.parent_key == cate.key]
-        print ("\tTop branchs in {}".format(cate.key))
+        print("\tTop branchs in {}".format(cate.key))
+        
         for i, branch in enumerate(top_branch):
-            pointer_row += 2 # skip 2 for adding empty line
+            pointer_row += 2  # skip 2 for adding empty line
             bran_name = branch.text
             if len(bran_name) == 0:
                 bran_name = "UnOrganized, please write some description to the branch."
             data_collection.append(EXCEL.ExcelDataItem(bran_name, pointer_row, "B", is_bold=True))
-            print("\t\t{}: [{}] {}".format(i+1,branch.key, branch.text))
+            print("\t\t{}: [{}] {}".format(i+1, branch.key, branch.text))
+            
             leafs = [x for x in all_keynotes if x.parent_key == branch.key]
             for j, leaf in enumerate(leafs):
                 pointer_row += 1
-                data_collection.append(EXCEL.ExcelDataItem(leaf.key, pointer_row, "B",
-                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
-                data_collection.append(EXCEL.ExcelDataItem(leaf.text, pointer_row, "C", text_wrap=True,
-                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
+                
+                # Keynote ID column
+                data_collection.append(EXCEL.ExcelDataItem(
+                    leaf.key, pointer_row, "B",
+                    top_border_style=1, 
+                    side_border_style=1, 
+                    bottom_border_style=1
+                ))
+                
+                # Keynote Description column
+                data_collection.append(EXCEL.ExcelDataItem(
+                    leaf.text, pointer_row, "C", 
+                    text_wrap=True,
+                    top_border_style=1, 
+                    side_border_style=1, 
+                    bottom_border_style=1
+                ))
 
                 extend_db_item = db_data.get(leaf.key)
                 if extend_db_item:
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("SOURCE"), pointer_row, "D", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("PRODUCT"), pointer_row, "E", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("CAT.NO"), pointer_row, "F", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("COLOR"), pointer_row, "G", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("FINISH"), pointer_row, "H", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("SIZE"), pointer_row, "I", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("CONTACT"), pointer_row, "J", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("SPEC SECTION"), pointer_row, "K", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(extend_db_item.get("REMARKS"), pointer_row, "L", text_wrap=True,
-                                                            top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    # Add extended DB data columns
+                    for col, field in [
+                        ("D", "SOURCE"),
+                        ("E", "PRODUCT"),
+                        ("F", "CAT.NO"),
+                        ("G", "COLOR"),
+                        ("H", "FINISH"),
+                        ("I", "SIZE"),
+                        ("J", "CONTACT"),
+                        ("K", "SPEC SECTION"),
+                        ("L", "REMARKS")
+                    ]:
+                        data_collection.append(EXCEL.ExcelDataItem(
+                            extend_db_item.get(field), pointer_row, col, 
+                            text_wrap=True,
+                            top_border_style=1, 
+                            side_border_style=1, 
+                            bottom_border_style=1
+                        ))
                 else:
-                    # if cannot find a matching DB item by keynote key, it problly means DB item is lost or user have give a new keynote key.
-                    # override the color to light red to make it notice
-                    data_collection.append(EXCEL.ExcelDataItem(leaf.key, pointer_row, "B", cell_color=(255, 200, 200),
-                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem(leaf.text, pointer_row, "C", cell_color=(255, 200, 200), text_wrap=True,
-                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
-                    data_collection.append(EXCEL.ExcelDataItem("Cannot find this item in extended DB", pointer_row, "D", cell_color=(211, 211, 211), merge_with=[(pointer_row, "E"), (pointer_row, "F"), (pointer_row, "G"), (pointer_row, "H"), (pointer_row, "I"), (pointer_row, "J"), (pointer_row, "K"), (pointer_row, "L")],
-                                                           top_border_style=1, side_border_style=1, bottom_border_style=1))
+                    # If no matching DB item, highlight with light red
+                    data_collection.append(EXCEL.ExcelDataItem(
+                        leaf.key, pointer_row, "B", 
+                        cell_color=(255, 200, 200),
+                        top_border_style=1, 
+                        side_border_style=1, 
+                        bottom_border_style=1
+                    ))
+                    
+                    data_collection.append(EXCEL.ExcelDataItem(
+                        leaf.text, pointer_row, "C", 
+                        cell_color=(255, 200, 200), 
+                        text_wrap=True,
+                        top_border_style=1, 
+                        side_border_style=1, 
+                        bottom_border_style=1
+                    ))
+                    
+                    # Add a merged cell for showing a message
+                    data_collection.append(EXCEL.ExcelDataItem(
+                        "Cannot find this item in extended DB", 
+                        pointer_row, "D", 
+                        cell_color=(211, 211, 211), 
+                        merge_with=[
+                            (pointer_row, "E"), (pointer_row, "F"), 
+                            (pointer_row, "G"), (pointer_row, "H"), 
+                            (pointer_row, "I"), (pointer_row, "J"), 
+                            (pointer_row, "K"), (pointer_row, "L")
+                        ],
+                        top_border_style=1, 
+                        side_border_style=1, 
+                        bottom_border_style=1
+                    ))
                     
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
                 
 
         def _pick_excel_out_path():
-            excel_out_path = forms.pick_excel_file(title="Pick Extended Keynote Database Excel File for [{}]".format(cate.key),
-                                                    save = True,
-                                                    )
+            excel_out_path = forms.pick_excel_file(
+                title="Pick Extended Keynote Database Excel File for [{}]".format(cate.key),
+                save=True
+            )
             if "keynote_assistant" not in project_data:
                 project_data["keynote_assistant"] = {}
             if "setting" not in project_data["keynote_assistant"]:
@@ -342,16 +486,14 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
         
         excel_out_path = project_data.get("keynote_assistant", {}).get("setting", {}).get("excel_path_{}".format(cate.key))
         if not excel_out_path:
-            note =  "Excel output path for [{}] is not defined, please pick one".format(cate.key)
+            note = "Excel output path for [{}] is not defined, please pick one".format(cate.key)
             NOTIFICATION.messenger(note)
-            print (note)
+            print(note)
             excel_out_path = _pick_excel_out_path()
         elif not os.path.exists(excel_out_path):
-            print ("Excel output path for [{}] is not found, please pick one again.\nOriginal path: {}  is no longer valid".format(cate.key, excel_out_path))
+            print("Excel output path for [{}] is not found, please pick one again."
+                  "\nOriginal path: {} is no longer valid".format(cate.key, excel_out_path))
             excel_out_path = _pick_excel_out_path()
-
-
-
 
         EXCEL.save_data_to_excel(data_collection, excel_out_path, worksheet=cate.key, freeze_row=2)
 
@@ -359,7 +501,6 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
         return
 
     bug_coolection = []
-    
     
     # Get keynotes once to avoid multiple database calls
     leaf_keynotes = get_leaf_keynotes(keynote_data_conn)
@@ -378,11 +519,14 @@ def export_keynote_as_exterior_and_interior(keynote_data_conn):
             bug_coolection.append("-{}: [{}]{}".format(i+1, key, keynote_keys[key].text))
 
     if diff or reverse_diff:
-        print ("\n\n")
+        print("\n\n")
         bug_coolection.append("This is usually due to one of the following reasons:")
-        bug_coolection.append("1. You have renamed the key in keynote file but did not update the same item in the DB excel file: Please update the same item in the DB excel file")
-        bug_coolection.append("2. You have added a new keynote in keynote file, but not in extended DB: Please add the same item in the DB excel file")
-        bug_coolection.append("3. You have added a new keynote in extended DB, but not in keynote file: Please add the same item in the keynote file")
+        bug_coolection.append("1. You have renamed the key in keynote file but did not update the same item in the DB excel file: "
+                             "Please update the same item in the DB excel file")
+        bug_coolection.append("2. You have added a new keynote in keynote file, but not in extended DB: "
+                             "Please add the same item in the DB excel file")
+        bug_coolection.append("3. You have added a new keynote in extended DB, but not in keynote file: "
+                             "Please add the same item in the keynote file")
 
     if bug_coolection:
         output = script.get_output()
@@ -396,26 +540,39 @@ def update_keynote_from_excel(keynote_data_conn):
     Update keynote data from an Excel file.
     
     This function allows you to update keynote data from an Excel file into the keynote database.
+    It provides options to add missing keynotes and update existing ones with new descriptions.
     
     Args:
+        keynote_data_conn: Database connection to the keynote data
+        
+    Returns:
+        None
     """
+    options = [
+        ["Update Keynote from Excel", "Update keynote data from an Excel file."], 
+        "Abort Abort Abort!!!!!!"
+    ]
 
-    options = [["Update Keynote from Excel", "Update keynote data from an Excel file."], "Abort Abort Abort!!!!!!"]
-
-    res = REVIT_FORMS.dialogue(main_text="Update Keynote from Excel.", sub_text="This is a dangerour game.", options=options, icon="warning")
+    res = REVIT_FORMS.dialogue(
+        main_text="Update Keynote from Excel.", 
+        sub_text="This is a dangerour game. I am going to use the 'Update' worksheet in the Excel file "
+                "to update the keynote data. Adding one if missing, and updating the existing ones with new description."
+                "\nYou will have a chance to pick a parent for the new keynotes, if you did not assign one in the Excel file.", 
+        options=options, 
+        icon="warning"
+    )
     if res != options[0][0]:
         return
 
-    excel_path = forms.pick_excel_file(title="Pick Keynote Excel File",
-                                        save = False,
-                                        )
+    excel_path = forms.pick_excel_file(
+        title="Pick Keynote Excel File",
+        save=False
+    )
     if not excel_path:
         return
 
-    data = EXCEL.read_data_from_excel(excel_path, worksheet="New", return_dict=True)
-
+    data = EXCEL.read_data_from_excel(excel_path, worksheet="Update", return_dict=True)
     data = EXCEL.parse_excel_data(data, "KEYNOTE ID")
-
     
     categories = kdb.get_categories(keynote_data_conn)
     keynotes = kdb.get_keynotes(keynote_data_conn)
@@ -423,33 +580,56 @@ def update_keynote_from_excel(keynote_data_conn):
     available_parents.extend([x.key for x in keynotes])
    
     # prompt to select a record
-    new_parent = forms.SelectFromList.show(
+    new_parent_for_new_keynote = forms.SelectFromList.show(
         natsorted(available_parents),
         title='Select New Parent',
         multiselect=False,
-        button_name="Pick new parent to attach to..."
-        )
+        button_name="Pick new parent to attach to if you are creating a new keynote and did not assign in excel..."
+    )
     
-    if not new_parent:
+    if not new_parent_for_new_keynote:
         return
-
 
     all_keynotes = kdb.get_keynotes(keynote_data_conn)
     all_keys = [x.key for x in all_keynotes]
     with kdb.BulkAction(keynote_data_conn):
         for k, v in data.items():
             v = v.get("KEYNOTE DESCRIPTION")
+           
             if k in all_keys:
                 current_keynote_text = [x for x in all_keynotes if x.key == k][0].text
                 if current_keynote_text != v:
                     kdb.update_keynote_text(keynote_data_conn, k, v)
-                    print ("Update [{}]: {}".format(k, v))
+                    print("Update [{}]: {}".format(k, v))
             else:
-                kdb.add_keynote(keynote_data_conn, k, v, new_parent)
-                print ("Add [{}]: {}".format(k, v))
+                assigned_parent = v.get("PARENT FOR NEW KEYNOTE")
+                if assigned_parent is not None and assigned_parent not in all_keys:
+                    print("You are trying to create [{}] and attach it to [{}] as parent, "
+                          "but [{}] is not found in the keynote database. "
+                          "I am going to use [{}] as parent instead.".format(
+                            k, assigned_parent, assigned_parent, new_parent_for_new_keynote))
+                    assigned_parent = None
+                    
+                if assigned_parent:
+                    kdb.add_keynote(keynote_data_conn, k, v, assigned_parent)
+                else:
+                    kdb.add_keynote(keynote_data_conn, k, v, new_parent_for_new_keynote)
+                print("Add [{}]: {}".format(k, v))
     
 
 def open_extended_db_excel(keynote_data_conn):
+    """
+    Open the extended DB Excel file for editing.
+    
+    This function opens the extended DB Excel file for editing. If the file does not exist,
+    it creates a new one with a default structure.
+    
+    Args:
+        keynote_data_conn: Database connection to the keynote data
+        
+    Returns:
+        None
+    """
     doc = REVIT_APPLICATION.get_doc()
     t = DB.Transaction(doc, "edit extended db excel")
     t.Start()
@@ -459,9 +639,10 @@ def open_extended_db_excel(keynote_data_conn):
     keynote_excel_extend_db = project_data.get("keynote_assistant", {}).get("setting", {}).get("extended_db_excel_path")
     if not keynote_excel_extend_db:
         
-        keynote_excel_extend_db = forms.pick_excel_file(title="Pick Extended Keynote Database Excel File",
-                                                  save = True,
-                                                  )
+        keynote_excel_extend_db = forms.pick_excel_file(
+            title="Pick Extended Keynote Database Excel File",
+            save=True
+        )
         if "keynote_assistant" not in project_data:
             project_data["keynote_assistant"] = {}
         if "setting" not in project_data["keynote_assistant"]:
@@ -481,28 +662,33 @@ def open_extended_db_excel(keynote_data_conn):
     color_dark_grey = (200, 200, 200)
     data_collection = []
     pointer_row = 0
-    data_collection.append(EXCEL.ExcelDataItem("KEYNOTE ID", pointer_row, "B", cell_color=color_dark_grey, col_width=15,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("KEYNOTE DESCRIPTION", pointer_row, "C", cell_color=color_dark_grey, 
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("SOURCE", pointer_row, "D", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("PRODUCT", pointer_row, "E", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("CAT.NO", pointer_row, "F", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("COLOR", pointer_row, "G", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("FINISH", pointer_row, "H", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("SIZE", pointer_row, "I", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("CONTACT", pointer_row, "J", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-    data_collection.append(EXCEL.ExcelDataItem("SPEC SECTION", pointer_row, "K", cell_color=color_dark_grey, col_width=10,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))   
-    data_collection.append(EXCEL.ExcelDataItem("REMARKS", pointer_row, "L", cell_color=color_dark_grey, col_width=30,
-                                                top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
+    
+    # Create header rows with consistent formatting
+    header_fields = [
+        ("B", "KEYNOTE ID", 15),
+        ("C", "KEYNOTE DESCRIPTION", None),
+        ("D", "SOURCE", 10),
+        ("E", "PRODUCT", 10),
+        ("F", "CAT.NO", 10),
+        ("G", "COLOR", 10),
+        ("H", "FINISH", 10),
+        ("I", "SIZE", 10),
+        ("J", "CONTACT", 10),
+        ("K", "SPEC SECTION", 10),
+        ("L", "REMARKS", 30)
+    ]
+    
+    for col, title, width in header_fields:
+        data_collection.append(EXCEL.ExcelDataItem(
+            title, pointer_row, col, 
+            cell_color=color_dark_grey, 
+            col_width=width,
+            top_border_style=1, 
+            side_border_style=1, 
+            bottom_border_style=1, 
+            is_bold=True, 
+            is_read_only=True
+        ))
     
     # Get the full keynote tree
     categorys = [x for x in kdb.get_categories(keynote_data_conn)]
@@ -510,53 +696,121 @@ def open_extended_db_excel(keynote_data_conn):
     for cate in categorys:
         pointer_row += 3
         print("\n== CATEGORY: {} ==".format(cate.key))
-        data_collection.append(EXCEL.ExcelDataItem("[Category]: " + str(cate.key), pointer_row, "B", cell_color = color_yellow, is_bold=True, is_read_only=True))
+        
+        # Add category header
+        data_collection.append(EXCEL.ExcelDataItem(
+            "[Category]: " + str(cate.key), 
+            pointer_row, "B", 
+            cell_color=color_yellow, 
+            is_bold=True, 
+            is_read_only=True
+        ))
+        
+        # Fill category row with consistent formatting
         for column in range(10):  # From C to L, char 67 is C
-            data_collection.append(EXCEL.ExcelDataItem("", pointer_row, chr(67 + column), cell_color=color_yellow, is_bold=True, is_read_only=True))
+            data_collection.append(EXCEL.ExcelDataItem(
+                "", 
+                pointer_row, 
+                chr(67 + column), 
+                cell_color=color_yellow, 
+                is_bold=True, 
+                is_read_only=True
+            ))
 
         top_branch = [x for x in all_keynotes if x.parent_key == cate.key]
-        print ("\tTop branchs in {}".format(cate.key))
+        print("\tTop branchs in {}".format(cate.key))
+        
         for i, branch in enumerate(top_branch):
             pointer_row += 1
             bran_name = branch.text
             if len(bran_name) == 0:
                 bran_name = "UnOrganized"
-            data_collection.append(EXCEL.ExcelDataItem("[Branch]: " + str(bran_name), pointer_row, "B", cell_color=color_green, is_bold=True, is_read_only=True))
+            
+            # Add branch header
+            data_collection.append(EXCEL.ExcelDataItem(
+                "[Branch]: " + str(bran_name), 
+                pointer_row, "B", 
+                cell_color=color_green, 
+                is_bold=True, 
+                is_read_only=True
+            ))
+            
+            # Fill branch row with consistent formatting
             for column in range(10):  # From C to L, char 67 is C
-                data_collection.append(EXCEL.ExcelDataItem("", pointer_row, chr(67 + column), cell_color=color_green, is_bold=True, is_read_only=True))
-            print("\t\t{}: [{}] {}".format(i+1,branch.key, branch.text))
+                data_collection.append(EXCEL.ExcelDataItem(
+                    "", 
+                    pointer_row, 
+                    chr(67 + column), 
+                    cell_color=color_green, 
+                    is_bold=True, 
+                    is_read_only=True
+                ))
+                
+            print("\t\t{}: [{}] {}".format(i+1, branch.key, branch.text))
+            
             leafs = [x for x in all_keynotes if x.parent_key == branch.key]
             for j, leaf in enumerate(leafs):
                 pointer_row += 1
-
                 print("\t\t\t{}-{}: [{}] {}".format(i+1, j+1, leaf.key, leaf.text))
 
-                data_collection.append(EXCEL.ExcelDataItem(str(leaf.key), pointer_row, "B", cell_color=color_light_grey, 
-                                                        top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-                data_collection.append(EXCEL.ExcelDataItem(str(leaf.text), pointer_row, "C", cell_color=color_light_grey, 
-                                                        top_border_style=1, side_border_style=1, bottom_border_style=1, is_bold=True, is_read_only=True))
-            
-            
+                # Add keynote ID cell
+                data_collection.append(EXCEL.ExcelDataItem(
+                    str(leaf.key), 
+                    pointer_row, "B", 
+                    cell_color=color_light_grey, 
+                    top_border_style=1, 
+                    side_border_style=1, 
+                    bottom_border_style=1, 
+                    is_bold=True, 
+                    is_read_only=True
+                ))
+                
+                # Add keynote description cell
+                data_collection.append(EXCEL.ExcelDataItem(
+                    str(leaf.text), 
+                    pointer_row, "C", 
+                    cell_color=color_light_grey, 
+                    top_border_style=1, 
+                    side_border_style=1, 
+                    bottom_border_style=1, 
+                    is_bold=True, 
+                    is_read_only=True
+                ))
     
-
-    EXCEL.save_data_to_excel(data_collection, keynote_excel_extend_db, worksheet="Keynote Extended DB", freeze_row=1, freeze_column="C")
+    EXCEL.save_data_to_excel(
+        data_collection, 
+        keynote_excel_extend_db, 
+        worksheet="Keynote Extended DB", 
+        freeze_row=1, 
+        freeze_column="C"
+    )
 
     os.startfile(keynote_excel_extend_db)
 
 
 def regenerate_extended_db_excel(keynote_data_conn):
+    """
+    Regenerate the extended DB Excel file.
+    
+    This function regenerates the extended DB Excel file based on the current keynote database.
+    Currently not implemented.
+    
+    Args:
+        keynote_data_conn: Database connection to the keynote data
+        
+    Returns:
+        None
+    """
     doc = REVIT_APPLICATION.get_doc()
     project_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     keynote_excel_extend_db = project_data.get("keynote_assistant", {}).get("setting", {}).get("extended_db_excel_path")
     if not keynote_excel_extend_db:
         note = "Extended DB excel path is not defined, please define one first by using [Open Extended Database Excel] button."
         NOTIFICATION.messenger(note)
-        print (note)
+        print(note)
         return
 
-    print ("Regenerate extended DB excel feature is not implemented yet. Sen is very lazy.")
-
-
+    print("Regenerate extended DB excel feature is not implemented yet. Sen is very lazy.")
 
 
 if __name__ == "__main__":

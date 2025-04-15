@@ -30,7 +30,7 @@ Dont tell me it is a security risk, it is NOT.
 
 import os
 import sys
-
+from datetime import datetime
 
 PLUGIN_NAME = "EnneadTab"
 PLUGIN_ABBR = "EA"
@@ -56,11 +56,14 @@ ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennea
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
-ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, "{}-Ecosystem".format(PLUGIN_NAME))
+ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, "{}-Ecosystem".format(PLUGIN_NAME))
 ECO_SYS_FOLDER_LEGACY = os.path.join(USER_DOCUMENT_FOLDER, "{} Ecosystem".format(PLUGIN_NAME))
 ####################################
-# TO_DO: make commit change after May 1st
-ECO_SYS_FOLDER = ECO_SYS_FOLDER_LEGACY
+# TO_DO: make commit change to MODERN after May 1st
+if datetime.now().date() > datetime(2026, 5, 1).date():
+    ECO_SYS_FOLDER = ECO_SYS_FOLDER_MODERN
+else:
+    ECO_SYS_FOLDER = ECO_SYS_FOLDER_LEGACY
 ####################################
 DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
@@ -72,7 +75,7 @@ def _secure_folder(folder):
         except Exception as e:
             print("Cannot secure folder [{}] becasue {}".format(folder, e))
 
-map(_secure_folder, [ECO_SYS_FOLDER, DUMP_FOLDER])
+map(_secure_folder, [ECO_SYS_FOLDER, ECO_SYS_FOLDER_MODERN, DUMP_FOLDER])
 
 APP_FOLDER = os.path.join(ROOT, "Apps")
 
@@ -134,7 +137,7 @@ if not os.path.exists(DB_FOLDER):
     DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "05_EnneadTab", "EnneadTab-DB")
 SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
-
+STAND_ALONE_FOLDER = os.path.join(DB_FOLDER, "Stand Alone Tools")
 
 
 

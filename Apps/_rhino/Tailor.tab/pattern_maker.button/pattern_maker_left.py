@@ -200,11 +200,7 @@ def pattern_maker():
         rs.ObjectColor(new_block, TYPE_DEFINITIONS[block_type].get('color', (0, 0, 0)))
 
     if "header_blocks" in locals():
-        import pprint
-        print ("header location map is : ")
-        print (pprint.pprint(header_location_map))
-        print ("################################")
-        
+
         for location in sorted(header_block_dict.keys(), key=lambda x: (x[1], x[0])): # row first, then column
             block = header_block_dict[location]
             current_transform = rs.BlockInstanceXform(block)

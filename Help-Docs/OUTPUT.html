@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>OUTPUT</h1><p><script>
+function sample_func(btn) {
+  alert(btn.innerText);
+  prompt("Type anything:");
+  confirm("Do you want to continue?");
+}
+
+function highlightSearch() {
+  var input, filter, body, p, h1, h2, li, i, txtValue;
+  input = document.getElementById('searchBox');
+  filter = input.value.toLowerCase();
+  body = document.getElementsByTagName('body')[0];
+  
+  // Highlight paragraphs
+  p = body.getElementsByTagName('p');
+  for (i = 0; i < p.length; i++) {
+    txtValue = p[i].textContent || p[i].innerText;
+    if (filter === "") {
+      p[i].style.backgroundColor = '';
+    } else if (txtValue.toLowerCase().indexOf(filter) > -1) {
+      p[i].style.backgroundColor = 'lightgreen';
+    } else {
+      p[i].style.backgroundColor = '';
+    }
+  }
+
+  // Highlight titles
+  h1 = body.getElementsByTagName('h1');
+  for (i = 0; i < h1.length; i++) {
+    txtValue = h1[i].textContent || h1[i].innerText;
+    if (filter === "") {
+      h1[i].style.backgroundColor = '';
+    } else if (txtValue.toLowerCase().indexOf(filter) > -1) {
+      h1[i].style.backgroundColor = 'lightgreen';
+    } else {
+      h1[i].style.backgroundColor = '';
+    }
+  }
+  
+  h2 = body.getElementsByTagName('h2');
+  for (i = 0; i < h2.length; i++) {
+    txtValue = h2[i].textContent || h2[i].innerText;
+    if (filter === "") {
+      h2[i].style.backgroundColor = '';
+    } else if (txtValue.toLowerCase().indexOf(filter) > -1) {
+      h2[i].style.backgroundColor = 'lightgreen';
+    } else {
+      h2[i].style.backgroundColor = '';
+    }
+  }
+
+  // Highlight list items
+  li = body.getElementsByTagName('li');
+  for (i = 0; i < li.length; i++) {
+    txtValue = li[i].textContent || li[i].innerText;
+    if (filter === "") {
+      li[i].style.backgroundColor = '';
+    } else if (txtValue.toLowerCase().indexOf(filter) > -1) {
+      li[i].style.backgroundColor = 'lightgreen';
+    } else {
+      li[i].style.backgroundColor = '';
+    }
+  }
+}
+
+function copyErrorCard(btn) {
+    const card = btn.closest('.error-card');
+    const text = card.textContent.replace('Copy', '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+        btn.innerHTML = 'Copied!';
+        setTimeout(() => {
+            btn.innerHTML = 'Copy';
+        }, 2000);
+    });
+}
+
+// Mouse tracking and logo animation system
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup floating logo animation
+    const floatingLogoContainer = document.createElement('div');
+    floatingLogoContainer.id = 'floating-logo-container';
+    document.body.appendChild(floatingLogoContainer);
+    
+    const floatingLogo = document.createElement('img');
+    floatingLogo.id = 'floating-logo';
+    floatingLogo.src = document.querySelector('img[src*="logo_outline_white.png"]').src;
+    floatingLogo.height = 80;
+    floatingLogoContainer.appendChild(floatingLogo);
+    
+    // Variables for tracking mouse and animation
+    let mouseX = 0, mouseY = 0;
+    let logoX = window.innerWidth / 2;
+    let logoY = window.innerHeight / 2;
+    let prevLogoX = logoX;
+    let prevLogoY = logoY;
+    let angle = 0;
+    let targetAngle = 0;
+    let lastMoveTime = Date.now();
+    let isRotatingToUpright = false;
+    
+    // Track mouse movement
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.pageX;
+        mouseY = e.pageY;
+    });
+    
+    // Animation function
+    function updateLogoPosition() {
+        // Store previous position for direction calculation
+        prevLogoX = logoX;
+        prevLogoY = logoY;
+        
+        // Calculate new position with easing for delay effect
+        logoX += (mouseX - logoX) * 0.08;
+        logoY += (mouseY - logoY) * 0.08;
+        
+        // Calculate direction of movement
+        const dx = logoX - prevLogoX;
+        const dy = logoY - prevLogoY;
+        
+        // Check if there's significant movement
+        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+            targetAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+            lastMoveTime = Date.now();
+            isRotatingToUpright = false;
+        } else {
+            // If no movement for 0.5 seconds, start rotating back to upright
+            const currentTime = Date.now();
+            if (currentTime - lastMoveTime > 500 && !isRotatingToUpright) {
+                isRotatingToUpright = true;
+                targetAngle = 0; // Upright orientation
+            }
+        }
+        
+        // Smoothly interpolate current angle to target angle
+        const rotationSpeed = isRotatingToUpright ? 0.03 : 0.2; // Slower rotation when returning to upright
+        angle += (targetAngle - angle) * rotationSpeed;
+        
+        // Apply position and rotation transform
+        floatingLogo.style.transform = `translate(${logoX - 40}px, ${logoY - 40}px) rotate(${angle}deg)`;
+        
+        // Continue animation loop
+        requestAnimationFrame(updateLogoPosition);
+    }
+    
+    // Start animation
+    updateLogoPosition();
+});
+
+// Rotating message system
+let currentMessageIndex = 0;
+const rotationInterval = 6000; 
+
+function rotateMessages() {
+    const footer = document.querySelector('.floating-footer');
+    if (!footer) return;
+    
+    const messages = JSON.parse(footer.dataset.messages);
+    
+    // Remove old animation class
+    footer.classList.remove('message-animate');
+    
+    // Update content
+    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+    footer.innerHTML = messages[currentMessageIndex];
+    
+    // Force a reflow to restart animation
+    void footer.offsetWidth;
+    
+    // Add animation class
+    footer.classList.add('message-animate');
+}
+
+// Start rotation when document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const footer = document.querySelector('.floating-footer');
+    if (footer) {
+        // Show first message immediately
+        const messages = JSON.parse(footer.dataset.messages);
+        footer.innerHTML = messages[0];
+        footer.classList.add('message-animate');
+        
+        // Start rotation after first animation
+        setInterval(rotateMessages, rotationInterval);
+    }
+});
+
+// Add format method to String prototype if not exists
+if (!String.prototype.format) {
+    String.prototype.format = function() {
+        const args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] != 'undefined' ? args[number] : match;
+        });
+    };
+}
+</script></p><h2>Functions</h2>
+                        <div class="function" id="sanitize_message">
+                            <h3>sanitize_message(msg)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="__new__">
+                            <h3>__new__(cls, *args, **kwargs)</h3>
+                            <p>Implements the singleton pattern for Output class.
+
+        Returns:
+            Output: The single instance of the Output class.</p>
+                        </div>
+                        
+                        <div class="function" id="write">
+                            <h3>write(self, content, style = Style.MainBody, as_str=False)</h3>
+                            <p>Writes content to the output buffer with specified styling.
+
+        Args:
+            content: The content to write (can be any type)
+            style: The style to apply (default: Style.MainBody)
+            as_str (bool): Whether to force convert content to string (default: False)
+
+        Note:
+            Content is stored in the output buffer and will be displayed when plot() is called.
+            If _is_print_out is True, content is also printed to console.</p>
+                        </div>
+                        
+                        <div class="function" id="reset_output">
+                            <h3>reset_output(self)</h3>
+                            <p>Clears the output buffer.
+        
+        Removes all content from the output buffer without affecting the HTML report.</p>
+                        </div>
+                        
+                        <div class="function" id="is_empty">
+                            <h3>is_empty(self)</h3>
+                            <p>Checks if the output buffer is empty.
+
+        Returns:
+            bool: True if no content in output buffer, False otherwise.</p>
+                        </div>
+                        
+                        <div class="function" id="plot">
+                            <h3>plot(self)</h3>
+                            <p>Generates and displays the HTML report if output buffer is not empty.
+        
+        This method:
+        1. Checks if there is content to display
+        2. Generates the HTML report with current content
+        3. Opens the report in the default web browser</p>
+                        </div>
+                        
+                        <div class="function" id="_generate_html_report">
+                            <h3>_generate_html_report(self, save_path = None)</h3>
+                            <p>Generates the HTML report with current output content.
+        
+        Creates a styled HTML file with:
+            - Search functionality
+            - Error highlighting
+            - Copy buttons for error messages
+            - Responsive design
+            - EnneadTab branding</p>
+                        </div>
+                        
+                        <div class="function" id="format_content">
+                            <h3>format_content(input)</h3>
+                            <p>Formats input content for HTML display.
+
+        Args:
+            input: Content to be formatted (any type)
+
+        Returns:
+            str: HTML-safe formatted string representation of the input</p>
+                        </div>
+                        
+                        <div class="function" id="print_md">
+                            <h3>print_md(self, content)</h3>
+                            <p>Prints content in markdown format.
+
+        Args:
+            content: Content to be displayed in markdown format</p>
+                        </div>
+                        
+                        <div class="function" id="print_html">
+                            <h3>print_html(self, content)</h3>
+                            <p>Prints raw HTML content.
+
+        Args:
+            content: HTML content to be displayed directly</p>
+                        </div>
+                        
+                        <div class="function" id="_print_html_report">
+                            <h3>_print_html_report(self)</h3>
+                            <p>Opens the generated HTML report in the default web browser.</p>
+                        </div>
+                        
+                        <div class="function" id="insert_divider">
+                            <h3>insert_divider(self)</h3>
+                            <p>Inserts a horizontal line divider in the output.</p>
+                        </div>
+                        
+                        <div class="function" id="reset">
+                            <h3>reset(self)</h3>
+                            <p>Resets the output system.
+        
+        Clears the output buffer and removes the existing HTML report file.</p>
+                        </div>
+                        
+                        <div class="function" id="get_output">
+                            <h3>get_output()</h3>
+                            <p>Returns the singleton instance of the Output class.
+
+    Returns:
+        Output: The single instance of the Output class</p>
+                        </div>
+                        
+                        <div class="function" id="unit_test">
+                            <h3>unit_test()</h3>
+                            <p>Runs a comprehensive test of the output system.
+    
+    Tests:
+        - Basic output functionality
+        - Different style outputs
+        - Error message formatting
+        - List output
+        - Divider insertion
+        - HTML report generation</p>
+                        </div>
+                        
+                        <div class="function" id="display_output_on_browser">
+                            <h3>display_output_on_browser()</h3>
+                            <p>Forces the current output to be displayed in the browser.
+    
+    Note:
+        This is a convenience function that creates an Output instance
+        and calls its plot() method.</p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

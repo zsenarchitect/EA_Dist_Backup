@@ -174,10 +174,10 @@ def _save_dict_to_json(data_dict, filepath, use_encode=True):
     """
     try:
         # Create a custom JSON encoder to handle non-serializable objects
-        class EnneadTabJSONEncoder(json.JSONEncoder):
+        class AmazingJSONEncoder(json.JSONEncoder):
             def default(self, obj):
                 try:
-                    return super(EnneadTabJSONEncoder, self).default(obj)
+                    return super(AmazingJSONEncoder, self).default(obj)
                 except TypeError:
                     # Try type conversion cascade: bool -> int -> float -> str
                     str_obj = str(obj).lower()
@@ -195,10 +195,10 @@ def _save_dict_to_json(data_dict, filepath, use_encode=True):
                             return str(obj)
         
         try:
-            json_str = json.dumps(data_dict, ensure_ascii=False, indent=4, sort_keys=True, cls=EnneadTabJSONEncoder)
+            json_str = json.dumps(data_dict, ensure_ascii=False, indent=4, sort_keys=True, cls=AmazingJSONEncoder)
         except Exception as e:
             print("Failed to convert data_dict to json_str because of {}".format(str(e)))
-            json_str = json.dumps(data_dict, ensure_ascii=True, indent=4, sort_keys=True, cls=EnneadTabJSONEncoder)
+            json_str = json.dumps(data_dict, ensure_ascii=True, indent=4, sort_keys=True, cls=AmazingJSONEncoder)
         
         if sys.platform == "cli":  # IronPython
             from System.IO import File, StreamWriter
@@ -367,8 +367,6 @@ def set_data(data_dict, file_name_or_full_path, is_local=True):
         bool: True if save successful
     """
     if os.path.exists(file_name_or_full_path):
-        if "{}_DEVELOPERS.secret".format(ENVIRONMENT.PLUGIN_NAME.upper()) not in file_name_or_full_path:
-            print("Using full path feature is allowed but not prefered.", file_name_or_full_path)
         return _save_dict_to_json(data_dict, file_name_or_full_path, use_encode=True)
     
     if is_local:

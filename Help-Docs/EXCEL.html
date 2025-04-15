@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>EXCEL</h1><p>Excel file manipulation utilities for EnneadTab.
+
+This module provides comprehensive tools for Excel file operations including:
+- Reading and writing data from/to Excel files
+- Formula validation and visualization
+- Column/row manipulation and searching
+- Color and formatting management
+- Support for both local and online Excel files
+
+The module handles both .xls and .xlsx formats, with special handling for
+SharePoint-hosted files.
+
+Key Features:
+- Excel file format conversion and validation
+- Cell formatting and styling
+- Data extraction and manipulation
+- Formula checking and highlighting
+- Support for both local and remote Excel files</p><h2>Functions</h2>
+                        <div class="function" id="column_number_to_letter">
+                            <h3>column_number_to_letter(number, is_upper=True)</h3>
+                            <p>Convert numeric column index to Excel letter notation.
+
+    Handles both single-letter (A-Z) and multi-letter (AA-ZZ) column references.
+    Uses 1-based indexing to match Excel's column numbering system.
+
+    Args:
+        number (int): Column number (1-based index)
+        is_upper (bool, optional): If True, returns uppercase letters. Defaults to True.
+
+    Returns:
+        str: Column letter notation (e.g., 1 -> 'A', 27 -> 'AA')</p>
+                        </div>
+                        
+                        <div class="function" id="letter_to_index">
+                            <h3>letter_to_index(letter, start_from_zero=False)</h3>
+                            <p>Convert Excel column letter to numeric index.
+
+    Args:
+        letter (str): Column letter ('A' to 'Z')
+        start_from_zero (bool, optional): If True, 'A' maps to 0; if False, 'A' maps to 1.
+            Defaults to False.
+
+    Returns:
+        int or None: Column index if valid input, None otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="letter_next">
+                            <h3>letter_next(letter, offset = 1)</h3>
+                            <p>Get the next column letter in the sequence.
+
+    Args:
+        letter (str): Current column letter
+        offset (int, optional): Number of positions to move forward. Defaults to 1.</p>
+                        </div>
+                        
+                        <div class="function" id="get_column_index">
+                            <h3>get_column_index(letter, start_from_zero=False)</h3>
+                            <p>Convert Excel column reference to numeric index.
+
+    Handles both single ('A') and double ('AA') letter column references.
+    Accepts both string and integer inputs.
+
+    Args:
+        letter (str|int): Column reference or direct index
+        start_from_zero (bool, optional): If True, 'A' maps to 0; if False, 'A' maps to 1.
+            Defaults to False.
+
+    Returns:
+        int or None: Column index if valid input, None otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="__init__">
+                            <h3>__init__(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="set_pointer_lower_right">
+                            <h3>set_pointer_lower_right(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="add">
+                            <h3>add(self, item)</h3>
+                            <p>Add an item to the collection.
+        NOTE that it will not move pointer after added.
+        
+        Args:
+            item (ExcelDataItem | str ): The item to add.</p>
+                        </div>
+                        
+                        <div class="function" id="add_row">
+                            <h3>add_row(self, row)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="pointer">
+                            <h3>pointer(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="next_row">
+                            <h3>next_row(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="next_col">
+                            <h3>next_col(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="prev_col">
+                            <h3>prev_col(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="prev_row">
+                            <h3>prev_row(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="set_col_by_header">
+                            <h3>set_col_by_header(self, header)</h3>
+                            <p>Set the current column to the column with the given header text.
+        
+        Args:
+            header (str): Header text to search for</p>
+                        </div>
+                        
+                        <div class="function" id="set_headers">
+                            <h3>set_headers(self, headers, width_list = None, starting_col = "A", header_row = 0)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="save">
+                            <h3>save(self, filepath, worksheet="EnneadTab", open_after=True, freeze_column=None)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="__init__">
+                            <h3>__init__(
+        self,
+        item,
+        row,
+        column,
+        is_bold = False,
+        is_read_only = False,
+        cell_color=None,
+        text_color=None,
+        text_alignment = TextAlignment.Left,
+        font_size=None,
+        font_name=None,
+        col_width=None,
+        border_style=None,
+        border_color=None,
+        top_border_style=None,
+        bottom_border_style=None,
+        side_border_style=None,
+        merge_with=None,
+        text_wrap=False,
+    )</h3>
+                            <p>_summary_
+
+        Args:
+            item (_type_): _description_
+            row (_type_): _description_
+            column (_type_): _description_
+            is_bold (bool, optional): If True, the text will be bold. Defaults to False.
+            is_read_only (bool, optional): If True, the cell will be read only. Defaults to False.
+            cell_color (_type_, optional): _description_. Defaults to None.
+            text_color (_type_, optional): _description_. Defaults to None.
+            text_alignment (TextAlignment, optional): _description_. Defaults to TextAlignment.Left.
+            font_size (_type_, optional): _description_. Defaults to None.
+            font_name (_type_, optional): _description_. Defaults to None.
+            col_width (_type_, optional): _description_. Defaults to None.
+            border_style (_type_, optional): _description_. Defaults to None.
+            border_color (_type_, optional): _description_. Defaults to None.
+            top_border_style (_type_, optional): _description_. Defaults to None.
+            bottom_border_style (_type_, optional): _description_. Defaults to None.
+            side_border_style (_type_, optional): _description_. Defaults to None.
+            merge_with (_type_, optional): _description_. Defaults to None.
+            text_wrap (bool, optional): _description_. Defaults to False.</p>
+                        </div>
+                        
+                        <div class="function" id="__str__">
+                            <h3>__str__(self)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="as_dict">
+                            <h3>as_dict(self)</h3>
+                            <p>Convert ExcelDataItem to dictionary, excluding internal attributes.
+        
+        Returns:
+            dict: Dictionary containing all non-internal attributes</p>
+                        </div>
+                        
+                        <div class="function" id="from_dict">
+                            <h3>from_dict(cls, data)</h3>
+                            <p>Create an ExcelDataItem instance from a dictionary.
+        
+        Args:
+            data (dict): Dictionary containing ExcelDataItem attributes
+            
+        Returns:
+            ExcelDataItem: New instance with attributes from dictionary</p>
+                        </div>
+                        
+                        <div class="function" id="convert_datas_to_dict">
+                            <h3>convert_datas_to_dict(datas)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="convert_dict_to_datas">
+                            <h3>convert_dict_to_datas(data_dict)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_all_worksheets">
+                            <h3>get_all_worksheets(filepath)</h3>
+                            <p>List all worksheets in an Excel file.
+
+    Args:
+        filepath (str): Path to the Excel file
+
+    Returns:
+        list: Names of all worksheets in the workbook</p>
+                        </div>
+                        
+                        <div class="function" id="save_as_xls">
+                            <h3>save_as_xls(filepath)</h3>
+                            <p>Convert Excel file to .xls format.
+
+    Creates a safe copy before conversion and handles cleanup.
+    Uses Microsoft.Office.Interop.Excel for conversion.
+
+    Args:
+        filepath (str): Path to source Excel file
+
+    Returns:
+        str or None: Path to converted .xls file if successful, None if conversion fails</p>
+                        </div>
+                        
+                        <div class="function" id="read_data_from_excel">
+                            <h3>read_data_from_excel(filepath, worksheet=None, return_dict=False, headless=True)</h3>
+                            <p>Read data from local or online Excel file.
+
+    Supports both local files and HTTP URLs. For .xlsx files, uses ExcelHandler
+    for improved performance.
+
+    Args:
+        filepath (str): Local path or URL to Excel file
+        worksheet (str, optional): Target worksheet name. Defaults to first sheet.
+        return_dict (bool, optional): If True, returns dict with (row,col) keys.
+            Defaults to False.
+        headless (bool, optional): If True, runs Excel operations without UI.
+            Defaults to True.
+
+    Returns:
+        list or dict: Excel data in requested format</p>
+                        </div>
+                        
+                        <div class="function" id="_read_data_from_excel_online">
+                            <h3>_read_data_from_excel_online(url, worksheet, return_dict, headless)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="_read_data_from_excel_locally">
+                            <h3>_read_data_from_excel_locally(filepath, worksheet, return_dict, headless)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_column_values">
+                            <h3>get_column_values(data, column, start_from_zero=False)</h3>
+                            <p>Extract all values from a specific column in Excel data.
+
+    Args:
+        data (list): Excel data as list of rows
+        column (str|int): Column reference (letter or index)
+        start_from_zero (bool, optional): If True, column indexing starts at 0.
+            Defaults to False.
+
+    Returns:
+        list: All values found in the specified column</p>
+                        </div>
+                        
+                        <div class="function" id="search_row_in_column_by_value">
+                            <h3>search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, start_from_zero=False)</h3>
+                            <p>Search for a value in a specific column and return matching row indices.
+
+    Args:
+        data (list): Excel data as list of rows
+        column (str|int): Column reference (letter or index)
+        search_value (str): Value to search for
+        is_fuzzy (bool, optional): If True, performs partial string matching.
+            Defaults to False.
+        start_from_zero (bool, optional): If True, column indexing starts at 0.
+            Defaults to False.
+
+    Returns:
+        list: Indices of rows containing the search value</p>
+                        </div>
+                        
+                        <div class="function" id="save_data_to_excel">
+                            <h3>save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row=None, freeze_column=None)</h3>
+                            <p>Save data to a new Excel file with formatting.
+
+    Creates a new Excel workbook and writes data with preserved formatting.
+    Supports cell colors, borders, and other formatting options.
+
+    Args:
+        data (list): Data to write, can include ExcelDataItem objects
+        filepath (str): Target Excel file path
+        worksheet (str, optional): Name for the worksheet. Defaults to "EnneadTab".
+        open_after (bool, optional): If True, opens file after saving.
+            Defaults to True.
+        freeze_row (int, optional): 1-based row number to freeze panes at.
+            Defaults to None.
+        freeze_column (str | int, optional): Excel column letter or 0-based column number to freeze panes at.
+            Defaults to None.
+
+    Returns:
+        bool: True if save successful, False otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="legacy_method">
+                            <h3>legacy_method()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="write_data_item">
+                            <h3>write_data_item(worksheet, data)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="new_method">
+                            <h3>new_method()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="check_formula">
+                            <h3>check_formula(excel, worksheet, highlight_formula=True)</h3>
+                            <p>Validate and highlight Excel formulas in a worksheet.
+
+    Checks for formula validity and optionally highlights cells containing formulas.
+    Useful for debugging and auditing Excel files.
+
+    Args:
+        excel (str): Path to Excel file
+        worksheet (str): Name of worksheet to check
+        highlight_formula (bool, optional): If True, highlights formula cells.
+            Defaults to True.
+
+    Returns:
+        dict: Formula validation results and cell locations</p>
+                        </div>
+                        
+                        <div class="function" id="get_header_map">
+                            <h3>get_header_map(data, header_row=1)</h3>
+                            <p>Get a map of header to column index.</p>
+                        </div>
+                        
+                        <div class="function" id="parse_excel_data">
+                            <h3>parse_excel_data(data, key_name, header_row=1, ignore_keywords=None)</h3>
+                            <p>Parse Excel data into a structured format with dot notation access.
+    
+    Converts raw Excel data into a dictionary of objects where each row becomes a data entry.
+    The value in the key_name column becomes the dictionary key, and all other columns
+    become properties accessible via dot notation or dictionary-style access.
+    
+    Args:
+        data (dict): Excel data as dict of coordinates and values
+        key_name (str): Column header to use as key for each entry
+        header_row (int, optional): Row number of the header row (1-based index). Defaults to 1.
+        ignore_keywords (list, optional): List of keywords to ignore when creating entries. Defaults to None.
+    
+    Returns:
+        dict: Dictionary of data objects with property access via dot notation</p>
+                        </div>
+                        
+                        <div class="function" id="__init__">
+                            <h3>__init__(self, properties, row_number)</h3>
+                            <p>Initialize with column data from a row.</p>
+                        </div>
+                        
+                        <div class="function" id="__getattr__">
+                            <h3>__getattr__(self, name)</h3>
+                            <p>Handle attribute access with helpful error messages.</p>
+                        </div>
+                        
+                        <div class="function" id="get">
+                            <h3>get(self, key, default=None)</h3>
+                            <p>Access data dictionary-style with fallback support.</p>
+                        </div>
+                        
+                        <div class="function" id="__str__">
+                            <h3>__str__(self)</h3>
+                            <p>Generate a readable representation of the row data.</p>
+                        </div>
+                        
+                        <div class="function" id="__repr__">
+                            <h3>__repr__(self)</h3>
+                            <p>Return the same formatted string as __str__.</p>
+                        </div>
+                        
+                        <div class="function" id="should_ignore">
+                            <h3>should_ignore(key_value)</h3>
+                            <p>Check if key contains any ignore keywords.</p>
+                        </div>
+                        
+                        <div class="function" id="_process_row_data">
+                            <h3>_process_row_data(row_data, result_dict, row_number)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="flip_dict">
+                            <h3>flip_dict(dict)</h3>
+                            <p>Flip a dictionary by swapping keys and values.
+    
+    Args:
+        dict (dict): Input dictionary to flip
+        
+    Returns:
+        dict: Flipped dictionary with original values as keys and keys as values</p>
+                        </div>
+                        
+                        <div class="function" id="num_and_letter">
+                            <h3>num_and_letter(num, letter)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="update_excel_data">
+                            <h3>update_excel_data(existing_excel, 
+                      worksheet, new_data, 
+                      key_name, header_row=1, 
+                      ignore_keywords=None, open_after=True)</h3>
+                            <p>Update existing Excel data with new data.
+    
+    Args:
+        existing_excel (str): Path to existing Excel file
+        worksheet (str): Name of worksheet to update
+        new_data (dict): New data to merge with existing data
+        key_name (str): Column name to use as key
+        header_row (int, optional): Row number containing headers. Defaults to 1.
+        ignore_keywords (list, optional): Keywords to ignore in data. Defaults to None.</p>
+                        </div>
+                        
+                        <div class="function" id="unit_test">
+                            <h3>unit_test()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="sample_excel_writer_by_pointer">
+                            <h3>sample_excel_writer_by_pointer()</h3>
+                            <p></p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

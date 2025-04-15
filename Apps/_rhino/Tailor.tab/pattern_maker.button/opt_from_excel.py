@@ -39,7 +39,7 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
 
     def is_process_zone(row, col):
         if is_header:
-            if 79 >= col >= 59 and row <= 3:
+            if 142 >= col >= 59 and row <= 3:
                 return True
             return False
         else:
@@ -81,14 +81,22 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
                 row = 4-row 
             else:
                 row = 15-row
+
+            # shift the pattern to the left by 58 if it is header
+            if is_header:
+                col = col - 58
                 
             new_key = (col-1, row-1)
             base_pattern_data[new_key] = looked_up_type
     
+
+            
     # Get pattern dimensions
     pattern_width = max(x for x, _ in base_pattern_data.keys()) + 1
     pattern_height = max(y for _, y in base_pattern_data.keys()) + 1
     
+
+            
     # Create expanded location map
     location_map = {}
     for y in range(max_y):
@@ -105,12 +113,6 @@ def get_location_map(max_x, max_y, sheet_name, is_header=False):
         NOTIFICATION.messenger("Bad data found, please check your excel")
 
 
-    if is_header:
-        # shift the location map to the left by 58
-        for key in sorted(location_map.keys(), key=lambda x: (x[1], x[0])):
-            new_key = (key[0] - 58, key[1])
-            location_map[new_key] = location_map[key]
-            del location_map[key]
     return location_map
 
 if __name__ == "__main__":

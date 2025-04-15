@@ -14,7 +14,7 @@ Key Features:
 - Intuitive UI for managing wall type fire ratings
 - Batch updates across selected views
 - Support for linked models
-- Smart graphic family (EA_Fire Rating) with customizable appearance
+- Smart graphic family (Smart_Fire_Rating) with customizable appearance
 - Real-time wall instance counting and preview
 
 Perfect for maintaining consistent fire separation documentation and ensuring 
@@ -45,7 +45,8 @@ uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
-FAMILY_NAME = "EA_Fire Rating"
+FAMILY_NAME = "Smart_Fire_Rating"
+LEGACY_FAMILY_NAME = "EA_Fire Rating"
 
 
 class FireRatingGraphicMaker:
@@ -82,7 +83,7 @@ class FireRatingGraphicMaker:
         """
         OUT = dict()
         types = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol).ToElements()
-        types = filter(lambda x: "EA_Fire Rating" in x.FamilyName, types)
+        types = filter(lambda x: FAMILY_NAME in x.FamilyName or LEGACY_FAMILY_NAME in x.FamilyName, types)
         
         if not types:
             return OUT
@@ -157,7 +158,7 @@ class FireRatingGraphicMaker:
 
         instances = DB.FilteredElementCollector(doc, view.Id).OfClass(DB.FamilyInstance ).WhereElementIsNotElementType().ToElements()
         #print types
-        instances = filter(lambda x: "EA_Fire Rating" in x.Symbol.FamilyName, instances)
+        instances = filter(lambda x: FAMILY_NAME in x.Symbol.FamilyName or LEGACY_FAMILY_NAME in x.Symbol.FamilyName, instances)
 
         clean_list = []
         for instance in instances:
@@ -274,7 +275,7 @@ def update_wall_data(data_grid_source):
 
 
 @ERROR_HANDLE.try_catch_error()
-def load_EA_family(title):
+def load_rating_family(title):
     """Load the EA Fire Rating family into current document.
     
     Args:
@@ -353,7 +354,7 @@ class fire_rating_ModelessForm(WPFWindow):
         self.ext_event_update_wall_data = ExternalEvent.Create(self.update_wall_data_event_handler)
 
 
-        self.load_family_event_handler = fire_rating_SimpleEventHandler(load_EA_family)
+        self.load_family_event_handler = fire_rating_SimpleEventHandler(load_rating_family)
         self.ext_event_load_family = ExternalEvent.Create(self.load_family_event_handler)
         return
 
@@ -529,7 +530,7 @@ class fire_rating_ModelessForm(WPFWindow):
 
     def is_EA_family_loaded(self):
         for family in DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements():
-            if "EA_Fire Rating" in family.Name:
+            if FAMILY_NAME in family.Name or LEGACY_FAMILY_NAME in family.Name:
                 return True
         return False
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>USER</h1><p>User management and authentication module for EnneadTab.
+
+This module handles user identification, permissions, and developer status across
+different environments (Revit, Rhino, Terminal). It provides a unified interface
+for user management across the EnneadTab ecosystem.
+
+Key Features:
+- User identification and email resolution
+- Developer status verification
+- Environment-specific username handling
+- Usage logging and tracking
+- Developer contact management
+
+Note:
+    Developer permissions are managed through separate system and Autodesk keys
+    to support environment-specific access control.</p><h2>Functions</h2>
+                        <div class="function" id="user_get_dev_dict">
+                            <h3>user_get_dev_dict()</h3>
+                            <p>Retrieve the developer configuration dictionary.
+
+    Accesses the secure developer configuration containing system and Autodesk
+    usernames for authorized developers.
+
+    Returns:
+        dict: Developer configuration mapping or empty list if access fails</p>
+                        </div>
+                        
+                        <div class="function" id="get_EA_email_address">
+                            <h3>get_EA_email_address(user_name=USER_NAME)</h3>
+                            <p>Convert system username to Ennead email address.
+
+    Args:
+        user_name (str, optional): System username to convert. 
+            Defaults to current user.
+
+    Returns:
+        str: Ennead email address in format 'username@ennead.com'</p>
+                        </div>
+                        
+                        <div class="function" id="get_usernames_from_developers">
+                            <h3>get_usernames_from_developers()</h3>
+                            <p>Extract all developer usernames from developer dictionary.
+
+    Processes the PLUGIN_DEVELOPERS dictionary to separate system and
+    Autodesk usernames for different environment authentications.
+
+    Returns:
+        tuple: Contains (system_usernames, autodesk_usernames)
+            system_usernames (list): List of system usernames
+            autodesk_usernames (list): List of Autodesk usernames</p>
+                        </div>
+                        
+                        <div class="function" id="is_EnneadTab_developer">
+                            <h3>is_EnneadTab_developer()</h3>
+                            <p>Verify if current user has developer status.
+
+    Checks against appropriate username list based on current environment:
+    - Rhino: Checks system username
+    - Revit: Checks Autodesk username
+    - Other: Defaults to system username check
+
+    Returns:
+        bool: True if user is a developer, False otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="get_autodesk_user_name">
+                            <h3>get_autodesk_user_name()</h3>
+                            <p>Retrieve current user's Autodesk username.
+
+    Only functional in Revit environment. Handles potential errors
+    when accessing Revit API.
+
+    Returns:
+        str or None: Autodesk username if in Revit, None otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="update_user_log">
+                            <h3>update_user_log()</h3>
+                            <p>Record user activity timestamp in shared log file.
+
+    Creates or updates a user-specific log file with current timestamp.
+    File is stored in shared location for usage tracking.</p>
+                        </div>
+                        
+                        <div class="function" id="get_rhino_developer_emails">
+                            <h3>get_rhino_developer_emails()</h3>
+                            <p>Get email addresses for all Rhino developers.
+
+    Filters developer list to include only those with system access
+    permissions.
+
+    Returns:
+        list: Email addresses of developers with system access</p>
+                        </div>
+                        
+                        <div class="function" id="get_revit_developer_emails">
+                            <h3>get_revit_developer_emails()</h3>
+                            <p>Get email addresses for all Revit developers.
+
+    Filters developer list to include only those with Autodesk access
+    permissions.
+
+    Returns:
+        list: Email addresses of developers with Autodesk access</p>
+                        </div>
+                        
+                        <div class="function" id="unit_test">
+                            <h3>unit_test()</h3>
+                            <p>Run diagnostic tests on user management functions.
+
+    Tests include:
+    - Current user identification
+    - Developer status verification
+    - Username resolution
+    - Developer email list generation
+    
+    Prints results to console for verification.</p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

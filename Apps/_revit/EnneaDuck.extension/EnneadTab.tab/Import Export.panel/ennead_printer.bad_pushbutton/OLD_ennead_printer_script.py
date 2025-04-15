@@ -217,7 +217,7 @@ class EA_Printer_UI(WPFWindow):
 
 
         # important data setup
-        self.setting_file = "exporter_setting.sexyDuck"
+        self.setting_file = "exporter_setting{}".format(ENVIRONMENT.PLUGIN_EXTENSION)
         self.output_folder = "{}\EnneadTab Exporter".format(FOLDER.DUMP_FOLDER)
         FOLDER.secure_folder(self.output_folder)
 
@@ -1516,7 +1516,7 @@ class EA_Printer_UI(WPFWindow):
 
 
     def get_record_file_by_doc(self, doc):
-        return "EXPORT_RECORD_" + self.central_doc_name(doc) + ".sexyDuck"
+        return "EXPORT_RECORD_" + self.central_doc_name(doc) + ENVIRONMENT.PLUGIN_EXTENSION
 
  
     

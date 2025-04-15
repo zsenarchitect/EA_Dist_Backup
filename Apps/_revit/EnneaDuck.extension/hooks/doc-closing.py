@@ -27,7 +27,7 @@ def main():
         return
     remove_last_sync_data_file(doc)
     update_pyrevit()
-    VERSION_CONTROL.update_EA_dist()
+    VERSION_CONTROL.update_dist_repo()
 
 
 ###################################################

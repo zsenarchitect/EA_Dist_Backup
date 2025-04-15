@@ -65,7 +65,7 @@ def add_hook():
     Rhino.RhinoDoc.CloseDocument += event_func_timesheet
 
 
-    Rhino.RhinoDoc.BeginSaveDocument += event_func_update_EA_dist
+    Rhino.RhinoDoc.BeginSaveDocument += event_func_update_dist_repo
 
     
     Rhino.RhinoApp.Closing += event_func_update_r8_rui
@@ -85,9 +85,9 @@ def action_update_timesheet(doc):
 def event_func_timesheet(sender, e):
     action_update_timesheet(e.Document)
 
-def event_func_update_EA_dist(sender, e):
-    if CONFIG.get_setting("is_update_EA_dist_enabled", True):
-        VERSION_CONTROL.update_EA_dist()
+def event_func_update_dist_repo(sender, e):
+    if CONFIG.get_setting("is_update_dist_repo_enabled", True):
+        VERSION_CONTROL.update_dist_repo()
 
 def event_func_update_r8_rui():
     EXE.try_open_app("Rhino8RuiUpdater", safe_open=True)

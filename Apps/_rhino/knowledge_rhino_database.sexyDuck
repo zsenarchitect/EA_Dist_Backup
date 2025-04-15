@@ -838,7 +838,7 @@
         "script": "Render.tab\\inspect_enscape_setting.button\\inspect_enscape_setting_left.py",
         "icon": "Render.tab\\inspect_enscape_setting.button\\icon.png",
         "alias": "InspectEnscapeSetting",
-        "doc": "Inspect Enscape setting file",
+        "doc": "Inspect and compare Enscape setting files for differences",
         "tab": "Render.tab",
         "tab_icon": "Render.tab\\icon.png",
         "is_popular": false

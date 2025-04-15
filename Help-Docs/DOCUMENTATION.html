@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>DOCUMENTATION</h1><p>Utilities for showing tips and documentation for tools.
+
+This module provides functionality for managing and displaying documentation, tips,
+and knowledge base content across the EnneadTab ecosystem. It supports both Revit
+and Rhino environments.
+
+Key Features:
+- Documentation retrieval and display
+- Tip of the day functionality
+- Knowledge base management
+- Scott's tips integration from EI posts
+- Icon and resource management</p><h2>Functions</h2>
+                        <div class="function" id="get_text_path_by_name">
+                            <h3>get_text_path_by_name(file_name)</h3>
+                            <p>Get the full path of a text file in the documents library.
+
+    Args:
+        file_name (str): Name of the text file to locate
+
+    Returns:
+        str: Full path to the text file if found, None otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="show_scott_tip">
+                            <h3>show_scott_tip()</h3>
+                            <p>Display a random tip from Scott's EI knowledge base.
+    
+    Opens the tip in the default web browser and displays it in the output window.
+    Tips are curated from Scott's posts on the Ennead Intranet.</p>
+                        </div>
+                        
+                        <div class="function" id="get_files_with_keyword">
+                            <h3>get_files_with_keyword(keyword, folder)</h3>
+                            <p>Search for files containing a specific keyword in the given folder.
+    
+    Args:
+        keyword (str): The keyword to search for in file contents
+        folder (str): Root folder path to begin the search
+        
+    Returns:
+        list: List of file paths containing the keyword
+        
+    Note:
+        Excludes certain system folders and template files from the search.</p>
+                        </div>
+                        
+                        <div class="function" id="get_title_tip_from_folder">
+                            <h3>get_title_tip_from_folder(folder, is_random_single = True)</h3>
+                            <p>Retrieve title and tip information from files in a folder.
+
+    Args:
+        folder (str): The folder path to search for tips
+        is_random_single (bool, optional): If True, returns a single random tip. 
+            Defaults to True.
+
+    Returns:
+        list: List of tuples containing (title, tip, icon_path) for each tip found</p>
+                        </div>
+                        
+                        <div class="function" id="get_icon_from_path">
+                            <h3>get_icon_from_path(file_path)</h3>
+                            <p>Locate the icon file associated with a given script path.
+
+    Searches for icon files named 'icon.png' or containing 'icon' in the
+    same directory as the script.
+
+    Args:
+        file_path (str): Path to the script file
+
+    Returns:
+        str: Path to the icon file if found, None otherwise</p>
+                        </div>
+                        
+                        <div class="function" id="get_title_tip_from_file">
+                            <h3>get_title_tip_from_file(lucky_file, is_random_single)</h3>
+                            <p>Extract title and tip information from a Python script file.
+
+    Args:
+        lucky_file (str): Path to the Python script file
+        is_random_single (bool): If True, returns only one random tip
+
+    Returns:
+        tuple: Contains (module_name, tip_text, icon_path)
+            module_name (str): Name of the module
+            tip_text (str or None): The tip text if found
+            icon_path (str or None): Path to the module's icon</p>
+                        </div>
+                        
+                        <div class="function" id="show_tip_revit">
+                            <h3>show_tip_revit(is_random_single=True)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="extract_global_variables">
+                            <h3>extract_global_variables(script_path)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="set_revit_knowledge">
+                            <h3>set_revit_knowledge()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="strip_folder">
+                            <h3>strip_folder(folder)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_revit_knowledge">
+                            <h3>get_revit_knowledge()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_rhino_knowledge">
+                            <h3>get_rhino_knowledge()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="show_tip_rhino">
+                            <h3>show_tip_rhino()</h3>
+                            <p>Show a random tip for Rhino. Not implemented yet.</p>
+                        </div>
+                        
+                        <div class="function" id="update_image_action">
+                            <h3>update_image_action(search_key)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="tip_of_day">
+                            <h3>tip_of_day()</h3>
+                            <p>Show a random tip of the day.</p>
+                        </div>
+                        
+                        <div class="function" id="unit_test">
+                            <h3>unit_test()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="print_documentation_book_for_review_revit">
+                            <h3>print_documentation_book_for_review_revit()</h3>
+                            <p>Print all the tips in a book or webpage to check spelling and doc updates.</p>
+                        </div>
+                        
+                        <div class="function" id="show_floating_box_warning">
+                            <h3>show_floating_box_warning()</h3>
+                            <p>Show an informational message for floating a box window.</p>
+                        </div>
+                        
+                        <div class="function" id="get_floating_box_documentation">
+                            <h3>get_floating_box_documentation()</h3>
+                            <p>Return an informational message for floating a box window.</p>
+                        </div>
+                        
+                        <div class="function" id="generate_documentation">
+                            <h3>generate_documentation(debug = False)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="generate_app_documentation">
+                            <h3>generate_app_documentation(debug, app)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_command_order">
+                            <h3>get_command_order(x)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="is_in_delayed_category">
+                            <h3>is_in_delayed_category(x)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="write_dream">
+                            <h3>write_dream()</h3>
+                            <p></p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

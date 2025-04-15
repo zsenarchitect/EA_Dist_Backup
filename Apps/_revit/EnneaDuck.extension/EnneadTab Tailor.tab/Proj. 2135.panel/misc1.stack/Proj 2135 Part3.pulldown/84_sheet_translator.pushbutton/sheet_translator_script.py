@@ -6,9 +6,9 @@
 __doc__ = "DO NOT USE, use newer AI translator"
 __title__ = "84_sheet_translator"
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
-from pyrevit.forms import WPFWindow
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
+from pyrevit.forms import WPFWindow # pyright: ignore
 # from pyrevit import forms #
 from pyrevit import script #
 
@@ -16,7 +16,7 @@ import traceback
 from Autodesk.Revit import DB # pyright: ignore 
 import random
 # from Autodesk.Revit import UI # pyright: ignore
-uidoc = __revit__.ActiveUIDocument
+uidoc = __revit__.ActiveUIDocument # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 
@@ -99,7 +99,7 @@ class rename_sheet_ModelessForm(WPFWindow):
         self.primary_button.Content = "Find a sheet without translation yet"
         self.second_button.Content = "Update sheet translation per textbox."
 
-        self.Title = "EA_Sheet Translator."
+        self.Title = "Sheet Translator."
         self.Width = 600
         self.Height = 400
         self.Show()

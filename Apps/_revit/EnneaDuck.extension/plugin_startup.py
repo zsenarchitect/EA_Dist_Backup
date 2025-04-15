@@ -350,7 +350,7 @@ def EnneadTab_startup():
     register_context_menu()
 
     
-    VERSION_CONTROL.update_EA_dist()
+    VERSION_CONTROL.update_dist_repo()
     register_xaml_path()
     check_minimal_version_for_enneadtab()
 

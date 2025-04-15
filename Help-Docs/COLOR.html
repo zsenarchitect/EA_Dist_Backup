@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>COLOR</h1><p>Utilities for color manipulation and conversion</p><h2>Functions</h2>
+                        <div class="function" id="darken_color">
+                            <h3>darken_color(color, amount)</h3>
+                            <p>Darken a color.
+
+    Args:
+        color (tuple): The color to darken.
+        amount (float): The amount to darken the color.</p>
+                        </div>
+                        
+                        <div class="function" id="lighten_color">
+                            <h3>lighten_color(color, amount)</h3>
+                            <p>Lighten a color.
+
+    Args:
+        color (tuple): The color to lighten.
+        amount (float): The amount to lighten the color.</p>
+                        </div>
+                        
+                        <div class="function" id="from_rgb">
+                            <h3>from_rgb(r, g, b)</h3>
+                            <p>Generate a color object from rgb values.
+
+    Args:
+        r (int): The red value.
+        g (int): The green value.
+        b (int): The blue value.
+
+    Returns:
+        System.Drawing.Color: The resulting color object.</p>
+                        </div>
+                        
+                        <div class="function" id="get_random_color">
+                            <h3>get_random_color(return_tuple = True)</h3>
+                            <p>Generate a random color object.
+
+    Args:
+        return_tuple (bool, optional): Return as a tuple of 3 ints. Defaults to True.
+
+    Returns:
+    if return_tuple is True:
+        tuple: The resulting color as a tuple of 3 ints.
+    else:
+        System.Drawing.Color: The resulting color object.</p>
+                        </div>
+                        
+                        <div class="function" id="tuple_to_color">
+                            <h3>tuple_to_color(tuple)</h3>
+                            <p>Convert 3 ints to color object
+
+    Args:
+        tuple (tuple of 3 int): The tuple of 3 ints.
+
+    Returns:
+        System.Drawing.Color: The resulting color object.</p>
+                        </div>
+                        
+                        <div class="function" id="invert_color">
+                            <h3>invert_color(color, return_tuple = False)</h3>
+                            <p>Invert a color.
+
+    Args:
+        color (tuple): The color to invert.
+        return_tuple (bool, optional): Return as a tuple of 3 ints. Defaults to False.
+
+    Returns:
+    if return_tuple is True:
+        tuple: The resulting color as a tuple of 3 ints.
+    else:
+        System.Drawing.Color: The resulting color object.</p>
+                        </div>
+                        
+                        <div class="function" id="rgb_to_hex">
+                            <h3>rgb_to_hex(rgb_tuple)</h3>
+                            <p>Convert rgb to hex.
+
+    Args:
+        rgb_tuple (tuple): The rgb tuple.
+
+    Returns:
+        str: The resulting hex string.</p>
+                        </div>
+                        
+                        <div class="function" id="hex_to_rgb">
+                            <h3>hex_to_rgb(hex_str)</h3>
+                            <p>Convert hex to rgb.
+
+    Args:
+        hex_str (str): The hex string.
+
+    Returns:
+        tuple: The resulting rgb tuple.</p>
+                        </div>
+                        
+                        <div class="function" id="decimal_to_rgb">
+                            <h3>decimal_to_rgb(decimal_color)</h3>
+                            <p>Convert decimal to rgb.
+
+    Args:
+        decimal_color (int): The decimal color.
+
+    Returns:
+        tuple: The resulting rgb color.</p>
+                        </div>
+                        
+                        <div class="function" id="is_same_color">
+                            <h3>is_same_color(color1, color2)</h3>
+                            <p>Checks if the environment is Revit,
+    then checks if the colors are the same.
+
+    Args:
+        color1 (tuple): The first color.
+        color2 (tuple): The second color.
+
+    Returns:
+        bool: True if the colors are the same, False otherwise.</p>
+                        </div>
+                        
+                        <div class="function" id="_gather_data">
+                            <h3>_gather_data(raw_data, key_column, is_zero_indexed)</h3>
+                            <p>Gather color data from raw data extracted from an Excel file.
+
+    This function processes raw Excel data to extract color information based on a specified
+    key column. It handles both zero-indexed and one-indexed data structures.
+
+    Args:
+        raw_data (dict): Raw data from Excel structured as {(row,col): {"value": val, "color": color}}.
+        key_column (int): The column index to use for subject names/keys.
+        is_zero_indexed (bool): Whether the Excel data uses zero-based indexing.
+
+    Returns:
+        dict: Structured color data in the format {subject_name: {"abbr": abbreviation, "color": color_value}}.</p>
+                        </div>
+                        
+                        <div class="function" id="get_color_template_data">
+                            <h3>get_color_template_data(template = None)</h3>
+                            <p>Get color template data from department standards.
+
+    Args:
+        template (str, optional): The template path. Defaults to None.
+
+    Returns:
+        dict: The resulting color data.</p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

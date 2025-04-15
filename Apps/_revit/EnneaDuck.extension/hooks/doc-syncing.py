@@ -173,7 +173,7 @@ def update_modified_date(doc):
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def doc_syncing(doc):
-    VERSION_CONTROL.update_EA_dist()
+    VERSION_CONTROL.update_dist_repo()
 
 
     can_sync = check_sync_queue(doc)

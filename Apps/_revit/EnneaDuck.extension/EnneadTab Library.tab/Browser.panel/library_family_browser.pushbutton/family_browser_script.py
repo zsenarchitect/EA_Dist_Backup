@@ -7,23 +7,23 @@ __doc__ = "A floating window that can help you search the family from AppliedCom
 __title__ = "Family\nBrowser"
 
 
-from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent
-from Autodesk.Revit.Exceptions import InvalidOperationException
-from pyrevit.forms import WPFWindow
+from Autodesk.Revit.UI import IExternalEventHandler, ExternalEvent # pyright: ignore
+from Autodesk.Revit.Exceptions import InvalidOperationException # pyright: ignore
+from pyrevit.forms import WPFWindow # pyright: ignore
 # from pyrevit import forms #
 from pyrevit import script #
 # from pyrevit import revit #
 import os
 
-import System
+import System # pyright: ignore
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import ENVIRONMENT
+from EnneadTab import ENVIRONMENT, ERROR_HANDLE, DATA_FILE, NOTIFICATION
 import traceback
 from Autodesk.Revit import DB # pyright: ignore 
 
 from Autodesk.Revit import UI # pyright: ignore
-uidoc = __revit__.ActiveUIDocument
+uidoc = __revit__.ActiveUIDocument # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
 __persistentengine__ = True
 
@@ -142,7 +142,7 @@ class family_browser_ModelessForm(WPFWindow):
 
         self.Title = self.title_text.Text
 
-        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(EnneadTab.ENVIRONMENT.IMAGE_FOLDER))
+        self.set_image_source(self.logo_img, "{}\logo_vertical_light.png".format(ENVIRONMENT.IMAGE_FOLDER))
         self.set_image_source(self.monitor_icon, "monitor_icon.png")
         self.set_image_source(self.preview_image, "DEFAULT PREVIEW_CANNOT FIND PREVIEW IMAGE.png")
         self.set_image_source(self.status_icon, "update_icon.png")
@@ -162,11 +162,11 @@ class family_browser_ModelessForm(WPFWindow):
         self.Show()
 
     def get_meta_datas(self):
-        meta_data_files = ["{}\{}".format(self.meta_data_folder, x) for x in os.listdir(self.meta_data_folder) if x.endswith(".sexyDuck")]
+        meta_data_files = ["{}\{}".format(self.meta_data_folder, x) for x in os.listdir(self.meta_data_folder) if x.endswith(ENVIRONMENT.PLUGIN_EXTENSION)]
         meta_data_files.sort()
-        EnneadTab.NOTIFICATION.messenger(main_text = "Indexing {} files from the DataBase...\nthis might takes a few seconds...".format(len(meta_data_files)))
+        NOTIFICATION.messenger(main_text = "Indexing {} files from the DataBase...\nthis might takes a few seconds...".format(len(meta_data_files)))
 
-        family_datas =  [EnneadTab.DATA_FILE.get_data(x) for x in meta_data_files]
+        family_datas =  [DATA_FILE.get_data(x) for x in meta_data_files]
         type_datas = []
         for family_data in family_datas:
 
@@ -184,12 +184,12 @@ class family_browser_ModelessForm(WPFWindow):
             # if temp_data is not None:
             #     try:
             #         print "\n"
-            #         EnneadTab.DATA_FILE.pretty_print_dict(temp_data)
+            #         DATA_FILE.pretty_print_dict(temp_data)
             #     except:
             #         print "!!!!!!!!!!!!!!!!!!!!!!!!!!"*100
             #         print family_data.get("family_name", "N/A")
             
-        #type_datas = [EnneadTab.DATA_FILE.get_data(x) for x in meta_data_files]
+        #type_datas = [DATA_FILE.get_data(x) for x in meta_data_files]
         
         return type_datas
 

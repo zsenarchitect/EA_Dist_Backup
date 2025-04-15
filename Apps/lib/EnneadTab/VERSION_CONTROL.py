@@ -14,7 +14,7 @@ import FOLDER
 
 import random
 
-def update_EA_dist():
+def update_dist_repo():
     if not is_update_too_soon():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
         DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time")
@@ -72,9 +72,9 @@ def show_last_success_update_time():
 
 
 def unit_test():
-    update_EA_dist()
+    update_dist_repo()
 
 
 
 if __name__ == "__main__":
-    update_EA_dist()
+    update_dist_repo()

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>JOKE</h1><p>get some fun message for loading screen
+    Returns:
+        str: a random line of funny message</p><h2>Functions</h2>
+                        <div class="function" id="open_red_alert_online">
+                            <h3>open_red_alert_online()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="is_hate_fun">
+                            <h3>is_hate_fun()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_all_jokes">
+                            <h3>get_all_jokes()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="get_all_loading_screen_message">
+                            <h3>get_all_loading_screen_message()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="random_joke">
+                            <h3>random_joke()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="random_loading_message">
+                            <h3>random_loading_message()</h3>
+                            <p>get some fun message for loading screen
+    Returns:
+        str: a random line of funny message</p>
+                        </div>
+                        
+                        <div class="function" id="prank_ph">
+                            <h3>prank_ph()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="prank_meme">
+                            <h3>prank_meme()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="prank_dvd">
+                            <h3>prank_dvd()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="joke_quote">
+                            <h3>joke_quote()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="give_me_a_joke">
+                            <h3>give_me_a_joke(talk=False, max_len=None)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="validating_jokes">
+                            <h3>validating_jokes()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="april_fool">
+                            <h3>april_fool()</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="ennead_duck">
+                            <h3>ennead_duck()</h3>
+                            <p></p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

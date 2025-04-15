@@ -143,7 +143,7 @@ def record_instance_property():
     #print all_instances
     map(process_instance_recording, all_instances)
     #envvars.get_pyrevit_env_var("IS_SYNC_QUEUE_DISABLED")
-    envvars.set_pyrevit_env_var("EA_INSTANCE_DATA_TRANSFER", DATA)
+    envvars.set_pyrevit_env_var("TEMP_INSTANCE_DATA_TRANSFER", DATA)
 
 def map_instance_property():
 
@@ -156,7 +156,7 @@ def map_instance_property():
     # get all_instance of family
     all_instances = get_all_instance_of_type(type_detail_name)
     global DATA
-    DATA = envvars.get_pyrevit_env_var("EA_INSTANCE_DATA_TRANSFER")
+    DATA = envvars.get_pyrevit_env_var("TEMP_INSTANCE_DATA_TRANSFER")
     #print all_instances
     t = DB.Transaction(doc, "Set instance from record")
     t.Start()

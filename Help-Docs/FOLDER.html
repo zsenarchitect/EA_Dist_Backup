@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnneadTab Documentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1>EnneadTab</h1>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search documentation...">
+                <div id="search-results"></div>
+            </div>
+            <div class="module-list">
+                <!-- Module list will be populated by JavaScript -->
+            </div>
+        </nav>
+        <main class="content">
+            <h1>FOLDER</h1><p>File and folder management utilities for EnneadTab.
+
+This module provides comprehensive file and folder operations across the EnneadTab
+ecosystem, including file copying, backup management, and path manipulation.
+
+Key Features:
+- Safe file copying and backup creation
+- Path manipulation and formatting
+- Folder security and creation
+- File extension management
+- Local and shared dump folder operations
+- Automated backup scheduling
+
+Compatible with Python 2.7 and Python 3.x</p><h2>Functions</h2>
+                        <div class="function" id="purge_powershell_folder">
+                            <h3>purge_powershell_folder()</h3>
+                            <p>Clean up PowerShell transcript folders that match YYYYMMDD pattern.
+    
+    This function:
+    1. Scans Documents folder for YYYYMMDD pattern folders
+    2. Checks for PowerShell_transcript files inside
+    3. Deletes matching folders
+    4. Runs once per day using timestamp check</p>
+                        </div>
+                        
+                        <div class="function" id="get_safe_copy">
+                            <h3>get_safe_copy(filepath, include_metadata=False)</h3>
+                            <p>Create a safe copy of a file in the dump folder.
+
+    Creates a timestamped copy of the file in the EA dump folder to prevent
+    file conflicts and data loss.
+
+    Args:
+        filepath (str): Path to the source file
+        include_metadata (bool, optional): If True, preserves file metadata.
+            Defaults to False.
+
+    Returns:
+        str: Path to the safe copy</p>
+                        </div>
+                        
+                        <div class="function" id="copy_file">
+                            <h3>copy_file(original_path, new_path)</h3>
+                            <p>Copy file to new location, creating directories if needed.
+
+    Args:
+        original_path (str): Source file path
+        new_path (str): Destination file path
+
+    Note:
+        Creates parent directories if they don't exist.</p>
+                        </div>
+                        
+                        <div class="function" id="copy_file_to_folder">
+                            <h3>copy_file_to_folder(original_path, target_folder, handle_BW_file = False)</h3>
+                            <p>Copy file to target folder, preserving filename.
+
+    Args:
+        original_path (str): Source file path
+        target_folder (str): Destination folder path
+
+    Returns:
+        str: Path to the copied file
+
+    Note:
+        Creates target folder if it doesn't exist.</p>
+                        </div>
+                        
+                        <div class="function" id="secure_folder">
+                            <h3>secure_folder(folder)</h3>
+                            <p>Create folder if it doesn't exist.
+
+    Args:
+        folder (str): Path to folder to create/verify
+
+    Returns:
+        str: Path to secured folder</p>
+                        </div>
+                        
+                        <div class="function" id="get_file_name_from_path">
+                            <h3>get_file_name_from_path(file_path, include_extension=True)</h3>
+                            <p>Extract filename from full path.
+
+    Args:
+        file_path (str): Full path to file
+        include_extension (bool, optional): If True, includes file extension.
+            Defaults to True.
+
+    Returns:
+        str: Extracted filename</p>
+                        </div>
+                        
+                        <div class="function" id="get_file_extension_from_path">
+                            <h3>get_file_extension_from_path(file_path)</h3>
+                            <p>Extract file extension from path.
+
+    Args:
+        file_path (str): Full path to file
+
+    Returns:
+        str: File extension including dot (e.g. '.txt')</p>
+                        </div>
+                        
+                        <div class="function" id="_secure_file_name">
+                            <h3>_secure_file_name(file_name)</h3>
+                            <p>Ensure file has proper extension.
+    
+    If file has no extension, append PLUGIN_EXTENSION.
+    If file already has an extension, use it as is.
+    
+    Args:
+        file_name (str): Original filename
+        
+    Returns:
+        str: Filename with proper extension</p>
+                        </div>
+                        
+                        <div class="function" id="_get_internal_file_from_folder">
+                            <h3>_get_internal_file_from_folder(folder, file_name)</h3>
+                            <p>this construct the path but DO NOT garatee exist.</p>
+                        </div>
+                        
+                        <div class="function" id="get_local_dump_folder_file">
+                            <h3>get_local_dump_folder_file(file_name)</h3>
+                            <p>Get full path for file in EA dump folder.
+
+    Args:
+        file_name (str): Name of file including extension
+
+    Returns:
+        str: Full path in EA dump folder</p>
+                        </div>
+                        
+                        <div class="function" id="get_shared_dump_folder_file">
+                            <h3>get_shared_dump_folder_file(file_name)</h3>
+                            <p>Get full path for file in shared dump folder.
+
+    Args:
+        file_name (str): Name of file including extension
+
+    Returns:
+        str: Full path in shared dump folder</p>
+                        </div>
+                        
+                        <div class="function" id="copy_file_to_local_dump_folder">
+                            <h3>copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning=False)</h3>
+                            <p>Copy file to local dump folder.
+
+    Creates a local copy of a file in the dump folder, optionally with
+    a new name.
+
+    Args:
+        original_path (str): Source file path
+        file_name (str, optional): New name for copied file.
+            Defaults to original filename.
+        ignore_warning (bool, optional): If True, suppresses file-in-use warnings.
+            Defaults to False.
+
+    Returns:
+        str: Path to copied file
+
+    Raises:
+        Exception: If file is in use and ignore_warning is False</p>
+                        </div>
+                        
+                        <div class="function" id="backup_data">
+                            <h3>backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1)</h3>
+                            <p>Create scheduled backups of data files.
+
+    Decorator that creates timestamped backups of data files at specified intervals.
+    Backups are stored in a dedicated backup folder within the EA dump folder.
+
+    Args:
+        data_file_name (str): Name of file to backup
+        backup_folder_title (str): Name for backup folder
+        max_time (int, optional): Backup interval in seconds.
+            Defaults to 1 day (86400 seconds).
+
+    Returns:
+        function: Decorated function that performs backup</p>
+                        </div>
+                        
+                        <div class="function" id="decorator">
+                            <h3>decorator(func)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="wrapper">
+                            <h3>wrapper(*args, **kwargs)</h3>
+                            <p></p>
+                        </div>
+                        
+                        <div class="function" id="cleanup_folder_by_extension">
+                            <h3>cleanup_folder_by_extension(folder, extension, old_file_only=False)</h3>
+                            <p>Delete files with specified extension from folder.
+
+    Args:
+        folder (str): Target folder path
+        extension (str): File extension to match (with or without dot)
+        old_file_only (bool, optional): If True, only deletes files older than 10 days.
+            Defaults to False.
+
+    Returns:
+        int: Number of files deleted</p>
+                        </div>
+                        
+                        <div class="function" id="secure_filename_in_folder">
+                            <h3>secure_filename_in_folder(output_folder, desired_name, extension)</h3>
+                            <p>Format and secure filename in output folder.
+
+    Ensures proper file naming in output folder, particularly useful for
+    Revit exports where filenames may be modified.
+    Note that with the new Revit API PDF exporter, this is no longer needed since revit 2022.
+    But for image export, this is still needed. Becasue ti always export with e a -Sheet- thing in file name.
+
+    Args:
+        output_folder (str): Target folder path
+        desired_name (str): Desired filename without extension
+        extension (str): File extension including dot (e.g. '.jpg')
+
+    Returns:
+        str: Properly formatted filename</p>
+                        </div>
+                        
+                        <div class="function" id="wait_until_file_is_ready">
+                            <h3>wait_until_file_is_ready(file_path)</h3>
+                            <p>Wait until a file is ready to use.
+
+    Args:
+        file_path (str): Path to the file to check
+
+    Returns:
+        bool: True if file is ready, False otherwise</p>
+                        </div>
+                        
+        </main>
+    </div>
+    <script>
+        const searchIndex = {{searchIndex}};
+        // Initialize search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const results = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = results.map(item => `
+                <a href="${item.url}">${item.title}</a>
+            `).join('');
+        });
+        
+        // Populate module list
+        const moduleList = document.querySelector('.module-list');
+        const modules = [...new Set(searchIndex.map(item => item.url.split('/')[1].split('.')[0]))];
+        moduleList.innerHTML = modules.map(module => `
+            <a href="/${module}.html">${module}</a>
+        `).join('');
+    </script>
+</body>
+</html> 

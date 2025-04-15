@@ -31,7 +31,7 @@ from EnneadTab.RHINO import RHINO_ALIAS, RHINO_UI
 
 import logging
 
-# Add at the start of the file
+# Configure logging
 logging.basicConfig(level=logging.INFO, 
                    format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -43,9 +43,7 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
     
     @ERROR_HANDLE.try_catch_error()
     def __init__(self):
-        #logger.info("Initializing EnneadSearchDialog")
-        # Eto initials
-        self.Title = "EnneadTab For Rhino. Searcher"
+        self.Title = "Command Searcher"
         self.Resizable = True
         self.Padding = Eto.Drawing.Padding(5)
         self.Spacing = Eto.Drawing.Size(5, 5)
@@ -118,15 +116,11 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # collect data for list
     def InitializeScriptList(self):
-        #logger.info("Initializing script list and get base knowledge")
-
         with io.open(ENVIRONMENT.KNOWLEDGE_RHINO_FILE, "r", encoding = "utf-8") as f:
             knowledge_pool = json.load(f)
 
-
         self.knowledge = {}
         
-        # for reason not understood yet, value is not displayed in grid view if not contained by list, must convert list format: [1,2,3,"abc"] ----> [[1],[2],[3],["abd"]]
         for value in knowledge_pool.values():
             command_names = value["alias"]
             if not isinstance(command_names, list):
@@ -134,8 +128,6 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
             for command_name in command_names:
                 self.knowledge[command_name] = value
 
-
-        # wrap each command name in a list to fit grid view format
         return sorted([[x] for x in self.knowledge.keys()])
 
 
@@ -365,45 +357,21 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
 
     # create a search function
     def Search(self, text):
-        #logger.info("Performing search with text: '{}'".format(text))
-        """
-        Searches self.ScriptList with a given string
-        Supports wildCards
-        """
         if text == "":
             logger.debug("Empty search - showing full script list")
             self.lb.DataStore = self.ScriptList
         else:
             if not self.is_search_in_tooltip:
-                #print self.ScriptList
                 temp = [ [str(x[0])] for x in self.ScriptList]
-                # print temp[0:2]
                 self.SearchedScriptList = list(graft(fnmatch.filter(flatten(temp), "*" + text + "*"), 1))
-            
             else:
                 complete_data = [["{}^^^{}".format(x[0], self.knowledge[x[0]]["doc"])] for x in self.ScriptList]
-                # print complete_data[0:2]
-                #print temp
-                #print flatten(temp)
-                #print graft(fnmatch.filter(flatten(temp), "*" + text + "*"), 1)
-                #print list(graft(fnmatch.filter(flatten(temp), "*" + text + "*"), 1))
-
-                # self.SearchedScriptList = list(graft(fnmatch.filter(flatten(temp), "*" + text + "*"), 1))
-                # print searched_compiler
                 searched_compiler = list(graft(fnmatch.filter(flatten(complete_data), "*" + text + "*"), 1))
-                # print searched_compiler
                 self.SearchedScriptList = [[x[0].split("^^^")[0]] for x in searched_compiler]
-
                 self.SearchedScriptList.sort(key=lambda x: text.lower() in x[0].lower(), reverse=True)
-                # print self.SearchedScriptList
-            #print "######"
-            #print self.SearchedScriptList
 
-            #original method only work with pure list of string
-            #self.SearchedScriptList = list(graft(fnmatch.filter(flatten(self.ScriptList), "*" + text + "*"), 1))
             self.lb.DataStore = self.SearchedScriptList
             
-        
         self.update_info_panel()
 
 
@@ -433,16 +401,8 @@ class EnneadSearchDialog(Eto.Forms.Dialog[bool]):
         self.Search(self.tB_Search.Text)
 
     def btn_command_Clicked(self, sender, e):
-        #logger.info("Run button clicked")
-        # close window after double click action. Otherwise, run with error
         self.Close(True)
-
-        # print self.knowledge
         data = self.knowledge[self.selected_button_name]
-       
-
-    
-
         commands = data.get("alias", None)
         if not isinstance(commands, list):
             commands = [commands]

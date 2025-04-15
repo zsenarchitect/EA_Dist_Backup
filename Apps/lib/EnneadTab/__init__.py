@@ -53,6 +53,9 @@ This code can cause encoding failures, so it's best to avoid it. Got it?!
 import os
 import sys
 import traceback
+import io
+
+__py3_marker__ = "#!python3"
 
 def get_module_files():
     """Get all Python module files in the current directory.
@@ -112,14 +115,10 @@ def import_module(module_name):
             extension, which will be stripped before import.
     
     Note:
-        If an import fails, the error will be printed to stdout. Two attempts
-        are made to format the error message:
+        If an import fails, the error will be printed to stdout only if #!python3 is not present in the script.
+        Two attempts are made to format the error message:
         1. Using the full traceback
         2. Using just the exception string if traceback formatting fails
-    
-    Example:
-        >>> import_module('PDF.py')  # Will import EnneadTab.PDF
-        >>> import_module('REVIT')   # Will import EnneadTab.REVIT
     """
     try:
         # Ensure module directory is in path for relative imports
@@ -129,14 +128,25 @@ def import_module(module_name):
             
         # Import the module (strip .py extension if present)
         base_name = module_name[:-3] if module_name.endswith('.py') else module_name
+        module_path = os.path.join(module_dir, module_name)
+        
+        # Check if script has python3 marker
+        should_silent = False
+        if os.path.exists(module_path):
+            with io.open(module_path, 'r', encoding='utf-8') as f:
+                first_line = f.readline().strip()
+                if first_line == __py3_marker__:
+                    should_silent = True
+                    
         __import__("{}.{}".format(__package_name__, base_name), fromlist=['*'])
     except Exception as e:
-        try:
-            print("Cannot import {} because\n\n{}".format(
-                module_name, traceback.format_exc()))
-        except:
-            print("Cannot import {} because\n\n{}".format(
-                module_name, str(e)))
+        if not should_silent:
+            try:
+                print("Cannot import {} because\n\n{}".format(
+                    module_name, traceback.format_exc()))
+            except:
+                print("Cannot import {} because\n\n{}".format(
+                    module_name, str(e)))
 
 def initialize_package():
     """Initialize the package by importing all modules.

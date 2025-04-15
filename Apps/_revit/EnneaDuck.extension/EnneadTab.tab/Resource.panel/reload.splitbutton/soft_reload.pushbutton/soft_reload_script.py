@@ -16,7 +16,7 @@ from EnneadTab import ERROR_HANDLE, LOG, VERSION_CONTROL
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def soft_reload():
-    VERSION_CONTROL.update_EA_dist()
+    VERSION_CONTROL.update_dist_repo()
 
 
 ################## main code below #####################

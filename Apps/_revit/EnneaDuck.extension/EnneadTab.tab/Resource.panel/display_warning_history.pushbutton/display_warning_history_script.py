@@ -14,7 +14,7 @@ from pyrevit import script #
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_HISTORY
-from EnneadTab import ENVIRONMENT, OUTPUT, NOTIFICATION, ERROR_HANDLE, LOG, FOLDER
+from EnneadTab import ENVIRONMENT,  NOTIFICATION, ERROR_HANDLE, LOG, FOLDER
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 # uidoc = REVIT_APPLICATION.get_uidoc()
@@ -47,7 +47,7 @@ def display_warning_history(using_current = True):
     class MyOption(forms.TemplateListItem):
         @property
         def name(self):
-            return self.item.replace("REVIT_WARNING_HISTORY_", "").replace(".sexyDuck", "")
+            return self.item.replace("REVIT_WARNING_HISTORY_", "").replace(ENVIRONMENT.PLUGIN_EXTENSION, "")
     folder = FOLDER.DUMP_FOLDER or FOLDER.SHARED_DATA_DUMP_FOLDER
 
     file_list = [MyOption(x) for x in os.listdir(folder) if x.startswith("REVIT_WARNING_HISTORY_")]
@@ -61,10 +61,9 @@ def display_warning_history(using_current = True):
 
     hint_chart_js()
     for item in res:
-        REVIT_HISTORY.display_warning(item.replace("REVIT_WARNING_HISTORY_", "").replace(".sexyDuck", ""),
+        REVIT_HISTORY.display_warning(item.replace("REVIT_WARNING_HISTORY_", "").replace(ENVIRONMENT.PLUGIN_EXTENSION, ""),
                                                       show_detail=show_detail)
     
-    # OUTPUT.display_output_on_browser()
     print("Done")
 
 def hint_chart_js():

@@ -390,13 +390,13 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
 class ToggleSaveDocumentHandler:
 
     def __enter__(self):
-        CONFIG.set_setting("is_update_EA_dist_enabled", False)
-        print ("is_update_EA_dist_enabled set to False")
+        CONFIG.set_setting("is_update_dist_repo_enabled", False)
+        print ("is_update_dist_repo_enabled set to False")
         return self
         
     def __exit__(self, exc_type, exc_val, exc_tb):
-        CONFIG.set_setting("is_update_EA_dist_enabled", True)
-        print ("is_update_EA_dist_enabled set to True")
+        CONFIG.set_setting("is_update_dist_repo_enabled", True)
+        print ("is_update_dist_repo_enabled set to True")
 
 def get_output_folder():
 
