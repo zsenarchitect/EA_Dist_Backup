@@ -918,7 +918,7 @@
     "Revit.tab\\export_for_rhino2revit.button\\export_for_rhino2revit_left.py": {
         "script": "Revit.tab\\export_for_rhino2revit.button\\export_for_rhino2revit_left.py",
         "icon": "Revit.tab\\export_for_rhino2revit.button\\icon.png",
-        "alias": "ExportForRhino2Revit",
+        "alias": "Rhino2Revit",
         "doc": "Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit.",
         "tab": "Revit.tab",
         "tab_icon": "Revit.tab\\icon.png",

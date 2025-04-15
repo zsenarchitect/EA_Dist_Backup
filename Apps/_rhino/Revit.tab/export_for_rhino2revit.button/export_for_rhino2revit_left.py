@@ -463,6 +463,8 @@ def export(output_folder, datas):
         rs.StatusBarProgressMeterUpdate(position = i, absolute = True)
         entry, check_3dm, check_dwg = data
         layer = RHINO_LAYER.user_layer_to_rhino_layer(entry)
+        if not rs.IsLayerVisible(layer):
+            continue
 
         rs.UnselectAllObjects()
         raw_objs = rs.ObjectsByLayer(layer, select = False)
@@ -474,7 +476,7 @@ def export(output_folder, datas):
             # avoid situation where there are only non solid geo, such as curve and text, in the final export
             objs = [x for x in objs if rs.IsSurface(x) or rs.IsPolysurface(x)]
 
-            
+        objs = [x for x in objs if not rs.IsObjectHidden(x) and not rs.IsObjectLocked(x)]
         if len(objs) == 0:
             continue
             

@@ -3165,7 +3165,7 @@ EA_Block2Family</script>
     </macro_item>
     <macro_item guid="94c9025c-ff7e-4333-a01f-c2450834b47b" bitmap_id="c3ef4e8e-2544-4ec9-a8e2-05c085848498">
       <text>
-        <locale_1033>ExportForRhino2Revit</locale_1033>
+        <locale_1033>Rhino2Revit</locale_1033>
       </text>
       <tooltip>
         <locale_1033>Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit.</locale_1033>
@@ -3174,13 +3174,13 @@ EA_Block2Family</script>
         <locale_1033>Export Layer Contents to 3dm and dwg for Rhino2Revit in EnneadTab for Revit.</locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>ExportForRhino2Revit</locale_1033>
+        <locale_1033>Rhino2Revit</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>ExportForRhino2Revit</locale_1033>
+        <locale_1033>Rhino2Revit</locale_1033>
       </menu_text>
       <script>EA_ActivateEnneadTab
-EA_ExportForRhino2Revit</script>
+EA_Rhino2Revit</script>
     </macro_item>
     <macro_item guid="72e29702-99b9-485e-8a9d-0cda6d6648cd" bitmap_id="e4e3a042-751f-457a-8926-a4621cea5043">
       <text>
