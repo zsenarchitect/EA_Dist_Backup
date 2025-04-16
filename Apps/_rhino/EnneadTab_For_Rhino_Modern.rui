@@ -3404,7 +3404,7 @@ EA_FloorDrafter</script>
       <script>EA_ActivateEnneadTab
 EA_ImportRevitCollection</script>
     </macro_item>
-    <macro_item guid="8a1b6057-10de-4bb3-8132-36ba7a198bc0" bitmap_id="1d33dc8f-e7e4-4438-8205-89344c680d8d">
+    <macro_item guid="8a1b6057-10de-4bb3-8132-36ba7a198bc0" bitmap_id="230dd58a-40d3-47bc-acb2-58307e75d3e5">
       <text>
         <locale_1033>LiveSelection</locale_1033>
       </text>
@@ -3752,7 +3752,7 @@ Key Features:
       <script>EA_ActivateEnneadTab
 EA_RebaseFile</script>
     </macro_item>
-    <macro_item guid="4c379625-5fed-40e4-9aab-c9323b624bb0" bitmap_id="41ad5e61-6858-44ec-8ed3-2b2a47996a41">
+    <macro_item guid="4c379625-5fed-40e4-9aab-c9323b624bb0" bitmap_id="31e855cf-6627-4e24-8fc4-83f09d0960a6">
       <text>
         <locale_1033>2425ReplaceBlocks</locale_1033>
       </text>
@@ -3771,7 +3771,7 @@ EA_RebaseFile</script>
       <script>EA_ActivateEnneadTab
 EA_2425ReplaceBlocks</script>
     </macro_item>
-    <macro_item guid="168370c0-18bf-4742-b4a0-7a82b40ba6c6" bitmap_id="01f3d00c-3946-4c7c-9393-17c01f6aa267">
+    <macro_item guid="168370c0-18bf-4742-b4a0-7a82b40ba6c6" bitmap_id="d2e6f24d-c541-4935-b8ce-efdafd6db7d5">
       <text>
         <locale_1033>ExportWithoutCrv_1643</locale_1033>
       </text>
@@ -3790,7 +3790,7 @@ EA_2425ReplaceBlocks</script>
       <script>EA_ActivateEnneadTab
 EA_ExportWithoutCrv_1643</script>
     </macro_item>
-    <macro_item guid="88e6071a-834e-4831-af1b-67b44b1f13ac" bitmap_id="d1cf7684-8665-4566-9694-7a3a132d5db6">
+    <macro_item guid="88e6071a-834e-4831-af1b-67b44b1f13ac" bitmap_id="81c5e8ce-6e02-40e1-b59a-a400f299efed">
       <text>
         <locale_1033>2128_PatternMaker</locale_1033>
       </text>
@@ -3809,7 +3809,7 @@ EA_ExportWithoutCrv_1643</script>
       <script>EA_ActivateEnneadTab
 EA_2128_PatternMaker</script>
     </macro_item>
-    <macro_item guid="403a008f-ce02-430f-9012-104b66c2047c" bitmap_id="caa3b12b-e2a7-4726-a02e-889fabfb7ddd">
+    <macro_item guid="403a008f-ce02-430f-9012-104b66c2047c" bitmap_id="cd703085-e93b-43ff-a702-f067373410ff">
       <text>
         <locale_1033>RegisterMirror</locale_1033>
       </text>
@@ -3828,7 +3828,7 @@ EA_2128_PatternMaker</script>
       <script>EA_ActivateEnneadTab
 EA_RegisterMirror</script>
     </macro_item>
-    <macro_item guid="7d65fe82-088d-4812-a352-ac01d43707bc" bitmap_id="0d300d6b-f88c-4d9b-8f29-c847c4a3e172">
+    <macro_item guid="7d65fe82-088d-4812-a352-ac01d43707bc" bitmap_id="be5ac5bf-2dd1-4aaa-9e42-d27ec3e20cd4">
       <text>
         <locale_1033>RelocateAll_1643</locale_1033>
       </text>
@@ -3897,7 +3897,7 @@ EA_Stack PSD</script>
       <script>EA_ActivateEnneadTab
 EA_MoveImg_1643</script>
     </macro_item>
-    <macro_item guid="f801db6c-13db-4d5a-aef9-21147bcdc5ff" bitmap_id="772f6c2f-f64b-45a4-af17-cc5f0e701feb">
+    <macro_item guid="f801db6c-13db-4d5a-aef9-21147bcdc5ff" bitmap_id="399a305e-5076-4c1c-9355-aba113cda34e">
       <text>
         <locale_1033>2419_Facade move</locale_1033>
       </text>
@@ -4083,7 +4083,7 @@ Features:
       <script>EA_ActivateEnneadTab
 EA_RedAlert</script>
     </macro_item>
-    <macro_item guid="d0e192b2-aac5-446a-a5a4-b1f503d04e8d" bitmap_id="af289833-9bc8-4925-81c1-6c9ada4364d4">
+    <macro_item guid="d0e192b2-aac5-446a-a5a4-b1f503d04e8d" bitmap_id="7d1e7c76-82f7-499e-ab46-a96bb584ea49">
       <text>
         <locale_1033>Dockpane</locale_1033>
       </text>
@@ -4867,7 +4867,7 @@ EA_UnitTest</script>
       <bitmap_item guid="74becca3-77ec-4a2c-98d6-cceed222a6ef" index="93"/>
       <bitmap_item guid="57c3180b-710e-4a1b-8c03-c72de2884944" index="94"/>
       <bitmap_item guid="96d7882e-a637-4662-a8c2-a78ccfe3a440" index="95"/>
-      <bitmap_item guid="1d33dc8f-e7e4-4438-8205-89344c680d8d" index="96"/>
+      <bitmap_item guid="230dd58a-40d3-47bc-acb2-58307e75d3e5" index="96"/>
       <bitmap_item guid="91e1c315-9c43-4baf-8792-87bb0131ee4c" index="97"/>
       <bitmap_item guid="6b3658f7-7f3a-4ed0-bd5a-10e4d7f9bace" index="98"/>
       <bitmap_item guid="a0e2eb77-7eea-480d-a1e3-f87abf344603" index="99"/>
@@ -4882,14 +4882,14 @@ EA_UnitTest</script>
       <bitmap_item guid="aeab6fdd-17bd-4667-92ef-e07da55beb27" index="108"/>
       <bitmap_item guid="28564a23-c114-4a3e-a9c8-6532fb5b3a70" index="109"/>
       <bitmap_item guid="41d624e3-dbbe-4820-aa0e-9d666be8f95e" index="110"/>
-      <bitmap_item guid="41ad5e61-6858-44ec-8ed3-2b2a47996a41" index="111"/>
-      <bitmap_item guid="01f3d00c-3946-4c7c-9393-17c01f6aa267" index="112"/>
-      <bitmap_item guid="d1cf7684-8665-4566-9694-7a3a132d5db6" index="113"/>
-      <bitmap_item guid="caa3b12b-e2a7-4726-a02e-889fabfb7ddd" index="114"/>
-      <bitmap_item guid="0d300d6b-f88c-4d9b-8f29-c847c4a3e172" index="115"/>
+      <bitmap_item guid="31e855cf-6627-4e24-8fc4-83f09d0960a6" index="111"/>
+      <bitmap_item guid="d2e6f24d-c541-4935-b8ce-efdafd6db7d5" index="112"/>
+      <bitmap_item guid="81c5e8ce-6e02-40e1-b59a-a400f299efed" index="113"/>
+      <bitmap_item guid="cd703085-e93b-43ff-a702-f067373410ff" index="114"/>
+      <bitmap_item guid="be5ac5bf-2dd1-4aaa-9e42-d27ec3e20cd4" index="115"/>
       <bitmap_item guid="3c13b537-0f6a-449d-acd2-2a4f666f616f" index="116"/>
       <bitmap_item guid="7f17092a-8d63-4999-9d1f-4ad7dfa06940" index="117"/>
-      <bitmap_item guid="772f6c2f-f64b-45a4-af17-cc5f0e701feb" index="118"/>
+      <bitmap_item guid="399a305e-5076-4c1c-9355-aba113cda34e" index="118"/>
       <bitmap_item guid="a9b17235-30ff-4888-bec0-5507144f9173" index="119"/>
       <bitmap_item guid="9b3fd901-6426-4e19-8708-2e105d9e6dc8" index="120"/>
       <bitmap_item guid="487a7d6f-d6cf-4df2-b76f-eab8155a2ddd" index="121"/>
@@ -4897,7 +4897,7 @@ EA_UnitTest</script>
       <bitmap_item guid="06641f7c-0371-4780-b7fe-1154eaf100cd" index="123"/>
       <bitmap_item guid="003477d4-5d38-4c35-93f3-c5c930926381" index="124"/>
       <bitmap_item guid="07fd1914-a620-44e0-8cc6-edabe1df62ac" index="125"/>
-      <bitmap_item guid="af289833-9bc8-4925-81c1-6c9ada4364d4" index="126"/>
+      <bitmap_item guid="7d1e7c76-82f7-499e-ab46-a96bb584ea49" index="126"/>
       <bitmap_item guid="642c836b-5b8f-4d27-989b-97564dffff53" index="127"/>
       <bitmap_item guid="fcb1bd10-7ddc-4285-a158-776fa1b946f4" index="128"/>
       <bitmap_item guid="fa77b2d3-dd61-4485-b937-44a787e55d37" index="129"/>
@@ -6393,7 +6393,7 @@ Py+0AAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="74becca3-77ec-4a2c-98d6-cceed222a6ef" index="93"/>
       <bitmap_item guid="57c3180b-710e-4a1b-8c03-c72de2884944" index="94"/>
       <bitmap_item guid="96d7882e-a637-4662-a8c2-a78ccfe3a440" index="95"/>
-      <bitmap_item guid="1d33dc8f-e7e4-4438-8205-89344c680d8d" index="96"/>
+      <bitmap_item guid="230dd58a-40d3-47bc-acb2-58307e75d3e5" index="96"/>
       <bitmap_item guid="91e1c315-9c43-4baf-8792-87bb0131ee4c" index="97"/>
       <bitmap_item guid="6b3658f7-7f3a-4ed0-bd5a-10e4d7f9bace" index="98"/>
       <bitmap_item guid="a0e2eb77-7eea-480d-a1e3-f87abf344603" index="99"/>
@@ -6408,14 +6408,14 @@ Py+0AAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="aeab6fdd-17bd-4667-92ef-e07da55beb27" index="108"/>
       <bitmap_item guid="28564a23-c114-4a3e-a9c8-6532fb5b3a70" index="109"/>
       <bitmap_item guid="41d624e3-dbbe-4820-aa0e-9d666be8f95e" index="110"/>
-      <bitmap_item guid="41ad5e61-6858-44ec-8ed3-2b2a47996a41" index="111"/>
-      <bitmap_item guid="01f3d00c-3946-4c7c-9393-17c01f6aa267" index="112"/>
-      <bitmap_item guid="d1cf7684-8665-4566-9694-7a3a132d5db6" index="113"/>
-      <bitmap_item guid="caa3b12b-e2a7-4726-a02e-889fabfb7ddd" index="114"/>
-      <bitmap_item guid="0d300d6b-f88c-4d9b-8f29-c847c4a3e172" index="115"/>
+      <bitmap_item guid="31e855cf-6627-4e24-8fc4-83f09d0960a6" index="111"/>
+      <bitmap_item guid="d2e6f24d-c541-4935-b8ce-efdafd6db7d5" index="112"/>
+      <bitmap_item guid="81c5e8ce-6e02-40e1-b59a-a400f299efed" index="113"/>
+      <bitmap_item guid="cd703085-e93b-43ff-a702-f067373410ff" index="114"/>
+      <bitmap_item guid="be5ac5bf-2dd1-4aaa-9e42-d27ec3e20cd4" index="115"/>
       <bitmap_item guid="3c13b537-0f6a-449d-acd2-2a4f666f616f" index="116"/>
       <bitmap_item guid="7f17092a-8d63-4999-9d1f-4ad7dfa06940" index="117"/>
-      <bitmap_item guid="772f6c2f-f64b-45a4-af17-cc5f0e701feb" index="118"/>
+      <bitmap_item guid="399a305e-5076-4c1c-9355-aba113cda34e" index="118"/>
       <bitmap_item guid="a9b17235-30ff-4888-bec0-5507144f9173" index="119"/>
       <bitmap_item guid="9b3fd901-6426-4e19-8708-2e105d9e6dc8" index="120"/>
       <bitmap_item guid="487a7d6f-d6cf-4df2-b76f-eab8155a2ddd" index="121"/>
@@ -6423,7 +6423,7 @@ Py+0AAAAAElFTkSuQmCC</bitmap>
       <bitmap_item guid="06641f7c-0371-4780-b7fe-1154eaf100cd" index="123"/>
       <bitmap_item guid="003477d4-5d38-4c35-93f3-c5c930926381" index="124"/>
       <bitmap_item guid="07fd1914-a620-44e0-8cc6-edabe1df62ac" index="125"/>
-      <bitmap_item guid="af289833-9bc8-4925-81c1-6c9ada4364d4" index="126"/>
+      <bitmap_item guid="7d1e7c76-82f7-499e-ab46-a96bb584ea49" index="126"/>
       <bitmap_item guid="642c836b-5b8f-4d27-989b-97564dffff53" index="127"/>
       <bitmap_item guid="fcb1bd10-7ddc-4285-a158-776fa1b946f4" index="128"/>
       <bitmap_item guid="fa77b2d3-dd61-4485-b937-44a787e55d37" index="129"/>
@@ -9146,7 +9146,7 @@ nvPvCWQZHQDg/wH3CLz1gxXyfQAAAABJRU5ErkJggg==</bitmap>
       <bitmap_item guid="74becca3-77ec-4a2c-98d6-cceed222a6ef" index="93"/>
       <bitmap_item guid="57c3180b-710e-4a1b-8c03-c72de2884944" index="94"/>
       <bitmap_item guid="96d7882e-a637-4662-a8c2-a78ccfe3a440" index="95"/>
-      <bitmap_item guid="1d33dc8f-e7e4-4438-8205-89344c680d8d" index="96"/>
+      <bitmap_item guid="230dd58a-40d3-47bc-acb2-58307e75d3e5" index="96"/>
       <bitmap_item guid="91e1c315-9c43-4baf-8792-87bb0131ee4c" index="97"/>
       <bitmap_item guid="6b3658f7-7f3a-4ed0-bd5a-10e4d7f9bace" index="98"/>
       <bitmap_item guid="a0e2eb77-7eea-480d-a1e3-f87abf344603" index="99"/>
@@ -9161,14 +9161,14 @@ nvPvCWQZHQDg/wH3CLz1gxXyfQAAAABJRU5ErkJggg==</bitmap>
       <bitmap_item guid="aeab6fdd-17bd-4667-92ef-e07da55beb27" index="108"/>
       <bitmap_item guid="28564a23-c114-4a3e-a9c8-6532fb5b3a70" index="109"/>
       <bitmap_item guid="41d624e3-dbbe-4820-aa0e-9d666be8f95e" index="110"/>
-      <bitmap_item guid="41ad5e61-6858-44ec-8ed3-2b2a47996a41" index="111"/>
-      <bitmap_item guid="01f3d00c-3946-4c7c-9393-17c01f6aa267" index="112"/>
-      <bitmap_item guid="d1cf7684-8665-4566-9694-7a3a132d5db6" index="113"/>
-      <bitmap_item guid="caa3b12b-e2a7-4726-a02e-889fabfb7ddd" index="114"/>
-      <bitmap_item guid="0d300d6b-f88c-4d9b-8f29-c847c4a3e172" index="115"/>
+      <bitmap_item guid="31e855cf-6627-4e24-8fc4-83f09d0960a6" index="111"/>
+      <bitmap_item guid="d2e6f24d-c541-4935-b8ce-efdafd6db7d5" index="112"/>
+      <bitmap_item guid="81c5e8ce-6e02-40e1-b59a-a400f299efed" index="113"/>
+      <bitmap_item guid="cd703085-e93b-43ff-a702-f067373410ff" index="114"/>
+      <bitmap_item guid="be5ac5bf-2dd1-4aaa-9e42-d27ec3e20cd4" index="115"/>
       <bitmap_item guid="3c13b537-0f6a-449d-acd2-2a4f666f616f" index="116"/>
       <bitmap_item guid="7f17092a-8d63-4999-9d1f-4ad7dfa06940" index="117"/>
-      <bitmap_item guid="772f6c2f-f64b-45a4-af17-cc5f0e701feb" index="118"/>
+      <bitmap_item guid="399a305e-5076-4c1c-9355-aba113cda34e" index="118"/>
       <bitmap_item guid="a9b17235-30ff-4888-bec0-5507144f9173" index="119"/>
       <bitmap_item guid="9b3fd901-6426-4e19-8708-2e105d9e6dc8" index="120"/>
       <bitmap_item guid="487a7d6f-d6cf-4df2-b76f-eab8155a2ddd" index="121"/>
@@ -9176,7 +9176,7 @@ nvPvCWQZHQDg/wH3CLz1gxXyfQAAAABJRU5ErkJggg==</bitmap>
       <bitmap_item guid="06641f7c-0371-4780-b7fe-1154eaf100cd" index="123"/>
       <bitmap_item guid="003477d4-5d38-4c35-93f3-c5c930926381" index="124"/>
       <bitmap_item guid="07fd1914-a620-44e0-8cc6-edabe1df62ac" index="125"/>
-      <bitmap_item guid="af289833-9bc8-4925-81c1-6c9ada4364d4" index="126"/>
+      <bitmap_item guid="7d1e7c76-82f7-499e-ab46-a96bb584ea49" index="126"/>
       <bitmap_item guid="642c836b-5b8f-4d27-989b-97564dffff53" index="127"/>
       <bitmap_item guid="fcb1bd10-7ddc-4285-a158-776fa1b946f4" index="128"/>
       <bitmap_item guid="fa77b2d3-dd61-4485-b937-44a787e55d37" index="129"/>
