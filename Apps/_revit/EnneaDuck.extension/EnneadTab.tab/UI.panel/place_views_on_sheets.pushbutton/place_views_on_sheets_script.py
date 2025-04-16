@@ -855,12 +855,7 @@ def place_views_on_sheets(doc):
 
 ################## main code below #####################
 if __name__ == "__main__":
-    try:
-        place_views_on_sheets(DOC)
-    except Exception as e:
-        from EnneadTab import NOTIFICATION, ERROR_HANDLE # pyright: ignore
-        NOTIFICATION.messenger("Error in main function: {}".format(str(e)))
-        ERROR_HANDLE.print_traceback()
+    place_views_on_sheets(DOC)
 
 
 
