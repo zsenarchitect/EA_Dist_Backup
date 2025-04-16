@@ -117,8 +117,9 @@ def email_error(
     except Exception as e:
         print(e)
         additional_note = str(e)
-    body = "{}\nError happens on {}'s machine when running {}.\n\nDetail below:\n{}\n\n{}".format(
-        t, error_from_user, tool_name, traceback, additional_note
+        computer_name = ENVIRONMENT.get_computer_name()
+    body = "{}\nError happens on {}'s machine [{}] when running {}.\n\nDetail below:\n{}\n\n{}".format(
+        t, error_from_user, computer_name, tool_name, traceback, additional_note
     )
 
     if ENVIRONMENT.IS_REVIT_ENVIRONMENT:

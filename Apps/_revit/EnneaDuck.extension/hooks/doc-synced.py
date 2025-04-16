@@ -10,7 +10,7 @@ DOC = EXEC_PARAMS.event_args.Document
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK
+from EnneadTab import ERROR_HANDLE, FOLDER, SOUND, LOG, NOTIFICATION, SPEAK, MODULE_HELPER, ENVIRONMENT, EMAIL, USER, DATA_FILE, IMAGE, SPEAK, TIME 
 from EnneadTab.REVIT import REVIT_SYNC, REVIT_FORMS, REVIT_EVENT, REVIT_SPATIAL_ELEMENT, REVIT_PROJ_DATA
 __title__ = "Doc Synced Hook"
 
@@ -273,7 +273,20 @@ def update_sync_queue(doc):
     REVIT_FORMS.notification(main_text = "[{}]\nshould sync next.".format(next_user), sub_text = "Expect slight network lag between SH/NY server to transfer waitlist file.", window_width = 500, window_height = 400, self_destruct = 15)
 
 
-
+def warn_revit_session_too_long():
+    uptime = TIME.get_revit_uptime()
+    if uptime > 3 * 24 * 60 * 60:
+        NOTIFICATION.messenger("Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_readable_time(uptime)))
+        return
+    if uptime > 5 * 24 * 60 * 60:
+        NOTIFICATION.messenger("Ahhhh! Revit has been open for {}. Please consider restarting your computer soon.".format(TIME.get_readable_time(uptime)))
+        return
+    if uptime > 10 * 24 * 60 * 60:
+        NOTIFICATION.messenger("This is ridiculous! Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_readable_time(uptime)))
+        return
+    if uptime > 15 * 24 * 60 * 60:
+        NOTIFICATION.messenger("I am begging you! please restart your computer. Revit has been open for {}. ".format(TIME.get_readable_time(uptime)))
+        return
 
 def play_success_sound():
     file = 'sound_effect_mario_1up.wav'
@@ -312,6 +325,9 @@ def doc_synced(doc):
     if USER.IS_DEVELOPER:
         SPEAK.speak("Document {} has finished syncing.".format(doc.Title))
         NOTIFICATION.messenger("Document {} has finished syncing.".format(doc.Title))
+
+
+    warn_revit_session_too_long()
     return
 
 

@@ -195,10 +195,19 @@ def is_avd():
     Returns:
         bool: True if running in AVD or GPU-PD environment, False otherwise
     """
+    computer_name = get_computer_name()
+  
+    return "avd" in computer_name.lower() or "gpupd" in computer_name.lower()
+
+def get_computer_name():
+    """Get the computer name.
+
+    Returns:
+        str: Computer name
+
+    """
     try:
         import clr  # pyright:ignore
-
-        clr.AddReference("System")
         from System.Net import Dns  # pyright:ignore
 
         computer_name = Dns.GetHostName()
@@ -206,8 +215,8 @@ def is_avd():
         import socket
 
         computer_name = socket.gethostname()
-  
-    return "avd" in computer_name.lower() or "gpupd" in computer_name.lower()
+
+    return computer_name
 
 
 def is_Rhino_8():

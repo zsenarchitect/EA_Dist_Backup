@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import datetime
@@ -60,6 +59,12 @@ def get_formatted_time(input_time):
     return "{}-{}-{}_{}-{}-{}".format(year, month, day, hour, minute, second)
 
 def get_readable_time(time_in_seconds):
+    """
+    Converts time in seconds to a human-readable format.
+    For durations less than 1 second, returns value with 2 decimal places.
+    Automatically selects appropriate units (seconds, minutes, hours, days, weeks)
+    based on the duration.
+    """
     if time_in_seconds < 1:
         # return floating second with 2 decimal places
         return "{:.2f}s".format(time_in_seconds)
@@ -77,10 +82,26 @@ def get_readable_time(time_in_seconds):
     # mins = time_in_seconds%60
     # secs = time_in_seconds%60
     
-    hours = time_in_seconds // 3600
+    if time_in_seconds < 86400:
+        hours = time_in_seconds // 3600
+        mins = (time_in_seconds % 3600) // 60
+        secs = time_in_seconds % 60
+        return "{}h {}m {}s".format(hours, mins, secs)
+    
+    if time_in_seconds < 604800:  # Less than a week
+        days = time_in_seconds // 86400
+        hours = (time_in_seconds % 86400) // 3600
+        mins = (time_in_seconds % 3600) // 60
+        secs = time_in_seconds % 60
+        return "{}d {}h {}m {}s".format(days, hours, mins, secs)
+    
+    # Handle weeks
+    weeks = time_in_seconds // 604800
+    days = (time_in_seconds % 604800) // 86400
+    hours = (time_in_seconds % 86400) // 3600
     mins = (time_in_seconds % 3600) // 60
     secs = time_in_seconds % 60
-    return "{}h {}m {}s".format(hours, mins, secs)
+    return "{}w {}d {}h {}m {}s".format(weeks, days, hours, mins, secs)
 
 
 
