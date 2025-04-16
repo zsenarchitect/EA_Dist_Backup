@@ -244,6 +244,10 @@ def _get_internal_file_from_folder(folder, file_name):
     return os.path.join(folder, _secure_file_name(file_name))
   
 
+def get_EA_dump_folder_file(file_name):
+    """TO-DO:this is for backward compatibility, will remove after May 20 2025"""
+    return get_local_dump_folder_file(file_name)
+
 def get_local_dump_folder_file(file_name):
     """Get full path for file in EA dump folder.
 

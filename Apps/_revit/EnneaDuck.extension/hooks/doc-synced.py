@@ -274,18 +274,18 @@ def update_sync_queue(doc):
 
 
 def warn_revit_session_too_long():
-    uptime = TIME.get_revit_uptime()
+    uptime = TIME.get_revit_uptime(return_number = True)
     if uptime > 3 * 24 * 60 * 60:
-        NOTIFICATION.messenger("Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_readable_time(uptime)))
+        NOTIFICATION.messenger("Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_revit_uptime()))
         return
     if uptime > 5 * 24 * 60 * 60:
-        NOTIFICATION.messenger("Ahhhh! Revit has been open for {}. Please consider restarting your computer soon.".format(TIME.get_readable_time(uptime)))
+        NOTIFICATION.messenger("Ahhhh! Revit has been open for {}. Please consider restarting your computer soon.".format(TIME.get_revit_uptime()))
         return
     if uptime > 10 * 24 * 60 * 60:
-        NOTIFICATION.messenger("This is ridiculous! Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_readable_time(uptime)))
+        NOTIFICATION.messenger("This is ridiculous! Revit has been open for {}. Please consider restarting your computer.".format(TIME.get_revit_uptime()))
         return
     if uptime > 15 * 24 * 60 * 60:
-        NOTIFICATION.messenger("I am begging you! please restart your computer. Revit has been open for {}. ".format(TIME.get_readable_time(uptime)))
+        NOTIFICATION.messenger("I am begging you! please restart your computer. Revit has been open for {}. ".format(TIME.get_revit_uptime()))
         return
 
 def play_success_sound():

@@ -1,10 +1,11 @@
 layout:
 
   - Search
-  - EA_who_did_that
+  - what_happened
   - prefilter_selection
   - ">>>" 
   - toggle_warning_mode
   - open_app_store
   - pick_absolute_similar
   - ownership_inspect
+  - place_views_on_sheets

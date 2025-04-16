@@ -14,6 +14,11 @@ import FOLDER
 
 import random
 
+
+def update_EA_dist():
+    """TO-DO:this is kept for backward compatibility, will remove after May 20 2025"""
+    update_dist_repo()
+
 def update_dist_repo():
     if not is_update_too_soon():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)

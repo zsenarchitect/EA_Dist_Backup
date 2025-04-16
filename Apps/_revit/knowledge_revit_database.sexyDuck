@@ -2717,15 +2717,6 @@
         "tab": "Tools",
         "tab_icon": null
     },
-    "EnneadTab.tab\\UI.panel\\EA_who_did_that.pushbutton\\who_did_script.py": {
-        "alias": "What Happened?",
-        "doc": "A floating window that give you information of the creator, editor and owner of selected elements and active view.",
-        "icon": "EnneadTab.tab\\UI.panel\\EA_who_did_that.pushbutton\\icon.png",
-        "is_popular": true,
-        "script": "EnneadTab.tab\\UI.panel\\EA_who_did_that.pushbutton\\who_did_script.py",
-        "tab": "UI",
-        "tab_icon": null
-    },
     "EnneadTab.tab\\UI.panel\\Search.pushbutton\\search_script.py": {
         "alias": "Search Command",
         "doc": "Intelligent command search engine for Revit. This powerful search utility helps you locate tools across both EnneadTab and native Revit interfaces with ranked results based on name and documentation matches. Features include visual previews of tool locations, direct activation capability, and detailed documentation display with links to help resources. Perfect for quickly accessing functions without navigating through ribbon panels or when you can't remember where tools are located.",
@@ -2762,6 +2753,15 @@
         "tab": "UI",
         "tab_icon": null
     },
+    "EnneadTab.tab\\UI.panel\\place_views_on_sheets.pushbutton\\place_views_on_sheets_script.py": {
+        "alias": "Place Views On Sheets",
+        "doc": "Monitor for new views in the project and allow quick renaming through a non-blocking interface.",
+        "icon": "EnneadTab.tab\\UI.panel\\place_views_on_sheets.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\UI.panel\\place_views_on_sheets.pushbutton\\place_views_on_sheets_script.py",
+        "tab": "UI",
+        "tab_icon": null
+    },
     "EnneadTab.tab\\UI.panel\\prefilter_selection.pushbutton\\prefilter_selection_script.py": {
         "alias": "Prefilter Selection",
         "doc": "Just like the prefilter selection in Rhino, this allow you to narrow down selection beofre heavy window selection and post filter.\nVery helpful when the drawing is very crowded.\n\nYou can enable multiple category at same time.\n\nLet Sen.Z know if you would like to add more to the category list.",
@@ -2777,6 +2777,15 @@
         "icon": "EnneadTab.tab\\UI.panel\\toggle_warning_mode.smartbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\UI.panel\\toggle_warning_mode.smartbutton\\toggle_warning_mode_script.py",
+        "tab": "UI",
+        "tab_icon": null
+    },
+    "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\what_happened_script.py": {
+        "alias": "What Happened?",
+        "doc": "A floating window that give you information of the creator, editor and owner of selected elements and active view.",
+        "icon": "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\icon.png",
+        "is_popular": true,
+        "script": "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\what_happened_script.py",
         "tab": "UI",
         "tab_icon": null
     }

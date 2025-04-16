@@ -67,7 +67,7 @@ def create_temporary_copy(exe_path, exe_name):
         str or None: Path to the temporary copy if successful, None otherwise.
     """
     temp_exe_name = "_temp_exe_{}_{}.exe".format(exe_name, int(time.time()))
-    temp_exe = ENVIRONMENT.WINDOW_TEMP_FOLDER + "\\" + temp_exe_name
+    temp_exe = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, temp_exe_name)
     
     COPY.copyfile(exe_path, temp_exe)
     if os.path.exists(temp_exe):
@@ -146,7 +146,15 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         return True
 
 def clean_temporary_executables():
-    """Clean up temporary executables older than a specified age."""
+    """Clean up temporary executables older than a specified age.
+    
+    This function removes temporary executable files created by the safe_open option.
+    Files are only removed if they are older than a specified threshold:
+    - OS_Installer/AutoStartup files: cleaned up after 12 hours
+    - Other executables: cleaned up after 24 hours
+    
+    Files that are currently in use will be skipped with an appropriate debug message.
+    """
     
     def get_ignore_age(file):
         """Determine the age threshold for ignoring files."""

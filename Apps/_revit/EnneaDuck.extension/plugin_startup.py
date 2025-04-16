@@ -105,9 +105,7 @@ def open_scheduled_docs():
     """this will also require the exe to run a schedule to active the revit, with version required.
     """
 
-    data_file = "action_" + "schedule_opener_data"
-    if not os.path.exists(FOLDER.get_local_dump_folder_file(data_file)):
-        return
+    data_file = "action_schedule_opener_data"
     data = DATA_FILE.get_data(data_file)
     if not data:
         return

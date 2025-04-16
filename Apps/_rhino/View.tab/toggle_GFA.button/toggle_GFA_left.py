@@ -549,6 +549,8 @@ def get_schedule_layers():
     def is_good_layer(x):
         if not "[GFA]" in x:
             return False
+        if not rs.IsLayer(x):
+            return False
         if not rs.IsLayerVisible(x):
             return False
         return True

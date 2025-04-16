@@ -1,0 +1,147 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Views Monitor"
+        Foreground="#000"
+        Margin="0"
+        SizeToContent="Height"
+        Width="650"
+        MaxWidth="650"
+        ShowInTaskbar="True"
+        BorderThickness="0"
+        Background="{x:Null}"
+        WindowStartupLocation="CenterScreen"
+        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+        HorizontalContentAlignment="Center"
+        UseLayoutRounding="False"
+        FontFamily="RomanD"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        MouseLeftButtonDown="mouse_down_main_panel"
+        Cursor="ScrollAll">
+    <Window.Resources>
+        <SolidColorBrush x:Key="AboutWindowTextColor" Color="#FFDAE8FD"/>
+        <SolidColorBrush x:Key="AboutWindowHightlightColor" Color="#f39c12"/>
+        <SolidColorBrush x:Key="AboutWindowMainPanelColor" Color="#FF464646"/>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource AboutWindowTextColor}"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="{StaticResource AboutWindowHightlightColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#222222"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="#DDDDDD"/>
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="{StaticResource AboutWindowMainPanelColor}" 
+            CornerRadius="5" 
+            Padding="10">
+        <StackPanel>
+            <TextBlock x:Name="title_text" 
+                      Text="New Views Monitor" 
+                      FontSize="16" 
+                      Margin="0,0,0,10"/>
+            
+            <TextBlock x:Name="sub_text" 
+                      Text="Double-click a view name to rename it. Use dropdowns to assign sheets, scope boxes, and templates." 
+                      TextWrapping="Wrap" 
+                      Margin="0,0,0,10"/>
+            
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <DataGrid x:Name="views_data_grid" 
+                         Height="400" 
+                         Width="620"
+                         BorderThickness="1"
+                         Background="#333333"
+                         AutoGenerateColumns="False"
+                         CanUserAddRows="False"
+                         CanUserDeleteRows="False"
+                         IsReadOnly="False"
+                         RowHeaderWidth="0"
+                         GridLinesVisibility="Horizontal"
+                         AlternatingRowBackground="#444444"
+                         RowBackground="#333333"
+                         MouseEnter="datagrid_mouse_enter"
+                         MouseLeave="datagrid_mouse_leave">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="View Name" Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" MouseLeftButtonDown="viewname_double_click" Foreground="White"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Sheet" Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding SheetInfo}" 
+                                                  Foreground="#f39c12" 
+                                                  FontWeight="Bold"
+                                                  Margin="0,0,0,5" 
+                                                  TextWrapping="Wrap" />
+                                        <ComboBox ItemsSource="{Binding AllSheets}" 
+                                                  SelectedItem="{Binding SelectedSheet, Mode=TwoWay}" 
+                                                  SelectionChanged="sheet_selection_changed"
+                                                  DisplayMemberPath="Name"
+                                                  Tag="{Binding}"
+                                                  Width="140"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Scope Box" Width="140">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding AllScopeBoxes}" 
+                                              SelectedItem="{Binding SelectedScopeBox, Mode=TwoWay}" 
+                                              SelectionChanged="scopebox_selection_changed"
+                                              DisplayMemberPath="Name"
+                                              Tag="{Binding}"
+                                              Width="130"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="View Template" Width="140">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding AllViewTemplates}" 
+                                              SelectedItem="{Binding SelectedViewTemplate, Mode=TwoWay}" 
+                                              SelectionChanged="template_selection_changed"
+                                              DisplayMemberPath="Name"
+                                              Tag="{Binding}"
+                                              Width="130"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+
+            <TextBlock x:Name="status_text" 
+                      Text="Waiting for new views..." 
+                      TextWrapping="Wrap" 
+                      Margin="0,10,0,0"/>
+            
+            <Button x:Name="refresh_btn" 
+                    Content="Manual Refresh" 
+                    Click="refresh_click"
+                    Margin="0,10,0,0"/>
+            
+            <Button x:Name="close_btn" 
+                    Content="Close" 
+                    Click="close_Click" 
+                    Margin="0,10,0,0"/>
+        </StackPanel>
+    </Border>
+</Window> 
