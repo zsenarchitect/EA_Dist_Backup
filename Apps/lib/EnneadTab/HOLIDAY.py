@@ -166,7 +166,7 @@ def display_greeting(image_name, title_text="Greeting from EnneadTab",
     if isinstance(image_name, basestring) and not image_name.startswith("holiday_"):
         image_name = "holiday_" + image_name
         
-    image_file = "{0}\\{1}".format(ENVIRONMENT.IMAGE_FOLDER, image_name)
+    image_file = os.path.join(ENVIRONMENT.IMAGE_FOLDER, image_name)
     
     output = OUTPUT.get_output()
     output.write(title_text, OUTPUT.Style.Title)
@@ -181,7 +181,7 @@ def display_greeting(image_name, title_text="Greeting from EnneadTab",
     if sound_file:
         # Check if sound file needs folder prefix for standard location
         if not os.path.isfile(sound_file) and not sound_file.startswith("holiday_"):
-            sound_file = "{0}\\{1}".format(ENVIRONMENT.AUDIO_FOLDER, sound_file)
+            sound_file = os.path.join(ENVIRONMENT.AUDIO_FOLDER, sound_file)
         SOUND.play_sound(sound_file)
 
 
@@ -247,7 +247,7 @@ def greeting_april_fools():
     ]
     
     NOTIFICATION.messenger(JOKE.random_loading_message())
-    SOUND.play_sound("{0}\\{1}".format(ENVIRONMENT.AUDIO_FOLDER, random.choice(fun_sounds)))
+    SOUND.play_sound(os.path.join(ENVIRONMENT.AUDIO_FOLDER, random.choice(fun_sounds)))
 
 
 def greeting_may_force():
@@ -349,12 +349,12 @@ def greeting_mid_moon():
     output.write("## An important part is the moon-cake. You may find the technical drawing below.", OUTPUT.Style.Subtitle)
     
     moon_cake_image = "holiday_moon-cake-drawing.png"
-    moon_cake_image_file = "{0}\\{1}".format(ENVIRONMENT.IMAGE_FOLDER, moon_cake_image)
+    moon_cake_image_file = os.path.join(ENVIRONMENT.IMAGE_FOLDER, moon_cake_image)
     output.write(moon_cake_image_file)
     
     output.plot()
     
-    SOUND.play_sound("{0}\\{1}".format(ENVIRONMENT.AUDIO_FOLDER, "holiday_chinese_new_year.wav"))
+    SOUND.play_sound(os.path.join(ENVIRONMENT.AUDIO_FOLDER, "holiday_chinese_new_year.wav"))
 
     # Occasional export to HTML
     if random.random() > 0.2:

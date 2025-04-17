@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
@@ -12,7 +11,7 @@ def get_audio_path_by_name(file_name):
         file_name = file_name + ".wav"
     if os.path.exists(file_name):
         return file_name
-    path = "{}\\{}".format(ENVIRONMENT.AUDIO_FOLDER, file_name)
+    path = os.path.join(ENVIRONMENT.AUDIO_FOLDER, file_name)
     if os.path.exists(path):
         return path
     print ("A ha! {} is not valid or accessibile. Better luck next time.".format(path))
@@ -34,6 +33,15 @@ def play_finished_sound():
     play_sound("sound_effect_mario_message")
 
 def play_sound(file = "sound_effect_popup_msg3"):
+    """
+    Play a sound file using various methods.
+    
+    Args:
+        file: Sound file name or path (with or without .wav extension)
+        
+    Returns:
+        bool: True if sound played successfully, False otherwise
+    """
     file = get_audio_path_by_name(file)
     if not file:
         return
@@ -56,8 +64,9 @@ def play_sound(file = "sound_effect_popup_msg3"):
         # print ("Cannot use native playsound  becasue: " + str(e))
         pass
     try:
-        # Assuming you're using os.system to play sounds
-        os.system('powershell -c (New-Object Media.SoundPlayer "{}").PlaySync();'.format(file))
+        # Use proper path escaping for PowerShell
+        escaped_path = file.replace('\\', '\\\\')
+        os.system('powershell -c (New-Object Media.SoundPlayer "{}").PlaySync();'.format(escaped_path))
         return True
     except Exception as e:
         # print(f"An error occurred: {e}")
