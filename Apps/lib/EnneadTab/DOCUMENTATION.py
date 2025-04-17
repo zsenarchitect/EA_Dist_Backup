@@ -250,12 +250,13 @@ def get_title_tip_from_file(lucky_file, is_random_single):
             ref_module = resources.module_from_spec(spec)
             spec.loader.exec_module(ref_module)
         except Exception as e:
-            if USER.is_EnneadTab_developer:
+            if USER.IS_DEVELOPER:
                 print ("\n\nDeveloper visible only logging:")
                 print (ERROR_HANDLE.get_alternative_traceback())
+                print ("The lucky file is: {}".format(lucky_file))
             return module_name, None, icon_path
     except Exception as e:
-        if USER.is_EnneadTab_developer:
+        if USER.IS_DEVELOPER:
             print ("\n\nDeveloper visible only logging:")
             print (ERROR_HANDLE.get_alternative_traceback())
             

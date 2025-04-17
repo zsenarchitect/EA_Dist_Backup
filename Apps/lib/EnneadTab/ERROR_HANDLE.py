@@ -157,7 +157,7 @@ def print_note(*args):
             - int: 123
             - list: ['a', 'b']
     """
-    if not USER.is_EnneadTab_developer():
+    if not USER.IS_DEVELOPER:
         return
         
     try:

@@ -454,7 +454,7 @@ def main():
     #example to make auto changes to doc continously
     """
     from EnneadTab import USER
-    if not USER.is_enneadtab_developer():
+    if not USER.IS_DEVELOPER:
         return
     from REVIT import REVIT_AUTO
     

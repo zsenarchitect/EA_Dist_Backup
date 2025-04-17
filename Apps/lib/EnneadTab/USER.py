@@ -88,7 +88,7 @@ def get_usernames_from_developers():
     return system_usernames, autodesk_usernames
 
 
-def is_EnneadTab_developer():
+def _is_EnneadTab_developer():
     """Verify if current user has developer status.
 
     Checks against appropriate username list based on current environment:
@@ -99,6 +99,8 @@ def is_EnneadTab_developer():
     Returns:
         bool: True if user is a developer, False otherwise
     """
+    if os.path.exists("{}\\dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION)):
+        return True
     # declare username variables
     system_usernames, autodesk_usernames = get_usernames_from_developers()
 
@@ -110,6 +112,9 @@ def is_EnneadTab_developer():
 
 
     # in all other terminal conditions:
+    if USER_NAME in system_usernames:
+        with open("{}\\dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION), "w") as f:
+            f.write("Harry, you are a wizard!")
     return USER_NAME in system_usernames
 
 
@@ -139,7 +144,7 @@ def get_autodesk_user_name():
     
         
 
-IS_DEVELOPER = is_EnneadTab_developer()
+IS_DEVELOPER = _is_EnneadTab_developer()
 
 
 
@@ -222,7 +227,7 @@ def unit_test():
                 print(x, " = ", content)
 
     print ("current user [{}] is a developer? {}".format(USER_NAME,
-                                                       UNIT_TEST.print_boolean_in_color(is_EnneadTab_developer())))
+                                                       UNIT_TEST.print_boolean_in_color(IS_DEVELOPER)))
     print ("my system name = {}".format(USER_NAME))
     print ("my autodesk name = {}".format(get_autodesk_user_name()))
     print ("Am I a developer? {}".format(UNIT_TEST.print_boolean_in_color(IS_DEVELOPER)))
