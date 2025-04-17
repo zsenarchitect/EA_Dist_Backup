@@ -25,6 +25,9 @@ try:
 except Exception as e:
     print(e)
 
+# Add recursion depth tracking
+_error_handler_recursion_depth = 0
+_max_error_handler_recursion_depth = 50  # Set a reasonable limit
 
 def get_alternative_traceback():
     """Generate a formatted stack trace for the current exception.
@@ -65,12 +68,26 @@ def try_catch_error(is_silent=False, is_pass = False):
     """
     def decorator(func):
         def error_wrapper(*args, **kwargs):
-
+            global _error_handler_recursion_depth, _max_error_handler_recursion_depth
+            
+            # Check if we've reached max depth
+            if _error_handler_recursion_depth >= _max_error_handler_recursion_depth:
+                print("Maximum error handler recursion depth reached ({})".format(_max_error_handler_recursion_depth))
+                # Just call the function directly without error handling
+                return func(*args, **kwargs)
+                
+            # Increment depth counter
+            _error_handler_recursion_depth += 1
+            
             try:
                 out = func(*args, **kwargs)
+                # Decrement depth counter before returning
+                _error_handler_recursion_depth -= 1
                 return out
             except Exception as e:
                 if is_pass:
+                    # Ensure we decrement even when passing
+                    _error_handler_recursion_depth -= 1
                     return
                 print_note(str(e))
                 print_note("error_Wrapper func for EA Log -- Error: " + str(e))
@@ -113,6 +130,9 @@ def try_catch_error(is_silent=False, is_pass = False):
                 if ENVIRONMENT.IS_REVIT_ENVIRONMENT and not is_silent:
                     NOTIFICATION.messenger(
                         main_text="!Critical Warning, close all Revit UI window from EnneadTab and reach to Sen Zhang.")
+                
+                # Make sure to decrement the counter even in case of exception
+                _error_handler_recursion_depth -= 1
                     
         error_wrapper.original_function = func
         return error_wrapper

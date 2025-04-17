@@ -77,6 +77,9 @@ def email_error(
         subject_line (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email Error Log".
     """
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(time.time())))
+    computer_name = ENVIRONMENT.get_computer_name()
+    additional_note = ""
+    
     try:
         if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
             from pyrevit import versionmgr
@@ -117,7 +120,7 @@ def email_error(
     except Exception as e:
         print(e)
         additional_note = str(e)
-        computer_name = ENVIRONMENT.get_computer_name()
+        
     body = "{}\nError happens on {}'s machine [{}] when running {}.\n\nDetail below:\n{}\n\n{}".format(
         t, error_from_user, computer_name, tool_name, traceback, additional_note
     )

@@ -325,7 +325,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
         self.object_style_combos.ItemsSource = raw_subC_names
      
     @ERROR_HANDLE.try_catch_error()
-    def open_details_describtion(self, sender, args):
+    def open_details_description(self, sender, args):
         """Display detailed information about file type options."""
         REVIT_FORMS.notification(main_text="<.3dm Files>\nPros:\n\tStable, feel more similar to native Revit elements.\n\tIndividual control on Boolean, Subc, Visibility, Dimension Control\nCons:\n\tRequire Higer Standard of Cleaness in model.\n\tCannot handle curves.\n\n<.DWG Files>\nPros:\n\tMore tolerance on imperfection in models\n\tCan deal with lines, arcs and circle. Can also deal with Nurbs if all control points on same CPlane.\nCons:\n\tNo individual control for multiple elements, each import from same source file is glued.\n\tIntroduce Import SubC (which can be fixed automatically)",
                                  sub_text="With the exception of curve elements, .3dm is always prefered format, if it fails to convert, try some fix source model as far as you can. You can see the help from the output window.\nUse .dwg as your last resort.",
@@ -406,7 +406,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def force_file_name_OST_clicked(self, sender, args):
-        """Force using filename as subcategory for all unassigned items."""
+        """Force using filename as object style."""
         for item in self.data_grid.ItemsSource:
             if item.selected_OST_name == self.object_style_combos.ItemsSource[0]:
                 item.selected_OST_name = self.object_style_combos.ItemsSource[-1]
