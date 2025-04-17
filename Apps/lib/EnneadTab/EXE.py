@@ -6,6 +6,7 @@ with support for legacy versions and temporary file handling.
 
 import os
 import time
+import random
 import ENVIRONMENT
 import USER
 import NOTIFICATION
@@ -158,6 +159,9 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         return True
 
 def clean_temporary_executables():
+    if random.random() < 0.9:
+        return
+
     """Clean up temporary executables older than a specified age.
     
     This function removes temporary executable files created by the safe_open option.
@@ -185,17 +189,11 @@ def clean_temporary_executables():
             try:
                 # Remove the file or directory
                 if os.path.isfile(file_path):
-                    if USER.IS_DEVELOPER:
-                        print("[Developer only log] Removing temporary file: {}".format(file_path))
                     os.remove(file_path)
                 elif os.path.isdir(file_path):
-                    if USER.IS_DEVELOPER:
-                        print("[Developer only log] Removing temporary directory: {}".format(file_path))
                     os.rmdir(file_path)
             except OSError as e:
                 # This typically happens when file is still in use
-                if USER.IS_DEVELOPER:
-                    print("[Developer only log] File in use, will remove later: {}".format(file_path))
                 continue
             except Exception as e:
                 ERROR_HANDLE.print_note("Error removing {}: {}".format(file_path, e))
