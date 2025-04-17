@@ -13,6 +13,7 @@ else:
 
 
 def try_catch_conduit_error(func):
+    """this is used for conduit replated erroc catching becasue otherwise email server will be bombed"""
     def wrapper(*args, **kwargs):
         try:
             out = func(*args, **kwargs)

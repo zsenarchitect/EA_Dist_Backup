@@ -10,6 +10,7 @@ Features:
 - Allows full interaction with Rhino while dialog is open
 - Gamepad-style button layout
 - Zoom to selected function
+- Measure3D function for quick measurements
 - Choice between View CPlane and World CPlane coordinate systems"""
 
 
@@ -80,6 +81,10 @@ class MoveFixedDistDialog(Eto.Forms.Form):
         zoom_button = Eto.Forms.Button(Text="Zoom Selected")
         zoom_button.Click += self.on_zoom_click
         
+        # Create measure3D button
+        measure3D_button = Eto.Forms.Button(Text="Measure3D")
+        measure3D_button.Click += self.on_measure3D_click
+        
         # Create footnote label
         footnote_label = Eto.Forms.Label()
         footnote_label.Text = "Note: Red, Green, Blue colors correspond to\nthe XYZ positive axis direction of the CPlane"
@@ -120,7 +125,9 @@ class MoveFixedDistDialog(Eto.Forms.Form):
         
         # Add footnote at the bottom
         layout.AddRow(footnote_label)
+        layout.AddSeparateRow(None, measure3D_button, None)
         
+        # Add a separator line
         self.Content = layout
         
         # Apply EnneadTab dark style
@@ -229,6 +236,11 @@ class MoveFixedDistDialog(Eto.Forms.Form):
         
         # Zoom to selected objects
         rs.ZoomSelected()
+    
+    @ERROR_HANDLE.try_catch_error()
+    def on_measure3D_click(self, sender, e):
+        """Call the EA_Meassure3D command."""
+        rs.Command("EA_Meassure3D", False)
     
     def OnFormClosed(self, sender, e):
         if sc.sticky.has_key(FORM_KEY):

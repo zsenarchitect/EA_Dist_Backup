@@ -735,11 +735,20 @@
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
     },
+    "Modify.tab\\meassure_3d.button\\meassure_3d_left.py": {
+        "script": "Modify.tab\\meassure_3d.button\\meassure_3d_left.py",
+        "icon": "Modify.tab\\meassure_3d.button\\icon.png",
+        "alias": "Meassure3D",
+        "doc": "Display 3D measurements between two points.\n\nShows total distance with a curve, and displays X, Y, Z differences as color-coded curves:\n- X difference in red\n- Y difference in green\n- Z difference in blue\n\nMeasurements remain on screen until a new measurement is started.\n",
+        "tab": "Modify.tab",
+        "tab_icon": "Modify.tab\\icon.png",
+        "is_popular": false
+    },
     "Modify.tab\\move_fixed_dist.button\\move_fixed_dist_left.py": {
         "script": "Modify.tab\\move_fixed_dist.button\\move_fixed_dist_left.py",
         "icon": "Modify.tab\\move_fixed_dist.button\\icon.png",
         "alias": "MoveFixedDist",
-        "doc": "Move selected objects a fixed distance in 6 directions.\n\nFeatures:\n- Simple modeless interface with 6 directional buttons\n- Persistent distance value between sessions\n- Input validation for numeric values\n- North/South/East/West/Up/Down movement\n- Safe window handling to prevent UI errors\n- Allows full interaction with Rhino while dialog is open\n- Gamepad-style button layout\n- Zoom to selected function\n- Choice between View CPlane and World CPlane coordinate systems",
+        "doc": "Move selected objects a fixed distance in 6 directions.\n\nFeatures:\n- Simple modeless interface with 6 directional buttons\n- Persistent distance value between sessions\n- Input validation for numeric values\n- North/South/East/West/Up/Down movement\n- Safe window handling to prevent UI errors\n- Allows full interaction with Rhino while dialog is open\n- Gamepad-style button layout\n- Zoom to selected function\n- Measure3D function for quick measurements\n- Choice between View CPlane and World CPlane coordinate systems",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
