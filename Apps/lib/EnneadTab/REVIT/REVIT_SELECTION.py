@@ -568,11 +568,7 @@ def get_owner(x):
 
 def is_changable(x):
     current_owner = get_owner(x)
-
-    #print current_owner
-    if current_owner == "":
-        return True
-    if current_owner.lower() == x.Document.Application.Username.lower():
+    if current_owner == "" or current_owner.lower() == x.Document.Application.Username.lower():
         return True
     return False
 
