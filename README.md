@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-18 14:58:02.
+This is the distribution repository for EnneadTab updated on 2025-04-18 15:13:11.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-I needed a password eight characters long so I picked Snow White and the Seven Dwarfs.
+I cut my finger cutting cheese. I know it may be a cheesy story but I feel grate now.
