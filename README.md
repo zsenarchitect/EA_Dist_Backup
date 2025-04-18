@@ -1,9 +1,18 @@
-This is the distribution repository for EnneadTab.
-It contains the Apps and Installation folders.
-It is automatically generated, not manually maintained by ANYONE.
+This is the distribution repository for EnneadTab updated on 2025-04-18 14:58:02.
 
-For support, please contact szhang@ennead.com directly.
+It contains the Apps and Installation and Help-Docs folders.
+
+It is automatically generated, not manually maintained by ANYONE.For support, please contact szhang@ennead.com directly.
+
 Have a nice day! Hope you enjoyed using this product.
 
 Special thanks to all the users who have provided feedback and suggestions.
+
 Special thanks to Ehsan and all the pyRevit team for providing the foundation for the Revit Extension.
+
+
+
+
+
+
+I needed a password eight characters long so I picked Snow White and the Seven Dwarfs.
