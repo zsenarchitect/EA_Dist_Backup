@@ -23,3 +23,4 @@ layout:
   - detail_line_from_excel
   - join_all_coln_floor
   - inspect_cutter
+  - make_template_from_current_view
