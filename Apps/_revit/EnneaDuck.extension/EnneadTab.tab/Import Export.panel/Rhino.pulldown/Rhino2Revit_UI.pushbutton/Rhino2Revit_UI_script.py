@@ -90,12 +90,12 @@ def purge_geo_from_doc():
                 deleted_count = len(element_ids)
                 doc.Delete(System.Collections.Generic.List[DB.ElementId](element_ids))
                 t.Commit()
-                NOTIFICATION.messenger("Deleted " + str(deleted_count) + " elements of category: " + category.Name)
+                print ("Deleted " + str(deleted_count) + " elements of category: " + category.Name)
             except Exception as e:
                 t.RollBack()
-                NOTIFICATION.messenger("Error deleting elements: " + str(e))
+                print ("Error deleting elements of category: " + category.Name + " because " + str(e))
         else:
-            NOTIFICATION.messenger("No elements found with category: " + category.Name)
+            print ("No elements found with category: " + category.Name)
 
 
 class DataGridObj(object):

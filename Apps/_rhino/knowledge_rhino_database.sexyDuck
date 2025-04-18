@@ -53,6 +53,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "EnneadTab.menu\\open_autosave_folder.button\\open_autosave_folder_left.py": {
+        "script": "EnneadTab.menu\\open_autosave_folder.button\\open_autosave_folder_left.py",
+        "icon": null,
+        "alias": "OpenAutosaveFolder",
+        "doc": "Open the Rhino autosave folder lcoations.",
+        "tab": "EnneadTab.menu",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "EnneadTab.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
         "script": "EnneadTab.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py",
         "icon": "EnneadTab.menu\\open_ecosystem_folder.button\\icon.png",
