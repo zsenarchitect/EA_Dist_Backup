@@ -735,10 +735,10 @@
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
     },
-    "Modify.tab\\meassure_3d.button\\meassure_3d_left.py": {
-        "script": "Modify.tab\\meassure_3d.button\\meassure_3d_left.py",
-        "icon": "Modify.tab\\meassure_3d.button\\icon.png",
-        "alias": "Meassure3D",
+    "Modify.tab\\measure_3d.button\\measure_3d_left.py": {
+        "script": "Modify.tab\\measure_3d.button\\measure_3d_left.py",
+        "icon": "Modify.tab\\measure_3d.button\\icon.png",
+        "alias": "Measure3D",
         "doc": "Display 3D measurements between two points.\n\nShows total distance with a curve, and displays X, Y, Z differences as color-coded curves:\n- X difference in red\n- Y difference in green\n- Z difference in blue\n\nMeasurements remain on screen until a new measurement is started.\n",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",

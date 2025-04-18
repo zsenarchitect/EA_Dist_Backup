@@ -239,8 +239,8 @@ class MoveFixedDistDialog(Eto.Forms.Form):
     
     @ERROR_HANDLE.try_catch_error()
     def on_measure3D_click(self, sender, e):
-        """Call the EA_Meassure3D command."""
-        rs.Command("EA_Meassure3D", False)
+        """Call the EA_Measure3D command."""
+        rs.Command("EA_Measure3D", False)
     
     def OnFormClosed(self, sender, e):
         if sc.sticky.has_key(FORM_KEY):

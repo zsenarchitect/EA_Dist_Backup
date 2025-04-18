@@ -450,11 +450,11 @@
         </text>
         <left_macro_id>ac715b90-229d-428d-a69f-c915d0ba9339</left_macro_id>
       </tool_bar_item>
-      <tool_bar_item guid="18521919-6d6a-40b2-9340-23114e11d965">
+      <tool_bar_item guid="4cc998f3-8321-4a88-893c-0f5af7ffc6df">
         <text>
-          <locale_1033>meassure_3d</locale_1033>
+          <locale_1033>measure_3d</locale_1033>
         </text>
-        <left_macro_id>6daa2686-f6ab-41cd-9b8f-dad79a1f9b94</left_macro_id>
+        <left_macro_id>89e0dc49-d962-40f5-8d89-9c30bb3defe8</left_macro_id>
       </tool_bar_item>
       <tool_bar_item guid="3822e7df-7780-42b7-bd79-03214b18982d">
         <text>
@@ -2280,9 +2280,9 @@ EA_MakeVoidSeam</script>
       <script>EA_ActivateEnneadTab
 EA_MatchCrvDir</script>
     </macro_item>
-    <macro_item guid="6daa2686-f6ab-41cd-9b8f-dad79a1f9b94" bitmap_id="50bc29ff-42ec-40ed-8348-8edf997c2b2a">
+    <macro_item guid="89e0dc49-d962-40f5-8d89-9c30bb3defe8" bitmap_id="4cf93228-af56-4ba8-91c8-5e4ee5358087">
       <text>
-        <locale_1033>Meassure3D</locale_1033>
+        <locale_1033>Measure3D</locale_1033>
       </text>
       <tooltip>
         <locale_1033>Display 3D measurements between two points.
@@ -2307,13 +2307,13 @@ Measurements remain on screen until a new measurement is started.
 </locale_1033>
       </help_text>
       <button_text>
-        <locale_1033>Meassure3D</locale_1033>
+        <locale_1033>Measure3D</locale_1033>
       </button_text>
       <menu_text>
-        <locale_1033>Meassure3D</locale_1033>
+        <locale_1033>Measure3D</locale_1033>
       </menu_text>
       <script>EA_ActivateEnneadTab
-EA_Meassure3D</script>
+EA_Measure3D</script>
     </macro_item>
     <macro_item guid="1a9944e7-1a46-4d02-ba91-9f2fdc4f9058" bitmap_id="c563e9ae-ffde-4f9d-ac9f-f755c589014c">
       <text>
@@ -4867,7 +4867,7 @@ EA_UnitTest</script>
       <bitmap_item guid="a286277d-fba8-4705-bbc8-42a52358b68b" index="46"/>
       <bitmap_item guid="df054979-a7ff-4877-9976-c53ab236b62d" index="47"/>
       <bitmap_item guid="90ee77da-b840-4357-be07-5a44e859c179" index="48"/>
-      <bitmap_item guid="50bc29ff-42ec-40ed-8348-8edf997c2b2a" index="49"/>
+      <bitmap_item guid="4cf93228-af56-4ba8-91c8-5e4ee5358087" index="49"/>
       <bitmap_item guid="c563e9ae-ffde-4f9d-ac9f-f755c589014c" index="50"/>
       <bitmap_item guid="07d15fa7-b95a-4bda-959b-c0fd40117db6" index="51"/>
       <bitmap_item guid="be514c8e-fce4-46f8-8e2f-20602fff7f26" index="52"/>
@@ -6403,7 +6403,7 @@ goXoNOSJZ3ez9qjkGxsrK+3vw6P/GP4vUa+WIX5mxBwAAAAASUVORK5CYII=</bitmap>
       <bitmap_item guid="a286277d-fba8-4705-bbc8-42a52358b68b" index="46"/>
       <bitmap_item guid="df054979-a7ff-4877-9976-c53ab236b62d" index="47"/>
       <bitmap_item guid="90ee77da-b840-4357-be07-5a44e859c179" index="48"/>
-      <bitmap_item guid="50bc29ff-42ec-40ed-8348-8edf997c2b2a" index="49"/>
+      <bitmap_item guid="4cf93228-af56-4ba8-91c8-5e4ee5358087" index="49"/>
       <bitmap_item guid="c563e9ae-ffde-4f9d-ac9f-f755c589014c" index="50"/>
       <bitmap_item guid="07d15fa7-b95a-4bda-959b-c0fd40117db6" index="51"/>
       <bitmap_item guid="be514c8e-fce4-46f8-8e2f-20602fff7f26" index="52"/>
@@ -9173,7 +9173,7 @@ LZ643+uOk3lTeD2KtB/aOnDSayImYYiycFgMmHX/e9BLgZnpkWW7ctfi6dCziNT07Dn/t4EsowMA
       <bitmap_item guid="a286277d-fba8-4705-bbc8-42a52358b68b" index="46"/>
       <bitmap_item guid="df054979-a7ff-4877-9976-c53ab236b62d" index="47"/>
       <bitmap_item guid="90ee77da-b840-4357-be07-5a44e859c179" index="48"/>
-      <bitmap_item guid="50bc29ff-42ec-40ed-8348-8edf997c2b2a" index="49"/>
+      <bitmap_item guid="4cf93228-af56-4ba8-91c8-5e4ee5358087" index="49"/>
       <bitmap_item guid="c563e9ae-ffde-4f9d-ac9f-f755c589014c" index="50"/>
       <bitmap_item guid="07d15fa7-b95a-4bda-959b-c0fd40117db6" index="51"/>
       <bitmap_item guid="be514c8e-fce4-46f8-8e2f-20602fff7f26" index="52"/>

@@ -51,19 +51,36 @@ USER_DOCUMENT_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Documents")
 USER_DOWNLOAD_FOLDER = os.path.join(USER_PROFILE_FOLDER, "downloads")
 
 USER_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "Desktop")
-ONE_DRIVE_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Desktop")
-ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents")
+ONE_DRIVE_DESKTOP_FOLDER = os.path.join(USER_PROFILE_FOLDER, 
+                                        "OneDrive - Ennead Architects", "Desktop")
+ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER, 
+                                          "OneDrive - Ennead Architects", "Documents")
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
-ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, "{}-Ecosystem".format(PLUGIN_NAME))
-ECO_SYS_FOLDER_LEGACY = os.path.join(USER_DOCUMENT_FOLDER, "{} Ecosystem".format(PLUGIN_NAME))
+ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, 
+                                     "{}-Ecosystem".format(PLUGIN_NAME))
+ECO_SYS_FOLDER_LEGACY = os.path.join(USER_DOCUMENT_FOLDER, 
+                                     "{} Ecosystem".format(PLUGIN_NAME))
 ####################################
 # TO_DO: make commit change to MODERN after May 1st
 if datetime.now().date() > datetime(2026, 5, 1).date():
     ECO_SYS_FOLDER = ECO_SYS_FOLDER_MODERN
 else:
     ECO_SYS_FOLDER = ECO_SYS_FOLDER_LEGACY
+    try:
+        if os.path.exists(ECO_SYS_FOLDER_LEGACY):
+            import shutil
+            for root, dirs, files in os.walk(ECO_SYS_FOLDER_LEGACY):
+                for file in files:
+                    if file.endswith(PLUGIN_EXTENSION):
+                        rel_path = os.path.relpath(os.path.join(root, file), 
+                                                ECO_SYS_FOLDER_LEGACY)
+                        shutil.copy(os.path.join(ECO_SYS_FOLDER_LEGACY, rel_path), 
+                                    os.path.join(ECO_SYS_FOLDER_MODERN, rel_path))
+    except:
+        pass
+
 ####################################
 DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
@@ -118,6 +135,15 @@ INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
 
 KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database{}".format(RHINO_FOLDER, PLUGIN_EXTENSION)
 KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database{}".format(REVIT_FOLDER, PLUGIN_EXTENSION)
+for _ in [KNOWLEDGE_RHINO_FILE, KNOWLEDGE_REVIT_FILE]:
+    if not os.path.exists(_):
+        import json
+        try:
+            with open(_, "w") as f:
+                json.dump({}, f, indent=4)
+        except Exception as e:
+            print("Cannot create file [{}] becasue {}".format(_, e))
+
 
 PRIMARY_EXTENSION_NAME = "EnneaDuck"
 REVIT_PRIMARY_EXTENSION = os.path.join(
