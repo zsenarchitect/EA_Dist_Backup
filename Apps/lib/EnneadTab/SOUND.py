@@ -44,7 +44,7 @@ def play_sound(file = "sound_effect_popup_msg3"):
     """
     file = get_audio_path_by_name(file)
     if not file:
-        return
+        return False
 
     try:
         from System.Media import SoundPlayer # pyright: ignore
@@ -53,7 +53,6 @@ def play_sound(file = "sound_effect_popup_msg3"):
         sp.Play()
         return True
     except Exception as e:
-        # print ("Cannot use system media becasue: " + str(e))
         pass
 
     try:
@@ -61,15 +60,22 @@ def play_sound(file = "sound_effect_popup_msg3"):
         playsound.playsound(file)
         return True
     except Exception as e:
-        # print ("Cannot use native playsound  becasue: " + str(e))
         pass
+
     try:
-        # Use proper path escaping for PowerShell
-        escaped_path = file.replace('\\', '\\\\')
-        os.system('powershell -c (New-Object Media.SoundPlayer "{}").PlaySync();'.format(escaped_path))
+        import winsound
+        winsound.PlaySound(file, winsound.SND_FILENAME | winsound.SND_ASYNC)
         return True
     except Exception as e:
-        # print(f"An error occurred: {e}")
+        pass
+        
+    try:
+        # Use proper path escaping and quotes for PowerShell
+        escaped_path = file.replace('"', '`"')  # Escape any quotes in the path
+        ps_command = 'powershell -c "(New-Object Media.SoundPlayer \\"{}\\").PlaySync();"'.format(escaped_path)
+        os.system(ps_command)
+        return True
+    except Exception as e:
         pass
         
     try:
@@ -79,7 +85,6 @@ def play_sound(file = "sound_effect_popup_msg3"):
         playsound.playsound(file)
         return True
     except Exception as e:
-        # print ("cannot use playsound module becasue: " + str(e))
         pass
 
     return False
