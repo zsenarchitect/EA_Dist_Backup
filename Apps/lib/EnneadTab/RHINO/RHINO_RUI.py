@@ -85,9 +85,26 @@ Option Explicit
 Sub StartupEnable()
     Dim filePath
     Dim userFolder
+    Dim intCount
+    Dim arrPaths
+    Dim strPath
     
     userFolder = CreateObject("WScript.Shell").ExpandEnvironmentStrings("%USERPROFILE%")
-    filePath = userFolder + "\{}\EA_Dist\Apps\_rhino\{}.menu\get_latest.button\StartupCaller.rvb"
+
+    ' Get count of startup scripts
+    intCount = Rhino.StartupScriptCount
+    
+    ' If there are scripts, check for ones containing "+" and remove them
+    If intCount > 0 Then
+        arrPaths = Rhino.StartupScriptList
+        For Each strPath in arrPaths
+            If InStr(strPath, "+") > 0 Then
+                Call Rhino.DeleteStartupScript (strPath)
+            End If
+        Next
+    End If
+    
+    filePath = userFolder + "\Documents\{}\EA_Dist\Apps\_rhino\{}.menu\get_latest.button\StartupCaller.rvb"
     
     ' Ensure path with spaces is handled correctly by enclosing in quotes
     filePath = Chr(34) & filePath & Chr(34)

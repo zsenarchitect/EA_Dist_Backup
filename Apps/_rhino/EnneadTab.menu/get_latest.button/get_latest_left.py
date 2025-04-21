@@ -21,7 +21,7 @@ def add_search_path():
 time_start = time.time()
 add_search_path()
 # print ("Get Latest use {:.2}s".format(time.time() - time_start))
-print ("\n".join(sys.path))
+# print ("\n".join(sys.path))
 
 
 
