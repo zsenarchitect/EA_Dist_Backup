@@ -17,10 +17,7 @@ Sub StartupEnable()
     If intCount > 0 Then
         arrPaths = Rhino.StartupScriptList
         For Each strPath in arrPaths
-        Rhino.Print strPath
             If InStr(strPath, "+") > 0 Then
-                Rhino.Print "Deleting path"
-                Rhino.Print strPath
                 Call Rhino.DeleteStartupScript (strPath)
             End If
         Next
@@ -32,8 +29,6 @@ Sub StartupEnable()
     filePath = Chr(34) & filePath & Chr(34)
     
     Call Rhino.AddStartupScript(filePath)
-    Rhino.Print "Adding startup path"
-    Rhino.Print filePath
 End Sub
 
 Call StartupEnable()

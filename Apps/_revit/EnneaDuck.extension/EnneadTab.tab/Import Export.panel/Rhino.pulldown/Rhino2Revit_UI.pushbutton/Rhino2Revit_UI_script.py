@@ -349,9 +349,13 @@ class Rhino2Revit_UI(forms.WPFWindow):
         recent_out_data = DATA_FILE.get_data("rhino2revit_out_paths")
         if recent_out_data:
             if recent_out_data["3dm_out_paths"]:
-                recent_output_folder = os.path.dirname(recent_out_data["3dm_out_paths"][-1])
+                recent_path = recent_out_data["3dm_out_paths"][-1]
+                if os.path.exists(os.path.dirname(recent_path)):
+                    recent_output_folder = os.path.dirname(recent_path)
             if recent_out_data["dwg_out_paths"]:
-                recent_output_folder = os.path.dirname(recent_out_data["dwg_out_paths"][-1])
+                recent_path = recent_out_data["dwg_out_paths"][-1]
+                if os.path.exists(os.path.dirname(recent_path)):
+                    recent_output_folder = os.path.dirname(recent_path)
                 
         files = forms.pick_file(files_filter='Rhino and AutoCAD (*.3dm; *.dwg)|*.3dm; *.dwg|'
                                 'Rhino (*.3dm)|*.3dm|'
@@ -383,12 +387,16 @@ class Rhino2Revit_UI(forms.WPFWindow):
         files = []
         if recent_out_data:
             if recent_out_data["3dm_out_paths"]:
-                files.extend(recent_out_data["3dm_out_paths"])
+                for path in recent_out_data["3dm_out_paths"]:
+                    if os.path.exists(path):
+                        files.append(path)
             if recent_out_data["dwg_out_paths"]:
-                files.extend(recent_out_data["dwg_out_paths"])
+                for path in recent_out_data["dwg_out_paths"]:
+                    if os.path.exists(path):
+                        files.append(path)
 
         if not files:
-            NOTIFICATION.messenger("No recent output found.")
+            NOTIFICATION.messenger("No recent output found or files no longer exist.")
             return
         self.post_file_load(files)
 

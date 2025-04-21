@@ -98,6 +98,15 @@
         "tab_icon": null,
         "is_popular": false
     },
+    "EnneadTab.menu\\self_repair.button\\self_repair_left.py": {
+        "script": "EnneadTab.menu\\self_repair.button\\self_repair_left.py",
+        "icon": null,
+        "alias": "SelfRepair",
+        "doc": "Automatically repair and update EnneadTab installation.\n\nKey Features:\n- Legacy RUI detection and repair\n- Automatic version updates\n- System path verification\n- Component synchronization\n- Installation validation",
+        "tab": "EnneadTab.menu",
+        "tab_icon": null,
+        "is_popular": false
+    },
     "EnneadTab.menu\\tell_me_version.button\\tell_me_version_left.py": {
         "script": "EnneadTab.menu\\tell_me_version.button\\tell_me_version_left.py",
         "icon": "EnneadTab.menu\\tell_me_version.button\\icon.png",

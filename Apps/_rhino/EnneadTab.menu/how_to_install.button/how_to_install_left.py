@@ -18,5 +18,7 @@ from EnneadTab import LOG, ERROR_HANDLE
 def how_to_install():
     webbrowser.open('https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/How%20To%20Install.md')
 
+
+
 if __name__ == "__main__":
     how_to_install()
