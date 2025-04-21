@@ -37,7 +37,7 @@ def update_get_latest():
         
     sys.path.append(get_latest_path)
 
-    import get_latest_left as GL
+    import get_latest_left as GL #type: ignore
     GL.get_latest()
     return
 
