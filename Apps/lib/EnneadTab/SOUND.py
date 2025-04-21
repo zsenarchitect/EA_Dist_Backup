@@ -46,6 +46,15 @@ def play_sound(file = "sound_effect_popup_msg3"):
     if not file:
         return False
 
+    # Try winsound first as it's the most reliable on Windows
+    try:
+        import winsound
+        winsound.PlaySound(str(file), winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
+        return True
+    except Exception as e:
+        pass
+
+    # Try System.Media.SoundPlayer (.NET)
     try:
         from System.Media import SoundPlayer # pyright: ignore
         sp = SoundPlayer()
@@ -55,34 +64,28 @@ def play_sound(file = "sound_effect_popup_msg3"):
     except Exception as e:
         pass
 
+    # Try playsound module
     try:
         import playsound # pyright : ignore
-        playsound.playsound(file)
+        playsound.playsound(file, block=False)  # Use non-blocking mode
         return True
     except Exception as e:
         pass
 
-    try:
-        import winsound
-        winsound.PlaySound(file, winsound.SND_FILENAME | winsound.SND_ASYNC)
-        return True
-    except Exception as e:
-        pass
-        
-    try:
-        # Use proper path escaping and quotes for PowerShell
-        escaped_path = file.replace('"', '`"')  # Escape any quotes in the path
-        ps_command = 'powershell -c "(New-Object Media.SoundPlayer \\"{}\\").PlaySync();"'.format(escaped_path)
-        os.system(ps_command)
-        return True
-    except Exception as e:
-        pass
-        
+    # Try playsound from dependency folder
     try:
         import sys
         sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
         import playsound # pyright : ignore
-        playsound.playsound(file)
+        playsound.playsound(file, block=False)  # Use non-blocking mode
+        return True
+    except Exception as e:
+        pass
+
+    # If all else fails, try system beep
+    try:
+        import winsound
+        winsound.MessageBeep(winsound.MB_ICONASTERISK)
         return True
     except Exception as e:
         pass
