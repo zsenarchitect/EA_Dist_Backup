@@ -41,3 +41,5 @@ def secure_layer(layer):
     if not rs.IsLayer(layer):
         rs.AddLayer(layer)
     return layer
+
+

@@ -18,7 +18,7 @@ graft = itertools.combinations
 
 
 from EnneadTab import NOTIFICATION, SPEAK, SOUND, ENVIRONMENT, CONFIG, DATA_FILE
-from EnneadTab import LOG, ERROR_HANDLE
+from EnneadTab import LOG, ERROR_HANDLE , FOLDER
 from EnneadTab.RHINO import RHINO_LAYER, RHINO_UI
 
 
@@ -492,7 +492,8 @@ def export(output_folder, datas):
             
         rs.SelectObjects(objs)
 
-        file_name_naked = layer.replace("::", "_").replace("/", "-").replace("\\", "-").replace(":", "-").replace("*", "-").replace("?", "-").replace("\\", "-").replace("<", "-").replace(">", "-").replace("|", "-")
+
+        file_name_naked = FOLDER.secure_legal_file_name(layer)
 
 
         for ost_name in ["Generic Models_"]:

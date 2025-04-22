@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-21 17:41:03.
+This is the distribution repository for EnneadTab updated on 2025-04-21 20:08:50.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Want to hear my pizza joke? Never mind, it's too cheesy.
+What do you do when your bunny gets wet? You get your hare dryer.

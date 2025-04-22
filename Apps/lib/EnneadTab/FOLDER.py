@@ -220,6 +220,15 @@ def get_file_extension_from_path(file_path):
     """
     return os.path.splitext(file_path)[1]
 
+def secure_legal_file_name(file_name):
+    """Ensure file name is legal for all operating systems.
+    
+    Args:
+        file_name (str): Original filename
+        
+    """
+    return file_name.replace("::", "_").replace("/", "-").replace("\\", "-").replace(":", "-").replace("*", "-").replace("?", "-").replace("\\", "-").replace("<", "-").replace(">", "-").replace("|", "-")
+
 def _secure_file_name(file_name):
     """Ensure file has proper extension.
     
