@@ -1,4 +1,5 @@
 __title__ = "SelfRepair"
+__FONDATION__ = True
 __doc__ = """Automatically repair and update EnneadTab installation.
 
 Key Features:
@@ -10,7 +11,7 @@ Key Features:
 
 import os
 import sys
-from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ERROR_HANDLE, LOG, ENVIRONMENT
 import rhinoscriptsyntax as rs
 
 @LOG.log(__file__, __title__)
@@ -31,15 +32,14 @@ def self_repair():
 
 
 def update_get_latest():
-    menu_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    get_latest_path = os.path.join(menu_folder, "get_latest.button")
-    
-        
-    sys.path.append(get_latest_path)
-
-    import get_latest_left as GL #type: ignore
-    GL.get_latest()
-    return
+    for folder in os.listdir(ENVIRONMENT.RHINO_FOLDER):
+        if ".menu" in folder:
+            menu_folder = os.path.join(ENVIRONMENT.RHINO_FOLDER, folder)
+            get_latest_path = os.path.join(menu_folder, "get_latest.button")
+            sys.path.append(get_latest_path)
+            import get_latest_left as GL #type: ignore
+            GL.get_latest()
+            return
 
 def is_legacy_rui(rui_path):
     """Check if RUI file contains legacy EnneadTab references.

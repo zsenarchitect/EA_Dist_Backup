@@ -4870,8 +4870,21 @@ Key Features:
       <menu_text>
         <locale_1033>SelfRepair</locale_1033>
       </menu_text>
-      <script>EA_ActivateEnneadTab
-EA_SelfRepair</script>
+      <script>! _-RunPythonScript (
+import os
+import sys
+common_folders = [&quot;github&quot;,&quot;dev-repo&quot;,&quot;duck-repo&quot;,&quot;design-repo&quot;]
+lib_folders = [os.path.join(os.environ['USERPROFILE'],x, &quot;EnneadTab-OS&quot;,&quot;Apps&quot;,&quot;lib&quot;,&quot;EnneadTab&quot;) for x in common_folders]
+lib_folders.append( os.path.join(os.environ['USERPROFILE'], 'Documents','EnneadTab Ecosystem','EA_Dist','Apps','lib','EnneadTab'))
+lib_folders.append( os.path.join(os.environ['USERPROFILE'], 'Documents','EnneadTab-Ecosystem','EA_Dist','Apps','lib','EnneadTab'))
+for lib_folder in lib_folders:
+    if os.path.exists(lib_folder):
+        sys.path.append(lib_folder)
+        break
+import MODULE_HELPER
+MODULE_HELPER.run_Rhino_button('EnneadTab.menu\\self_repair.button\\self_repair_left.py')
+)
+</script>
     </macro_item>
     <macro_item guid="8a06b1e2-2e96-4d41-b3db-320c9ea8b1e3" bitmap_id="81cff116-5a16-4d88-9b14-acd58595140f">
       <text>
