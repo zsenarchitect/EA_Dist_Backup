@@ -20,7 +20,6 @@ import io
 import os
 import random
 
-import json
 
 import ENVIRONMENT
 import FOLDER
@@ -222,6 +221,70 @@ def get_icon_from_path(file_path):
         if "icon" in file:
             return os.path.join(button_folder, file)
    
+def get_module_info(script_path):
+    """Safely extract module information without executing imports.
+    
+    Args:
+        script_path (str): Path to the Python script file
+        
+    Returns:
+        dict: Dictionary containing __title__, __doc__, and __tip__ if found
+    """
+    info = {
+        '__title__': None,
+        '__doc__': None,
+        '__tip__': None
+    }
+    
+    try:
+        with io.open(script_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            
+        # Split into lines and process each line
+        lines = content.split('\n')
+        for i, line in enumerate(lines):
+            line = line.strip()
+            
+            # Skip import statements
+            if line.startswith(('import ', 'from ')):
+                continue
+                
+            # Look for docstring
+            if line.startswith('"""') or line.startswith("'''"):
+                docstring = []
+                j = i
+                while j < len(lines):
+                    docstring.append(lines[j])
+                    if lines[j].endswith('"""') or lines[j].endswith("'''"):
+                        break
+                    j += 1
+                info['__doc__'] = '\n'.join(docstring)
+                continue
+                
+            # Look for title assignment
+            if '__title__' in line:
+                try:
+                    title = line.split('=', 1)[1].strip().strip('"\'')
+                    info['__title__'] = title
+                except:
+                    pass
+                    
+            # Look for tip assignment
+            if '__tip__' in line:
+                try:
+                    tip = line.split('=', 1)[1].strip().strip('"\'')
+                    info['__tip__'] = tip
+                except:
+                    pass
+                    
+        return info
+    except Exception as e:
+        if USER.IS_DEVELOPER:
+            print("\n\nDeveloper visible only logging:")
+            print("Failed to parse file directly, falling back to module execution method")
+            print(ERROR_HANDLE.get_alternative_traceback())
+        return None
+
 def get_title_tip_from_file(lucky_file, is_random_single):
     """Extract title and tip information from a Python script file.
 
@@ -236,48 +299,55 @@ def get_title_tip_from_file(lucky_file, is_random_single):
             icon_path (str or None): Path to the module's icon
     """
     icon_path = get_icon_from_path(lucky_file)
-        
     module_name = FOLDER.get_file_name_from_path(lucky_file).replace(".py", "")
+    
+    # Try the new safe method first
+    info = get_module_info(lucky_file)
+    if info is not None:
+        tip = info['__tip__'] or info['__doc__']
+        if tip and is_random_single:
+            tip = [random.choice(tip)]
+        title = info['__title__'] or module_name
+        return title, tip, icon_path
+    
+    # Fallback to the original method
     try:
         # Try imp first
         import imp # pyright: ignore
         ref_module = imp.load_source(module_name, lucky_file)
     except (ImportError, AttributeError):
         try:
-            # Fallback to importlib if imp fails
-            from importlib import resources  # use resources instead of util
-            spec = resources.spec_from_file_location(module_name, lucky_file)
-            ref_module = resources.module_from_spec(spec)
-            spec.loader.exec_module(ref_module)
+            # Fallback to execfile for IronPython compatibility
+            ref_module = type('module', (), {})
+            with open(lucky_file, 'r') as f:
+                exec(f.read(), ref_module.__dict__)
         except Exception as e:
             if USER.IS_DEVELOPER:
                 print ("\n\nDeveloper visible only logging:")
                 print (ERROR_HANDLE.get_alternative_traceback())
-                print ("The lucky file is: {}".format(lucky_file))
             return module_name, None, icon_path
     except Exception as e:
         if USER.IS_DEVELOPER:
             print ("\n\nDeveloper visible only logging:")
             print (ERROR_HANDLE.get_alternative_traceback())
-            
         return module_name, None, icon_path
     
-    tip = getattr(ref_module,TIP_KEY)
+    tip = getattr(ref_module, TIP_KEY, None)
+    if tip is None:
+        tip = ref_module.__doc__
     
-    if isinstance(tip, list): #>>>>>>>if manually define many tips then use that, otherwise use __doc__, it shold not require double writing
+    if isinstance(tip, list):
         pass
     else:
-        tip = [ref_module.__doc__]
+        tip = [tip]
         
     if is_random_single:
         tip = [random.choice(tip)]
 
-        
     if hasattr(ref_module, "__title__"):
         title = ref_module.__title__.replace("\n", " ")
     else:
         title = module_name
-    
     
     return title, tip, icon_path
 

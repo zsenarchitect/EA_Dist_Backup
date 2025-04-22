@@ -149,7 +149,7 @@ def load_family(file):
     option.OverwriteExistingFile = True
     family_container_folder = ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER + "\\{} Temp Family Folder".format(ENVIRONMENT.PLUGIN_NAME)
     if not os.path.exists(family_container_folder):
-        os.mkdir(family_container_folder)
+        os.makedirs(family_container_folder)
     family_doc.SaveAs(family_container_folder + "\\" + block_name + ".rfa",
                       option)
 

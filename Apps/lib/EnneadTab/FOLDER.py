@@ -147,7 +147,7 @@ def copy_file(original_path, new_path):
     """
     target_folder = os.path.dirname(new_path)
     if not os.path.exists(target_folder):
-        os.mkdir(target_folder)
+        os.makedirs(target_folder)
     COPY.copyfile(original_path, new_path)
 
 
@@ -187,7 +187,7 @@ def secure_folder(folder):
     """
 
     if not os.path.exists(folder):
-        os.mkdir(folder)
+        os.makedirs(folder)
     return folder
 
 
@@ -337,7 +337,7 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
 
             backup_folder = get_local_dump_folder_file("backup_" + backup_folder_title)
             if not os.path.exists(backup_folder):
-                os.mkdir(backup_folder)
+                os.makedirs(backup_folder)
 
             latest_backup_date = None
             for filename in os.listdir(backup_folder):

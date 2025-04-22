@@ -53,7 +53,8 @@ def update_miro():
         if os.path.exists(dump_folder):
             shutil.rmtree(dump_folder)
 
-        os.mkdir(dump_folder)
+        if not os.path.exists(dump_folder):
+            os.makedirs(dump_folder)
     except:
         pass
 

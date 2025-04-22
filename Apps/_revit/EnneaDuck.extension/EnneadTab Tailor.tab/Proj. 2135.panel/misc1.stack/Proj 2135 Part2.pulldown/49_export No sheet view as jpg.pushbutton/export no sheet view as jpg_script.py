@@ -50,7 +50,7 @@ def export_image_from_view(view, doc, adding_creator):
 
     #dir = os.path.join("C:\\","temp","python")
     if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
+        os.makedirs(output_folder)
 
 
     opts = DB.ImageExportOptions()

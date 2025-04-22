@@ -441,7 +441,7 @@ class WorkingViewManager(WPFWindow):
      
 
         if not os.path.exists(output_folder):
-            os.mkdir(output_folder)
+            os.makedirs(output_folder)
 
 
         opts = DB.ImageExportOptions()
