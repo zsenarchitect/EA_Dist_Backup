@@ -2150,6 +2150,15 @@
         "tab": "Import Export",
         "tab_icon": null
     },
+    "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\import_rhino_material.pushbutton\\import_rhino_material_script.py": {
+        "alias": "Import Rhino Material",
+        "doc": "Import material definitions from Rhino into Revit. Creates new materials or updates existing ones based on Rhino material properties.",
+        "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\import_rhino_material.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\import_rhino_material.pushbutton\\import_rhino_material_script.py",
+        "tab": "Import Export",
+        "tab_icon": null
+    },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\map_Rhino_block.pushbutton\\map_rhino_block_script.py": {
         "alias": "Map Rhino Block to Revit Family",
         "doc": "Transform the Rhino block orientation to Adaptive Revit Family. It will be searching for same name as block name.\n The biggest benift is You will no longer be restricted by level based vertical up family. It can be freeform as in Rhino.",
@@ -2656,7 +2665,7 @@
     },
     "EnneadTab.tab\\Tools.panel\\make_template_from_current_view.pushbutton\\make_template_from_current_view_script.py": {
         "alias": "Make Template From Current View",
-        "doc": "Creates a new view template based on the current view settings. If the current view has a template applied, it will be removed first, and the new template name will default to the removed template name or the current view name.",
+        "doc": "The big different from the Revit version is that you can use this to fix the wrong view type template that was resulted from duplicating wrong view teyp and cause revit default type group to display wrongly.",
         "icon": "EnneadTab.tab\\Tools.panel\\make_template_from_current_view.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Tools.panel\\make_template_from_current_view.pushbutton\\make_template_from_current_view_script.py",

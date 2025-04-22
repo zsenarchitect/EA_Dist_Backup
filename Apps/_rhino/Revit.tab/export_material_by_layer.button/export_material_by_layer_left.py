@@ -3,7 +3,8 @@ __doc__ = "Export material definitions for each layer using legal file names as 
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
-from EnneadTab import ERROR_HANDLE, LOG, FOLDER
+from EnneadTab import ERROR_HANDLE, LOG, FOLDER, DATA_FILE, NOTIFICATION
+
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -20,7 +21,6 @@ def export_material_by_layer():
     layer_materials = {}
     
     for layer in all_layers:
-            
         # Get material index for the layer
         material_index = rs.LayerMaterialIndex(layer)
         if material_index == -1:
@@ -28,20 +28,27 @@ def export_material_by_layer():
             
         # Get material properties
         material = sc.doc.Materials[material_index]
+        
+        # Convert color to RGB values
+        diffuse = material.DiffuseColor
+        rgb = (diffuse.R, diffuse.G, diffuse.B)
+        
         material_def = {
             "name": material.Name,
-            "diffuse": material.DiffuseColor,
-            "transparency": material.Transparency,
-            "shininess": material.Shine
+            "color": {
+                "diffuse": rgb,
+                "transparency": float(material.Transparency),
+                "shininess": float(material.Shine)
+            }
         }
         
         # Create legal file name as key
         legal_name = FOLDER.secure_legal_file_name(layer)
         layer_materials[legal_name] = material_def
     
-
-    import pprint
-    pprint.pprint(layer_materials)
+    # Save the material data to a file that Revit can read
+    DATA_FILE.set_data(layer_materials, "RHINO_MATERIAL_MAP")
+    NOTIFICATION.messenger(main_text="Material data exported successfully!")
 
 if __name__ == "__main__":
     export_material_by_layer()

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-__doc__ = "Creates a new view template based on the current view settings. If the current view has a template applied, it will be removed first, and the new template name will default to the removed template name or the current view name."
+__doc__ = "The big different from the Revit version is that you can use this to fix the wrong view type template that was resulted from duplicating wrong view teyp and cause revit default type group to display wrongly."
 __title__ = "Make Template\nFrom Current View"
 
 import proDUCKtion # pyright: ignore 

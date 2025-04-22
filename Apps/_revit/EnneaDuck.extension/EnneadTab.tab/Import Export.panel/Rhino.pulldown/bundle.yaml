@@ -10,6 +10,7 @@ layout:
   - brep2mass
   - ----- 
   - import Rhino camera 
+  - import_rhino_material
   - -----
   - revit2rhino
   - room2diagram

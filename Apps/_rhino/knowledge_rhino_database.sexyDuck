@@ -55,7 +55,7 @@
     },
     "EnneadTab.menu\\open_autosave_folder.button\\open_autosave_folder_left.py": {
         "script": "EnneadTab.menu\\open_autosave_folder.button\\open_autosave_folder_left.py",
-        "icon": null,
+        "icon": "EnneadTab.menu\\open_autosave_folder.button\\icon.png",
         "alias": "OpenAutosaveFolder",
         "doc": "Open the Rhino autosave folder lcoations.",
         "tab": "EnneadTab.menu",
@@ -100,7 +100,7 @@
     },
     "EnneadTab.menu\\self_repair.button\\self_repair_left.py": {
         "script": "EnneadTab.menu\\self_repair.button\\self_repair_left.py",
-        "icon": null,
+        "icon": "EnneadTab.menu\\self_repair.button\\icon.png",
         "alias": "SelfRepair",
         "doc": "Automatically repair and update EnneadTab installation.\n\nKey Features:\n- Legacy RUI detection and repair\n- Automatic version updates\n- System path verification\n- Component synchronization\n- Installation validation",
         "tab": "EnneadTab.menu",
@@ -962,7 +962,7 @@
     },
     "Revit.tab\\export_material_by_layer.button\\export_material_by_layer_left.py": {
         "script": "Revit.tab\\export_material_by_layer.button\\export_material_by_layer_left.py",
-        "icon": null,
+        "icon": "Revit.tab\\export_material_by_layer.button\\icon.png",
         "alias": "ExportMaterialByLayer",
         "doc": "Export material definitions for each layer using legal file names as dictionary keys.",
         "tab": "Revit.tab",
