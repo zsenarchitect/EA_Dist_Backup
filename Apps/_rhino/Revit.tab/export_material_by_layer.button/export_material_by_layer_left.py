@@ -3,6 +3,7 @@ __doc__ = "Export material definitions for each layer using legal file names as 
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
+import Rhino
 from EnneadTab import ERROR_HANDLE, LOG, FOLDER, DATA_FILE, NOTIFICATION
 
 
@@ -19,6 +20,7 @@ def export_material_by_layer():
     
     # Initialize dictionary to store layer materials
     layer_materials = {}
+    cached_convertion = {}
     
     for layer in all_layers:
         # Get material index for the layer
@@ -28,17 +30,44 @@ def export_material_by_layer():
             
         # Get material properties
         material = sc.doc.Materials[material_index]
-        
-        # Convert color to RGB values
-        diffuse = material.DiffuseColor
-        rgb = (diffuse.R, diffuse.G, diffuse.B)
-        
+        if not material:
+            continue
+
+        material_name = material.RenderMaterial.Name
+        if material.RenderMaterial.TypeName == "Enscape":
+            if material_name not in cached_convertion:
+                pb_material = material.RenderMaterial.ConvertToPhysicallyBased(Rhino.Render.RenderTexture.TextureGeneration.Skip)
+                cached_convertion[material_name] = pb_material
+                note = "temporaryly converting to physically based for material: {}.\nBecasue you can not directly use Enscape material for Revit.".format(material_name)
+                NOTIFICATION.messenger(main_text=note)
+                print (note)
+            else:
+                pb_material = cached_convertion[material_name]
+
+            rgb = (255*pb_material.BaseColor.R, 255*pb_material.BaseColor.G, 255*pb_material.BaseColor.B)
+            transparency = 1.0 - pb_material.Opacity
+            transparency_color = (255*pb_material.BaseColor.R, 255*pb_material.BaseColor.G, 255*pb_material.BaseColor.B)
+            shininess = pb_material.Roughness
+        else:
+            # Convert color to RGB values
+            diffuse = material.DiffuseColor
+            rgb = (diffuse.R, diffuse.G, diffuse.B)
+
+            if hasattr(material, "TransparencyColor"):
+                transparency_color = (material.TransparencyColor.R, material.TransparencyColor.G, material.TransparencyColor.B)
+            else:
+                transparency_color = (diffuse.R, diffuse.G, diffuse.B)
+
+            transparency = material.Transparency
+            shininess = material.Shine
+
         material_def = {
-            "name": material.Name,
+            "name": material_name,
             "color": {
                 "diffuse": rgb,
-                "transparency": float(material.Transparency),
-                "shininess": float(material.Shine)
+                "transparency": transparency,
+                "transparency_color": transparency_color,
+                "shininess": shininess
             }
         }
         

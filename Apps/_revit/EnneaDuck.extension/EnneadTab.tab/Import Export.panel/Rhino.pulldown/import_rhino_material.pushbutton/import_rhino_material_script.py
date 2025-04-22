@@ -8,9 +8,10 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_MATERIAL, REVIT_SELECTION
 from Autodesk.Revit import DB # pyright: ignore 
 
+from pyrevit import script, forms
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
 
@@ -35,9 +36,19 @@ def update_material_properties(material, color_data):
     r, g, b = color_data["diffuse"]
     material.Color = DB.Color(r, g, b)
     material.Transparency = int(color_data["transparency"] * 100)  # 0-100 range
-    material.Shininess = int(color_data["shininess"] * 128)  # Scale to 0-128 range
-    print("Material properties updated:\nDiffuse: {}-{}-{}, Transparency: {}, Shininess: {}".format(
-        r, g, b, material.Transparency, material.Shininess))
+
+    transparency_color_R, transparency_color_G, transparency_color_B = color_data["transparency_color"]
+    material.SurfaceForegroundPatternColor = DB.Color(transparency_color_R, transparency_color_G, transparency_color_B)
+    material.SurfaceForegroundPatternId = REVIT_SELECTION.get_solid_fill_pattern_id(DOC)
+    
+    # Scale shininess from Rhino's 0-255 range to Revit's 0-128 range
+    rhino_shininess = color_data["shininess"]  # 0-255 range
+    revit_shininess = int((rhino_shininess / 255.0) * 128)  # Scale to 0-128 range
+    revit_shininess = max(0, min(128, revit_shininess))  # Clamp between 0 and 128
+    material.Shininess = revit_shininess
+    
+    print("\nMaterial properties updated:\nDiffuse: {}-{}-{}, Transparency: {}, Shininess: {} (Rhino: {})".format(
+        r, g, b, material.Transparency, material.Shininess, rhino_shininess))
 
 def assign_materials_to_subcategories(doc, material_data, existing_materials):
     """Assign materials to subcategories based on Rhino data.
@@ -47,33 +58,39 @@ def assign_materials_to_subcategories(doc, material_data, existing_materials):
         material_data (dict): Material data from Rhino
         existing_materials (dict): Dictionary of existing materials
     """
+
+    sub_cate_to_process = []
     for category in doc.Settings.Categories:
         for sub_category in category.SubCategories:
+            sub_cate_to_process.append(sub_category)
+    selected_sub_cate = forms.SelectFromList.show(sub_cate_to_process, 
+                                                    title="Select subcategories to process",
+                                                    name_attr = "Name", 
+                                                    multiselect=True,
+                                                    button_name="Select Subcategories")
+    if not selected_sub_cate:
+        return
+
+
+
+    
+    print ("\n\nAssigning materials to subcategories\n\n")
+    output = script.get_output()
+    for category in doc.Settings.Categories:
+        for sub_category in category.SubCategories:
+            if sub_category.Name not in selected_sub_cate:
+                continue
             material_name = material_data.get(sub_category.Name, {}).get("name")
             if not material_name:
                 continue
                 
             material = existing_materials.get(material_name)
             if material:
-                print("Updating material for sub category: {}, new material: {}".format(
+                output.print_md("Updating material for sub category: [**{}**], new material: [**{}**]".format(
                     sub_category.Name, material.Name))
                 sub_category.Material = material
 
-def sanitize_material_name(name):
-    """Remove prohibited characters from material name.
-    
-    Args:
-        name (str): Original material name
-        
-    Returns:
-        str: Sanitized material name
-    """
-    name = name.replace("[imported]", '')
-    prohibited_chars = '{}[]|;<>?`~'
-    for char in prohibited_chars:
-        name = name.replace(char, '_')
-    name = name.strip()
-    return name
+
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -93,14 +110,37 @@ def import_rhino_material(doc):
 
     t = DB.Transaction(doc, __title__)
     t.Start()
-    
+
+    imported_material_names = []
+    for _, mat_data in material_data.items():
+        original_name = mat_data["name"]
+        material_name = REVIT_MATERIAL.sanitize_material_name(original_name)
+        if material_name != original_name:
+            print("Material name sanitized: '{}' -> '{}'".format(original_name, material_name))
+        imported_material_names.append(material_name)
+    imported_material_names = list(set(imported_material_names))
+    imported_material_names.sort()
+
+    res = forms.SelectFromList.show(imported_material_names, 
+                                    title="Select materials to import", 
+                                    multiselect=True,
+                                    button_name="Import Materials")
+
+    if not res:
+        return
+
+    selected_materials = res
+
+        
     # Process each material from Rhino
     for _, mat_data in material_data.items():
         original_name = mat_data["name"]
-        material_name = sanitize_material_name(original_name)
+        material_name = REVIT_MATERIAL.sanitize_material_name(original_name)
         if material_name != original_name:
             print("Material name sanitized: '{}' -> '{}'".format(original_name, material_name))
-            
+        if material_name not in selected_materials:
+            continue
+        
         color_data = mat_data["color"]
 
         # Check if material already exists
@@ -118,6 +158,7 @@ def import_rhino_material(doc):
         update_material_properties(material, color_data)
 
     # Assign materials to subcategories
+    
     assign_materials_to_subcategories(doc, material_data, existing_materials)
         
     t.Commit()
