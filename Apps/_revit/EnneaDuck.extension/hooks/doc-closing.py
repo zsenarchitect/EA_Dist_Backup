@@ -27,7 +27,9 @@ def main():
         return
     remove_last_sync_data_file(doc)
     update_pyrevit()
-    VERSION_CONTROL.update_dist_repo()
+
+    if random.random() < 0.1:
+        VERSION_CONTROL.update_dist_repo()
 
 
 ###################################################

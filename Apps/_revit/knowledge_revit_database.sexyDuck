@@ -62,69 +62,6 @@
         "tab": "Personal",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\01_Family Path for BIM360.pushbutton\\family path open 360_script.py": {
-        "alias": "01_Family Path BIM360",
-        "doc": "Order by GD",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\01_Family Path for BIM360.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\01_Family Path for BIM360.pushbutton\\family path open 360_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\07_batch rename RP.pushbutton\\batch rename rp_script.py": {
-        "alias": "Alias not set",
-        "doc": "Prefix selected ref plane with 'W_' in the name",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\07_batch rename RP.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\07_batch rename RP.pushbutton\\batch rename rp_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\check_design_option.pushbutton\\check_design_option_script.py": {
-        "alias": "Check Design Option(Depreciated)",
-        "doc": "See what is inside your design option by colorize them.",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\check_design_option.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\check_design_option.pushbutton\\check_design_option_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename grids.pushbutton\\rename grid_script.py": {
-        "alias": "rename Grids",
-        "doc": "Replace _ with - in grid names",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename grids.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename grids.pushbutton\\rename grid_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename levels.pushbutton\\rename level_script.py": {
-        "alias": "Rename Level",
-        "doc": "Remove '_' in level names, and replace 'C' to 'E'",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename levels.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename levels.pushbutton\\rename level_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename scopebox.pushbutton\\rename scopebox_script.py": {
-        "alias": "rename scopebox",
-        "doc": "Rename scopebox by removing all '_' in scopebox name",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename scopebox.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\rename scopebox.pushbutton\\rename scopebox_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\show_category_temporarily.pushbutton\\show_category_temporarily_script.py": {
-        "alias": "Show Category Temporarily",
-        "doc": "for selected sheets, and selected categories, turn on the categories temperarly.",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\show_category_temporarily.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\archive\\show_category_temporarily.pushbutton\\show_category_temporarily_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
     "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\discover line pattern.pushbutton\\line pattern_script.py": {
         "alias": "Discover Line Pattern",
         "doc": "Find the line patterns that are similar in definition but silightly different.",
@@ -257,15 +194,6 @@
         "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\test_coloner.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\test_coloner.pushbutton\\test_coloner_script.py",
-        "tab": "Personal",
-        "tab_icon": null
-    },
-    "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\test_get_rvt_link_data_in_template.pushbutton\\test_get_rvt_link_data_in_template_script.py": {
-        "alias": "test_get_rvt_link_data_in_template",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
-        "icon": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\test_get_rvt_link_data_in_template.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Personal.panel\\Generic Order.pulldown\\test_get_rvt_link_data_in_template.pushbutton\\test_get_rvt_link_data_in_template_script.py",
         "tab": "Personal",
         "tab_icon": null
     },
@@ -1797,6 +1725,78 @@
         "is_popular": false,
         "script": "EnneadTab Tailor.tab\\Tester.panel\\test_encoder_2025.pushbutton\\test_encoder_2025_script.py",
         "tab": "Tester",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\01_Family Path for BIM360.pushbutton\\family path open 360_script.py": {
+        "alias": "01_Family Path BIM360",
+        "doc": "Order by GD",
+        "icon": "EnneadTab Tailor.tab\\archive\\01_Family Path for BIM360.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\01_Family Path for BIM360.pushbutton\\family path open 360_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\07_batch rename RP.pushbutton\\batch rename rp_script.py": {
+        "alias": "Alias not set",
+        "doc": "Prefix selected ref plane with 'W_' in the name",
+        "icon": "EnneadTab Tailor.tab\\archive\\07_batch rename RP.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\07_batch rename RP.pushbutton\\batch rename rp_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\check_design_option.pushbutton\\check_design_option_script.py": {
+        "alias": "Check Design Option(Depreciated)",
+        "doc": "See what is inside your design option by colorize them.",
+        "icon": "EnneadTab Tailor.tab\\archive\\check_design_option.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\check_design_option.pushbutton\\check_design_option_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\rename grids.pushbutton\\rename grid_script.py": {
+        "alias": "rename Grids",
+        "doc": "Replace _ with - in grid names",
+        "icon": "EnneadTab Tailor.tab\\archive\\rename grids.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\rename grids.pushbutton\\rename grid_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\rename levels.pushbutton\\rename level_script.py": {
+        "alias": "Rename Level",
+        "doc": "Remove '_' in level names, and replace 'C' to 'E'",
+        "icon": "EnneadTab Tailor.tab\\archive\\rename levels.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\rename levels.pushbutton\\rename level_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\rename scopebox.pushbutton\\rename scopebox_script.py": {
+        "alias": "rename scopebox",
+        "doc": "Rename scopebox by removing all '_' in scopebox name",
+        "icon": "EnneadTab Tailor.tab\\archive\\rename scopebox.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\rename scopebox.pushbutton\\rename scopebox_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\show_category_temporarily.pushbutton\\show_category_temporarily_script.py": {
+        "alias": "Show Category Temporarily",
+        "doc": "for selected sheets, and selected categories, turn on the categories temperarly.",
+        "icon": "EnneadTab Tailor.tab\\archive\\show_category_temporarily.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\show_category_temporarily.pushbutton\\show_category_temporarily_script.py",
+        "tab": "No Tab",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\archive\\test_get_rvt_link_data_in_template.pushbutton\\test_get_rvt_link_data_in_template_script.py": {
+        "alias": "test_get_rvt_link_data_in_template",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "icon": "EnneadTab Tailor.tab\\archive\\test_get_rvt_link_data_in_template.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\archive\\test_get_rvt_link_data_in_template.pushbutton\\test_get_rvt_link_data_in_template_script.py",
+        "tab": "No Tab",
         "tab_icon": null
     },
     "EnneadTab.tab\\ACE.panel\\CollectTextures.pushbutton\\collect textures_script.py": {

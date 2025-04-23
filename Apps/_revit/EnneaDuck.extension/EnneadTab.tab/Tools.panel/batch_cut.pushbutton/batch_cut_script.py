@@ -106,7 +106,9 @@ def batch_cut():
         all_elements_to_cut = REVIT_SELECTION.get_selection(UIDOC)
         
     else:  # opts[2]
-        text_to_search = forms.ask_for_string("Enter text to search for in comments")
+        text_to_search = forms.ask_for_string(prompt="Enter text to search for in comments",
+                                              title=ENVIRONMENT.PLUGIN_NAME,
+                                              default_value="something something something darkside, something something something completed")
         all_elements_to_cut = get_generic_models_by_comment(text_to_search)
         if not all_elements_to_cut:
             NOTIFICATION.messenger("No generic models found with comments: {}".format(text_to_search))

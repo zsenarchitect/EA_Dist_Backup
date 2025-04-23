@@ -3,19 +3,33 @@
 
 from Autodesk.Revit import UI # pyright: ignore
 from Autodesk.Revit import DB # pyright: ignore
+import os
+import sys
+import traceback
 
-def is_version_at_least(year_int = 2025):
-    """Checks if the current Revit version is at least the specified year.
-    Include the year if the version is exactly the year.
+# Setup imports
+root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(root_folder)
+
+try:
+    import FOLDER, SAMPLE_FILE, ERROR_HANDLE
+except Exception as e:
+    ERROR_HANDLE.print_note("REVIT_APPLICATION.py: Error importing Revit modules")
+    ERROR_HANDLE.print_note(traceback.format_exc())
+
+def is_version_at_least(year_int=2025):
+    """Check if current Revit version meets or exceeds specified year.
     
     Args:
-        year_int (int): The year to compare against. Defaults to 2025. becasue this year has significant change in a lot of things
+        year_int (int): Year to compare against. Defaults to 2025.
+        
+    Returns:
+        bool: True if version meets or exceeds specified year
     """
     return int(get_app().VersionNumber) >= year_int
 
-
 def get_app():
-    """Returns the Revit Application instance.
+    """Get the Revit Application instance.
     
     Returns:
         Application: The Revit Application object
@@ -25,92 +39,68 @@ def get_app():
         app = app.Application
     return app
 
-
 def get_uiapp():
-    """Returns the Revit UI Application instance.
+    """Get the Revit UI Application instance.
     
     Returns:
         UIApplication: The Revit UI Application object
     """
     if isinstance(__revit__, UI.UIApplication): # pyright: ignore
-        return __revit__  # pyright: ignore
+        return __revit__ # pyright: ignore
 
     from Autodesk.Revit import ApplicationServices # pyright: ignore
     if isinstance(__revit__, ApplicationServices.Application): # pyright: ignore
         return UI.UIApplication(__revit__) # pyright: ignore
     return __revit__ # pyright: ignore
 
-
 def get_uidoc():
-    """Returns the active Revit UI Document.
+    """Get the active Revit UI Document.
     
     Returns:
         UIDocument: The active UI Document, or None if not available
     """
     return getattr(get_uiapp(), 'ActiveUIDocument', None)
 
-
 def get_doc():
-    """Returns the active Revit Document.
+    """Get the active Revit Document.
     
     Returns:
         Document: The active Document, or None if not available
     """
     return getattr(get_uidoc(), 'Document', None)
 
-
-
-import os
-import sys
-root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-sys.path.append(root_folder)
-import traceback
-try:
-    import FOLDER, SAMPLE_FILE, ERROR_HANDLE
-
-except Exception as e:
-    ERROR_HANDLE.print_note("REVIT_APPLICATION.py: Error importing Revit modules")
-    ERROR_HANDLE.print_note(traceback.format_exc())
-
-
-
-
-
-
-
 def get_active_view():
-    """Returns the currently active view in Revit.
+    """Get the currently active view in Revit.
     
     Returns:
         View: The active view object, or None if not available
     """
     return getattr(get_uidoc(), 'ActiveView', None)
 
-
 def switch_away_from_family(family_name_to_avoid):
-    """Switches away from the current family document.
+    """Switch away from current family document to another open family.
+    
+    Args:
+        family_name_to_avoid (str): Name of family to avoid switching to
     """
     all_family_docs = get_all_family_docs()
-    if len(all_family_docs) == 0:
-        return
-    if len(all_family_docs) == 1:
-        return
+    if len(all_family_docs) <= 1:
+        return None
+        
     for family_doc in all_family_docs:
         if family_doc.Title == family_name_to_avoid:
             continue
-        ui_doc = get_uiapp().OpenAndActivateDocument(family_doc.PathName)
-        return ui_doc
+        return get_uiapp().OpenAndActivateDocument(family_doc.PathName)
     return None
 
 def open_safety_doc_family():
-    filepath = SAMPLE_FILE.get_file("EnneadTab Safety Doc.rfa")
+    """Open a safety family document for closing operations."""
+    filepath = SAMPLE_FILE.get_file("Closing Safety Doc.rfa")
     safe_family = FOLDER.copy_file_to_local_dump_folder(filepath, ignore_warning=True)
-
     open_and_active_project(safe_family)
 
-
 def open_and_active_project(filepath):
-    """Opens and activates a Revit project or family file.
+    """Open and activate a Revit project or family file.
     
     Args:
         filepath (str): Full path to the Revit file to open
@@ -119,51 +109,54 @@ def open_and_active_project(filepath):
         UIDocument: The opened document's UI interface, or None if operation fails
     """
     try:
-        return get_uiapp().OpenAndActivateDocument (filepath)
-    except:
-        pass
+        return get_uiapp().OpenAndActivateDocument(filepath)
+    except Exception as e:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        
     try:
-        app = __revit__ #pyright: ignore
-        return UI.UIApplication(app).OpenAndActivateDocument (filepath)
-    except:
-        pass
-
+        app = __revit__ # pyright: ignore
+        return UI.UIApplication(app).OpenAndActivateDocument(filepath)
+    except Exception as e:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        
     try:
-        app = __revit__.ActiveUIDocument.Document  #pyright: ignore
-        return UI.UIApplication(app).OpenAndActivateDocument (filepath)
-    except:
-        pass
-
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore
+        return UI.UIApplication(app).OpenAndActivateDocument(filepath)
+    except Exception as e:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        
     try:
-        app = __revit__.ActiveUIDocument.Document  #pyright: ignore
+        app = __revit__.ActiveUIDocument.Document # pyright: ignore
         open_options = DB.OpenOptions()
-        return UI.UIApplication(app).OpenAndActivateDocument (filepath, open_options, False)
-    except:
-        pass
-
+        return UI.UIApplication(app).OpenAndActivateDocument(filepath, open_options, False)
+    except Exception as e:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        
     try:
-        app = __revit__ #pyright: ignore
+        app = __revit__ # pyright: ignore
         open_options = DB.OpenOptions()
-        return UI.UIApplication(app).OpenAndActivateDocument (filepath, open_options, False)
-    except:
-        pass
+        return UI.UIApplication(app).OpenAndActivateDocument(filepath, open_options, False)
+    except Exception as e:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        
+    ERROR_HANDLE.print_note("Activate Failed")
+    return None
 
-    ERROR_HANDLE.print_note ("Activate Failed")
-
-
-def close_docs_by_name(names = [], close_all = False):
-    """Closes specified Revit documents safely.
+def close_docs_by_name(names=None, close_all=False):
+    """Close specified Revit documents safely.
     
     Args:
         names (list): List of document names to close. Defaults to empty list
-        close_all (bool): If True, closes all open documents regardless of names. Defaults to False
+        close_all (bool): If True, closes all open documents. Defaults to False
     """
-
+    if names is None:
+        names = []
+        
     def safe_close(doc):
         name = doc.Title
         doc.Close(False)
-        doc.Dispose()#########################
-        print ("{} closed".format(name))
+        doc.Dispose()
+        print("{} closed".format(name))
 
     docs = get_top_revit_docs()
     if close_all:
@@ -175,37 +168,35 @@ def close_docs_by_name(names = [], close_all = False):
             try:
                 safe_close(doc)
             except Exception as e:
-                print( e)
-                print ("skip closing [{}]".format(doc.Title))
-
+                print(traceback.format_exc())
+                print("skip closing [{}]".format(doc.Title))
 
 def get_top_revit_docs():
-    """Retrieves all main Revit project documents.
+    """Get all main Revit project documents.
     
     Returns:
         list: Collection of Document objects, excluding linked files and family documents
     """
-
-
     docs = get_app().Documents
-    OUT = []
-    for doc in docs:
-        if doc.IsLinked:
-            continue
-        if doc.IsFamilyDocument:
-            continue
-        OUT.append(doc)
-    return OUT
+    return [doc for doc in docs if not doc.IsLinked and not doc.IsFamilyDocument]
 
 def get_document_by_name(doc_name):
+    """Get a document by its name.
+    
+    Args:
+        doc_name (str): Name of document to find
+        
+    Returns:
+        Document: The matching document, or None if not found
+    """
     docs = get_app().Documents
     for doc in docs:
         if doc.Title == doc_name:
             return doc
     return None
 
-def get_all_family_docs(including_current_doc = False):
-    """Retrieves all open family documents.
+def get_all_family_docs(including_current_doc=False):
+    """Get all open family documents.
     
     Args:
         including_current_doc (bool): Include currently active family document. Defaults to False
@@ -219,15 +210,13 @@ def get_all_family_docs(including_current_doc = False):
         if not doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-            # add attr check because if the context was zero-doc, there are no active UI doc.
             if hasattr(__revit__, "ActiveUIDocument") and doc.Title == __revit__.ActiveUIDocument.Document.Title: # pyright: ignore
                 continue
         OUT.append(doc)
     return OUT
 
-
-def select_family_docs(select_multiple = True, including_current_doc = False):
-    """Displays UI for selecting open family documents.
+def select_family_docs(select_multiple=True, including_current_doc=False):
+    """Display UI for selecting open family documents.
     
     Args:
         select_multiple (bool): Allow multiple family selection. Defaults to True
@@ -238,29 +227,34 @@ def select_family_docs(select_multiple = True, including_current_doc = False):
     """
     from pyrevit import forms
     title = "Pick Families" if select_multiple else "Pick Family"
-    return forms.SelectFromList.show(get_all_family_docs(including_current_doc = including_current_doc),
-                                        name_attr = "Title",
-                                        multiselect = select_multiple,
-                                        title = title,
-                                        button_name=title)
+    return forms.SelectFromList.show(
+        get_all_family_docs(including_current_doc=including_current_doc),
+        name_attr="Title",
+        multiselect=select_multiple,
+        title=title,
+        button_name=title
+    )
 
-
-def select_top_level_docs(select_multiple = True):
+def select_top_level_docs(select_multiple=True):
+    """Display UI for selecting top-level documents.
+    
+    Args:
+        select_multiple (bool): Allow multiple document selection. Defaults to True
+        
+    Returns:
+        list: Selected Document objects, or single Document if select_multiple is False
+    """
     from pyrevit import forms
     docs = get_top_revit_docs()
-    docs = forms.SelectFromList.show(docs,
-                                    name_attr = "Title",
-                                    multiselect = select_multiple,
-                                    title = "Pick some open revit docs")
-    return docs
+    return forms.SelectFromList.show(
+        docs,
+        name_attr="Title",
+        multiselect=select_multiple,
+        title="Pick some open revit docs"
+    )
 
-
-
-
-
-
-def get_revit_link_docs(including_current_doc = False, link_only = False):
-    """Retrieves Revit documents including or limited to linked files.
+def get_revit_link_docs(including_current_doc=False, link_only=False):
+    """Get Revit documents including or limited to linked files.
     
     Args:
         including_current_doc (bool): Include active document. Defaults to False
@@ -269,31 +263,25 @@ def get_revit_link_docs(including_current_doc = False, link_only = False):
     Returns:
         list: Collection of Document objects matching specified criteria
     """
-
     docs = get_app().Documents
-
     OUT = []
     for doc in docs:
         if doc.IsFamilyDocument:
             continue
         if not including_current_doc:
-
             try:
                 if doc.Title == get_doc().Title: # pyright: ignore
                     continue
             except:
                 pass
-        
-        if link_only:
-            if not doc.IsLinked:
-                continue
-
+        if link_only and not doc.IsLinked:
+            continue
         OUT.append(doc)
-    OUT.sort(key = lambda x: x.Title)
+    OUT.sort(key=lambda x: x.Title)
     return OUT
 
-def select_revit_link_docs(select_multiple = True, including_current_doc = False, link_only = False):
-    """Displays UI for selecting Revit link documents.
+def select_revit_link_docs(select_multiple=True, including_current_doc=False, link_only=False):
+    """Display UI for selecting Revit link documents.
     
     Args:
         select_multiple (bool): Allow multiple document selection. Defaults to True
@@ -304,16 +292,16 @@ def select_revit_link_docs(select_multiple = True, including_current_doc = False
         list: Selected Document objects, or single Document if select_multiple is False
     """
     from pyrevit import forms
-    docs = get_revit_link_docs(including_current_doc = including_current_doc, link_only = link_only )
-    docs = forms.SelectFromList.show(docs,
-                                    name_attr = "Title",
-                                    multiselect = select_multiple,
-                                    title = "Pick some revit links")
-    return docs
-
+    docs = get_revit_link_docs(including_current_doc=including_current_doc, link_only=link_only)
+    return forms.SelectFromList.show(
+        docs,
+        name_attr="Title",
+        multiselect=select_multiple,
+        title="Pick some revit links"
+    )
 
 def get_revit_link_types(doc):
-    """Retrieves all RevitLinkType elements from specified document.
+    """Get all RevitLinkType elements from specified document.
     
     Args:
         doc (Document): The Revit document to query
@@ -324,15 +312,21 @@ def get_revit_link_types(doc):
     return list(DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkType).ToElements())
 
 def close_revit_app():
-    """Attempts to close the current Revit session using UI automation.
-    """
-    from Autodesk.Revit.UI import RevitCommandId,PostableCommand  #pyright: ignore
-
+    """Close the current Revit session using UI automation."""
+    from Autodesk.Revit.UI import RevitCommandId, PostableCommand # pyright: ignore
     uiapp = get_uiapp()
+    cmd_id = RevitCommandId.LookupPostableCommandId(PostableCommand.ExitRevit)
+    uiapp.PostCommand(cmd_id)
 
 
-    CmndID = RevitCommandId.LookupPostableCommandId (PostableCommand .ExitRevit)
-    CmId = CmndID.Id
-    uiapp.PostCommand(CmndID)
-
-
+def run_picked_command():
+    from pyrevit import forms
+    from Autodesk.Revit.UI import RevitCommandId, PostableCommand # pyright: ignore
+    all_commands = [str(cmd) for cmd in dir(PostableCommand)]
+    command_name = forms.SelectFromList.show(all_commands, 
+                                     name_attr="Title", 
+                                     multiselect=False, 
+                                     title="Pick a command")
+    cmd_id = RevitCommandId.LookupPostableCommandId(getattr(PostableCommand, command_name))
+    uiapp = get_uiapp()
+    uiapp.PostCommand(cmd_id)

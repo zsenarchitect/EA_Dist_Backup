@@ -5,7 +5,7 @@ from pyrevit import script
 
 
 from EnneadTab.REVIT import REVIT_VIEW, REVIT_UNIT, REVIT_FAMILY
-from EnneadTab import SAMPLE_FILE, USER
+from EnneadTab import SAMPLE_FILE, USER, ENVIRONMENT
 
 
 
@@ -328,7 +328,7 @@ def set_type_order_index(doc, option):
 def is_family_valid(doc, option):
 
     # make sure family exists
-    sample_family_path = SAMPLE_FILE.get_file("EnneadTab AreaData Calculator.rfa")
+    sample_family_path = SAMPLE_FILE.get_file("{} AreaData Calculator.rfa".format(ENVIRONMENT.PLUGIN_NAME))
     REVIT_FAMILY.get_family_by_name(option.CALCULATOR_FAMILY_NAME, doc, load_path_if_not_exist=sample_family_path)
     
 

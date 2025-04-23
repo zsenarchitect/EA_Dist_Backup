@@ -1,7 +1,7 @@
 
-from EnneadTab import DATA_CONVERSION, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
+from EnneadTab import DATA_CONVERSION, ENVIRONMENT, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PROJ_DATA, REVIT_PARAMETER
-from pyrevit import forms, script
+from pyrevit import script
 from Autodesk.Revit import DB #pyright: ignore
 from collections import OrderedDict
 import traceback
@@ -84,9 +84,9 @@ class DepartmentOption:
 
         self.LEVEL_NAMES = levels
 
-        self.CALCULATOR_FAMILY_NAME_RAW = "EnneadTab AreaData Calculator"
+        self.CALCULATOR_FAMILY_NAME_RAW = "{} AreaData Calculator".format(ENVIRONMENT.PLUGIN_NAME)
         self.CALCULATOR_FAMILY_NAME = self.CALCULATOR_FAMILY_NAME_RAW
-        self.CALCULATOR_CONTAINER_VIEW_NAME = "EnneadTab Area Calculator Collection"
+        self.CALCULATOR_CONTAINER_VIEW_NAME = "{} Area Calculator Collection".format(ENVIRONMENT.PLUGIN_NAME)
         self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
 
         if not self.is_primary:

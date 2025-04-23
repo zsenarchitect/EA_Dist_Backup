@@ -1,6 +1,8 @@
 
 
 import os
+from EnneadTab import ENVIRONMENT
+
 DOC_LEVLEL_DICT = {
     "2151_A_EA_NYULI_Hospital_EXT": [
         "B1",
@@ -104,10 +106,10 @@ class DepartmentOption():
 
         SURFIX = "" if self.is_primary else "_{}".format(option_name)
 
-        self.CALCULATOR_FAMILY_NAME = "EnneadTab AreaData Calculator{}".format(SURFIX)
+        self.CALCULATOR_FAMILY_NAME = "{} AreaData Calculator{}".format(ENVIRONMENT.PLUGIN_NAME, SURFIX)
 
 
-        self.CALCULATOR_CONTAINER_VIEW_NAME = "EnneadTab Area Calculator Collection{}".format(SURFIX)
+        self.CALCULATOR_CONTAINER_VIEW_NAME = "{} Area Calculator Collection{}".format(ENVIRONMENT.PLUGIN_NAME, SURFIX)
         self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY{}".format(SURFIX)
 
         self.DEPARTMENT_AREA_SCHEME_NAME = department_area_scheme_name
