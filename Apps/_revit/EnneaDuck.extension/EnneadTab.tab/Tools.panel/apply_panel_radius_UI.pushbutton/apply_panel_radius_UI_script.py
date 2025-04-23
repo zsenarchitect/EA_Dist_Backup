@@ -224,7 +224,7 @@ class apply_panel_radius_UI(forms.WPFWindow):
 
 
 
-    def open_details_describtion(self, sender, args):
+    def open_details_description(self, sender, args):
         main_text = "How to use Panel Radius Apply?"
         sub_text = "\n\nStep 1: Pick curtain panel family"
         sub_text += "\nStep 2: Pick the type"

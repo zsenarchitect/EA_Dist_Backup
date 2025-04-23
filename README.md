@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-23 11:21:55.
+This is the distribution repository for EnneadTab updated on 2025-04-23 13:51:35.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Why are oranges the smartest fruit? Because they are made to concentrate.
+Today a man knocked on my door and asked for a small donation towards the local swimming pool. I gave him a glass of water.

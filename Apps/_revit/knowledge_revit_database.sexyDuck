@@ -2593,7 +2593,7 @@
     },
     "EnneadTab.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py": {
         "alias": "Batch Cut Elements",
-        "doc": "Powerful batch cutting utility that streamlines the process of creating multiple void cuts in curtain panels. Select curtain walls or individual panels and apply the same void geometry to all elements simultaneously. Perfect for creating consistent openings across curtain systems without tedious individual operations.",
+        "doc": "Powerful batch cutting utility for curtain wall systems.\n\nThis tool enables efficient creation of void cuts across multiple curtain panels.\nFeatures:\n- Batch process curtain walls or individual panels\n- Support for multiple selection methods\n- Intelligent void detection and validation\n- Transaction-safe operations with error handling\n\nUsage:\n1. Select curtain walls or panels\n2. Choose void geometry\n3. Apply cuts across all selected elements\n",
         "icon": "EnneadTab.tab\\Tools.panel\\batch_cut.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py",
