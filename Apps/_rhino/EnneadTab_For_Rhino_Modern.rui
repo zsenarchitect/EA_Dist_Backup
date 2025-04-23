@@ -2116,10 +2116,40 @@ EA_ViewToggle</script>
         <locale_1033>QuickMassing</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options.</locale_1033>
+        <locale_1033>Create parametric massing models with customizable floor heights and basement options.
+
+Features:
+- Adjustable first floor height
+- Configurable typical floor height
+- Customizable number of typical floors
+- Optional basement level with adjustable height
+- Real-time input validation
+- Persistent settings storage
+
+Usage:
+1. Left-click to activate the QuickMassing tool
+2. Configure floor heights and counts in the dialog
+3. Create massing model based on your specifications
+
+Note: All settings are saved between sessions for convenience.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options.</locale_1033>
+        <locale_1033>Create parametric massing models with customizable floor heights and basement options.
+
+Features:
+- Adjustable first floor height
+- Configurable typical floor height
+- Customizable number of typical floors
+- Optional basement level with adjustable height
+- Real-time input validation
+- Persistent settings storage
+
+Usage:
+1. Left-click to activate the QuickMassing tool
+2. Configure floor heights and counts in the dialog
+3. Create massing model based on your specifications
+
+Note: All settings are saved between sessions for convenience.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>QuickMassing</locale_1033>
@@ -2137,26 +2167,54 @@ EA_QuickMassing</script>
       <tooltip>
         <locale_1033>Create custom slab edges by sweeping a profile block along selected edges.
 
-This tool allows users to:
-- Select individual edges or edge loops from a slab
-- Choose a profile block to use as the edge detail
-- Preview the result before finalizing
-- Flip the profile orientation if needed
+Features:
+- Multiple selection methods:
+  * Individual edge selection
+  * Edge loop selection
+  * Curve selection
+- Profile block customization:
+  * Select from existing blocks
+  * Preview profile orientation
+  * Flip profile direction
+- Interactive preview:
+  * Real-time visualization
+  * Adjust before finalizing
+  * Cancel and retry options
 
-The tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.
-</locale_1033>
+Usage:
+1. Choose selection method
+2. Select edges or curves
+3. Pick profile block
+4. Preview and adjust
+5. Confirm to create
+
+Note: Preview objects are automatically cleaned up after use.</locale_1033>
       </tooltip>
       <help_text>
         <locale_1033>Create custom slab edges by sweeping a profile block along selected edges.
 
-This tool allows users to:
-- Select individual edges or edge loops from a slab
-- Choose a profile block to use as the edge detail
-- Preview the result before finalizing
-- Flip the profile orientation if needed
+Features:
+- Multiple selection methods:
+  * Individual edge selection
+  * Edge loop selection
+  * Curve selection
+- Profile block customization:
+  * Select from existing blocks
+  * Preview profile orientation
+  * Flip profile direction
+- Interactive preview:
+  * Real-time visualization
+  * Adjust before finalizing
+  * Cancel and retry options
 
-The tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.
-</locale_1033>
+Usage:
+1. Choose selection method
+2. Select edges or curves
+3. Pick profile block
+4. Preview and adjust
+5. Confirm to create
+
+Note: Preview objects are automatically cleaned up after use.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>SlabEdge</locale_1033>
@@ -2172,24 +2230,50 @@ EA_SlabEdge</script>
         <locale_1033>StairMaker</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Interactively create linear stairs in Rhino.
+        <locale_1033>Create parametric linear stairs with interactive controls and real-time preview.
 
-Key Features:
-- Dynamic stair creation with real-time preview
-- Customizable riser height and tread width
-- Automatic step count calculation
-- Integrated error handling for invalid inputs
-- Support for multiple stair configurations</locale_1033>
+Features:
+- Dynamic stair creation with live preview
+- Customizable parameters:
+  * Riser height
+  * Tread width
+  * Stair width
+  * Landing configuration
+- Automatic step count calculation based on height
+- Intelligent error handling for invalid inputs
+- Support for multiple stair configurations
+- Interactive point selection for precise placement
+
+Usage:
+1. Select start point for stair base
+2. Define stair direction and height
+3. Adjust width using flip point
+4. Preview and confirm stair creation
+
+Note: All parameters are validated in real-time to ensure code compliance.</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Interactively create linear stairs in Rhino.
+        <locale_1033>Create parametric linear stairs with interactive controls and real-time preview.
 
-Key Features:
-- Dynamic stair creation with real-time preview
-- Customizable riser height and tread width
-- Automatic step count calculation
-- Integrated error handling for invalid inputs
-- Support for multiple stair configurations</locale_1033>
+Features:
+- Dynamic stair creation with live preview
+- Customizable parameters:
+  * Riser height
+  * Tread width
+  * Stair width
+  * Landing configuration
+- Automatic step count calculation based on height
+- Intelligent error handling for invalid inputs
+- Support for multiple stair configurations
+- Interactive point selection for precise placement
+
+Usage:
+1. Select start point for stair base
+2. Define stair direction and height
+3. Adjust width using flip point
+4. Preview and confirm stair creation
+
+Note: All parameters are validated in real-time to ensure code compliance.</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>StairMaker</locale_1033>

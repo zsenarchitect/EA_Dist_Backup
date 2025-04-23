@@ -1,14 +1,28 @@
 __title__ = "SlabEdge"
 __doc__ = """Create custom slab edges by sweeping a profile block along selected edges.
 
-This tool allows users to:
-- Select individual edges or edge loops from a slab
-- Choose a profile block to use as the edge detail
-- Preview the result before finalizing
-- Flip the profile orientation if needed
+Features:
+- Multiple selection methods:
+  * Individual edge selection
+  * Edge loop selection
+  * Curve selection
+- Profile block customization:
+  * Select from existing blocks
+  * Preview profile orientation
+  * Flip profile direction
+- Interactive preview:
+  * Real-time visualization
+  * Adjust before finalizing
+  * Cancel and retry options
 
-The tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.
-"""
+Usage:
+1. Choose selection method
+2. Select edges or curves
+3. Pick profile block
+4. Preview and adjust
+5. Confirm to create
+
+Note: Preview objects are automatically cleaned up after use."""
 
 import select
 import rhinoscriptsyntax as rs

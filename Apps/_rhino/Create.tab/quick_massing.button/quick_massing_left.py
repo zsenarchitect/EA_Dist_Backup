@@ -1,5 +1,20 @@
 __title__ = "QuickMassing"
-__doc__ = "Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options."
+__doc__ = """Create parametric massing models with customizable floor heights and basement options.
+
+Features:
+- Adjustable first floor height
+- Configurable typical floor height
+- Customizable number of typical floors
+- Optional basement level with adjustable height
+- Real-time input validation
+- Persistent settings storage
+
+Usage:
+1. Left-click to activate the QuickMassing tool
+2. Configure floor heights and counts in the dialog
+3. Create massing model based on your specifications
+
+Note: All settings are saved between sessions for convenience."""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc

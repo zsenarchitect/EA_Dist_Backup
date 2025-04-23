@@ -294,7 +294,7 @@
         "script": "Create.tab\\quick_massing.button\\quick_massing_left.py",
         "icon": "Create.tab\\quick_massing.button\\icon.png",
         "alias": "QuickMassing",
-        "doc": "Initiates QuickMassing process upon left-click. This feature includes the ability to create basements below ground level, offering adjustable height options.",
+        "doc": "Create parametric massing models with customizable floor heights and basement options.\n\nFeatures:\n- Adjustable first floor height\n- Configurable typical floor height\n- Customizable number of typical floors\n- Optional basement level with adjustable height\n- Real-time input validation\n- Persistent settings storage\n\nUsage:\n1. Left-click to activate the QuickMassing tool\n2. Configure floor heights and counts in the dialog\n3. Create massing model based on your specifications\n\nNote: All settings are saved between sessions for convenience.",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": false
@@ -303,7 +303,7 @@
         "script": "Create.tab\\slab_edge.button\\slab_edge_left.py",
         "icon": "Create.tab\\slab_edge.button\\icon.png",
         "alias": "SlabEdge",
-        "doc": "Create custom slab edges by sweeping a profile block along selected edges.\n\nThis tool allows users to:\n- Select individual edges or edge loops from a slab\n- Choose a profile block to use as the edge detail\n- Preview the result before finalizing\n- Flip the profile orientation if needed\n\nThe tool maintains a live preview and allows for easy adjustments before finalizing the slab edge creation.\n",
+        "doc": "Create custom slab edges by sweeping a profile block along selected edges.\n\nFeatures:\n- Multiple selection methods:\n  * Individual edge selection\n  * Edge loop selection\n  * Curve selection\n- Profile block customization:\n  * Select from existing blocks\n  * Preview profile orientation\n  * Flip profile direction\n- Interactive preview:\n  * Real-time visualization\n  * Adjust before finalizing\n  * Cancel and retry options\n\nUsage:\n1. Choose selection method\n2. Select edges or curves\n3. Pick profile block\n4. Preview and adjust\n5. Confirm to create\n\nNote: Preview objects are automatically cleaned up after use.",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": false
@@ -312,7 +312,7 @@
         "script": "Create.tab\\stair_maker.button\\stair_maker_left.py",
         "icon": "Create.tab\\stair_maker.button\\icon.png",
         "alias": "StairMaker",
-        "doc": "Interactively create linear stairs in Rhino.\n\nKey Features:\n- Dynamic stair creation with real-time preview\n- Customizable riser height and tread width\n- Automatic step count calculation\n- Integrated error handling for invalid inputs\n- Support for multiple stair configurations",
+        "doc": "Create parametric linear stairs with interactive controls and real-time preview.\n\nFeatures:\n- Dynamic stair creation with live preview\n- Customizable parameters:\n  * Riser height\n  * Tread width\n  * Stair width\n  * Landing configuration\n- Automatic step count calculation based on height\n- Intelligent error handling for invalid inputs\n- Support for multiple stair configurations\n- Interactive point selection for precise placement\n\nUsage:\n1. Select start point for stair base\n2. Define stair direction and height\n3. Adjust width using flip point\n4. Preview and confirm stair creation\n\nNote: All parameters are validated in real-time to ensure code compliance.",
         "tab": "Create.tab",
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": true
