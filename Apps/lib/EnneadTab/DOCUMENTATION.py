@@ -2,25 +2,25 @@ import sys
 # if hasattr(sys, "setdefaultencoding"):
 #     sys.setdefaultencoding('utf-8')  # This line ensures the default encoding is UTF-8, only need for some old py2
 
-"""Documentation and Knowledge Management System for EnneadTab.
+"""Utilities for showing tips and documentation for tools.
 
-This module provides comprehensive tools for managing and displaying documentation,
-tips, and knowledge base content across the EnneadTab ecosystem. It supports both
-Revit and Rhino environments with specialized functionality for each.
+This module provides functionality for managing and displaying documentation, tips,
+and knowledge base content across the EnneadTab ecosystem. It supports both Revit
+and Rhino environments.
 
-Features:
+Key Features:
 - Documentation retrieval and display
 - Tip of the day functionality
 - Knowledge base management
 - Scott's tips integration from EI posts
 - Icon and resource management
-- Documentation generation and review tools
 """
 
 import io
 import os
 import random
 
+import json
 
 import ENVIRONMENT
 import FOLDER
@@ -32,16 +32,13 @@ import DATA_FILE
 
 
 def get_text_path_by_name(file_name):
-    """Retrieve the full path of a text file from the documents library.
+    """Get the full path of a text file in the documents library.
 
     Args:
-        file_name (str): Name of the text file to locate, including extension
+        file_name (str): Name of the text file to locate
 
     Returns:
-        str: Full path to the text file if found, None if file not found or inaccessible
-
-    Note:
-        Prints a user-friendly message if the file cannot be found
+        str: Full path to the text file if found, None otherwise
     """
     path = "{}\\text\\{}".format(ENVIRONMENT.DOCUMENT_FOLDER, file_name)
     if os.path.exists(path):
@@ -67,44 +64,53 @@ SCOTT_TIPS = ["https://ei.ennead.com/post/3046/revit-legends-legend-components",
 
 def show_scott_tip():
     """Display a random tip from Scott's EI knowledge base.
-
-    This function retrieves and displays a random tip from the Scott's tips collection,
-    presenting it in a formatted HTML window for better readability.
-
-    Note:
-        Requires internet connection to access EI posts
+    
+    Opens the tip in the default web browser and displays it in the output window.
+    Tips are curated from Scott's posts on the Ennead Intranet.
     """
+    if ENVIRONMENT.is_Revit_environment():
+        from pyrevit import script
+        output = script.get_output()
+        if not ENVIRONMENT.IS_OFFLINE_MODE:
+            pass
+            # output.print_image("L:\\4b_Applied Computing\\01_Revit\\04_Tools\\08_EA Extensions\\Project Settings\\Misc\\scott_but_younger.png")
+    else:
+        output = OUTPUT.Output()
     tip = random.choice(SCOTT_TIPS)
+    import webbrowser
+    webbrowser.open(tip)
+    output.print_md ("#Scott's Tip of the day:\n{}".format(tip))
+
     embed_html = """<!DOCTYPE html>
-    <html>
-    <head>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                line-height: 1.6;
-            }}
-        </style>
-    </head>
-    <body>
-        {}
-    </body>
-    </html>""".format(tip)
-    OUTPUT.show_message(embed_html)
+<html>
+<head>
+    <title>Embedding a Webpage</title>
+</head>
+<body>
+    <h1>...............................................</h1>
+    
+    <!-- Use an iframe to embed the webpage -->
+    <iframe src={} width="1200" height="900" frameborder="0"></iframe>
+    
+    <p>Enjoy!</p>
+</body>
+</html>""".format(tip)
+    # output.print_html(embed_html)
+    OUTPUT.display_output_on_browser()
+    
 
 def get_files_with_keyword(keyword, folder):
     """Search for files containing a specific keyword in the given folder.
-
+    
     Args:
         keyword (str): The keyword to search for in file contents
-        folder (str): The directory path to search within
-
+        folder (str): Root folder path to begin the search
+        
     Returns:
-        list: List of file paths that contain the keyword
-
+        list: List of file paths containing the keyword
+        
     Note:
-        Performs case-insensitive search
-        Only searches through .py files
+        Excludes certain system folders and template files from the search.
     """
     
     max_open = 10
@@ -176,19 +182,15 @@ def get_files_with_keyword(keyword, folder):
         pass
 
 def get_title_tip_from_folder(folder, is_random_single = True):
-    """Retrieve documentation information from files in a specified folder.
+    """Retrieve title and tip information from files in a folder.
 
     Args:
-        folder (str): Directory path containing Python files to analyze
-        is_random_single (bool, optional): If True, returns a single random entry.
-            If False, returns all entries. Defaults to True.
+        folder (str): The folder path to search for tips
+        is_random_single (bool, optional): If True, returns a single random tip. 
+            Defaults to True.
 
     Returns:
-        list or dict: If is_random_single is True, returns a single random entry.
-            If False, returns a list of all entries with their titles and tips.
-
-    Note:
-        Each entry is a dictionary containing 'title' and 'tip' keys
+        list: List of tuples containing (title, tip, icon_path) for each tip found
     """
     
     matching_files = get_files_with_keyword(TIP_KEY, folder)
@@ -202,14 +204,14 @@ def get_title_tip_from_folder(folder, is_random_single = True):
 def get_icon_from_path(file_path):
     """Locate the icon file associated with a given script path.
 
+    Searches for icon files named 'icon.png' or containing 'icon' in the
+    same directory as the script.
+
     Args:
-        file_path (str): Path to the Python script file
+        file_path (str): Path to the script file
 
     Returns:
-        str: Path to the associated icon file if found, None otherwise
-
-    Note:
-        Searches for .png files with matching names in the same directory
+        str: Path to the icon file if found, None otherwise
     """
     button_folder = os.path.dirname(file_path)
     for file in os.listdir(button_folder):
@@ -220,158 +222,67 @@ def get_icon_from_path(file_path):
         if "icon" in file:
             return os.path.join(button_folder, file)
    
-def get_module_info(script_path):
-    """Extract module information from a Python script without executing imports.
-
-    Args:
-        script_path (str): Path to the Python script file
-
-    Returns:
-        dict: Dictionary containing module information including:
-            - title: Module title from docstring
-            - tip: Module description from docstring
-            - imports: List of imported modules
-            - functions: List of function names
-
-    Note:
-        Safely parses the file without executing any code
-        Handles both single and multi-line docstrings
-    """
-    info = {
-        '__title__': None,
-        '__doc__': None,
-        '__tip__': None
-    }
-    
-    try:
-        with io.open(script_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-            
-        # Split into lines and process each line
-        lines = content.split('\n')
-        for i, line in enumerate(lines):
-            line = line.strip()
-            
-            # Skip import statements
-            if line.startswith(('import ', 'from ')):
-                continue
-                
-            # Look for docstring
-            if line.startswith('"""') or line.startswith("'''"):
-                docstring = []
-                j = i
-                while j < len(lines):
-                    docstring.append(lines[j])
-                    if lines[j].endswith('"""') or lines[j].endswith("'''"):
-                        break
-                    j += 1
-                info['__doc__'] = '\n'.join(docstring)
-                continue
-                
-            # Look for title assignment
-            if '__title__' in line:
-                try:
-                    title = line.split('=', 1)[1].strip().strip('"\'')
-                    info['__title__'] = title
-                except:
-                    pass
-                    
-            # Look for tip assignment
-            if '__tip__' in line:
-                try:
-                    tip = line.split('=', 1)[1].strip().strip('"\'')
-                    info['__tip__'] = tip
-                except:
-                    pass
-                    
-        return info
-    except Exception as e:
-        if USER.IS_DEVELOPER:
-            print("\n\nDeveloper visible only logging:")
-            print("Failed to parse file directly, falling back to module execution method")
-            print(ERROR_HANDLE.get_alternative_traceback())
-        return None
-
 def get_title_tip_from_file(lucky_file, is_random_single):
     """Extract title and tip information from a Python script file.
 
     Args:
         lucky_file (str): Path to the Python script file
-        is_random_single (bool): If True, returns a single random entry.
-            If False, returns all entries.
+        is_random_single (bool): If True, returns only one random tip
 
     Returns:
-        dict or list: If is_random_single is True, returns a single random entry.
-            If False, returns a list of all entries with their titles and tips.
-
-    Note:
-        Parses the file's docstring and function docstrings
-        Handles both single and multi-line docstrings
+        tuple: Contains (module_name, tip_text, icon_path)
+            module_name (str): Name of the module
+            tip_text (str or None): The tip text if found
+            icon_path (str or None): Path to the module's icon
     """
     icon_path = get_icon_from_path(lucky_file)
+        
     module_name = FOLDER.get_file_name_from_path(lucky_file).replace(".py", "")
-    
-    # Try the new safe method first
-    info = get_module_info(lucky_file)
-    if info is not None:
-        tip = info['__tip__'] or info['__doc__']
-        if tip and is_random_single:
-            tip = [random.choice(tip)]
-        title = info['__title__'] or module_name
-        return title, tip, icon_path
-    
-    # Fallback to the original method
     try:
         # Try imp first
         import imp # pyright: ignore
         ref_module = imp.load_source(module_name, lucky_file)
     except (ImportError, AttributeError):
         try:
-            # Fallback to execfile for IronPython compatibility
-            ref_module = type('module', (), {})
-            with open(lucky_file, 'r') as f:
-                exec(f.read(), ref_module.__dict__)
+            # Fallback to importlib if imp fails
+            from importlib import resources  # use resources instead of util
+            spec = resources.spec_from_file_location(module_name, lucky_file)
+            ref_module = resources.module_from_spec(spec)
+            spec.loader.exec_module(ref_module)
         except Exception as e:
             if USER.IS_DEVELOPER:
                 print ("\n\nDeveloper visible only logging:")
                 print (ERROR_HANDLE.get_alternative_traceback())
+                print ("The lucky file is: {}".format(lucky_file))
             return module_name, None, icon_path
     except Exception as e:
         if USER.IS_DEVELOPER:
             print ("\n\nDeveloper visible only logging:")
             print (ERROR_HANDLE.get_alternative_traceback())
+            
         return module_name, None, icon_path
     
-    tip = getattr(ref_module, TIP_KEY, None)
-    if tip is None:
-        tip = ref_module.__doc__
+    tip = getattr(ref_module,TIP_KEY)
     
-    if isinstance(tip, list):
+    if isinstance(tip, list): #>>>>>>>if manually define many tips then use that, otherwise use __doc__, it shold not require double writing
         pass
     else:
-        tip = [tip]
+        tip = [ref_module.__doc__]
         
     if is_random_single:
         tip = [random.choice(tip)]
 
+        
     if hasattr(ref_module, "__title__"):
         title = ref_module.__title__.replace("\n", " ")
     else:
         title = module_name
     
+    
     return title, tip, icon_path
 
 def show_tip_revit(is_random_single=True):
-    """Display a random tip for Revit users.
 
-    Args:
-        is_random_single (bool, optional): If True, displays a single random tip.
-            If False, displays all available tips. Defaults to True.
-
-    Note:
-        Requires Revit environment
-        Displays tips in a formatted window with title and description
-    """
     from pyrevit import script
     output = script.get_output()
     if not output:
@@ -523,11 +434,7 @@ def get_rhino_knowledge():
 
 
 def show_tip_rhino():
-    """Display a random tip for Rhino users.
-
-    Note:
-        Requires Rhino environment
-        Displays tips in a formatted window with title and description
+    """Show a random tip for Rhino. Not implemented yet.
     """
     knowledge = get_rhino_knowledge()
 
@@ -605,14 +512,7 @@ def show_tip_rhino():
 
 
 def tip_of_day():
-    """Display a random tip of the day.
-
-    This function randomly selects and displays a tip from the available
-    knowledge base, presenting it in a user-friendly format.
-
-    Note:
-        Automatically detects the current environment (Revit/Rhino)
-        and displays appropriate tips
+    """Show a random tip of the day.
     """
     if not USER.IS_DEVELOPER:
         if random.random() < 0.2:
@@ -634,25 +534,13 @@ def unit_test():
     
     
 def print_documentation_book_for_review_revit():
-    """Generate and display documentation for review in Revit environment.
-
-    This function creates a comprehensive documentation book containing
-    all available tips and documentation for review purposes.
-
-    Note:
-        Outputs formatted documentation to the Revit output window
-        Includes both module and function level documentation
-    """
+    """Print all the tips in a book or webpage to check spelling and doc updates."""
     show_tip_revit(is_random_single=False)
     
     OUTPUT.display_output_on_browser()
 
 def show_floating_box_warning():
-    """Display a warning message in a floating box window.
-
-    Note:
-        Used for displaying important warnings or notifications
-        to users in a non-intrusive manner
+    """Show an informational message for floating a box window.
     """
     import NOTIFICATION
     NOTIFICATION.duck_pop(main_text="Click has no use for this button. Just hold down on the arrow and drag to make the window floating.\nThis will always stay on top even when changed to another tab.")
@@ -666,16 +554,6 @@ def get_floating_box_documentation():
     
     
 def generate_documentation(debug = False):
-    """Generate comprehensive documentation for the EnneadTab system.
-
-    Args:
-        debug (bool, optional): If True, enables debug output during generation.
-            Defaults to False.
-
-    Note:
-        Creates documentation for all available modules and functions
-        Outputs to both console and file formats
-    """
     generate_app_documentation(debug, app="Rhino")
     generate_app_documentation(debug, app="Revit")
 

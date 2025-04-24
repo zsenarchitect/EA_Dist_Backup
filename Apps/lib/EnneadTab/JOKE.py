@@ -186,6 +186,7 @@ def april_fool():
 
 def ennead_duck():
     EXE.try_open_app("Pet.exe")
+    EXE.try_open_app("EnneaDuck.exe")
 
 april_fool()
 

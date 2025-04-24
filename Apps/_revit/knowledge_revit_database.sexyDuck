@@ -530,813 +530,813 @@
         "tab": "Proj. 2128",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\00_version note.pushbutton\\date_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\00_version note.pushbutton\\date_script.py": {
         "alias": "Note: toolbar version 12.1",
         "doc": "If 2135 toolset not working for you, restart you revit to receive current update",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\00_version note.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\00_version note.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\00_version note.pushbutton\\date_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\00_version note.pushbutton\\date_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\01_remove not placed area.pushbutton\\remove not placed area_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\01_remove unlaced area.pushbutton\\RNPA_script.py": {
         "alias": "01_remove not placed area(Legacy)",
         "doc": "Legacy, now in review panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\01_remove not placed area.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\01_remove unlaced area.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\01_remove not placed area.pushbutton\\remove not placed area_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\01_remove unlaced area.pushbutton\\RNPA_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\02_fill in default ratio.pushbutton\\fill in default ratio_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\02_fill in default ratio.pushbutton\\fill in default ratio_script.py": {
         "alias": "02_fill in default discount ratio if has not been filled",
         "doc": "Doc string not set",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\02_fill in default ratio.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\02_fill in default ratio.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\02_fill in default ratio.pushbutton\\fill in default ratio_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\02_fill in default ratio.pushbutton\\fill in default ratio_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.0_assign ID by scopebox.pushbutton\\assign ID data by scopebox_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.0_assign ID by scopebox.pushbutton\\assign ID data by scopebox_script.py": {
         "alias": "03.0_Assign Bldg ID data  by Scopebox",
         "doc": "xxx",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.0_assign ID by scopebox.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.0_assign ID by scopebox.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.0_assign ID by scopebox.pushbutton\\assign ID data by scopebox_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.0_assign ID by scopebox.pushbutton\\assign ID data by scopebox_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.2_change_furnichure_level.pushbutton\\change furnichure level_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.2_change_furnichure_level.pushbutton\\change furnichure level_script.py": {
         "alias": "03.2_change furnichure level by bldg id",
         "doc": "Relocate the furnichure level of the selected elements by building ID",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.2_change_furnichure_level.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.2_change_furnichure_level.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.2_change_furnichure_level.pushbutton\\change furnichure level_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.2_change_furnichure_level.pushbutton\\change furnichure level_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.3_remake room.pushbutton\\transfer room_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.3_remake room.pushbutton\\transfer room_script.py": {
         "alias": "3.3_recreate room on correct level",
         "doc": "Get the rooms that does not have associate level matching building id, then try to recreate this room in the coorect associate level. This is a common problem in early SD/DD where rooms are created in similar height levels and the information locked to it.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.3_remake room.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.3_remake room.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\03.3_remake room.pushbutton\\transfer room_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\03.3_remake room.pushbutton\\transfer room_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\04.1_efficiency block filler.pushbutton\\efficiency block filler_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\04.1_efficiency block filler.pushbutton\\efficiency block filler_script.py": {
         "alias": "04.1_efficiency block data filler",
         "doc": "Get the data reading based on the rule from Efficiency schedule, process them and fill to the graphical symbal data calculator on sheets, which shows the workstation seat count, net area and gross area, and what is the efficiency rate of this level.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\04.1_efficiency block filler.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\04.1_efficiency block filler.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\04.1_efficiency block filler.pushbutton\\efficiency block filler_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\04.1_efficiency block filler.pushbutton\\efficiency block filler_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\05_area data to excel_2.0.pushbutton\\area data to excel 2.0_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\05_area data to excel_2.0.pushbutton\\area data to excel 2.0_script.py": {
         "alias": "05_area to excel 2.0, N3 Only",
         "doc": "Gather the data of GFA area plans and publish it to Excel in the format requested by the client.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\05_area data to excel_2.0.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\05_area data to excel_2.0.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\05_area data to excel_2.0.pushbutton\\area data to excel 2.0_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\05_area data to excel_2.0.pushbutton\\area data to excel 2.0_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\06_fix keyplans.pushbutton\\fix keyplans_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\06_fix keyplans.pushbutton\\fix keyplans_script.py": {
         "alias": "06_fix keyplan",
         "doc": "Batch apply keyplan instance parameter to many sheets.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\06_fix keyplans.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\06_fix keyplans.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\06_fix keyplans.pushbutton\\fix keyplans_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\06_fix keyplans.pushbutton\\fix keyplans_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\07_assign sheet plot number.pushbutton\\assign sheet plot number_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\07_assign sheet plot number.pushbutton\\assign sheet plot number_script.py": {
         "alias": "07_sheet, floor, level and grid plot number",
         "doc": "Assign plot ID to all sheet, floor, level and grid elements in project. This is critical for having a accurate shcedule from linked file.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\07_assign sheet plot number.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\07_assign sheet plot number.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\07_assign sheet plot number.pushbutton\\assign sheet plot number_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\07_assign sheet plot number.pushbutton\\assign sheet plot number_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\08_prefix views.pushbutton\\prefix views_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\08_prefix views.pushbutton\\prefix views_script.py": {
         "alias": "08_prefix views",
         "doc": "Prefix user input text before view names. Good for organizing workings such as slab edge drawings and GFA drawings.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\08_prefix views.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\08_prefix views.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\08_prefix views.pushbutton\\prefix views_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\08_prefix views.pushbutton\\prefix views_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\09_add node to surf.pushbutton\\add node tosrf_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\09_add node to surf.pushbutton\\add node tosrf_script.py": {
         "alias": "09_add node to surf, N3 spehere only",
         "doc": "Set surface divider number on selected face.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\09_add node to surf.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\09_add node to surf.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\09_add node to surf.pushbutton\\add node tosrf_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\09_add node to surf.pushbutton\\add node tosrf_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\10_panel radius to multiple.pushbutton\\multiple panel radius_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\10_panel radius to multiple.pushbutton\\multiple panel radius_script.py": {
         "alias": "10_By List: multiple panel radius by host wall",
         "doc": "pick panel types to be fixed, it will update the 'R' or 'r' parameter based on the curved host wall",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\10_panel radius to multiple.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\10_panel radius to multiple.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\10_panel radius to multiple.pushbutton\\multiple panel radius_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\10_panel radius to multiple.pushbutton\\multiple panel radius_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\11_prefix GRIDS.pushbutton\\prefix grid_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\11_prefix GRIDS.pushbutton\\prefix grid_script.py": {
         "alias": "11_prefix grids",
         "doc": "Prefix grid name with 'temp'",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\11_prefix GRIDS.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\11_prefix GRIDS.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\11_prefix GRIDS.pushbutton\\prefix grid_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\11_prefix GRIDS.pushbutton\\prefix grid_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\12_elevator note update.pushbutton\\elevator note on and update_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\12_elevator note update.pushbutton\\elevator note on and update_script.py": {
         "alias": "12_turn on elevator note and update data",
         "doc": "Turn on elevator notes about the base level and top level of the elevator model, its usage mark, and when was the last time this scheck was run.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\12_elevator note update.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\12_elevator note update.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\12_elevator note update.pushbutton\\elevator note on and update_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\12_elevator note update.pushbutton\\elevator note on and update_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\15.1_fix room department.pushbutton\\fix room department 2.0_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\15.1_fix room department.pushbutton\\fix room department 2.0_script.py": {
         "alias": "15.1_fix color_room department 2.0",
         "doc": "Find the room department that is using names other than agreed name list. And attempt to fix it. \n\nName list location: \n\nI:\\2135\\6_Team\\CH\\2022-03-05 Color Scheme\\Room Department Script.txt",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\15.1_fix room department.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\15.1_fix room department.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\15.1_fix room department.pushbutton\\fix room department 2.0_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\15.1_fix room department.pushbutton\\fix room department 2.0_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\16_fix area department.pushbutton\\fix area department_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\16_fix area department.pushbutton\\fix area department_script.py": {
         "alias": "16_fix color_area department",
         "doc": "If area department is not part of user allowed list, find them and replace them.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\16_fix area department.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\16_fix area department.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\16_fix area department.pushbutton\\fix area department_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\16_fix area department.pushbutton\\fix area department_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\17_fix area office efficiency function.pushbutton\\fix area office function_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\17_fix area office efficiency function.pushbutton\\fix area office function_script.py": {
         "alias": "17_fix color_area office layout function",
         "doc": "Get areas with department assignment outside predefined name list. And attempt to fix them.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\17_fix area office efficiency function.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\17_fix area office efficiency function.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\17_fix area office efficiency function.pushbutton\\fix area office function_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\17_fix area office efficiency function.pushbutton\\fix area office function_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\18_set bullit point by revision.pushbutton\\18_set bullit point by revision_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\18_set bullit point by revision.pushbutton\\18_set bullit point by revision_script.py": {
         "alias": "18_set bullit point by/to revision on sheet",
         "doc": "Transfer the data between issing parameter and titleblock revision schedule. Also can transfer issue data from last round to current round.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\18_set bullit point by revision.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\18_set bullit point by revision.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\18_set bullit point by revision.pushbutton\\18_set bullit point by revision_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\18_set bullit point by revision.pushbutton\\18_set bullit point by revision_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\PDF printer 2.0_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\PDF printer 2.0_script.py": {
         "alias": "19_[PDF and DWG and JPG exporter] <------",
         "doc": "The original flavour auto-exporter. It export pdf and dwgs and jpg, package them to different folders, and control the print by issuing parameter. The paper size and color setting is picked automatically by sheets parameter.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\PDF printer 2.0_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\19.1_PDF printer CAD exporter 2.0.pushbutton\\PDF printer 2.0_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\20.1_open multi file.pushbutton\\open all proj_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\20.1_open multi file.pushbutton\\open all proj_script.py": {
         "alias": "21.1_Open Many Bili Proj",
         "doc": "Open many Bili projects together.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\20.1_open multi file.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\20.1_open multi file.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\20.1_open multi file.pushbutton\\open all proj_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\20.1_open multi file.pushbutton\\open all proj_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\21_bring material and family from link.pushbutton\\copy mat from link_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\21_bring material and family from link.pushbutton\\copy mat from link_script.py": {
         "alias": "20_copy material from link, load family(beta) from link",
         "doc": "Copy graphical property of material from link, but keep the keynote data untouched.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\21_bring material and family from link.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\21_bring material and family from link.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\21_bring material and family from link.pushbutton\\copy mat from link_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\21_bring material and family from link.pushbutton\\copy mat from link_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\23_gradient frit.pushbutton\\frit gradient_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\23_gradient frit.pushbutton\\frit gradient_script.py": {
         "alias": "23_frit gradient",
         "doc": "Apply grediant frit pattern to the ADP family instance.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\23_gradient frit.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\23_gradient frit.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\23_gradient frit.pushbutton\\frit gradient_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\23_gradient frit.pushbutton\\frit gradient_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\24.1_global comments.pushbutton\\gloabl comment 2.0_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\24.1_global comments.pushbutton\\gloabl comment 2.0_script.py": {
         "alias": "24.1_Show/Hide Markups and Office layout 2.0",
         "doc": "For office markup elements( internal textnotes, sketch dims, etc), the tool goes thru the entire file and find them on each view, then it either hide and show them based on your choice.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\24.1_global comments.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\24.1_global comments.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\24.1_global comments.pushbutton\\gloabl comment 2.0_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\24.1_global comments.pushbutton\\gloabl comment 2.0_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\25_near or overlap tags.pushbutton\\overlap tags_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\25_near or overlap tags.pushbutton\\overlap tags_script.py": {
         "alias": "25_remove near or overlapped area or room tags",
         "doc": "Remove area tag or room tags that is visually very close on same view.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\25_near or overlap tags.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\25_near or overlap tags.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\25_near or overlap tags.pushbutton\\overlap tags_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\25_near or overlap tags.pushbutton\\overlap tags_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\26_align dim across sheet.pushbutton\\align dim across sheet_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\26_align dim across sheet.pushbutton\\align dim across sheet_script.py": {
         "alias": "26_align dim acroos sheet",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\26_align dim across sheet.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\26_align dim across sheet.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\26_align dim across sheet.pushbutton\\align dim across sheet_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\26_align dim across sheet.pushbutton\\align dim across sheet_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\27_TAG MANY VIEW.pushbutton\\TAG MANY VIEWS_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\27_TAG MANY VIEW.pushbutton\\TAG MANY VIEWS_script.py": {
         "alias": "27_TAG MANY VIEWS---",
         "doc": "Select views from project browser, remove tags that are too close to other tags( if they are taging the same element).\n\nIt then tags Objects with user selected type",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\27_TAG MANY VIEW.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\27_TAG MANY VIEW.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\27_TAG MANY VIEW.pushbutton\\TAG MANY VIEWS_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\27_TAG MANY VIEW.pushbutton\\TAG MANY VIEWS_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\28_empty titleblock.pushbutton\\empty titleblock_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\28_empty titleblock.pushbutton\\empty titleblock_script.py": {
         "alias": "28_Set/Reset Empty Titleblock.",
         "doc": "Some LDI prefer a totally empty titleblock. Unfortunately, the revision schedule cannot be turned on/off by parameter control. SO this tool, will remove the sheet revisions, and store that information at the issue parameters. Then the titleblock can be turned empty. After the export, the tool can be used to recover sheet revision schedule.\n\nWhy not switch to another empty titleblock family? Becasue when switching, non-shared-instance-parameter will reset.So you will lose any local setting.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\28_empty titleblock.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\28_empty titleblock.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\28_empty titleblock.pushbutton\\empty titleblock_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\28_empty titleblock.pushbutton\\empty titleblock_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\29_transfer ara to other shceme.pushbutton\\trhansfer area_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\29_transfer ara to other shceme.pushbutton\\trhansfer area_script.py": {
         "alias": "29_transfer area to other scheme",
         "doc": "Get the area boundary lines and areas from one area scheme to another.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\29_transfer ara to other shceme.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\29_transfer ara to other shceme.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\29_transfer ara to other shceme.pushbutton\\trhansfer area_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\29_transfer ara to other shceme.pushbutton\\trhansfer area_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\30_remove dup area boundary line.pushbutton\\remove dup area boundary line_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\30_remove dup area boundary line.pushbutton\\remove dup area boundary line_script.py": {
         "alias": "30_remove dup area boundary line",
         "doc": "Remove duplicated the area boundary line for each view.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\30_remove dup area boundary line.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\30_remove dup area boundary line.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part1.pulldown\\30_remove dup area boundary line.pushbutton\\remove dup area boundary line_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135A.pulldown\\30_remove dup area boundary line.pushbutton\\remove dup area boundary line_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\31_what is in design option.pushbutton\\what in design option_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\31_what is in design option.pushbutton\\what in design option_script.py": {
         "alias": "31_what is in design option?(Legacy)",
         "doc": "Legacy, now you can do better in color code design option",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\31_what is in design option.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\31_what is in design option.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\31_what is in design option.pushbutton\\what in design option_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\31_what is in design option.pushbutton\\what in design option_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\33_Check monitoring staust.pushbutton\\monitor status_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\33_Check monitoring staust.pushbutton\\monitor status_script.py": {
         "alias": "33_check monitoring status(Site File only)",
         "doc": "In the revit file with copy/monitor status, compare how many levels and grids have two way monitor status and how many have one way monitor.\n\nThis usually happens when somewhere in the life cycle one side the element is recreated/deleted or massively renamed, which means other link file need to catchup. This takes you further than the native copy/monitor review.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\33_Check monitoring staust.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\33_Check monitoring staust.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\33_Check monitoring staust.pushbutton\\monitor status_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\33_Check monitoring staust.pushbutton\\monitor status_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\34_uncheck view note from tempklate.pushbutton\\view note template_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\34_uncheck view note from tempklate.pushbutton\\view note template_script.py": {
         "alias": "34_uncheck view note and translation from template",
         "doc": "Unbind the checkbox for view note and translation parameter from the view templates.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\34_uncheck view note from tempklate.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\34_uncheck view note from tempklate.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\34_uncheck view note from tempklate.pushbutton\\view note template_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\34_uncheck view note from tempklate.pushbutton\\view note template_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\35_elevation direction.pushbutton\\elev direction_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\35_elevation direction.pushbutton\\elev direction_script.py": {
         "alias": "35_Elevation and Grid orth-direction",
         "doc": "Check if all of your grids and elevations is orthoganal.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\35_elevation direction.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\35_elevation direction.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\35_elevation direction.pushbutton\\elev direction_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\35_elevation direction.pushbutton\\elev direction_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\36_repeat adp.pushbutton\\repeat_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\36_repeat adp.pushbutton\\repeat_script.py": {
         "alias": "36_repeat ADP",
         "doc": "For selected ADP componenets that have been placed. Run 'Repeat' Command for all of them. This saves you huge time on waiting for recalculating patterned placement.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\36_repeat adp.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\36_repeat adp.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\36_repeat adp.pushbutton\\repeat_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\36_repeat adp.pushbutton\\repeat_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.1_set protected model no name.pushbutton\\set protect lemtn_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.1_set protected model no name.pushbutton\\set protect lemtn_script.py": {
         "alias": "37B_set protected element without name(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.1_set protected model no name.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.1_set protected model no name.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.1_set protected model no name.pushbutton\\set protect lemtn_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.1_set protected model no name.pushbutton\\set protect lemtn_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.2_review protected model.pushbutton\\review protect element_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.2_review protected model.pushbutton\\review protect element_script.py": {
         "alias": "37C_review protected elements(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.2_review protected model.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.2_review protected model.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37.2_review protected model.pushbutton\\review protect element_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37.2_review protected model.pushbutton\\review protect element_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37_set protected element.pushbutton\\set protect lemtn_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37_set protected element.pushbutton\\set protect lemtn_script.py": {
         "alias": "37A_set protected element(grid, level, scopebox)(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37_set protected element.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37_set protected element.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\37_set protected element.pushbutton\\set protect lemtn_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\37_set protected element.pushbutton\\set protect lemtn_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\38_Purge unused SubC.pushbutton\\purge unused Subc_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\38_Purge unused SubC.pushbutton\\purge unused Subc_script.py": {
         "alias": "38_Purge SubC",
         "doc": "Purge Subcategory(Danger)",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\38_Purge unused SubC.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\38_Purge unused SubC.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\38_Purge unused SubC.pushbutton\\purge unused Subc_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\38_Purge unused SubC.pushbutton\\purge unused Subc_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\39_wall max height.pushbutton\\wall max height_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\39_wall max height.pushbutton\\wall max height_script.py": {
         "alias": "39_wall max_height",
         "doc": "Find the geometrical max height of walls and store that data at 'Element_Max_Height_Report' parameter",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\39_wall max height.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\39_wall max height.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\39_wall max height.pushbutton\\wall max height_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\39_wall max height.pushbutton\\wall max height_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\40_floor to filled region.pushbutton\\floor to filled region_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\40_floor to filled region.pushbutton\\floor to filled region_script.py": {
         "alias": "40_Floor to Filled region",
         "doc": "Recreate a filled region using the same shape as the floor.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\40_floor to filled region.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\40_floor to filled region.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\40_floor to filled region.pushbutton\\floor to filled region_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\40_floor to filled region.pushbutton\\floor to filled region_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\41_check if hseet on schedule.pushbutton\\is sheet on schedule_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\41_check if hseet on schedule.pushbutton\\is sheet on schedule_script.py": {
         "alias": "41_ check if sheet on schedule",
         "doc": "Force to make all sheets check this 'Appears In Sheet List'. You are suggested to always use other method to filter sheets in schedule, becasue a QAQC sheet schedule should be able to see every sheet, including the onces not for documentation.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\41_check if hseet on schedule.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\41_check if hseet on schedule.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\41_check if hseet on schedule.pushbutton\\is sheet on schedule_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\41_check if hseet on schedule.pushbutton\\is sheet on schedule_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\42_inspect mat keynote by family.pushbutton\\inpsect keynote from family_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\42_inspect mat keynote by family.pushbutton\\inpsect keynote from family_script.py": {
         "alias": "42_inspect material keynote, material, family and object style",
         "doc": "Inspect the material keynote, material, subCategory relationship and where there are being used.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\42_inspect mat keynote by family.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\42_inspect mat keynote by family.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\42_inspect mat keynote by family.pushbutton\\inpsect keynote from family_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\42_inspect mat keynote by family.pushbutton\\inpsect keynote from family_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\43_Review Keynotes.pushbutton\\inspect_keynote_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\43_Review Keynotes.pushbutton\\inspect_keynote_script.py": {
         "alias": "Alias not set",
         "doc": "xxx",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\43_Review Keynotes.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\43_Review Keynotes.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\43_Review Keynotes.pushbutton\\inspect_keynote_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\43_Review Keynotes.pushbutton\\inspect_keynote_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44.1_make no color.pushbutton\\make no color_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44.1_make no color.pushbutton\\make no color_script.py": {
         "alias": "44.1_update internal dim selection set",
         "doc": "Find the dims of internal dim type, and update the selection filter set for filter control.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44.1_make no color.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44.1_make no color.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44.1_make no color.pushbutton\\make no color_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44.1_make no color.pushbutton\\make no color_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44_make no color.pushbutton\\make no color_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44_make no color.pushbutton\\make no color_script.py": {
         "alias": "44_set/recover no color elevation/sections/plans",
         "doc": "For many cateogries, set or recover the color and surface pattern status so the dwg can have non-solid hatch. Many LDI prefer the dwg this way, while office pdf would prefer to show full foreground and background surface pattern.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44_make no color.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44_make no color.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\44_make no color.pushbutton\\make no color_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\44_make no color.pushbutton\\make no color_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\45_color foreground to background.pushbutton\\transfer color_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\45_color foreground to background.pushbutton\\transfer color_script.py": {
         "alias": "45_transfer material color background",
         "doc": "Make material foreground graphic to background graphic",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\45_color foreground to background.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\45_color foreground to background.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\45_color foreground to background.pushbutton\\transfer color_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\45_color foreground to background.pushbutton\\transfer color_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46.1_move elements south 4500.pushbutton\\move 4500_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46.1_move elements south 4500.pushbutton\\move 4500_script.py": {
         "alias": "46B_move elements south 4500 thru move(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46.1_move elements south 4500.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46.1_move elements south 4500.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46.1_move elements south 4500.pushbutton\\move 4500_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46.1_move elements south 4500.pushbutton\\move 4500_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46_move elements south 4500.pushbutton\\move 4500 thru copy_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46_move elements south 4500.pushbutton\\move 4500 thru copy_script.py": {
         "alias": "46A_move elements south 4500 thru copy/delete(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46_move elements south 4500.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46_move elements south 4500.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\46_move elements south 4500.pushbutton\\move 4500 thru copy_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\46_move elements south 4500.pushbutton\\move 4500 thru copy_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\47_export isolated walltype.pushbutton\\47_isolated export walltype_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\47_export isolated walltype.pushbutton\\47_isolated export walltype_script.py": {
         "alias": "47_Isolate export type for Wall/Floor/Roof/Column/Stair(Legacy)",
         "doc": "Legacy, now in Output panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\47_export isolated walltype.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\47_export isolated walltype.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\47_export isolated walltype.pushbutton\\47_isolated export walltype_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\47_export isolated walltype.pushbutton\\47_isolated export walltype_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\48_load family to many docs.pushbutton\\load family to many docs_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\48_load family to many docs.pushbutton\\load family to many docs_script.py": {
         "alias": "48_load many families to many docs",
         "doc": "Legacy, not under Family Panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\48_load family to many docs.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\48_load family to many docs.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\48_load family to many docs.pushbutton\\load family to many docs_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\48_load family to many docs.pushbutton\\load family to many docs_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py": {
         "alias": "49_Export No Sheet View as Jpgs(Depreciated)",
         "doc": "Depreciated",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\49_export No sheet view as jpg.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py": {
         "alias": "50_Delete view based on jpgs in folder(Legacy)",
         "doc": "Legacy, now in view panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\50_delete view based on folder.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\51_RENAME detail num.pushbutton\\rename detail num_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\51_RENAME detail num.pushbutton\\rename detail num_script.py": {
         "alias": "51_rename detail num",
         "doc": "\nThis function renames views in Revit based on their associated level and name. It first selects the views to be renamed. It then loops through each view in the selection and extracts the associated level and key from the view name. The key is used to identify the type of view, and is used in the new view name. The associated level and key are combined to form a new detail number for the view, which is set as the view's \"Detail Number\" parameter. If the associated level cannot be extra",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\51_RENAME detail num.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\51_RENAME detail num.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\51_RENAME detail num.pushbutton\\rename detail num_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\51_RENAME detail num.pushbutton\\rename detail num_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\52_make walltype_filter and assign.pushbutton\\make walltype filter_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\52_make walltype_filter and assign.pushbutton\\make walltype filter_script.py": {
         "alias": "52_Assign Walltype Filter",
         "doc": "Batch create walltype filters with defined color to many view templates. \n\nThis is handy when doing the colored wall type diagram elevation.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\52_make walltype_filter and assign.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\52_make walltype_filter and assign.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\52_make walltype_filter and assign.pushbutton\\make walltype filter_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\52_make walltype_filter and assign.pushbutton\\make walltype filter_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\53_make walltype_legend.pushbutton\\walltype legend_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\53_make walltype_legend.pushbutton\\walltype legend_script.py": {
         "alias": "53_Make walltype legend(Legacy)",
         "doc": "Legacy, now do it in output panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\53_make walltype_legend.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\53_make walltype_legend.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\53_make walltype_legend.pushbutton\\walltype legend_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\53_make walltype_legend.pushbutton\\walltype legend_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\54_create_shared_para.pushbutton\\create shared para_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\54_create_shared_para.pushbutton\\create shared para_script.py": {
         "alias": "54_Create Shared Para(Legacy)",
         "doc": "Legacy, now do output panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\54_create_shared_para.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\54_create_shared_para.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\54_create_shared_para.pushbutton\\create shared para_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\54_create_shared_para.pushbutton\\create shared para_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\55_add field to schedule.pushbutton\\add filed to schedule_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\55_add field to schedule.pushbutton\\add filed to schedule_script.py": {
         "alias": "55_Add field to schedule(Depreciated)",
         "doc": "Depreciated",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\55_add field to schedule.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\55_add field to schedule.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\55_add field to schedule.pushbutton\\add filed to schedule_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\55_add field to schedule.pushbutton\\add filed to schedule_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\56_create revisions.pushbutton\\create revisions_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\56_create revisions.pushbutton\\create revisions_script.py": {
         "alias": "56_Create revisions(Depreciated)",
         "doc": "Depreciated",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\56_create revisions.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\56_create revisions.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part2.pulldown\\56_create revisions.pushbutton\\create revisions_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135B.pulldown\\56_create revisions.pushbutton\\create revisions_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\57_break composite floor.pushbutton\\break floor_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\57_break composite floor.pushbutton\\break floor_script.py": {
         "alias": "57_break composite floor",
         "doc": "For composite floor element, recreate the finish and structrue slab as seperate element. It will use the source footprint for both outcomes.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\57_break composite floor.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\57_break composite floor.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\57_break composite floor.pushbutton\\break floor_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\57_break composite floor.pushbutton\\break floor_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\58_transfer_Templates.pushbutton\\copy selected_template_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\58_transfer_Templates.pushbutton\\copy selected_template_script.py": {
         "alias": "58_Copy selected template to other open doc",
         "doc": "Copy selected view templates to other open models.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\58_transfer_Templates.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\58_transfer_Templates.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\58_transfer_Templates.pushbutton\\copy selected_template_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\58_transfer_Templates.pushbutton\\copy selected_template_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\60_detect_FOG_to_grid.pushbutton\\detect_FOG_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\60_detect_FOG_to_grid.pushbutton\\detect_FOG_script.py": {
         "alias": "60_detect_FOG",
         "doc": "Detect the FOG of curtain to the nearest palleral grid line.\n\nThe result is ranked by how off the distance are to the nearest whole number.\n\nIt also provide links to the problem curtain wall, and will attempt to create a working view to help you fix them.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\60_detect_FOG_to_grid.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\60_detect_FOG_to_grid.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\60_detect_FOG_to_grid.pushbutton\\detect_FOG_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\60_detect_FOG_to_grid.pushbutton\\detect_FOG_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\61_import Rhino camera.pushbutton\\import_rhino_camera_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\61_import Rhino camera.pushbutton\\import_rhino_camera_script.py": {
         "alias": "61_Import Rhino camera(Legacy)",
         "doc": "Legacy, now in view panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\61_import Rhino camera.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\61_import Rhino camera.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\61_import Rhino camera.pushbutton\\import_rhino_camera_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\61_import Rhino camera.pushbutton\\import_rhino_camera_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\62_sheets has unassigned value.pushbutton\\sheet value check_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\62_sheets has unassigned value.pushbutton\\sheet value check_script.py": {
         "alias": "62_check sheet value",
         "doc": "Check esential sheet value has been assigned.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\62_sheets has unassigned value.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\62_sheets has unassigned value.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\62_sheets has unassigned value.pushbutton\\sheet value check_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\62_sheets has unassigned value.pushbutton\\sheet value check_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\63_get cloud model GUID.pushbutton\\get model GUID_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\63_get cloud model GUID.pushbutton\\get model GUID_script.py": {
         "alias": "63_Get model GUID",
         "doc": "Get the GUID for current model. This is the identifier on BIM360 server.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\63_get cloud model GUID.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\63_get cloud model GUID.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\63_get cloud model GUID.pushbutton\\get model GUID_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\63_get cloud model GUID.pushbutton\\get model GUID_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\64_create3D view of workset.pushbutton\\3d workset view_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\64_create3D view of workset.pushbutton\\3d workset view_script.py": {
         "alias": "64_3D workset views(Legacy)",
         "doc": "Legacy, now do it in view panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\64_create3D view of workset.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\64_create3D view of workset.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\64_create3D view of workset.pushbutton\\3d workset view_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\64_create3D view of workset.pushbutton\\3d workset view_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\65_replace_dim_text.pushbutton\\replace_dim_text_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\65_replace_dim_text.pushbutton\\replace_dim_text_script.py": {
         "alias": "65_replace_dim_text",
         "doc": "Replace the dim text that is below the dim number in current document from A to B. \n\nFor example, changing from 'FOG' to 'F.O.G.'",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\65_replace_dim_text.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\65_replace_dim_text.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\65_replace_dim_text.pushbutton\\replace_dim_text_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\65_replace_dim_text.pushbutton\\replace_dim_text_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\66_bundle Rhino as family.pushbutton\\bundle Rhino_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\66_bundle Rhino as family.pushbutton\\bundle Rhino_script.py": {
         "alias": "66_bundle Rhino(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\66_bundle Rhino as family.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\66_bundle Rhino as family.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\66_bundle Rhino as family.pushbutton\\bundle Rhino_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\66_bundle Rhino as family.pushbutton\\bundle Rhino_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\mark_preserved_color_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\mark_preserved_color_script.py": {
         "alias": "67_mark preserve color fillregion and detail item type",
         "doc": "Sometimes you want to set certain filled region and detail item to be graphically controlled seperately from the category graphic. So you can use filter to assign special graphic. But the setting inside the type parameter might not be reflected on the type name. So this tool will lookup for those conditions and append '_preserved color' in type name os it is easier to be found.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\mark_preserved_color_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\67_mark_preserve color_fillregion_types.pushbutton\\mark_preserved_color_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\68_stair_end_with_riser.pushbutton\\stair_end_with_riser_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\68_stair_end_with_riser.pushbutton\\stair_end_with_riser_script.py": {
         "alias": "68_stair_end_with_riser(Checker)",
         "doc": "Check if the stairs are ending with a riser.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\68_stair_end_with_riser.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\68_stair_end_with_riser.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\68_stair_end_with_riser.pushbutton\\stair_end_with_riser_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\68_stair_end_with_riser.pushbutton\\stair_end_with_riser_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\69_stair_end_with_riser_fix.pushbutton\\fix_stair_end_with_riser_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\69_stair_end_with_riser_fix.pushbutton\\fix_stair_end_with_riser_script.py": {
         "alias": "69_stair_end_with_riser(Fixer)",
         "doc": "Try to fix stairs that has end with a riser checked.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\69_stair_end_with_riser_fix.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\69_stair_end_with_riser_fix.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\69_stair_end_with_riser_fix.pushbutton\\fix_stair_end_with_riser_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\69_stair_end_with_riser_fix.pushbutton\\fix_stair_end_with_riser_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\70_FRW_Dim.pushbutton\\FRW_DIM_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\70_FRW_Dim.pushbutton\\FRW_DIM_script.py": {
         "alias": "70_FRW Dims(NOT IN USE)",
         "doc": "NOT IN USE, attemp to auto dimension distence between FRW windows",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\70_FRW_Dim.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\70_FRW_Dim.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\70_FRW_Dim.pushbutton\\FRW_DIM_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\70_FRW_Dim.pushbutton\\FRW_DIM_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\71_check_level_id.pushbutton\\check_level_id_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\71_check_level_id.pushbutton\\check_level_id_script.py": {
         "alias": "71_check_level_id",
         "doc": "Print out all levels, ranked by elevation, to show level names and its level id data",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\71_check_level_id.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\71_check_level_id.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\71_check_level_id.pushbutton\\check_level_id_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\71_check_level_id.pushbutton\\check_level_id_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\72_fix_area_view_title.pushbutton\\fix_area_view_title_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\72_fix_area_view_title.pushbutton\\fix_area_view_title_script.py": {
         "alias": "72_fix_area_view_title(NOT IN USE)",
         "doc": "NOT IN USE",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\72_fix_area_view_title.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\72_fix_area_view_title.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\72_fix_area_view_title.pushbutton\\fix_area_view_title_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\72_fix_area_view_title.pushbutton\\fix_area_view_title_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\find_EOS_in_FOG_family_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\find_EOS_in_FOG_family_script.py": {
         "alias": "73_find_EOS_in_FOG_family",
         "doc": "Find the modular marker family that have the EOS instance parameter turned on/off.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\find_EOS_in_FOG_family_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\73_find_EOS_in_FOG_family.pushbutton\\find_EOS_in_FOG_family_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\74_bring_size_from_old_door.pushbutton\\bring_size_from_old_door_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\74_bring_size_from_old_door.pushbutton\\bring_size_from_old_door_script.py": {
         "alias": "74_bring_size_from_old_door",
         "doc": "Get door size data from old file. Apply to current file by matching GUID.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\74_bring_size_from_old_door.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\74_bring_size_from_old_door.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\74_bring_size_from_old_door.pushbutton\\bring_size_from_old_door_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\74_bring_size_from_old_door.pushbutton\\bring_size_from_old_door_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\fix_wall_rm_sp_line_overlap_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\fix_wall_rm_sp_line_overlap_script.py": {
         "alias": "75_Fix Wall And Room sp_line Overlap",
         "doc": "In the standalone window, you can zoom in with section box to a region that have wall and room seperation line overlay warning.\n\nAs you are fixing it, you will see the wanring count going down.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\fix_wall_rm_sp_line_overlap_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\75_fix_wall_rm_sp_line_overlap.pushbutton\\fix_wall_rm_sp_line_overlap_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\76_load family from link.pushbutton\\load family from link_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\76_load family from link.pushbutton\\load family from link_script.py": {
         "alias": "76_load 2D family from container link(Legacy)",
         "doc": "Legacy, now in family panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\76_load family from link.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\76_load family from link.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\76_load family from link.pushbutton\\load family from link_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\76_load family from link.pushbutton\\load family from link_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\update_detailitem_by_CAD_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\update_detailitem_by_CAD_script.py": {
         "alias": "77_Create/Update detail item from CAD",
         "doc": "For each selected dwg file, create new detail item family and load in the dwg, save family as the same name as the dwg, then load the family to project.\n\nThis batch process is handy when your consaltant gives you dozens of CAD drawing and you need to convert all of them to detail item family.\n\nYou should also checkout EnneadTab for CAD for some CAD batch processing related tto this workflow.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\update_detailitem_by_CAD_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\77_make_update_detail_item_from_CAD.pushbutton\\update_detailitem_by_CAD_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\78_mark RFR detail items.pushbutton\\mark_RFR_details_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\78_mark RFR detail items.pushbutton\\mark_RFR_details_script.py": {
         "alias": "78_Mark RFR",
         "doc": "Mark detail items on this QAQC view with info about how many of this instance have been placed on other views of the document. And if more than one, which view.\n\nHandy after you brought in many contents from container file on day one and one day ten, you want to know how many have been deployed on the document.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\78_mark RFR detail items.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\78_mark RFR detail items.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\78_mark RFR detail items.pushbutton\\mark_RFR_details_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\78_mark RFR detail items.pushbutton\\mark_RFR_details_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\79_map_instance_property.pushbutton\\map_instance_property_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\79_map_instance_property.pushbutton\\map_instance_property_script.py": {
         "alias": "79_map_instance_property(legacy)",
         "doc": "Legacy, now under family panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\79_map_instance_property.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\79_map_instance_property.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\79_map_instance_property.pushbutton\\map_instance_property_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\79_map_instance_property.pushbutton\\map_instance_property_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\80_tag_room_too_high.pushbutton\\tag_room_too_high_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\80_tag_room_too_high.pushbutton\\tag_room_too_high_script.py": {
         "alias": "80_tag_room_too_high",
         "doc": "Get rooms that is overlapping other rooms, and tag them in views from selected sheets.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\80_tag_room_too_high.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\80_tag_room_too_high.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\80_tag_room_too_high.pushbutton\\tag_room_too_high_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\80_tag_room_too_high.pushbutton\\tag_room_too_high_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\find_section_mark_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\find_section_mark_script.py": {
         "alias": "81_find_section_mark_not_from_sheet",
         "doc": "Locate sections in the viewport of the sheet that is refering to views from other sheet. For system drawing, most detail section mark should refer to current sheet.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\find_section_mark_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\81_find_section_mark_not_from_sheet.pushbutton\\find_section_mark_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\82_link_dummy_callout_to_view.pushbutton\\link_dummy_callout_to_view_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\82_link_dummy_callout_to_view.pushbutton\\link_dummy_callout_to_view_script.py": {
         "alias": "82_Link Dummy Callout To View From Link",
         "doc": "Assign a stable ID when creating the dummy reference. So even if future session, the dummy callout can still find the desired view data in the link file, and update the view detail number and sheet number shown on the small circle.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\82_link_dummy_callout_to_view.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\82_link_dummy_callout_to_view.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\82_link_dummy_callout_to_view.pushbutton\\link_dummy_callout_to_view_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\82_link_dummy_callout_to_view.pushbutton\\link_dummy_callout_to_view_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\83_update_linked_dummy_callout.pushbutton\\update_linked_dummy_callout_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\83_update_linked_dummy_callout.pushbutton\\update_linked_dummy_callout_script.py": {
         "alias": "83_Update Linked Dummy Callout",
         "doc": "Update the view detail number and sheet number data based on the linked dummy callout. You need to have the related link loaded for it to find the linked view.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\83_update_linked_dummy_callout.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\83_update_linked_dummy_callout.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\83_update_linked_dummy_callout.pushbutton\\update_linked_dummy_callout_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\83_update_linked_dummy_callout.pushbutton\\update_linked_dummy_callout_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\84_sheet_translator.pushbutton\\sheet_translator_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\84_sheet_translator.pushbutton\\sheet_translator_script.py": {
         "alias": "84_sheet_translator",
         "doc": "DO NOT USE, use newer AI translator",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\84_sheet_translator.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\84_sheet_translator.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\84_sheet_translator.pushbutton\\sheet_translator_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\84_sheet_translator.pushbutton\\sheet_translator_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\85_pattern_definition.pushbutton\\adjust_line_pattern_definition_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\85_pattern_definition.pushbutton\\adjust_line_pattern_definition_script.py": {
         "alias": "85_adjust_line_pattern_definition",
         "doc": "Adjusting the line pattern definition to remove very similar but different definition, WIP",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\85_pattern_definition.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\85_pattern_definition.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\85_pattern_definition.pushbutton\\adjust_line_pattern_definition_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\85_pattern_definition.pushbutton\\adjust_line_pattern_definition_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\88_find_empty_tag.pushbutton\\find_empty_tag_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\88_find_empty_tag.pushbutton\\find_empty_tag_script.py": {
         "alias": "88_find_empty_tag",
         "doc": "Find keynote tags that is current empty.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\88_find_empty_tag.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\88_find_empty_tag.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\88_find_empty_tag.pushbutton\\find_empty_tag_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\88_find_empty_tag.pushbutton\\find_empty_tag_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\92_adjust_fin.pushbutton\\92_adjust_fin_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\92_adjust_fin.pushbutton\\92_adjust_fin_script.py": {
         "alias": "92_adjust_fin",
         "doc": "Adjust fin height by intersecting detail line.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\92_adjust_fin.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\92_adjust_fin.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\92_adjust_fin.pushbutton\\92_adjust_fin_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\92_adjust_fin.pushbutton\\92_adjust_fin_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\identify_level_for_cw_panel.pushbutton\\identify_level_for_cw_panel_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\identify_level_for_cw_panel.pushbutton\\identify_level_for_cw_panel_script.py": {
         "alias": "89_identify_level_for_cw_panel",
         "doc": "Find the nearest level by boundingbox lowest Z, then apply vent level as Comments",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\identify_level_for_cw_panel.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\identify_level_for_cw_panel.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135 Part3.pulldown\\identify_level_for_cw_panel.pushbutton\\identify_level_for_cw_panel_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\misc1.stack\\Proj 2135C.pulldown\\identify_level_for_cw_panel.pushbutton\\identify_level_for_cw_panel_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
