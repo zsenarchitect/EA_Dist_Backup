@@ -1655,6 +1655,15 @@
         "tab": "Proj. 2317",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\assign_door_mat.pushbutton\\assign_door_mat_script.py": {
+        "alias": "Assign Door Mat",
+        "doc": "Assign materials to door panels and frames in the current phase using instance parameters Door_$Panel_Material and Door_$Frame_Material",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\assign_door_mat.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\assign_door_mat.pushbutton\\assign_door_mat_script.py",
+        "tab": "Proj. 2317",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\room_to_door_mark.pushbutton\\room_to_door_mark_script.py": {
         "alias": "Room To Door Mark",
         "doc": "Update door marks based on their To Room parameter values. If multiple doors lead to the same room, append A, B, C etc. to make them unique.",

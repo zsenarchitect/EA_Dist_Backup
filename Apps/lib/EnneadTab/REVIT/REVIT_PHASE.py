@@ -35,6 +35,8 @@ def get_phase_by_name(phase_name, doc = DOC):
 
 
 def get_elements_in_phase(doc, phase, category = DB.BuiltInCategory.OST_Rooms):
+    if isinstance(phase, str):
+        phase = get_phase_by_name(phase, doc)
     status_collection = [DB.ElementOnPhaseStatus.Existing, DB.ElementOnPhaseStatus.New]
     status_collection = DATA_CONVERSION.list_to_system_list(status_collection, 
                                                             type=DB.ElementOnPhaseStatus, 

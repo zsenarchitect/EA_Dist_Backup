@@ -802,3 +802,34 @@ def pick_element_by_category(doc, category, message="Select an element"):
                                               title=message,
                                               button_name='Select Element')
     return selected_element
+
+def pick_material(doc=DOC, title="Select Material", button_name="Select Material"):
+    """Pick a material from the document's materials.
+    
+    Args:
+        doc: Current Revit document
+        title: Title for the selection dialog
+        
+    Returns:
+        Selected material or None if cancelled
+    """
+    from pyrevit import forms
+    
+    # Get all materials from document
+    materials = DB.FilteredElementCollector(doc).OfClass(DB.Material).WhereElementIsNotElementType().ToElements()
+    
+    # Sort materials by name
+    materials = sorted(materials, key=lambda x: x.Name)
+    
+    # Create selection list items
+    class MaterialItem(forms.TemplateListItem):
+        @property
+        def name(self):
+            return self.item.Name
+
+    # Show selection dialog
+    selected = forms.SelectFromList.show([MaterialItem(x) for x in materials],
+                                       title=title,
+                                       multiselect=False,
+                                       button_name=button_name)
+    return selected
