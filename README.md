@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-25 10:34:49.
+This is the distribution repository for EnneadTab updated on 2025-04-25 12:48:39.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-A woman is on trial for beating her husband to death with his guitar collection. Judge says, 'First offender?' She says, 'No, first a Gibson! Then a Fender!'
+Geology rocks, but Geography is where it's at!
