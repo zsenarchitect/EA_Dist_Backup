@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-25 15:09:17.
+This is the distribution repository for EnneadTab updated on 2025-04-25 17:27:25.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-I wonder if there are any time combinations on the clock that I've never seen.
+What do computers eat for a snack? Microchips!

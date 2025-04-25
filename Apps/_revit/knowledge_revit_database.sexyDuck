@@ -989,21 +989,21 @@
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_exportNoSheetView.pushbutton\\exportNoSheetView_script.py": {
         "alias": "49_Export No Sheet View as Jpgs(Depreciated)",
         "doc": "Depreciated",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_exportNoSheetView.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_export No sheet view as jpg.pushbutton\\export no sheet view as jpg_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\49_exportNoSheetView.pushbutton\\exportNoSheetView_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_deleteViewByFolder.pushbutton\\DeleteViewByFolder_script.py": {
         "alias": "50_Delete view based on jpgs in folder(Legacy)",
         "doc": "Legacy, now in view panel",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_deleteViewByFolder.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_delete view based on folder.pushbutton\\delete view based on folder_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2135.panel\\A.stack\\Proj 2135B.pulldown\\50_deleteViewByFolder.pushbutton\\DeleteViewByFolder_script.py",
         "tab": "Proj. 2135",
         "tab_icon": null
     },
@@ -1619,12 +1619,12 @@
         "tab": "Proj. 2306",
         "tab_icon": null
     },
-    "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\update_stair_capacity_calculator.pushbutton\\update_stair_capacity_calculator_script.py": {
+    "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\updateStairCalc.pushbutton\\updateStairCalc_script.py": {
         "alias": "(Depreciated)Update Stair Capacity Calculator",
         "doc": "Gather the room life safety data from rooms of each level can sum and feed into the Stair Capacity Calculator for capacity required.",
-        "icon": "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\update_stair_capacity_calculator.pushbutton\\icon.png",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\updateStairCalc.pushbutton\\icon.png",
         "is_popular": false,
-        "script": "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\update_stair_capacity_calculator.pushbutton\\update_stair_capacity_calculator_script.py",
+        "script": "EnneadTab Tailor.tab\\Proj. 2306.panel\\Universal Hydro.pulldown\\updateStairCalc.pushbutton\\updateStairCalc_script.py",
         "tab": "Proj. 2306",
         "tab_icon": null
     },
