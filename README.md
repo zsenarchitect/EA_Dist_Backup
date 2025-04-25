@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-25 10:23:22.
+This is the distribution repository for EnneadTab updated on 2025-04-25 10:34:49.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Wife told me to take the spider out instead of killing it... We had some drinks, cool guy, wants to be a web developer.
+A woman is on trial for beating her husband to death with his guitar collection. Judge says, 'First offender?' She says, 'No, first a Gibson! Then a Fender!'
