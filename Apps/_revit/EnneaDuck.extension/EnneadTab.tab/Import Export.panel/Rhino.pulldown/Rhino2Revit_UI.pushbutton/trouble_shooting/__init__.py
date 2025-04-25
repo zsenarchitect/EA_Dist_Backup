@@ -38,7 +38,7 @@ def show_instruction(output):
     output.print_image(image)
 
     print("\n\n4. rationalization check: Whenever possible, do not use the study model or competition model directly. Please try to rationalize your design before moving on to revit stage. Make better source geomtry based on your intent. This will benifit your documentation as well.")
-    image = "{}\{}".format(images_source,"instruction_simplify ruled geomtry generation.jpg")
+    image = "{}\{}".format(images_source,"instruction_ruled_geo.jpg")
     output.print_image(image)
 
     print("\n\n5. zebra check: It reveals how dense the curvature distribute over surface. Not a direct indicator of why things fails, but it helps you find where things might be wrong.")
