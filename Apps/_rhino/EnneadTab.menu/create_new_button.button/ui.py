@@ -32,6 +32,11 @@ class UI:
         # Set the background color
         self.root.configure(bg=background_color)
 
+        # Add window dragging functionality
+        self.root.bind('<Button-1>', self.start_move)
+        self.root.bind('<B1-Motion>', self.on_motion)
+        self.root.bind('<ButtonRelease-1>', self.stop_move)
+
         # Create a label for the text above the selection with bold font
         bold_font = font.Font(weight="bold")  # Create a bold font
         text_label = tk.Label(self.root, 
@@ -120,4 +125,19 @@ class UI:
         print ("Click action = {}".format("Left" if self.is_left_click.get() else "Right"))
         self.root.destroy()  # Close the window when the function finishes
         make_button( "{}\\{}".format(self.main_folder, selected_option), user_text, is_left_click=self.is_left_click.get())
+
+    def start_move(self, event):
+        self.x = event.x
+        self.y = event.y
+
+    def on_motion(self, event):
+        deltax = event.x - self.x
+        deltay = event.y - self.y
+        x = self.root.winfo_x() + deltax
+        y = self.root.winfo_y() + deltay
+        self.root.geometry(f"+{x}+{y}")
+
+    def stop_move(self, event):
+        self.x = None
+        self.y = None
 

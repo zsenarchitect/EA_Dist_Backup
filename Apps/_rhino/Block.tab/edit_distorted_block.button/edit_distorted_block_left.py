@@ -11,7 +11,7 @@ Features:
 __is_popular__ = True
 
 import rhinoscriptsyntax as rs
-from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE
+from EnneadTab import NOTIFICATION, LOG, ERROR_HANDLE, ENVIRONMENT
 
 
 
