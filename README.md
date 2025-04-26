@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-26 07:08:15.
+This is the distribution repository for EnneadTab updated on 2025-04-26 09:25:05.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Why don't you find hippopotamuses hiding in trees?They're really good at it.
+It was raining cats and dogs the other day. I almost stepped in a poodle.
