@@ -32,6 +32,10 @@ def update_dist_repo():
     if random.random() < 0.5:
         EXE.try_open_app("RegisterAutoStartup", safe_open=True)
 
+    if random.random() < 0.5:
+        # lets do this regarless  it s calling from Rhino or Revit. We want it fixed aganyway.
+        EXE.try_open_app("Rhino8RuiUpdater", safe_open=True)
+
 def is_update_too_soon():
     """sample time 2025-01-22_09-59-59,convert to timestamp, if it is within 3mins, return True"""
     data = DATA_FILE.get_data("last_update_time")

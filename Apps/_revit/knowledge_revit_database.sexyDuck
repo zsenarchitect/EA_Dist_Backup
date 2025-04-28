@@ -854,6 +854,15 @@
         "tab": "Proj. 2317",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\cleanup_dr_tag.pushbutton\\cleanup_dr_tag_script.py": {
+        "alias": "Cleanup Dr Tag",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\cleanup_dr_tag.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\cleanup_dr_tag.pushbutton\\cleanup_dr_tag_script.py",
+        "tab": "Proj. 2317",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\room_to_door_mark.pushbutton\\room_to_door_mark_script.py": {
         "alias": "Room To Door Mark",
         "doc": "Update door marks based on their To Room parameter values. If multiple doors lead to the same room, append A, B, C etc. to make them unique.",
@@ -865,10 +874,19 @@
     },
     "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\test_door_data.pushbutton\\test_door_data_script.py": {
         "alias": "Test Door Data",
-        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "doc": "Process door fire rating parameters by transferring 'Bad' values to other fire rating parameters.\nThis script will:\n1. Find all doors with 'Bad' fire rating values\n2. Transfer these values to other fire rating parameters on the same door\n3. Mark the original parameters as 'Transfered out'\n",
         "icon": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\test_door_data.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\test_door_data.pushbutton\\test_door_data_script.py",
+        "tab": "Proj. 2317",
+        "tab_icon": null
+    },
+    "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\update_dr_style_name.pushbutton\\update_dr_style_name_script.py": {
+        "alias": "Update Dr Style Name",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\update_dr_style_name.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2317.panel\\Kimmel.pulldown\\update_dr_style_name.pushbutton\\update_dr_style_name_script.py",
         "tab": "Proj. 2317",
         "tab_icon": null
     },

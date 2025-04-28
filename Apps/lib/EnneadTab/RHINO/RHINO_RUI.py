@@ -56,7 +56,7 @@ def add_startup_script():
     i use this python script C to call rhino script B to call rhino script A, which is the command alias
     This will not run the startup command, it just add to the start sequence.
     """
-    rvb_caller_script_path = "{}\\{}.menu\\get_latest.button\\StartupCaller.rvb".format(ENVIRONMENT.RHINO_FOLDER, ENVIRONMENT.PLUGIN_NAME)
+    rvb_caller_script_path = "{}\\{}_StartupCaller.rvb".format(ENVIRONMENT.WINDOW_TEMP_FOLDER, ENVIRONMENT.PLUGIN_NAME)
 
     rvb_caller_content = """
 Option Explicit
@@ -73,47 +73,49 @@ Call StartupCaller()
     with open(rvb_caller_script_path, "w") as f:
         f.write(rvb_caller_content)
 
-
-
-    
-    rvb_startup_modifier_script_path = "{}\\{}.menu\\get_latest.button\\StartupEnable.rvb".format(ENVIRONMENT.RHINO_FOLDER, ENVIRONMENT.PLUGIN_NAME)
-
+    rvb_startup_modifier_script_path = "{}\\{}_StartupEnable.rvb".format(ENVIRONMENT.WINDOW_TEMP_FOLDER, ENVIRONMENT.PLUGIN_NAME)
 
     rvb_startup_modifier_content = """
 Option Explicit
 
 Sub StartupEnable()
+    On Error Resume Next
+    
     Dim filePath
-    Dim userFolder
     Dim intCount
     Dim arrPaths
     Dim strPath
+    Dim temp_folder
     
-    userFolder = CreateObject("WScript.Shell").ExpandEnvironmentStrings("%USERPROFILE%")
+    temp_folder = "C:\\temp\\{}_Dump"
 
     ' Get count of startup scripts
     intCount = Rhino.StartupScriptCount
     
-    ' If there are scripts, check for ones containing "+" and remove them
+    ' If there are scripts, check for ones containing "menu" and remove them
     If intCount > 0 Then
         arrPaths = Rhino.StartupScriptList
         For Each strPath in arrPaths
-            If InStr(strPath, "+") > 0 Then
+            If InStr(strPath, "menu") > 0 Then
                 Call Rhino.DeleteStartupScript (strPath)
             End If
         Next
     End If
     
-    filePath = userFolder + "\Documents\{}\EA_Dist\Apps\_rhino\{}.menu\get_latest.button\StartupCaller.rvb"
+    filePath = temp_folder & "\\{}_StartupCaller.rvb"
     
     ' Ensure path with spaces is handled correctly by enclosing in quotes
     filePath = Chr(34) & filePath & Chr(34)
     
     Call Rhino.AddStartupScript(filePath)
+    
+    If Err.Number <> 0 Then
+        Call Rhino.Print("Error in StartupEnable: " & Err.Description)
+    End If
 End Sub
 
 Call StartupEnable()
-""".format(os.path.basename(ENVIRONMENT.ECO_SYS_FOLDER), ENVIRONMENT.PLUGIN_NAME)
+""".format(ENVIRONMENT.PLUGIN_NAME, ENVIRONMENT.PLUGIN_NAME)
 
     with open(rvb_startup_modifier_script_path, "w") as f:
         f.write(rvb_startup_modifier_content)
