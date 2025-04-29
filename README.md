@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-29 16:12:08.
+This is the distribution repository for EnneadTab updated on 2025-04-29 19:32:09.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-What do you call a dictionary on drugs? High definition.
+I wouldn't buy anything with velcro. It's a total rip-off.
