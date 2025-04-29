@@ -526,4 +526,11 @@ def set_sticky(sticky_name, value_to_write,
 if __name__ == "__main__":
 
 
-    print (get_data("excel_handler_input"))
+    test_names = ["BLOCKS2FAMILY", "BLOCKS2FAMILY_railing_middle", "BLOCKS2FAMILY_railing_start", "BLOCKS2FAMILY_railing_end", "BLOCKS2FAMILY_railing_extension", "any name"]
+
+
+    for name in test_names:
+        with update_data(name) as data:
+            data["setting"] = "new_value"
+
+        print ("data {}: {}".format(name, get_data(name)))

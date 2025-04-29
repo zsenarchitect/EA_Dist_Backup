@@ -268,6 +268,17 @@ def get_local_dump_folder_file(file_name):
     """
     return _get_internal_file_from_folder(DUMP_FOLDER, file_name)
 
+def get_local_dump_folder_folder(folder_name):
+    """Get full path for folder in EA dump folder.
+
+    Args:
+        folder_name (str): Name of folder
+
+    Returns:    
+        str: Full path in EA dump folder
+    """
+    return os.path.join(DUMP_FOLDER, folder_name)
+
 def get_shared_dump_folder_file(file_name):
     """Get full path for file in shared dump folder.
 

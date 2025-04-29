@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-28 17:26:11.
+This is the distribution repository for EnneadTab updated on 2025-04-28 20:42:27.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Why didn't the orange win the race? It ran out of juice.
+Wife told me to take the spider out instead of killing it... We had some drinks, cool guy, wants to be a web developer.

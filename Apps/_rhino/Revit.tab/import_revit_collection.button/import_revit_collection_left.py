@@ -166,7 +166,7 @@ def import_revit_collection():
     global OST_MATERIAL_MAP
     OST_MATERIAL_MAP  = DATA_FILE.get_data("EA_OST_MATERIAL_MAP")
     if not OST_MATERIAL_MAP:
-        NOTIFICATION.messenger("No mapping data found. Did you export setting from Revit side?")
+        NOTIFICATION.messenger(main_text="No mapping data found. Did you export setting from Revit side?")
         return
     map(lambda x: process_dwg(x, units, is_using_default), filenames)
     

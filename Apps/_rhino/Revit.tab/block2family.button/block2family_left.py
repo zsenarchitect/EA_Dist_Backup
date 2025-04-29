@@ -41,10 +41,11 @@ def block2family():
     # purge old data folders
     for folder in os.listdir(FOLDER.DUMP_FOLDER):
         if folder.startswith(KEY_PREFIX):
-            if os.path.isdir(FOLDER.get_local_dump_folder_file(folder)):
-                shutil.rmtree(FOLDER.get_local_dump_folder_file(folder))
+            full_path = os.path.join(FOLDER.DUMP_FOLDER, folder)
+            if os.path.isdir(full_path):
+                shutil.rmtree(full_path)
             else:
-                os.remove(FOLDER.get_local_dump_folder_file(folder))
+                os.remove(full_path)
 
 
     
@@ -79,7 +80,7 @@ def process_block_name(block_name,block_ids):
             NOTIFICATION.messenger("Block name contains illegal character '{}'.\nPlease rename block to use valid filename characters and try again.".format(char))
             return
             
-    working_folder = FOLDER.get_local_dump_folder_file(KEY_PREFIX + "_" + block_name)
+    working_folder = FOLDER.get_local_dump_folder_folder(KEY_PREFIX + "_" + block_name)
     
     if not os.path.isdir(working_folder):
         os.makedirs(working_folder)
@@ -212,6 +213,7 @@ def export_sample_block(block_name, output_folder):
             rs.DeleteObjects(objs)
         except:
             pass
+
 
     return area, width, height
 

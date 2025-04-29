@@ -123,7 +123,7 @@ def load_family(file):
         family_doc = ApplicationServices.Application.NewFamilyDocument (app, template)
 
     block_name = get_block_name_from_data_file(file)
-    geo_folder = FOLDER.get_local_dump_folder_file(KEY_PREFIX + "_" + block_name)
+    geo_folder = FOLDER.get_local_dump_folder_folder(KEY_PREFIX + "_" + block_name)
     t = DB.Transaction(family_doc, __title__)
     t.Start()
     for file in os.listdir(geo_folder):
