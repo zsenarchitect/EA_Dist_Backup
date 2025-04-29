@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-29 06:28:10.
+This is the distribution repository for EnneadTab updated on 2025-04-29 09:42:53.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Heat, Pressure and Time. The three things that make a diamond are also the three things that make a waffle.
+Sgt.: Commissar! Commissar! The troops are revolting! Commissar: Well, you're pretty repulsive yourself.
