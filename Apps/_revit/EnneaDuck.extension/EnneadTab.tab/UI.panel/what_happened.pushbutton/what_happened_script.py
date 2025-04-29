@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that give you information of the creator, editor and owner of selected elements and active view."
+__doc__ = "A simple window that give you information of the creator, editor and owner of selected elements and active view."
 __title__ = "What\nHappened?"
 __tip__ = True
 __is_popular__ = True

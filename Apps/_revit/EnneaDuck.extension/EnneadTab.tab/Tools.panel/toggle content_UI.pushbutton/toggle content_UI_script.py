@@ -260,7 +260,7 @@ class ToggleContent_UI(forms.WPFWindow):
         self.pre_actions()
         xaml_file_name = 'toggle content_UI.xaml'
         forms.WPFWindow.__init__(self, xaml_file_name)
-        self.subtitle.Text = "A floating window that helps with several common toggle actions."
+        self.subtitle.Text = "A simple window that helps with several common toggle actions."
 
         logo_file = IMAGE.get_image_path_by_name("logo_vertical_light.png")
         self.set_image_source(self.logo_img, logo_file)

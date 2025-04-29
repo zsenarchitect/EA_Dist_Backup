@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "A floating window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities."
+__doc__ = "A simple window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities."
 __title__ = "Content\nTransfer"
 __tip__ = True
 __is_popular__ = True

@@ -3,7 +3,7 @@
 
 
 
-__doc__ = "Virtual achievement system that tracks your productivity and EnneadTab usage. This floating window displays your current MiniBank balance and leaderboard ranking, celebrating your contributions to the firm's digital ecosystem. Earn coins through regular tool usage, submitting bug reports, and helping colleagues. Perfect for encouraging healthy competition while building a culture of technology adoption."
+__doc__ = "Virtual achievement system that tracks your productivity and EnneadTab usage. This simple window displays your current MiniBank balance and leaderboard ranking, celebrating your contributions to the firm's digital ecosystem. Earn coins through regular tool usage, submitting bug reports, and helping colleagues. Perfect for encouraging healthy competition while building a culture of technology adoption."
 __title__ = "MiniBank"
 __context__ = "zero-doc"
 __tip__ = True

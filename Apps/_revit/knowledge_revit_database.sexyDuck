@@ -1,7 +1,7 @@
 {
     "EnneadTab Library.tab\\Browser.panel\\library_family_browser.pushbutton\\family_browser_script.py": {
         "alias": "Family Browser",
-        "doc": "A floating window that can help you search the family from AppliedComputing Library.\n\nDisclaimer: EnneadTab only help you find the family, but is not participating in the creation and maintainance of the family library.",
+        "doc": "A simple window that can help you search the family from AppliedComputing Library.\n\nDisclaimer: EnneadTab only help you find the family, but is not participating in the creation and maintainance of the family library.",
         "icon": "EnneadTab Library.tab\\Browser.panel\\library_family_browser.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab Library.tab\\Browser.panel\\library_family_browser.pushbutton\\family_browser_script.py",
@@ -1891,7 +1891,7 @@
     },
     "EnneadTab.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py": {
         "alias": "Project Initiating",
-        "doc": "A floating window that give you quick access to all kinds of function needed when a new project is starting.\n\n+Default Workset Creation\n+New Sheet Created From Excel\n+Quick project info filling",
+        "doc": "A simple window that give you quick access to all kinds of function needed when a new project is starting.\n\n+Default Workset Creation\n+New Sheet Created From Excel\n+Quick project info filling",
         "icon": "EnneadTab.tab\\ACE.panel\\Project Starter.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\ACE.panel\\Project Starter.pushbutton\\project_starter_script.py",
@@ -2260,7 +2260,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\content_transfer.pushbutton\\content_transfer_script.py": {
         "alias": "Content Transfer",
-        "doc": "A floating window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities.",
+        "doc": "A simple window that enables the transfer of view templates, object styles (SubCategory), and materials. The primary distinction between this tool and the default 'Transfer Project Standard' is its selective transfer capabilities.",
         "icon": "EnneadTab.tab\\Import Export.panel\\content_transfer.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Import Export.panel\\content_transfer.pushbutton\\content_transfer_script.py",
@@ -2386,7 +2386,7 @@
     },
     "EnneadTab.tab\\Manage.panel\\dwg_manager.pushbutton\\dwg_manager_script.py": {
         "alias": "DWG Manager",
-        "doc": "A floating window that help you manage DWG in the files. \nYou can find, select, zoom any dwgs with detailed infor on creator, view association, hidden status, workset, file path and file size. \n\nFor linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder.",
+        "doc": "A simple window that help you manage DWG in the files. \nYou can find, select, zoom any dwgs with detailed infor on creator, view association, hidden status, workset, file path and file size. \n\nFor linked dwgs, you might also open file directly, open folder directly, and repath links to a selected folder.",
         "icon": "EnneadTab.tab\\Manage.panel\\dwg_manager.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Manage.panel\\dwg_manager.pushbutton\\dwg_manager_script.py",
@@ -2530,7 +2530,7 @@
     },
     "EnneadTab.tab\\Resource.panel\\mini_bank.pushbutton\\mini_bank_script.py": {
         "alias": "MiniBank",
-        "doc": "Virtual achievement system that tracks your productivity and EnneadTab usage. This floating window displays your current MiniBank balance and leaderboard ranking, celebrating your contributions to the firm's digital ecosystem. Earn coins through regular tool usage, submitting bug reports, and helping colleagues. Perfect for encouraging healthy competition while building a culture of technology adoption.",
+        "doc": "Virtual achievement system that tracks your productivity and EnneadTab usage. This simple window displays your current MiniBank balance and leaderboard ranking, celebrating your contributions to the firm's digital ecosystem. Earn coins through regular tool usage, submitting bug reports, and helping colleagues. Perfect for encouraging healthy competition while building a culture of technology adoption.",
         "icon": "EnneadTab.tab\\Resource.panel\\mini_bank.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Resource.panel\\mini_bank.pushbutton\\mini_bank_script.py",
@@ -2674,7 +2674,7 @@
     },
     "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py": {
         "alias": "Super Renamer",
-        "doc": "A powerful floating window that provides efficient access to a comprehensive suite of renaming functions.\n    - Add or remove prefixes for selected views with a single click\n    - Convert Views and Sheets to uppercase for consistent documentation\n    - Format view names based on detail number and sheet number with customizable patterns\n    - Rename families directly without navigating through the project browser\n    - Toggle between different naming conventions with ease\n    \nThis tool streamlines the tedious process of maintaining naming consistency throughout your project.",
+        "doc": "A powerful simple window that provides efficient access to a comprehensive suite of renaming functions.\n    - Add or remove prefixes for selected views with a single click\n    - Convert Views and Sheets to uppercase for consistent documentation\n    - Format view names based on detail number and sheet number with customizable patterns\n    - Rename families directly without navigating through the project browser\n    - Toggle between different naming conventions with ease\n    \nThis tool streamlines the tedious process of maintaining naming consistency throughout your project.",
         "icon": "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py",
@@ -2845,7 +2845,7 @@
     },
     "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\what_happened_script.py": {
         "alias": "What Happened?",
-        "doc": "A floating window that give you information of the creator, editor and owner of selected elements and active view.",
+        "doc": "A simple window that give you information of the creator, editor and owner of selected elements and active view.",
         "icon": "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\UI.panel\\what_happened.pushbutton\\what_happened_script.py",

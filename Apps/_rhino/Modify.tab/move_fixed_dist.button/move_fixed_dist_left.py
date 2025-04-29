@@ -6,7 +6,6 @@ Features:
 - Persistent distance value between sessions
 - Input validation for numeric values
 - North/South/East/West/Up/Down movement
-- Safe window handling to prevent UI errors
 - Allows full interaction with Rhino while dialog is open
 - Gamepad-style button layout
 - Zoom to selected function

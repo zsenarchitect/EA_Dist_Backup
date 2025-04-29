@@ -3,7 +3,7 @@
 
 
 
-__doc__ = """A powerful floating window that provides efficient access to a comprehensive suite of renaming functions.
+__doc__ = """A powerful simple window that provides efficient access to a comprehensive suite of renaming functions.
     - Add or remove prefixes for selected views with a single click
     - Convert Views and Sheets to uppercase for consistent documentation
     - Format view names based on detail number and sheet number with customizable patterns

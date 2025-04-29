@@ -3,7 +3,7 @@
 
 
 
-__doc__ = """A floating window that give you quick access to all kinds of function needed when a new project is starting.
+__doc__ = """A simple window that give you quick access to all kinds of function needed when a new project is starting.
 
 +Default Workset Creation
 +New Sheet Created From Excel

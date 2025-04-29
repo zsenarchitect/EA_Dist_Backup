@@ -5,7 +5,7 @@
         "alias": "ActivateEnneadTab",
         "doc": "Restore EnneadTab functionality.\n\nKey Features:\n- System path verification\n- Component activation\n- Path configuration\n- Startup script setup",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\app_store.button\\app_store_left.py": {
@@ -14,7 +14,7 @@
         "alias": "AppStore",
         "doc": "Access EnneadTab's centralized tool repository.\n\nKey Features:\n- Complete tool collection\n- Category organization\n- Installation management\n- Update notifications\n- Tool documentation access",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\create_new_button.button\\new_button_left.py": {
@@ -23,7 +23,7 @@
         "alias": "MakeANewButton",
         "doc": "Create new EnneadTab button components.\n\nKey Features:\n- Interactive button creation\n- Template generation\n- File structure setup\n- Icon integration support\n- Documentation templates",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\extract_preview_images.button\\extract_preview_images_left.py": {
@@ -32,7 +32,16 @@
         "alias": "ExtractPreviewImages",
         "doc": "Extract preview images from Rhino files.\n\nKey Features:\n- Batch image extraction\n- Multiple file support\n- Automatic naming convention\n- Progress tracking",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
+        "is_popular": false
+    },
+    "EnneadTab.menu\\get_engine.button\\get_engine_left.py": {
+        "script": "EnneadTab.menu\\get_engine.button\\get_engine_left.py",
+        "icon": null,
+        "alias": "GetEngine",
+        "doc": "Ensure that you have a localized Python engine installed",
+        "tab": "EnneadTab.menu",
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\get_latest.button\\get_latest_left.py": {
@@ -41,7 +50,7 @@
         "alias": "GetLatest",
         "doc": "Update EnneadTab to latest version.\n\nKey Features:\n- Automatic version detection\n- Core module updates\n- System path configuration\n- Component synchronization\n- Installation verification",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\how_to_install.button\\how_to_install_left.py": {
@@ -50,7 +59,7 @@
         "alias": "HowToInstall",
         "doc": "Access EnneadTab installation documentation.\n\nKey Features:\n- Step-by-step installation guide\n- System requirements\n- Troubleshooting tips\n- Configuration instructions\n- Team deployment guidance",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\open_autosave_folder.button\\open_autosave_folder_left.py": {
@@ -59,7 +68,7 @@
         "alias": "OpenAutosaveFolder",
         "doc": "Open the Rhino autosave folder lcoations.",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\open_ecosystem_folder.button\\open_ecosystem_folder_left.py": {
@@ -68,7 +77,7 @@
         "alias": "OpenEcosystemFolder",
         "doc": "Access the EnneadTab Ecosystem directory.\n\nKey Features:\n- Direct folder access\n- System file management\n- Resource exploration\n- Configuration access\n- Template management",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
@@ -77,7 +86,7 @@
         "alias": "ResetAllConduit",
         "doc": "Reset all display conduits to default state.\n\nKey Features:\n- Complete conduit cleanup\n- Memory optimization\n- Display pipeline reset\n- System performance improvement\n- Debug assistance",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\restart_rhino.button\\restart_rhino_left.py": {
@@ -86,7 +95,7 @@
         "alias": "RestartRhino",
         "doc": "Restart Rhino to apply core updates.\n\nKey Features:\n- Safe application restart\n- Update implementation\n- Session state preservation\n- Automatic core reloading\n- System verification",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\secret_key_binding.button\\secret_key_binding_left.py": {
@@ -95,7 +104,7 @@
         "alias": "SecretKeyBinding",
         "doc": "Setup some secrete shortcut based on Sen's preference.",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\self_repair.button\\self_repair_left.py": {
@@ -104,7 +113,7 @@
         "alias": "SelfRepair",
         "doc": "Automatically repair and update EnneadTab installation.\n\nKey Features:\n- Legacy RUI detection and repair\n- Automatic version updates\n- System path verification\n- Component synchronization\n- Installation validation",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\tell_me_version.button\\tell_me_version_left.py": {
@@ -113,7 +122,7 @@
         "alias": "TellMeVersion",
         "doc": "Display current EnneadTab Rhino version.\n\nKey Features:\n- Version number display\n- Update status information\n- Installation verification\n- Component compatibility check\n- Release notes access",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\unit_test.button\\unit_test_left.py": {
@@ -122,7 +131,7 @@
         "alias": "UnitTest",
         "doc": "Execute unit tests for EnneadTab components.\n\nKey Features:\n- Comprehensive module testing\n- Automated error detection\n- System integrity verification\n- Performance validation",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "EnneadTab.menu\\youtube_playlist.button\\youtube_playlist_left.py": {
@@ -131,7 +140,7 @@
         "alias": "YoutubePlaylist",
         "doc": "Access EnneadTab's video tutorial library.\n\nOpens the official EnneadTab YouTube playlist containing tutorials, \ndemonstrations and workflow guides.",
         "tab": "EnneadTab.menu",
-        "tab_icon": null,
+        "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
     "Block.tab\\batch_rename_blocks.button\\batch_rename_blocks_left.py": {
@@ -766,7 +775,7 @@
         "script": "Modify.tab\\move_fixed_dist.button\\move_fixed_dist_left.py",
         "icon": "Modify.tab\\move_fixed_dist.button\\icon.png",
         "alias": "MoveFixedDist",
-        "doc": "Move selected objects a fixed distance in 6 directions.\n\nFeatures:\n- Simple modeless interface with 6 directional buttons\n- Persistent distance value between sessions\n- Input validation for numeric values\n- North/South/East/West/Up/Down movement\n- Safe window handling to prevent UI errors\n- Allows full interaction with Rhino while dialog is open\n- Gamepad-style button layout\n- Zoom to selected function\n- Measure3D function for quick measurements\n- Choice between View CPlane and World CPlane coordinate systems",
+        "doc": "Move selected objects a fixed distance in 6 directions.\n\nFeatures:\n- Simple modeless interface with 6 directional buttons\n- Persistent distance value between sessions\n- Input validation for numeric values\n- North/South/East/West/Up/Down movement\n- Allows full interaction with Rhino while dialog is open\n- Gamepad-style button layout\n- Zoom to selected function\n- Measure3D function for quick measurements\n- Choice between View CPlane and World CPlane coordinate systems",
         "tab": "Modify.tab",
         "tab_icon": "Modify.tab\\icon.png",
         "is_popular": false
