@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-29 12:57:27.
+This is the distribution repository for EnneadTab updated on 2025-04-29 16:12:08.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-Why was Santa's little helper feeling depressed? Because he has low elf esteem.
+What do you call a dictionary on drugs? High definition.

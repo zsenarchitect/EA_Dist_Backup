@@ -523,6 +523,8 @@ class EgressPathManager:
 
     def process_type(self, family_type_name, hide_note):
         family_type = REVIT_FAMILY.get_family_type_by_name(self.egress_path_family_name, family_type_name, doc=self.doc)
+        if not family_type.IsActive:
+            family_type.Activate()
         family_type.LookupParameter("Type Comments").Set(family_type_name)
         family_type.LookupParameter("show_note").Set(hide_note)
 
@@ -556,8 +558,18 @@ class EgressPathManager:
             print(traceback.format_exc())
             t.RollBack()
 
-def smart_egress_path(doc, schedule_name, egress_path_family_name, egress_path_family_path, egress_path_tag_family_name, egress_path_tag_family_path):
-    manager = EgressPathManager(doc, schedule_name, egress_path_family_name, egress_path_family_path, egress_path_tag_family_name, egress_path_tag_family_path)
+def smart_egress_path(doc, 
+                      schedule_name, 
+                      egress_path_family_name, 
+                      egress_path_family_path, 
+                      egress_path_tag_family_name, 
+                      egress_path_tag_family_path):
+    manager = EgressPathManager(doc, 
+                                schedule_name, 
+                                egress_path_family_name, 
+                                egress_path_family_path, 
+                                egress_path_tag_family_name, 
+                                egress_path_tag_family_path)
     manager.secure_egress_path_family_package()
     view = REVIT_VIEW.get_view_by_name(schedule_name, doc=doc)
     if view is None:

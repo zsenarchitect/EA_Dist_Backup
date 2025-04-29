@@ -12,7 +12,6 @@ layout:
   - export_filled_region_types
   - ">>>"
   - List_Legend and Schedule
-  - QAQC_AI
   - Excel Sheet Creator
   - CollectTextures
   - family_tree
@@ -26,14 +25,17 @@ layout:
   - check_phase_mapping
   - check_view_link
   - smart_egress_path
-  - property_line_from_excel
+  - color_scheme_to_filled_region_types
   - repath_dwg_drive_letter
   - merge_ost
   - batch_fix_family_name
   - wall_type_diagram
   - rename_nesting_family
   - duplicate_area_scheme
+  - QAQC_AI
   - keynote_assistant
   - monitor_link_status
   - sheet_tree
   - relationship_tree
+  - property_line_from_excel
+  - visulize_door_room_calc_pt

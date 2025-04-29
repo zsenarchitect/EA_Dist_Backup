@@ -1970,6 +1970,15 @@
         "tab": "ACE",
         "tab_icon": null
     },
+    "EnneadTab.tab\\ACE.panel\\color_scheme_to_filled_region_types.pushbutton\\color_scheme_to_filled_region_types_script.py": {
+        "alias": "ColorScheme To FilledRegion Types",
+        "doc": "Doc string not set",
+        "icon": "EnneadTab.tab\\ACE.panel\\color_scheme_to_filled_region_types.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\ACE.panel\\color_scheme_to_filled_region_types.pushbutton\\color_scheme_to_filled_region_types_script.py",
+        "tab": "ACE",
+        "tab_icon": null
+    },
     "EnneadTab.tab\\ACE.panel\\duplicate_area_scheme.pushbutton\\duplicate_area_scheme_script.py": {
         "alias": "Duplicate Area Scheme",
         "doc": "Duplicates a Revit area scheme to a new area scheme with all boundaries and areas.\n\nThis tool allows you to:\n1. Select an existing area scheme to duplicate\n2. Provide a new unique name for the duplicated scheme\n3. Choose which views to include in the duplication process\n4. Automatically transfer all boundaries and areas to the new scheme\n",
@@ -2138,6 +2147,15 @@
         "icon": "EnneadTab.tab\\ACE.panel\\update_DOB_page.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\ACE.panel\\update_DOB_page.pushbutton\\update_DOB_page_script.py",
+        "tab": "ACE",
+        "tab_icon": null
+    },
+    "EnneadTab.tab\\ACE.panel\\visulize_door_room_calc_pt.pushbutton\\visulize_door_room_calc_pt_script.py": {
+        "alias": "Door Calc Pt Visualizer",
+        "doc": "Visualize door calculation points by drawing detail lines from To/From points to door insertion points. Blue lines for ToRoom, red lines for FromRoom. Works on selected views.",
+        "icon": "EnneadTab.tab\\ACE.panel\\visulize_door_room_calc_pt.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\ACE.panel\\visulize_door_room_calc_pt.pushbutton\\visulize_door_room_calc_pt_script.py",
         "tab": "ACE",
         "tab_icon": null
     },
