@@ -123,9 +123,20 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
     
 def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption()):
     project_doc = project_doc or DOC
+    if REVIT_APPLICATION.is_version_at_least():
+        base, ext = os.path.splitext(family_path)
+        search_family = base + "_VersionAlt" + ext
+        if not os.path.exists(search_family):
+            print ("Cannot find [{}], fall back to [{}]".format(search_family, family_path))
+            search_family = family_path
+            
+    else:
+        search_family = family_path
+
+
     
     fam_ref = clr.StrongBox[DB.Family](None)
-    family_path = FOLDER.copy_file_to_local_dump_folder(family_path, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
+    family_path = FOLDER.copy_file_to_local_dump_folder(search_family, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
 
     res = project_doc.LoadFamily(family_path, loading_opt, fam_ref)
     if not res:

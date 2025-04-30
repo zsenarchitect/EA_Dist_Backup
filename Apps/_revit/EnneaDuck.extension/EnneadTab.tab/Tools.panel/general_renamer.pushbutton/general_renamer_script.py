@@ -111,144 +111,137 @@ def remove_creator_mark(name):
 
 @ERROR_HANDLE.try_catch_error()
 def rename_views(doc, sheets, is_default_format, is_original_flavor, attempt = 0, show_log = True):
-
-    if attempt > 3:
-        return
-
+    t = DB.Transaction(doc, "Rename Views")
+    t.Start()
     try:
-        t = DB.Transaction(doc, "Rename Views")
-        t.Start()
-    except Exception as e:
-        # should allow this to happen becasue of the recursive call during additional attempt to rename
-        pass
+        failed_sheets = set()
+        all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+        def is_user_view(view):
+            if view.IsTemplate:
+                return False
+            if view.ViewType.ToString() in ["Legend", "Schedule"]:
+                return False
+            return True
+        all_views = filter(lambda x: is_user_view(x), all_views)
 
-    failed_sheets = set()
-    all_views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
-    def is_user_view(view):
-        if view.IsTemplate:
-            return False
-        if view.ViewType.ToString() in ["Legend", "Schedule"]:
-            return False
-        return True
-    all_views = filter(lambda x: is_user_view(x), all_views)
+        view_names_pool = [x.Name for x in all_views]
 
-    view_names_pool = [x.Name for x in all_views]
+        for sheet in sheets:
+            sheet_num = sheet.SheetNumber
 
 
-    for sheet in sheets:
-        sheet_num = sheet.SheetNumber
+            view_filter = REVIT_VIEW.ViewFilter(list(sheet.GetAllPlacedViews()))
+            is_only_one_view = view_filter.filter_archi_views().to_count() == 1
 
 
-        view_filter = REVIT_VIEW.ViewFilter(list(sheet.GetAllPlacedViews()))
-        is_only_one_view = view_filter.filter_archi_views().to_count() == 1
+            #for view on current sheet
+            for view_id in sheet.GetAllPlacedViews():
+                view = doc.GetElement(view_id)
+
+                para = view.LookupParameter("Exclude Renaming")
+                if para and para.AsInteger() == 1:
+                    continue
+
+                if doc.IsWorkshared:
+                    current_owner = view.LookupParameter("Edited by").AsString()
+                    if current_owner != "" and current_owner != USER.get_autodesk_user_name():
+                        if show_log:
+                            print( "Skip view owned by {}. View Name = {}".format(current_owner, view.Name))
+                        continue
 
 
-        #for view on current sheet
-        for view_id in sheet.GetAllPlacedViews():
-            view = doc.GetElement(view_id)
 
-            para = view.LookupParameter("Exclude Renaming")
-            if para and para.AsInteger() == 1:
-                continue
+                if view.ViewType.ToString() in ["Legend", "Schedule"]:
+                    continue
 
-            if doc.IsWorkshared:
-                current_owner = view.LookupParameter("Edited by").AsString()
-                if current_owner != "" and current_owner != USER.get_autodesk_user_name():
-                    if show_log:
-                        print( "Skip view owned by {}. View Name = {}".format(current_owner, view.Name))
+                #print revit.doc.GetElement(view.ViewId).Name
+                if "{3D" in view.Name:
                     continue
 
 
-
-            if view.ViewType.ToString() in ["Legend", "Schedule"]:
-                continue
-
-            #print revit.doc.GetElement(view.ViewId).Name
-            if "{3D" in view.Name:
-                continue
-
-
-            refill_title = False
-            detail_num_para_id = DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER
-            if is_only_one_view:
-                view.Parameter[detail_num_para_id].Set("10")
-            detail_num = view.Parameter[detail_num_para_id].AsString() #get view detail num
+                refill_title = False
+                detail_num_para_id = DB.BuiltInParameter.VIEWPORT_DETAIL_NUMBER
+                if is_only_one_view:
+                    view.Parameter[detail_num_para_id].Set("10")
+                detail_num = view.Parameter[detail_num_para_id].AsString() #get view detail num
 
                 
 
-            title_para_id = DB.BuiltInParameter.VIEW_DESCRIPTION
-            original_title = view.Parameter[title_para_id].AsString() #get view title
+                title_para_id = DB.BuiltInParameter.VIEW_DESCRIPTION
+                original_title = view.Parameter[title_para_id].AsString() #get view title
 
-            name_para_id = DB.BuiltInParameter.VIEW_NAME
-            original_name = view.Parameter[name_para_id].AsString() #get view name,if none, then use view name
-
-
-            if not(original_title):
-                new_title = original_name
-                refill_title = True
-            else:
-                new_title = original_title
+                name_para_id = DB.BuiltInParameter.VIEW_NAME
+                original_name = view.Parameter[name_para_id].AsString() #get view name,if none, then use view name
 
 
-            new_title = remove_creator_mark(new_title)
-
-            if is_default_format:
-                new_view_name = str(sheet_num) + "_" + str(detail_num) + "_" + str(new_title)
-            else:
-                new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(new_title)
-            #forms.alert(str(new_view_name))
+                if not(original_title):
+                    new_title = original_name
+                    refill_title = True
+                else:
+                    new_title = original_title
 
 
-            new_view_name = remove_creator_mark(new_view_name)
+                new_title = remove_creator_mark(new_title)
 
-            if new_view_name == view.Name and new_title == original_title:
-                #print "Skip {}".format(new_view_name)
-                continue
+                if is_default_format:
+                    new_view_name = str(sheet_num) + "_" + str(detail_num) + "_" + str(new_title)
+                else:
+                    new_view_name = str(detail_num) + "_" + str(sheet_num) + "_" + str(new_title)
+                #forms.alert(str(new_view_name))
 
-            if new_view_name in view_names_pool:
-                #print new_view_name
-                failed_sheets.add(sheet)
-                if show_log:
-                    print ("Will try to visit <{}> again to avoid using same name.".format(view.Name))
-                view.Parameter[name_para_id].Set(new_view_name + "_Pending")
-                #print view
-                continue
 
-            if is_original_flavor:
-                try:
-                    if str(sheet_num) + "_" + str(detail_num) + "_" in new_view_name:
-                        native_view_name = new_view_name.replace(str(sheet_num) + "_" + str(detail_num) + "_" , "")
-                    if str(detail_num) + "_" + str(sheet_num) + "_" in new_view_name:
-                        native_view_name = new_view_name.replace(str(detail_num) + "_" + str(sheet_num) + "_" , "")
+                new_view_name = remove_creator_mark(new_view_name)
 
-                    while native_view_name in view_names_pool:
-                        native_view_name = native_view_name + "_OverlappingViewName"
-                    print ("{}-->{}".format(new_view_name, native_view_name))
-                    view.Parameter[title_para_id].Set(new_title)
-                    view.Parameter[name_para_id].Set(native_view_name)
-                    view_names_pool.append(native_view_name)
-                except Exception as e:
+                if new_view_name == view.Name and new_title == original_title:
+                    #print "Skip {}".format(new_view_name)
+                    continue
+
+                if new_view_name in view_names_pool:
+                    #print new_view_name
+                    failed_sheets.add(sheet)
                     if show_log:
-                        print ("Skip {} becasue {}".format(view.Name, e))
-            else:
-                try:
-                    
-                    view.Parameter[title_para_id].Set(new_title)
-                    view.Parameter[name_para_id].Set(new_view_name)
-                except:
-                    if show_log:
-                        print ("Skip {}".format(view.Name))
-               
+                        print ("Will try to visit <{}> again to avoid using same name.".format(view.Name))
+                    view.Parameter[name_para_id].Set(new_view_name + "_Pending")
+                    #print view
+                    continue
 
-    if len(list(failed_sheets)) > 0:
-        attempt += 1
-        if show_log:
-            print ("\n\nAttemp = {}".format(attempt))
-       
-        rename_views(doc, list(failed_sheets), is_default_format, is_original_flavor, attempt, show_log)
+                if is_original_flavor:
+                    try:
+                        if str(sheet_num) + "_" + str(detail_num) + "_" in new_view_name:
+                            native_view_name = new_view_name.replace(str(sheet_num) + "_" + str(detail_num) + "_" , "")
+                        if str(detail_num) + "_" + str(sheet_num) + "_" in new_view_name:
+                            native_view_name = new_view_name.replace(str(detail_num) + "_" + str(sheet_num) + "_" , "")
 
-    if not t.HasEnded():
+                        while native_view_name in view_names_pool:
+                            native_view_name = native_view_name + "_OverlappingViewName"
+                        print ("{}-->{}".format(new_view_name, native_view_name))
+                        view.Parameter[title_para_id].Set(new_title)
+                        view.Parameter[name_para_id].Set(native_view_name)
+                        view_names_pool.append(native_view_name)
+                    except Exception as e:
+                        if show_log:
+                            print ("Skip {} becasue {}".format(view.Name, e))
+                else:
+                    try:
+                        
+                        view.Parameter[title_para_id].Set(new_title)
+                        view.Parameter[name_para_id].Set(new_view_name)
+                    except:
+                        if show_log:
+                            print ("Skip {}".format(view.Name))
+                   
+
+        if len(list(failed_sheets)) > 0:
+            attempt += 1
+            if show_log:
+                print ("\n\nAttemp = {}".format(attempt))
+            rename_views(doc, list(failed_sheets), is_default_format, is_original_flavor, attempt, show_log)
+        
         t.Commit()
+    except Exception as e:
+        if not t.HasEnded():
+            t.RollBack()
+        raise e
 
 @ERROR_HANDLE.try_catch_error()
 def rename_family(selected_element):

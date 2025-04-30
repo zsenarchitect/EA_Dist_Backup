@@ -45,7 +45,7 @@ uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
 __persistentengine__ = True
 
-FAMILY_NAME = "Smart_Fire_Rating"
+FAMILY_NAME = "Smart_FireRating"
 LEGACY_FAMILY_NAME = "EA_Fire Rating"
 
 
@@ -81,6 +81,7 @@ class FireRatingGraphicMaker:
         Returns:
             Dict mapping rating strings to family symbol types
         """
+
         OUT = dict()
         types = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol).ToElements()
         types = filter(lambda x: FAMILY_NAME in x.FamilyName or LEGACY_FAMILY_NAME in x.FamilyName, types)

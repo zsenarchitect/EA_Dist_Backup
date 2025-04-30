@@ -8,7 +8,7 @@ except:
 import math
 import traceback
 import random
-from EnneadTab import NOTIFICATION, SAMPLE_FILE, IMAGE
+from EnneadTab import NOTIFICATION, SAMPLE_FILE, IMAGE, USER
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FAMILY, REVIT_SELECTION, REVIT_VIEW, REVIT_SCHEDULE, REVIT_FORMS
 
 LIFE_SAFETY_CALCULATOR_FAMILY_NAME = "LifeSafetyCalculator"

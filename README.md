@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-30 11:49:28.
+This is the distribution repository for EnneadTab updated on 2025-04-30 15:07:27.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-What is a witch's favorite subject in school? Spelling!
+I got fired from the transmission factor, turns out I didn't put on enough shifts...
