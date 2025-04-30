@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-29 19:32:09.
+This is the distribution repository for EnneadTab updated on 2025-04-29 22:47:10.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-I wouldn't buy anything with velcro. It's a total rip-off.
+How do you know if there's an elephant under your bed? Your head hits the ceiling!
