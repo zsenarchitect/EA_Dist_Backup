@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-04-29 22:47:10.
+This is the distribution repository for EnneadTab updated on 2025-04-30 02:03:07.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -15,4 +15,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 
-How do you know if there's an elephant under your bed? Your head hits the ceiling!
+What do you call a fat psychic? A four-chin teller.
