@@ -112,8 +112,8 @@ def try_catch_error(is_silent=False, is_pass = False):
 
                 if not is_silent:
 
-                    error += "\n\n######If you have EnneadTab UI window open, just close the original EnneadTab window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########"
                     error_file = FOLDER.get_local_dump_folder_file("error_general_log.txt")
+                    error += "\n\n######If you have EnneadTab UI window open, just close the original EnneadTab window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########BTW, a local copy of the error is available at {}".format(error_file)
                     try:
                         import io
                         with io.open(error_file, "w", encoding="utf-8") as f:

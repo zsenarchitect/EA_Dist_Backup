@@ -559,7 +559,7 @@
         "script": "Lab.tab\\dockpane.button\\dockpane_left.py",
         "icon": null,
         "alias": "Dockpane",
-        "doc": "A dockpane with text input and selection controls",
+        "doc": "A dockable panel that attaches to the side of Rhino window",
         "tab": "Lab.tab",
         "tab_icon": "Lab.tab\\icon.png",
         "is_popular": false

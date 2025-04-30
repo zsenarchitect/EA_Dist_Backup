@@ -4258,10 +4258,10 @@ EA_RedAlert</script>
         <locale_1033>Dockpane</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>A dockpane with text input and selection controls</locale_1033>
+        <locale_1033>A dockable panel that attaches to the side of Rhino window</locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>A dockpane with text input and selection controls</locale_1033>
+        <locale_1033>A dockable panel that attaches to the side of Rhino window</locale_1033>
       </help_text>
       <button_text>
         <locale_1033>Dockpane</locale_1033>
