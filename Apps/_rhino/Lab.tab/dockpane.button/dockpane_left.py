@@ -8,6 +8,7 @@ import Eto.Drawing as drawing
 import scriptcontext as sc
 import System
 from EnneadTab import ERROR_HANDLE, LOG
+from Rhino.UI import Panels
 
 class DockablePanel(forms.Panel):
     def __init__(self):
@@ -54,7 +55,7 @@ def dockpane():
     """Create and show a dockable panel that attaches to the side of Rhino window"""
     # Create and register the panel
     panel = DockablePanel()
-    Rhino.UI.Panels.RegisterPanel(panel, "EnneadTab Dockpane", System.Drawing.SystemIcons.Application.ToBitmap(), Rhino.UI.Panels.PanelType.Floating)
+    Panels.RegisterPanel(panel, "EnneadTab Dockpane", System.Drawing.SystemIcons.Application.ToBitmap(), Panels.PanelType.Floating)
     
 if __name__ == "__main__":
     dockpane()

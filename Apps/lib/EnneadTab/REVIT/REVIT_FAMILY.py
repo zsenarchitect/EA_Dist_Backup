@@ -1,4 +1,3 @@
-
 try:
     from Autodesk.Revit import DB # pyright: ignore
     import clr # pyright: ignore
@@ -164,6 +163,10 @@ def get_family_by_name(family_name,
                        doc=None, 
                        load_path_if_not_exist=None):
     doc = doc or DOC
+    if not doc or not isinstance(doc, DB.Document):
+        NOTIFICATION.messenger("Invalid document provided for family lookup")
+        return None
+        
     all_families = DB.FilteredElementCollector(doc).OfClass(DB.Family).ToElements()
     families = filter(lambda x: x.Name == family_name, all_families)
     

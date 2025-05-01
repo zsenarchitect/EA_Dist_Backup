@@ -395,7 +395,9 @@ class fire_rating_ModelessForm(WPFWindow):
                         "3 HR"]
         rating_family = REVIT_FAMILY.get_family_by_name(FAMILY_NAME, doc)
         if rating_family:
-            rating_list = ["Unrated"] +REVIT_FAMILY.get_all_types_by_family_name(FAMILY_NAME, return_name = True)
+            types = REVIT_FAMILY.get_all_types_by_family_name(FAMILY_NAME, return_name = True)
+            if types is not None:
+                rating_list = ["Unrated"] + types
             
         self.rating_list = rating_list
         

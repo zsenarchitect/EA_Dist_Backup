@@ -37,7 +37,7 @@
     },
     "EnneadTab.menu\\get_engine.button\\get_engine_left.py": {
         "script": "EnneadTab.menu\\get_engine.button\\get_engine_left.py",
-        "icon": null,
+        "icon": "EnneadTab.menu\\get_engine.button\\icon.png",
         "alias": "GetEngine",
         "doc": "Ensure that you have a localized Python engine installed",
         "tab": "EnneadTab.menu",
@@ -58,6 +58,15 @@
         "icon": "EnneadTab.menu\\how_to_install.button\\icon.png",
         "alias": "HowToInstall",
         "doc": "Access EnneadTab installation documentation.\n\nKey Features:\n- Step-by-step installation guide\n- System requirements\n- Troubleshooting tips\n- Configuration instructions\n- Team deployment guidance",
+        "tab": "EnneadTab.menu",
+        "tab_icon": "EnneadTab.menu\\icon.png",
+        "is_popular": false
+    },
+    "EnneadTab.menu\\monitor_drive_connection.button\\monitor_drive_connection_left.py": {
+        "script": "EnneadTab.menu\\monitor_drive_connection.button\\monitor_drive_connection_left.py",
+        "icon": "EnneadTab.menu\\monitor_drive_connection.button\\icon.png",
+        "alias": "MonitorDriveConnection",
+        "doc": "Launches the MonitorDrive application to track and manage network drive connections.\nThis tool provides real-time monitoring of network drive status and connection health.",
         "tab": "EnneadTab.menu",
         "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false

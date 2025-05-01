@@ -155,7 +155,7 @@ def get_files_with_keyword(keyword, folder):
 
                     
                     if "__main__" not in contents:
-                        # this is to skip file that can actually run the whole thing during import. This is bad. shoud report back to SEn to fix
+                        # this is to skip file that can actually run the whole thing during import. This is bad. shoud report back to SEn to fix this for dynamic constant handling."
                         if USER.IS_DEVELOPER:
                             print ("\n\nThis contain dangerous format that can run during import:\n" + file_path + "\nYou can add this...")
                             print ("""if __name__ == "__main__":
@@ -244,17 +244,24 @@ def get_title_tip_from_file(lucky_file, is_random_single):
         ref_module = imp.load_source(module_name, lucky_file)
     except (ImportError, AttributeError):
         try:
-            # Fallback to importlib if imp fails
-            from importlib import resources  # use resources instead of util
+            # Try importlib.resources as second option
+            from importlib import resources
             spec = resources.spec_from_file_location(module_name, lucky_file)
             ref_module = resources.module_from_spec(spec)
             spec.loader.exec_module(ref_module)
-        except Exception as e:
-            if USER.IS_DEVELOPER:
-                print ("\n\nDeveloper visible only logging:")
-                print (ERROR_HANDLE.get_alternative_traceback())
-                print ("The lucky file is: {}".format(lucky_file))
-            return module_name, None, icon_path
+        except (ImportError, AttributeError):
+            try:
+                # Try importlib.util as third option
+                import importlib.util
+                spec = importlib.util.spec_from_file_location(module_name, lucky_file)
+                ref_module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(ref_module)
+            except Exception as e:
+                if USER.IS_DEVELOPER:
+                    print ("\n\nDeveloper visible only logging:")
+                    print (ERROR_HANDLE.get_alternative_traceback())
+                    print ("The lucky file is: {}".format(lucky_file))
+                return module_name, None, icon_path
     except Exception as e:
         if USER.IS_DEVELOPER:
             print ("\n\nDeveloper visible only logging:")
