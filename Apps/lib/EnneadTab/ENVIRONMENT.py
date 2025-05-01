@@ -173,13 +173,17 @@ if IS_OFFLINE_MODE:
 
 
 # this is to remove any transitional folder from IT transition, not intented to be ussed anywhere else
-__legacy_one_drive_folder = os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{} Ecosystem".format(PLUGIN_NAME))
-if os.path.exists(__legacy_one_drive_folder):
-    import shutil
-    try:
-        shutil.rmtree(__legacy_one_drive_folder)
-    except:
-        pass
+__legacy_one_drive_folder = [os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{} Ecosystem".format(PLUGIN_NAME)),
+                            os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{}-Ecosystem".format(PLUGIN_NAME))]
+
+for _folder in __legacy_one_drive_folder:
+    if os.path.exists(_folder):
+        print("legacy one drive folder found, this is not gooodddddddddddddddddddddddddddddddddddd: {}".format(_folder))
+        import shutil
+        try:
+            shutil.rmtree(_folder)
+        except:
+            pass
 
 
 def cleanup_dump_folder():

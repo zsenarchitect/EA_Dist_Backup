@@ -89,6 +89,15 @@
         "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
+    "EnneadTab.menu\\reload_engine.button\\reload_engine_left.py": {
+        "script": "EnneadTab.menu\\reload_engine.button\\reload_engine_left.py",
+        "icon": null,
+        "alias": "ReloadEngine",
+        "doc": "Reload all EnneadTab modules to ensure latest changes are applied.\n\nThis script will:\n1. Import all EnneadTab modules\n2. Reload each module to apply latest changes\n3. Handle any import errors gracefully",
+        "tab": "EnneadTab.menu",
+        "tab_icon": "EnneadTab.menu\\icon.png",
+        "is_popular": false
+    },
     "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
         "script": "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
         "icon": "EnneadTab.menu\\reset_all_conduit.button\\icon.png",

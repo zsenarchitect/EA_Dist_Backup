@@ -150,9 +150,6 @@ def check_C_drive_space():
     
     if percent_used > 85:
         NOTIFICATION.messenger(main_text = "Your C drive is almost full, {}% used.\nSome revit file might fail to open. Please clean cache with ".format(percent_used))
-    else:
-        NOTIFICATION.messenger(main_text = "Your C drive is {}% used.".format(percent_used))
-            
 
 
 
