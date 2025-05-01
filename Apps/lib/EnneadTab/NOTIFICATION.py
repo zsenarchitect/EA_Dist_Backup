@@ -183,7 +183,7 @@ def duck_pop(main_text=None):
     data["audio"] = SOUND.get_one_audio_path_by_prefix("duck")
     DATA_FILE.set_data(data, "DUCK_POP") 
 
-    EXE.try_open_app("DuckPop", legacy_name="Duck_Pop")
+    EXE.try_open_app("DuckPop")
   
 
 def unit_test():

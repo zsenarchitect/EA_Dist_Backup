@@ -366,7 +366,7 @@ def try_open_legacy_app(exe_name):
         return True
     return False
 
-def try_open_app(exe_name, legacy_name = None, safe_open = False):
+def try_open_app(exe_name, legacy_name = None, safe_open = False, depth = 0):
     """Attempt to open an executable file from the app library.
     
     Args:
@@ -374,6 +374,8 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         legacy_name (str, optional): Name of legacy executable as fallback.
         safe_open (bool, optional): When True, creates a temporary copy before execution
             to allow for updates while the app is running.
+        depth (int, optional): Recursion depth counter to prevent infinite recursion.
+            Defaults to 0.
     
     Returns:
         bool: True if application was successfully opened, False otherwise.
@@ -383,6 +385,11 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         - OS_Installer/AutoStartup files: cleaned up after 12 hours
         - Other executables: cleaned up after 24 hours
     """
+    # Prevent infinite recursion
+    if depth > 2:
+        ERROR_HANDLE.print_note("Maximum recursion depth reached for: {}".format(exe_name))
+        return False
+
     # Handle non-executable files directly
     abs_name = exe_name.lower()
     if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg")):
@@ -395,7 +402,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False):
         NOTIFICATION.messenger("No exe found!!!\n{}\n Will try to open legacy app.".format(exe_name))
         
         # Try legacy app
-        if legacy_name and try_open_app(legacy_name):
+        if legacy_name and try_open_app(legacy_name, depth = depth + 1):
             return True
             
         if try_open_legacy_app(exe_name):

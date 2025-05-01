@@ -18,14 +18,29 @@ DIVIDER = "+"
 class EgressData:
     data_collection = dict()
 
+    # Define replacements as a static dictionary
+    LEVEL_NAME_REPLACEMENTS = {
+        " Lachman/Wolman/Campus": "",
+        " (also Wolman / Campus)": "",
+        " Existing": "",
+        " Lachman": "",
+        " Wolman / Campus Exist Roof": ""
+    }
+
     @staticmethod
     def level_name_match(level_name):
-        return level_name.replace(" Lachman/Wolman/Campus", "")\
-                        .replace(" (also Wolman / Campus)", "")\
-                        .replace(" Existing", "")\
-                        .replace(" Lachman", "")\
-                        .replace(" Existing", "")\
-                        .replace(" Wolman / Campus Exist Roof", "")
+        """Clean level name by removing common suffixes.
+        
+        Args:
+            level_name (str): Original level name
+            
+        Returns:
+            str: Cleaned level name with common suffixes removed
+        """
+        result = level_name
+        for old, new in EgressData.LEVEL_NAME_REPLACEMENTS.items():
+            result = result.replace(old, new)
+        return result
     
     @classmethod
     def egress_id_exist(cls, test_id):

@@ -452,6 +452,9 @@ def show_tip_rhino():
     if tab_name is None:
         tab_name = "Unknown"
     tab_name = tab_name.replace(".tab", " Tab").replace(".menu", " Menu")
+    if "tailor" in tab_name.lower():
+        # lets not show any tip replated to tailor
+        return
 
     commands = tip_data.get("alias", None)
     if not isinstance(commands, list):
@@ -514,9 +517,9 @@ def show_tip_rhino():
 def tip_of_day():
     """Show a random tip of the day.
     """
-    if not USER.IS_DEVELOPER:
-        if random.random() < 0.2:
-            return
+
+    if random.random() < 0.1:
+        return
 
         
     if ENVIRONMENT.is_Revit_environment():
