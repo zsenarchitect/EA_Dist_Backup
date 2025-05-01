@@ -43,3 +43,10 @@ def secure_layer(layer):
     return layer
 
 
+def get_layers_in_order():
+    """
+    Returns a list of layer full paths, ordered based on the SortIndex property.
+    """
+    layers = sc.doc.Layers
+    layers = sorted(layers, key=lambda x: x.SortIndex)
+    return [layer.FullPath for layer in layers]
