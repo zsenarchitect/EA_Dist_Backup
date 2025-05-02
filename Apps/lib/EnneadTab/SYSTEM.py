@@ -60,7 +60,7 @@ def check_system_uptime():
         "last_uptime": uptime
     }, "system_uptime_check")
     
-    if True or uptime > 7 * 24 * 60 * 60:  # 7 days in seconds
+    if uptime > 7 * 24 * 60 * 60:  # 7 days in seconds
         days = int(uptime / (24 * 60 * 60))
         hours = int((uptime % (24 * 60 * 60)) / (60 * 60))
         NOTIFICATION.messenger("Your computer has been running for {} days and {} hours. Consider restarting your computer for optimal performance.\nNo one work their donkey this hard.".format(days, hours))

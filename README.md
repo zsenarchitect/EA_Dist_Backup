@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-02 10:11:13.
+This is the distribution repository for EnneadTab updated on 2025-05-02 10:23:28.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do birds give out on Halloween? Tweets.
+What do you call a group of disorganized cats? A cat-tastrophe.
