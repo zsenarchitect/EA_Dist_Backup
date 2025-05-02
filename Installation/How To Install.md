@@ -15,6 +15,8 @@
 - [5. Configure Notification Level](#5-configure-notification-level)
 - [6. EnneadTab for CAD](#6-enneadtab-for-cad)
   - [6.1 Install EnneadTab for CAD](#61-install-enneadtab-for-cad)
+- [7. Troubleshooting](#7-troubleshooting)
+  - [7.1 OneDrive Synchronization Issues](#71-onedrive-synchronization-issues)
 
 ## 1. Overall Introduction
 Overall, you will need Ecosystem downloaded as foundation(Chapter 2). <br>
@@ -191,3 +193,19 @@ It is not recommended in this office to use CAD as production tool, but some tim
 4. Right click on "LISP Files" and Load "EnneadTab_For_CAD.lsp"
 ![CAD CUI](/Apps/lib/EnneadTab/images/Instruction_cad_cui.png)
 5. Restart CAD.
+
+## 7. Troubleshooting
+
+### 7.1 OneDrive Synchronization Issues
+
+If you find that your Documents folder Ecosystem folder is being removed periodically, this is likely due to OneDrive synchronization settings. Here's how to fix it:
+
+1. Open OneDrive settings
+2. Go to "Backup" tab
+3. Click "Manage backup"
+4. Uncheck the "Documents" folder from being backed up
+
+
+This will prevent OneDrive from attempting to relocate your local Documents folder contents (including the Ecosystem folder) to the OneDrive Documents folder.
+
+

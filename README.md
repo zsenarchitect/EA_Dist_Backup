@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-01 17:55:06.
+This is the distribution repository for EnneadTab updated on 2025-05-02 10:07:34.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Whoever invented the knock-knock joke should get a no bell prize.
+Who is the coolest Doctor in the hospital? The hip Doctor!
