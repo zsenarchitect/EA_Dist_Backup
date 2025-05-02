@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-02 13:26:04.
+This is the distribution repository for EnneadTab updated on 2025-05-02 16:26:08.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why does a Moon-rock taste better than an Earth-rock? Because it's a little meteor.
+What did Michael Jackson name his denim store?    Billy Jeans!

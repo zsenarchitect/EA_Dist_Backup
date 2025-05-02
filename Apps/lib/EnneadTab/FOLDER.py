@@ -16,104 +16,17 @@ Compatible with Python 2.7 and Python 3.x
 
 import time
 import os
-import re
-from datetime import datetime
-import shutil
 
-from ENVIRONMENT import DUMP_FOLDER, USER_DESKTOP_FOLDER, SHARED_DUMP_FOLDER, ONE_DRIVE_DOCUMENTS_FOLDER, PLUGIN_EXTENSION
+from ENVIRONMENT import DUMP_FOLDER, SHARED_DUMP_FOLDER, PLUGIN_EXTENSION
 try:
     import COPY
 except Exception as e:
     print(e)
 
-def purge_powershell_folder():
-    """Clean up PowerShell transcript folders that match YYYYMMDD pattern.
-    
-    This function:
-    1. Scans Documents folder for YYYYMMDD pattern folders
-    2. Checks for PowerShell_transcript files inside
-    3. Deletes matching folders
-    4. Runs once per day using timestamp check
-    """
-    # Get the documents folder path
-    docs_folder = ONE_DRIVE_DOCUMENTS_FOLDER
-    if not os.path.exists(docs_folder):
-        return
-    
-    # Check if we already ran today
-    timestamp_file = get_local_dump_folder_file("last_ps_cleanup.txt")
-    
-    try:
-        
-        with open(timestamp_file, 'r') as f:
-            last_run = f.read().strip()
-            if last_run == datetime.now().strftime("%Y%m%d"):
-                # print("Already ran cleanup today")
-                return
-    except:
-        pass
-        
-    # Pattern for YYYYMMDD folders
-    date_pattern = re.compile(r"^\d{8}$")
-    
-    folders_to_delete = []
-    
-    # Scan for matching folders
-    for folder_name in os.listdir(docs_folder):
-        folder_path = os.path.join(docs_folder, folder_name)
-        
-        # Check if it's a directory and matches date pattern
-        if os.path.isdir(folder_path) and date_pattern.match(folder_name):
-            # Check if contains PowerShell transcripts
-            has_ps_transcript = False
-            for file in os.listdir(folder_path):
-                if "PowerShell_transcript" in file:
-                    has_ps_transcript = True
-                    break
-            if len(os.listdir(folder_path)) == 0:
-                folders_to_delete.append(folder_path)
-                # print("Found empty folder: {}".format(folder_path))
-                    
-            if has_ps_transcript:
-                folders_to_delete.append(folder_path)
-                # print("Found matching folder: {}".format(folder_path))
-    
-    # Actual deletion
-    # print("\nDeleting these folders:")
-    deleted_count = 0
-    for folder in folders_to_delete:
-        try:
-            # Try to delete entire folder tree first
-            shutil.rmtree(folder)
-            deleted_count += 1
-        except Exception as e:
-            # If folder deletion fails, try deleting individual files
-            try:
-                files = os.listdir(folder)
-                for file in files:
-                    file_path = os.path.join(folder, file)
-                    try:
-                        if os.path.isfile(file_path):
-                            os.remove(file_path)
-                        elif os.path.isdir(file_path):
-                            shutil.rmtree(file_path)
-                    except Exception:
-                        continue
-                # Try deleting empty folder again
-                os.rmdir(folder)
-                deleted_count += 1
-            except Exception as e:
-                # If folder deletion fails, skip it
-                # print("Failed to delete folder {}: {}".format(folder, e))
-                continue
-    # print("\nSuccessfully deleted {} out of {} folders".format(deleted_count, len(folders_to_delete)))
-        
-    # Update timestamp file
-    with open(timestamp_file, 'w') as f:
-        f.write(datetime.now().strftime("%Y%m%d"))
-    
-    return folders_to_delete
 
+def purge_powershell_folder():
+    """TO-DO: this is for backward compatibility, will remove after May 20 2025"""
+    pass
 
 
 def get_safe_copy(filepath, include_metadata=False):
@@ -327,7 +240,7 @@ def copy_file_to_local_dump_folder(original_path, file_name=None, ignore_warning
     return local_path
 
 
-def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
+def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 7):
     """Create scheduled backups of data files.
 
     Decorator that creates timestamped backups of data files at specified intervals.
@@ -337,7 +250,7 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
         data_file_name (str): Name of file to backup
         backup_folder_title (str): Name for backup folder
         max_time (int, optional): Backup interval in seconds.
-            Defaults to 1 day (86400 seconds).
+            Defaults to 7 days (604800 seconds).
 
     Returns:
         function: Decorated function that performs backup
@@ -346,36 +259,46 @@ def backup_data(data_file_name, backup_folder_title, max_time=60 * 60 * 24 * 1):
         def wrapper(*args, **kwargs):
             out = func(*args, **kwargs)
 
+            # Check if source file exists before proceeding
+            source_file = get_local_dump_folder_file(data_file_name)
+            if not os.path.exists(source_file):
+                return out
+
             backup_folder = get_local_dump_folder_file("backup_" + backup_folder_title)
             if not os.path.exists(backup_folder):
                 os.makedirs(backup_folder)
 
+            # Get today's date once
+            today = time.strftime("%Y-%m-%d")
+            
+            # Check if backup exists for today
+            today_backup = os.path.join(backup_folder, "{}_{}".format(today, data_file_name))
+            if os.path.exists(today_backup):
+                return out
+
+            # Find latest backup date
             latest_backup_date = None
             for filename in os.listdir(backup_folder):
                 if not filename.endswith(PLUGIN_EXTENSION):
                     continue
                 backup_date_str = filename.split("_")[0]
-                backup_date = time.strptime(backup_date_str, "%Y-%m-%d")
-                if not latest_backup_date or backup_date > latest_backup_date:
-                    latest_backup_date = backup_date
+                try:
+                    backup_date = time.strptime(backup_date_str, "%Y-%m-%d")
+                    if not latest_backup_date or backup_date > latest_backup_date:
+                        latest_backup_date = backup_date
+                except Exception:
+                    continue
 
-            today = time.strftime("%Y-%m-%d")
-            if (
-                not latest_backup_date
-                or (
-                    time.mktime(time.strptime(today, "%Y-%m-%d"))
-                    - time.mktime(latest_backup_date)
-                )
-                > max_time
-            ):
-                backup_file_path = os.path.join(
-                    backup_folder, "{}_{}".format(today, data_file_name)
-                )
+            # Skip if latest backup is within max_time
+            if latest_backup_date:
+                if (time.mktime(time.strptime(today, "%Y-%m-%d")) - time.mktime(latest_backup_date)) <= max_time:
+                    return out
 
-                if os.path.exists(get_local_dump_folder_file(data_file_name)):
-                    COPY.copyfile(
-                        get_local_dump_folder_file(data_file_name), backup_file_path
-                    )
+            # Create new backup
+            try:
+                COPY.copyfile(source_file, today_backup)
+            except Exception as e:
+                print("Backup failed: %s" % str(e))
 
             return out
 
@@ -495,7 +418,6 @@ def wait_until_file_is_ready(file_path):
 
 
 if __name__ == "__main__":
-    purge_powershell_folder()
     print( "input: test.txt, should return test.txt")
     print ("actual return: {}".format(_secure_file_name("test.txt")))
     print ("\n")
