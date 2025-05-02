@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-02 10:23:28.
+This is the distribution repository for EnneadTab updated on 2025-05-02 13:26:04.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do you call a group of disorganized cats? A cat-tastrophe.
+Why does a Moon-rock taste better than an Earth-rock? Because it's a little meteor.
