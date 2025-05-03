@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-03 16:32:49.
+This is the distribution repository for EnneadTab updated on 2025-05-03 19:34:38.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-A man got hit in the head with a can of Coke, but he was alright because it was a soft drink.
+How do you make holy water? You boil the hell out of it.
