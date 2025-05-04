@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-03 19:34:38.
+This is the distribution repository for EnneadTab updated on 2025-05-03 22:35:08.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-How do you make holy water? You boil the hell out of it.
+Why did the barber win the race? He took a short cut.
