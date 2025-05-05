@@ -1,17 +1,21 @@
-
 __title__ = "GetEngine"
 __doc__ = "Ensure that you have a localized Python engine installed"
 
 
-from EnneadTab import ERROR_HANDLE, LOG, EXE
-reload(EXE)
+import sys
+import os
+# Add proper path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+
+# Use proper import syntax
+from EnneadTab import ERROR_HANDLE, LOG
+from EnneadTab import ENGINE
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def get_engine():
-    EXE.ensure_engine_installed()
+    ENGINE.ensure_engine_installed()
 
-    EXE.cast_python("EnneadTab_OS_Installer")
     
 if __name__ == "__main__":
     get_engine()

@@ -94,6 +94,9 @@ def _secure_folder(folder):
 
 map(_secure_folder, [ECO_SYS_FOLDER, ECO_SYS_FOLDER_MODERN, DUMP_FOLDER])
 
+
+
+
 APP_FOLDER = os.path.join(ROOT, "Apps")
 
 
@@ -121,6 +124,7 @@ PY3_DEPENDENCY_FOLDER = os.path.join(LIB_FOLDER, "dependency", "py3")
 REVIT_FOLDER_KEYNAME = "_revit"
 REVIT_FOLDER = os.path.join(APP_FOLDER, REVIT_FOLDER_KEYNAME)
 
+################# rhino extension ####################
 RHINO_FOLDER_KEYNAME = "_rhino"
 RHINO_FOLDER = os.path.join(APP_FOLDER, RHINO_FOLDER_KEYNAME)
 DIST_RUI_CLASSIC = os.path.join(RHINO_FOLDER, "{}_For_Rhino_Classic.rui".format(PLUGIN_NAME))
@@ -129,10 +133,11 @@ ACTIVE_MODERN_RUI = os.path.join(DUMP_FOLDER, "{}_For_Rhino_Modern.rui".format(P
 INSTALLATION_RUI = os.path.join(INSTALLATION_FOLDER, "{}_For_Rhino_Installer.rui".format(PLUGIN_NAME))
 RHINO_INSTALLER_SETUP_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME, "RHINO")
 
-
+################# indesign extension ####################
 INDESIGN_FOLDER_KEYNAME = "_indesign"
 INDESIGN_FOLDER = os.path.join(APP_FOLDER, INDESIGN_FOLDER_KEYNAME)
 
+################### knowledge database ####################
 KNOWLEDGE_RHINO_FILE = "{}\\knowledge_rhino_database{}".format(RHINO_FOLDER, PLUGIN_EXTENSION)
 KNOWLEDGE_REVIT_FILE = "{}\\knowledge_revit_database{}".format(REVIT_FOLDER, PLUGIN_EXTENSION)
 for _ in [KNOWLEDGE_RHINO_FILE, KNOWLEDGE_REVIT_FILE]:
@@ -144,7 +149,7 @@ for _ in [KNOWLEDGE_RHINO_FILE, KNOWLEDGE_REVIT_FILE]:
         except Exception as e:
             print("Cannot create file [{}] becasue {}".format(_, e))
 
-
+################### revit extension ####################
 PRIMARY_EXTENSION_NAME = "EnneaDuck"
 REVIT_PRIMARY_EXTENSION = os.path.join(
     REVIT_FOLDER, "{}.extension".format(PRIMARY_EXTENSION_NAME)
@@ -153,6 +158,9 @@ REVIT_PRIMARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{}.tab".format(PLUGIN
 REVIT_LIBRARY_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Library.tab".format(PLUGIN_NAME))
 REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Tailor.tab".format(PLUGIN_NAME))
 
+
+
+#################### L drive folder ####################
 L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
 if not os.path.exists(L_DRIVE_HOST_FOLDER):
     L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
@@ -166,6 +174,11 @@ SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 STAND_ALONE_FOLDER = os.path.join(DB_FOLDER, "Stand Alone Tools")
 
 
+
+############# engine ####################
+ENGINE_FOLDER = os.path.join(WINDOW_TEMP_FOLDER, "_engine")
+SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib", "site-packages")
+map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:

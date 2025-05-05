@@ -525,7 +525,7 @@ def tip_of_day():
     """Show a random tip of the day.
     """
 
-    if random.random() < 0.1:
+    if random.random() < 0.9:
         return
 
         
