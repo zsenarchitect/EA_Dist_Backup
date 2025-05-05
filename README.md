@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-04 19:44:17.
+This is the distribution repository for EnneadTab updated on 2025-05-04 22:45:54.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What's black and white and read all over? The newspaper.
+Is there a hole in your shoe? No.. Then how'd you get your foot in it?
