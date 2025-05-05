@@ -160,7 +160,25 @@ def run_system_checks():
     
     This function runs various system checks and maintenance tasks based on
     random probability values. Each check has its own probability threshold.
+    Checks are limited to once per hour to prevent excessive system load using
+    environment variables for lightweight tracking between sessions.
+    
+    Returns:
+        bool: True if checks were performed, False if skipped due to frequency limit
     """
+    # Check if we already ran recently using environment variable
+    env_var_name = "LAST_SYSTEM_CHECK"
+    
+    try:
+        last_check_time_str = os.environ.get(env_var_name, "0")
+        last_check_time = float(last_check_time_str)
+    except (ValueError, TypeError):
+        last_check_time = 0
+    
+    # Only proceed if more than 1 hour has passed since last check
+    if time.time() - last_check_time < 1800:  # 1800 seconds = 30 minutes
+        return False
+    
     # Generate a single random number for all probability checks
     random_value = random.random()
     
@@ -181,6 +199,11 @@ def run_system_checks():
                 check()
             else:
                 EXE.try_open_app(check, safe_open=True)
+    
+    # Update last check time in environment variable
+    os.environ[env_var_name] = str(time.time())
+    
+    return True
 
 # Run system checks when module is imported
 run_system_checks()

@@ -73,12 +73,12 @@ MODULE_HELPER.run_Rhino_button('Enneaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         <locale_1033>UninstallOldVersion</locale_1033>
       </text>
       <tooltip>
-        <locale_1033>Uninstall old version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
+        <locale_1033>Uninstall any version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
 
 </locale_1033>
       </tooltip>
       <help_text>
-        <locale_1033>Uninstall old version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
+        <locale_1033>Uninstall any version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
 
 </locale_1033>
       </help_text>

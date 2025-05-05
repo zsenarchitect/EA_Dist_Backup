@@ -1,6 +1,6 @@
 
 __title__ = "UninstallOldVersion"
-__doc__ = """Uninstall old version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
+__doc__ = """Uninstall any version of EnneadTab. Do this only if you have old enneadtab for rhino on your machine.
 
 """
 __FONDATION__ = True
@@ -15,15 +15,14 @@ def uninstall_old_version():
         return
 
     for toolbar_collection in rs.ToolbarCollectionNames():
-        toolbar_names = ["EnneadTab", "Ennead-For-Rhino", "EnneadTab_For_Rhino_Modern"]
-        if toolbar_collection in toolbar_names:
+        if "ennead".lower() in toolbar_collection.lower():
             rs.CloseToolbarCollection(toolbar_collection)
 
     for path in rs.SearchPathList():
-        if "EnneadTab".lower() in path.lower():
+        if "ennead".lower() in path.lower():
             rs.DeleteSearchPath(path)
 
-    rs.MessageBox("Restart your rhino before install the new version.")
+    rs.MessageBox("Restart your rhino.")
 
 
 if __name__ == "__main__":
