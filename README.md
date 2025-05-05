@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-05 16:01:05.
+This is the distribution repository for EnneadTab updated on 2025-05-05 18:57:54.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why did the cookie cry? It was feeling crumby.
+How do hens stay fit? They always egg-cercise!
