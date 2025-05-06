@@ -12,6 +12,7 @@ import USER
 import NOTIFICATION
 import COPY
 import ERROR_HANDLE
+import ENGINE
 
 
 
@@ -214,5 +215,7 @@ def ensure_module(module_name):
     return ENGINE.ensure_module(module_name)
 
 if __name__ == "__main__":
-    print(ENGINE.ensure_engine_installed())
-    cast_python("Messenger", wait=True)
+    script_path = os.path.join(ENVIRONMENT.APP_FOLDER, "Messenger.py")
+    success, stdout, stderr = ENGINE.cast_python(script_path, wait=True)
+    if not success:
+        ERROR_HANDLE.print_note("Failed to run Messenger: {}".format(stderr))

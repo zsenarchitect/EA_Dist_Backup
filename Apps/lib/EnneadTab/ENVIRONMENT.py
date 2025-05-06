@@ -176,8 +176,8 @@ STAND_ALONE_FOLDER = os.path.join(DB_FOLDER, "Stand Alone Tools")
 
 
 ############# engine ####################
-ENGINE_FOLDER = os.path.join(WINDOW_TEMP_FOLDER, "_engine")
-SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib", "site-packages")
+ENGINE_FOLDER = os.path.join(APP_FOLDER, "_engine")
+SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib")
 map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)

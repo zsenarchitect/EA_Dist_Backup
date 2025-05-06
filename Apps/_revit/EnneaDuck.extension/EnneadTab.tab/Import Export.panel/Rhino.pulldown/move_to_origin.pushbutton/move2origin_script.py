@@ -1,4 +1,13 @@
-__doc__ = "Move this family to the internal origin under current orienttation. \n\nThere are 3 modes for the operation:\n1: Family is placed on 3d view, but location is wrong.>>>You select it and move it.\n2: Family is placed on 3d view somewhere but you don't know where.>>>You select it from listbox and move it.\n3: The family is just loaded in, it is new, and has not been placed anywhere.>>> You select it from list and move it."
+__doc__ = """Move family instances to the internal origin while maintaining current orientation.
+
+Three operation modes are available:
+1: Family is placed in 3D view with incorrect location - Select it and move it.
+2: Family is placed somewhere in 3D view but location unknown - Select from listbox and move it.
+3: Family is newly loaded but not yet placed - Select from list and place at origin.
+
+Note: Some element types have location constraints and may not be movable to absolute origin.
+Report any issues to the EnneadTab team.
+"""
 __title__ = "Move2Origin"
 __tip__ = True
 __is_popular__ = True
@@ -11,7 +20,6 @@ proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_UNIT, REVIT_APPLICATION, REVIT_FORMS
 from EnneadTab import ERROR_HANDLE, LOG
 from EnneadTab import NOTIFICATION 
-#forms.alert( "Work in progress. Coming in the next version")
 from Autodesk.Revit import DB # pyright: ignore
 uidoc = REVIT_APPLICATION.get_uidoc()
 doc = REVIT_APPLICATION.get_doc()
@@ -60,7 +68,6 @@ class Solution:
 
 
         if not family_type.IsActive:
-            #print family_type
             t = DB.Transaction(doc, "Activate Symbol")
             t.Start()
             family_type.Activate ()
@@ -68,21 +75,16 @@ class Solution:
             t.Commit()
 
         self.symbol = family_type
-        #print family_type
-        #print "xxxxxxx"
         family_instances = DB.FilteredElementCollector(doc).OfClass(DB.FamilyInstance).WhereElementIsNotElementType().ToElements()
         def check_type(instance):
             try:
-                #print instance.Symbol.Id
                 if instance.Symbol.Id == family_type.Id:
                     return True
                 return False
             except Exception as e:
-                #print (e)
                 return False
 
         instances = filter(check_type, family_instances)
-        #print instances
         return instances
 
     def place_new_instance(self):
@@ -147,7 +149,6 @@ class Solution:
                     break
 
 
-        #instance.Pinned = True
         t.Commit()
         return instance
 
@@ -155,23 +156,11 @@ class Solution:
     def move_to_origin(self):
         selection = [doc.GetElement(x) for x in uidoc.Selection.GetElementIds()]
         if len(selection) < 1:
-  
             selection = self.pick_instances()
 
-
-
-
         if not selection or len(selection) < 1:
-            #dialogue(main_text = "Please select the family you want to place.")
             selection = [self.place_new_instance()]
-            #maybe here it can direct to Youtube demo video.
 
-
-
-
-
-
-        #with revit.Transaction("Move2Origin"):
         t = DB.Transaction(doc, "Move2Origin")
         t.Start()
         for element in selection:
@@ -182,37 +171,43 @@ class Solution:
                     main_text="It is currently pinned.",
                     title="wait...",
                     options=["Unpin this element and move it.", "Leave it as it is."])
-                # res1 = forms.alert(options = ["Unpin this element and move it." , "Leave it as it is."], msg = "It is currently pinned.", title = "wait...")
                 if res1 == "Unpin this element and move it.":
                     element.Pinned = False
                 else:
                     continue
-            #print element.Location
-            #origin = DB.XYZ(0,0,0)
             try:
-                moving_vec = DB.XYZ.Negate( element.Location.Point  )
+                moving_vec = DB.XYZ.Negate(element.Location.Point)
                 element.Location.Move(moving_vec)
-            except:
-                element.Location = DB.XYZ(0,0,0)
+            except Exception as e:
+                # First try the direct assignment approach
+                try:
+                    element.Location = DB.XYZ(0,0,0)
+                except Exception as direct_e:
+                    # If direct assignment fails, try alternative methods
+                    ERROR_HANDLE.print_note("Cannot move element directly: {}".format(str(e)))
+                    try:
+                        # Try alternative methods to move the element
+                        if hasattr(element, "Location") and element.Location:
+                            if hasattr(element.Location, "Move"):
+                                # Use the Move method if available
+                                element.Location.Move(DB.XYZ(-element.Location.Point.X, 
+                                                           -element.Location.Point.Y, 
+                                                           -element.Location.Point.Z))
+                            else:
+                                # Use ElementTransformUtils as a fallback
+                                DB.ElementTransformUtils.MoveElement(
+                                    doc, 
+                                    element.Id, 
+                                    DB.XYZ(0, 0, 0) - (element.Location.Point if hasattr(element.Location, "Point") else DB.XYZ(0, 0, 0))
+                                )
+                    except Exception as inner_e:
+                        ERROR_HANDLE.print_note("Failed to move element to origin: {}".format(str(inner_e)))
+                        NOTIFICATION.messenger("Could not move this element to origin. It may require special handling.")
 
-
-            """
-            moving_vec =DB.XYZ.Negate( element.Location  )
-            #element.Location = DB.XYZ(0,0,0)
-            #DB.Transform().CreateTraslation(moving_vec)
-            DB.ElementTransformUtils.MoveElement(revit.doc, element, moving_vec)
-            """
-
-
-
-            """
-            and it can pin it afterward
-            """
             res = REVIT_FORMS.dialogue(
                 main_text="It has moved to the origin point.\nNow I want to ...",
                 title="good news!",
                 options=["Pin this element.", "Don't Pin this element."])
-            # res = forms.alert(options = ["Pin this element." , "Don't Pin this element."], msg = "It has moved to the origin point.\nNow I want to ...", title = "good news!")
             if res == "Pin this element.":
                 element.Pinned = True
 
@@ -222,15 +217,14 @@ class Solution:
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def main():
-    if doc.IsFamilyDocument :
+    if doc.IsFamilyDocument:
         NOTIFICATION.messenger("this function is meant to use in project environment not in family environment")
         return
     
     Solution().move_to_origin()
-################## main code below #####################
+
 output = script.get_output()
 output.close_others()
-
 
 if __name__ == "__main__":
     main()

@@ -2233,7 +2233,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\move2origin_script.py": {
         "alias": "Move2Origin",
-        "doc": "Move this family to the internal origin under current orienttation. \n\nThere are 3 modes for the operation:\n1: Family is placed on 3d view, but location is wrong.>>>You select it and move it.\n2: Family is placed on 3d view somewhere but you don't know where.>>>You select it from listbox and move it.\n3: The family is just loaded in, it is new, and has not been placed anywhere.>>> You select it from list and move it.",
+        "doc": "Move family instances to the internal origin while maintaining current orientation.\n\nThree operation modes are available:\n1: Family is placed in 3D view with incorrect location - Select it and move it.\n2: Family is placed somewhere in 3D view but location unknown - Select from listbox and move it.\n3: Family is newly loaded but not yet placed - Select from list and place at origin.\n\nNote: Some element types have location constraints and may not be movable to absolute origin.\nReport any issues to the EnneadTab team.\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\move_to_origin.pushbutton\\move2origin_script.py",
