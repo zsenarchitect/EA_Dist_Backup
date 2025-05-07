@@ -6,6 +6,7 @@ __doc__ = "The magical kickstarter for EnneadTab! This script initializes all th
 
 import os
 import sys
+import threading
 
 
 """need to navigate to duckking lib first before it can auto detect further. 
@@ -218,17 +219,25 @@ def register_temp_graphic_server():
 
 
 def register_xaml_path():
-    """go thru all extension to location all examl file location, so later when attempt o lokk up it is quicker."""
-    data = {}
+    """Register XAML file paths in a persistent background thread.
+    This function scans all extensions to locate XAML files for quick lookup later.
+    The thread will continue running even after main program exit.
+    """
+    def _register_xaml_path_worker():
+        try:
+            data = {}
+            for root, dirs, files in os.walk(ENVIRONMENT.REVIT_FOLDER):
+                for file in files:
+                    if file.endswith(".xaml"):
+                        data[file] = os.path.join(root, file)
+            DATA_FILE.set_data(data, "xaml_path")
+        except Exception as e:
+            print("Error in XAML path registration thread: {}".format(str(e)))
 
-    # loop thru folder and nesting folder
-    for root, dirs, files in os.walk(ENVIRONMENT.REVIT_FOLDER):
-        for file in files:
-            if file.endswith(".xaml"):
-                data[file] = os.path.join(root, file)
+    thread = threading.Thread(target=_register_xaml_path_worker)
+    thread.daemon = False  # Thread will continue running after main program exits
+    thread.start()
 
-    DATA_FILE.set_data(data, "xaml_path")
-    
 def set_RIR_clicker():
     
     if not USER.IS_DEVELOPER:
@@ -242,7 +251,8 @@ def set_RIR_clicker():
 
 def register_selection_owner_checker():
     # to-do: this is too slow, i am goint to disable it untile better solution found.
-    return
+    if not USER.IS_DEVELOPER:
+        return
     from pyrevit import HOST_APP
     if not HOST_APP.is_newer_than(version = 2023, or_equal = True):
         return
@@ -269,6 +279,7 @@ def selection_owner_checker(sender, args):
             continue
         if not REVIT_SELECTION.is_changable(element):
             NOTIFICATION.messenger("Note that your selection contains element owned by [{}]".format(REVIT_SELECTION.get_owner(element)))
+            SOUND.play_error_sound()
             return
 
 def purge_dump_folder_families():

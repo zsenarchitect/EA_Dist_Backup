@@ -1,20 +1,19 @@
 """
-The main purpose of this moudle to is to handle Rhino 8 situation. 
-Native shutil.copyfile will fail in some cases, so we use dotnet to copy the file.
-This module also ensures that large files are completely copied before returning.
-
+The main purpose of this module is to handle file copying operations with verification across different Python environments. In previous Rhino 8 there is a bug that shutil.copyfile will fail. 
+Supports both standard Python and IronPython 2.7 in Rhino by providing multiple file copy methods.
+This module ensures that large files are completely copied before returning.
 """
 
 
 import os
 import time
+import threading
 
 
-
-
-def copyfile(src, dst, include_metadata=True, verify=True, timeout=120):
+def copyfile(src, dst, include_metadata=True, verify=True, timeout=120, run_threaded=False):
     """
     Copy a file from source to destination with verification to ensure complete copy.
+    Automatically selects the best copy method based on environment capabilities.
     
     Args:
         src: Source file path
@@ -22,24 +21,60 @@ def copyfile(src, dst, include_metadata=True, verify=True, timeout=120):
         include_metadata: Whether to include file metadata in the copy
         verify: Whether to verify the file is completely copied
         timeout: Maximum time in seconds to wait for copy verification
+        run_threaded: Whether to run the copy operation in a separate thread
     
     Returns:
         bool: True if copy was successful, False otherwise
+        If run_threaded is True, returns the thread object instead
+    """
+    if run_threaded:
+        # Create a thread for the copy operation
+        copy_thread = threading.Thread(
+            target=_copyfile_thread,
+            args=(src, dst, include_metadata, verify, timeout)
+        )
+        copy_thread.daemon = True  # Don't let this thread block program exit
+        copy_thread.start()
+        return copy_thread
+    else:
+        # Run synchronously
+        return _copyfile_thread(src, dst, include_metadata, verify, timeout)
+
+
+def _copyfile_thread(src, dst, include_metadata=True, verify=True, timeout=120):
+    """
+    Internal function to handle the actual copy operation, potentially in a thread.
     """
     try:
         return copyfile_with_cpy(src, dst, include_metadata, verify, timeout)
     except Exception as e:
-        # print("Standard copy failed, trying dotnet method:", e)
-        return copyfile_with_dotnet(src, dst, verify, timeout)
+        try:
+            # Only print debug info for specific user
+            if os.getenv("USERNAME") == "szhang":
+                print("Standard copy failed, trying dotnet method:", e)
+            
+            # Try .NET method which works in IronPython
+            return copyfile_with_dotnet(src, dst, verify, timeout)
+        except Exception as e2:
+            # Last resort - basic file copy if all else fails
+            if os.getenv("USERNAME") == "szhang":
+                print("Dotnet copy failed, trying basic method:", e2)
+            return copyfile_basic(src, dst, verify, timeout)
 
 
 def copyfile_with_cpy(src, dst, include_metadata=True, verify=True, timeout=120):
     """
-    Copy a file from source to destination with verification to ensure complete copy.
+    Copy a file from source to destination using Python's shutil.
     
     Args:
         src: Source file path
         dst: Destination file path
+        include_metadata: Whether to include file metadata in the copy
+        verify: Whether to verify the file is completely copied
+        timeout: Maximum time in seconds to wait for copy verification
+        
+    Returns:
+        bool: True if copy was successful, False otherwise
     """
     import shutil
      # Get source file size for verification
@@ -58,9 +93,11 @@ def copyfile_with_cpy(src, dst, include_metadata=True, verify=True, timeout=120)
     if verify and src_size > 1024*1024:  # Only verify for files larger than 1MB
         return verify_copy_complete(src, dst, src_size, timeout)
     
+    return True
+    
 def copyfile_with_dotnet(src, dst, verify=True, timeout=120):
     """
-    Copy a file using dotnet with verification to ensure complete copy.
+    Copy a file using .NET framework methods - compatible with IronPython.
     
     Args:
         src: Source file path
@@ -75,17 +112,74 @@ def copyfile_with_dotnet(src, dst, verify=True, timeout=120):
     # Get source file size for verification
     if verify:
         try:
-            import os
+            # Try normal Python method first
             src_size = os.path.getsize(src)
         except:
-            from System.IO import FileInfo  # pyright: ignore
-            src_size = FileInfo(src).Length
+            # Fall back to .NET method
+            try:
+                from System.IO import FileInfo  # pyright: ignore
+                src_size = FileInfo(src).Length
+            except:
+                # If this also fails, skip verification
+                verify = False
     
+    # Create destination directory if it doesn't exist
+    try:
+        dst_dir = os.path.dirname(dst)
+        if not os.path.exists(dst_dir):
+            os.makedirs(dst_dir)
+    except:
+        pass
+        
     # Perform copy using dotnet
-    from System.IO import File  # pyright: ignore
-    File.Copy(src, dst, True)  # True to overwrite if exists
+    try:
+        from System.IO import File  # pyright: ignore
+        File.Copy(src, dst, True)  # True to overwrite if exists
+    except ImportError:
+        # Fall back if System.IO not available
+        raise Exception("System.IO not available in this Python environment")
     
     # Verify the copy is complete for large files
+    if verify and src_size > 1024*1024:  # Only verify for files larger than 1MB
+        return verify_copy_complete(src, dst, src_size, timeout)
+        
+    return True
+
+
+def copyfile_basic(src, dst, verify=True, timeout=120):
+    """
+    Basic file copy using raw Python - last resort method.
+    
+    Args:
+        src: Source file path
+        dst: Destination file path
+        verify: Whether to verify the file is completely copied
+        timeout: Maximum time in seconds to wait for copy verification
+    
+    Returns:
+        bool: True if copy was successful, False otherwise
+    """
+    # Get source file size for verification
+    if verify and os.path.exists(src):
+        try:
+            src_size = os.path.getsize(src)
+        except:
+            verify = False
+    
+    # Create destination directory if it doesn't exist
+    try:
+        dst_dir = os.path.dirname(dst)
+        if not os.path.exists(dst_dir):
+            os.makedirs(dst_dir)
+    except:
+        pass
+            
+    # Basic file copy operation
+    with open(src, 'rb') as src_file:
+        with open(dst, 'wb') as dst_file:
+            dst_file.write(src_file.read())
+            
+    # Verify the copy is complete
     if verify and src_size > 1024*1024:  # Only verify for files larger than 1MB
         return verify_copy_complete(src, dst, src_size, timeout)
         
@@ -206,6 +300,26 @@ def run_unittest():
             print("Copy speed: {:.2f} MB/s".format(
                 self.file_size / (1024 * 1024) / elapsed if elapsed > 0 else 0
             ))
+            
+        def test_threaded_copy(self):
+            """Test that threaded copying works"""
+            print("\nTesting threaded copy...")
+            
+            # Test with threading
+            thread = copyfile(self.src_path, self.dst_path, verify=True, run_threaded=True)
+            
+            # Wait for thread to complete
+            thread.join(timeout=30)
+            
+            # Verify the copy worked
+            self.assertTrue(os.path.exists(self.dst_path), "Threaded copy failed to create destination file")
+            
+            # Check file sizes match
+            src_size = os.path.getsize(self.src_path)
+            dst_size = os.path.getsize(self.dst_path)
+            self.assertEqual(src_size, dst_size, "File sizes don't match in threaded copy")
+            
+            print("Threaded copy test successful")
     
     # Run the tests
     print("Running file copy unit tests...")

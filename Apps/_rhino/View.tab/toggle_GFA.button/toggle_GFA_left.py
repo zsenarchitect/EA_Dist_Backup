@@ -69,10 +69,8 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         self.current_objs = get_current_objs()
         
         data = RHINO_PROJ_DATA.get_plugin_data()
-        try: #TO-DO remove this try catch later after 2025-03-20
-            self.target_dict = data.get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})
-        except:
-            self.target_dict = {}
+        self.target_dict = data.get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})
+
 
 
        
@@ -119,7 +117,7 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
     
     def reset_conduit_data(self, note=None):
         
-        if time.time() - sc.sticky["reset_timestamp"] < 1:
+        if time.time() - sc.sticky["reset_timestamp"] < 2:
             return
         if note:
             NOTIFICATION.messenger(note)
@@ -128,6 +126,8 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
         sc.sticky["reset_timestamp"] = time.time()
         # print ("cached data is now empty")
         # self.is_reseted = True
+        self.target_dict = RHINO_PROJ_DATA.get_plugin_data().get(RHINO_PROJ_DATA.DocKeys.GFA_TARGET_DICT, {})   
+
     
     def add_hook(self):
         Rhino.RhinoDoc.AddRhinoObject  += self.check_doc_update_after_adding
@@ -425,14 +425,6 @@ class EA_GFA_Conduit(Rhino.Display.DisplayConduit):
             sc.doc.Views.Redraw()
 
 
-        if "EA_GFA_IS_SETTING_TARGET_DICT" not in sc.sticky:
-            sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"] = False
-        if sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"]:
-            import toggle_GFA_right
-            self.target_dict = toggle_GFA_right.set_target_dict()
-            NOTIFICATION.messenger("Target dictionary updated.")
-            print (self.target_dict)
-            sc.sticky["EA_GFA_IS_SETTING_TARGET_DICT"] = False
 
 
 
