@@ -18,7 +18,7 @@ if block2family_dir not in sys.path:
     sys.path.insert(0, block2family_dir)
 import block2family_left as B2F
 
-PREFIX = "{}_CONVERT_".format(ENVIRONMENT.PLUGIN_ABBR)
+S2F_PREFIX = "{}_CONVERT_".format(ENVIRONMENT.PLUGIN_ABBR)
 
 class Shape2RevitDialog(Eto.Forms.Dialog[bool]):
     def __init__(self):
@@ -95,7 +95,7 @@ def shape2revit():
         center = RHINO_OBJ_DATA.get_center(geo)
         
         # Create temporary block name
-        block_name = "{}{}".format(PREFIX, str(geo)) # using guid from rs.parsing
+        block_name = "{}{}".format(S2F_PREFIX, str(geo)) # using guid from rs.parsing
         
         # Create block from geometry
         if rs.IsBlock(block_name):
@@ -119,7 +119,7 @@ def shape2revit():
     B2F.block2family(temp_block_collection)
     rs.DeleteObjects(temp_block_collection)
     for block_name in rs.BlockNames():
-        rs.DeleteBlock(block_name) if block_name.startswith(PREFIX) else None
+        rs.DeleteBlock(block_name) if block_name.startswith(S2F_PREFIX) else None
     
     NOTIFICATION.messenger("Conversion complete!")
     

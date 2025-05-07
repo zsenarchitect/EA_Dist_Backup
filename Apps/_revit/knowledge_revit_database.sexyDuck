@@ -2449,7 +2449,7 @@
     },
     "EnneadTab.tab\\Manage.panel\\load_family_from_link.pushbutton\\load_family_from_link_script.py": {
         "alias": "Load Family From Link",
-        "doc": "Load family from linked revit file without open those links.",
+        "doc": "Load family from linked revit file without open those links. Non-editable families (in-place and system) will be skipped.",
         "icon": "EnneadTab.tab\\Manage.panel\\load_family_from_link.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Manage.panel\\load_family_from_link.pushbutton\\load_family_from_link_script.py",

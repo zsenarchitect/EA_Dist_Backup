@@ -75,7 +75,7 @@ def main():
     output = OUTPUT.get_output()
  
     output.insert_divider()
-    output.write("The following new subCategory(s) are brought to the project while loading the family", OUTPUT.Style.Subtitle)
+    output.write("The following new subCategory(s) are brought to the project [{}] while loading the family [{}]".format(doc.Title, EXEC_PARAMS.event_args.FamilyName), OUTPUT.Style.Subtitle)
     output.write("<{}>".format(EXEC_PARAMS.event_args.FamilyName), OUTPUT.Style.Title)
     output.write(new_sub_c_list)
     

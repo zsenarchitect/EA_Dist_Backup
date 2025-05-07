@@ -120,6 +120,8 @@ def load_family(file):
     app = REVIT_APPLICATION.get_app()
     # create new family from path(loaded with shared parameter), 
     if int(app.VersionNumber) >= 2024:
+        if REVIT_APPLICATION.is_version_at_least():
+            template = "{}\\BaseFamily_{}_alt.rft".format(os.path.dirname(__file__), template_unit)
         family_doc = ApplicationServices.Application.NewFamilyDocument (app, template)
     else:
         template = "{}\\old_special_compatible.rft".format(os.path.dirname(__file__))

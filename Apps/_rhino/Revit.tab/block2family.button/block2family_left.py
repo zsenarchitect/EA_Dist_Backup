@@ -9,7 +9,15 @@ import shutil
 import clr # pyright: ignore
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION, FOLDER, ENVIRONMENT
 
-KEY_PREFIX = "BLOCKS2FAMILY"
+B2F_KEY_PREFIX = "BLOCKS2FAMILY"
+
+import os
+import sys
+current_dir = os.path.dirname(__file__)
+shape2revit_dir = os.path.abspath(os.path.join(current_dir, '..', 'shape2revit.button'))
+if shape2revit_dir not in sys.path:
+    sys.path.insert(0, shape2revit_dir)
+import shape2revit_left as S2R
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
@@ -40,7 +48,7 @@ def block2family(blocks = None):
 
     # purge old data folders
     for folder in os.listdir(FOLDER.DUMP_FOLDER):
-        if folder.startswith(KEY_PREFIX):
+        if folder.startswith(B2F_KEY_PREFIX):
             full_path = os.path.join(FOLDER.DUMP_FOLDER, folder)
             if os.path.isdir(full_path):
                 shutil.rmtree(full_path)
@@ -80,7 +88,7 @@ def process_block_name(block_name,block_ids):
             NOTIFICATION.messenger("Block name contains illegal character '{}'.\nPlease rename block to use valid filename characters and try again.".format(char))
             return
             
-    working_folder = FOLDER.get_local_dump_folder_folder(KEY_PREFIX + "_" + block_name)
+    working_folder = FOLDER.get_local_dump_folder_folder(B2F_KEY_PREFIX + "_" + block_name)
     
     if not os.path.isdir(working_folder):
         os.makedirs(working_folder)
@@ -105,15 +113,18 @@ def process_block_name(block_name,block_ids):
 
 
     
-    with DATA_FILE.update_data("{}_{}".format(KEY_PREFIX, block_name)) as data:
+    with DATA_FILE.update_data("{}_{}".format(B2F_KEY_PREFIX, block_name)) as data:
         geo_data = {}
         for block_id in block_ids:
             rs.SetUserText(block_id, "Projected_Area", area)
             rs.SetUserText(block_id, "Panel_Width", width)
             rs.SetUserText(block_id, "Panel_Height", height)
 
-            
-            geo_data[str(block_id)] = {
+            if S2R.S2F_PREFIX in rs.BlockInstanceName(block_id):
+                key = rs.BlockInstanceName(block_id).replace(S2R.S2F_PREFIX, "")
+            else:
+                key = str(block_id)
+            geo_data[key] = {
                 "transform_data": get_transform(block_id),
                 "user_data": {key:rs.GetUserText(block_id, key) for key in rs.GetUserText(block_id)}
                 }
