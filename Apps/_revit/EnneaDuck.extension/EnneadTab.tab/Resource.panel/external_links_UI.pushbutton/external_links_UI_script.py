@@ -238,27 +238,49 @@ class AssistantUI(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def decode_guid_click(self, sender, args):
-        # TO-DO: make also a selection list so user can decide which folder to delete cahe or restore recent crash local
-        
+        """
+        Decodes a GUID from the user input and identifies its type and related project/file information.
+        Handles both dictionary and tuple/list data structures for maximum compatibility with EnneadTab's evolving data formats.
+        Updates the UI with a friendly, informative message about the GUID.
+        """
         guid = self.textbox_cache_decoder.Text
-        
         data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
-        note = "This Guid has not been recored in EnneadTab DataBase."
+        note = "This Guid has not been recorded in the EnneadTab DataBase.\nTry another one or check your input!"
+        found = False
         for doc_title, value in data.items():
             if isinstance(value, dict):
-                project_guid = value["project_guid"]
-                file_guid = value["model_guid"]
-            else:
-                project_guid, file_guid,_ = value
-            if guid == project_guid:
-                note = "This Guid is a Project Guid. \nThis project contains:\n"
-                for doc_title, value in data.items():
-                    if value[0] == guid:
-                        note += "[{}]\n".format(doc_title)
-                break
-            if guid == file_guid:
-                note = "This Guid is a File Guid for [{}].".format(doc_title)
-                break
+                project_guid = value.get("project_guid", None)
+                file_guid = value.get("model_guid", None)
+                if guid == project_guid:
+                    note = "This Guid is a Project Guid.\nThis project contains:\n"
+                    for dt, v in data.items():
+                        if isinstance(v, dict) and v.get("project_guid", None) == guid:
+                            note += "[{}]\n".format(dt)
+                        elif isinstance(v, (list, tuple)) and len(v) > 0 and v[0] == guid:
+                            note += "[{}]\n".format(dt)
+                    found = True
+                    break
+                if guid == file_guid:
+                    note = "This Guid is a File Guid for [{}].".format(doc_title)
+                    found = True
+                    break
+            elif isinstance(value, (list, tuple)):
+                # Defensive: check length
+                project_guid = value[0] if len(value) > 0 else None
+                file_guid = value[1] if len(value) > 1 else None
+                if guid == project_guid:
+                    note = "This Guid is a Project Guid.\nThis project contains:\n"
+                    for dt, v in data.items():
+                        if isinstance(v, dict) and v.get("project_guid", None) == guid:
+                            note += "[{}]\n".format(dt)
+                        elif isinstance(v, (list, tuple)) and len(v) > 0 and v[0] == guid:
+                            note += "[{}]\n".format(dt)
+                    found = True
+                    break
+                if guid == file_guid:
+                    note = "This Guid is a File Guid for [{}].".format(doc_title)
+                    found = True
+                    break
         self.textbox_decoder.Text = note
 
     @ERROR_HANDLE.try_catch_error()

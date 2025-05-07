@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-07 11:39:49.
+This is the distribution repository for EnneadTab updated on 2025-05-07 12:06:18.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What did the pirate say on his 80th birthday? Aye Matey!
+Why did the scarecrow get promoted? Because he was outstanding in his field.

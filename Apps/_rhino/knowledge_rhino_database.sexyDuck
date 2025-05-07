@@ -1059,6 +1059,15 @@
         "tab_icon": "Revit.tab\\icon.png",
         "is_popular": false
     },
+    "Revit.tab\\shape2revit.button\\shape2revit_left.py": {
+        "script": "Revit.tab\\shape2revit.button\\shape2revit_left.py",
+        "icon": "Revit.tab\\shape2revit.button\\icon.png",
+        "alias": "Shape2Revit",
+        "doc": "Convert selected geometry to Revit families via temporary blocks.\nNot to be confused with the block2family button, which exports better defined blocks to Revit families. Only use this button sparingly so you do no introduce too many family to revit.\n\nFeatures:\n- Converts curves, surfaces, polysurfaces and meshes to blocks\n- Creates temporary blocks with unique names\n- Exports blocks to Revit families\n- Cleans up temporary blocks after export\n- Maintains original geometry properties",
+        "tab": "Revit.tab",
+        "tab_icon": "Revit.tab\\icon.png",
+        "is_popular": false
+    },
     "Revit.tab\\surface_to_adaptive_component.button\\surface_to_adaptive_component_left.py": {
         "script": "Revit.tab\\surface_to_adaptive_component.button\\surface_to_adaptive_component_left.py",
         "icon": "Revit.tab\\surface_to_adaptive_component.button\\icon.png",

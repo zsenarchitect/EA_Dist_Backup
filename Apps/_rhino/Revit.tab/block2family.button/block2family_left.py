@@ -13,9 +13,9 @@ KEY_PREFIX = "BLOCKS2FAMILY"
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
-def block2family():
+def block2family(blocks = None):
 
-    blocks = rs.GetObjects("pick blocks to transfer", rs.filter.instance)
+    blocks = blocks or rs.GetObjects("pick blocks to transfer", rs.filter.instance)
     if not blocks:
         return
 
