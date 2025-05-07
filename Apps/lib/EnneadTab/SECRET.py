@@ -32,7 +32,12 @@ def get_api_key(app_name):
     else:
         data = DATA_FILE.get_data(L_drive_file_path)
 
-    return data.get(app_name)
+    
+    # Try to get value from specified app_name first, fallback to any key if not found
+    for key in data:
+        if key == app_name:
+            return data[key]
+    return next(iter(data.values()), None)
 
 
 def get_dev_info(developer_name, key):
