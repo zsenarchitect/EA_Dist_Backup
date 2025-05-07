@@ -3,6 +3,9 @@
 
 
 __doc__ = """Convert .3dm and .dwg files into native Revit family elements.
+Compared to shape2family and block2family, this tool give you the maximual control over subCategory mapping to existing category so you revit will be the most clean.
+Pair this usage with move2origin.
+
 
 Key Features:
 - Assign subcategories per file

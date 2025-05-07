@@ -49,11 +49,23 @@ def user_get_dev_dict():
     """
     import SECRET
     return SECRET.get_dev_dict()
-try:
-    PLUGIN_DEVELOPERS = user_get_dev_dict() or []
-except Exception as e:
-    PLUGIN_DEVELOPERS = []
 
+# Initialize as None to enable lazy loading
+PLUGIN_DEVELOPERS = None
+
+def _get_plugin_developers():
+    """Lazy load the developer dictionary.
+    
+    Returns:
+        dict: Developer configuration mapping or empty list if access fails
+    """
+    global PLUGIN_DEVELOPERS
+    if PLUGIN_DEVELOPERS is None:
+        try:
+            PLUGIN_DEVELOPERS = user_get_dev_dict() or []
+        except Exception as e:
+            PLUGIN_DEVELOPERS = []
+    return PLUGIN_DEVELOPERS
 
 def get_EA_email_address(user_name=USER_NAME):
     """Convert system username to Ennead email address.
@@ -82,40 +94,52 @@ def get_usernames_from_developers():
     """
     system_usernames = []
     autodesk_usernames = []
-    for key in PLUGIN_DEVELOPERS:
-        system_usernames += PLUGIN_DEVELOPERS[key]["system_id"]
-        autodesk_usernames += PLUGIN_DEVELOPERS[key]["autodesk_id"]
+    for key in _get_plugin_developers():
+        system_usernames += _get_plugin_developers()[key]["system_id"]
+        autodesk_usernames += _get_plugin_developers()[key]["autodesk_id"]
     return system_usernames, autodesk_usernames
 
 
 def _is_EnneadTab_developer():
     """Verify if current user has developer status.
 
-    Checks against appropriate username list based on current environment:
-    - Rhino: Checks system username
-    - Revit: Checks Autodesk username
-    - Other: Defaults to system username check
+    Uses a two-step verification:
+    1. Fast local cache check using egg files
+    2. Fallback to developer dictionary if cache miss
 
     Returns:
         bool: True if user is a developer, False otherwise
     """
-    if os.path.exists("{}\\dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION)):
+    dev_egg_path = "{}\\dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION)
+    non_dev_egg_path = "{}\\non_dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION)
+    
+    # Check cache first
+    if os.path.exists(dev_egg_path):
         return True
-    # declare username variables
-    system_usernames, autodesk_usernames = get_usernames_from_developers()
-
-    if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
-        return USER_NAME in system_usernames
-
-    if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
-        return get_autodesk_user_name() in autodesk_usernames
-
-
-    # in all other terminal conditions:
-    if USER_NAME in system_usernames:
-        with open("{}\\dev_egg{}".format(ENVIRONMENT.DUMP_FOLDER, ENVIRONMENT.PLUGIN_EXTENSION), "w") as f:
-            f.write("Harry, you are a wizard!")
-    return USER_NAME in system_usernames
+    if os.path.exists(non_dev_egg_path):
+        return False
+        
+    # Cache miss - check developer dictionary
+    try:
+        system_usernames, autodesk_usernames = get_usernames_from_developers()
+        is_dev = False
+        
+        if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
+            is_dev = USER_NAME in system_usernames
+        elif ENVIRONMENT.IS_REVIT_ENVIRONMENT:
+            is_dev = get_autodesk_user_name() in autodesk_usernames
+        else:
+            is_dev = USER_NAME in system_usernames
+            
+        # Update cache with Harry Potter themed message
+        cache_path = dev_egg_path if is_dev else non_dev_egg_path
+        with open(cache_path, "w") as f:
+            f.write("Harry, you are{} a wizard!".format("" if is_dev else " not"))
+            
+        return is_dev
+    except Exception as e:
+        print("Error checking developer status: {}".format(e))
+        return False
 
 
 
@@ -175,7 +199,7 @@ def get_rhino_developer_emails():
         list: Email addresses of developers with system access
     """
     out = []
-    for developer_data in PLUGIN_DEVELOPERS.values():
+    for developer_data in _get_plugin_developers().values():
         if len(developer_data["system_id"]) == 0:
             continue
         out += developer_data["email"]
@@ -191,7 +215,7 @@ def get_revit_developer_emails():
         list: Email addresses of developers with Autodesk access
     """
     out = []
-    for developer_data in PLUGIN_DEVELOPERS.values():
+    for developer_data in _get_plugin_developers().values():
         if len(developer_data["autodesk_id"]) == 0:
             continue
         out += developer_data["email"]

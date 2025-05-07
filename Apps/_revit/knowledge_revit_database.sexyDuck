@@ -2179,7 +2179,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py": {
         "alias": "Rhino2Revit",
-        "doc": "Convert .3dm and .dwg files into native Revit family elements.\n\nKey Features:\n- Assign subcategories per file\n- Add new subcategories on the fly\n- Use source filename as subcategory\n- Support major curve conversion (except NURBS curves with control points on different CPlanes)\n\nBest used with EnneadTab for Rhino's Rhino2Revit exporter window.\n\nFormat Support:\n.3dm Files:\n- Stable conversion to native Revit elements\n- Individual control of Boolean, Subcategory, Visibility, Dimensions\n- Requires clean source models\n\n.dwg Files:\n- More tolerant of model imperfections\n- Handles lines, arcs, circles and planar NURBS curves\n- Elements from same source file are grouped\n- Creates Import subcategories (auto-cleaned)\n",
+        "doc": "Convert .3dm and .dwg files into native Revit family elements.\nCompared to shape2family and block2family, this tool give you the maximual control over subCategory mapping to existing category so you revit will be the most clean.\nPair this usage with move2origin.\n\n\nKey Features:\n- Assign subcategories per file\n- Add new subcategories on the fly\n- Use source filename as subcategory\n- Support major curve conversion (except NURBS curves with control points on different CPlanes)\n\nBest used with EnneadTab for Rhino's Rhino2Revit exporter window.\n\nFormat Support:\n.3dm Files:\n- Stable conversion to native Revit elements\n- Individual control of Boolean, Subcategory, Visibility, Dimensions\n- Requires clean source models\n\n.dwg Files:\n- More tolerant of model imperfections\n- Handles lines, arcs, circles and planar NURBS curves\n- Elements from same source file are grouped\n- Creates Import subcategories (auto-cleaned)\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py",
@@ -2264,6 +2264,15 @@
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\room2diagram.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\room2diagram.pushbutton\\room2diagram_script.py",
+        "tab": "Import Export",
+        "tab_icon": null
+    },
+    "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\shape2family.pushbutton\\shape2family_script.py": {
+        "alias": "Shape2Family",
+        "doc": "This is to handle all the incoming geometry made from Rhino's shape2revit command.",
+        "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\shape2family.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\shape2family.pushbutton\\shape2family_script.py",
         "tab": "Import Export",
         "tab_icon": null
     },

@@ -52,7 +52,7 @@ def get_block_name_from_data_file(data_file):
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
-def block2family():
+def block2family(always_standing=False):
     for _doc in REVIT_APPLICATION.get_app().Documents:
         if _doc.IsFamilyDocument:
             try:
@@ -62,18 +62,21 @@ def block2family():
 
     data_files = [file for file in os.listdir(FOLDER.DUMP_FOLDER) if file.startswith(KEY_PREFIX) and file.endswith(ENVIRONMENT.PLUGIN_EXTENSION)]
 
-    face_model_selection = forms.SelectFromList.show([get_block_name_from_data_file(x) for x in sorted(data_files)],
-                                                     multiselect = True,
-                                                     width = 1000,
-                                                     button_name = "Use UV projection for selected blocks",
-                                                     title="How was your block orgin defined? If it was laid on XY then it is UV projection, if it was standing then it is NOT UV projection.")
-    
-    if face_model_selection is None:
+    if not always_standing:
+        face_XY_model_selection = forms.SelectFromList.show([get_block_name_from_data_file(x) for x in sorted(data_files)],
+                                                        multiselect = True,
+                                                        width = 1000,
+                                                        button_name = "Use UV projection for selected blocks",
+                                                        title="How was your block orgin defined? If it was laid on XY then it is UV projection(check it), if it was standing then it is NOT UV projection.(do not check it)")
+    else:
+        face_XY_model_selection = []
+        
+    if face_XY_model_selection is None:
         return
 
     def _work(data_file):
         block_name = get_block_name_from_data_file(data_file)
-        process_file(data_file, block_name in face_model_selection)
+        process_file(data_file, block_name in face_XY_model_selection)
            
 
     

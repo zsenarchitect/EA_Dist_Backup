@@ -1,18 +1,13 @@
 __title__ = "Shape2Revit"
-__doc__ = """Convert selected geometry to Revit families via temporary blocks.
-Not to be confused with the block2family button, which exports better defined blocks to Revit families. Only use this button sparingly so you do no introduce too many family to revit.
-
-Features:
-- Converts curves, surfaces, polysurfaces and meshes to blocks
-- Creates temporary blocks with unique names
-- Exports blocks to Revit families
-- Cleans up temporary blocks after export
-- Maintains original geometry properties"""
+__doc__ = """Convert EACH and EVERY selected geometry to INDIVIDUAL Revit families via temporary blocks.\nNot to be confused with the block2family button, which exports better defined blocks to Revit families and is much more memory efficient.\nOnly use this button sparingly so you do not introduce too many families to Revit.\n\nFeatures:\n- Converts surfaces, polysurfaces and meshes to blocks\n- Creates temporary blocks with unique names\n- Exports blocks to Revit families\n- Cleans up temporary blocks after export\n- Maintains original geometry properties"""
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 from EnneadTab import ENVIRONMENT, ERROR_HANDLE, LOG, NOTIFICATION, DATA_FILE
-from EnneadTab.RHINO import RHINO_OBJ_DATA
+from EnneadTab.RHINO import RHINO_OBJ_DATA, RHINO_UI
+import Eto # pyright: ignore
+import Rhino # pyright: ignore
+import System
 
 import os
 import sys
@@ -25,7 +20,7 @@ import block2family_left as B2F
 
 PREFIX = "{}_CONVERT_".format(ENVIRONMENT.PLUGIN_ABBR)
 
-class Shape2RevitDialog(Eto.Forms.Form):
+class Shape2RevitDialog(Eto.Forms.Dialog[bool]):
     def __init__(self):
         self.Title = "Shape2Revit"
         self.Padding = Eto.Drawing.Padding(10)
@@ -40,7 +35,7 @@ class Shape2RevitDialog(Eto.Forms.Form):
         # Add description
         description = Eto.Forms.Label()
         description.Text = __doc__
-        description.Wrap = True
+        description.Wrap = Eto.Forms.WrapMode.Word
         layout.AddRow(description)
         
         # Add checkbox
@@ -62,6 +57,7 @@ class Shape2RevitDialog(Eto.Forms.Form):
         layout.AddRow(button_layout)
         
         self.Content = layout
+        RHINO_UI.apply_dark_style(self)
         
     def on_confirm(self, sender, e):
         if self.never_show.Checked:
@@ -77,12 +73,13 @@ def shape2revit():
     # Check if we should show the dialog
     if not DATA_FILE.get_sticky("SHAPE2REVIT_NEVER_SHOW", False):
         dialog = Shape2RevitDialog()
-        if not dialog.ShowModal():
+        result = Rhino.UI.EtoExtensions.ShowSemiModal(dialog, Rhino.RhinoDoc.ActiveDoc, Rhino.UI.RhinoEtoApp.MainWindow)
+        if not result:
             return
     
     # Get geometry with specific filters
-    filter_list = [rs.filter.curve, rs.filter.surface, rs.filter.polysurface, rs.filter.mesh]
-    geos = rs.GetObjects("Select geometry to convert to Revit families, blocks will be ignored. For block conversion, use the block2family button.", filter_list)
+    filter_value = rs.filter.surface | rs.filter.polysurface | rs.filter.mesh
+    geos = rs.GetObjects("Select geometry to convert to Revit families, blocks will be ignored. Note this is a inefficent usage of revit, and will impact revit performance significantly.", filter_value)
     if not geos:
         return
 
@@ -98,7 +95,7 @@ def shape2revit():
         center = RHINO_OBJ_DATA.get_center(geo)
         
         # Create temporary block name
-        block_name = "{}{}".format(PREFIX, rs.GetObjectGUID(geo))
+        block_name = "{}{}".format(PREFIX, str(geo)) # using guid from rs.parsing
         
         # Create block from geometry
         if rs.IsBlock(block_name):
@@ -106,11 +103,18 @@ def shape2revit():
         rs.AddBlock([geo], center, name=block_name, delete_input=False)
         
         # Insert block instance
-        block = rs.InsertBlock(block_name, center)
-        if not block:
+        temp_block = rs.InsertBlock(block_name, center)
+        if not temp_block:
             continue
-            
-        temp_block_collection.append(block)
+        
+        # Copy user data from original geometry to block instance
+        user_keys = rs.GetUserText(geo)
+        if user_keys:
+            for key in user_keys:
+                value = rs.GetUserText(geo, key)
+                rs.SetUserText(temp_block, key, value)
+        
+        temp_block_collection.append(temp_block)
 
     B2F.block2family(temp_block_collection)
     rs.DeleteObjects(temp_block_collection)

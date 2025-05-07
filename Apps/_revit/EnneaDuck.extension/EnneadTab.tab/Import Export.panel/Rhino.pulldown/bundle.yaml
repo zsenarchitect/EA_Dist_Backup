@@ -6,6 +6,7 @@ layout:
   - ----- 
   # - map_Rhino_block 
   - block2family
+  - shape2family
   - srf2adp 
   - brep2mass
   - ----- 

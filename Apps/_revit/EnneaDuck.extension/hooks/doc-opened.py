@@ -257,18 +257,21 @@ def register_silient_open(doc):
 
 
     data = DATA_FILE.get_data("DOC_OPENER_DATA", is_local=False)
-    if doc.Title in data:
-        return
-
-    
     app_version = REVIT_APPLICATION.get_app().VersionNumber
-    # Store model info
-    data[doc.Title] = {
+    desired_data = {
         "project_guid": str(model_path.GetProjectGUID()),
         "model_guid": str(model_path.GetModelGUID()),
         "region": model_path.Region,
         "revit_version": app_version
     }
+    
+    if doc.Title in data:
+        # need update check becaue once in a while revit will be updgrader to new version so data will need to be updated
+        if data[doc.Title] == desired_data:
+            return
+    
+    # Store model info
+    data[doc.Title] = desired_data
     
     
 
