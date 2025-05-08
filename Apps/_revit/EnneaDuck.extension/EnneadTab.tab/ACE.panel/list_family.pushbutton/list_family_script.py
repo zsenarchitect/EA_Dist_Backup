@@ -1179,7 +1179,7 @@ class List3DFamily(ListFamily):
         Returns:
             list: Selected 3D families, excluding curtain panels and mullions
         """
-        return REVIT_SELECTION.pick_family(multi_select=True, include_2D=False, exclude_categories=["Curtain Panels", "Curtain Wall Mullions"])
+        return REVIT_SELECTION.pick_family(self.doc, multi_select=True, include_2D=False, exclude_categories=["Curtain Panels", "Curtain Wall Mullions"])
 
         
     def get_or_create_view(self):
