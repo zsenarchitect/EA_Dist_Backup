@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-08 18:15:57.
+This is the distribution repository for EnneadTab updated on 2025-05-08 19:13:31.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Today a man knocked on my door and asked for a small donation towards the local swimming pool. I gave him a glass of water.
+I went to the doctor today and he told me I had type A blood but it was a type O.

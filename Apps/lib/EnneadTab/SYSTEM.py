@@ -187,7 +187,7 @@ def run_system_checks():
         (0.6, "MonitorDriveSilent"),
         (0.01, "AccAutoRestarter"),
         (0.5, "RegisterAutoStartup"),
-        (0.7, "Rhino8RuiUpdater"),
+        (0.8, "Rhino8RuiUpdater"),
         (0.5, check_system_uptime),
         (0.3, purge_powershell_folder)
     ]
