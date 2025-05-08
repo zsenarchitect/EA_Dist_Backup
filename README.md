@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-07 18:39:07.
+This is the distribution repository for EnneadTab updated on 2025-05-07 20:47:23.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do you call a pig that knows karate? A pork chop!
+Whiteboards are remarkable.
