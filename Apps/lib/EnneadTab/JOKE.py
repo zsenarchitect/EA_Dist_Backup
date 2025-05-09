@@ -194,7 +194,4 @@ if __name__ == "__main__":
 
 
  
-    # joke_quote()
-    for x in get_all_loading_screen_message():
-        print (x)
-
+    ennead_duck()

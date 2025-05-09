@@ -9,7 +9,6 @@ import textwrap
 
 import NOTIFICATION
 import DOCUMENTATION
-import ENVIRONMENT
 import CONFIG
 
 def is_hate_encouraging():

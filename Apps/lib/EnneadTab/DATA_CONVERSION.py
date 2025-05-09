@@ -86,12 +86,15 @@ def compare_list(A, B):
     Args:
         A (list): The first list.
         B (list): The second list.
+
+    Returns:
+        tuple: A tuple containing three lists: unique elements in A, unique elements in B, and shared elements.
     """
     unique_A = [x for x in A if x not in B]
     unique_B = [x for x in B if x not in A]
     shared = [x for x in A if x in B]
 
-
+    return unique_A, unique_B, shared
 def unit_test():
     # print all the enumerations of DataType
     print("All DataType in class:")
