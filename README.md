@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-08 19:34:15.
+This is the distribution repository for EnneadTab updated on 2025-05-08 20:50:51.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What kind of award did the dentist receive? A little plaque.
+What's the difference between a poorly dressed man on a tricycle and a well dressed man on a bicycle? Attire.
