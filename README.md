@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-10 07:45:39.
+This is the distribution repository for EnneadTab updated on 2025-05-10 10:47:02.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do you call a sheep with no legs? A cloud.
+I just got fired from a florist, apparently I took too many leaves.
