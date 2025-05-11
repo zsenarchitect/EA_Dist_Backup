@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-11 13:54:32.
+This is the distribution repository for EnneadTab updated on 2025-05-11 16:54:37.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-The other day I was listening to a song about superglue, it's been stuck in my head ever since.
+What do you get hanging from Apple trees? Sore arms.
