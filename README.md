@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-10 19:50:28.
+This is the distribution repository for EnneadTab updated on 2025-05-10 22:49:59.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why do choirs keep buckets handy? So they can carry their tune
+What's the difference between a poorly dressed man on a tricycle and a well dressed man on a bicycle? Attire.
