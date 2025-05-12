@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-11 16:54:37.
+This is the distribution repository for EnneadTab updated on 2025-05-11 20:00:32.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do you get hanging from Apple trees? Sore arms.
+What do birds give out on Halloween? Tweets.
