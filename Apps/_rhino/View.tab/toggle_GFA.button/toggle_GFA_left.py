@@ -536,8 +536,6 @@ def get_merged_data(faces):
 
 
 def get_schedule_layers():
-    layers = RHINO_LAYER.get_layers_in_order()
-
     def is_good_layer(x):
         if not "[GFA]" in x:
             return False
@@ -546,10 +544,15 @@ def get_schedule_layers():
         if not rs.IsLayerVisible(x):
             return False
         return True
-    good_layers = filter(is_good_layer, layers)
+
+
+    try:
+        good_layers = filter(is_good_layer, RHINO_LAYER.get_layers_in_order())
+    except Exception as e:
+        good_layers = filter(is_good_layer, rs.LayerNames())
+
     return good_layers
 
-    pass
 
 
 
