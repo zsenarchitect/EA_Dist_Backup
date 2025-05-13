@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-13 11:06:09.
+This is the distribution repository for EnneadTab updated on 2025-05-13 14:05:41.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Did you hear about the new restaurant on the moon? The food is great, but there's just no atmosphere.
+Have you heard about corduroy pillows?  They're making headlines!
