@@ -310,8 +310,8 @@ class Rhino2Revit_UI(forms.WPFWindow):
         try:
             new_subc = doc.Settings.Categories.NewSubcategory(
                 parent_category, new_subc_name)
-        except:
-            pass
+        except Exception as e:
+            print("Error creating new subcategory: {}".format(e))
         t.Commit()
 
         if not self.data_grid.ItemsSource:
@@ -531,6 +531,8 @@ def get_graphic_style_by_name(name):
 
 def assign_subC(converted_els, subC):
     """Assign subcategory to elements."""
+    if not subC:
+        return
     for element in converted_els:
         element.Subcategory = subC
 

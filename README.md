@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-13 14:05:41.
+This is the distribution repository for EnneadTab updated on 2025-05-13 17:06:19.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Have you heard about corduroy pillows?  They're making headlines!
+My new thesaurus is terrible. In fact, it's so bad, I'd say it's terrible.
