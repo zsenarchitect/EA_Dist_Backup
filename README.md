@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-12 20:06:14.
+This is the distribution repository for EnneadTab updated on 2025-05-12 23:04:57.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What did Michael Jackson name his denim store?    Billy Jeans!
+A man walks into a bar and orders helicopter flavor chips. The barman replies "sorry mate we only do plain"
