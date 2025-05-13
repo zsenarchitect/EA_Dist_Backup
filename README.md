@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-12 23:04:57.
+This is the distribution repository for EnneadTab updated on 2025-05-13 02:05:59.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-A man walks into a bar and orders helicopter flavor chips. The barman replies "sorry mate we only do plain"
+Why was Pavlov's beard so soft?  Because he conditioned it.
