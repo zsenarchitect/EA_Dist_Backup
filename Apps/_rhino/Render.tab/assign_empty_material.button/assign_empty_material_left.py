@@ -58,6 +58,9 @@ def assign_empty_material():
     
     if materials_created > 0:
         message = "Created and assigned {} unique materials to layers without materials.".format(materials_created)
+
+        notes = "Now, you will need to active you material.\nBy go to the MaterialsTab in Rhino\nThen shift-select all the SamepleMat_<layer_name> materials.\nAnd change the material type to any other type(Plastic, Metal, etc).\n\n\nThen you can push sync to D5 to have it recognize."
+        rs.TextOut(notes, "You are almost done!")   
     else:
         message = "No layers found that need materials assigned."
     

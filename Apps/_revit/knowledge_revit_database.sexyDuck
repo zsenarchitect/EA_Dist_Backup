@@ -2663,6 +2663,15 @@
         "tab": "Tools",
         "tab_icon": null
     },
+    "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\auto_dim_plan_script.py": {
+        "alias": "Auto Dim Plan",
+        "doc": "Automatically dimensions walls in plan views.\n\nFeatures:\n- Works with selected walls or all walls in active view\n- Creates dimensions between parallel walls\n- Smart dimension placement perpendicular to walls\n- Option to create dimensions to grids\n- Filters out curved walls (future enhancement coming soon!)\n\n",
+        "icon": "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\auto_dim_plan_script.py",
+        "tab": "Tools",
+        "tab_icon": null
+    },
     "EnneadTab.tab\\Tools.panel\\batch_cut.pushbutton\\batch_cut_script.py": {
         "alias": "Batch Cut Elements",
         "doc": "Powerful batch cutting utility for curtain wall systems.\n\nThis tool enables efficient creation of void cuts across multiple curtain panels.\nFeatures:\n- Batch process curtain walls or individual panels\n- Support for multiple selection methods\n- Intelligent void detection and validation\n- Transaction-safe operations with error handling\n\nUsage:\n1. Select curtain walls or panels\n2. Choose void geometry\n3. Apply cuts across all selected elements\n",

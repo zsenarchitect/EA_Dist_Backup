@@ -24,3 +24,4 @@ layout:
   - join_all_coln_floor
   - inspect_cutter
   - make_template_from_current_view
+  - auto_dim_plan
