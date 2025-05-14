@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-13 17:06:19.
+This is the distribution repository for EnneadTab updated on 2025-05-13 20:14:10.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-My new thesaurus is terrible. In fact, it's so bad, I'd say it's terrible.
+What lies at the bottom of the ocean and twitches? A nervous wreck.
