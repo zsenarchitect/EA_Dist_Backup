@@ -408,36 +408,42 @@ def set_revit_knowledge():
 
     DATA_FILE.set_data(data_dict, ENVIRONMENT.KNOWLEDGE_REVIT_FILE )
 
+def sanitize(func):
+    """Decorator to sanitize knowledge dictionary by filtering out archive and tailor entries.
+    
+    Args:
+        func: The function to decorate that returns a knowledge dictionary
+        
+    Returns:
+        dict: Sanitized knowledge dictionary
+    """
+    def wrapper(*args, **kwargs):
+        knowledge_pool = func(*args, **kwargs)
+        knowledge = {}
+        
+        for value in knowledge_pool.values():
+            if "archive" in value["script"].lower():
+                continue
+            if "tailor" in value["script"].lower():
+                continue
+            command_names = value["alias"]
+            if not isinstance(command_names, list):
+                command_names = [command_names]
+            for command_name in command_names:
+                knowledge[command_name] = value
+                
+        return knowledge
+    return wrapper
+
+@sanitize
 def get_revit_knowledge():
-    knowledge_pool = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE)
+    return DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE)
 
-
-    knowledge = {}
-    
-    for value in knowledge_pool.values():
-        command_names = value["alias"]
-        if not isinstance(command_names, list):
-            command_names = [command_names]
-        for command_name in command_names:
-            knowledge[command_name] = value
-
-    return knowledge
-
-
-
+@sanitize
 def get_rhino_knowledge():
-    knowledge_pool = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_RHINO_FILE)
- 
-    knowledge = {}
-    
-    for value in knowledge_pool.values():
-        command_names = value["alias"]
-        if not isinstance(command_names, list):
-            command_names = [command_names]
-        for command_name in command_names:
-            knowledge[command_name] = value
+    return DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_RHINO_FILE)
 
-    return knowledge
+
 
 
 def show_tip_rhino():
@@ -592,7 +598,8 @@ def generate_app_documentation(debug, app):
                                  "contents",
                                  "proj",
                                  "personal",
-                                 "tester"]
+                                 "tester",
+                                 "archive"]
         def is_in_delayed_category(x):
             for item in delayed_item_keywords:
                 if item in x.lower():

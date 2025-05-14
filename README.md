@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-14 14:25:38.
+This is the distribution repository for EnneadTab updated on 2025-05-14 17:29:27.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What did the pirate say on his 80th birthday? Aye Matey!
+What's the worst part about being a cross-eyed teacher?    They can't control their pupils.

@@ -935,6 +935,15 @@
         "tab": "Proj. 2419",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2512.panel\\MetroTech.pulldown\\room_bounding_to_area_b_line.pushbutton\\room_bounding_to_area_b_line_script.py": {
+        "alias": "Room Bounding To Area Boundary Lines",
+        "doc": "Creates area boundary lines from room boundaries in selected Area Plan views.\n\nThe tool processes each selected Area Plan view, finds all rooms on the associated level,\nand creates area boundary lines based on the room boundaries. The newly created area\nboundary lines are grouped by view for easier management.",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2512.panel\\MetroTech.pulldown\\room_bounding_to_area_b_line.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2512.panel\\MetroTech.pulldown\\room_bounding_to_area_b_line.pushbutton\\room_bounding_to_area_b_line_script.py",
+        "tab": "Proj. 2512",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. Princeton.panel\\Proj. Princetong.pulldown\\fire_door_checker.pushbutton\\fire_door_checker_script.py": {
         "alias": "Fire Door Checker",
         "doc": "Find rated walls and doors in the model and highlight them in schedules.\n\nMain Steps:\n1. Locate all rated walls based on fire rating parameter\n2. Find doors hosted on rated walls\n3. Cross reference with door schedule\n4. Highlight rated doors in schedule by changing text color to red\n\nOptional:\n- Creates a report of findings\n- Allows for parameter verification\n",
