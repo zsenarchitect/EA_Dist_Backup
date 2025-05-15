@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-14 20:35:52.
+This is the distribution repository for EnneadTab updated on 2025-05-14 23:36:13.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What was a more important invention than the first telephone? The second one.
+Why don't skeletons ever go trick or treating? Because they have nobody to go with.
