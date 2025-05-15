@@ -125,23 +125,33 @@ def email_error(
         t, error_from_user, computer_name, tool_name, traceback, additional_note
     )
 
-    if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
-        developer_emails = USER.get_revit_developer_emails()
-        if len(developer_emails) == 0:
-            developer_emails = ["szhang@ennead.com"]
-        if "h" in app_uptime and 50 < int(app_uptime.split("h")[0]):
-            email_to_self(
-                subject="I am tired...Revit running non-stop for {}".format(app_uptime),
-                body="Hello,\nI have been running for {}.\nLet me rest and clear cache!\n\nDid you know that restarting your Revit regularly can improve performance?\nBest regard,\nYour poor Revit.".format(
-                    app_uptime
-                ),
-            )
+    developer_emails = []
+    try:
+        if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
+            developer_emails = USER.get_revit_developer_emails()
+            if not developer_emails:  # Check if list is empty
+                developer_emails = ["szhang@ennead.com"]
+            
+            # Check Revit uptime for notification
+            if "h" in app_uptime and 50 < int(app_uptime.split("h")[0]):
+                email_to_self(
+                    subject="I am tired...Revit running non-stop for {}".format(app_uptime),
+                    body="Hello,\nI have been running for {}.\nLet me rest and clear cache!\n\nDid you know that restarting your Revit regularly can improve performance?\nBest regard,\nYour poor Revit.".format(
+                        app_uptime
+                    ),
+                )
+        elif ENVIRONMENT.IS_RHINO_ENVIRONMENT:
+            developer_emails = USER.get_rhino_developer_emails()
 
-    if ENVIRONMENT.IS_RHINO_ENVIRONMENT:
-        developer_emails = USER.get_rhino_developer_emails()
-
-    if USER.IS_DEVELOPER:
-        developer_emails = [USER.get_EA_email_address()]
+        if USER.IS_DEVELOPER:
+            developer_emails = [USER.get_EA_email_address()]
+            
+        # Ensure developer_emails is always a list
+        if not isinstance(developer_emails, list):
+            developer_emails = [developer_emails] if developer_emails else ["szhang@ennead.com"]
+    except Exception as e:
+        print("Error getting developer emails: {}".format(e))
+        developer_emails = ["szhang@ennead.com"]  # Fallback to default
 
     email(
         receiver_email_list=developer_emails,

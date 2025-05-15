@@ -73,14 +73,21 @@ def is_module_installed(module_name):
     env = os.environ.copy()
     env["PYTHONHOME"] = ENVIRONMENT.ENGINE_FOLDER
     
-    # Create a simple script to check for the module
+    # Create a more robust script to check for the module and its version
     check_script = """
 try:
     import {}
-    print("OK")
+    # Try to get version info if available
+    try:
+        version = getattr({}, '__version__', 'unknown')
+        if version == 'unknown':
+            version = getattr({}, 'VERSION', 'unknown')
+        print("OK:{}".format(version))
+    except:
+        print("OK")
 except ImportError:
     print("NOT_INSTALLED")
-""".format(module_name)
+""".format(module_name, module_name, module_name, module_name)
     
     # Write the check script to a temporary file
     temp_script = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "check_module.py")
@@ -99,6 +106,12 @@ except ImportError:
         )
         
         stdout, stderr = process.communicate()
+        
+        # More detailed output - show the version if available
+        if "OK:" in stdout:
+            version = stdout.strip().split("OK:")[1]
+            print("Module {} is installed (version: {})".format(module_name, version))
+            return True
         return "OK" in stdout
     except Exception as e:
         print("Error checking if module is installed: {}".format(e))
@@ -319,7 +332,7 @@ def _install_requirements():
     if not USER.IS_DEVELOPER:
         return True
 
-    print ("Dev only note: Installing requirements")
+    print("Dev only note: Installing requirements")
     
     global _MODULE_REQUIREMENTS_CHECKED
     
@@ -327,15 +340,48 @@ def _install_requirements():
     if _MODULE_REQUIREMENTS_CHECKED:
         return True
         
+    # Create a marker file to track installed modules
+    marker_file = os.path.join(ENVIRONMENT.DUMP_FOLDER, "installed_modules.txt")
+    installed_modules = set()
+    
+    # Load previously installed modules if marker file exists
+    if os.path.exists(marker_file):
+        try:
+            with open(marker_file, "r") as f:
+                for line in f:
+                    module = line.strip()
+                    if module:
+                        installed_modules.add(module)
+        except:
+            pass
+    
     all_success = True
+    modules_to_install = []
+    
+    # First check which modules need installation
     for module in REQUIREMENTS:
+        if module in installed_modules:
+            print("Module {} already marked as installed (skipping check)".format(module))
+            continue
+            
         if not is_module_installed(module):
-            success = install_module(module)
-            if not success:
-                all_success = False
-                print("Failed to install required module: {}".format(module))
+            modules_to_install.append(module)
+    
+    # Then install them
+    for module in modules_to_install:
+        success = install_module(module)
+        if success:
+            installed_modules.add(module)
+            # Update marker file immediately after each successful installation
+            try:
+                with open(marker_file, "w") as f:
+                    for m in installed_modules:
+                        f.write(m + "\n")
+            except:
+                pass
         else:
-            print("Module already installed: {}".format(module))
+            all_success = False
+            print("Failed to install required module: {}".format(module))
     
     _MODULE_REQUIREMENTS_CHECKED = True        
     return all_success
@@ -826,7 +872,8 @@ def _cleanup_on_startup():
     # Mark module as initialized
     _MODULE_INITIALIZED = True
 
-if __name__ == "__main__":
+
+def basic_test():
     sample_script = """
 import sys
 import os
@@ -906,3 +953,6 @@ print ("############# end of test ##############")
                 os.remove(test_file)
             except:
                 pass
+
+if __name__ == "__main__":
+    basic_test()

@@ -198,12 +198,37 @@ def get_rhino_developer_emails():
     Returns:
         list: Email addresses of developers with system access
     """
-    out = []
-    for developer_data in _get_plugin_developers().values():
-        if len(developer_data["system_id"]) == 0:
-            continue
-        out += developer_data["email"]
-    return out
+    try:
+        out = []
+        developers = _get_plugin_developers()
+        if not developers or not isinstance(developers, dict):
+            return ["szhang@ennead.com"]  # Default fallback
+            
+        for developer_data in developers.values():
+            if not isinstance(developer_data, dict):
+                continue
+                
+            if "system_id" not in developer_data or "email" not in developer_data:
+                continue
+                
+            if len(developer_data["system_id"]) == 0:
+                continue
+                
+            # Make sure we're dealing with a list
+            if isinstance(developer_data["email"], list):
+                out.extend(developer_data["email"])
+            else:
+                # Handle single email as string case
+                out.append(developer_data["email"])
+        
+        # Always return at least one developer email
+        if not out:
+            return ["szhang@ennead.com"]
+            
+        return out
+    except Exception as e:
+        print("Error getting Rhino developer emails: {}".format(e))
+        return ["szhang@ennead.com"]  # Fallback to default
 
 def get_revit_developer_emails():
     """Get email addresses for all Revit developers.
@@ -214,12 +239,37 @@ def get_revit_developer_emails():
     Returns:
         list: Email addresses of developers with Autodesk access
     """
-    out = []
-    for developer_data in _get_plugin_developers().values():
-        if len(developer_data["autodesk_id"]) == 0:
-            continue
-        out += developer_data["email"]
-    return out
+    try:
+        out = []
+        developers = _get_plugin_developers()
+        if not developers or not isinstance(developers, dict):
+            return ["szhang@ennead.com"]  # Default fallback
+            
+        for developer_data in developers.values():
+            if not isinstance(developer_data, dict):
+                continue
+                
+            if "autodesk_id" not in developer_data or "email" not in developer_data:
+                continue
+                
+            if len(developer_data["autodesk_id"]) == 0:
+                continue
+                
+            # Make sure we're dealing with a list
+            if isinstance(developer_data["email"], list):
+                out.extend(developer_data["email"])
+            else:
+                # Handle single email as string case
+                out.append(developer_data["email"])
+        
+        # Always return at least one developer email
+        if not out:
+            return ["szhang@ennead.com"]
+            
+        return out
+    except Exception as e:
+        print("Error getting Revit developer emails: {}".format(e))
+        return ["szhang@ennead.com"]  # Fallback to default
 
 
 

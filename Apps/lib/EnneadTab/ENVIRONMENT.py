@@ -105,6 +105,7 @@ CORE_FOLDER = os.path.join(LIB_FOLDER, PLUGIN_NAME)
 IMAGE_FOLDER = os.path.join(CORE_FOLDER, "images")
 AUDIO_FOLDER = os.path.join(CORE_FOLDER, "audios")
 DOCUMENT_FOLDER = os.path.join(CORE_FOLDER, "documents")
+SCRIPT_FOLDER = os.path.join(CORE_FOLDER, "scripts")
 
 
 EXE_PRODUCT_FOLDER = os.path.join(LIB_FOLDER, "ExeProducts")
