@@ -2251,7 +2251,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py": {
         "alias": "Revit2Rhino",
-        "doc": "\nScript for exporting Revit Family Instances to Rhino.\nIt converts each FamilyInstance's geometry into a **single Rhino block** containing all its Breps\n(or fallback Meshes). The block definition is annotated with 'RevitElementID'.\n\n\nThis only process current view.\n\nTO-DO: accept layer making\n\n",
+        "doc": "\nScript for exporting Revit Family Instances to Rhino.\nIt converts each FamilyInstance's geometry into a **single Rhino block** containing all its Breps\n(or fallback Meshes). The block definition is annotated with 'RevitElementID'.\n\nThe script will first try to extract untransformed geometry from the symbol, but if that fails,\nit will fall back to using instance geometry for creating blocks.\n\nUsers can select which families to export through an interactive selection dialog.\n\nBlock names in Rhino follow the format: \"FamilyName_ElementID\"\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py",

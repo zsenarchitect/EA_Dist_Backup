@@ -53,6 +53,8 @@ def handle_auto_start_command():
     if "{}_DRAFTER".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
         rs.Command("{}_RevitDrafterImport".format(ENVIRONMENT.PLUGIN_ABBR))
 
+    if "{}_Revit2Rhino".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
+        rs.Command("!_Zoom Extents")
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)
 def add_hook(): 
