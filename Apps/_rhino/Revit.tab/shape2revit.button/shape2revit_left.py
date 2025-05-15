@@ -7,7 +7,7 @@ from EnneadTab import ENVIRONMENT, ERROR_HANDLE, LOG, NOTIFICATION, DATA_FILE
 from EnneadTab.RHINO import RHINO_OBJ_DATA, RHINO_UI
 import Eto # pyright: ignore
 import Rhino # pyright: ignore
-import System
+import System # pyright: ignore
 
 import os
 import sys
@@ -16,7 +16,7 @@ current_dir = os.path.dirname(__file__)
 block2family_dir = os.path.abspath(os.path.join(current_dir, '..', 'block2family.button'))
 if block2family_dir not in sys.path:
     sys.path.insert(0, block2family_dir)
-import block2family_left as B2F
+import block2family_left as B2F # pyright: ignore
 
 S2F_PREFIX = "{}_CONVERT_".format(ENVIRONMENT.PLUGIN_ABBR)
 

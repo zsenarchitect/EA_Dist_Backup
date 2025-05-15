@@ -36,35 +36,19 @@ def main():
 
     DOCUMENTATION.tip_of_day()
 
-    handle_auto_start_command()
-
     HOLIDAY.festival_greeting()
 
 
-def handle_auto_start_command():
-    if not rs.DocumentName():        
-        return
 
-    # this to help revit selection method.
-    if "{}RevitSelectionHelper".format(ENVIRONMENT.PLUGIN_NAME) in rs.DocumentName():
-        rs.Command("{}_LiveSelection".format(ENVIRONMENT.PLUGIN_ABBR))
-
-    # this to help revit selection method.
-    if "{}_DRAFTER".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
-        rs.Command("{}_RevitDrafterImport".format(ENVIRONMENT.PLUGIN_ABBR))
-
-    if "{}_Revit2Rhino".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
-        rs.Command("!_Zoom Extents")
     
 @ERROR_HANDLE.try_catch_error(is_silent=True, is_pass=True)
 def add_hook(): 
-    # first record current file
-    action_update_timesheet(Rhino.RhinoDoc.ActiveDoc)
-   
+
         
     # then add hook for future file in this session
-    Rhino.RhinoDoc.BeginOpenDocument += event_func_timesheet
     Rhino.RhinoDoc.CloseDocument += event_func_timesheet
+    Rhino.RhinoDoc.EndOpenDocumentInitialViewUpdate  += event_func_handle_auto_start_command
+    Rhino.RhinoDoc.EndOpenDocumentInitialViewUpdate  += event_func_timesheet
 
 
     Rhino.RhinoDoc.BeginSaveDocument += event_func_update_dist_repo
@@ -84,6 +68,19 @@ def action_update_timesheet(doc):
 
 
 ##################################################
+
+def event_func_handle_auto_start_command(sender, e):
+    file_name = e.FileName
+    if not file_name:        
+        return
+
+
+    if "{}_Revit2Rhino".format(ENVIRONMENT.PLUGIN_ABBR) in rs.DocumentName():
+        rs.Command("!Zoom Extents")
+        rs.Command("!- _Select None")
+
+
+        
 def event_func_timesheet(sender, e):
     action_update_timesheet(e.Document)
 
