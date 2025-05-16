@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-15 17:57:33.
+This is the distribution repository for EnneadTab updated on 2025-05-15 20:56:05.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why do crabs never give to charity? Because they're shellfish.
+What do vegetarian zombies eat? Grrrrrainnnnnssss.
