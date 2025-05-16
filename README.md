@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-15 20:56:05.
+This is the distribution repository for EnneadTab updated on 2025-05-15 23:56:26.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do vegetarian zombies eat? Grrrrrainnnnnssss.
+What do you get when you cross a rabbit with a water hose? Hare spray.
