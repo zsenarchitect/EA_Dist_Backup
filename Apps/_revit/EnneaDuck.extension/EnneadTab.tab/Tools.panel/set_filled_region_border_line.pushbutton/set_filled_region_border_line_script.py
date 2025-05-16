@@ -7,8 +7,8 @@ __doc__ = "Specialized filled region styling tool that allows precise control ov
 __title__ = "Set FilledRegion\nBorder Style"
 
 
-from pyrevit import script #
-from pyrevit.revit import ErrorSwallower
+from pyrevit import script # pyright: ignore
+from pyrevit.revit import ErrorSwallower # pyright: ignore
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
@@ -17,7 +17,7 @@ from EnneadTab import ERROR_HANDLE, LOG
 from Autodesk.Revit import DB # pyright: ignore 
 # from Autodesk.Revit import UI # pyright: ignore
 doc = __revit__.ActiveUIDocument.Document # pyright: ignore
-uidoc = __revit__.ActiveUIDocument
+uidoc = __revit__.ActiveUIDocument # pyright: ignore
 
 
 

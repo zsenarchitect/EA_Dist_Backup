@@ -14,7 +14,10 @@ import COPY
 import ERROR_HANDLE
 import ENGINE
 
-
+# Dictionary to track recent calls to executables
+_recent_exe_calls = {}
+# Maximum number of calls allowed per second (2 calls per second)
+_MAX_CALLS_PER_SECOND = 2
 
 
 def open_document_file(file_path):
@@ -129,15 +132,42 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False, depth = 0):
         Safe mode creates temporary copies in the system temp folder with automatic cleanup:
         - OS_Installer/AutoStartup files: cleaned up after 12 hours
         - Other executables: cleaned up after 24 hours
+        
+        Rate limiting is applied to prevent rapid-fire calling of the same executable.
+        No more than 2 calls per second for the same executable are allowed.
     """
+    # Access the global dictionary for tracking calls
+    global _recent_exe_calls
+    
     # Prevent infinite recursion
     if depth > 2:
         ERROR_HANDLE.print_note("Maximum recursion depth reached for: {}".format(exe_name))
         return False
+        
+    # Check rate limiting for the executable
+    exe_key = exe_name.lower().replace(".exe", "")
+    current_time = time.time()
+    
+    if exe_key in _recent_exe_calls:
+        recent_calls = _recent_exe_calls[exe_key]
+        # Remove calls older than 1 second
+        recent_calls = [t for t in recent_calls if current_time - t < 1.0]
+        
+        # If too many recent calls, prevent this call
+        if len(recent_calls) >= _MAX_CALLS_PER_SECOND:
+            ERROR_HANDLE.print_note("Rate limit reached for: {}. Maximum {} calls per second allowed.".format(
+                exe_name, _MAX_CALLS_PER_SECOND))
+            return False
+            
+        # Update the call history
+        _recent_exe_calls[exe_key] = recent_calls + [current_time]
+    else:
+        # First call for this executable
+        _recent_exe_calls[exe_key] = [current_time]
 
     # Handle non-executable files directly
     abs_name = exe_name.lower()
-    if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg")):
+    if abs_name.endswith((".3dm", ".xlsx", ".xls", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico", ".webp", ".psd")):
         return open_document_file(exe_name)
 
     # Locate the executable

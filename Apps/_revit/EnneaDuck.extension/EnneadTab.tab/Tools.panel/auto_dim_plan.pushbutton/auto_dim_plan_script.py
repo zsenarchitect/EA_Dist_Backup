@@ -73,11 +73,11 @@ def create_wall_dimensions(doc, walls, view, options):
             continue
     
     if not straight_walls:
-        NOTIFICATION.toast("No straight walls found", "Warning")
+        NOTIFICATION.messenger("No straight walls found", "Warning")
         return False
     
     if curved_walls and options["show_curved_wall_warning"]:
-        NOTIFICATION.toast(f"{len(curved_walls)} curved walls ignored", "Info")
+        NOTIFICATION.messenger("{} curved walls ignored".format(len(curved_walls)), "Info")
     
     dimension_line_offset = options["dimension_offset"]
     include_grids = options["include_grids"]
@@ -165,7 +165,7 @@ def auto_dim_plan(doc):
     
     # Check if the active view is a plan view
     if not isinstance(active_view, DB.ViewPlan):
-        NOTIFICATION.toast("This tool works only in plan views", "Warning")
+        NOTIFICATION.messenger("This tool works only in plan views", "Warning")
         return
     
     # Get walls to dimension
@@ -182,7 +182,7 @@ def auto_dim_plan(doc):
             return
     
     if not walls:
-        NOTIFICATION.toast("No walls found to dimension", "Warning")
+        NOTIFICATION.messenger("No walls found to dimension", "Warning")
         return
     
     # Get user options
@@ -221,9 +221,9 @@ def auto_dim_plan(doc):
     success = create_wall_dimensions(doc, walls, active_view, options)
     
     if success:
-        NOTIFICATION.toast("Walls dimensioned successfully", "Success")
+        NOTIFICATION.messenger("Walls dimensioned successfully", "Success")
     else:
-        NOTIFICATION.toast("Could not dimension any walls", "Warning")
+        NOTIFICATION.messenger("Could not dimension any walls", "Warning")
         
     t.Commit()
 

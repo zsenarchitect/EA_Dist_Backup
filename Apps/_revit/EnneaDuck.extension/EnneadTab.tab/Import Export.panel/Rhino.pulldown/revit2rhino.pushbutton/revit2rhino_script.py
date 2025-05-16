@@ -4,15 +4,7 @@
 __doc__ ="""
 Script for exporting Revit Family Instances to Rhino.
 It converts each FamilyInstance's geometry into a Rhino block containing all its Breps
-(or fallback Meshes). The block definition is annotated with 'RevitElementID'.
-
-GEOMETRY EXTRACTION METHODS:
-1. First tries GetSymbolGeometry() - Returns untransformed geometry in family coordinate system.
-   This is ideal for block definitions as it's in the symbol's local coordinate space.
-
-2. If that fails, uses GetInstanceGeometry() - Returns geometry that includes the instance
-   transformation and is already in the project coordinate system.
-   For this case, we untransform the geometry before creating the block definition.
+(or fallback Meshes). 
 
 Block names in Rhino follow the format: "FamilyName_TypeName"
 Each export includes a timestamp in the filename.
@@ -21,8 +13,6 @@ Each export includes a timestamp in the filename.
 __title__ = "Revit2Rhino"
 
 import clr  # pyright: ignore
-import os
-import time
 import logging
 
 # Configure logging
@@ -53,15 +43,11 @@ except:
 import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 
-from pyrevit import forms
-from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, UI, ENVIRONMENT, USER
-from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_UNIT, REVIT_RHINO, REVIT_FORMS
-from Autodesk.Revit import DB  # pyright: ignore
+from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, USER
+from EnneadTab.REVIT import REVIT_APPLICATION
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
-
-# get_family_instances_from_view function has been moved to the UI module
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()

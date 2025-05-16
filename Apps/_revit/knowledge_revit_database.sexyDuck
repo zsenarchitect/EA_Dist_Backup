@@ -908,6 +908,15 @@
         "tab": "Proj. 2412",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2418.panel\\Texttile.pulldown\\make_filter_legend.pushbutton\\make_filter_legend_script.py": {
+        "alias": "Make Filter Legend",
+        "doc": "Create view filters based on Generic Model family names, apply colors from CSS definitions, and generate a legend.",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2418.panel\\Texttile.pulldown\\make_filter_legend.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2418.panel\\Texttile.pulldown\\make_filter_legend.pushbutton\\make_filter_legend_script.py",
+        "tab": "Proj. 2418",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. 2419.panel\\SinoChem.pulldown\\chained_family_loading.pushbutton\\chained_family_loading_script.py": {
         "alias": "Chained Family Loading",
         "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
@@ -2251,7 +2260,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py": {
         "alias": "Revit2Rhino",
-        "doc": "\nScript for exporting Revit Family Instances to Rhino.\nIt converts each FamilyInstance's geometry into a Rhino block containing all its Breps\n(or fallback Meshes). The block definition is annotated with 'RevitElementID'.\n\nGEOMETRY EXTRACTION METHODS:\n1. First tries GetSymbolGeometry() - Returns untransformed geometry in family coordinate system.\n   This is ideal for block definitions as it's in the symbol's local coordinate space.\n\n2. If that fails, uses GetInstanceGeometry() - Returns geometry that includes the instance\n   transformation and is already in the project coordinate system.\n   For this case, we untransform the geometry before creating the block definition.\n\nBlock names in Rhino follow the format: \"FamilyName_TypeName\"\nEach export includes a timestamp in the filename.\n",
+        "doc": "\nScript for exporting Revit Family Instances to Rhino.\nIt converts each FamilyInstance's geometry into a Rhino block containing all its Breps\n(or fallback Meshes). \n\nBlock names in Rhino follow the format: \"FamilyName_TypeName\"\nEach export includes a timestamp in the filename.\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\revit2rhino.pushbutton\\revit2rhino_script.py",

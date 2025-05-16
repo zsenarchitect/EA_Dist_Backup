@@ -401,26 +401,8 @@ if __name__ == "__main__":
     # Test random font messenger
     font = get_random_font()
     messenger("Hello world with bigger text\nUsing [{}]".format(font), font_size=30, font_family=font)
-    
-    # Run window message tests
-    test_window_msg()
-    
-    # Direct test without dependency on other modules
-    print("\nDirect standalone toast test:")
-    try:
-        from win10toast import ToastNotifier
-        print("Using win10toast for notification")
-        toaster = ToastNotifier()
-        toaster.show_toast(
-            "Direct Test",
-            "This is a direct test without module dependencies",
-            duration=5,
-            threaded=True
-        )
-        import time
-        time.sleep(6)  # Wait to see notification
-        print("Toast notification should be visible now")
-    except ImportError:
-        print("win10toast not available, notification may not appear")
-
+    for font_name    in FUNFONTS:
+        messenger("rapid fire test："+font_name, font_family=font_name)
+        # import time 
+        # time.sleep(0.2)
     

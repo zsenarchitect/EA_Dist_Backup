@@ -204,7 +204,7 @@ def cleanup_dump_folder():
     """Clean up temporary files from the dump folder.
 
     Removes files older than 3 days from the DUMP_FOLDER, excluding protected file types:
-    .json, PLUGIN_EXTENSION, .txt, .lock, and .rui files.
+    .json, PLUGIN_EXTENSION, .txt, .DuckLock, and .rui files.
     
     This function runs silently and handles file deletion errors gracefully.
     """
@@ -212,7 +212,7 @@ def cleanup_dump_folder():
     import time
 
     cutoff_time = time.time() - (3 * 24 * 60 * 60)  # 3 days
-    protected_extensions = {'.json', PLUGIN_EXTENSION, ".txt", ".lock", ".rui"}
+    protected_extensions = {'.json', PLUGIN_EXTENSION, ".txt", ".lock", ".DuckLock", ".rui"}
 
     for filename in os.listdir(DUMP_FOLDER):
         file_path = os.path.join(DUMP_FOLDER, filename)
@@ -231,7 +231,63 @@ def cleanup_dump_folder():
                 pass
 
 
-cleanup_dump_folder()
+def should_check_l_drive():
+    """Determine if L drive should be checked based on time elapsed since last check.
+    
+    Ensures check happens at most once per hour.
+    
+    Returns:
+        bool: True if an hour has passed since last check, False otherwise.
+    """
+    import time
+    import os.path
+    
+    timestamp_file = os.path.join(DUMP_FOLDER, "l_drive_check.DuckLock")
+    current_time = time.time()
+    cutoff_time = current_time - (60 * 60)  # 1 hour
+    
+    # If lock file exists and is less than an hour old, don't check
+    if os.path.exists(timestamp_file):
+        if os.path.getmtime(timestamp_file) > cutoff_time:
+            return False
+    
+    # Update timestamp by touching the file
+    try:
+        with open(timestamp_file, "w") as f:
+            f.write("")
+    except:
+        pass
+        
+    return True
+
+def should_cleanup_dump_folder():
+    """Determine if dump folder should be cleaned up based on time elapsed since last cleanup.
+    
+    Ensures cleanup happens at most once per day.
+    
+    Returns:
+        bool: True if a day has passed since last cleanup, False otherwise.
+    """
+    import time
+    import os.path
+    
+    timestamp_file = os.path.join(DUMP_FOLDER, "dump_cleanup.DuckLock")
+    current_time = time.time()
+    cutoff_time = current_time - (24 * 60 * 60)  # 24 hours
+    
+    # If lock file exists and is less than a day old, don't cleanup
+    if os.path.exists(timestamp_file):
+        if os.path.getmtime(timestamp_file) > cutoff_time:
+            return False
+    
+    # Update timestamp by touching the file
+    try:
+        with open(timestamp_file, "w") as f:
+            f.write("")
+    except:
+        pass
+        
+    return True
 
 def is_avd():
     """Detect if running in Azure Virtual Desktop environment.
@@ -436,8 +492,13 @@ def alert_l_drive_not_available(play_sound = False):
 
     return False
 
-alert_l_drive_not_available()
+# Run maintenance operations
+if should_cleanup_dump_folder():
+    cleanup_dump_folder()
 
+if should_check_l_drive():
+    alert_l_drive_not_available()
 ###############
 if __name__ == "__main__":
     unit_test()
+

@@ -10,7 +10,7 @@ import os
 import sys
 import clr
 import logging
-
+import traceback
 from pyrevit import forms, script
 from pyrevit.framework import wpf, Windows, Media
 import System
@@ -60,9 +60,13 @@ def get_family_instances_from_view(include_links=False):
         
         # Find linked documents
         linkInstances = DB.FilteredElementCollector(doc).OfClass(DB.RevitLinkInstance).ToElements()
+        logger.debug("Found {} link instances in the document".format(len(list(linkInstances))))
+        
         for linkInstance in linkInstances:
             if linkInstance.GetLinkDocument():
                 linked_docs.append(linkInstance)
+        
+        logger.debug("Found {} linked documents with available content".format(len(linked_docs)))
         
         # Collect instances from each linked document
         for linkInstance in linked_docs:
@@ -70,24 +74,38 @@ def get_family_instances_from_view(include_links=False):
             if not link_doc:
                 continue
                 
+            # Skip if the link instance itself is not visible in the view
+            # Use IsHidden property on View to check link visibility
+            view_state = doc.ActiveView.GetLinkVisibility(linkInstance.Id)
+            if view_state == DB.ViewVisibility.Hidden:
+                logger.debug("Link '{}' is not visible in active view, skipping...".format(link_doc.Title))
+                continue
+                
+            logger.debug("Processing linked document: {}".format(link_doc.Title))
             link_transform = linkInstance.GetTransform()
             
-            # Use LinkElementId to keep track of linked elements
+            # Use collector without viewId for linked documents
             linked_instances = (
-                DB.FilteredElementCollector(link_doc, doc.ActiveView.Id)
+                DB.FilteredElementCollector(link_doc)
                 .OfClass(DB.FamilyInstance)
                 .WhereElementIsNotElementType()
                 .ToElements()
             )
             
+            linked_instances_list = list(linked_instances)
+            logger.debug("Found {} family instances in linked document".format(len(linked_instances_list)))
+            
             # Store link info with the element for later processing
-            for linked_element in linked_instances:
-                # Skip invisible elements
-                if not linked_element.IsVisibleInView(doc.ActiveView):
-                    continue
+            count = 0
+            for linked_element in linked_instances_list:
+                # No need to check individual element visibility here
+                # as we already confirmed the link is visible
                 linked_element.link_transform = link_transform
                 linked_element.link_doc = link_doc
                 all_family_instances.append(linked_element)
+                count += 1
+            
+            logger.debug("Added {} elements from linked document '{}'".format(count, link_doc.Title))
     
     # Organize by family
     family_dict = {}
@@ -210,6 +228,7 @@ class Revit2RhinoUI(forms.WPFWindow):
             self.export_button.IsEnabled = True
             
         except Exception as e:
+            print (traceback.format_exc())
             NOTIFICATION.messenger("Error selecting families: {}".format(str(e)))
             self.selection_info.Text = "Error occurred while selecting families."
             self.export_button.IsEnabled = False

@@ -127,7 +127,7 @@
                     </GroupBox.Header>
                     <StackPanel Margin="10,10,10,10">
                         <CheckBox x:Name="include_linked_elements_checkbox" 
-                                  Content="Include Elements from Links" 
+                                  Content="Include Elements from Links(WIP)" 
                                   IsChecked="False"
                                   Margin="0,0,0,5"/>
                         
