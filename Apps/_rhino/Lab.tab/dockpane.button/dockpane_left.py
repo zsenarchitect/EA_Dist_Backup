@@ -13,29 +13,93 @@ from Rhino.UI import Panels
 class DockablePanel(forms.Panel):
     def __init__(self):
         super(DockablePanel, self).__init__()
-        self.Title = "Dockpane"
+        self.Title = "EnneadTab Panel"
         self.Padding = drawing.Padding(5)
         
         # Create controls
+        self.create_controls()
+        
+        # Create layout
+        self.create_layout()
+    
+    def create_controls(self):
+        # Text section
+        self.text_label = forms.Label(Text="Enter Text:")
         self.textbox = forms.TextBox()
         self.textbox.Width = 200
-        
         self.print_button = forms.Button(Text="Print Text")
         self.print_button.Click += self.on_print_click
         
+        # Selection section
+        self.selection_label = forms.Label(Text="Objects:")
         self.select_button = forms.Button(Text="Select All")
         self.select_button.Click += self.on_select_click
+        self.filter_button = forms.Button(Text="Select Lines Only")
+        self.filter_button.Click += self.on_filter_click
         
-        # Create layout
+        # Layer section
+        self.layer_label = forms.Label(Text="Active Layer:")
+        self.layer_dropdown = forms.DropDown()
+        self.update_layer_list()
+        self.layer_dropdown.SelectedIndexChanged += self.on_layer_changed
+        self.add_layer_button = forms.Button(Text="Add New Layer")
+        self.add_layer_button.Click += self.on_add_layer_click
+        
+        # Color section
+        self.color_label = forms.Label(Text="Color:")
+        self.color_picker = forms.ColorPicker()
+        self.color_picker.Value = drawing.Colors.Red
+        self.apply_color_button = forms.Button(Text="Apply Color")
+        self.apply_color_button.Click += self.on_apply_color_click
+    
+    def create_layout(self):
         layout = forms.DynamicLayout()
-        layout.Padding = drawing.Padding(5)
-        layout.Spacing = drawing.Size(5, 5)
+        layout.Padding = drawing.Padding(10)
+        layout.Spacing = drawing.Size(5, 10)
         
+        # Add text section
+        layout.AddRow(self.text_label)
         layout.AddRow(self.textbox)
         layout.AddRow(self.print_button)
+        
+        # Add separator
+        separator1 = forms.SeparatorControl()
+        separator1.Height = 1
+        layout.AddRow(None, separator1, None)
+        
+        # Add selection section
+        layout.AddRow(self.selection_label)
         layout.AddRow(self.select_button)
+        layout.AddRow(self.filter_button)
+        
+        # Add separator
+        separator2 = forms.SeparatorControl()
+        separator2.Height = 1
+        layout.AddRow(None, separator2, None)
+        
+        # Add layer section
+        layout.AddRow(self.layer_label)
+        layout.AddRow(self.layer_dropdown)
+        layout.AddRow(self.add_layer_button)
+        
+        # Add separator
+        separator3 = forms.SeparatorControl()
+        separator3.Height = 1
+        layout.AddRow(None, separator3, None)
+        
+        # Add color section
+        layout.AddRow(self.color_label)
+        layout.AddRow(self.color_picker)
+        layout.AddRow(self.apply_color_button)
         
         self.Content = layout
+    
+    def update_layer_list(self):
+        self.layer_dropdown.Items.Clear()
+        for layer in Rhino.RhinoDoc.ActiveDoc.Layers:
+            self.layer_dropdown.Items.Add(layer.Name)
+        if self.layer_dropdown.Items.Count > 0:
+            self.layer_dropdown.SelectedIndex = 0
     
     @ERROR_HANDLE.try_catch_error()    
     def on_print_click(self, sender, e):
@@ -48,14 +112,86 @@ class DockablePanel(forms.Panel):
         for obj in objects:
             obj.Select(True)
         doc.Views.Redraw()
+    
+    @ERROR_HANDLE.try_catch_error()    
+    def on_filter_click(self, sender, e):
+        doc = Rhino.RhinoDoc.ActiveDoc
+        # Clear current selection
+        doc.Objects.UnselectAll()
+        
+        # Only select curve objects
+        settings = Rhino.DocObjects.ObjectEnumeratorSettings()
+        settings.ObjectTypeFilter = Rhino.DocObjects.ObjectType.Curve
+        objects = doc.Objects.FindByFilter(settings)
+        
+        for obj in objects:
+            obj.Select(True)
+        doc.Views.Redraw()
+    
+    @ERROR_HANDLE.try_catch_error()    
+    def on_layer_changed(self, sender, e):
+        selected_layer = self.layer_dropdown.SelectedValue
+        if selected_layer:
+            rs.CurrentLayer(selected_layer)
+    
+    @ERROR_HANDLE.try_catch_error()    
+    def on_add_layer_click(self, sender, e):
+        new_layer_name = "NewLayer_" + System.Guid.NewGuid().ToString().Substring(0, 8)
+        rs.AddLayer(new_layer_name)
+        self.update_layer_list()
+        # Select the newly created layer
+        for i, layer in enumerate(self.layer_dropdown.Items):
+            if layer == new_layer_name:
+                self.layer_dropdown.SelectedIndex = i
+                break
+    
+    @ERROR_HANDLE.try_catch_error()    
+    def on_apply_color_click(self, sender, e):
+        doc = Rhino.RhinoDoc.ActiveDoc
+        objects = doc.Objects.GetSelectedObjects(False, False)
+        if not objects:
+            print("No objects selected. Please select objects first.")
+            return
+            
+        # Convert Eto color to Rhino color
+        eto_color = self.color_picker.Value
+        rhino_color = System.Drawing.Color.FromArgb(eto_color.Rb, eto_color.Gb, eto_color.Bb)
+        
+        for obj in objects:
+            obj.Attributes.ObjectColor = rhino_color
+            obj.Attributes.ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromObject
+            obj.CommitChanges()
+        
+        doc.Views.Redraw()
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def dockpane():
     """Create and show a dockable panel that attaches to the side of Rhino window"""
     # Create and register the panel
+    panel_id = "EnneadTab_Dockpane_Panel"
+    
+    # Check if panel already exists
+    existing_panel = Panels.GetPanel(panel_id)
+    if existing_panel:
+        Panels.ClosePanel(panel_id)
+    
+    # Create new panel
     panel = DockablePanel()
-    Panels.RegisterPanel(panel, "EnneadTab Dockpane", System.Drawing.SystemIcons.Application.ToBitmap(), Panels.PanelType.Floating)
+    
+    # Try to load a custom bitmap
+    try:
+        icon_path = Rhino.PlugIns.PlugIn.PathFromName("EnneadTab") + "\\resources\\rhino\\dockpanel.png"
+        panel_bitmap = System.Drawing.Bitmap.FromFile(icon_path)
+    except:
+        # Use default bitmap if loading fails
+        panel_bitmap = System.Drawing.SystemIcons.Application.ToBitmap()
+        
+    # Register with a specific ID so we can find it later
+    Panels.RegisterPanel(panel_id, panel, "EnneadTab Dockpane", panel_bitmap, Panels.PanelType.Left)
+    
+    # Show the panel
+    Panels.OpenPanel(panel_id)
     
 if __name__ == "__main__":
     dockpane()

@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-16 08:58:16.
+This is the distribution repository for EnneadTab updated on 2025-05-16 11:57:58.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-You can't run through a camp site. You can only ran, because it's past tents.
+I thought my wife was joking when she said she'd leave me if I didn't stop signing "I'm A Believer"... Then I saw her face.

@@ -141,6 +141,57 @@ def lookup_unit_id(key):
         if key == str(unit_type_id.TypeId).split("-")[0].split("unit:")[1]:
             return unit_type_id
 
+def get_scale_factor(to_unit, from_unit = "feet"):
+    """
+    Get scale factor for unit conversion between different unit types.
+    
+    Args:
+        from_unit (str, optional): Source unit name (e.g. 'feet', 'inches', 'millimeters'). Defaults to 'feet'.
+        to_unit (str): Target unit name
+        
+    Returns:
+        float: Scale factor to convert from source to target unit
+    """
+    # Conversion factors from feet to different units
+    conversion_table = {
+        "feet": 1.0,
+        "foot": 1.0,
+        "ft": 1.0,
+        "inches": 12.0,
+        "inch": 12.0,
+        "in": 12.0,
+        "millimeters": 304.8,
+        "millimeter": 304.8,
+        "mm": 304.8,
+        "centimeters": 30.48,
+        "centimeter": 30.48,
+        "cm": 30.48,
+        "meters": 0.3048,
+        "meter": 0.3048,
+        "m": 0.3048
+    }
+    
+    # Standardize unit names (case insensitive)
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    
+    # Find conversion factors
+    from_factor = None
+    to_factor = None
+    
+    for unit_name, factor in conversion_table.items():
+        if from_unit_lower == unit_name.lower() or from_unit_lower.startswith(unit_name.lower()):
+            from_factor = factor
+        if to_unit_lower == unit_name.lower() or to_unit_lower.startswith(unit_name.lower()):
+            to_factor = factor
+    
+    # Calculate scale factor (to_unit / from_unit)
+    if from_factor is not None and to_factor is not None:
+        return to_factor / from_factor
+    
+    # Default to no scaling if units not recognized
+    return 1.0
+
 def list_all_unit_ids():
     for unit_type_id in DB.UnitUtils.GetAllUnits():
         print (str(unit_type_id.TypeId).split("-")[0].split("unit:")[1])

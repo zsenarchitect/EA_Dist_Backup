@@ -143,30 +143,10 @@ class RevitToRhinoExporter(object):
         
         # Store the scale factor for unit conversion
         # Revit internal unit is always feet, but display unit can be different
-        self.scale_factor = self._get_unit_scale_factor()
-        logger.info("Revit document unit: {} (scale factor: {})".format(self.revit_unit, self.scale_factor))
-        
-    def _get_unit_scale_factor(self):
-        """
-        Calculate scale factor for unit conversion between Revit internal (feet) and display units
-        """
-        # Default to a neutral scale factor
-        try:
-            # Use REVIT_UNIT to get scale factor - Revit internal is always feet
-            return REVIT_UNIT.get_scale_factor("feet", self.revit_unit)
-        except:
-            # Fallback scale factors for common unit types
-            if self.revit_unit in ["feet", "foot"]:
-                return 1.0
-            elif "inch" in self.revit_unit:
-                return 12.0
-            elif self.revit_unit in ["millimeters", "millimeter"]:
-                return 304.8
-            elif self.revit_unit in ["meters", "meter"]:
-                return 0.3048
-            else:
-                return 1.0  # Default to no scaling
-                
+        self.scale_factor = REVIT_UNIT.get_scale_factor(self.revit_unit)
+        logger.info("Revit document unit: {} (scale factor: {:.3f})".format(self.revit_unit, self.scale_factor))
+
+
     def setup_document(self):
         """Initialize Rhino document and geometry options"""
         self.rhino_doc = REVIT_RHINO.setup_rhino_doc(self.revit_doc)
