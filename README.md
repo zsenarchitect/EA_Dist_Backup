@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-16 15:03:22.
+This is the distribution repository for EnneadTab updated on 2025-05-16 18:04:09.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why is the ocean always blue? Because the shore never waves back.
+I'm glad I know sign language, it's pretty handy.
