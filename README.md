@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-17 21:08:29.
+This is the distribution repository for EnneadTab updated on 2025-05-18 00:09:38.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-How was the snow globe feeling after the storm? A little shaken.
+How do locomotives know where they're going? Lots of training
