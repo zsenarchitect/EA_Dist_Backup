@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-19 12:20:21.
+This is the distribution repository for EnneadTab updated on 2025-05-19 15:21:41.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Did you hear that the police have a warrant out on a midget psychic ripping people off? It reads "Small medium at large"
+What did the scarf say to the hat? You go on ahead, I am going to hang around a bit longer.

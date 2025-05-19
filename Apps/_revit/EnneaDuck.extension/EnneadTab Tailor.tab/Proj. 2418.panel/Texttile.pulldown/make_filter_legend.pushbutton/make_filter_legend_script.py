@@ -297,7 +297,15 @@ def create_legend_graphics(legend_view, filter_overrides):
     # Add header
     header_point = DB.XYZ(x_position, y_position, 0)
     header_text = "Screen Panel Families"
-    DB.TextNote.Create(DOC, legend_view.Id, header_point, header_text, text_note_type_id)
+    try:
+        DB.TextNote.Create(DOC, legend_view.Id, header_point, header_text, text_note_type_id)
+    except Exception as e:
+        print (e)
+        print (traceback.format_exc())
+        print (legend_view)
+        print (text_note_type_id)
+        print (header_point)
+        print (DOC)
     
     # Update position for items
     y_position -= item_spacing * 2
@@ -418,8 +426,8 @@ def make_filter_legend(doc):
     
     create_legend_graphics(legend_view, filter_overrides)
     
-    # Step 6: Add legend to current hosting sheet
-    add_legend_to_sheet(hosting_sheet, legend_view)
+    # # Step 6: Add legend to current hosting sheet
+    # add_legend_to_sheet(hosting_sheet, legend_view)
     
     t.Commit()
     

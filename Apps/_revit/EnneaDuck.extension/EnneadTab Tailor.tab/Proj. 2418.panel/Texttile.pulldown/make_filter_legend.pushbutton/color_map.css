@@ -102,13 +102,13 @@
 
 /* Version 5 Panels */
 .V5_1 {
-    color: rgb(200, 200, 200);  /* Light gray */
+    color: rgb(255, 0, 0);  /* Bright red */
 }
 
 .V5_2 {
-    color: rgb(210, 210, 210);  /* Lighter gray */
+    color: rgb(255, 100, 100);  /* Lighter red */
 }
 
 .V5_3 {
-    color: rgb(220, 220, 220);  /* Even lighter gray */
+    color: rgb(255, 150, 150);  /* Even lighter red */
 } 
