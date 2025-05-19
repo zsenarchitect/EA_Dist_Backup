@@ -724,3 +724,7 @@ class RevitToRhinoExporter(object):
         
         # Open the file
         os.startfile(self.output_file) 
+
+
+if __name__ == "__main__":
+    pass

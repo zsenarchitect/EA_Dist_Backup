@@ -188,6 +188,7 @@ class PDFGenerator:
 
         for doc_data in segment_data:
             is_popular = doc_data.get('is_popular', False)
+            is_popular = False
 
             
             alias_info = doc_data.get('alias', "No alias")

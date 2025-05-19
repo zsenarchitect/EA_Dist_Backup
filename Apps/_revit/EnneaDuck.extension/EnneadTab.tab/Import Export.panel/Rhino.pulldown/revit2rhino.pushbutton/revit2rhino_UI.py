@@ -296,3 +296,7 @@ def show_dialog():
     """Show the Revit2Rhino UI dialog."""
     dlg = Revit2RhinoUI()
     return dlg.ShowDialog() 
+
+
+if __name__ == "__main__":
+    pass

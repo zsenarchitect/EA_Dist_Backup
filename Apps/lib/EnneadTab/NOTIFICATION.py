@@ -148,7 +148,8 @@ def messenger(main_text,
 
     DATA_FILE.set_data(data, "messenger_data")
 
-    EXE.try_open_app("Messenger")
+    if not EXE.try_open_app("Messenger"):
+        print (main_text)
 
 
 def duck_pop(main_text=None):

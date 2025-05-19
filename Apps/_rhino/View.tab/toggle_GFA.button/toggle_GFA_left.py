@@ -731,6 +731,10 @@ def toggle_GFA():
     conduit.Enabled = not conduit.Enabled
     if conduit.Enabled: 
         conduit.add_hook()
+        try: # this is helpful so user resume conduit will trigger refresh, becasue user might be modifying the doc while the conduit is off.
+            conduit.reset_conduit_data()
+        except Exception as e:
+            print (e)
         print ("conduit enabled")
     else: 
         conduit.remove_hook()

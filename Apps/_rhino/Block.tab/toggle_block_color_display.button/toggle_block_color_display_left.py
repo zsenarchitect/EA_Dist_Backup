@@ -1,4 +1,3 @@
-
 __title__ = "ToggleBlockColorDisplay"
 __doc__ = "Toggle on/off for highlighting the different block type. Very helpful when you have many block variation."
 __is_popular__ = True
@@ -94,9 +93,11 @@ def get_color_from_blockname(blockname):
     if COLOR_DICT.has_key(blockname):
         red, green, blue = COLOR_DICT[blockname]
     else:
-        red = int(255*random.random())
-        green = int(255*random.random())
-        blue = int(255*random.random())
+        # Use hash of blockname to generate consistent colors
+        hash_value = hash(blockname)
+        red = abs(hash_value % 256)
+        green = abs((hash_value >> 8) % 256)
+        blue = abs((hash_value >> 16) % 256)
         COLOR_DICT[blockname] = desaturate_color((red, green, blue))
 
     color = rs.CreateColor([red, green, blue])

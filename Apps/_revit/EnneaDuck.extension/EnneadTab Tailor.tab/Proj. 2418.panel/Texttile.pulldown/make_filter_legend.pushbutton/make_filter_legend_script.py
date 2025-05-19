@@ -17,7 +17,7 @@ from collections import defaultdict
 from System.Collections.Generic import List, IList # pyright: ignore
 from System import Array # pyright: ignore
 import clr # pyright: ignore
-
+import traceback
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
 
@@ -107,6 +107,7 @@ def load_color_map_from_css():
 
 def create_or_update_filters(view, color_map):
     """Create or update view filters for family names defined in color map.
+    Uses the correct parameter for Generic Models (Family Name).
     
     Args:
         view (DB.View): Current view to apply filters to
@@ -142,16 +143,14 @@ def create_or_update_filters(view, color_map):
             filter_name = "ScreenPanel_{}".format(family_name)
             filter_name = filter_name.replace(":", "").replace("|", "").replace("?", "")
             
-            # Set up filter rules - Try a different parameter and approach
-            param_id = DB.ElementId(DB.BuiltInParameter.ELEM_FAMILY_AND_TYPE_PARAM)
+            # Use correct parameter for Generic Models: Family Name
+            param_id = DB.ElementId(DB.BuiltInParameter.ALL_MODEL_FAMILY_NAME)
             
             # Create rule that contains the family name
             version = int(DOC.Application.VersionNumber)
             if version > 2023:
-                # For newer versions of Revit
                 rule = DB.ParameterFilterRuleFactory.CreateContainsRule(param_id, family_name)
             else:
-                # For older versions of Revit
                 rule = DB.ParameterFilterRuleFactory.CreateContainsRule(param_id, family_name, True)
                 
             elem_filter = DB.ElementParameterFilter(rule)
@@ -188,6 +187,7 @@ def create_or_update_filters(view, color_map):
             }
         except Exception as e:
             NOTIFICATION.messenger(main_text="Error creating filter for {}: {}".format(family_name, str(e)))
+            print (traceback.format_exc())
             continue
     
     return filter_overrides
@@ -404,7 +404,11 @@ def make_filter_legend(doc):
     t.Start()
     
     # Step 3 & 4: Create/update filters and add to view template
-    filter_overrides = create_or_update_filters(active_view, color_map)
+    if active_view.ViewTemplateId != DB.ElementId.InvalidElementId:
+        template = DOC.GetElement(active_view.ViewTemplateId)
+        filter_overrides = create_or_update_filters(template, color_map)
+    else:
+        filter_overrides = create_or_update_filters(active_view, color_map)
     
     # Step 5: Create/update legend view
     legend_view = find_or_create_legend_view()
