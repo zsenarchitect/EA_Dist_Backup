@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-20 06:28:00.
+This is the distribution repository for EnneadTab updated on 2025-05-20 09:27:16.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What is a witch's favorite subject in school? Spelling!
+What did the judge say to the dentist? Do you swear to pull the tooth, the whole tooth and nothing but the tooth?
