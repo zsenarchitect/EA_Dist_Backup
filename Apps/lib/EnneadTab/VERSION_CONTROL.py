@@ -22,11 +22,8 @@ import USER
 def update_dist_repo():
     """Updates the distribution repository if sufficient time has passed since last update"""
     if not is_update_too_soon():
-        if USER.IS_DEVELOPER:
-            print ("DEV ONLY: Using new EnneadTab_OS_Installer untill all is fine for future release")
-            EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
-        else:
-            EXE.try_open_app("EnneadTab_OS_Installer_Backup", safe_open=True)
+        EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
+
         DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time")
         
 
