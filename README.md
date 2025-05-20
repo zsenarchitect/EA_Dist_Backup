@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-20 12:28:10.
+This is the distribution repository for EnneadTab updated on 2025-05-20 15:31:53.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why did Mozart kill all his chickens? Because when he asked them who the best composer was, they'd all say "Bach bach bach!"
+What does a female snake use for support? A co-Bra!
