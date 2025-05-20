@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-19 18:24:20.
+This is the distribution repository for EnneadTab updated on 2025-05-19 21:25:01.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-A man walked in to a bar with some asphalt on his arm. He said "Two beers please, one for me and one for the road"
+This is my step ladder. I never knew my real ladder.
