@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-21 12:37:30.
+This is the distribution repository for EnneadTab updated on 2025-05-21 15:37:39.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What do you call a bear with no teeth? A gummy bear.
+Americans can't switch from pounds to kilograms overnight. That would cause mass confusion.

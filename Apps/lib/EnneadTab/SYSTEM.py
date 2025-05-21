@@ -72,7 +72,7 @@ def check_system_uptime():
     if uptime > 7 * 24 * 60 * 60:  # 7 days in seconds
         days = int(uptime / (24 * 60 * 60))
         hours = int((uptime % (24 * 60 * 60)) / (60 * 60))
-        NOTIFICATION.messenger("Your computer has been running for {} days and {} hours. Consider restarting your computer for optimal performance.\nNo one work their donkey this hard.".format(days, hours))
+        NOTIFICATION.messenger("Your computer has been running for {} days and {} hours. Consider restarting your computer for optimal performance.\nNo one even work their donkey this hard.".format(days, hours))
     return uptime
 
 def purge_powershell_folder():
