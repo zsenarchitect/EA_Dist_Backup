@@ -189,7 +189,8 @@ def run_system_checks():
         (0.5, "RegisterAutoStartup"),
         (0.3, "Rhino8RuiUpdater"),
         (0.5, check_system_uptime),
-        (0.3, purge_powershell_folder)
+        (0.3, purge_powershell_folder),
+        (0.3, "ComputerSpec")
     ]
     
     # Run checks based on probability

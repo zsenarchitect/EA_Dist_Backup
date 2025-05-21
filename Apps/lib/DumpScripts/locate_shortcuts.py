@@ -30,6 +30,10 @@ logger = logging.getLogger(__name__)
 _shell_cache = None
 _shell_lock = threading.Lock()
 
+# Global output file names
+CROSS_LINK_FILENAME = "shortcut_cross_link.txt"
+SELF_LINK_FILENAME = "shortcut_self_link.txt"
+
 def get_shell():
     """Get or create a cached shell object."""
     global _shell_cache
@@ -73,13 +77,13 @@ def get_project_folders(drive_path: str = "J:\\") -> Set[str]:
         logger.error("Error accessing {}: {}".format(drive_path, str(e)))
         return set()
 
-def scan_folder_batch(folder_batch: List[str], project_folders: Set[str], max_depth: int = 3) -> Dict[str, List[Tuple[str, str]]]:
+def scan_folder_batch(folder_batch: List[str], project_folders: Set[str], max_depth: int = 2) -> Dict[str, List[Tuple[str, str]]]:
     """Scan a batch of folders for shortcuts pointing to project folders.
     
     Args:
         folder_batch: List of folders to scan
         project_folders: Set of project folder paths to check against
-        max_depth: Maximum folder depth to scan (default: 3)
+        max_depth: Maximum folder depth to scan (default: 2)
         
     Returns:
         Dictionary mapping folders to their project shortcuts
@@ -108,20 +112,27 @@ def scan_folder_batch(folder_batch: List[str], project_folders: Set[str], max_de
                         target = get_shortcut_target(shortcut_path)
                         if target and any(target.startswith(project) for project in project_folders_list):
                             results[folder_path].append((shortcut_path, target))
+                            # Write result immediately to file
+                            with open(CROSS_LINK_FILENAME, "a", encoding="utf-8") as f:
+                                f.write("Found shortcut:\n")
+                                f.write("  Folder: {}\n".format(folder_path))
+                                f.write("  Shortcut: {}\n".format(shortcut_path))
+                                f.write("  Target: {}\n".format(target))
+                                f.write("-" * 80 + "\n")
                     except Exception as e:
                         logger.debug("Error processing {}: {}".format(shortcut_path, str(e)))
         except Exception as e:
             logger.error("Error scanning {}: {}".format(folder_path, str(e)))
     return dict(results)
 
-def scan_folders_batch(drive_path: str, project_folders: Set[str], batch_size: int = 1000, max_depth: int = 3) -> Generator[Set[str], None, None]:
+def scan_folders_batch(drive_path: str, project_folders: Set[str], batch_size: int = 1000, max_depth: int = 2) -> Generator[Set[str], None, None]:
     """Scan folders in batches to reduce memory usage.
     
     Args:
         drive_path: Root path to scan
         project_folders: Set of project folder paths to exclude
         batch_size: Number of folders to collect before yielding
-        max_depth: Maximum folder depth to scan (default: 3)
+        max_depth: Maximum folder depth to scan (default: 2)
         
     Yields:
         Sets of folder paths
@@ -198,20 +209,25 @@ def save_results_to_json(results: Dict[str, List[Tuple[str, str]]], desktop_path
         logger.error("Error saving results to JSON: {}".format(str(e)))
         raise
 
-def find_nested_project_shortcuts(drive_path: str = "J:\\", timeout: int = 10, batch_size: int = 50, max_depth: int = 3) -> Dict[str, List[Tuple[str, str]]]:
+def find_nested_project_shortcuts(drive_path: str = "J:\\", timeout: int = 10, batch_size: int = 50, max_depth: int = 2) -> Dict[str, List[Tuple[str, str]]]:
     """Find shortcuts pointing to project folders using parallel processing.
     
     Args:
         drive_path: Root path to scan (default: J:\\)
         timeout: Maximum time in seconds to scan each folder (default: 10)
         batch_size: Number of folders to process in each batch (default: 50)
-        max_depth: Maximum folder depth to scan (default: 3)
+        max_depth: Maximum folder depth to scan (default: 2)
         
     Returns:
         Dictionary mapping folders to their project shortcuts
     """
     logger.info("Starting project shortcut scan...")
     start_time = time.time()
+    
+    # Clear the results file at start
+    with open(CROSS_LINK_FILENAME, "w", encoding="utf-8") as f:
+        f.write("Shortcut Scan Results - Started at {}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        f.write("=" * 80 + "\n\n")
     
     # First, get all project folders
     logger.info("Collecting project folders...")
@@ -255,32 +271,94 @@ def find_nested_project_shortcuts(drive_path: str = "J:\\", timeout: int = 10, b
     elapsed_time = time.time() - start_time
     logger.info("Scan completed in {:.2f} seconds".format(elapsed_time))
     logger.info("Scanned {} folders in {} batches".format(total_folders, processed_batches))
+    
+    # Write final summary to results file
+    with open(CROSS_LINK_FILENAME, "a", encoding="utf-8") as f:
+        f.write("\nScan Summary:\n")
+        f.write("Total folders scanned: {}\n".format(total_folders))
+        f.write("Total batches processed: {}\n".format(processed_batches))
+        f.write("Total shortcuts found: {}\n".format(sum(len(v) for v in results.values())))
+        f.write("Scan completed in {:.2f} seconds\n".format(elapsed_time))
+        f.write("=" * 80 + "\n")
+    
     return results
 
-def main():
-    """Main function to find and display nested project shortcuts."""
-    try:
-        logger.info("Starting scan for nested project shortcuts in J: drive...")
-        results = find_nested_project_shortcuts(max_depth=3)  # Set max depth to 3 levels
-        
-        if not results:
-            logger.info("No project shortcuts found.")
-            return
+def find_project_shortcut_links(drive_path: str = "J:\\") -> None:
+    """Scan each immediate project folder in the root of J: for .lnk files that point to other project folders.
+    Write cross-project links to shortcut_cross_link.txt and self-links to shortcut_self_link.txt in the specified output directory.
+    Add 1-based index to each entry. Ignore 'J:\\_0000 - Project Directory'.
+    """
+    # Output directory
+    output_dir = r"L:\\4b_Applied Computing\\EnneadTab-DB\\Shared Data Dump\\_internal reports"
+    results_path = os.path.join(output_dir, CROSS_LINK_FILENAME)
+    selflinks_path = os.path.join(output_dir, SELF_LINK_FILENAME)
 
-        # Get desktop path
-        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-        
-        # Save results to JSON
-        json_path = save_results_to_json(results, desktop_path)
-        logger.info("Results saved to: {}".format(json_path))
-        
-        # Open the JSON file
+    # Get all immediate project folders
+    project_folders = get_project_folders(drive_path)
+    project_folders = sorted(project_folders)
+    ignore_folder = os.path.join(drive_path, "_0000 - Project Directory")
+    project_folders = [f for f in project_folders if f != ignore_folder]
+    project_folders_set = set(project_folders)
+
+    # Prepare results files
+    with open(results_path, "w", encoding="utf-8") as f:
+        f.write("Project-to-Project Shortcut Scan (X->Y) - {}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        f.write("IGNORED: {}\n".format(ignore_folder))
+        f.write("=" * 80 + "\n\n")
+    with open(selflinks_path, "w", encoding="utf-8") as f:
+        f.write("Project Self-Link Shortcut Scan (X->X) - {}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        f.write("IGNORED: {}\n".format(ignore_folder))
+        f.write("=" * 80 + "\n\n")
+
+    cross_count = 0
+    self_count = 0
+    cross_index = 1
+    self_index = 1
+    for folder in tqdm(project_folders, desc="Scanning project folders", unit="folder"):
         try:
-            subprocess.run(['start', json_path], shell=True)
-            logger.info("Opening results file...")
+            # Only look for .lnk files directly inside the folder (not recursively)
+            for entry in os.scandir(folder):
+                if entry.is_file() and entry.name.lower().endswith('.lnk'):
+                    shortcut_path = entry.path
+                    target = get_shortcut_target(shortcut_path)
+                    if target in project_folders_set:
+                        if target == folder:
+                            self_count += 1
+                            with open(selflinks_path, "a", encoding="utf-8") as f:
+                                f.write("{}. Self-link in project folder: {}\n".format(self_index, folder))
+                                f.write("   Shortcut: {}\n".format(shortcut_path))
+                                f.write("   Points to itself: {}\n".format(target))
+                                f.write("-" * 80 + "\n")
+                            self_index += 1
+                        else:
+                            cross_count += 1
+                            with open(results_path, "a", encoding="utf-8") as f:
+                                f.write("{}. Shortcut in project folder: {}\n".format(cross_index, folder))
+                                f.write("   Shortcut: {}\n".format(shortcut_path))
+                                f.write("   Points to project folder: {}\n".format(target))
+                                f.write("-" * 80 + "\n")
+                            cross_index += 1
         except Exception as e:
-            logger.error("Error opening file: {}".format(str(e)))
-            logger.info("Please open the file manually: {}".format(json_path))
+            logger.error("Error scanning {}: {}".format(folder, str(e)))
+
+    with open(results_path, "a", encoding="utf-8") as f:
+        f.write("\nScan complete. Found {} cross-project shortcuts (X->Y).\n".format(cross_count))
+        f.write("=" * 80 + "\n")
+    with open(selflinks_path, "a", encoding="utf-8") as f:
+        f.write("\nScan complete. Found {} self-link shortcuts (X->X).\n".format(self_count))
+        f.write("=" * 80 + "\n")
+
+def main():
+    try:
+        logger.info("Starting project-to-project shortcut scan in J: root...")
+        find_project_shortcut_links()
+        logger.info("Scan complete. See {} and {} for details in the output directory.".format(CROSS_LINK_FILENAME, SELF_LINK_FILENAME))
+        try:
+            subprocess.run(['start', os.path.join(r'L:\\4b_Applied Computing\\EnneadTab-DB\\Shared Data Dump\\_internal reports', CROSS_LINK_FILENAME)], shell=True)
+            subprocess.run(['start', os.path.join(r'L:\\4b_Applied Computing\\EnneadTab-DB\\Shared Data Dump\\_internal reports', SELF_LINK_FILENAME)], shell=True)
+        except Exception as e:
+            logger.error("Error opening results file: {}".format(str(e)))
+            logger.info("Please open the output files manually.")
     except Exception as e:
         logger.error("An error occurred: {}".format(str(e)))
         sys.exit(1)
