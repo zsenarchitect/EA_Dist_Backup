@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-20 18:32:44.
+This is the distribution repository for EnneadTab updated on 2025-05-20 21:33:59.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Why does Norway have barcodes on their battleships? So when they get back to port, they can Scandinavian.
+Hostess: Do you have a preference of where you sit?Dad: Down.
