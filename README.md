@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-22 15:40:06.
+This is the distribution repository for EnneadTab updated on 2025-05-22 18:42:29.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-How many optometrists does it take to change a light bulb? 1 or 2? 1... or 2?
+Did you hear about the chameleon who couldn't change color? They had a reptile dysfunction.
