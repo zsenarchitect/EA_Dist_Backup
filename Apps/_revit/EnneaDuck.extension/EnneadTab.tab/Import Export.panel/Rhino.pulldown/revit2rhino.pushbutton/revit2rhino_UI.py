@@ -85,7 +85,7 @@ class Revit2RhinoUI(forms.WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def select_families_click(self, sender, args):
-        """Handle Select Families button click."""
+        """Handle Select Families button click. Updates selection info to show unique elements instead of unique families."""
         
         selected_categories = [
             cat for cb, cat in CATEGORY_CHECKBOX_MAP.items()
@@ -144,7 +144,7 @@ class Revit2RhinoUI(forms.WPFWindow):
         self.selected_instances = []
         for family_name in selected_family_names:
             self.selected_instances.extend(family_dict[family_name])
-        self.selection_info.Text = "Selected {} unique families.".format(len(self.selected_instances))
+        self.selection_info.Text = "Selected {} unique elements.".format(len(self.selected_instances))
         self.export_button.IsEnabled = True
         
 

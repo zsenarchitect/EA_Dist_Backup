@@ -86,7 +86,7 @@
         <Grid Margin="20,20,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="550"/>
             </Grid.ColumnDefinitions>
             
             <Image Grid.Column="0" 

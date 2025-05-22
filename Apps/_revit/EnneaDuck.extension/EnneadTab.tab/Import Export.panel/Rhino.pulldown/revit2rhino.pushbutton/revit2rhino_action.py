@@ -11,6 +11,8 @@ import os
 import time
 import logging
 import traceback
+import hashlib
+import json
 # Configure logging
 logger = logging.getLogger("Revit2Rhino")
 logger.setLevel(logging.INFO)
@@ -233,58 +235,132 @@ class RevitToRhinoExporter(object):
             pass
         return "NoType"
 
+    def _geometry_signature(self, geometry_data):
+        """Generate an 8-digit hash signature for all Rhino geometry in geometry_data using ToJSON."""
+        jsons = []
+        for subcat, geo_list in geometry_data.items():
+            if subcat in ("geometry_source", "category_name") or not geo_list:
+                continue
+            for geo in geo_list:
+                if geo is not None and hasattr(geo, "ToJSON"):
+                    try:
+                        jsons.append(geo.ToJSON())
+                    except Exception:
+                        jsons.append(str(geo))
+        combined = ''.join(sorted(jsons))
+        return hashlib.sha256(combined.encode('utf-8')).hexdigest()[:8]
+
+    def _instance_parameter_signature(self, element):
+        """
+        Generate a stable, order-independent signature for geometry-affecting instance parameters.
+        Only includes parameters that are not ElementId or String type.
+        Returns an 8-digit hash string.
+        """
+        param_dict = {}
+        for param in element.Parameters:
+            # Skip ElementId and String types
+            if param.StorageType.ToString() in ["ElementId", "String"]:
+                continue
+            try:
+                # Get parameter value safely
+                if param.StorageType.ToString() == "Double":
+                    value = str(param.AsDouble())
+                elif param.StorageType.ToString() == "Integer":
+                    value = str(param.AsInteger())
+                elif param.StorageType.ToString() == "None":
+                    value = "None"
+                else:
+                    # For other types, try to get string representation
+                    try:
+                        value = param.AsValueString()
+                    except:
+                        try:
+                            value = param.AsString()
+                        except:
+                            value = str(param.AsInteger())
+                
+                # Clean the value string to ensure it's ASCII-safe
+                if value:
+                    # Replace common special characters with their ASCII equivalents
+                    value = value.replace("°", "deg")
+                    value = value.replace("±", "+-")
+                    value = value.replace("×", "x")
+                    value = value.replace("÷", "/")
+                    # Remove any remaining non-ASCII characters
+                    value = ''.join(char for char in value if ord(char) < 128)
+                
+                param_dict[param.Definition.Name] = value
+            except Exception:
+                continue
+                
+        # Sort and serialize for stable hashing
+        try:
+            param_json = json.dumps(param_dict, sort_keys=True, ensure_ascii=True)
+            return hashlib.sha256(param_json.encode('utf-8')).hexdigest()[:8]
+        except Exception:
+            # Fallback: if JSON serialization fails, use a simpler string representation
+            param_str = str(sorted(param_dict.items()))
+            return hashlib.sha256(param_str.encode('utf-8', errors='ignore')).hexdigest()[:8]
+
     def _process_element(self, element):
-        """Process a single family instance for export."""
+        """Process a single family instance for export, using appropriate block caching strategy."""
         element_id = element.Id.IntegerValue
         family_name = self._get_family_name(element)
         type_name = self._get_type_name(element)
 
-        
-        # For system families, use the element's Id as the symbol_id
-        if hasattr(element, "Symbol"):
-            symbol_id = element.Symbol.Id.IntegerValue
+        # Determine if this is a system family
+        is_system_family = any(hasattr(element, attr) for attr in [
+            "WallType", "FloorType", "RoofType", "StairsType", 
+            "RailingType", "CeilingType", "RampType", "ModelTextType"
+        ])
+
+        # Extract geometry for this element
+        geometry_data = self._get_geometry(element)
+
+        # Generate block name based on family type
+        if is_system_family:
+            # For system families, use element ID to ensure uniqueness
+            block_name = "{}_{}_{}".format(family_name, type_name, element_id)
         else:
-            symbol_id = element.Id.IntegerValue
-        
-        # Check if we've already created a block for this symbol
-        if symbol_id in self.block_cache:
-            block_idx = self.block_cache[symbol_id]
-            geo_source = self.block_geo_source.get(symbol_id, "Unknown")
-            logger.debug("  Using cached block for symbol {}".format(symbol_id))
+            # For loadable families, use parameter signature
+            param_signature = self._instance_parameter_signature(element)
+            block_name = "{}_{}_{}".format(family_name, type_name, param_signature)
+
+        # Check if we've already created a block for this signature
+        if block_name in self.block_cache:
+            block_idx = self.block_cache[block_name]
+            geo_source = self.block_geo_source.get(block_name, "Unknown")
+            logger.debug("  Using cached block for {}".format(block_name))
         else:
-            # Extract geometry for this element
-            geometry_data = self._get_geometry(element)
-            
             if not geometry_data or len(geometry_data) <= 1:
                 logger.warning("  WARNING: No valid geometry found for {}".format(family_name))
                 self.failed_geo_count += 1
                 return
-            
+
             # Update statistics based on geometry source
             geo_source = geometry_data.get("geometry_source", "Unknown")
             if geo_source == "Symbol":
                 self.symbol_geo_count += 1
             elif geo_source.startswith("Instance"):
                 self.instance_geo_count += 1
-            
+
             # For Instance geometry, untransform it to get it in symbol coordinates
             if geo_source == "Instance" and hasattr(element, "GetTransform"):
                 transform = element.GetTransform()
                 if transform:
                     geometry_data = self._untransform_geometry(geometry_data, transform)
                     geo_source = geometry_data.get("geometry_source", "Unknown")
-            
+
             # Create a block definition from the geometry
             block_idx = self._create_block_definition(family_name, type_name, geometry_data)
-            
             if block_idx < 0:
                 logger.error("  ERROR: Failed to create block for {}".format(family_name))
                 return
-                
-            # Cache the block for future instances of the same symbol
-            self.block_cache[symbol_id] = block_idx
-            self.block_geo_source[symbol_id] = geo_source
-        
+
+            # Cache the block for future instances
+            self.block_cache[block_name] = block_idx
+            self.block_geo_source[block_name] = geo_source
+
         # Place a block instance with the element's transformation
         self._place_block_instance(block_idx, element, geo_source)
 
