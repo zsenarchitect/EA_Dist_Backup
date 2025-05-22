@@ -44,7 +44,7 @@ import proDUCKtion  # pyright: ignore
 proDUCKtion.validify()
 
 from EnneadTab import ERROR_HANDLE, LOG, NOTIFICATION, USER
-from EnneadTab.REVIT import REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_VIEW
 
 UIDOC = REVIT_APPLICATION.get_uidoc()
 DOC = REVIT_APPLICATION.get_doc()
@@ -56,6 +56,14 @@ def revit2rhino(doc):
     # Check if Rhino.Inside is available
     if not IMPORT_OK:
         NOTIFICATION.messenger("Please initiate [Rhino.Inside] First")
+        return
+
+    if REVIT_VIEW.is_focused_on_system_view():
+        NOTIFICATION.messenger("You are focused on either ProjectBrower or PropetyPanel. Please activate an Architectural View such as 3D View.")
+        return
+    
+    if not REVIT_VIEW.is_archi_view(doc.ActiveView):
+        NOTIFICATION.messenger("Please activate an Architectural View such as 3D View.")
         return
     
     # Enable debug logging for developers

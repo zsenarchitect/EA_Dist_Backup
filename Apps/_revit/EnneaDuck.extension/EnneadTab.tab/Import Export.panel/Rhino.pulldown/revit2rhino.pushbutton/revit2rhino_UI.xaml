@@ -15,6 +15,8 @@
         AllowsTransparency="True"
         WindowStyle="None"
         MouseLeftButtonDown="mouse_down_main_panel"
+        Width="600"
+        
         >
     <Window.Resources>
         <SolidColorBrush x:Key="AboutWindowTextColor" Color="#FFDAE8FD"/>
@@ -130,33 +132,88 @@
                                   Content="Include Elements from Links(WIP)" 
                                   IsChecked="False"
                                   Margin="0,0,0,5"/>
-                        
-                        <CheckBox x:Name="preserve_family_layer_checkbox" 
-                                  Content="Preserve Family Layer" 
-                                  IsChecked="False"
-                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Category Selection -->
+                <GroupBox BorderBrush="{StaticResource AboutWindowHightlightColor}" Margin="0,5,0,10" Width="500">
+                    <GroupBox.Header>
+                        <TextBlock Text="Select Categories" Foreground="#FFBBD5FC" FontStyle="Italic" FontWeight="Light" Opacity="0.9"/>
+                    </GroupBox.Header>
+                    <StackPanel Margin="10,10,10,10">
+                        <WrapPanel Margin="0,0,0,10" HorizontalAlignment="Left">
+                            <Button x:Name="check_all_btn" Content="Check All" Width="130" Margin="0,0,10,0" Click="check_all_btn_Click"/>
+                            <Button x:Name="check_none_btn" Content="Check None" Width="130" Margin="0,0,10,0" Click="check_none_btn_Click"/>
+                            <Button x:Name="toggle_checked_btn" Content="Toggle Checked" Width="150" Click="toggle_checked_btn_Click"/>
+                        </WrapPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="260"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Column 1 -->
+                            <CheckBox x:Name="walls_checkbox" Content="Walls" Grid.Row="0" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="floors_checkbox" Content="Floors" Grid.Row="1" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="ceilings_checkbox" Content="Ceilings" Grid.Row="2" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="stairs_checkbox" Content="Stairs" Grid.Row="3" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="columns_checkbox" Content="Columns" Grid.Row="4" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="massing_checkbox" Content="Massing" Grid.Row="5" Grid.Column="0" Margin="0,0,10,5" MinWidth="120"/>
+
+                            <!-- Column 2 -->
+                            <CheckBox x:Name="windows_checkbox" Content="Windows" Grid.Row="0" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="doors_checkbox" Content="Doors" Grid.Row="1" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="roofs_checkbox" Content="Roofs" Grid.Row="2" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="stair_railings_checkbox" Content="Stair Railings" Grid.Row="3" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="fixtures_checkbox" Content="Fixtures" Grid.Row="4" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="model_text_checkbox" Content="Model Text" Grid.Row="5" Grid.Column="1" Margin="0,0,10,5" MinWidth="120"/>
+
+                            <!-- Column 3 -->
+                            <CheckBox x:Name="curtain_wall_panels_checkbox" Grid.Row="0" Grid.Column="2" Margin="0,0,10,5" MinWidth="140">
+                                <TextBlock Text="Curtain Wall Panels" TextWrapping="Wrap"/>
+                            </CheckBox>
+                            <CheckBox x:Name="curtain_wall_mullions_checkbox" Grid.Row="1" Grid.Column="2" Margin="0,0,10,5" MinWidth="140">
+                                <TextBlock Text="Curtain Wall Mullions" TextWrapping="Wrap"/>
+                            </CheckBox>
+                            <CheckBox x:Name="furniture_checkbox" Content="Furniture" Grid.Row="2" Grid.Column="2" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="generic_model_checkbox" Content="Generic Model" Grid.Row="3" Grid.Column="2" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="railings_checkbox" Content="Railings" Grid.Row="4" Grid.Column="2" Margin="0,0,10,5" MinWidth="120"/>
+                            <CheckBox x:Name="ramps_checkbox" Content="Ramps" Grid.Row="5" Grid.Column="2" Margin="0,0,10,5" MinWidth="120"/>
+                        </Grid>
                     </StackPanel>
                 </GroupBox>
                 
                 <!-- Selection Info Panel -->
                 <TextBlock x:Name="selection_info"
                            Margin="0,5,0,10"
-                           Text="No elements selected. Click 'Select Families' to choose which families to export."
+                           Text="Select categories and click 'Select Families' to choose elements to export."
                            TextWrapping="Wrap"/>
                 
-                <!-- Buttons -->
+                <!-- Action Buttons -->
                 <WrapPanel HorizontalAlignment="Center">
                     <Button Content="Select Families" 
                             x:Name="select_families_button"
-                            Click="select_families_click"/>
+                            Click="select_families_click"
+                            Margin="5"/>
                     
                     <Button Content="Export to Rhino" 
                             x:Name="export_button"
                             Click="export_click"
-                            IsEnabled="False"/>
+                            IsEnabled="False"
+                            Margin="5"/>
                             
                     <Button Content="Close" 
-                            Click="close_click"/>
+                            Click="close_click"
+                            Margin="5"/>
                 </WrapPanel>
                 
                 <!-- Version Info -->

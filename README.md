@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-22 09:37:34.
+This is the distribution repository for EnneadTab updated on 2025-05-22 12:39:39.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-They're making a movie about clocks. It's about time
+I hate perforated lines, they're tearable.

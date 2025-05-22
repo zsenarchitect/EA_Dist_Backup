@@ -10,7 +10,7 @@ import clr  # pyright: ignore
 import os
 import time
 import logging
-
+import traceback
 # Configure logging
 logger = logging.getLogger("Revit2Rhino")
 logger.setLevel(logging.INFO)
@@ -44,13 +44,13 @@ from Autodesk.Revit import DB  # pyright: ignore
 DOC = REVIT_APPLICATION.get_doc()
 
 
-def export_elements_to_rhino(selected_instances, preserve_family_layers=False):
+def export_elements_to_rhino(doc, selected_instances):
     """
     Export selected elements to Rhino with options.
     
     Args:
+        doc (DB.Document): The Revit document.
         selected_instances (list): List of Revit elements to export
-        preserve_family_layers (bool): Whether to preserve family subcategory layers
         
     Returns:
         str: Path to the exported Rhino file or None if failed
@@ -59,9 +59,9 @@ def export_elements_to_rhino(selected_instances, preserve_family_layers=False):
     start_time = time.time()
     
     # Initialize exporter with options
-    exporter = RevitToRhinoExporter(DOC)
+    exporter = RevitToRhinoExporter(doc)
     exporter.family_instances = selected_instances
-    exporter.preserve_family_layers = preserve_family_layers
+    exporter.preserve_family_layers = True  # Always preserve family layers
     exporter.setup_document()
     
     # Process elements with progress bar
@@ -101,11 +101,7 @@ def export_elements_to_rhino(selected_instances, preserve_family_layers=False):
     
     if export_result:
         success_message = "Successfully exported to: {}\nTotal time: {}".format(export_result, time_str)
-        
-        # Add reminder about EA_PackageBlockLayer if using preserve family layers
-        if preserve_family_layers:
-            success_message += "\n\nReminder: For best results with preserved family layers, use 'EA_PackageBlockLayer' in EnneadTab for Rhino."
-        
+        success_message += "\nYou new Rhino will start soon."
         NOTIFICATION.messenger(success_message)
         return export_result
     else:
@@ -178,26 +174,77 @@ class RevitToRhinoExporter(object):
     def _get_family_name(self, element):
         """Get family name from an element with error handling"""
         try:
-            # Special handling for linked elements
-            if hasattr(element, 'link_doc'):
-                return element.Symbol.FamilyName + " (Linked)"
-            return element.Symbol.FamilyName
-        except:
-            return "Unknown"
+            # Handle system families
+            if hasattr(element, "WallType"):
+                return "Wall"
+            elif hasattr(element, "FloorType"):
+                return "Floor"
+            elif hasattr(element, "RoofType"):
+                return "Roof"
+            elif hasattr(element, "StairsType"):
+                return "Stair"
+            elif hasattr(element, "RailingType"):
+                return "Railing"
+            elif hasattr(element, "CeilingType"):
+                return "Ceiling"
+            elif hasattr(element, "RampType"):
+                return "Ramp"
+            elif hasattr(element, "ModelTextType"):
+                return "ModelText"
+            # Handle loadable families
+            elif hasattr(element, "Symbol") and hasattr(element.Symbol, "FamilyName"):
+                if hasattr(element, 'link_doc'):
+                    return element.Symbol.FamilyName + " (Linked)"
+                return element.Symbol.FamilyName
+            elif hasattr(element, "FamilyName"):
+                return element.FamilyName
+            elif hasattr(element, "Name"):
+                return element.Name
+        except Exception:
+            print(traceback.format_exc())
+        return "Unknown"
 
     def _get_type_name(self, element):
         """Get type name from an element with error handling"""
         try:
-            return element.Symbol.Name
-        except:
-            return "NoType"
+            # Handle system families
+            if hasattr(element, "WallType"):
+                return element.WallType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "FloorType"):
+                return element.FloorType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "RoofType"):
+                return element.RoofType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "StairsType"):
+                return element.StairsType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "RailingType"):
+                return element.RailingType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "CeilingType"):
+                return element.CeilingType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "RampType"):
+                return element.RampType.LookupParameter("Type Name").AsString()
+            elif hasattr(element, "ModelTextType"):
+                return element.ModelTextType.LookupParameter("Type Name").AsString()
+            # Handle loadable families
+            elif hasattr(element, "Symbol") and hasattr(element.Symbol, "Name"):
+                return element.Symbol.Name
+            elif hasattr(element, "Name"):
+                return element.Name
+        except Exception:
+            pass
+        return "NoType"
 
     def _process_element(self, element):
         """Process a single family instance for export."""
         element_id = element.Id.IntegerValue
         family_name = self._get_family_name(element)
         type_name = self._get_type_name(element)
-        symbol_id = element.Symbol.Id.IntegerValue
+
+        
+        # For system families, use the element's Id as the symbol_id
+        if hasattr(element, "Symbol"):
+            symbol_id = element.Symbol.Id.IntegerValue
+        else:
+            symbol_id = element.Id.IntegerValue
         
         # Check if we've already created a block for this symbol
         if symbol_id in self.block_cache:
@@ -244,21 +291,37 @@ class RevitToRhinoExporter(object):
     def _get_geometry(self, element):
         """Extract geometry from a family instance."""
         family_name = self._get_family_name(element)
+        category_name = self._get_category_name(element)
+
+        out_data = {
+            "category_name": category_name, 
+            "family_name": family_name,
+            "geometry_source": "None"}
         
-        # First try to get symbol geometry (preferred)
-        symbol_geometry = self._get_symbol_geometry(element.Symbol)
+        # For system families, get geometry directly from the element
+        if any(hasattr(element, attr) for attr in ["WallType", "FloorType", "RoofType", "StairsType", 
+                                                  "RailingType", "CeilingType", "RampType", "ModelTextType"]):
+            instance_geometry = self._get_instance_geometry(element)
+            if instance_geometry and len(instance_geometry) > 1:  # More than just metadata
+                instance_geometry["category_name"] = category_name
+                return instance_geometry
+            return out_data
         
-        if symbol_geometry and len(symbol_geometry) > 1:  # More than just metadata
-            return symbol_geometry
-        
-        # If symbol geometry failed, try instance geometry
-        instance_geometry = self._get_instance_geometry(element)
-        
-        if instance_geometry and len(instance_geometry) > 1:  # More than just metadata
-            return instance_geometry
+        # For loadable families, try symbol geometry first
+        if hasattr(element, "Symbol"):
+            symbol_geometry = self._get_symbol_geometry(element.Symbol)
+            if symbol_geometry and len(symbol_geometry) > 1:  # More than just metadata
+                symbol_geometry["category_name"] = category_name
+                return symbol_geometry
+            
+            # If symbol geometry failed, try instance geometry
+            instance_geometry = self._get_instance_geometry(element)
+            if instance_geometry and len(instance_geometry) > 1:  # More than just metadata
+                instance_geometry["category_name"] = category_name
+                return instance_geometry
         
         # If both approaches failed
-        return {"geometry_source": "None"}
+        return out_data
 
     def _get_symbol_geometry(self, symbol):
         """Extract geometry directly from a family symbol (untransformed)."""
@@ -275,25 +338,16 @@ class RevitToRhinoExporter(object):
             # Process each geometry object
             for geometry_object in geom_elem:
                 if isinstance(geometry_object, DB.GeometryInstance):
-                    # GetSymbolGeometry returns untransformed geometry
-                    symbol_geo = geometry_object.GetSymbolGeometry()
-                    if not symbol_geo:
-                        continue
-                    
-                    # Process each geometry object in the symbol
-                    for g_obj in symbol_geo:
-                        # Get subcategory name for layer assignment
-                        subcat_name = self._get_subcategory_name(g_obj)
-                        
-                        # Convert to Rhino geometry
-                        converted = self._convert_revit_geometry(g_obj)
-                        
-                        if converted:
-                            # Add to the appropriate subcategory/layer
-                            if subcat_name not in geometry_by_subcategory:
-                                geometry_by_subcategory[subcat_name] = []
-                            geometry_by_subcategory[subcat_name].extend(converted)
-                            total_objects += len(converted)
+                    # Handle nested family geometry recursively
+                    nested_symbol = geometry_object.Symbol
+                    nested_geo = self._get_symbol_geometry(nested_symbol)
+                    for subcat_name, geo_list in nested_geo.items():
+                        if subcat_name == "geometry_source":
+                            continue
+                        if subcat_name not in geometry_by_subcategory:
+                            geometry_by_subcategory[subcat_name] = []
+                        geometry_by_subcategory[subcat_name].extend(geo_list)
+                        total_objects += len(geo_list)
                 
                 elif isinstance(geometry_object, DB.Solid) or hasattr(geometry_object, 'Mesh'):
                     # Direct geometry objects in symbol
@@ -306,7 +360,9 @@ class RevitToRhinoExporter(object):
                             geometry_by_subcategory[subcat_name] = []
                         geometry_by_subcategory[subcat_name].extend(converted)
                         total_objects += len(converted)
-            
+            # Add category_name if available from symbol
+            if hasattr(symbol, 'Family') and hasattr(symbol.Family, 'FamilyCategory') and symbol.Family.FamilyCategory:
+                geometry_by_subcategory["category_name"] = symbol.Family.FamilyCategory.Name
             return geometry_by_subcategory
             
         except Exception as e:
@@ -347,7 +403,6 @@ class RevitToRhinoExporter(object):
                                         if subcat_name not in geometry_by_subcategory:
                                             geometry_by_subcategory[subcat_name] = []
                                         geometry_by_subcategory[subcat_name].extend(converted)
-                
                 return geometry_by_subcategory
             
             # Normal case - get the instance's geometry
@@ -358,25 +413,16 @@ class RevitToRhinoExporter(object):
             # Process each geometry object
             for geometry_object in geom_elem:
                 if isinstance(geometry_object, DB.GeometryInstance):
-                    # GetInstanceGeometry returns geometry already transformed to project coordinates
-                    inst_geo = geometry_object.GetInstanceGeometry()
-                    if not inst_geo:
-                        continue
-                    
-                    # Process each geometry object in the instance
-                    for g_obj in inst_geo:
-                        # Get subcategory name for layer assignment
-                        subcat_name = self._get_subcategory_name(g_obj)
-                        
-                        # Convert to Rhino geometry
-                        converted = self._convert_revit_geometry(g_obj)
-                        
-                        if converted:
-                            # Add to the appropriate subcategory/layer
-                            if subcat_name not in geometry_by_subcategory:
-                                geometry_by_subcategory[subcat_name] = []
-                            geometry_by_subcategory[subcat_name].extend(converted)
-                            total_objects += len(converted)
+                    # Handle nested family geometry recursively
+                    nested_symbol = geometry_object.Symbol
+                    nested_geo = self._get_symbol_geometry(nested_symbol)
+                    for subcat_name, geo_list in nested_geo.items():
+                        if subcat_name == "geometry_source":
+                            continue
+                        if subcat_name not in geometry_by_subcategory:
+                            geometry_by_subcategory[subcat_name] = []
+                        geometry_by_subcategory[subcat_name].extend(geo_list)
+                        total_objects += len(geo_list)
                 
                 elif isinstance(geometry_object, DB.Solid) or hasattr(geometry_object, 'Mesh'):
                     # Direct geometry objects
@@ -389,7 +435,9 @@ class RevitToRhinoExporter(object):
                             geometry_by_subcategory[subcat_name] = []
                         geometry_by_subcategory[subcat_name].extend(converted)
                         total_objects += len(converted)
-            
+            # Add category_name if available from element
+            if hasattr(element, 'Category') and element.Category:
+                geometry_by_subcategory["category_name"] = element.Category.Name
             return geometry_by_subcategory
             
         except Exception as e:
@@ -398,10 +446,6 @@ class RevitToRhinoExporter(object):
 
     def _get_subcategory_name(self, g_obj):
         """Get the subcategory name for a geometry object"""
-        # If not preserving family layers, return default layer
-        if not self.preserve_family_layers:
-            return "Default"
-            
         try:
             if g_obj.GraphicsStyleId and self.revit_doc.GetElement(g_obj.GraphicsStyleId):
                 style = self.revit_doc.GetElement(g_obj.GraphicsStyleId)
@@ -462,6 +506,79 @@ class RevitToRhinoExporter(object):
             
         return rhino_mesh
 
+    def _get_or_create_layer(self, subC_name, family_name, category_name):
+        """Get or create a layer with the given name and return its index.
+        
+        Args:
+            subC_name (str): The subcategory name
+            family_name (str): The family name
+            category_name (str): The category name
+            
+        Returns:
+            int: Layer index in the Rhino document
+        """
+        # Create parent layers first
+        category_layer = self._get_or_create_parent_layer(category_name)
+        family_layer = self._get_or_create_parent_layer(family_name, parent_index=category_layer)
+        
+        # Create the full layer path using the new format
+        full_layer_path = "{}::{}::{}".format(category_name, family_name, subC_name)
+        
+        # Check if layer already exists
+        layer_index = self.rhino_doc.Layers.FindByFullPath(full_layer_path, True)
+        if layer_index >= 0:
+            return layer_index
+            
+        # Create new layer
+        layer = Rhino.DocObjects.Layer()
+        layer.Name = subC_name
+        layer.ParentLayerId = self.rhino_doc.Layers[family_layer].Id
+        
+        # Generate a color based only on the subcategory name
+        name_hash = hash(subC_name) % 1000
+        r = (name_hash * 13) % 256
+        g = (name_hash * 17) % 256
+        b = (name_hash * 19) % 256
+        layer.Color = System.Drawing.Color.FromArgb(r, g, b)
+        
+        # Add the layer to the document
+        return self.rhino_doc.Layers.Add(layer)
+
+    def _get_or_create_parent_layer(self, layer_name, parent_index=None):
+        """Create or get a parent layer.
+        
+        Args:
+            layer_name (str): The layer name
+            parent_index (int, optional): Index of the parent layer
+            
+        Returns:
+            int: Layer index in the Rhino document
+        """
+        # Check if layer already exists
+        if parent_index is None:
+            # For top level layers, search through all layers
+            for i in range(self.rhino_doc.Layers.Count):
+                layer = self.rhino_doc.Layers[i]
+                if layer.Name == layer_name and layer.ParentLayerId == System.Guid.Empty:
+                    return i
+        else:
+            # For child layers, use the full path
+            parent_path = self.rhino_doc.Layers[parent_index].FullPath
+            full_path = "{}::{}".format(parent_path, layer_name)
+            for i in range(self.rhino_doc.Layers.Count):
+                layer = self.rhino_doc.Layers[i]
+                if layer.FullPath == full_path:
+                    return i
+            
+        # Create new layer
+        layer = Rhino.DocObjects.Layer()
+        layer.Name = layer_name
+        if parent_index is not None:
+            layer.ParentLayerId = self.rhino_doc.Layers[parent_index].Id
+            
+        # Add the layer to the document
+        return self.rhino_doc.Layers.Add(layer)
+
     def _create_block_definition(self, family_name, type_name, geometry_data):
         """Create a Rhino block definition for a family symbol."""
         # Create a block name
@@ -480,25 +597,38 @@ class RevitToRhinoExporter(object):
         # Check if there's any actual geometry
         has_geometry = False
         for subcat_name, geo_list in geometry_data.items():
-            if subcat_name != "geometry_source" and len(geo_list) > 0:
+            if subcat_name in ("geometry_source", "category_name") or not geo_list:
+                continue
+            for geo in geo_list:
+                if geo is None:
+                    continue
+                # Only add if geo is a geometry object
+                if not hasattr(geo, "IsValid"):  # or use isinstance(geo, Rhino.Geometry.GeometryBase)
+                    continue
                 has_geometry = True
                 break
                 
         if not has_geometry:
             return -1
-            
+        
+        # Use category_name from geometry_data
+        category_name = geometry_data.get("category_name", "Unknown")
+        
         # Process each subcategory
         for subcat_name, geo_list in geometry_data.items():
-            if subcat_name == "geometry_source" or not geo_list:
+            if subcat_name in ("geometry_source", "category_name") or not geo_list:
                 continue
                 
-            # Create or get layer for this subcategory
-            layer_index = self._get_or_create_layer(subcat_name)
+            # Create or get layer for this subcategory using the new format
+            layer_index = self._get_or_create_layer(subcat_name, family_name, category_name)
             
             for geo in geo_list:
                 if geo is None:
                     continue
                     
+                # Only add if geo is a geometry object
+                if not hasattr(geo, "IsValid"):  # or use isinstance(geo, Rhino.Geometry.GeometryBase)
+                    continue
                 all_geometry.append(geo)
                 
                 # Create attributes for this object that reference the layer
@@ -528,26 +658,26 @@ class RevitToRhinoExporter(object):
             
         return block_idx
 
-    def _get_or_create_layer(self, layer_name):
-        """Get or create a layer with the given name and return its index"""
-        # Check if layer already exists
-        layer_index = self.rhino_doc.Layers.FindByFullPath(layer_name, True)
-        if layer_index >= 0:
-            return layer_index
-            
-        # Create new layer
-        layer = Rhino.DocObjects.Layer()
-        layer.Name = layer_name
-        
-        # Generate a color based on the layer name
-        name_hash = hash(layer_name) % 1000
-        r = (name_hash * 13) % 256
-        g = (name_hash * 17) % 256
-        b = (name_hash * 19) % 256
-        layer.Color = System.Drawing.Color.FromArgb(r, g, b)
-        
-        # Add the layer to the document
-        return self.rhino_doc.Layers.Add(layer)
+    def _get_category_name(self, element):
+        """
+        Get the category name for a Revit element, with error handling.
+        Args:
+            element: The Revit element or symbol.
+        Returns:
+            str: The category name, or 'Unknown' if not available.
+        """
+        try:
+            if hasattr(element, "Category") and element.Category is not None:
+                return element.Category.Name
+            # For symbols, try to get from FamilyCategory
+            if hasattr(element, "FamilyCategory") and element.FamilyCategory is not None:
+                return element.FamilyCategory.Name
+            # For symbols with Family, try to get from Family.FamilyCategory
+            if hasattr(element, "Family") and hasattr(element.Family, "FamilyCategory") and element.Family.FamilyCategory is not None:
+                return element.Family.FamilyCategory.Name
+        except Exception as e:
+            logger.debug("Error getting category name: {}".format(str(e)))
+        return "Unknown"
 
     def _revit_transform_to_rhino(self, revit_transform):
         """Convert a Revit transform to a Rhino transform"""

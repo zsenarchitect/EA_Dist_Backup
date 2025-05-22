@@ -81,20 +81,28 @@ def view_ids_to_views(elements, doc=DOC):
         return []
 
 def filter_archi_views(views):
-    out = []
-    for view in views:
-        if view is None:
-            continue
-        if not isinstance(view, DB.View):
-            continue
-        if view.IsTemplate:
-            continue
-        if view.ViewType.ToString() in ["Legend", "Schedule", "ProjectBrowser", "SystemBrowser"]:
-            continue
-        out.append(view)
-    return out
+    out = filter(is_archi_view, views)
+    return list(out)
+
+def is_archi_view(view):
+    if view is None:
+        return False
+    if not isinstance(view, DB.View):
+        return False
+    if view.IsTemplate:
+        return False
+    if view.ViewType.ToString() in ["Legend", "Schedule", "ProjectBrowser", "SystemBrowser"]:
+        return False
+    return True
 
 
+def is_focused_on_system_view():
+    view = REVIT_APPLICATION.get_doc().ActiveView
+    if view is None:
+        return False
+    if view.ViewType.ToString() in ["ProjectBrowser", "SystemBrowser"]:
+        return True
+    return False
 
 class ViewFilter:
     def __init__(self, views_or_view_ids = None, doc=DOC):
