@@ -353,6 +353,15 @@
         "tab_icon": "Create.tab\\icon.png",
         "is_popular": false
     },
+    "Drafting.tab\\color_picker.button\\color_picker_left.py": {
+        "script": "Drafting.tab\\color_picker.button\\color_picker_left.py",
+        "icon": "Drafting.tab\\color_picker.button\\icon.png",
+        "alias": "ColorPicker",
+        "doc": "Opens Coolors.co color palette generator in default web browser for color scheme inspiration",
+        "tab": "Drafting.tab",
+        "tab_icon": "Drafting.tab\\icon.png",
+        "is_popular": false
+    },
     "Drafting.tab\\duplicate_layout.button\\duplicate_layout_left.py": {
         "script": "Drafting.tab\\duplicate_layout.button\\duplicate_layout_left.py",
         "icon": "Drafting.tab\\duplicate_layout.button\\icon.png",
