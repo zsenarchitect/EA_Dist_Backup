@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-23 13:00:44.
+This is the distribution repository for EnneadTab updated on 2025-05-23 16:02:37.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-People saying 'boo! to their friends has risen by 85% in the last year.... That's a frightening statistic.
+A book just fell on my head. I only have my shelf to blame.
