@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-25 07:23:21.
+This is the distribution repository for EnneadTab updated on 2025-05-25 10:24:06.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Firefly is the opposite of waterfall.
+I needed a password eight characters long so I picked Snow White and the Seven Dwarfs.
