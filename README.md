@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-25 10:24:06.
+This is the distribution repository for EnneadTab updated on 2025-05-25 13:32:13.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-I needed a password eight characters long so I picked Snow White and the Seven Dwarfs.
+Why did Sweden start painting barcodes on the sides of their battleships? So they could Scandinavian.
