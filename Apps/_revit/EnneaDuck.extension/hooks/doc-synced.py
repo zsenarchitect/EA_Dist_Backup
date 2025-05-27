@@ -317,10 +317,11 @@ def doc_synced(doc):
         run_legacy_updates(doc)
     else:
         proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
-        if proj_data["is_update_view_name_format"]:
-            update_view_names(doc)
-        if proj_data["area_tracking"]["auto_update_enabled"]:
-            update_area_tracking(doc)
+        if proj_data:
+            if proj_data.get("area_tracking", {}).get("auto_update_enabled", False):
+                update_area_tracking(doc)
+            if proj_data.get("is_update_view_name_format", False):
+                update_view_names(doc)
 
     if USER.IS_DEVELOPER:
         SPEAK.speak("Document {} has finished syncing.".format(doc.Title))

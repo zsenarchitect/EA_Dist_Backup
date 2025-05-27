@@ -60,6 +60,29 @@ class DepartmentOption:
         """Returns collection of all type names for calculator."""
         return self.LEVEL_NAMES + self.DUMMY_DATA_HOLDER
 
+    @property
+    def CALCULATOR_FAMILY_NAME_BASE(self):
+        """Returns the base name of the calculator family."""
+        return "AreaData Calculator"
+
+    @property
+    def CALCULATOR_FAMILY_NAME(self):
+        """Returns the calculator family name with option suffix if not primary."""
+        base_name = self.CALCULATOR_FAMILY_NAME_BASE
+        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+
+    @property
+    def CALCULATOR_CONTAINER_VIEW_NAME(self):
+        """Returns the calculator container view name with option suffix if not primary."""
+        base_name = "Area Calculator Collection"
+        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+
+    @property
+    def FINAL_SCHEDULE_VIEW_NAME(self):
+        """Returns the final schedule view name with option suffix if not primary."""
+        base_name = "PROGRAM CATEGORY"
+        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+
     def __init__(self, internal_option_name, department_para_mapping,
                  department_ignore_para_names, levels, option_name,
                  overall_area_scheme_name, department_area_scheme_name,
@@ -83,16 +106,6 @@ class DepartmentOption:
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name
         self.LEVEL_NAMES = levels
-
-        # Set family and view names
-        self.CALCULATOR_FAMILY_NAME = "AreaData Calculator"
-        self.CALCULATOR_CONTAINER_VIEW_NAME = "Area Calculator Collection"
-        self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
-
-        if not self.is_primary:
-            self.CALCULATOR_FAMILY_NAME += "_{}".format(self.formated_option_name)
-            self.CALCULATOR_CONTAINER_VIEW_NAME += "_{}".format(self.formated_option_name)
-            self.FINAL_SCHEDULE_VIEW_NAME += "_{}".format(self.formated_option_name)
 
         # Set area scheme names
         self.OVERALL_AREA_SCHEME_NAME = overall_area_scheme_name
@@ -221,7 +234,7 @@ class OptionValidation:
 
     def validate_family(self):
         """Validates calculator family exists."""
-        default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
+        default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME_BASE))
         fam = REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, doc=self.doc, load_path_if_not_exist=default_sample_family_path)
         return fam is not None
 
@@ -474,6 +487,7 @@ class InternalCheck:
         self.output = script.get_output()
         self._found_bad_area = False
         self._owner_holding = set()
+        self._has_changes = False
         AreaData.purge_data()
 
     def collect_all_area_data(self):
@@ -547,10 +561,10 @@ class InternalCheck:
                 department_nickname = para_mapping.get(department_name)
                 if not department_nickname:
                     if self.show_log:
-                        print("Area has department value [{}] not matched any thing in project setup....{}@{}".format(
+                        print("Area has department value [{}] not matched anything in project setup, this is case sensitive....{}@{}".format(
                             department_name, self.output.linkify(area.Id), level.Name))
                     else:
-                        print("Area has department value [{}] not matched any thing in project setup. Run in detail mode to find out which.".format(
+                        print("Area has department value [{}] not matched anything in project setup, this is case sensitive. Run in detail mode to find out which.".format(
                             department_name))
                     continue
 
@@ -632,15 +646,23 @@ class InternalCheck:
                 if para:
                     local_factor = 1 if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"] else level_data.factor
                     factored_area = getattr(level_data, family_para_name) * local_factor
-                    para.Set(factored_area)
+                    if para.AsDouble() != factored_area:
+                        self._has_changes = True
+                        para.Set(factored_area)
                 else:
                     print("No para found for [{}], please edit the family..".format(family_para_name))
 
             # Fill in GSF data
             design_SF_para = calc_type.LookupParameter(self.option.DESIGN_SF_PARA_NAME)
-            design_SF_para.Set(design_GSF_before_factor)
+            if design_SF_para.AsDouble() != design_GSF_before_factor:
+                self._has_changes = True
+                design_SF_para.Set(design_GSF_before_factor)
+                
             estimate_SF_para = calc_type.LookupParameter(self.option.ESTIMATE_SF_PARA_NAME)
-            estimate_SF_para.Set(design_GSF_before_factor * level_data.factor)
+            estimate_value = design_GSF_before_factor * level_data.factor
+            if estimate_SF_para.AsDouble() != estimate_value:
+                self._has_changes = True
+                estimate_SF_para.Set(estimate_value)
 
         t.Commit()
 
@@ -696,7 +718,9 @@ class InternalCheck:
                 continue
             para = dummy_calc_type.LookupParameter(para_name)
             if para:
-                para.Set(getattr(dummy_sum_data, para_name))
+                if para.AsDouble() != getattr(dummy_sum_data, para_name):
+                    self._has_changes = True
+                    para.Set(getattr(dummy_sum_data, para_name))
             else:
                 print("No para found for [{}], please edit the family..".format(para_name))
 
@@ -727,7 +751,9 @@ class InternalCheck:
         for para_name in self.option.FAMILY_PARA_COLLECTION:
             if para_name == self.option.FACTOR_PARA_NAME:
                 setattr(dummy_delta_data, para_name, 1)
-                dummy_delta_type.LookupParameter(para_name).Set(1)
+                if dummy_delta_type.LookupParameter(para_name).AsDouble() != 1:
+                    self._has_changes = True
+                    dummy_delta_type.LookupParameter(para_name).Set(1)
                 continue
             if para_name in self.option.INTERNAL_PARA_NAMES.values():
                 continue
@@ -739,12 +765,17 @@ class InternalCheck:
                 dummy_delta_data.update(para_name, delta)
 
             if dummy_delta_type.LookupParameter(para_name):
-                dummy_delta_type.LookupParameter(para_name).Set(delta)
+                if dummy_delta_type.LookupParameter(para_name).AsDouble() != delta:
+                    self._has_changes = True
+                    dummy_delta_type.LookupParameter(para_name).Set(delta)
             else:
                 print("No para found for [{}], please edit the family..".format(para_name))
 
     def update_schedule_last_update_date(self):
-        """Update schedule with last update date."""
+        """Update schedule with last update date only if changes were made."""
+        if not self._has_changes:
+            return
+            
         schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, self.doc)
         if not REVIT_SELECTION.is_changable(schedule_view):
             return
