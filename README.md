@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-27 01:50:31.
+This is the distribution repository for EnneadTab updated on 2025-05-27 04:53:19.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-What does an angry pepper do? It gets jalapeño face.
+I was in an 80's band called the prevention. We were better than the cure.
