@@ -1,4 +1,3 @@
-
 from EnneadTab import DATA_CONVERSION, ENVIRONMENT, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
 from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PROJ_DATA, REVIT_PARAMETER
 from pyrevit import script
@@ -7,86 +6,87 @@ from collections import OrderedDict
 import traceback
 
 class DepartmentOption:
+    """Configuration class for department area tracking and calculations.
+    
+    Attributes:
+        DEPARTMENT_KEY_PARA (str): Parameter name for department tracking
+        PROGRAM_TYPE_KEY_PARA (str): Parameter name for program type
+        PROGRAM_TYPE_DETAIL_KEY_PARA (str): Parameter name for program type detail
+        DEPARTMENT_PARA_MAPPING (OrderedDict): Mapping between Revit departments and calculator nicknames
+        DEPARTMENT_IGNORE_PARA_NAMES (list): List of department names to ignore in calculations
+        OVERALL_AREA_SCHEME_NAME (str): Name of the overall area scheme
+        OVERALL_PARA_NAME (str): Parameter name for overall area
+        DEPARTMENT_AREA_SCHEME_NAME (str): Name of the department area scheme
+        FACTOR_PARA_NAME (str): Parameter name for discount factor
+        DESIGN_SF_PARA_NAME (str): Parameter name for design square footage
+        ESTIMATE_SF_PARA_NAME (str): Parameter name for estimated square footage
+        INTERNAL_PARA_NAMES (dict): Internal parameter names for tracking
+        LEVEL_NAMES (list): List of level names to track
+        DUMMY_DATA_HOLDER (list): List of dummy data types for summaries
+    """
 
-
-    DEPARTMENT_KEY_PARA = "get from project data para_dict" #default value "Area_$Department" 
-    PROGRAM_TYPE_KEY_PARA = "get from project data para_dict" #default value "Area_$Department_Program Type"
-    PROGRAM_TYPE_DETAIL_KEY_PARA = "get from project data para_dict" #default value "Area_$Department_Program Type Detail"
-
-
-
-    # KEY = REVIT ASSIGNED DEPARTMENT, VALUE = NICKNAME USED IN CALCUATOR FAMILY AND EXCEL AND  AREADATA CLASS
+    DEPARTMENT_KEY_PARA = "get from project data para_dict"
+    PROGRAM_TYPE_KEY_PARA = "get from project data para_dict"
+    PROGRAM_TYPE_DETAIL_KEY_PARA = "get from project data para_dict"
     DEPARTMENT_PARA_MAPPING = "get from project data table setting"
-
-    # in the department area plan, if category fall into the IGNORE list, then it will not alert such discovery. This way only the mis spelled and unintentional category is alerted.
     DEPARTMENT_IGNORE_PARA_NAMES = "get from project data setting"
-
+    OVERALL_AREA_SCHEME_NAME = "get from project data option setting"
+    OVERALL_PARA_NAME = "GSF"
+    DEPARTMENT_AREA_SCHEME_NAME = "get from project data option setting"
+    FACTOR_PARA_NAME = "FACTOR"
+    DESIGN_SF_PARA_NAME = "DGSF TAKEOFF"
+    ESTIMATE_SF_PARA_NAME = "DGSF ESTIMATE"
+    INTERNAL_PARA_NAMES = {"title": "LEVEL", "order": "order"}
+    LEVEL_NAMES = []
+    DUMMY_DATA_HOLDER = ["GRAND TOTAL", "PROGRAM TARGET", "DELTA"]
 
     @property
     def PARA_TRACKER_MAPPING(self):
-        temp = OrderedDict([("MECHANICAL", "MERS")]) # mech is not part of department calc
+        """Returns mapping of department parameters including mechanical."""
+        temp = OrderedDict([("MECHANICAL", "MERS")])
         temp.update(self.DEPARTMENT_PARA_MAPPING)
         return temp
 
-
-
-    #
-    OVERALL_AREA_SCHEME_NAME = "get from project data option setting" # deafult value "GFA Scheme"
-    OVERALL_PARA_NAME = "GSF"
-
-    DEPARTMENT_AREA_SCHEME_NAME = "get from project data option setting" # deafult value "DGSF Scheme"
-
-
-
-    FACTOR_PARA_NAME = "FACTOR" #the discount value, this should be typed in in proj
-    DESIGN_SF_PARA_NAME = "DGSF TAKEOFF" 
-    ESTIMATE_SF_PARA_NAME = "DGSF ESTIMATE"
-
-    INTERNAL_PARA_NAMES = {"title":"LEVEL", "order":"order"}
-
-
     @property
     def FAMILY_PARA_COLLECTION(self):
-        return self.INTERNAL_PARA_NAMES.values() + [self.OVERALL_PARA_NAME,  self.DESIGN_SF_PARA_NAME, self.FACTOR_PARA_NAME, self.ESTIMATE_SF_PARA_NAME] + self.PARA_TRACKER_MAPPING.values() 
-    
+        """Returns collection of all family parameters."""
+        return (self.INTERNAL_PARA_NAMES.values() + 
+                [self.OVERALL_PARA_NAME, self.DESIGN_SF_PARA_NAME, 
+                 self.FACTOR_PARA_NAME, self.ESTIMATE_SF_PARA_NAME] + 
+                self.PARA_TRACKER_MAPPING.values())
 
-
-
-    # in the setting file to set which level to run calc
-    LEVEL_NAMES = []
-    
-
-    DUMMY_DATA_HOLDER = ["GRAND TOTAL",
-                        "PROGRAM TARGET",
-                        "DELTA"]
-
-    # thia type name collection is to contain all and exact type names for the caulator
     @property
     def TYPE_NAME_COLLECTION(self):
+        """Returns collection of all type names for calculator."""
         return self.LEVEL_NAMES + self.DUMMY_DATA_HOLDER
 
-
-    def __init__(self, 
-                 internal_option_name,
-                 department_para_mapping,
-                 department_ignore_para_names,
-                 levels, 
-                 option_name, 
-                 overall_area_scheme_name, 
-                 department_area_scheme_name,
-                 department_key_para_name,
-                 program_type_key_para_name,
+    def __init__(self, internal_option_name, department_para_mapping,
+                 department_ignore_para_names, levels, option_name,
+                 overall_area_scheme_name, department_area_scheme_name,
+                 department_key_para_name, program_type_key_para_name,
                  program_type_detail_key_para_name):
+        """Initialize department option configuration.
+        
+        Args:
+            internal_option_name (str): Internal name for the option
+            department_para_mapping (OrderedDict): Department parameter mapping
+            department_ignore_para_names (list): List of departments to ignore
+            levels (list): List of levels to track
+            option_name (str): Name of the option
+            overall_area_scheme_name (str): Name of overall area scheme
+            department_area_scheme_name (str): Name of department area scheme
+            department_key_para_name (str): Department key parameter name
+            program_type_key_para_name (str): Program type key parameter name
+            program_type_detail_key_para_name (str): Program type detail parameter name
+        """
         self.internal_option_name = internal_option_name
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name
-
-
         self.LEVEL_NAMES = levels
 
-        self.CALCULATOR_FAMILY_NAME_RAW = "{} AreaData Calculator".format(ENVIRONMENT.PLUGIN_NAME)
-        self.CALCULATOR_FAMILY_NAME = self.CALCULATOR_FAMILY_NAME_RAW
-        self.CALCULATOR_CONTAINER_VIEW_NAME = "{} Area Calculator Collection".format(ENVIRONMENT.PLUGIN_NAME)
+        # Set family and view names
+        self.CALCULATOR_FAMILY_NAME = "AreaData Calculator"
+        self.CALCULATOR_CONTAINER_VIEW_NAME = "Area Calculator Collection"
         self.FINAL_SCHEDULE_VIEW_NAME = "PROGRAM CATEGORY"
 
         if not self.is_primary:
@@ -94,129 +94,146 @@ class DepartmentOption:
             self.CALCULATOR_CONTAINER_VIEW_NAME += "_{}".format(self.formated_option_name)
             self.FINAL_SCHEDULE_VIEW_NAME += "_{}".format(self.formated_option_name)
 
-
+        # Set area scheme names
         self.OVERALL_AREA_SCHEME_NAME = overall_area_scheme_name
         self.DEPARTMENT_AREA_SCHEME_NAME = department_area_scheme_name
 
+        # Set parameter names
         self.DEPARTMENT_KEY_PARA = department_key_para_name
         self.PROGRAM_TYPE_KEY_PARA = program_type_key_para_name
         self.PROGRAM_TYPE_DETAIL_KEY_PARA = program_type_detail_key_para_name
 
+        # Set department mappings
         self.DEPARTMENT_PARA_MAPPING = department_para_mapping
         self.DEPARTMENT_IGNORE_PARA_NAMES = department_ignore_para_names
 
 class OptionValidation:
+    """Validates department option configuration and related Revit elements.
+    
+    Args:
+        doc (Document): Revit document
+        option (DepartmentOption): Department option to validate
+        show_log (bool): Whether to show detailed logging
+    """
+
     def __init__(self, doc, option, show_log):
-
-
         self.doc = doc
         self.option = option
         self.output = script.get_output()
         self.show_log = show_log
 
+    def validate_family_data_holder(self):
+        """Validates and updates family data holder parameters."""
+        fam_doc = self.doc.EditFamily(REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, self.doc))
+        fam_manager = fam_doc.FamilyManager
+
+        all_fam_para_dict = {para.Definition.Name: para for para in fam_manager.GetParameters()}
+        T = DB.Transaction(fam_doc, "Validate Family Data Holder")
+        T.Start()
+        
+        # Remove parameters not in collection
+        for para_name in all_fam_para_dict:
+            if para_name not in self.option.FAMILY_PARA_COLLECTION:
+                fam_manager.RemoveParameter(all_fam_para_dict[para_name])
+
+        # Add missing parameters
+        for para_name in self.option.FAMILY_PARA_COLLECTION:
+            if para_name not in all_fam_para_dict:
+                fam_manager.AddParameter(para_name, DB.GroupTypeId.Data, DB.SpecTypeId.Area, False)
+
+        T.Commit()
+        REVIT_FAMILY.load_family(fam_doc, self.doc)
+        fam_doc.Close(False)
+        return True
+
     def validate_all(self):
+        """Validates all aspects of the department option."""
         self.show_logic()
         if not self.is_area_scheme_valid():
+            print("Area scheme validation failed")
             return False
         if not self.validate_family():
+            print("Family validation failed")
+            return False
+        if not self.validate_family_data_holder():
+            print("Family data holder validation failed")
             return False
         if not self.validate_container_view():
+            print("Container view validation failed")
             return False
-        self.validate_schedule_view()
-        self.is_family_types_valid()
+        if not self.validate_schedule_view():
+            print("Schedule view validation failed")
+            return False
+        if not self.is_family_types_valid():
+            print("Family types validation failed")
+            return False
         return True
 
     def show_logic(self):
-        output = script.get_output()
+        """Shows validation logic if logging is enabled."""
         if not self.show_log:
-
             return
 
-
+        output = script.get_output()
         output.print_md("## Logic for [{}]".format(self.option.formated_option_name))
-        note = ""
-
-
-        note += "The AreaScheme used for department data is [{}]".format(self.option.DEPARTMENT_AREA_SCHEME_NAME)
-        note += "\nThe parameter used in getting category is [{}]".format(self.option.DEPARTMENT_KEY_PARA)
-        note += "\nThe AreaScheme used for overall data is [{}]".format(self.option.OVERALL_AREA_SCHEME_NAME)
-        note += "\nAny valid area will count toward overall area."
         
+        note = []
+        note.append("The AreaScheme used for department data is [{}]".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
+        note.append("The parameter used in getting category is [{}]".format(self.option.DEPARTMENT_KEY_PARA))
+        note.append("The AreaScheme used for overall data is [{}]".format(self.option.OVERALL_AREA_SCHEME_NAME))
+        note.append("Any valid area will count toward overall area.")
+        note.append("The family used in checking is [{}]".format(self.option.CALCULATOR_FAMILY_NAME))
 
-
-        note += "\nThe family used in checking is [{}]".format(self.option.CALCULATOR_FAMILY_NAME)
-
-
-
-        container_view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc = self.doc)
+        container_view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc=self.doc)
         if container_view:
-            note += "\nThe view used to contain all calculator is [{}]".format(output.linkify(container_view.Id, 
-                                                                                                title=self.option.CALCULATOR_CONTAINER_VIEW_NAME))
+            note.append("The view used to contain all calculator is [{}]".format(
+                output.linkify(container_view.Id, title=self.option.CALCULATOR_CONTAINER_VIEW_NAME)))
 
-        
-        schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc = self.doc)
+        schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
         if schedule_view:
-            note += "\nThe view used to contain final schedule is [{}]".format(output.linkify(schedule_view.Id, 
-                                                                                                title=self.option.FINAL_SCHEDULE_VIEW_NAME))
+            note.append("The view used to contain final schedule is [{}]".format(
+                output.linkify(schedule_view.Id, title=self.option.FINAL_SCHEDULE_VIEW_NAME)))
 
-
-
-        note += "\n\nThe level names used in checking is below:"
+        note.append("\nThe level names used in checking is below:")
         for x in self.option.LEVEL_NAMES:
-            note += "\n   -[{}]".format(x)
-            
-            
-            
+            note.append("   -[{}]".format(x))
 
-        note += "\n\nThe value of area should fall in to one of below so it can match the excel table:"
+        note.append("\nThe value of area should fall in to one of below so it can match the excel table:")
         for para, nick_name in self.option.PARA_TRACKER_MAPPING.items():
-            note += "\n   -[{}]-->[{}]".format(para, nick_name)
-            
+            note.append("   -[{}]-->[{}]".format(para, nick_name))
 
-        note += "\n\nWhen the department category of area is not part of the above mapping table, it should alert exception. HOWEVER, category in below list will silent the alert, and they will NOT count toward department calculation."
+        note.append("\nWhen the department category of area is not part of the above mapping table, it should alert exception. HOWEVER, category in below list will silent the alert, and they will NOT count toward department calculation.")
         for para in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
-            note += "\n   -Ingore [{}]".format(para)
+            note.append("   -Ignore [{}]".format(para))
 
+        note.append("\nUnder the hood, Here is how the script logic is handled:")
+        note.append("1. Search through all the area in area scheme [{}], ignoring area on levels that not part of the defined Level Names".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
+        note.append("2. Look at the parameter [{}] of the area, map that value to the Excel version, and add the area to the related field of the level".format(self.option.DEPARTMENT_KEY_PARA))
+        note.append("3. Search through all the area in area scheme [{}], add any area to the overall area of this level".format(self.option.OVERALL_AREA_SCHEME_NAME))
+        note.append("4. Search through all the calculator types in the family [{}], get the predefined Factor in this level, apply that factor to each blue column data. Overall GFA and MERS are excluded in this act, they use factor 1 always".format(self.option.CALCULATOR_FAMILY_NAME))
+        note.append("5. The unfactored sum of blue column is filled to [{0}], and [{1}] is completed by {0}x{2}".format(
+            self.option.DESIGN_SF_PARA_NAME, self.option.ESTIMATE_SF_PARA_NAME, self.option.FACTOR_PARA_NAME))
+        note.append("6. After all the level based data is filled out, a dummy summary is filled by summing up the similar parameter names above.")
+        note.append("7. The target data is left untouched. THE TEAM IS EXPECTED TO FILL IN THOSE INFO BASED ON YOUR DESIRED TARGET. The delta is calculated by looking up the difference between dummy summary and manual target.")
+        note.append("8. After main option is processed, option is look into to primary area scheme and copy over data that is not BEDS.")
 
-
-        note += "\n\nUnder the hood, Here is how the script logic is handled:"
-        note += "\n1, search through all the area in area scheme [{}], ignoring area on levels that not part of the defined Level Names".format(self.option.DEPARTMENT_AREA_SCHEME_NAME)            
-
-        note += "\n2, Look at the parameter [{}] of the area, map that value to the Excel version, and add the area to the related field of the level".format(self.option.DEPARTMENT_KEY_PARA)
-        note += "\n3, Search through all the area in area scheme [{}], add any area to the overall area of this level".format(self.option.OVERALL_AREA_SCHEME_NAME)
-
-        note += "\n4, Search through all the calculator types in the family [{}], get the predefined Factor in this level, apply that factor to each blue column data. Overall GFA and MERS are excluded in this act, they use factor 1 always".format(self.option.CALCULATOR_FAMILY_NAME)
-        note += "\n5, The unfactored sum of blue coloumn is filled to [{0}], and [{1}] is completed by {0}x{2}".format(self.option.DESIGN_SF_PARA_NAME, self.option.ESTIMATE_SF_PARA_NAME, self.option.FACTOR_PARA_NAME)
-        note += "\n6, after all the level based data is filled out, a dummy summery is filled by summing up the similar paramter names above."
-
-        note += "\n7, the target data is left untouched. THE TEAM IS EXPECTED TO FILL IN THOSE INFO BASED ON YOUR DESIRED TARGET. The delta is caulated by looking up the difference between dummy summery and manual target."
-        note += "\n8, after main option is processed, option is look into to primaryu area scheme and copy over data that is not BEDS."
-
-        
-        note += "\n\nOk ok, enough talking, let's start checking....\n\n\n"
-
-        print(note)
-
-
+        print("\n".join(note))
 
     def validate_family(self):
-        default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME_RAW))
-        sample_family_path = FOLDER.copy_file_to_local_dump_folder(default_sample_family_path, "{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
-        fam = REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, doc=self.doc, load_path_if_not_exist=sample_family_path)
-        if not fam:
-            return False
-        return True
+        """Validates calculator family exists."""
+        default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME))
+        fam = REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, doc=self.doc, load_path_if_not_exist=default_sample_family_path)
+        return fam is not None
 
     def validate_container_view(self):
-        # test if container view exist
+        """Validates and creates container view if needed."""
         view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc=self.doc)
         if view:
             return True
 
         t = DB.Transaction(self.doc, "Making Container View")
         t.Start()
-        view = DB.ViewDrafting.Create(self.doc, 
-                                      REVIT_VIEW.get_default_view_type("drafting").Id)
+        view = DB.ViewDrafting.Create(self.doc, REVIT_VIEW.get_default_view_type("drafting").Id)
         view.Name = self.option.CALCULATOR_CONTAINER_VIEW_NAME
         view.Scale = 250
         try:
@@ -228,15 +245,13 @@ class OptionValidation:
         return True
 
     def validate_schedule_view(self):
-        # test if schedule view exist
+        """Validates and creates schedule view if needed."""
         view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
         if not view:
             t = DB.Transaction(self.doc, "Making Final Schedule View")
             t.Start()
-            view = DB.ViewSchedule.CreateNoteBlock(self.doc, REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, self.doc).Id ) 
-            # view = DB.ViewSchedule.CreateSchedule (self.doc, 
-            #                                         DB.Category.GetCategory(self.doc,
-            #                                                                 DB.BuiltInCategory.OST_GenericAnnotation).Id)
+            view = DB.ViewSchedule.CreateNoteBlock(self.doc, 
+                REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, self.doc).Id)
             view.Name = self.option.FINAL_SCHEDULE_VIEW_NAME
             t.Commit()
             
@@ -244,55 +259,41 @@ class OptionValidation:
 
         view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
         if self.show_log:
-            print ("Schedule view at [{}]".format(self.output.linkify(view.Id, title = self.option.FINAL_SCHEDULE_VIEW_NAME)))
-
-
+            print("Schedule view at [{}]".format(self.output.linkify(view.Id, title=self.option.FINAL_SCHEDULE_VIEW_NAME)))
+        return True
 
     def is_family_types_valid(self):
-
-        #  1.make sure the entire collection of family types is exactly matching the level names, so perform the following two steps.
-        # 1a, each type should have one and only one instance in the project
+        """Validates family types match level names."""
         self.validate_singular_instance()
-       
-        # 1b, removing unrelated type from the project.
         self.remove_unrelated_types()
-    
-        # 2.set order index for each type. This will set the display order in schdeule
         self.set_type_order_index()
-
- 
+        return True
 
     def validate_singular_instance(self):
-        # make sure each type is placed exactly once
+        """Ensures each type has exactly one instance."""
         for type_name in self.option.TYPE_NAME_COLLECTION:
-
+            calcs = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(
+                self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
             
-            calcs = REVIT_FAMILY.get_family_instances_by_family_name_and_type_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
             if calcs is None:
-                # make new type and place on the container view
                 self.make_new_calcualtor(type_name)
                 continue
 
             foot_note = "level [{}]".format(type_name) if type_name in self.option.LEVEL_NAMES else "dummy data block [{}]".format(type_name)
+            
             if calcs is not None and len(calcs) == 1:
-                
-                """maybe consideering force the data block in containner view only, but maybe team wants to have it in area plan view."""
                 continue
 
-            # when it is not 1, I want to make sure it is 1!
-            elif len(calcs) > 1:
+            if len(calcs) > 1:
                 print("Too many calculator found for {}. Resetting now...".format(foot_note))
             else:
-                print("No calculator found for level {}. Creating now...".format(foot_note))
+                print("No calculator found for {}. Creating now...".format(foot_note))
 
-            # try to purge this type first
             self.purge_type_by_name(type_name)
-
-            # make new type and place on the container view
             self.make_new_calcualtor(type_name)
 
-
     def purge_type_by_name(self, type_name):
+        """Removes a family type by name."""
         calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
         if calc_type:
             t = DB.Transaction(self.doc, "Purge Useless Type")
@@ -301,14 +302,13 @@ class OptionValidation:
             t.Commit()
 
     def make_new_calcualtor(self, type_name):
+        """Creates a new calculator instance."""
         t = DB.Transaction(self.doc, "Making new type [{}]".format(type_name))
         t.Start()
         new_type = REVIT_FAMILY.get_all_types_by_family_name(self.option.CALCULATOR_FAMILY_NAME, self.doc)[0].Duplicate(type_name)
         new_type.Activate()
         self.doc.Regenerate()
 
-        
-        
         unit_distant = 75
         if type_name in self.option.LEVEL_NAMES:
             index = self.option.LEVEL_NAMES.index(type_name)
@@ -320,27 +320,23 @@ class OptionValidation:
             y = -2
             
         self.doc.Create.NewFamilyInstance(DB.XYZ(unit_distant*x, unit_distant*y, 0), 
-                                            new_type,
-                                            REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc = self.doc))
+                                        new_type,
+                                        REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc=self.doc))
         t.Commit()
-        
-        
+
     def remove_unrelated_types(self):
+        """Removes family types not in the type collection."""
         for calc_type in REVIT_FAMILY.get_all_types_by_family_name(self.option.CALCULATOR_FAMILY_NAME, self.doc):
             type_name = calc_type.LookupParameter("Type Name").AsString()
-
             if type_name not in self.option.TYPE_NAME_COLLECTION:
-                print("Extra type [{}] found . Deleting now...".format(type_name))
-
-                t = DB.Transaction(self.doc,"Delete extra type [{}]".format(type_name))
+                print("Extra type [{}] found. Deleting now...".format(type_name))
+                t = DB.Transaction(self.doc, "Delete extra type [{}]".format(type_name))
                 t.Start()
                 self.doc.Delete(calc_type.Id)
                 t.Commit()
 
-
-
     def set_type_order_index(self):
-        
+        """Sets order index for each type."""
         for calc_type in REVIT_FAMILY.get_all_types_by_family_name(self.option.CALCULATOR_FAMILY_NAME, self.doc):
             type_name = calc_type.LookupParameter("Type Name").AsString()
             if type_name in self.option.LEVEL_NAMES:
@@ -348,168 +344,127 @@ class OptionValidation:
             elif type_name in self.option.DUMMY_DATA_HOLDER:
                 order_index = self.option.DUMMY_DATA_HOLDER[::-1].index(type_name) - 100
             else:
-                print ("!!!!!!!!!!!!!!!!![{}], is not a valid type name".format(type_name))
-            
-                
+                print("!!!!!!!!!!!!!!!!![{}], is not a valid type name".format(type_name))
+                continue
                 
             current_index = calc_type.LookupParameter(self.option.INTERNAL_PARA_NAMES["order"]).AsInteger()
             current_level_display = calc_type.LookupParameter(self.option.INTERNAL_PARA_NAMES["title"]).AsString()
+            
             if current_index != order_index or current_level_display != type_name:
-                print ("Fixing order index/title display of [{}]".format(type_name))
+                print("Fixing order index/title display of [{}]".format(type_name))
                 t = DB.Transaction(self.doc, "Set order index for [{}]".format(type_name))
                 t.Start()
                 calc_type.LookupParameter(self.option.INTERNAL_PARA_NAMES["title"]).Set(type_name)
                 calc_type.LookupParameter(self.option.INTERNAL_PARA_NAMES["order"]).Set(order_index)
-
                 t.Commit()
-                
-                
-                
-
-    def format_schedule(self):
-
-        # test if schedule has all required parameters as field
-        # create a schedule with defined rules(get viewschedule.definition, then add field, and set order)
-        view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc = self.doc)
-
-
-        if not REVIT_SELECTION.is_changable(view):
-            owner = REVIT_SELECTION.get_owner(view)
-            self.output.print_md("## Schedule view [{}] is owned by [{}]".format(self.option.FINAL_SCHEDULE_VIEW_NAME, owner))
-            return
-
-        t = DB.Transaction(self.doc, "Check schedule contents.")
-        t.Start()
-        definition = view.Definition
-        field_names = []  
-        for index in range(definition.GetFieldCount()):
-            field = definition.GetField(index)
-            field_names.append(field.GetName())
-            
-            
-            # options = field.GetFormatOptions()
-            # style = field.GetStyle()
-            # overrideOptions = style.GetCellStyleOverrideOptions()
-            # overrideOptions.BackgroundColor = True
-            # style.BackgroundColor = DB.Color(100,100,100)
-            
-            
-            if field.GetName() not in self.option.FAMILY_PARA_COLLECTION:
-                print ("[{}] should not appear in the schedule field".format(field.GetName()))
-                # definition.RemoveFeild(field.Id)
-        
-
-        REVIT_SCHEDULE.add_fields_to_schedule(view, self.option.FAMILY_PARA_COLLECTION)
-        REVIT_SCHEDULE.hide_fields_in_schedule(view, self.option.INTERNAL_PARA_NAMES["order"])
-
-        # set group order descending
-        definition = view.Definition
-        sort_group_field = DB.ScheduleSortGroupField()
-        sort_group_field.FieldId = REVIT_SCHEDULE.get_field_by_name(view, self.option.INTERNAL_PARA_NAMES["order"]).FieldId
-        sort_group_field.SortOrder = DB.ScheduleSortOrder.Descending
-        definition.SetSortGroupFields (DATA_CONVERSION.list_to_system_list([sort_group_field], type = DB.ScheduleSortGroupField, use_IList = False))
-
-
-
-        # set all digits to round to 10
-        for field in self.option.FAMILY_PARA_COLLECTION:
-            field = REVIT_SCHEDULE.get_field_by_name(view, field)
-        #     try:
-        #         format_option = field.GetFormatOptions()
-        #         format_option.UseDefault = False
-        #         format_option.Accuracy = 10.0
-        #         format_option.UseDigitGrouping = True
-        #         field.SetFormatOptions(format_option)
-        #     except Exception as e:
-        #         ERROR_HANDLE.print_note(e)
-
-
-
-            try:    
-                table_cell_style = field.GetStyle()
-                table_cell_style.FontHorizontalAlignment = DB.HorizontalAlignmentStyle.Right
-                import random
-                table_cell_style.BackgroundColor  = DB.Color(random.randint(0,255),random.randint(0,255),random.randint(0,255))
-                field.SetStyle(table_cell_style)
-            except Exception as e:
-                ERROR_HANDLE.print_note(e)
-
-
-
-                
-
-
-
-
-
-
-
-
-
-
-        # set order
-        # REVIT_SCHEDULE.sort_fields_in_schedule(view, self.option.FAMILY_PARA_COLLECTION)
-
-        
-        t.Commit()
-        # TO-DO
-
-        # test if each schedule field is the right format(align to right, digit grouping)
-        # TO-DO
-        pass
-
 
     def is_area_scheme_valid(self):
-
+        """Validates area schemes exist."""
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.OVERALL_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
-
-            self.output.print_md("## Area scheme [{}] not found for overall area scheme, please create it first".format(self.option.OVERALL_AREA_SCHEME_NAME))
+            self.output.print_md("## Area scheme [{}] not found for overall area scheme, please create it first".format(
+                self.option.OVERALL_AREA_SCHEME_NAME))
             return False
-
 
         area_scheme = REVIT_AREA_SCHEME.get_area_scheme_by_name(self.option.DEPARTMENT_AREA_SCHEME_NAME, self.doc)
         if not area_scheme:
-            self.output.print_md("## Area scheme [{}] not found for departmental scheme, please create it first".format(self.option.DEPARTMENT_AREA_SCHEME_NAME))
+            self.output.print_md("## Area scheme [{}] not found for departmental scheme, please create it first".format(
+                self.option.DEPARTMENT_AREA_SCHEME_NAME))
             return False
 
         return True
 
+    def format_schedule(self):
+        """Format the schedule view with proper field order and formatting."""
+        view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
 
+        if not REVIT_SELECTION.is_changable(view):
+            owner = REVIT_SELECTION.get_owner(view)
+            self.output.print_md("## Schedule view [{}] is owned by [{}]".format(self.option.FINAL_SCHEDULE_VIEW_NAME, owner))
+            return False
+
+        t = DB.Transaction(self.doc, "Format schedule contents")
+        t.Start()
+
+        # Add required fields and hide internal fields
+        REVIT_SCHEDULE.add_fields_to_schedule(view, self.option.FAMILY_PARA_COLLECTION)
+        REVIT_SCHEDULE.hide_fields_in_schedule(view, self.option.INTERNAL_PARA_NAMES["order"])
+
+        # Set group order descending
+        REVIT_SCHEDULE.set_group_order(view, self.option.INTERNAL_PARA_NAMES["order"], descending=True)
+
+        REVIT_SCHEDULE.sort_fields_in_schedule(view, self.option.FAMILY_PARA_COLLECTION)
+        t.Commit()
+
+        if self.show_log:
+            print("Schedule view at [{}]".format(self.output.linkify(view.Id, title=self.option.FINAL_SCHEDULE_VIEW_NAME)))
+        return True
 
 class AreaData:
-    """the main class for holding area data on each level."""
+    """Class for holding area data on each level.
+    
+    This class maintains a collection of area data for different levels and provides
+    methods to update and retrieve this data.
+    
+    Class Attributes:
+        data_collection (dict): Dictionary storing area data for each level
+    """
     data_collection = dict()
 
     def __init__(self, type_name):
+        """Initialize area data for a specific type.
+        
+        Args:
+            type_name (str): Name of the type/level
+        """
         self.title = type_name
 
     @classmethod
     def purge_data(cls):
+        """Clear all stored area data."""
         cls.data_collection.clear()
-        
         
     @classmethod
     def get_data(cls, type_name):
+        """Get or create area data for a specific type.
+        
+        Args:
+            type_name (str): Name of the type/level
+            
+        Returns:
+            AreaData: Area data instance for the specified type
+        """
         key = type_name
         if key in cls.data_collection:
             return cls.data_collection[key]
         instance = AreaData(type_name)
-
         cls.data_collection[key] = instance
         return instance
 
     def update(self, area_name, area):
+        """Update area data for a specific area name.
+        
+        Args:
+            area_name (str): Name of the area
+            area (float): Area value to add
+        """
         if not hasattr(self, area_name):
             setattr(self, area_name, area)
             return
 
         current_area = getattr(self, area_name)
         setattr(self, area_name, current_area + area)
-        
 
 class InternalCheck:
-    """the main class for hosting method about area summery
+    """Main class for handling area summary calculations.
+    
+    This class manages the collection and processing of area data, including
+    department-specific areas and overall areas.
+    
+    Args:
+        doc (Document): Revit document
+        option (DepartmentOption): Department option configuration
+        show_log (bool): Whether to show detailed logging
     """
 
     def __init__(self, doc, option, show_log):
@@ -519,49 +474,45 @@ class InternalCheck:
         self.output = script.get_output()
         self._found_bad_area = False
         self._owner_holding = set()
-        
         AreaData.purge_data()
-       
-
 
     def collect_all_area_data(self):
-        # collect data for deparmtnet details
+        """Collect area data for both department details and overall areas."""
+        # Collect department-specific data
         self.collect_area_data_action(self.option.DEPARTMENT_AREA_SCHEME_NAME, 
-                                      self.option.DEPARTMENT_KEY_PARA, 
-                                      self.option.PARA_TRACKER_MAPPING)
+                                    self.option.DEPARTMENT_KEY_PARA, 
+                                    self.option.PARA_TRACKER_MAPPING)
 
-        # collect data for GFA
+        # Collect overall area data
         self.collect_area_data_action(self.option.OVERALL_AREA_SCHEME_NAME, 
-                                      None, 
-                                      None)
-
+                                    None, 
+                                    None)
 
         if not self.option.is_primary:
             self.copy_data_from_primary()
 
-
     def collect_area_data_action(self, area_scheme_name, search_key_name, para_mapping):
-        """_summary_
-
+        """Collect area data for a specific area scheme.
+        
         Args:
-            area_scheme_name (_type_): _description_
-            search_key_name (_type_): lookup para as key. If ommited, will count toward GFA
-            para_mapping (_type_): abbr translation.If ommited, will count toward GFA
+            area_scheme_name (str): Name of the area scheme
+            search_key_name (str): Parameter name to use as key
+            para_mapping (dict): Mapping of parameter names to nicknames
         """
-        # get all the areas
+        # Get all areas in the scheme
         all_areas = DB.FilteredElementCollector(self.doc)\
-                        .OfCategory(DB.BuiltInCategory.OST_Areas)\
-                        .WhereElementIsNotElementType()\
-                        .ToElements()
+                    .OfCategory(DB.BuiltInCategory.OST_Areas)\
+                    .WhereElementIsNotElementType()\
+                    .ToElements()
         all_areas = filter(lambda x: x.AreaScheme.Name == area_scheme_name, all_areas)
 
-        # add info to dataItem
+        # Process each area
         for area in all_areas:
             level = area.Level
             if level.Name not in self.option.LEVEL_NAMES:
                 if self.show_log:
-                    print("Area is on [{}], which is not a tracking level....{}".format(level.Name,
-                                                                                        self.output.linkify(area.Id)))
+                    print("Area is on [{}], which is not a tracking level....{}".format(
+                        level.Name, self.output.linkify(area.Id)))
                 continue
 
             if not level:
@@ -573,77 +524,59 @@ class InternalCheck:
             if REVIT_SPATIAL_ELEMENT.is_element_bad(area):
                 if self.show_log:
                     status = REVIT_SPATIAL_ELEMENT.get_element_status(area)
-
-                    print("\nArea has no size!\nIt is {}....{} @ Level [{}] @ [{}]".format(status,
-                                                                                           self.output.linkify(area.Id, area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()),
-                                                                                                   level.Name,
-                                                                                                   area_scheme_name))
+                    print("\nArea has no size!\nIt is {}....{} @ Level [{}] @ [{}]".format(
+                        status, self.output.linkify(area.Id, 
+                        area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()),
+                        level.Name, area_scheme_name))
                 else:
                     info = DB.WorksharingUtils.GetWorksharingTooltipInfo(self.doc, area.Id)
                     editor = info.LastChangedBy
-                    print("\nArea has no area number!....Last edited by [{}]\nIt might not be enclosed or placed. Run in manual mode to find out more detail.".format(editor))
-                    
+                    print("\nArea has no area number!....Last edited by [{}]\nIt might not be enclosed or placed. Run in detail mode to find out more detail.".format(editor))
                 self._found_bad_area = True
                 continue
-            
-        
 
             level_data = AreaData.get_data(level.Name)
 
             if search_key_name:
                 department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
                 if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
-                    print ("Ignore {} for calculation at [{}]".format(self.output.linkify(area.Id, title=department_name), level.Name))
-                    
+                    print("Ignore {} for calculation at [{}]".format(
+                        self.output.linkify(area.Id, title=department_name), level.Name))
                     continue
-                department_nickname = para_mapping.get(department_name, None)
+
+                department_nickname = para_mapping.get(department_name)
                 if not department_nickname:
-
                     if self.show_log:
-
-                        print("Area has department value [{}] not matched any thing in project setup....{}@{}".format(department_name,
-                                                                                                           self.output.linkify(area.Id),
-                                                                                                           level.Name))
+                        print("Area has department value [{}] not matched any thing in project setup....{}@{}".format(
+                            department_name, self.output.linkify(area.Id), level.Name))
                     else:
-                        print("Area has department value [{}] not matched any thing in project setup. Run in tailor mode to find out which.".format(
+                        print("Area has department value [{}] not matched any thing in project setup. Run in detail mode to find out which.".format(
                             department_name))
                     continue
-                level_data.update(department_nickname, area.Area)
-                     
-                    
-     
-                
 
+                level_data.update(department_nickname, area.Area)
             else:
-                # this is for the GSF senario, everything will count.
+                # For GSF scenario, count everything
                 level_data.update(self.option.OVERALL_PARA_NAME, area.Area)
 
     def copy_data_from_primary(self):
-        
-        """except BEDS, get all other area per level from OPTION_MAIN family type.
-
-        first reset non BEDS to zero
-        Second, go thru main option and get everything that is not BEDS and fill in.
-        """
+        """Copy non-BEDS data from primary option to current option."""
         if self.show_log:
-            print ("Copying all data from primary option except BEDS, talk to Sen if you do not want this behavior")
-        #  reset all levels data where there is BED. SO later only update BEDS from main
-        for type_name, data in AreaData.data_collection.items():
+            print("Copying all data from primary option except BEDS, talk to Sen if you do not want this behavior")
 
-            # this is data per level
+        # Reset non-BEDS data to zero
+        for type_name, data in AreaData.data_collection.items():
             if type_name not in self.option.LEVEL_NAMES:
                 continue
             for attr_key in self.option.PARA_TRACKER_MAPPING.values():
                 if attr_key != "BEDS":
                     setattr(data, attr_key, 0)
 
-
-
-                
+        # Copy non-BEDS data from primary option
         all_areas = DB.FilteredElementCollector(self.doc)\
-                        .OfCategory(DB.BuiltInCategory.OST_Areas)\
-                        .WhereElementIsNotElementType()\
-                        .ToElements()
+                    .OfCategory(DB.BuiltInCategory.OST_Areas)\
+                    .WhereElementIsNotElementType()\
+                    .ToElements()
         all_areas = filter(lambda x: x.AreaScheme.Name == self.option.DEPARTMENT_AREA_SCHEME_NAME, all_areas)
 
         for area in all_areas:
@@ -651,262 +584,188 @@ class InternalCheck:
             if level.Name not in self.option.LEVEL_NAMES:
                 continue
 
-            if not level:
+            if not level or area.Area <= 0:
                 continue
-
-            if area.Area <= 0:
-                continue
-            
-
 
             department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
             if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
                 continue
-            department_nickname = self.option.PARA_TRACKER_MAPPING.get(department_name, None)
+
+            department_nickname = self.option.PARA_TRACKER_MAPPING.get(department_name)
             if department_nickname is not None and department_nickname != "BEDS":
                 level_data = AreaData.get_data(level.Name)
                 level_data.update(department_nickname, area.Area)
 
-
-
-
-
-    
     def update_main_calculator_family_types(self):
-        # for each data item, get the calcator family and update content
-        t = DB.Transaction(self.doc, "_Part 1_update main calcuator family types")
+        """Update calculator family types with collected area data."""
+        t = DB.Transaction(self.doc, "_Part 1_update main calculator family types")
         t.Start()
+        
         for type_name in sorted(self.option.LEVEL_NAMES):
             if self.show_log:
                 print("Processing data for Level: [{}]".format(type_name))
+                
             level_data = AreaData.get_data(type_name)
-
-            # get actual calculator types
             calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
 
-            # since validation is impleteed early on, the below check is no longer nessary...
-            # if not calc_type:
-
-            #     if self.show_log:
-            #         print("   --No calculator found for level: {}".format(type_name))
-            #     else:
-            #         print(
-            #             "   --No calculator found for level. Run in tailor mode to find out which.")
-
             if not REVIT_SELECTION.is_changable(calc_type):
-                print("Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
-                                                                                    REVIT_SELECTION.get_owner(calc_type)))
+                print("Cannot update [{}] due to ownership by {}.. Skipping".format(
+                    type_name, REVIT_SELECTION.get_owner(calc_type)))
                 self._owner_holding.add(REVIT_SELECTION.get_owner(calc_type))
                 continue
 
-            # process the content
+            # Process content
             factor = calc_type.LookupParameter(self.option.FACTOR_PARA_NAME).AsDouble()
-            level_data.factor = factor #adding new fator attr to the class instance
+            level_data.factor = factor
 
-
-
-            # fill in department related data
+            # Fill in department related data
             design_GSF_before_factor = 0
             for family_para_name in self.option.PARA_TRACKER_MAPPING.values() + [self.option.OVERALL_PARA_NAME]:
                 if not hasattr(level_data, family_para_name):
                     setattr(level_data, family_para_name, 0)
 
                 if family_para_name in self.option.PARA_TRACKER_MAPPING.values():
-                    if family_para_name == "MERS":
-                        pass
-                    else:
+                    if family_para_name != "MERS":
                         design_GSF_before_factor += getattr(level_data, family_para_name)
 
                 para = calc_type.LookupParameter(family_para_name)
-                """this part of para availibility check is no longer needed becasue para names are valided before loading"""
                 if para:
-                    if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"]:
-                        local_factor = 1
-                    else:
-                        local_factor = level_data.factor
-                    factored_area = getattr(level_data, family_para_name)* local_factor
+                    local_factor = 1 if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"] else level_data.factor
+                    factored_area = getattr(level_data, family_para_name) * local_factor
                     para.Set(factored_area)
-               
                 else:
                     print("No para found for [{}], please edit the family..".format(family_para_name))
 
-
-            # fill in GSF data
+            # Fill in GSF data
             design_SF_para = calc_type.LookupParameter(self.option.DESIGN_SF_PARA_NAME)
             design_SF_para.Set(design_GSF_before_factor)
             estimate_SF_para = calc_type.LookupParameter(self.option.ESTIMATE_SF_PARA_NAME)
             estimate_SF_para.Set(design_GSF_before_factor * level_data.factor)
-            
-            # below check is no longer needed becasue ealier check
-            # if design_SF_para:
-            #     design_SF_para.Set(design_GSF_before_factor)
-            # else:
-            #     print("No para found for [{}], please edit the family..".format(
-            #         DESIGN_SF_PARA_NAME))
 
         t.Commit()
 
-
     def update_summery_calculator_family_types(self):
-        t = DB.Transaction(self.doc, "_Part 2_update summery calcuator family types")
+        """Update summary calculator family types with aggregated data."""
+        t = DB.Transaction(self.doc, "_Part 2_update summary calculator family types")
         t.Start()
-        for i,type_name in enumerate( self.option.DUMMY_DATA_HOLDER):
+        
+        for i, type_name in enumerate(self.option.DUMMY_DATA_HOLDER):
             if self.show_log:
-                print ("Processing data for Summery Data Block [{}]".format(type_name))
+                print("Processing data for Summary Data Block [{}]".format(type_name))
 
-            
-            calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)         
+            calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
             if not REVIT_SELECTION.is_changable(calc_type):
-                note = "AHHHHHHHHHHH!   Cannot update [{}] due to ownership by {}.. Skipping".format(type_name,
-                                                                                    REVIT_SELECTION.get_owner(calc_type))
-                print (note)
+                note = "Cannot update [{}] due to ownership by {}.. Skipping".format(
+                    type_name, REVIT_SELECTION.get_owner(calc_type))
+                print(note)
                 self._owner_holding.add(REVIT_SELECTION.get_owner(calc_type))
-
                 NOTIFICATION.messenger(note)
                 continue
-            
-            
+
             if i == 0:
                 self.fill_dummy_sum(type_name)
             elif i == 1:
                 self.fetch_dummy_target(type_name)
-                pass
             elif i == 2:
                 self.fill_delta_data(type_name)
-            
+
         t.Commit()
-            
-    
+
     def fill_dummy_sum(self, type_name):
+        """Fill dummy summary data."""
         dummy_sum_data = AreaData.get_data(type_name)
 
-        
         for level in self.option.LEVEL_NAMES:
-            level_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, level, self.doc)   
-            for para_name in  self.option.FAMILY_PARA_COLLECTION:
+            level_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, level, self.doc)
+            for para_name in self.option.FAMILY_PARA_COLLECTION:
                 if para_name == self.option.FACTOR_PARA_NAME:
-                    setattr(dummy_sum_data,para_name, 1)
+                    setattr(dummy_sum_data, para_name, 1)
                     continue
                 if para_name in self.option.INTERNAL_PARA_NAMES.values():
                     continue
-                value = level_calc_type.LookupParameter(para_name).AsDouble()
-                dummy_sum_data.update(para_name, value)
-                
-     
-            
-        
-        dummy_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)    
+
+                if level_calc_type.LookupParameter(para_name):
+                    value = level_calc_type.LookupParameter(para_name).AsDouble()
+                    dummy_sum_data.update(para_name, value)
+                else:
+                    print("No para found for [{}], please edit the family..".format(para_name))
+
+        dummy_calc_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
         for para_name in self.option.FAMILY_PARA_COLLECTION:
             if para_name in self.option.INTERNAL_PARA_NAMES.values():
                 continue
             para = dummy_calc_type.LookupParameter(para_name)
-            para.Set(getattr(dummy_sum_data, para_name))
-          
+            if para:
+                para.Set(getattr(dummy_sum_data, para_name))
+            else:
+                print("No para found for [{}], please edit the family..".format(para_name))
 
     def fetch_dummy_target(self, type_name):
+        """Fetch target data for dummy summary."""
         dummy_target_data = AreaData.get_data(type_name)
+        dummy_target_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
 
- 
-        
-        dummy_target_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)   
-
-        # only update the internal para, which is Level Name and Order Number, also set factor as 1 as constant 
-        for para_name in  self.option.FAMILY_PARA_COLLECTION:
+        for para_name in self.option.FAMILY_PARA_COLLECTION:
             if para_name == self.option.FACTOR_PARA_NAME:
-       
-                setattr(dummy_target_data,para_name, 1)
+                setattr(dummy_target_data, para_name, 1)
                 continue
             if para_name in self.option.INTERNAL_PARA_NAMES.values():
                 continue
-            value = dummy_target_type.LookupParameter(para_name).AsDouble()
-            dummy_target_data.update(para_name, value)
+            if dummy_target_type.LookupParameter(para_name):
+                value = dummy_target_type.LookupParameter(para_name).AsDouble()
+                dummy_target_data.update(para_name, value)
+            else:
+                print("No para found for [{}], please edit the family..".format(para_name))
 
-        # if USER.IS_DEVELOPER:
-        #     if ENVIRONMENT.IS_AVD:
-        #         NOTIFICATION.messenger("Cannot update from excel in AVD becasue ACC desktop connector is not working in AVD.")
-        #         return
-        #     print ("\n\nThis is a developer version")
-        #     self.update_from_excel(dummy_target_data)
-
-                
-
-    def update_from_excel(self, dummy_target_data):
-        NOTIFICATION.duck_pop("Reading from ACC excel by downloading from cloud, this might take a moment.")
-        data = EXCEL.read_data_from_excel(self.option.SOURCE_EXCEL, worksheet="EA Benchmarking DGSF Tracker", return_dict=True)
-
-        key_column = "B"
-        print ("avaibale excel departments: {}".format(EXCEL.get_column_values(data, key_column).keys()))
-        for department_name in self.option.DEPARTMENT_PARA_MAPPING.keys():
-            row = EXCEL.search_row_in_column_by_value(data, 
-                                                      key_column, 
-                                                      search_value=department_name, 
-                                                      is_fuzzy=True)
-
-            target = data.get((row,EXCEL.get_column_index("P")), None)
-            print ("At this moment, there is no change to the target value. Just reading")
-            if target:
-                target = float(target)
-                print ("target value found for [{}]: {}".format(department_name, target))
-                # dummy_target_data.update(self.option.DEPARTMENT_PARA_MAPPING[department_name], target)
-                print ("\n\n")  
-        
     def fill_delta_data(self, type_name):
-        """maybe should worry about making smaller commit so doc is updated before geting data dfrom type data"""
+        """Fill delta data between actual and target values."""
         dummy_sum_data = AreaData.get_data(self.option.DUMMY_DATA_HOLDER[0])
-        dummy_tartget_data = AreaData.get_data(self.option.DUMMY_DATA_HOLDER[1])
+        dummy_target_data = AreaData.get_data(self.option.DUMMY_DATA_HOLDER[1])
         dummy_delta_data = AreaData.get_data(type_name)
-        
- 
- 
-       
-        dummy_delta_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc) 
+        dummy_delta_type = REVIT_FAMILY.get_family_type_by_name(self.option.CALCULATOR_FAMILY_NAME, type_name, self.doc)
+
         for para_name in self.option.FAMILY_PARA_COLLECTION:
             if para_name == self.option.FACTOR_PARA_NAME:
-                setattr(dummy_delta_data,para_name, 1)
+                setattr(dummy_delta_data, para_name, 1)
                 dummy_delta_type.LookupParameter(para_name).Set(1)
                 continue
             if para_name in self.option.INTERNAL_PARA_NAMES.values():
                 continue
-            
-            value_real = getattr(dummy_sum_data,para_name)
-            value_manual = getattr(dummy_tartget_data, para_name)
-            delta = value_real - value_manual
-            dummy_delta_data.update(para_name, delta)
-            
-            dummy_delta_type.LookupParameter(para_name).Set(delta)
-            
+
+            if hasattr(dummy_sum_data, para_name) and hasattr(dummy_target_data, para_name):
+                value_real = getattr(dummy_sum_data, para_name)
+                value_manual = getattr(dummy_target_data, para_name)
+                delta = value_real - value_manual
+                dummy_delta_data.update(para_name, delta)
+
+            if dummy_delta_type.LookupParameter(para_name):
+                dummy_delta_type.LookupParameter(para_name).Set(delta)
+            else:
+                print("No para found for [{}], please edit the family..".format(para_name))
+
     def update_schedule_last_update_date(self):
+        """Update schedule with last update date."""
         schedule_view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, self.doc)
         if not REVIT_SELECTION.is_changable(schedule_view):
             return
-        
+
         t = DB.Transaction(self.doc, "update schedule last update date")
         t.Start()
         para_name = "Last_Update_Date"
         REVIT_PARAMETER.confirm_shared_para_exist_on_category(self.doc, para_name, DB.BuiltInCategory.OST_Schedules)
+        
         if self._owner_holding:
             note = "[Syncing Needed from: {}]".format(", ".join(self._owner_holding))
         else:
             note = TIME.get_formatted_current_time()
+            
         schedule_view.LookupParameter(para_name).Set(note)
         t.Commit()
 
-
-
-
-
-
-
-
-
-
     def update_dgsf_chart(self):
-
-
+        """Update DGSF chart with current data."""
         T = DB.TransactionGroup(self.doc, "update_dgsf_chart")
         T.Start()
-
-        
 
         try:
             self.collect_all_area_data()
@@ -915,16 +774,15 @@ class InternalCheck:
             self.update_schedule_last_update_date()
             T.Commit()
         except:
-            print (traceback.format_exc())
-
+            print(traceback.format_exc())
             T.RollBack()
-        
-        
+
         if self.show_log:
             NOTIFICATION.messenger(main_text="Program schedule calculator update done!")
 
         if self._owner_holding:
-            NOTIFICATION.messenger(main_text="{} need to sync to display more accurate schedule.".format(", ".join(self._owner_holding)))
+            NOTIFICATION.messenger(main_text="{} need to sync to display more accurate schedule.".format(
+                ", ".join(self._owner_holding)))
         if self._found_bad_area:
             NOTIFICATION.duck_pop(main_text="Attention, there are some un-enclosed area in area plans that might affect your accuracy.\nSee output window for details.")
 
@@ -939,46 +797,48 @@ class InternalCheck:
 
 
 
-def dgsf_chart_update(doc, show_log = True):
+def dgsf_chart_update(doc, show_log=True):
+    """Update DGSF chart with current project data.
+    
+    Args:
+        doc (Document): Revit document
+        show_log (bool): Whether to show detailed logging
+    """
     proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     if not proj_data:
-        NOTIFICATION.messenger(main_text="No project data found, please initalize the project first.")
-
+        NOTIFICATION.messenger(main_text="No project data found, please initialize the project first.")
         return
 
+    # Get parameter names from project data
     department_key_para_name = proj_data["area_tracking"]["para_dict"]["DEPARTMENT_KEY_PARA"]
     program_type_key_para_name = proj_data["area_tracking"]["para_dict"]["PROGRAM_TYPE_KEY_PARA"]
     program_type_detail_key_para_name = proj_data["area_tracking"]["para_dict"]["PROGRAM_TYPE_DETAIL_KEY_PARA"]
 
-
+    # Get department mappings
     department_para_mapping = OrderedDict(proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"])
     department_ignore_para_names = proj_data["area_tracking"]["table_setting"]["DEPARTMENT_IGNORE_PARA_NAMES"]
 
+    # Process each option
     for internal_option_name, option_setting in proj_data["area_tracking"]["option_setting"].items():
-        
         level_names = option_setting["levels"]
         option_name = option_setting["option_name"]
-
-
         overall_area_scheme_name = option_setting["OVERALL_AREA_SCHEME_NAME"]
         department_area_scheme_name = option_setting["DEPARTMENT_AREA_SCHEME_NAME"]
 
-
+        # Create and validate option
         option = DepartmentOption(internal_option_name,
-                                  department_para_mapping,
-                                  department_ignore_para_names,
-                                  level_names, 
-                                  option_name, 
-                                  overall_area_scheme_name, 
-                                  department_area_scheme_name,
-                                  department_key_para_name,
-
-                                  program_type_key_para_name,
-                                  program_type_detail_key_para_name)
-
-  
+                                department_para_mapping,
+                                department_ignore_para_names,
+                                level_names,
+                                option_name,
+                                overall_area_scheme_name,
+                                department_area_scheme_name,
+                                department_key_para_name,
+                                program_type_key_para_name,
+                                program_type_detail_key_para_name)
 
         if not OptionValidation(doc, option, show_log).validate_all():
+            print("Validation failed")
             NOTIFICATION.messenger(main_text="Validation failed")
             return
 
@@ -987,6 +847,4 @@ def dgsf_chart_update(doc, show_log = True):
 
 
 if __name__ == "__main__":
-
-
     pass

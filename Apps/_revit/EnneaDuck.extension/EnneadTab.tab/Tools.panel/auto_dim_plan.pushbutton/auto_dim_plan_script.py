@@ -152,7 +152,7 @@ def create_wall_dimensions(doc, walls, view, options):
                 DB.Dimension.Create(doc, view.Id, dim_line_point, refs, DB.DimensionType.Linear)
                 dimension_count += 1
             except Exception as e:
-                print(f"Error creating dimension: {e}")
+                print("Error creating dimension: {}".format(e))
     
     return dimension_count > 0
 

@@ -61,12 +61,20 @@ def hide_fields_in_schedule(schedule_view, field_name_or_names):
         field.IsHidden = True
 
 def add_fields_to_schedule(schedule_view, field_names):
+    """Add fields to schedule if they are not already added.
+    
+    Args:
+        schedule_view (DB.ViewSchedule): The schedule view to add fields to
+        field_names (list): List of field names to add
+    """
     definition = schedule_view.Definition
+    
     for field_name in field_names:
         field = get_schedulable_field_by_name(schedule_view, field_name)
         if field is None:
             print("Field [{}] not found".format(field_name))
             continue
+            
         try:
             definition.AddField(field)
             print("Adding field [{}] to schedule".format(field_name))
@@ -75,12 +83,23 @@ def add_fields_to_schedule(schedule_view, field_names):
             print("cannot add field [{}] to schedule because [{}]".format(field_name, e))
 
 def sort_fields_in_schedule(schedule_view, field_names):
-    """make the filed order"""
-    definition = schedule_view.Definition
-    order = [get_field_by_name(schedule_view, x).FieldId for x in field_names]
-    definition.SetFieldOrder(DATA_CONVERSION.list_to_system_list(order, use_IList=True))
-        
-        
+    # Sort fields and format double type fields
+    field_ids = []
+    for para_name in field_names:
+        field = get_field_by_name(schedule_view, para_name)
+        if field:
+            field_ids.append(field.FieldId)
+
+    if field_ids:
+        schedule_view.Definition.SetFieldOrder(DATA_CONVERSION.list_to_system_list(field_ids, 
+                                                                                   type=DB.ScheduleFieldId, 
+                                                                                   use_IList=False))
+def set_group_order(schedule_view, field_name, descending = True):
+    sort_group_field = DB.ScheduleSortGroupField()
+    sort_group_field.FieldId = get_field_by_name(schedule_view, field_name).FieldId
+    sort_group_field.SortOrder = DB.ScheduleSortOrder.Descending if descending else DB.ScheduleSortOrder.Ascending
+    schedule_view.Definition.SetSortGroupFields(DATA_CONVERSION.list_to_system_list([sort_group_field], type=DB.ScheduleSortGroupField, use_IList=False))
+
 
 def add_filter_to_schedule(schedule_view, field_name, filter_type, filter_value):
     field = get_field_by_name(schedule_view, field_name)
