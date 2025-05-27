@@ -1,5 +1,5 @@
 import REVIT_APPLICATION
-
+import ERROR_HANDLE
 try:
 
     from Autodesk.Revit import DB # pyright: ignore
@@ -57,6 +57,10 @@ def hide_fields_in_schedule(schedule_view, field_name_or_names):
         field = get_field_by_name(schedule_view, field_name)
         if field is None:
             print("Field [{}] not found".format(field_name))
+            continue
+        if "calc_" in field_name.lower():
+            print ("calc_ keyword found in field name [{}], this will be preserved.".format(field_name))
+            field.IsHidden = False
             continue
         field.IsHidden = True
 
@@ -126,3 +130,68 @@ def add_filter_to_schedule(schedule_view, field_name, filter_type, filter_value)
         return
     print(schedule_filter)
     # definition.AddFilter(schedule_filter)
+
+def format_numeric_fields(schedule_view, field_names, rounding_value=10):
+    """Format numeric fields in a schedule with consistent formatting.
+    
+    Args:
+        schedule_view (DB.ViewSchedule): The schedule view to format
+        field_names (list): List of field names to format
+        rounding_value (int, optional): Value to round to. Defaults to 10.
+    """
+    definition = schedule_view.Definition
+    for index in range(definition.GetFieldCount()):
+        field = definition.GetField(index)
+        if field.GetName() in field_names:
+            try:
+                # Get format options
+                format_options = field.GetFormatOptions()
+                
+                # Set rounding to nearest value
+                format_options.RoundingMethod = DB.RoundingMethod.RoundToNearest
+                format_options.RoundingValue = rounding_value
+                
+                # Enable digit grouping
+                format_options.UseDigitGrouping = True
+                
+                # Set alignment to right
+                style = field.GetStyle()
+                style.HorizontalAlignment = DB.HorizontalAlignment.Right
+                
+                # Apply the format options
+                field.SetFormatOptions(format_options)
+            except Exception as e:
+                ERROR_HANDLE.print_note("Cannot format field [{}] as numeric: {}".format(field.GetName(), str(e)))
+                continue
+
+def shade_cells_by_field(schedule_view, color_dict):
+    """Shade cells in a schedule based on field names and colors.
+    
+    Args:
+        schedule_view (DB.ViewSchedule): The schedule view to format
+        color_dict (dict): Dictionary mapping field names to color tuples (R,G,B)
+                          Example: {"GSF": (200,200,200), "BEDS": (150,150,150)}
+    """
+    definition = schedule_view.Definition
+    for index in range(definition.GetFieldCount()):
+        field = definition.GetField(index)
+        field_name = field.GetName()
+        
+        if field_name in color_dict:
+            try:
+                # Get the color tuple for this field
+                r, g, b = color_dict[field_name]
+                
+                # Get style and override options
+                style = field.GetStyle()
+                override_options = style.GetCellStyleOverrideOptions()
+                
+                # Enable background color override
+                override_options.BackgroundColor = True
+                
+                # Set the background color
+                style.BackgroundColor = DB.Color(r, g, b)
+                
+            except Exception as e:
+                ERROR_HANDLE.print_note("Cannot shade field [{}]: {}".format(field_name, str(e)))
+                continue

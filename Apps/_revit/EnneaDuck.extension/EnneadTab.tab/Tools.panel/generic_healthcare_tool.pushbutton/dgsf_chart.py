@@ -388,7 +388,18 @@ class OptionValidation:
         return True
 
     def format_schedule(self):
-        """Format the schedule view with proper field order and formatting."""
+        """Format the schedule view with proper field order and formatting.
+        
+        This method formats the schedule view with:
+        - Fields ordered according to FAMILY_PARA_COLLECTION
+        - Internal fields hidden
+        - Group order set to descending
+        - Numeric fields formatted with:
+          - Rounding to nearest 10
+          - Digit grouping
+          - Right alignment
+        - Cell shading for different field types, using department color mapping from Excel
+        """
         view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
 
         if not REVIT_SELECTION.is_changable(view):
@@ -406,7 +417,59 @@ class OptionValidation:
         # Set group order descending
         REVIT_SCHEDULE.set_group_order(view, self.option.INTERNAL_PARA_NAMES["order"], descending=True)
 
+        # Sort fields
         REVIT_SCHEDULE.sort_fields_in_schedule(view, self.option.FAMILY_PARA_COLLECTION)
+
+        # Format numeric fields
+        REVIT_SCHEDULE.format_numeric_fields(view, self.option.FAMILY_PARA_COLLECTION)
+
+        # Shade cells based on field type and department color mapping
+        color_dict = {
+            self.option.OVERALL_PARA_NAME: (230, 230, 230),  # Light gray for GSF
+            "MERS": (220, 220, 220),  # Slightly darker gray for MERS
+            self.option.DESIGN_SF_PARA_NAME: (240, 240, 240),  # Very light gray for design SF
+            self.option.ESTIMATE_SF_PARA_NAME: (240, 240, 240),  # Very light gray for estimate SF
+        }
+        # Load department color mapping from Excel (project data)
+        proj_data = REVIT_PROJ_DATA.get_revit_project_data(self.doc)
+        excel_path = proj_data.get("color_update", {}).get("setting", {}).get("excel_path", None)
+        if excel_path:
+            from EnneadTab import COLOR
+            color_template = COLOR.get_color_template_data(excel_path)
+            dept_color_map = color_template.get("department_color_map", {})
+            # Add department colors by nickname
+            for dept, nickname in self.option.DEPARTMENT_PARA_MAPPING.items():
+                color_info = dept_color_map.get(dept) or dept_color_map.get(nickname)
+                if color_info and "color" in color_info:
+                    color_dict[nickname] = color_info["color"]
+        REVIT_SCHEDULE.shade_cells_by_field(view, color_dict)
+
+        # Conditional formatting: if 'order' is smaller than 0, color all its fields dark grey
+        try:
+            order_field = REVIT_SCHEDULE.get_field_by_name(view, self.option.INTERNAL_PARA_NAMES["order"])
+            if order_field:
+                table_data = view.GetTableData()
+                section = table_data.GetSection(DB.SectionType.Body)
+                row_count = section.NumberOfRows
+                col_count = section.NumberOfColumns
+                for row in range(row_count):
+                    try:
+                        order_val = section.GetCellText(row, order_field.FieldId)
+                        if order_val is not None and str(order_val).strip() != "":
+                            try:
+                                order_val_num = float(order_val)
+                                if order_val_num < 0:
+                                    for col in range(col_count):
+                                        cell_style = section.GetCellStyle(row, col)
+                                        cell_style.BackgroundColor = DB.Color(80, 80, 80)  # dark grey
+                                        section.SetCellStyle(row, col, cell_style)
+                            except Exception as e:
+                                ERROR_HANDLE.print_note("Could not parse 'order' value: {}".format(e))
+                    except Exception as e:
+                        ERROR_HANDLE.print_note("Error processing row {}: {}".format(row, e))
+        except Exception as e:
+            ERROR_HANDLE.print_note("Conditional formatting error: {}".format(e))
+
         t.Commit()
 
         if self.show_log:
@@ -561,10 +624,10 @@ class InternalCheck:
                 department_nickname = para_mapping.get(department_name)
                 if not department_nickname:
                     if self.show_log:
-                        print("Area has department value [{}] not matched anything in project setup, this is case sensitive....{}@{}".format(
+                        print("Area has department value [{}] not matched anything in project setup, this is CASE SENSITIVE....{}@{}".format(
                             department_name, self.output.linkify(area.Id), level.Name))
                     else:
-                        print("Area has department value [{}] not matched anything in project setup, this is case sensitive. Run in detail mode to find out which.".format(
+                        print("Area has department value [{}] not matched anything in project setup, this is CASE SENSITIVE. Run in detail mode to find out which.".format(
                             department_name))
                     continue
 
