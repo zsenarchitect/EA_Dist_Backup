@@ -147,8 +147,8 @@ def format_numeric_fields(schedule_view, field_names, rounding_value=10):
                 # Get format options
                 format_options = field.GetFormatOptions()
                 
-                # Set rounding to nearest value
-                format_options.RoundingMethod = DB.RoundingMethod.RoundToNearest
+                # Set rounding method to Nearest
+                format_options.RoundingMethod = DB.RoundingMethod.Nearest
                 format_options.RoundingValue = rounding_value
                 
                 # Enable digit grouping

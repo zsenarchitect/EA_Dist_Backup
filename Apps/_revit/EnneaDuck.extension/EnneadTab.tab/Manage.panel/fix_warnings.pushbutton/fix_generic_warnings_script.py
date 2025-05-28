@@ -33,7 +33,7 @@ def make_3D_views_for_warning_cleaning():
     view = create_view("Generic")
 
     try:
-        view.LookupParameter("Views_$Group").Set("Ennead")
+        view.LookupParameter("Views_$Group").Set("EnneadTab")
         view.LookupParameter("Views_$Series").Set("Fix Errors  (°⌓°)")        
     except:
         pass

@@ -561,6 +561,8 @@ def get_tooltip_info(doc, element):
     # return info.Creator, info.LastChangedBy , info.Owner
 
 def get_owner(x):
+    if x is None:
+        return ""
     if x.LookupParameter("Edited by"):
         return x.LookupParameter("Edited by").AsString()
     else:

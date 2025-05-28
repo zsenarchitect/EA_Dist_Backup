@@ -1,9 +1,10 @@
-from EnneadTab import DATA_CONVERSION, ENVIRONMENT, NOTIFICATION, SAMPLE_FILE, EXCEL, FOLDER, TIME, ERROR_HANDLE
+from EnneadTab import   NOTIFICATION, SAMPLE_FILE,   TIME, ERROR_HANDLE, USER
 from EnneadTab.REVIT import REVIT_FAMILY, REVIT_VIEW, REVIT_SCHEDULE,REVIT_SPATIAL_ELEMENT,REVIT_SELECTION, REVIT_AREA_SCHEME, REVIT_PROJ_DATA, REVIT_PARAMETER
 from pyrevit import script
 from Autodesk.Revit import DB #pyright: ignore
 from collections import OrderedDict
 import traceback
+import os
 
 class DepartmentOption:
     """Configuration class for department area tracking and calculations.
@@ -40,12 +41,40 @@ class DepartmentOption:
     LEVEL_NAMES = []
     DUMMY_DATA_HOLDER = ["GRAND TOTAL", "PROGRAM TARGET", "DELTA"]
 
+
     @property
     def PARA_TRACKER_MAPPING(self):
         """Returns mapping of department parameters including mechanical."""
-        temp = OrderedDict([("MECHANICAL", "MERS")])
-        temp.update(self.DEPARTMENT_PARA_MAPPING)
-        return temp
+        if not self._dedicated_department:
+            temp = OrderedDict([("MECHANICAL", "MERS")])
+            temp.update(self.DEPARTMENT_PARA_MAPPING)
+            return temp
+
+        if self._cached_para_mapping is not None:
+            return self._cached_para_mapping
+
+        if not hasattr(self, 'doc') or self.doc is None:
+            ERROR_HANDLE.print_note("Document not initialized for department mapping")
+            return OrderedDict()
+
+        try:
+            # get all the area whose department is equal to the dedicated department, collect the PROGRAM_TYPE_KEY_PARA of those areas
+            areas = DB.FilteredElementCollector(self.doc).OfCategory(DB.BuiltInCategory.OST_Areas).WhereElementIsNotElementType().ToElements()
+            temp = {}
+            for area in areas:
+                if area.LookupParameter(self.DEPARTMENT_KEY_PARA) and area.LookupParameter(self.DEPARTMENT_KEY_PARA).AsString() == self._dedicated_department:
+                    program_type_key = area.LookupParameter(self.PROGRAM_TYPE_KEY_PARA).AsString() if area.LookupParameter(self.PROGRAM_TYPE_KEY_PARA) else None
+                    if program_type_key:
+                        temp[program_type_key] = program_type_key
+
+            self._cached_para_mapping = OrderedDict(sorted(temp.items()))
+            if self._cached_para_mapping is None:
+                print("cached para mapping is None, return dummy data")
+                return OrderedDict({"ABC": "abc", "DEF": "def", "GHI": "ghi"})
+            return self._cached_para_mapping
+        except Exception as e:
+            ERROR_HANDLE.print_note("Error creating department mapping: {}".format(e))
+            return OrderedDict({"ABC111111": "abc333333", "DEF222222": "def444444", "GHI333333": "ghi555555"})
 
     @property
     def FAMILY_PARA_COLLECTION(self):
@@ -69,25 +98,37 @@ class DepartmentOption:
     def CALCULATOR_FAMILY_NAME(self):
         """Returns the calculator family name with option suffix if not primary."""
         base_name = self.CALCULATOR_FAMILY_NAME_BASE
-        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        new_name = base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        if self._dedicated_department:
+            return new_name + "_" + self._dedicated_department
+        else:
+            return new_name
 
     @property
     def CALCULATOR_CONTAINER_VIEW_NAME(self):
         """Returns the calculator container view name with option suffix if not primary."""
         base_name = "Area Calculator Collection"
-        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        new_name = base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        if self._dedicated_department:
+            return new_name + "_" + self._dedicated_department
+        else:
+            return new_name
 
     @property
     def FINAL_SCHEDULE_VIEW_NAME(self):
         """Returns the final schedule view name with option suffix if not primary."""
         base_name = "PROGRAM CATEGORY"
-        return base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        new_name = base_name if self.is_primary else "{}_{}".format(base_name, self.formated_option_name)
+        if self._dedicated_department:
+            return new_name + "_" + self._dedicated_department
+        else:
+            return new_name
 
     def __init__(self, internal_option_name, department_para_mapping,
                  department_ignore_para_names, levels, option_name,
                  overall_area_scheme_name, department_area_scheme_name,
                  department_key_para_name, program_type_key_para_name,
-                 program_type_detail_key_para_name):
+                 program_type_detail_key_para_name, dedicated_department, doc):
         """Initialize department option configuration.
         
         Args:
@@ -101,11 +142,19 @@ class DepartmentOption:
             department_key_para_name (str): Department key parameter name
             program_type_key_para_name (str): Program type key parameter name
             program_type_detail_key_para_name (str): Program type detail parameter name
+            dedicated_department (str): Department name to filter by, if any
+            doc (Document): Revit document
         """
+        # Initialize document first
+        self.doc = doc
+        self._cached_para_mapping = None
+        
+        # Initialize basic properties
         self.internal_option_name = internal_option_name
         self.is_primary = True if len(option_name) == 0 else False
         self.formated_option_name = "Main Option" if self.is_primary else option_name
         self.LEVEL_NAMES = levels
+        self._dedicated_department = dedicated_department
 
         # Set area scheme names
         self.OVERALL_AREA_SCHEME_NAME = overall_area_scheme_name
@@ -130,6 +179,8 @@ class OptionValidation:
     """
 
     def __init__(self, doc, option, show_log):
+        if doc is None:
+            raise ValueError("Document cannot be None in OptionValidation")
         self.doc = doc
         self.option = option
         self.output = script.get_output()
@@ -235,6 +286,7 @@ class OptionValidation:
     def validate_family(self):
         """Validates calculator family exists."""
         default_sample_family_path = SAMPLE_FILE.get_file("{}.rfa".format(self.option.CALCULATOR_FAMILY_NAME_BASE))
+       
         fam = REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, doc=self.doc, load_path_if_not_exist=default_sample_family_path)
         return fam is not None
 
@@ -242,6 +294,7 @@ class OptionValidation:
         """Validates and creates container view if needed."""
         view = REVIT_VIEW.get_view_by_name(self.option.CALCULATOR_CONTAINER_VIEW_NAME, doc=self.doc)
         if view:
+            self.update_view_organization(view)
             return True
 
         t = DB.Transaction(self.doc, "Making Container View")
@@ -249,13 +302,20 @@ class OptionValidation:
         view = DB.ViewDrafting.Create(self.doc, REVIT_VIEW.get_default_view_type("drafting").Id)
         view.Name = self.option.CALCULATOR_CONTAINER_VIEW_NAME
         view.Scale = 250
+        t.Commit()
+        self.update_view_organization(view)
+        return True
+
+    def update_view_organization(self, view):
+        """Updates the organization of the view."""
+        t = DB.Transaction(self.doc, "Updating View Organization")
+        t.Start()
         try:
-            view.LookupParameter("Views_$Group").Set("Ennead")
-            view.LookupParameter("Views_$Series").Set("Healthcare")
+            view.LookupParameter("Views_$Group").Set("EnneadTab")
+            view.LookupParameter("Views_$Series").Set("AreaTracking")
         except:
             pass
         t.Commit()
-        return True
 
     def validate_schedule_view(self):
         """Validates and creates schedule view if needed."""
@@ -269,7 +329,7 @@ class OptionValidation:
             t.Commit()
             
         self.format_schedule()
-
+        self.update_view_organization(view)
         view = REVIT_VIEW.get_view_by_name(self.option.FINAL_SCHEDULE_VIEW_NAME, doc=self.doc)
         if self.show_log:
             print("Schedule view at [{}]".format(self.output.linkify(view.Id, title=self.option.FINAL_SCHEDULE_VIEW_NAME)))
@@ -433,7 +493,7 @@ class OptionValidation:
         # Load department color mapping from Excel (project data)
         proj_data = REVIT_PROJ_DATA.get_revit_project_data(self.doc)
         excel_path = proj_data.get("color_update", {}).get("setting", {}).get("excel_path", None)
-        if excel_path:
+        if excel_path and os.path.exists(excel_path):
             from EnneadTab import COLOR
             color_template = COLOR.get_color_template_data(excel_path)
             dept_color_map = color_template.get("department_color_map", {})
@@ -448,25 +508,29 @@ class OptionValidation:
         try:
             order_field = REVIT_SCHEDULE.get_field_by_name(view, self.option.INTERNAL_PARA_NAMES["order"])
             if order_field:
-                table_data = view.GetTableData()
-                section = table_data.GetSection(DB.SectionType.Body)
-                row_count = section.NumberOfRows
-                col_count = section.NumberOfColumns
-                for row in range(row_count):
-                    try:
-                        order_val = section.GetCellText(row, order_field.FieldId)
-                        if order_val is not None and str(order_val).strip() != "":
-                            try:
-                                order_val_num = float(order_val)
-                                if order_val_num < 0:
-                                    for col in range(col_count):
-                                        cell_style = section.GetCellStyle(row, col)
-                                        cell_style.BackgroundColor = DB.Color(80, 80, 80)  # dark grey
-                                        section.SetCellStyle(row, col, cell_style)
-                            except Exception as e:
-                                ERROR_HANDLE.print_note("Could not parse 'order' value: {}".format(e))
-                    except Exception as e:
-                        ERROR_HANDLE.print_note("Error processing row {}: {}".format(row, e))
+                try:
+                    table_data = view.GetTableData()
+                    section = table_data.GetSection(DB.SectionType.Body)
+                    row_count = section.NumberOfRows
+                    col_count = section.NumberOfColumns
+                    for row in range(row_count):
+                        try:
+                            order_val = section.GetCellText(row, order_field.FieldId)
+                            if order_val is not None and str(order_val).strip() != "":
+                                try:
+                                    order_val_num = float(order_val)
+                                    if order_val_num < 0:
+                                        for col in range(col_count):
+                                            cell_style = section.GetCellStyle(row, col)
+                                            cell_style.BackgroundColor = DB.Color(80, 80, 80)  # dark grey
+                                            section.SetCellStyle(row, col, cell_style)
+                                except Exception as e:
+                                    ERROR_HANDLE.print_note("Could not parse 'order' value: {}".format(e))
+                        except Exception as e:
+                            ERROR_HANDLE.print_note("Error processing row {}: {}".format(row, e))
+                except AttributeError:
+                    # If GetSection is not available, skip conditional formatting
+                    pass
         except Exception as e:
             ERROR_HANDLE.print_note("Conditional formatting error: {}".format(e))
 
@@ -544,6 +608,11 @@ class InternalCheck:
     """
 
     def __init__(self, doc, option, show_log):
+        if doc is None:
+            raise ValueError("Document cannot be None in InternalCheck")
+        if option is None:
+            raise ValueError("Option cannot be None in InternalCheck")
+            
         self.doc = doc
         self.option = option
         self.show_log = show_log
@@ -553,21 +622,6 @@ class InternalCheck:
         self._has_changes = False
         AreaData.purge_data()
 
-    def collect_all_area_data(self):
-        """Collect area data for both department details and overall areas."""
-        # Collect department-specific data
-        self.collect_area_data_action(self.option.DEPARTMENT_AREA_SCHEME_NAME, 
-                                    self.option.DEPARTMENT_KEY_PARA, 
-                                    self.option.PARA_TRACKER_MAPPING)
-
-        # Collect overall area data
-        self.collect_area_data_action(self.option.OVERALL_AREA_SCHEME_NAME, 
-                                    None, 
-                                    None)
-
-        if not self.option.is_primary:
-            self.copy_data_from_primary()
-
     def collect_area_data_action(self, area_scheme_name, search_key_name, para_mapping):
         """Collect area data for a specific area scheme.
         
@@ -576,6 +630,10 @@ class InternalCheck:
             search_key_name (str): Parameter name to use as key
             para_mapping (dict): Mapping of parameter names to nicknames
         """
+        if not self.doc:
+            ERROR_HANDLE.print_note("Document is None in collect_area_data_action")
+            return
+
         # Get all areas in the scheme
         all_areas = DB.FilteredElementCollector(self.doc)\
                     .OfCategory(DB.BuiltInCategory.OST_Areas)\
@@ -637,6 +695,21 @@ class InternalCheck:
             else:
                 # For GSF scenario, count everything
                 level_data.update(self.option.OVERALL_PARA_NAME, area.Area)
+
+    def collect_all_area_data(self):
+        """Collect area data for both department details and overall areas."""
+        # Collect department-specific data
+        self.collect_area_data_action(self.option.DEPARTMENT_AREA_SCHEME_NAME, 
+                                    self.option.DEPARTMENT_KEY_PARA, 
+                                    self.option.PARA_TRACKER_MAPPING)
+
+        # Collect overall area data
+        self.collect_area_data_action(self.option.OVERALL_AREA_SCHEME_NAME, 
+                                    None, 
+                                    None)
+
+        if not self.option.is_primary:
+            self.copy_data_from_primary()
 
     def copy_data_from_primary(self):
         """Copy non-BEDS data from primary option to current option."""
@@ -893,13 +966,19 @@ class InternalCheck:
 
 
 
-def dgsf_chart_update(doc, show_log=True):
+def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
     """Update DGSF chart with current project data.
     
     Args:
         doc (Document): Revit document
         show_log (bool): Whether to show detailed logging
+        dedicated_department (str): Department name to filter by, if any
     """
+    if doc is None:
+        ERROR_HANDLE.print_note("Document is None in dgsf_chart_update")
+        return
+
+
     proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     if not proj_data:
         NOTIFICATION.messenger(main_text="No project data found, please initialize the project first.")
@@ -931,7 +1010,9 @@ def dgsf_chart_update(doc, show_log=True):
                                 department_area_scheme_name,
                                 department_key_para_name,
                                 program_type_key_para_name,
-                                program_type_detail_key_para_name)
+                                program_type_detail_key_para_name,
+                                dedicated_department,
+                                doc)
 
         if not OptionValidation(doc, option, show_log).validate_all():
             print("Validation failed")
@@ -939,6 +1020,17 @@ def dgsf_chart_update(doc, show_log=True):
             return
 
         InternalCheck(doc, option, show_log).update_dgsf_chart()
+
+        if not USER.IS_DEVELOPER:
+            continue
+        try:
+            if dedicated_department is None:
+                for dept in [x[0] for x in proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"]]:
+                    print("working on sub-chart for department [{}]".format(dept))
+                    dgsf_chart_update(doc, show_log=show_log, dedicated_department=dept)
+        except Exception as e:
+            ERROR_HANDLE.print_note(traceback.format_exc())
+            raise
 
 
 

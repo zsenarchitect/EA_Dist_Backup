@@ -491,7 +491,7 @@ class Deployer:
             view.Name = view_name
             
         try:
-            view.LookupParameter("Views_$Group").Set("Ennead")
+            view.LookupParameter("Views_$Group").Set("EnneadTab")
             view.LookupParameter("Views_$Series").Set("List Item Category ₍ᐢ.ˬ.⑅ᐢ₎")
         except:
             pass
@@ -1111,7 +1111,7 @@ class ListFamily:
         t = DB.Transaction(self.doc, "Change View Group")
         t.Start()
         try:
-            view.LookupParameter("Views_$Group").Set("Ennead")
+            view.LookupParameter("Views_$Group").Set("EnneadTab")
             view.LookupParameter("Views_$Series").Set("List Item (´･ᆺ･`)")
             t.Commit()
         except:

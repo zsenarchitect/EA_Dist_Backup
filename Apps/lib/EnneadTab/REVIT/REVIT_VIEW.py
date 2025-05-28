@@ -186,7 +186,7 @@ def switch_to_sync_draft_view(doc):
     t = DB.Transaction(doc, "Sync Quicker...")
     t.Start()
     try:
-        view.LookupParameter("Views_$Group").Set("Ennead")
+        view.LookupParameter("Views_$Group").Set("EnneadTab")
         view.LookupParameter("Views_$Series").Set(u"Sync Monitor  ◔.̮◔✧")
     except:
         pass

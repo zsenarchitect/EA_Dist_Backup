@@ -43,7 +43,7 @@ def make_3D_views_from_workset():
 
 
         try:
-            view.LookupParameter("Views_$Group").Set("Ennead")
+            view.LookupParameter("Views_$Group").Set("EnneadTab")
             view.LookupParameter("Views_$Series").Set("Workset Check  *⸜( •ᴗ• )⸝*")
 
          

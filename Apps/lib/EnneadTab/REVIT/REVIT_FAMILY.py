@@ -120,7 +120,7 @@ def load_family(family_doc, project_doc, loading_opt = EnneadTabFamilyLoadingOpt
                 NOTIFICATION.messenger("Cannot load family [{}]".format(family_doc.Title))
                 ERROR_HANDLE.print_note ("Failed to load family [{}], level 3, becasue {}".format(family_doc.Title, e))
     
-def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption()):
+def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFamilyLoadingOption(), as_name=None):
     project_doc = project_doc or DOC
     if REVIT_APPLICATION.is_version_at_least():
         base, ext = os.path.splitext(family_path)
@@ -133,9 +133,13 @@ def load_family_by_path(family_path, project_doc=None, loading_opt = EnneadTabFa
         search_family = family_path
 
 
-    
     fam_ref = clr.StrongBox[DB.Family](None)
-    family_path = FOLDER.copy_file_to_local_dump_folder(search_family, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
+    if as_name:
+        print ("Loading from [{}] as [{}.rfa]".format(search_family, as_name))
+        family_path = FOLDER.copy_file_to_local_dump_folder(search_family, file_name=as_name + ".rfa")
+    else:
+        print ("Loading from [{}]".format(search_family))
+        family_path = FOLDER.copy_file_to_local_dump_folder(search_family, file_name=family_path.rsplit("\\", 1)[1].replace("_content",""))
 
     res = project_doc.LoadFamily(family_path, loading_opt, fam_ref)
     if not res:
@@ -172,8 +176,8 @@ def get_family_by_name(family_name,
     
     if len(families) == 0:
         if load_path_if_not_exist:
-            print ("Loading from [{}]".format(load_path_if_not_exist))
-            return load_family_by_path(load_path_if_not_exist, project_doc=doc)
+            
+            return load_family_by_path(load_path_if_not_exist, project_doc=doc, as_name=family_name)
         else:
             NOTIFICATION.messenger("Cannot find family [{}]".format(family_name))
             return None
