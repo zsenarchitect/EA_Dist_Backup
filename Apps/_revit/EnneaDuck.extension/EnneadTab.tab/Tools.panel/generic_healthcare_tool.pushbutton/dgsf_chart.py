@@ -656,6 +656,10 @@ class InternalCheck:
                         self.output.linkify(area.Id)))
                 continue
 
+            if self.option._dedicated_department:
+                if area.LookupParameter(self.option.PROGRAM_TYPE_KEY_PARA).AsString() != self.option._dedicated_department:
+                    continue
+
             if REVIT_SPATIAL_ELEMENT.is_element_bad(area):
                 if self.show_log:
                     status = REVIT_SPATIAL_ELEMENT.get_element_status(area)
@@ -673,7 +677,12 @@ class InternalCheck:
             level_data = AreaData.get_data(level.Name)
 
             if search_key_name:
+                
+                department_name_test = area.LookupParameter(search_key_name).AsString()
                 department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
+                if not department_name_test==department_name:
+                    print ("TEST:", search_key_name, self.option.DEPARTMENT_KEY_PARA)
+                    print ("TEST:",department_name_test, department_name)
                 if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
                     print("Ignore {} for calculation at [{}]".format(
                         self.output.linkify(area.Id, title=department_name), level.Name))
@@ -700,7 +709,7 @@ class InternalCheck:
         """Collect area data for both department details and overall areas."""
         # Collect department-specific data
         self.collect_area_data_action(self.option.DEPARTMENT_AREA_SCHEME_NAME, 
-                                    self.option.DEPARTMENT_KEY_PARA, 
+                                    self.option.DEPARTMENT_KEY_PARA if not self.option._dedicated_department else self.option.PROGRAM_TYPE_KEY_PARA, 
                                     self.option.PARA_TRACKER_MAPPING)
 
         # Collect overall area data
@@ -1025,12 +1034,18 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
             continue
         try:
             if dedicated_department is None:
-                for dept in [x[0] for x in proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"]]:
+                for index, dept in enumerate([x[0] for x in proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"]]):
                     print("working on sub-chart for department [{}]".format(dept))
                     dgsf_chart_update(doc, show_log=show_log, dedicated_department=dept)
+                    if index > 3:
+                        print ("TEST: only do max 3 departments for now")
+                        break
         except Exception as e:
             ERROR_HANDLE.print_note(traceback.format_exc())
-            raise
+
+     
+        output = script.get_output()
+        output.close_others(True)
 
 
 

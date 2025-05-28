@@ -140,29 +140,36 @@ def format_numeric_fields(schedule_view, field_names, rounding_value=10):
         rounding_value (int, optional): Value to round to. Defaults to 10.
     """
     definition = schedule_view.Definition
-    for index in range(definition.GetFieldCount()):
-        field = definition.GetField(index)
-        if field.GetName() in field_names:
-            try:
-                # Get format options
-                format_options = field.GetFormatOptions()
-                
-                # Set rounding method to Nearest
-                format_options.RoundingMethod = DB.RoundingMethod.Nearest
-                format_options.RoundingValue = rounding_value
-                
-                # Enable digit grouping
-                format_options.UseDigitGrouping = True
-                
-                # Set alignment to right
-                style = field.GetStyle()
-                style.HorizontalAlignment = DB.HorizontalAlignment.Right
-                
-                # Apply the format options
-                field.SetFormatOptions(format_options)
-            except Exception as e:
-                ERROR_HANDLE.print_note("Cannot format field [{}] as numeric: {}".format(field.GetName(), str(e)))
-                continue
+    for field_name in field_names:
+        field = get_field_by_name(schedule_view, field_name)
+        if field is None:
+            print("Field [{}] not found".format(field_name))
+            continue
+        try:
+            # Create new format value options for schedule field
+            format_value_options = DB.FormatValueOptions()
+            
+            # # Set rounding method to Nearest (value 0)
+            # format_value_options.RoundingMethod = DB.RoundingMethod.Nearest
+            # format_value_options.RoundingValue = rounding_value
+
+            format_option = format_value_options.GetFormatOptions()
+            # Set accuracy to match rounding value
+            format_option.Accuracy = rounding_value
+            
+            # Enable digit grouping
+            format_option.UseDigitGrouping = True
+
+            format_value_options.SetFormatOptions(format_option)
+            
+            # Set alignment to right
+            field.HorizontalAlignment = DB.HorizontalAlignment.Right
+            
+            # Apply the format options
+            field.SetFormatOptions(format_value_options)
+        except Exception as e:
+            ERROR_HANDLE.print_note("Cannot format field [{}] as numeric: {}".format(field_name, str(e)))
+            continue
 
 def shade_cells_by_field(schedule_view, color_dict):
     """Shade cells in a schedule based on field names and colors.
@@ -191,6 +198,8 @@ def shade_cells_by_field(schedule_view, color_dict):
                 
                 # Set the background color
                 style.BackgroundColor = DB.Color(r, g, b)
+                style.SetCellStyleOverrideOptions(override_options)
+                field.SetStyle(style)
                 
             except Exception as e:
                 ERROR_HANDLE.print_note("Cannot shade field [{}]: {}".format(field_name, str(e)))
