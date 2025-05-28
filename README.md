@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-27 19:28:57.
+This is the distribution repository for EnneadTab updated on 2025-05-27 22:02:56.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-How does a dyslexic poet write? Inverse.
+Where did you learn to make ice cream? Sunday school.
