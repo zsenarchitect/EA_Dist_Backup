@@ -5,7 +5,7 @@ import random
 from Autodesk.Revit import DB # pyright: ignore
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab import NOTIFICATION, TIMESHEET, ERROR_HANDLE, EMAIL, NOTIFICATION, USER, FOLDER, DATA_FILE, ENVIRONMENT, SOUND
+from EnneadTab import NOTIFICATION, TIMESHEET, ERROR_HANDLE, EMAIL, NOTIFICATION, USER, FOLDER, DATA_FILE, ENVIRONMENT, SOUND, SPEAK
 from EnneadTab.REVIT import REVIT_HISTORY, REVIT_EXTERNAL_FILE, REVIT_FORMS, REVIT_SYNC, REVIT_EVENT, REVIT_APPLICATION
 from pyrevit import forms, script
 from pyrevit import EXEC_PARAMS
@@ -431,6 +431,10 @@ def main():
         
         check_group_usage(doc)
         log_time_sheet(doc)
+
+        if USER.IS_DEVELOPER:
+            NOTIFICATION.messenger(main_text = "Doc opened: {}".format(doc.Title))
+            SPEAK.speak("Doc opened: {}".format(doc.Title))
         return
         
         

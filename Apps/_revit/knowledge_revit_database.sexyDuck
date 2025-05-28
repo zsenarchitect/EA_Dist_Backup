@@ -2557,7 +2557,7 @@
     },
     "EnneadTab.tab\\Resource.panel\\display_warning_history.pushbutton\\display_warning_history_script.py": {
         "alias": "Display Revit Warning History",
-        "doc": "Warning tracking system that reveals error trends across your project history. This powerful diagnostic tool displays comprehensive warning logs that have been automatically recorded by EnneadTab, allowing you to analyze warning patterns over time. Left-click to analyze the current document, or Shift-click to compare multiple projects.",
+        "doc": "Doc string not set",
         "icon": "EnneadTab.tab\\Resource.panel\\display_warning_history.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Resource.panel\\display_warning_history.pushbutton\\display_warning_history_script.py",

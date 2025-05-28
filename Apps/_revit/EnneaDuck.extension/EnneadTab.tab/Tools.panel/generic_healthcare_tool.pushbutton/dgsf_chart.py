@@ -623,12 +623,14 @@ class InternalCheck:
 
                 department_nickname = para_mapping.get(department_name)
                 if not department_nickname:
+                    all_department_names = sorted(para_mapping.keys())
+                    error_msg = "Area has department value [{}] not matched in project setup (CASE SENSITIVE)".format(department_name)
+                    
                     if self.show_log:
-                        print("Area has department value [{}] not matched anything in project setup, this is CASE SENSITIVE....{}@{}".format(
-                            department_name, self.output.linkify(area.Id), level.Name))
-                    else:
-                        print("Area has department value [{}] not matched anything in project setup, this is CASE SENSITIVE. Run in detail mode to find out which.".format(
-                            department_name))
+                        error_msg += "....{}@{}".format(self.output.linkify(area.Id), level.Name)
+                    
+                    print(error_msg)
+                    print("Available departments: [{}]".format(", ".join(all_department_names)))
                     continue
 
                 level_data.update(department_nickname, area.Area)

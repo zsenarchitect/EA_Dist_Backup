@@ -93,11 +93,8 @@ class WarningHistory:
             self.doc_name = doc.Title
         self.file = "REVIT_WARNING_HISTORY_{}".format(self.doc_name)
 
-        if os.path.exists(FOLDER.get_shared_dump_folder_file(self.file)):
-            self.data = DATA_FILE.get_data(self.file)
-        else:
-            print("Data file not found")
-            self.data = {}
+        self.data = DATA_FILE.get_data(self.file, is_local=False)
+      
 
     def record_warning(self):
         if not self.doc:
@@ -125,26 +122,131 @@ class WarningHistory:
         DATA_FILE.set_data(self.data, self.file, is_local=False)
 
     def display_warning(self, show_detail=True):
+        
+        
+        from pyrevit import script
+
+        self.output = script.get_output()
+        all_mentioned_warning_cates = []
+        all_mentioned_users = []
+        
         if not self.data:
-            print("Empty history data")
+            print("empty data")
             return
 
-        print("\n\n\n\n")
-        print("# Document: {}".format(self.doc_name))
+        
+        print ("\n\n\n\n")
+        self.output.insert_divider(level='')
+        self.output.print_md ("# Document: {}".format(self.doc_name))
         if len(self.data.keys()) == 1:
-            print("### This document warning history has only been recorded once.")
+            self.output.print_md ("### This document warning history has only been recorded once.")
         for date in sorted(self.data.keys()):
             date_data = self.data[date]
-            print("\n## Date: {}".format(date)) if show_detail else None
-            for i, description in enumerate(sorted(date_data.keys())):
-                print("\n{}".format(i + 1)) if show_detail else None
-                print("Description: {}".format(description)) if show_detail else None
+            
+            self.output.insert_divider(level='') if show_detail else None
+            self.output.print_md ("## Date: {}".format(date)) if show_detail else None
+            all_mentioned_warning_cates += date_data.keys()
+            for i, description  in enumerate( sorted(date_data.keys())):
+                self.output.print_md ("\n\n{}".format(i+1)) if show_detail else None
+                self.output.print_md ("Description: {}".format(description)) if show_detail else None
                 warning_data = date_data[description]
-                print("Count: **{}**".format(warning_data["count"])) if show_detail else None
-                print("Creators: **{}**".format(warning_data["creators"])) if show_detail else None
+                self.output.print_md ("Count: **{}**".format(warning_data["count"])) if show_detail else None
+                self.output.print_md ("Creators: **{}**".format(warning_data["creators"])) if show_detail else None
+                all_mentioned_users += warning_data["creators"]
+                
+        all_mentioned_warning_cates = sorted(set(all_mentioned_warning_cates))
+        self.display_overall_status(all_mentioned_warning_cates)
+        
+        return
 
+
+                
     def display_overall_status(self, all_mentioned_warning_cates):
-        pass  # Charts are omitted as Python 2 lacks native support
+        # Line chart
+        chart = self.output.make_stacked_chart()
+        chart.set_style('height:150px')
+
+        chart.options.title = {'display': True,
+                            'text':'Revit File Warning History for [{}]'.format(self.doc_name),
+                            'fontSize': 18,
+                            'fontColor': '#000',
+                            'fontStyle': 'bold'}
+        
+        # Set the legend configuration
+        chart.options.legend = {
+            'display': True,
+            'position': 'bottom',  # Place the legend below the chart
+            'labels': {
+                'fontSize': 8,  # Customize the legend label font size
+            }
+        }
+        
+        # setting the charts x line data labels
+        chart.data.labels = sorted(self.data.keys())
+        
+
+        # add data sets:
+        for cate in all_mentioned_warning_cates:
+            set_local = chart.data.new_dataset(cate)
+
+            set_local.data = []
+
+            # use exact same order as the X asix label
+            for date in chart.data.labels:
+                date_data = self.data[date]
+                
+                if cate in date_data:
+                    set_local.data.append(date_data[cate]["count"])
+                else:
+                    set_local.data.append(0)
+
+            # this make straight line.
+            set_local.tension = 0
+
+            
+
+        chart.randomize_colors()
+
+        chart.draw()
+
+
+
+    def display_user_status(self, user, all_mentioned_warning_cates):
+        # Line chart
+        chart = self.output.make_stacked_chart()
+        chart.set_style('height:350px')
+
+        chart.options.title = {'display': True,
+                            'text':'Revit File Warning History for [{}]-[{}]'.format(self.doc_name, user),
+                            'fontSize': 18,
+                            'fontColor': '#000',
+                            'fontStyle': 'bold'}
+        
+        
+        
+        # setting the charts x line data labels
+        chart.data.labels = self.data.keys()
+        
+
+        # add data sets:
+        for cate in all_mentioned_warning_cates:
+            set_local = chart.data.new_dataset(cate)
+
+            set_local.data = []
+            for date_data in self.data.values():
+                if user not in date_data[cate]["creators"]:
+                    set_local.data.append(0)
+                else:
+                    set_local.data.append(date_data[cate]["count"])
+     
+            
+            set_local.tension = 0
+
+            
+
+        chart.randomize_colors()
+
+        chart.draw()
 
 
 def record_warning(doc):
