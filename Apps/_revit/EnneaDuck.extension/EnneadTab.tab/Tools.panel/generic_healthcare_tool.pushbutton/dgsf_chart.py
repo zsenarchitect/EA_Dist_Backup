@@ -6,6 +6,22 @@ from collections import OrderedDict
 import traceback
 import os
 
+
+class FamilyDocToClose:
+    family_docs = []
+
+    @classmethod
+    def add_family_doc(cls, doc):
+        cls.family_docs.append(doc)
+
+    @classmethod
+    def close_family_docs(cls):
+        for doc in cls.family_docs:
+            try:
+                doc.Close(False)
+            except Exception as e:
+                ERROR_HANDLE.print_note("Error closing document: {}".format(e))
+
 class DepartmentOption:
     """Configuration class for department area tracking and calculations.
     
@@ -186,6 +202,7 @@ class OptionValidation:
         self.output = script.get_output()
         self.show_log = show_log
 
+
     def validate_family_data_holder(self):
         """Validates and updates family data holder parameters."""
         fam_doc = self.doc.EditFamily(REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, self.doc))
@@ -194,19 +211,27 @@ class OptionValidation:
         all_fam_para_dict = {para.Definition.Name: para for para in fam_manager.GetParameters()}
         T = DB.Transaction(fam_doc, "Validate Family Data Holder")
         T.Start()
-        
+
+        family_changed = False
         # Remove parameters not in collection
         for para_name in all_fam_para_dict:
             if para_name not in self.option.FAMILY_PARA_COLLECTION:
+                print ("Removing parameter [{}] in family [{}]".format(para_name, self.option.CALCULATOR_FAMILY_NAME))
                 fam_manager.RemoveParameter(all_fam_para_dict[para_name])
+                family_changed = True
 
         # Add missing parameters
         for para_name in self.option.FAMILY_PARA_COLLECTION:
             if para_name not in all_fam_para_dict:
+                print ("Adding parameter [{}] in family [{}]".format(para_name, self.option.CALCULATOR_FAMILY_NAME))
                 fam_manager.AddParameter(para_name, DB.GroupTypeId.Data, DB.SpecTypeId.Area, False)
+                family_changed = True
 
         T.Commit()
-        REVIT_FAMILY.load_family(fam_doc, self.doc)
+        if family_changed:
+            REVIT_FAMILY.load_family(fam_doc, self.doc)
+        
+        FamilyDocToClose.add_family_doc(fam_doc)
         fam_doc.Close(False)
         return True
 
@@ -579,6 +604,8 @@ class AreaData:
             return cls.data_collection[key]
         instance = AreaData(type_name)
         cls.data_collection[key] = instance
+
+        
         return instance
 
     def update(self, area_name, area):
@@ -593,6 +620,7 @@ class AreaData:
             return
 
         current_area = getattr(self, area_name)
+
         setattr(self, area_name, current_area + area)
 
 class InternalCheck:
@@ -657,8 +685,10 @@ class InternalCheck:
                 continue
 
             if self.option._dedicated_department:
-                if area.LookupParameter(self.option.PROGRAM_TYPE_KEY_PARA).AsString() != self.option._dedicated_department:
+                if area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString() != self.option._dedicated_department:
                     continue
+
+  
 
             if REVIT_SPATIAL_ELEMENT.is_element_bad(area):
                 if self.show_log:
@@ -677,12 +707,7 @@ class InternalCheck:
             level_data = AreaData.get_data(level.Name)
 
             if search_key_name:
-                
-                department_name_test = area.LookupParameter(search_key_name).AsString()
-                department_name = area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString()
-                if not department_name_test==department_name:
-                    print ("TEST:", search_key_name, self.option.DEPARTMENT_KEY_PARA)
-                    print ("TEST:",department_name_test, department_name)
+                department_name = area.LookupParameter(search_key_name).AsString()
                 if department_name in self.option.DEPARTMENT_IGNORE_PARA_NAMES:
                     print("Ignore {} for calculation at [{}]".format(
                         self.output.linkify(area.Id, title=department_name), level.Name))
@@ -700,10 +725,14 @@ class InternalCheck:
                     print("Available departments: [{}]".format(", ".join(all_department_names)))
                     continue
 
+                # ERROR_HANDLE.print_note (" finding {} with area of {}, going to add.".format(department_nickname, area.Area))
                 level_data.update(department_nickname, area.Area)
+                # ERROR_HANDLE.print_note (" {} now has area of {}".format(department_nickname, getattr(level_data, department_nickname)))
+                # ERROR_HANDLE.print_note("DEBUG: id of data is {}".format(id(level_data)))
             else:
                 # For GSF scenario, count everything
                 level_data.update(self.option.OVERALL_PARA_NAME, area.Area)
+
 
     def collect_all_area_data(self):
         """Collect area data for both department details and overall areas."""
@@ -782,7 +811,9 @@ class InternalCheck:
             # Fill in department related data
             design_GSF_before_factor = 0
             for family_para_name in self.option.PARA_TRACKER_MAPPING.values() + [self.option.OVERALL_PARA_NAME]:
+                # ERROR_HANDLE.print_note("log: working on {} checking {}".format(type_name, family_para_name))
                 if not hasattr(level_data, family_para_name):
+                    # ERROR_HANDLE.print_note("log: not having {} in {}, its id is {}, will set level data area to 0 for {}".format(family_para_name, level_data, id(level_data),family_para_name))
                     setattr(level_data, family_para_name, 0)
 
                 if family_para_name in self.option.PARA_TRACKER_MAPPING.values():
@@ -793,9 +824,13 @@ class InternalCheck:
                 if para:
                     local_factor = 1 if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"] else level_data.factor
                     factored_area = getattr(level_data, family_para_name) * local_factor
+                    ERROR_HANDLE.print_note("DEBUG: para.AsDouble() is [{}]".format(para.AsDouble()))
+                    ERROR_HANDLE.print_note("DEBUG: factored_area is [{}]".format(factored_area))
+                    ERROR_HANDLE.print_note("DEBUG: factor is [{}]".format(local_factor))
                     if para.AsDouble() != factored_area:
                         self._has_changes = True
                         para.Set(factored_area)
+                        ERROR_HANDLE.print_note("!!!!!!!!!!!!!!!DEBUG: set [{}] to [{}] at type [{}]".format(family_para_name, factored_area, type_name))
                 else:
                     print("No para found for [{}], please edit the family..".format(family_para_name))
 
@@ -983,9 +1018,16 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
         show_log (bool): Whether to show detailed logging
         dedicated_department (str): Department name to filter by, if any
     """
+    if USER.IS_DEVELOPER:
+        reload(REVIT_SCHEDULE) #pyright: ignore
     if doc is None:
         ERROR_HANDLE.print_note("Document is None in dgsf_chart_update")
         return
+
+    if not dedicated_department:
+        # we adoing for general update and should get fresh start
+        output = script.get_output()
+        output.close_others(True)
 
 
     proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
@@ -1034,6 +1076,7 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
             continue
         try:
             if dedicated_department is None:
+                # if dedicated_department is None, then we are doing all departments as sub chart
                 for index, dept in enumerate([x[0] for x in proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"]]):
                     print("working on sub-chart for department [{}]".format(dept))
                     dgsf_chart_update(doc, show_log=show_log, dedicated_department=dept)
@@ -1044,8 +1087,12 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
             ERROR_HANDLE.print_note(traceback.format_exc())
 
      
-        output = script.get_output()
-        output.close_others(True)
+        # output = script.get_output()
+        # output.close_others(True)
+    if dedicated_department is None:
+        # only close family docs if we are done doing all departments as sub chart and return as main chart
+        FamilyDocToClose.close_family_docs()
+
 
 
 
