@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-05-28 00:39:15.
+This is the distribution repository for EnneadTab updated on 2025-05-28 03:15:54.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-Don't tell secrets in corn fields. Too many ears around.
+Leather is great for sneaking around because it's made of hide.
