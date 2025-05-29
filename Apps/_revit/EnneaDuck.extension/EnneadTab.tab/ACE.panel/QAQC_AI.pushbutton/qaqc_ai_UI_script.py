@@ -26,7 +26,7 @@ import proDUCKtion # pyright: ignore
 proDUCKtion.validify()
 from EnneadTab.REVIT import REVIT_FORMS
 
-from EnneadTab import EXE, DATA_FILE, SOUND, TIME, ERROR_HANDLE, FOLDER, IMAGE, LOG, JOKE, SECRET
+from EnneadTab import EXE, DATA_FILE, SOUND, TIME, ERROR_HANDLE, FOLDER,USER,  IMAGE, LOG, JOKE, SECRET
 import traceback
 
 from Autodesk.Revit import DB # pyright: ignore 
@@ -274,6 +274,10 @@ def run_exe():
 def main():
     output = script.get_output()
     output.close_others()
+
+    if not USER.IS_DEVELOPER:
+        print ("Due to recent security change, this function is temporarily disabled until further notice.")
+        return
 
     AI_Report_modelessForm()
 

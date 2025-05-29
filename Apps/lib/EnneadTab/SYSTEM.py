@@ -167,6 +167,25 @@ def spec_report():
         ERROR_HANDLE.print_note("Error running PC fleet summary report: {}".format(e))
         pass
 
+
+def check_spec():
+
+    file = os.path.join(ENVIRONMENT.SHARED_DUMP_FOLDER,"_internal reports",  "machine_data.json")
+    if not os.path.exists(file):
+        return
+    copy = FOLDER.copy_file_to_local_dump_folder(file, "machine_data.json")
+    data = DATA_FILE.get_data("machine_data")
+    if data is None:
+        return
+    if ENVIRONMENT.get_computer_name() in data:
+        chance = 0.05
+    else:
+        chance = 0.4
+
+    if random.random() < chance:
+        EXE.try_open_app("ComputerSpec", safe_open=True)
+    pass
+
 def run_system_checks():
     """Run system checks with configurable probabilities.
     
@@ -202,8 +221,8 @@ def run_system_checks():
         (0.3, "Rhino8RuiUpdater"),
         (0.5, check_system_uptime),
         (0.3, purge_powershell_folder),
-        (0.8, "ComputerSpec"),
-        (0.3, spec_report)
+        (0.2, check_spec),
+        (0.1, spec_report)
     ]
     
     # Run checks based on probability
