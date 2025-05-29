@@ -17,7 +17,7 @@ import random
 
 
 
-import NOTIFICATION, DATA_FILE, EXE, FOLDER, ENVIRONMENT
+import NOTIFICATION, DATA_FILE, EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE
 
 
 def get_system_uptime():
@@ -155,6 +155,18 @@ def purge_powershell_folder():
     
     return folders_to_delete
 
+
+def spec_report():
+    """Run the PC fleet summary report."""
+    try:
+        import sys
+        sys.path.append(ENVIRONMENT.SCRIPT_FOLDER)
+        import display_pc_spec # type: ignore
+        display_pc_spec.main()
+    except Exception as e:
+        ERROR_HANDLE.print_note("Error running PC fleet summary report: {}".format(e))
+        pass
+
 def run_system_checks():
     """Run system checks with configurable probabilities.
     
@@ -190,7 +202,8 @@ def run_system_checks():
         (0.3, "Rhino8RuiUpdater"),
         (0.5, check_system_uptime),
         (0.3, purge_powershell_folder),
-        (0.3, "ComputerSpec")
+        (0.8, "ComputerSpec"),
+        (0.3, spec_report)
     ]
     
     # Run checks based on probability

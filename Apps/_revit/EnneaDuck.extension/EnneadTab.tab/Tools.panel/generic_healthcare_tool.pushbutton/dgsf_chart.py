@@ -623,6 +623,13 @@ class AreaData:
 
         setattr(self, area_name, current_area + area)
 
+    @classmethod
+    def print_detail(cls):
+        for key, value in cls.data_collection.items():
+            print ("printing detail for [{}]".format(key))
+            for attr_key in value.__dict__.keys():
+                print ("- {}: {}".format(attr_key, getattr(value, attr_key)))
+
 class InternalCheck:
     """Main class for handling area summary calculations.
     
@@ -700,7 +707,7 @@ class InternalCheck:
                 else:
                     info = DB.WorksharingUtils.GetWorksharingTooltipInfo(self.doc, area.Id)
                     editor = info.LastChangedBy
-                    print("\nArea has no area number!....Last edited by [{}]\nIt might not be enclosed or placed. Run in detail mode to find out more detail.".format(editor))
+                    print("\nArea has no area number! [{}] @ Level [{}] at [{}]....Last edited by [{}]\nIt might not be enclosed or placed. Run in detail mode to find out more detail.".format(area.LookupParameter(self.option.DEPARTMENT_KEY_PARA).AsString(), level.Name, area_scheme_name, editor))
                 self._found_bad_area = True
                 continue
 
@@ -746,6 +753,8 @@ class InternalCheck:
                                     None, 
                                     None)
 
+        if self.option._dedicated_department == "CLASSROOM":
+            AreaData.print_detail()
         if not self.option.is_primary:
             self.copy_data_from_primary()
 
@@ -824,9 +833,11 @@ class InternalCheck:
                 if para:
                     local_factor = 1 if family_para_name in [self.option.OVERALL_PARA_NAME, "MERS"] else level_data.factor
                     factored_area = getattr(level_data, family_para_name) * local_factor
-                    ERROR_HANDLE.print_note("DEBUG: para.AsDouble() is [{}]".format(para.AsDouble()))
-                    ERROR_HANDLE.print_note("DEBUG: factored_area is [{}]".format(factored_area))
-                    ERROR_HANDLE.print_note("DEBUG: factor is [{}]".format(local_factor))
+                    if self.option._dedicated_department == "CLASSROOM":
+                        ERROR_HANDLE.print_note("1.DEBUG: para is [{}]".format(family_para_name))
+                        ERROR_HANDLE.print_note("2.DEBUG: para.AsDouble() is [{}]".format(para.AsDouble()))
+                        ERROR_HANDLE.print_note("3.DEBUG: factored_area is [{}]".format(factored_area))
+                        ERROR_HANDLE.print_note("4.DEBUG: factor is [{}]".format(local_factor))
                     if para.AsDouble() != factored_area:
                         self._has_changes = True
                         para.Set(factored_area)
@@ -1078,7 +1089,7 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
             if dedicated_department is None:
                 # if dedicated_department is None, then we are doing all departments as sub chart
                 for index, dept in enumerate([x[0] for x in proj_data["area_tracking"]["table_setting"]["DEPARTMENT_PARA_MAPPING"]]):
-                    print("working on sub-chart for department [{}]".format(dept))
+                    # print("working on sub-chart for department [{}]".format(dept))
                     dgsf_chart_update(doc, show_log=show_log, dedicated_department=dept)
                     if index > 3:
                         print ("TEST: only do max 3 departments for now")
