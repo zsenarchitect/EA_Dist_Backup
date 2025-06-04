@@ -47,7 +47,7 @@ def create_material(name, RGBAR, return_index = False):
 
     material = get_material_by_name(name)
     if material is None:
-        rs.TextOut(message = "No material named [{}] found after creating material, contact Sen for help on why.".format(name), title = "EnneadTab")
+        rs.TextOut(message = "No material named [{}] found after creating material, contact Sen for help on why.".format(name), title = ENVIRONMENT.PLUGIN_NAME)
     #material.CommitChanges()
     #print "begin changing material = {}".format(material)
     red, green, blue, transparency, reflectivity = RGBAR # trnasparency 0 = solid, 1 = see-thru,,,,,reflectivity 0 = matte, 255 = glossy

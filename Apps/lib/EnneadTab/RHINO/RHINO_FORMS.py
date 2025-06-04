@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import ENVIRONMENT
 
-
-
-def notification(title = "EnneadTab For Rhino",
+def notification(title = ENVIRONMENT.PLUGIN_NAME + " For Rhino",
                 main_text = "sample header",
                 sub_text = "",
                 self_destruct = None,
@@ -14,7 +13,7 @@ def notification(title = "EnneadTab For Rhino",
     """Display a notification dialog in Rhino.
 
     Args:
-        title (str, optional): Dialog window title. Defaults to "EnneadTab For Rhino".
+        title (str, optional): Dialog window title. Defaults to ENVIRONMENT.PLUGIN_NAME + " For Rhino".
         main_text (str, optional): Primary message text. Defaults to "sample header".
         sub_text (str, optional): Secondary message text. Defaults to "".
         self_destruct (int, optional): Auto-close time in seconds. Defaults to None.
@@ -38,7 +37,7 @@ def notification(title = "EnneadTab For Rhino",
                                             height)
 
 def select_from_list(options,
-                    title = "EnneadTab For Rhino",
+                    title = ENVIRONMENT.PLUGIN_NAME + " For Rhino",
                     message = "test message",
                     button_names = ["Select"],
                     width = 500,
@@ -48,7 +47,7 @@ def select_from_list(options,
 
     Args:
         options (list): List of items to choose from.
-        title (str, optional): Dialog window title. Defaults to "EnneadTab For Rhino".
+        title (str, optional): Dialog window title. Defaults to ENVIRONMENT.PLUGIN_NAME + " For Rhino".
         message (str, optional): Instructions for user. Defaults to "test message".
         button_names (list, optional): List of button labels. Defaults to ["Select"].
         width (int, optional): Dialog width in pixels. Defaults to 500.
@@ -75,7 +74,7 @@ def select_from_list(options,
 
 def select_from_list2list(options_A,
                         options_B,
-                        title = "EnneadTab For Rhino",
+                        title = ENVIRONMENT.PLUGIN_NAME + " For Rhino",
                         message = "",
                         search_A_text = "search AAA",
                         search_B_text = "search BBB",
@@ -89,7 +88,7 @@ def select_from_list2list(options_A,
     Args:
         options_A (list): Items in the first list.
         options_B (list): Items in the second list.
-        title (str, optional): Dialog window title. Defaults to "EnneadTab For Rhino".
+        title (str, optional): Dialog window title. Defaults to ENVIRONMENT.PLUGIN_NAME + " For Rhino".
         message (str, optional): Instructions for user. Defaults to "".
         search_A_text (str, optional): Placeholder for first list search. Defaults to "search AAA".
         search_B_text (str, optional): Placeholder for second list search. Defaults to "search BBB".

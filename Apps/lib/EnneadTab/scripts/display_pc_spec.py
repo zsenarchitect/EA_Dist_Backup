@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 PC Fleet Summary Pie Chart Report
 --------------------------------
@@ -138,11 +139,9 @@ HTML_TEMPLATE = """
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    // Only show the label (category name)
                                     return context.label;
                                 },
                                 afterLabel: function(context) {
-                                    // Show count and machine names, each on a new line
                                     const idx = context.dataIndex;
                                     const count = values[idx];
                                     const machines = machineLists[idx];
@@ -244,7 +243,6 @@ def main():
     json_path = os.path.join(folder, 'machine_data.json')
     html_path = os.path.join(folder, 'machine_report.html')
     if not os.path.exists(json_path):
-        # print('machine_data.json not found!')
         return
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -252,8 +250,6 @@ def main():
     html = HTML_TEMPLATE.replace('__SUMMARY__', json.dumps(summary)).replace('__DATA__', json.dumps(data))
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html)
-    # print('Summary PC fleet report generated at:', html_path)
-    # os.startfile(html_path)
 
 if __name__ == '__main__':
     main()

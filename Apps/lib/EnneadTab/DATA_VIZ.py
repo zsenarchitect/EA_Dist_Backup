@@ -1,12 +1,10 @@
-
-
-
 import DATA_FILE
 import EXE
+import ENVIRONMENT
 
 
 
-def show_data(data, title = "EnneadTab Data Visualization", show_axis=True):
+def show_data(data, title = ENVIRONMENT.PLUGIN_NAME + " Data Visualization", show_axis=True):
     """
     primary_value is the value that used to constantly display.
     {

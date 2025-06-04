@@ -15,7 +15,7 @@ try:
 except :
     pass
 
-
+import ENVIRONMENT
 
 import os
 import fnmatch
@@ -487,7 +487,7 @@ class List2ListSelectionDialog(REF_CLASS):
 
 def ShowList2ListSelectionDialog(options_A,
                                 options_B,
-                                title = "EnneadTab",
+                                title = ENVIRONMENT.PLUGIN_NAME,
                                 message = "",
                                 search_A_text = "search AAA",
                                 search_B_text = "search BBB",

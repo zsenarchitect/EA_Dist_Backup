@@ -361,15 +361,16 @@ def EnneadTab_startup():
     check_minimal_version_for_enneadtab()
 
 
-    if random.random() < 0.5:
-        ENCOURAGING.warming_quote()
-    elif random.random() < 0.9:
-        JOKE.joke_quote()
-    else:
-        NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))
-    
+    if  USER.IS_DEVELOPER:
+        if random.random() < 0.5:
+            ENCOURAGING.warming_quote()
+        elif random.random() < 0.9:
+            JOKE.joke_quote()
+        else:
+            NOTIFICATION.duck_pop(main_text = "Hello {}!\nEnneaDuck welcome you back!".format(USER.USER_NAME))
+        
 
-    HOLIDAY.festival_greeting()
+        HOLIDAY.festival_greeting()
     
     check_C_drive_space()
 

@@ -1025,7 +1025,7 @@
     },
     "Revit.tab\\live_selection.button\\live_selection_left.py": {
         "script": "Revit.tab\\live_selection.button\\live_selection_left.py",
-        "icon": null,
+        "icon": "Revit.tab\\live_selection.button\\icon.png",
         "alias": "LiveSelection",
         "doc": "This button does LiveSelection when left click",
         "tab": "Revit.tab",

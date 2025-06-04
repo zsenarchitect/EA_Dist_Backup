@@ -16,7 +16,7 @@ if ENVIRONMENT.IS_REVIT_ENVIRONMENT:
 def email(
     receiver_email_list,
     body,
-    subject="EnneadTab Auto Email",
+    subject=ENVIRONMENT.PLUGIN_NAME + " Auto Email",
     body_folder_link_list=None,
     body_image_link_list=None,
     attachment_list=None,
@@ -26,7 +26,7 @@ def email(
     Args:
         receiver_email_list (list): List of email addresses.
         body (str): Body of the email.
-        subject (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email".
+        subject (str, optional): Subject of the email. Defaults to " Auto Email".
         body_folder_link_list (list, optional): List of folder links to be included in the email body. Defaults to None.
         body_image_link_list (list, optional): List of image links to be included in the email body. Defaults to None.
         attachment_list (list, optional): List of file paths to be attached to the email. Defaults to None.
@@ -66,7 +66,7 @@ def email(
 
 
 def email_error(
-    traceback, tool_name, error_from_user, subject_line="EnneadTab Auto Email Error Log"
+    traceback, tool_name, error_from_user, subject_line=ENVIRONMENT.PLUGIN_NAME + " Auto Email Error Log"
 ):
     """Send automated email when an error occurs.
 
@@ -74,7 +74,7 @@ def email_error(
         traceback (str): Traceback of the error.
         tool_name (str): Name of the tool that caused the error.
         error_from_user (str): Error message from the user.
-        subject_line (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email Error Log".
+        subject_line (str, optional): Subject of the email. Defaults to " Auto Email Error Log".
     """
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(time.time())))
     computer_name = ENVIRONMENT.get_computer_name()
@@ -164,7 +164,7 @@ def email_error(
 
 
 def email_to_self(
-    subject="EnneadTab Auto Email to Self",
+    subject=ENVIRONMENT.PLUGIN_NAME + " Auto Email to Self",
     body=None,
     body_folder_link_list=None,
     body_image_link_list=None,
@@ -173,7 +173,7 @@ def email_to_self(
     """Send email to self.
 
     Args:
-        subject (str, optional): Subject of the email. Defaults to "EnneadTab Auto Email to Self".
+        subject (str, optional): Subject of the email. Defaults to " Auto Email to Self".
         body (str, optional): Body of the email. Defaults to None.
         body_folder_link_list (list, optional): List of folder links to be included in the email body. Defaults to None.
         body_image_link_list (list, optional): List of image links to be included in the email body. Defaults to None.

@@ -165,7 +165,7 @@ class NotificationDialog(REF_CLASS):
 
 
 
-def show_NotificationDialog(title = "EnneadTab",
+def show_NotificationDialog(title = ENVIRONMENT.PLUGIN_NAME,
                             main_text = "",
                             sub_text = "",
                             self_destruct = None,

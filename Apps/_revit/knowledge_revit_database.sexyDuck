@@ -2456,6 +2456,15 @@
         "tab": "Manage",
         "tab_icon": null
     },
+    "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\handle_internal_textnote_script.py": {
+        "alias": "Internal Textnote Handler",
+        "doc": "Unsupported value for safe evaluation, legacy version. See Sen Z to fix this for dynamic constant handling.",
+        "icon": "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\handle_internal_textnote_script.py",
+        "tab": "Manage",
+        "tab_icon": null
+    },
     "EnneadTab.tab\\Manage.panel\\load family to many docs.pushbutton\\load family to many docs_script.py": {
         "alias": "Load Multiple Families To Multiple Docs",
         "doc": "Pick many families, and load them to many projects. You can:\n\t- 1 family >> x projects\n\t- x families >> 1 projects\n\t- x families >> x projects\n\t- 1 family >> 1 project\n\nHave bonus option to sync and close after done. And have option to pre-pick shared family loading behaviour. Handy for loading big family at end of day.",
@@ -2678,15 +2687,6 @@
         "icon": "EnneadTab.tab\\Tools.panel\\apply_panel_radius_UI.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Tools.panel\\apply_panel_radius_UI.pushbutton\\apply_panel_radius_UI_script.py",
-        "tab": "Tools",
-        "tab_icon": null
-    },
-    "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\auto_dim_plan_script.py": {
-        "alias": "Auto Dim Plan",
-        "doc": "Automatically dimensions walls in plan views.\n\nFeatures:\n- Works with selected walls or all walls in active view\n- Creates dimensions between parallel walls\n- Smart dimension placement perpendicular to walls\n- Option to create dimensions to grids\n- Filters out curved walls (future enhancement coming soon!)\n\n",
-        "icon": "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\icon.png",
-        "is_popular": false,
-        "script": "EnneadTab.tab\\Tools.panel\\auto_dim_plan.pushbutton\\auto_dim_plan_script.py",
         "tab": "Tools",
         "tab_icon": null
     },

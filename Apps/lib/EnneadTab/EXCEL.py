@@ -50,6 +50,7 @@ except:
     pass
 
 from collections import defaultdict
+import ENVIRONMENT
 
 def column_number_to_letter(number, is_upper=True):
     """Convert numeric column index to Excel letter notation.
@@ -236,7 +237,7 @@ class ExcelDataCollection:
                                  side_border_style=BorderStyle.Thick)
             self.add(item)
 
-    def save(self, filepath, worksheet="EnneadTab", open_after=True, freeze_column=None):
+    def save(self, filepath, worksheet=ENVIRONMENT.PLUGIN_NAME, open_after=True, freeze_column=None):
         if self.has_warning:
             NOTIFICATION.messenger(main_text="There are warnings related to cell override, see console for details")
         save_data_to_excel(self.data, filepath, worksheet=worksheet, open_after=open_after, freeze_row=self.header_row+1, freeze_column=freeze_column)
@@ -665,7 +666,7 @@ def search_row_in_column_by_value(data, column, search_value, is_fuzzy=False, st
                 return data_row
     return None
 
-def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, freeze_row=None, freeze_column=None):
+def save_data_to_excel(data, filepath, worksheet=ENVIRONMENT.PLUGIN_NAME, open_after=True, freeze_row=None, freeze_column=None):
     """Save data to a new Excel file with formatting.
 
     Creates a new Excel workbook and writes data with preserved formatting.
@@ -674,7 +675,7 @@ def save_data_to_excel(data, filepath, worksheet="EnneadTab", open_after=True, f
     Args:
         data (list): Data to write, can include ExcelDataItem objects
         filepath (str): Target Excel file path
-        worksheet (str, optional): Name for the worksheet. Defaults to "EnneadTab".
+        worksheet (str, optional): Name for the worksheet. Defaults to ENVIRONMENT.PLUGIN_NAME.
         open_after (bool, optional): If True, opens file after saving.
             Defaults to True.
         freeze_row (int, optional): 1-based row number to freeze panes at.

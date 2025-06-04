@@ -14,11 +14,120 @@ import shutil
 import datetime
 import time
 import random
+import json
 
 
+import NOTIFICATION, DATA_FILE,USER,  EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE
 
-import NOTIFICATION, DATA_FILE, EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE
 
+def parse_timestamp(timestamp_str):
+    """Parse timestamp string that can be in two different formats.
+    
+    Args:
+        timestamp_str (str): Timestamp in either 'YYYY-MM-DD HH:MM:SS' or 'YYYYMMDD HHMMSS' format
+        
+    Returns:
+        datetime.datetime: Parsed datetime object
+        
+    Raises:
+        ValueError: If timestamp cannot be parsed in either format
+    """
+    # Try the newer format first (YYYYMMDD HHMMSS)
+    try:
+        return datetime.datetime.strptime(timestamp_str, "%Y%m%d %H%M%S")
+    except ValueError:
+        pass
+    
+    # Try the older format (YYYY-MM-DD HH:MM:SS)
+    try:
+        return datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        pass
+    
+    # If neither format works, raise an error
+    raise ValueError("Cannot parse timestamp: {}".format(timestamp_str))
+
+def alert_missing_schedule_update():
+    if not USER.IS_DEVELOPER:
+        return
+
+    # Construct file path that works for both IronPython and CPython
+    history_filename = "publish_history_SZHANG.json"
+    history = os.path.join(ENVIRONMENT.ROOT, "DarkSide", history_filename)
+    
+    if not os.path.exists(history):
+        return
+    
+    try:
+        with open(history, "r") as f:
+            data = json.load(f)
+    except Exception as e:
+        ERROR_HANDLE.print_note("Error reading publish history: {}".format(e))
+        return
+    
+    # Get runs data and check if it exists
+    runs = data.get("runs", [])
+    if not runs:
+        NOTIFICATION.duck_pop("No publish history found! Time to get back to work!")
+        return
+    
+    # Sort records by timestamp (most recent first)
+    try:
+        sorted_runs = sorted(runs, key=lambda x: parse_timestamp(x["timestamp"]), reverse=True)
+    except Exception as e:
+        ERROR_HANDLE.print_note("Error sorting publish history: {}".format(e))
+        return
+    
+    # Get most recent record
+    most_recent = sorted_runs[0]
+    most_recent_timestamp = most_recent["timestamp"]
+    most_recent_success = most_recent.get("success", False)
+    
+    # Parse timestamp and calculate time difference
+    try:
+        timestamp_dt = parse_timestamp(most_recent_timestamp)
+        current_time = datetime.datetime.now()
+        time_diff = current_time - timestamp_dt
+        
+        # Check if more than 1 day old
+        is_old = time_diff.total_seconds() > 24 * 60 * 60  # 1 day in seconds
+        
+        # Alert if most recent is more than 1 day old OR if it failed
+        if is_old or not most_recent_success:
+            if is_old and not most_recent_success:
+                message = "Yikes! Last publish was {} ago AND it failed! Time to fix things up!".format(
+                    format_time_diff(time_diff)
+                )
+            elif is_old:
+                message = "Hey there! Last publish was {} ago. Maybe time for an update?".format(
+                    format_time_diff(time_diff)
+                )
+            else:
+                message = "Oops! Last publish failed at {}. Better check what went wrong!".format(
+                    most_recent_timestamp
+                )
+            
+            print("DEBUG: Would show duck pop message: {}".format(message))
+            NOTIFICATION.duck_pop(message)
+        else:
+            print("DEBUG: All good! Most recent publish at {} was successful and recent.".format(most_recent_timestamp))
+            
+    except Exception as e:
+        ERROR_HANDLE.print_note("Error processing timestamp: {}".format(e))
+        return
+
+def format_time_diff(time_diff):
+    """Helper function to format time difference in human readable format."""
+    days = int(time_diff.total_seconds() // (24 * 60 * 60))
+    hours = int((time_diff.total_seconds() % (24 * 60 * 60)) // (60 * 60))
+    
+    if days > 0:
+        if hours > 0:
+            return "{} days and {} hours".format(days, hours)
+        else:
+            return "{} days".format(days)
+    else:
+        return "{} hours".format(hours)
 
 def get_system_uptime():
     """Get system uptime in seconds for Windows systems, compatible with both Python 3 and IronPython 2.7.
@@ -232,6 +341,9 @@ def run_system_checks():
                 check()
             else:
                 EXE.try_open_app(check, safe_open=True)
+
+    # this is only for developer and it is handled inside the function
+    alert_missing_schedule_update()
     
     # Update last check time in environment variable
     os.environ[env_var_name] = str(time.time())

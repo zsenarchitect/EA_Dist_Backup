@@ -1,19 +1,21 @@
+# -*- coding: utf-8 -*-
 __title__ = "Dockpane"
 __doc__ = "A dockable panel that attaches to the side of Rhino window"
 
 import rhinoscriptsyntax as rs
-import Rhino
-import Eto.Forms as forms
-import Eto.Drawing as drawing
+import Rhino # pyright: ignore
+import Eto.Forms as forms # pyright: ignore
+import Eto.Drawing as drawing # pyright: ignore
 import scriptcontext as sc
-import System
-from EnneadTab import ERROR_HANDLE, LOG
-from Rhino.UI import Panels
+import System # pyright: ignore
+from EnneadTab import ERROR_HANDLE, LOG, ENVIRONMENT
+from Rhino.UI import Panels # pyright: ignore
+
 
 class DockablePanel(forms.Panel):
     def __init__(self):
         super(DockablePanel, self).__init__()
-        self.Title = "EnneadTab Panel"
+        self.Title = ENVIRONMENT.PLUGIN_NAME + " Panel"
         self.Padding = drawing.Padding(5)
         
         # Create controls
@@ -62,30 +64,30 @@ class DockablePanel(forms.Panel):
         layout.AddRow(self.textbox)
         layout.AddRow(self.print_button)
         
-        # Add separator
-        separator1 = forms.SeparatorControl()
-        separator1.Height = 1
-        layout.AddRow(None, separator1, None)
+        # Add spacing
+        layout.AddRow(None)
+        layout.AddRow(forms.Label(Text="─────────────"))
+        layout.AddRow(None)
         
         # Add selection section
         layout.AddRow(self.selection_label)
         layout.AddRow(self.select_button)
         layout.AddRow(self.filter_button)
         
-        # Add separator
-        separator2 = forms.SeparatorControl()
-        separator2.Height = 1
-        layout.AddRow(None, separator2, None)
+        # Add spacing
+        layout.AddRow(None)
+        layout.AddRow(forms.Label(Text="─────────────"))
+        layout.AddRow(None)
         
         # Add layer section
         layout.AddRow(self.layer_label)
         layout.AddRow(self.layer_dropdown)
         layout.AddRow(self.add_layer_button)
         
-        # Add separator
-        separator3 = forms.SeparatorControl()
-        separator3.Height = 1
-        layout.AddRow(None, separator3, None)
+        # Add spacing
+        layout.AddRow(None)
+        layout.AddRow(forms.Label(Text="─────────────"))
+        layout.AddRow(None)
         
         # Add color section
         layout.AddRow(self.color_label)
@@ -136,7 +138,10 @@ class DockablePanel(forms.Panel):
     
     @ERROR_HANDLE.try_catch_error()    
     def on_add_layer_click(self, sender, e):
-        new_layer_name = "NewLayer_" + System.Guid.NewGuid().ToString().Substring(0, 8)
+        # Create a timestamp-based layer name instead of using GUID
+        import time
+        timestamp = int(time.time())
+        new_layer_name = "NewLayer_{}".format(timestamp)
         rs.AddLayer(new_layer_name)
         self.update_layer_list()
         # Select the newly created layer
@@ -169,7 +174,7 @@ class DockablePanel(forms.Panel):
 def dockpane():
     """Create and show a dockable panel that attaches to the side of Rhino window"""
     # Create and register the panel
-    panel_id = "EnneadTab_Dockpane_Panel"
+    panel_id = System.Guid("12345678-1234-1234-1234-123456789012")  # Use a fixed GUID for the panel
     
     # Check if panel already exists
     existing_panel = Panels.GetPanel(panel_id)
@@ -187,11 +192,13 @@ def dockpane():
         # Use default bitmap if loading fails
         panel_bitmap = System.Drawing.SystemIcons.Application.ToBitmap()
         
-    # Register with a specific ID so we can find it later
-    Panels.RegisterPanel(panel_id, panel, "EnneadTab Dockpane", panel_bitmap, Panels.PanelType.Left)
+    # Get the plugin instance
+    plugin = Rhino.PlugIns.PlugIn.Find("EnneadTab")
+    # Register with the plugin and panel class
+    Panels.RegisterPanel(plugin, DockablePanel, "EnneadTab Dockpane", panel_bitmap)
     
     # Show the panel
-    Panels.OpenPanel(panel_id)
+    Panels.OpenPanel("EnneadTab Dockpane")
     
 if __name__ == "__main__":
     dockpane()

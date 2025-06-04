@@ -39,17 +39,31 @@ def get_alternative_traceback():
         str: Formatted stack trace information
     """
     import sys
-    OUT = ""
+    OUT = []
     exc_type, exc_value, exc_traceback = sys.exc_info()
-    OUT += "Exception Type: {}".format(exc_type)
-    OUT += "\nException Message: {}".format(exc_value)
+    
+    # Handle exception type
+    type_str = str(exc_type.__name__ if hasattr(exc_type, '__name__') else exc_type)
+    OUT.append("Exception Type: {}".format(type_str))
+    
+    # Handle exception message
+    try:
+        msg = str(exc_value)
+    except:
+        msg = "Unable to convert error message to string"
+    OUT.append("Exception Message: {}".format(msg))
+    
+    # Handle stack trace
     while exc_traceback:
-        OUT += "\nFile: {}, Line: {}".format(exc_traceback.tb_frame.f_code.co_filename,exc_traceback.tb_lineno )
+        filename = str(exc_traceback.tb_frame.f_code.co_filename)
+        lineno = str(exc_traceback.tb_lineno)
+        OUT.append("File: {}, Line: {}".format(filename, lineno))
         exc_traceback = exc_traceback.tb_next
 
+    result = "\n".join(OUT)
     if USER.IS_DEVELOPER:
-        print (OUT)
-    return OUT
+        print(result)
+    return result
 
 def try_catch_error(is_silent=False, is_pass = False):
     """Decorator for catching exceptions and sending automated error log emails.
@@ -89,8 +103,10 @@ def try_catch_error(is_silent=False, is_pass = False):
                     # Ensure we decrement even when passing
                     _error_handler_recursion_depth -= 1
                     return
-                print_note(str(e))
-                print_note("error_Wrapper func for EA Log -- Error: " + str(e))
+                    
+                error_msg = str(e)
+                print_note(error_msg)
+                print_note("error_Wrapper func for EA Log -- Error: " + error_msg)
                 error_time = "Oops at {}\n\n".format(TIME.get_formatted_current_time())
                 error = get_alternative_traceback()
                 if not error:
@@ -98,11 +114,10 @@ def try_catch_error(is_silent=False, is_pass = False):
                         import traceback
                         error = traceback.format_exc()
                     except Exception as new_e:
-                        
-                        error = str(e)
-                        print (new_e)
+                        error = error_msg
+                        print(new_e)
 
-                subject_line = "EnneadTab Auto Error Log"
+                subject_line = ENVIRONMENT.PLUGIN_NAME + " Auto Error Log"
                 if is_silent:
                     subject_line += "(Silent)"
                 try:
@@ -111,9 +126,8 @@ def try_catch_error(is_silent=False, is_pass = False):
                     print_note("Cannot send email: {}".format(get_alternative_traceback()))
 
                 if not is_silent:
-
                     error_file = FOLDER.get_local_dump_folder_file("error_general_log.txt")
-                    error += "\n\n######If you have EnneadTab UI window open, just close the original EnneadTab window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########BTW, a local copy of the error is available at {}".format(error_file)
+                    error += "\n\n######If you have " + ENVIRONMENT.PLUGIN_NAME + " UI window open, just close the original " + ENVIRONMENT.PLUGIN_NAME + " window. Do no more action, otherwise the program might crash.##########\n#########Not sure what to do? Msg Sen Zhang, you have dicovered a important bug and we need to fix it ASAP!!!!!########BTW, a local copy of the error is available at {}".format(error_file)
                     try:
                         import io
                         with io.open(error_file, "w", encoding="utf-8") as f:
@@ -129,7 +143,7 @@ def try_catch_error(is_silent=False, is_pass = False):
 
                 if ENVIRONMENT.IS_REVIT_ENVIRONMENT and not is_silent:
                     NOTIFICATION.messenger(
-                        main_text="!Critical Warning, close all Revit UI window from EnneadTab and reach to Sen Zhang.")
+                        main_text="!Critical Warning, close all Revit UI window from " + ENVIRONMENT.PLUGIN_NAME + " and reach to Sen Zhang.")
                 
                 # Make sure to decrement the counter even in case of exception
                 _error_handler_recursion_depth -= 1

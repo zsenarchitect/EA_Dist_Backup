@@ -253,7 +253,7 @@ class ListSelectionDialog(REF_CLASS):
 
 #@ERROR_HANDLE.try_catch_error()
 def show_ListSelectionDialog(options,
-                            title = "EnneadTab",
+                            title = ENVIRONMENT.PLUGIN_NAME,
                             message = "",
                             multi_select = False,
                             button_names = ["Run"],
