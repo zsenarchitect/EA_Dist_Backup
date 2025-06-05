@@ -1,4 +1,4 @@
-This is the distribution repository for EnneadTab updated on 2025-06-05 17:09:15.
+This is the distribution repository for EnneadTab updated on 2025-06-05 18:28:40.
 
 It contains the Apps and Installation and Help-Docs folders.
 
@@ -14,4 +14,4 @@ Special thanks to Ehsan and all the pyRevit team for providing the foundation fo
 
 
 Wisdom of the day:
-A man walks into a bar and orders helicopter flavor chips. The barman replies "sorry mate we only do plain"
+What do you call an elephant that doesn't matter? An irrelephant.
