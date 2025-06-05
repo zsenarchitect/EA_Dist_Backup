@@ -15,7 +15,7 @@ import datetime
 import time
 import random
 import json
-
+import traceback
 
 import NOTIFICATION, DATA_FILE,USER,  EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE
 
@@ -107,10 +107,10 @@ def alert_missing_schedule_update():
                     most_recent_timestamp
                 )
             
-            print("DEBUG: Would show duck pop message: {}".format(message))
+            ERROR_HANDLE.print_note("DEBUG: Would show duck pop message: {}".format(message))
             NOTIFICATION.duck_pop(message)
         else:
-            print("DEBUG: All good! Most recent publish at {} was successful and recent.".format(most_recent_timestamp))
+            ERROR_HANDLE.print_note("DEBUG: All good! Most recent publish at {} was successful and recent.".format(most_recent_timestamp))
             
     except Exception as e:
         ERROR_HANDLE.print_note("Error processing timestamp: {}".format(e))
@@ -274,6 +274,7 @@ def spec_report():
         display_pc_spec.main()
     except Exception as e:
         ERROR_HANDLE.print_note("Error running PC fleet summary report: {}".format(e))
+        ERROR_HANDLE.print_note(traceback.format_exc())
         pass
 
 

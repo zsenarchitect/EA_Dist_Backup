@@ -98,6 +98,15 @@
         "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
+    "EnneadTab.menu\\remote_fix_code.button\\remote_fix_code_left.py": {
+        "script": "EnneadTab.menu\\remote_fix_code.button\\remote_fix_code_left.py",
+        "icon": null,
+        "alias": "RemoteFixCode",
+        "doc": "Launches VS Code Dev for emergency remote code editing and debugging",
+        "tab": "EnneadTab.menu",
+        "tab_icon": "EnneadTab.menu\\icon.png",
+        "is_popular": false
+    },
     "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py": {
         "script": "EnneadTab.menu\\reset_all_conduit.button\\reset_all_conduit_left.py",
         "icon": "EnneadTab.menu\\reset_all_conduit.button\\icon.png",

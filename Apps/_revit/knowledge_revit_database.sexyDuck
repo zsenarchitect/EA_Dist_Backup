@@ -2458,7 +2458,7 @@
     },
     "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\handle_internal_textnote_script.py": {
         "alias": "Internal Textnote Handler",
-        "doc": "Unsupported value for safe evaluation, legacy version. See Sen Z to fix this for dynamic constant handling.",
+        "doc": "Handle internal textnotes in the project.\nThis tool allows you to show or hide all internal textnotes at once.",
         "icon": "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Manage.panel\\handle_internal_textnote.pushbutton\\handle_internal_textnote_script.py",
@@ -2624,6 +2624,15 @@
         "icon": "EnneadTab.tab\\Resource.panel\\reload.splitbutton\\soft_reload.pushbutton\\icon.png",
         "is_popular": false,
         "script": "EnneadTab.tab\\Resource.panel\\reload.splitbutton\\soft_reload.pushbutton\\soft_reload_script.py",
+        "tab": "Resource",
+        "tab_icon": null
+    },
+    "EnneadTab.tab\\Resource.panel\\remote_fix_code.pushbutton\\remote_fix_code_script.py": {
+        "alias": "Remote Fix Code",
+        "doc": "Emergency code fix tool for remote debugging and editing using VS Code Dev",
+        "icon": "EnneadTab.tab\\Resource.panel\\remote_fix_code.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab.tab\\Resource.panel\\remote_fix_code.pushbutton\\remote_fix_code_script.py",
         "tab": "Resource",
         "tab_icon": null
     },

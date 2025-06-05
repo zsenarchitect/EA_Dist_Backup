@@ -58,28 +58,21 @@ ONE_DRIVE_DOCUMENTS_FOLDER = os.path.join(USER_PROFILE_FOLDER,
 if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
     ONE_DRIVE_DESKTOP_FOLDER = USER_DESKTOP_FOLDER
 USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
-ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, 
-                                     "{}-Ecosystem".format(PLUGIN_NAME))
-ECO_SYS_FOLDER_LEGACY = os.path.join(USER_DOCUMENT_FOLDER, 
-                                     "{} Ecosystem".format(PLUGIN_NAME))
+ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, 
+                            "{} Ecosystem".format(PLUGIN_NAME))
 ####################################
-# TO_DO: make commit change to MODERN after May 1st
-if datetime.now().date() > datetime(2026, 5, 1).date():
-    ECO_SYS_FOLDER = ECO_SYS_FOLDER_MODERN
-else:
-    ECO_SYS_FOLDER = ECO_SYS_FOLDER_LEGACY
-    try:
-        if os.path.exists(ECO_SYS_FOLDER_LEGACY):
-            import shutil
-            for root, dirs, files in os.walk(ECO_SYS_FOLDER_LEGACY):
-                for file in files:
-                    if file.endswith(PLUGIN_EXTENSION):
-                        rel_path = os.path.relpath(os.path.join(root, file), 
-                                                ECO_SYS_FOLDER_LEGACY)
-                        shutil.copy(os.path.join(ECO_SYS_FOLDER_LEGACY, rel_path), 
-                                    os.path.join(ECO_SYS_FOLDER_MODERN, rel_path))
-    except:
-        pass
+
+
+# no longer plan to have both folder, so delete the modern one and keep using the old one. i have resolved this by rerouting rvb file for rhino.
+old_ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, 
+                                     "{}-Ecosystem".format(PLUGIN_NAME))
+from datetime import datetime
+delete_after = datetime(2025, 8, 1) # just keep it longer so user has time to update their OS-installer first
+if datetime.now() >= delete_after:
+    if os.path.exists(old_ECO_SYS_FOLDER_MODERN):
+        import shutil
+        shutil.rmtree(old_ECO_SYS_FOLDER_MODERN)
+
 
 ####################################
 DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
@@ -92,7 +85,7 @@ def _secure_folder(folder):
         except Exception as e:
             print("Cannot secure folder [{}] becasue {}".format(folder, e))
 
-map(_secure_folder, [ECO_SYS_FOLDER, ECO_SYS_FOLDER_MODERN, DUMP_FOLDER])
+map(_secure_folder, [ECO_SYS_FOLDER, DUMP_FOLDER])
 
 
 

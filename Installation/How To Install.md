@@ -20,6 +20,9 @@
 - [8. Other apps](#8-other-apps)
   - [8.1 AccFileOpenner](#81-accfileopener)
   - [8.2 DeployRevitIniFile](#82-deployrevitinifile)
+  - [8.3 EnscapeAssetChanger](#83-enscapeassetchanger)
+  - [8.4 LastSyncMonitor](#84-lastsyncmonitor)
+  - [8.5 Pdf2indesign](#85-pdf2indesign)
 
 ## 1. Overall Introduction
 Overall, you will need Ecosystem downloaded as foundation(Chapter 2). <br>
@@ -58,9 +61,7 @@ See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this
 Run the installer by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
-Run the installer by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. **This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.**
 
-![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)
 
 Watch the progress, when it says finished it will close itself, and it is ready to move on installing Rhino and Revit Version. Follow **step 3.1 or 4.1** below.
 
@@ -74,7 +75,7 @@ EnneadTab-For-Revit run over **pyRevit** framework. Make sure you have pyrevit i
 You can get pyrevit from here and pick the first one under "Download" section. There is no admin restriction to install: https://github.com/pyrevitlabs/pyRevit/releases
 
 > [!NOTE]
-> Attention, **Revit 2025** users!  
+> Attention, **Revit 2025 and above** users!  
 > Due to the significant .Net framework changes from 2024 to 2025, pyRevit 4.x only support 2024 and below. pyRevit 5 will support all Revit version.  
 > Make sure you have COMPLETELY removed pyrevit 4.x before adaption version **5.0.1**
 
@@ -104,7 +105,7 @@ For a complete command list of this plugin, please check [EnneadTab For Rhino Ha
 1. Navigate to `C:\Users\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation`
 2. Have **ONLY ONE** Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
 3. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".
-4. **(Rhino 8 only)** You might see that the side bar is not showing up, this is because Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly, such as click and unclick 'Block' collection to trigger activation and make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
+4. **(Rhino 8 and above only)** You might see that the side bar is not showing up, this is because Rhino 8 has made some change compared to 7 that affect how toolbar is loaded. Now please go to below setting of Rhino and click different checkboxes randomly, such as click and unclick 'Block' collection to trigger activation and make Rhino load, but finish it in a stage like below screenshot: just make sure to check the Group: Dynamic Rui at the end.
 
 ![screenshot of toggle r8 sidebar](/Apps/lib/EnneadTab/images/Instruction_toggle_r8_sidebar.png)
 
@@ -228,3 +229,81 @@ This tool helps deploy Revit.ini file for all versions of Revit. It can work for
 #### How to use
 1. Go to working folder `L:\4b_Applied Computing\01_Revit\Initialization` prepare Revit.ini file for the target year version, make changes if needed (set default family template path to L drive, etc). Changes are to be confirmed by Gayatri. We will keep one Revit.ini file per folder because Revit separates them by folder. **Add install markup for any changes you want to add.**
 2. Download https://github.com/Ennead-Architects-LLP/EA_Dist/blob/main/Installation/RevitIniDeployer.exe and run. This will try to find all years versions and copy to ProgramData version ini for each year.
+
+### 8.3 EnscapeAssetChanger
+
+This tool helps locate and modify Enscape material assets for visualization specialists who need precise control over their rendering assets.
+
+#### What it does
+- Search for Enscape assets by name using fuzzy search
+- Browse and modify .matpkg material files for modern format assets
+- Access texture files directly for legacy format assets
+- Visual thumbnail preview of assets
+- Material editor with color picker and property adjustment
+
+#### How to use
+1. Place Enscape assets in your Rhino model and start an Enscape scene to download the assets
+2. Navigate to `C:\Users\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Apps`
+3. Run `EnscapeAssetChanger.exe`
+4. Use the search bar to find your assets
+5. Click "Open Folder" to navigate to the asset location
+6. For modern format assets: Edit .matpkg files with the built-in material editor
+7. For legacy format assets: Edit texture images directly with external programs
+8. Restart Rhino/Enscape to see changes take effect
+
+#### Asset location
+Assets are stored at: `C:\Users\[USERNAME]\AppData\Local\Temp\Enscape\Assets\Data`
+
+### 8.4 LastSyncMonitor
+
+This application monitors Revit file sync intervals and reminds users to sync their work regularly to prevent long periods without synchronization.
+
+#### What it does
+- Tracks time since last sync for all open Revit files
+- Provides visual warnings when sync intervals exceed set thresholds
+- Color-coded alerts: normal (white), warning (orange), critical (red)
+- Automatic cost tracking for overtime periods
+- Helps maintain good collaboration practices in shared Revit models
+
+#### How to use
+The monitor starts automatically when you open Revit files. The interface shows:
+- Current sync status for all tracked documents
+- Time elapsed since last sync
+- Visual alerts when sync intervals become too long
+- Default reminder interval is 45 minutes (configurable in EnneadTab settings)
+
+#### Configuration
+You can adjust the sync monitor interval in your EnneadTab Revit settings. The tool will remind you at the set interval and apply cost penalties for extended periods without syncing.
+
+### 8.5 Pdf2indesign
+
+This application converts PDF files into InDesign documents with professional layout options, perfect for design workflows that involve PDF-to-print conversions.
+
+#### What it does
+- Converts multi-page PDFs to properly formatted InDesign documents
+- Two layout modes: Spread mode (one page per spread) and Booklet mode (two pages per spread)
+- Automatic page dimension detection and scaling
+- Customizable margins and measurement units (inches/millimeters)
+- Media box or content box cropping options
+- Batch processing support for multiple PDFs
+
+#### How to use
+1. Navigate to `C:\Users\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Apps`
+2. Run `Pdf2indesign.exe`
+3. Configure your settings:
+   - InDesign version number
+   - Page dimensions (width/height)
+   - Margins (top, bottom, left, right)
+   - Units (inches or millimeters)
+   - Dimension type (Media Box or Content Box)
+4. Choose layout mode:
+   - **Spread mode**: Each PDF page becomes a full InDesign spread
+   - **Booklet mode**: Portrait pages are placed side-by-side, landscape pages use full spreads
+5. Select your PDF files for conversion
+6. The tool will create .indd files in the same location as your PDFs
+
+#### Supported workflow
+- Ideal for converting consultant drawings or presentation materials to InDesign format
+- Maintains proper scaling and proportions
+- Automatically handles mixed portrait/landscape orientations in booklet mode
+- Supports batch processing for efficient conversion of multiple documents

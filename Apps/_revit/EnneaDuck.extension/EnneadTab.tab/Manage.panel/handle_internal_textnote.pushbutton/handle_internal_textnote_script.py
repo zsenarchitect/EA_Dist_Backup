@@ -3,8 +3,7 @@
 
 INTERNAL_TEXTNOTE_TYPE_NAME = "_internal_note"
 __doc__ = """Handle internal textnotes in the project.
-This tool allows you to show or hide all internal textnotes at once.
-The type name used for searching is: [{}]""".format(INTERNAL_TEXTNOTE_TYPE_NAME)
+This tool allows you to show or hide all internal textnotes at once."""
 
 __title__ = "Internal Textnote\nHandler"
 
@@ -76,25 +75,10 @@ class InternalTextnoteHandler:
                     
         return bool(self.editable_notes)
         
-    def group_by_view(self):
-        """Group textnotes by their owner view.
-        
-        Returns:
-            dict: Dictionary mapping view_id to list of notes
-        """
-        textnotes_by_view = {}
-        for note in self.editable_notes:
-            view_id = note.OwnerViewId
-            if view_id not in textnotes_by_view:
-                textnotes_by_view[view_id] = []
-            textnotes_by_view[view_id].append(note)
-        return textnotes_by_view
-        
-    def modify_visibility(self, textnotes_by_view, show_notes):
-        """Modify visibility of textnotes in their respective views.
+    def modify_visibility(self, show_notes):
+        """Modify visibility of each textnote in its owner view and dependent views.
         
         Args:
-            textnotes_by_view: Dictionary of textnotes grouped by view
             show_notes: True to show, False to hide
         """
         self.modified = 0
@@ -102,18 +86,36 @@ class InternalTextnoteHandler:
         t = DB.Transaction(self.doc, __title__)
         t.Start()
         
-        for view_id, notes in textnotes_by_view.items():
+        for note in self.editable_notes:
+            view_id = note.OwnerViewId
             view = self.doc.GetElement(view_id)
-            if not view:
-                continue
+            
+            # Get all views to process (main view + dependent views)
+            views_to_do = [view]
+            dependent_view_ids = list(view.GetDependentViewIds())
+            if dependent_view_ids:
+                views_to_do.extend([self.doc.GetElement(x) for x in dependent_view_ids])
+            
+            # Process each view (main + dependent)
+            for current_view in views_to_do:
+                if not current_view:
+                    print("Cannot process view: {}".format(view.Name if view else "Unknown"))
+                    continue
                 
-            element_ids = DATA_CONVERSION.list_to_system_list([note.Id for note in notes])
-            if show_notes:
-                view.UnhideElements(element_ids)
-            else:
-                view.HideElements(element_ids)
-            self.modified += len(notes)
-        
+                # Check if view is owned by others
+                if not REVIT_SELECTION.is_changable(current_view):
+                    owner = REVIT_SELECTION.get_owner(current_view)
+                    print("Skipping view '{}' - owned by: {}".format(current_view.Name, owner if owner else "others"))
+                    continue
+                
+                element_ids = DATA_CONVERSION.list_to_system_list([note.Id])
+                if show_notes:
+                    current_view.UnhideElements(element_ids)
+                else:
+                    current_view.HideElements(element_ids)
+            
+            self.modified += 1
+            
         t.Commit()
         
     def report_results(self):
@@ -140,8 +142,7 @@ class InternalTextnoteHandler:
             NOTIFICATION.messenger("No editable internal textnotes found.")
             return
         
-        textnotes_by_view = self.group_by_view()
-        self.modify_visibility(textnotes_by_view, show_notes)
+        self.modify_visibility(show_notes)
         self.report_results()
 
 @LOG.log(__file__, __title__)
