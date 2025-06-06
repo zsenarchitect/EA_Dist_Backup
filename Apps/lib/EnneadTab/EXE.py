@@ -174,7 +174,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False, depth = 0):
     exe_path = locate_executable(exe_name)
     if not exe_path:
         ERROR_HANDLE.print_note("No exe found in the location.")
-        NOTIFICATION.messenger("No exe found!!!\n{}\n Will try to open legacy app.".format(exe_name))
+        ERROR_HANDLE.print_note("No exe found!!!\n{}\n Will try to open legacy app.".format(exe_name))
         
         # Try legacy app
         if legacy_name and try_open_app(legacy_name, depth = depth + 1):
@@ -183,7 +183,7 @@ def try_open_app(exe_name, legacy_name = None, safe_open = False, depth = 0):
         if try_open_legacy_app(exe_name):
             return True
             
-        NOTIFICATION.messenger("No legacy app found!!!\n{}".format(exe_name))
+        ERROR_HANDLE.print_note("No legacy app found!!!\n{}".format(exe_name))
         return False
 
     # Execute the app
