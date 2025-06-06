@@ -57,6 +57,9 @@ See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this
 > [!NOTE]
 > Some computer's firewall (such as windows smart defender) might mark this exe as potential virus, but it is really NOT virus, I promise! Just continue download and save that exe file.
 
+> [!TIP]
+> If your antivirus software is running high scaning those files, you can add the executable files to your antivirus whitelist using their hash values. The hash values for all executables are available in the `exe_hash.json` file located in the Installation folder. This is a more secure approach than completely disabling your antivirus.
+
 ### 2.2 Install Ecosystem Folder
 Run the installer by double clicking the exe file. It might takes a few seconds (or minutes, depending on your internet speed) to unpack the contents. __This window will only show if there was no existing Ecosystem folder, aka a clean (re)installation. Otherwise it will be a silent installation, and you can move on to next step when you have the needed content.__
 ![os install in progress](/Apps/lib/EnneadTab/images/Instruction_getting_OS.png)

@@ -1,19 +1,25 @@
-This is the distribution repository for EnneadTab updated on 2025-06-06 09:25:55.
+# EnneadTab Distribution Repository
+
+## 📅 Last Updated
+2025-06-06 16:13:38
 
 
 
-It contains the Apps and Installation and Help-Docs folders.
+## 📦 Contents
+This repository contains:
+- 📂 Apps
+- 📂 Installation
 
-It is automatically generated, not manually maintained by ANYONE.
-For support, please contact szhang@ennead.com directly.
+## ⚠️ Important Notes
+- This repository is **automatically generated** and not manually maintained
+- For support, please contact szhang@ennead.com directly
 
-Have a nice day! Hope you enjoyed using this product.
+## 🙏 Acknowledgments
+- Special thanks to all users who have provided feedback and suggestions
+- Special thanks to Ehsan and the pyRevit team for providing the foundation for the Revit Extension
 
-Special thanks to all the users who have provided feedback and suggestions.
+## 💭 Wisdom of the Day
+What do you call a group of killer whales playing instruments? An Orca-stra.
 
-Special thanks to Ehsan and all the pyRevit team for providing the foundation for the Revit Extension.
-
-
-
-Wisdom of the day:
-"Hey, dad, did you get a haircut?" "No, I got them all cut."
+---
+*Have a nice day! Hope you enjoy using this product.*
