@@ -121,7 +121,7 @@ def email_error(
         print(e)
         additional_note = str(e)
         
-    body = "{}\nError happens on {}'s machine [{}] when running {}.\n\nDetail below:\n{}\n\n{}".format(
+    body = "{}\nError happens on {}'s machine [{}] when running [{}].\n\nDetail below:\n{}\n\n{}".format(
         t, error_from_user, computer_name, tool_name, traceback, additional_note
     )
 
@@ -144,7 +144,7 @@ def email_error(
             developer_emails = USER.get_rhino_developer_emails()
 
         if USER.IS_DEVELOPER:
-            developer_emails = [USER.get_EA_email_address()]
+            developer_emails = [USER.get_company_email_address()]
             
         # Ensure developer_emails is always a list
         if not isinstance(developer_emails, list):
@@ -180,7 +180,7 @@ def email_to_self(
         attachment_list (list, optional): List of file paths to be attached to the email. Defaults to None
     """
     email(
-        receiver_email_list=[USER.get_EA_email_address()],
+        receiver_email_list=[USER.get_company_email_address()],
         subject=subject,
         body=body,
         body_folder_link_list=body_folder_link_list,

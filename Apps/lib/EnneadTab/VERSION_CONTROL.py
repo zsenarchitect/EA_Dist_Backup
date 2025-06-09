@@ -12,11 +12,30 @@ import os
 import sys
 import io
 import time
+import datetime
 import EXE
 import ENVIRONMENT
 import NOTIFICATION
 import DATA_FILE
 import USER
+
+
+def timestamp_string_to_unix(timestamp_str):
+    """
+    Converts timestamp string format "YYYY-MM-DD_HH-MM-SS" to Unix timestamp
+    
+    Args:
+        timestamp_str (str): Timestamp in format "2025-06-09_13-10-14"
+        
+    Returns:
+        float: Unix timestamp
+    """
+    try:
+        # Parse the timestamp string format "YYYY-MM-DD_HH-MM-SS"
+        dt = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d_%H-%M-%S")
+        return time.mktime(dt.timetuple())
+    except (ValueError, TypeError):
+        return None
 
 
 def update_dist_repo():
@@ -25,6 +44,8 @@ def update_dist_repo():
         EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
 
         DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time")
+
+        alert_user_to_update()
         
 
 
@@ -41,6 +62,21 @@ def is_update_too_soon():
     if not recent_update_time:
         return False
     return (time.time() - recent_update_time) < 1260.0
+
+
+def alert_user_to_update():
+    last_update_timestamp_str = get_last_update_time()
+    if last_update_timestamp_str is None:
+        return
+    
+    last_update_unix = timestamp_string_to_unix(last_update_timestamp_str)
+    if last_update_unix is None:
+        return
+        
+    time_since_last_update = time.time() - last_update_unix
+    if time_since_last_update > 2592000.0:  # 30 days in seconds (30 * 24 * 60 * 60)
+        NOTIFICATION.messenger("You have not updated EnneadTab for a long time. Please update it.")
+        return
 
 
 def get_last_update_time(return_file=False):

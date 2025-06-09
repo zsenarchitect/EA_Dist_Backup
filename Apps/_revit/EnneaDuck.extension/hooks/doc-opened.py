@@ -6,7 +6,7 @@ from Autodesk.Revit import DB # pyright: ignore
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 from EnneadTab import NOTIFICATION, TIMESHEET, ERROR_HANDLE, EMAIL, NOTIFICATION, USER, FOLDER, DATA_FILE, ENVIRONMENT, SOUND, SPEAK
-from EnneadTab.REVIT import REVIT_HISTORY, REVIT_EXTERNAL_FILE, REVIT_FORMS, REVIT_SYNC, REVIT_EVENT, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_HISTORY, REVIT_EXTERNAL_FILE, REVIT_FORMS, REVIT_SYNC, REVIT_EVENT, REVIT_APPLICATION, REVIT_METRIC
 from pyrevit import forms, script
 from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
@@ -431,6 +431,9 @@ def main():
         
         check_group_usage(doc)
         log_time_sheet(doc)
+
+        if ENVIRONMENT.get_computer_name() == "CXU":
+            REVIT_METRIC.RevitMetric(doc).update_metric()
 
         if USER.IS_DEVELOPER:
             NOTIFICATION.messenger(main_text = "Doc opened: {}".format(doc.Title))

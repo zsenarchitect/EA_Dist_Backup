@@ -67,7 +67,7 @@ def _get_plugin_developers():
             PLUGIN_DEVELOPERS = []
     return PLUGIN_DEVELOPERS
 
-def get_EA_email_address(user_name=USER_NAME):
+def get_company_email_address(user_name=USER_NAME):
     """Convert system username to Ennead email address.
 
     Args:
