@@ -452,7 +452,7 @@ def read_data_from_excel(filepath, worksheet=None, return_dict=False, headless=T
 
     Args:
         filepath (str): Local path or URL to Excel file
-        worksheet (str, optional): Target worksheet name. Defaults to first sheet.
+        worksheet (str): Target worksheet name, required for xlsx files
         return_dict (bool, optional): If True, returns dict with (row,col) keys.
             Defaults to False.
         headless (bool, optional): If True, runs Excel operations without UI.
@@ -496,6 +496,7 @@ def _read_data_from_excel_locally(filepath, worksheet, return_dict, headless):
     if filepath.endswith(".xlsx"):
         if not worksheet:
             NOTIFICATION.messenger(main_text="Worksheet input is required for xlsx files")
+            print ("Worksheet input is required for xlsx files")
             return {}   
         job_data = {
             "mode": "read",

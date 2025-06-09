@@ -530,6 +530,15 @@
         "tab": "Proj. 2128",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\bind_new_shared_para.pushbutton\\bind_new_shared_para_script.py": {
+        "alias": "Bind New Shared Para",
+        "doc": "Bind new shared parameters to Room category from Excel file. Requires a worksheet named 'Shared Paras To Add' with parameter names and types. User selects which columns contain parameter names and parameter types during execution. Those parameters will be added to the project document and bind to Room category. Let me know if you want to bind to other categories.",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\bind_new_shared_para.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\bind_new_shared_para.pushbutton\\bind_new_shared_para_script.py",
+        "tab": "Proj. 2142",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\all_in_one_checker.pushbutton\\all_in_one_checker_script.py": {
         "alias": "DEPRECIATED:Detailed Program Chart Update",
         "doc": "Basic area summery checker that update the data in special calculator. \n\nThis is also hooked to the sync event for this project. Request by Gayatri",

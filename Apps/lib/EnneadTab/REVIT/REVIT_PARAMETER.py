@@ -165,7 +165,7 @@ def add_shared_parameter_to_project_doc(project_doc,
     try:
         DB.SharedParameterElement.Create(project_doc, para_definition)
     except Exception as e:
-        print ("cannot add to doc [{}] becasue {}".format(project_doc.Title, e))
+        print ("cannot add [{}] to doc [{}] becasue {}".format(para_definition.Name, project_doc.Title, e))
 
         return False
     
@@ -286,6 +286,82 @@ def get_parameter_type(para_type = "YesNo"):
         
         parameter_type = REVIT_UNIT.lookup_unit_spec_id(para_type.lower())
     return parameter_type
+
+
+def get_parameter_type_from_string(para_type_str):
+    """Convert string parameter type to DB.SpecTypeId using fuzzy text matching
+    
+    Args:
+        para_type_str (str): Parameter type as string (e.g., "Text", "YesNo", "Number", "Length", "Integer", "MultilineText")
+    
+    Returns:
+        SpecTypeId: Revit parameter type
+    """
+    from EnneadTab import TEXT
+    
+    para_type_mapping = {
+        # Text parameter types
+        "text": DB.SpecTypeId.String.Text,
+        "string": DB.SpecTypeId.String.Text,
+        "multilinetext": DB.SpecTypeId.String.MultilineText,
+        "multiline text": DB.SpecTypeId.String.MultilineText,
+        "multiline_text": DB.SpecTypeId.String.MultilineText,
+        "multitext": DB.SpecTypeId.String.MultilineText,
+        "multi text": DB.SpecTypeId.String.MultilineText,
+        
+        # Boolean parameter types
+        "yesno": DB.SpecTypeId.Boolean.YesNo,
+        "yes no": DB.SpecTypeId.Boolean.YesNo,
+        "yes_no": DB.SpecTypeId.Boolean.YesNo,
+        "boolean": DB.SpecTypeId.Boolean.YesNo,
+        "bool": DB.SpecTypeId.Boolean.YesNo,
+        "true false": DB.SpecTypeId.Boolean.YesNo,
+        "truefalse": DB.SpecTypeId.Boolean.YesNo,
+        
+        # Numeric parameter types
+        "number": DB.SpecTypeId.Number,
+        "numeric": DB.SpecTypeId.Number,
+        "decimal": DB.SpecTypeId.Number,
+        "float": DB.SpecTypeId.Number,
+        "double": DB.SpecTypeId.Number,
+        
+        # Integer parameter types
+        "integer": DB.SpecTypeId.Int.Integer,
+        "int": DB.SpecTypeId.Int.Integer,
+        "whole number": DB.SpecTypeId.Int.Integer,
+        "wholenumber": DB.SpecTypeId.Int.Integer,
+        
+        # Length and dimensional types
+        "length": DB.SpecTypeId.Length,
+        "distance": DB.SpecTypeId.Length,
+        "dimension": DB.SpecTypeId.Length,
+        "area": DB.SpecTypeId.Area,
+        "volume": DB.SpecTypeId.Volume,
+        "angle": DB.SpecTypeId.Angle,
+    }
+    
+    # First try exact match (case-insensitive)
+    para_type_lower = para_type_str.lower().strip()
+    
+    if para_type_lower in para_type_mapping:
+        return para_type_mapping[para_type_lower]
+    
+    # Use TEXT.fuzzy_search for fuzzy matching
+    possible_types = list(para_type_mapping.keys())
+    
+    try:
+        best_match = TEXT.fuzzy_search(para_type_lower, possible_types)
+        
+        if best_match:
+            print("Fuzzy matched '{}' to '{}'".format(para_type_str, best_match))
+            return para_type_mapping[best_match]
+    except Exception as e:
+        print("Error in fuzzy search: {}".format(e))
+    
+    # If still no match, default to Text but warn user
+    print("Warning: Could not match parameter type '{}' to any known type. Defaulting to Text.".format(para_type_str))
+    return DB.SpecTypeId.String.Text
+
 
 if __name__ == "__main__":
     __override_L_drive_shared_para_file_to_OS_shared_para_file()
