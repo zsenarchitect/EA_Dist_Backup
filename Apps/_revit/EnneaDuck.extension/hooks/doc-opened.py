@@ -432,7 +432,7 @@ def main():
         check_group_usage(doc)
         log_time_sheet(doc)
 
-        if ENVIRONMENT.get_computer_name() == "CXU":
+        if ENVIRONMENT.get_computer_name() == "CXU" or USER.IS_DEVELOPER:
             REVIT_METRIC.RevitMetric(doc).update_metric()
 
         if USER.IS_DEVELOPER:
