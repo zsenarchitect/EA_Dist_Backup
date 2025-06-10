@@ -52,16 +52,16 @@ def update_dist_repo():
 
 def is_update_too_soon():
     """
-    Checks if the last update was too recent (within 21 minutes)
+    Checks if the last update was too recent (within 60 minutes)
     
     Returns:
-        bool: True if last update was within 21 minutes
+        bool: True if last update was within 60 minutes
     """
     data = DATA_FILE.get_data("last_update_time")
     recent_update_time = data.get("last_update_time", None)
     if not recent_update_time:
         return False
-    return (time.time() - recent_update_time) < 1260.0
+    return (time.time() - recent_update_time) < 3600
 
 
 def alert_user_to_update():
@@ -75,7 +75,7 @@ def alert_user_to_update():
         
     time_since_last_update = time.time() - last_update_unix
     if time_since_last_update > 2592000.0:  # 30 days in seconds (30 * 24 * 60 * 60)
-        NOTIFICATION.messenger("You have not updated EnneadTab for a long time. Please update it.")
+        NOTIFICATION.messenger("You have not updated EnneadTab for a long time. Please update it. Duck eggs have been hatched")
         return
 
 
