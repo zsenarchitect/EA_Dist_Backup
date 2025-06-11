@@ -167,12 +167,14 @@ SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 STAND_ALONE_FOLDER = os.path.join(DB_FOLDER, "Stand Alone Tools")
 
+# Backup repository in case SH cannot use L drive
+BACKUP_REPO_FOLDER = os.path.join(DB_FOLDER, "BackupRepo")
 
 
 ############# engine ####################
 ENGINE_FOLDER = os.path.join(APP_FOLDER, "_engine")
 SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib")
-map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
+map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER, BACKUP_REPO_FOLDER])
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:

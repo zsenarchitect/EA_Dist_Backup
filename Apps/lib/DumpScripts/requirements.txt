@@ -1,0 +1,5 @@
+pywin32>=306
+psutil==5.9.5
+pystray==0.19.4
+Pillow
+pyautogui==0.9.54 
