@@ -577,12 +577,25 @@ def generate_documentation(debug = False):
 
 def generate_app_documentation(debug, app):
     if app == "Rhino":
+        raw_knowledge = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_RHINO_FILE)
         knowledge_dict = get_rhino_knowledge()
     elif app == "Revit":
         set_revit_knowledge()
+        raw_knowledge = DATA_FILE.get_data(ENVIRONMENT.KNOWLEDGE_REVIT_FILE)
         knowledge_dict = get_revit_knowledge()
     else:
         raise
+
+    # IronPython 2.7 compatible tailor script count
+    import re
+    tailor_count = 0
+    for v in raw_knowledge.values():
+        script = v.get("script", "")
+        parts = re.split(r"[\\\\/]+", script)
+        for part in parts:
+            if "tailor" in part.lower():
+                tailor_count += 1
+                break
 
     def get_command_order(x):
         tab = x.get("tab")
@@ -592,7 +605,6 @@ def generate_app_documentation(debug, app):
 
         if not tab:
             tab = "no tab"
-
 
         delayed_item_keywords = ["browser",
                                  "contents",
@@ -612,11 +624,11 @@ def generate_app_documentation(debug, app):
     import time
     if debug:
         output =  "{}_knowledge_{}.pdf".format(app, time.time())
-        PDF.documentation2pdf(app, app_knowledge,output)
+        PDF.documentation2pdf(app, app_knowledge, output, tailor_count)
         os.startfile(output)
     else:
         output = "{}\\EnneadTab_For_{}_HandBook.pdf".format(ENVIRONMENT.INSTALLATION_FOLDER, app)
-        PDF.documentation2pdf(app, app_knowledge,output)
+        PDF.documentation2pdf(app, app_knowledge, output, tailor_count)
 
     # import WEB
     # output =  "rhino_knowledge_{}.html".format(time.time())

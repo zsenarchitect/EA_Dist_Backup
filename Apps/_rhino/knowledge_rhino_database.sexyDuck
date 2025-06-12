@@ -91,7 +91,7 @@
     },
     "EnneadTab.menu\\reload_engine.button\\reload_engine_left.py": {
         "script": "EnneadTab.menu\\reload_engine.button\\reload_engine_left.py",
-        "icon": null,
+        "icon": "EnneadTab.menu\\reload_engine.button\\icon.png",
         "alias": "ReloadEngine",
         "doc": "Reload all EnneadTab modules to ensure latest changes are applied.\n\nThis script will:\n1. Import all EnneadTab modules\n2. Reload each module to apply latest changes\n3. Handle any import errors gracefully",
         "tab": "EnneadTab.menu",
@@ -100,7 +100,7 @@
     },
     "EnneadTab.menu\\remote_fix_code.button\\remote_fix_code_left.py": {
         "script": "EnneadTab.menu\\remote_fix_code.button\\remote_fix_code_left.py",
-        "icon": null,
+        "icon": "EnneadTab.menu\\remote_fix_code.button\\icon.png",
         "alias": "RemoteFixCode",
         "doc": "Launches VS Code Dev for emergency remote code editing and debugging",
         "tab": "EnneadTab.menu",
@@ -519,7 +519,7 @@
         "script": "Fun.tab\\pet_duck.button\\pet_duck_left.py",
         "icon": "Fun.tab\\pet_duck.button\\icon.png",
         "alias": "PetDuck",
-        "doc": "\nDuckiTect - Professional Architecture Assistant\n--------------------------------------------\n\nA sophisticated desktop companion integrating architectural expertise with advanced AI capabilities.\n\nCore Features:\n- Intelligent Interaction:\n    * Natural language processing\n    * Advanced GPT integration\n    * Professional formatting\n    * Context-aware responses\n\n- Architecture Tools:\n    * Building code library\n    * Design research portal\n    * Documentation helper\n    * Drawing analysis\n\n- Professional Tools:\n    * Rhino/Grasshopper tools\n    * BIM workflow aids\n    * Error tracking system\n    * Markdown support\n\nUsage:\nLeft click to activate DuckiTect\n",
+        "doc": "\nDuckiTect - AI Architecture Assistant\n------------------------------------\n\nA desktop companion that combines architectural expertise with AI capabilities.\n\nFeatures:\n- AI-powered chat and analysis\n- Architecture tools and code library\n- Rhino/Grasshopper integration\n- Professional documentation support\n\nUsage: Left click to activate\n",
         "tab": "Fun.tab",
         "tab_icon": "Fun.tab\\icon.png",
         "is_popular": false
@@ -591,9 +591,18 @@
         "tab_icon": "Knowledge.tab\\icon.png",
         "is_popular": false
     },
+    "Lab.tab\\anything.button\\anything_left.py": {
+        "script": "Lab.tab\\anything.button\\anything_left.py",
+        "icon": "Lab.tab\\anything.button\\icon.png",
+        "alias": "Anything",
+        "doc": "This button does Anything, depedening what you want to quickly test without creating a new button",
+        "tab": "Lab.tab",
+        "tab_icon": "Lab.tab\\icon.png",
+        "is_popular": false
+    },
     "Lab.tab\\dockpane.button\\dockpane_left.py": {
         "script": "Lab.tab\\dockpane.button\\dockpane_left.py",
-        "icon": null,
+        "icon": "Lab.tab\\dockpane.button\\icon.png",
         "alias": "Dockpane",
         "doc": "A dockable panel that attaches to the side of Rhino window",
         "tab": "Lab.tab",

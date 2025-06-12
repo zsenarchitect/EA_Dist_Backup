@@ -95,8 +95,8 @@ except:
 
 
 
-def documentation2pdf(app, doc_data_list, pdf_path):
-    PDFGenerator(app, pdf_path).generate((doc_data_list))
+def documentation2pdf(app, doc_data_list, pdf_path, tailor_count=0):
+    PDFGenerator(app, pdf_path).generate(doc_data_list, tailor_count)
     
 class PDFGenerator:
     def __init__(self, app, pdf_path):
@@ -236,18 +236,21 @@ class PDFGenerator:
         doc.build(story, onFirstPage=lambda c, d: self.get_header(c, d, tab_name, tab_icon_path),
                   onLaterPages=lambda c, d: self.get_header(c, d, tab_name, tab_icon_path))
     
-    def generate(self, doc_data_list):
+    def generate(self, doc_data_list, tailor_count=0):
         """Generates the final PDF with cover page, TOC, segmented content, and page numbers."""
         temp_pdfs = []
         segmented_data = {}
         toc_entries = []
         self.current_page_num = 1
         
+        # Use the provided tailor_count instead of calculating it here
+        # Note: Keeping debug prints for compatibility with existing code
+        print("[DEBUG] Using provided tailor_count: {}".format(tailor_count))
+        
         # Generate cover page
         cover_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf").name
         self.generate_cover_page(cover_pdf)
         temp_pdfs.append(cover_pdf)
-
 
         used_scripts = set()
         # Split data into segments based on tab
@@ -281,6 +284,11 @@ class PDFGenerator:
         toc_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf").name
         self.generate_table_of_contents(toc_pdf, toc_entries)
         temp_pdfs.insert(1, toc_pdf)  # Insert TOC after cover
+
+        # Generate tailor information page
+        tailor_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf").name
+        self.generate_tailor_info_page(tailor_pdf, tailor_count)
+        temp_pdfs.append(tailor_pdf)  # Add tailor info page at the end
         
         # Merge all PDFs into the final document
         from PyPDF2 import PdfMerger
@@ -353,3 +361,38 @@ class PDFGenerator:
             canvas.restoreState()
 
         doc.build(story, onFirstPage=add_background)
+
+    def generate_tailor_info_page(self, temp_pdf_path, tailor_count):
+        """Generate a dedicated page showing tailor script statistics."""
+        doc = SimpleDocTemplate(temp_pdf_path, pagesize=letter,
+                                rightMargin=self.RIGHT_MARGIN, leftMargin=self.LEFT_MARGIN,
+                                topMargin=self.TOP_MARGIN, bottomMargin=self.BOTTOM_MARGIN)
+
+        title_style = ParagraphStyle(
+            'TailorTitleStyle',
+            parent=self.styles['Heading1'],
+            fontSize=24,
+            alignment=1,
+            spaceAfter=20
+        )
+        
+        content_style = ParagraphStyle(
+            'TailorContentStyle',
+            parent=self.styles['BodyText'],
+            fontSize=14,
+            alignment=1,
+            spaceAfter=12
+        )
+
+        story = [
+            Spacer(1, 2 * inch),
+            Paragraph("Tailor Scripts Information", title_style),
+            Spacer(1, 0.5 * inch),
+            Paragraph("This documentation excludes EnneadTab Tailor scripts from the main content.", content_style),
+            Spacer(1, 0.3 * inch),
+            Paragraph("<b>{}</b> tailor-related scripts were skipped for <b>{}</b>.".format(tailor_count, self.app), content_style),
+            Spacer(1, 0.3 * inch),
+            Paragraph("Tailor scripts are project-specific customizations and are not included in the general documentation.", content_style),
+        ]
+
+        doc.build(story)

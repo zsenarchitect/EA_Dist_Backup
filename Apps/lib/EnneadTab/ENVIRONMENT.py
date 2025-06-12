@@ -60,21 +60,6 @@ if not os.path.exists(ONE_DRIVE_DESKTOP_FOLDER):
 USER_APPDATA_FOLDER = os.path.join(USER_PROFILE_FOLDER, "AppData")
 ECO_SYS_FOLDER = os.path.join(USER_DOCUMENT_FOLDER, 
                             "{} Ecosystem".format(PLUGIN_NAME))
-####################################
-
-
-# no longer plan to have both folder, so delete the modern one and keep using the old one. i have resolved this by rerouting rvb file for rhino.
-old_ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, 
-                                     "{}-Ecosystem".format(PLUGIN_NAME))
-from datetime import datetime
-delete_after = datetime(2025, 8, 1) # just keep it longer so user has time to update their OS-installer first
-if datetime.now() >= delete_after:
-    if os.path.exists(old_ECO_SYS_FOLDER_MODERN):
-        import shutil
-        shutil.rmtree(old_ECO_SYS_FOLDER_MODERN)
-
-
-####################################
 DUMP_FOLDER = os.path.join(ECO_SYS_FOLDER, "Dump")
 INSTALLATION_FOLDER = os.path.join(ROOT, "Installation")
 
@@ -181,20 +166,49 @@ if IS_OFFLINE_MODE:
     SHARED_DUMP_FOLDER = DUMP_FOLDER
 
 
-# this is to remove any transitional folder from IT transition, not intented to be ussed anywhere else
-__legacy_one_drive_folder = [os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{} Ecosystem".format(PLUGIN_NAME)),
-                            os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{}-Ecosystem".format(PLUGIN_NAME))]
+####################################
 
-for _folder in __legacy_one_drive_folder:
-    if os.path.exists(_folder):
-        print("legacy one drive folder found, this is not gooodddddddddddddddddddddddddddddddddddd: {}".format(_folder))
+
+def _delete_folder_after_date(folder_path, date_YYMMDD_tuple):
+    """Delete a folder if current date is past the specified date.
+    
+    Args:
+        folder_path (str): Path to the folder to be deleted
+        date_YYMMDD_tuple (tuple): Date tuple in format (year, month, day)
+    """
+    if not os.path.exists(folder_path):
+        return
+        
+    delete_after = datetime(*date_YYMMDD_tuple)
+    if datetime.now() >= delete_after:
         import shutil
         try:
-            shutil.rmtree(_folder)
-        except:
+            shutil.rmtree(folder_path)
+        except Exception as e:
             pass
 
 
+
+# this is to remove any transitional folder from IT transition, not intented to be ussed anywhere else
+__legacy_one_drive_folders = [os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{} Ecosystem".format(PLUGIN_NAME)),
+                            os.path.join(USER_PROFILE_FOLDER, "OneDrive - Ennead Architects", "Documents", "{}-Ecosystem".format(PLUGIN_NAME))]
+
+# no longer plan to have both folder, so delete the modern one and keep using the old one. i have resolved this by rerouting rvb file for rhino.
+depreciated_ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER, 
+                                     "{}-Ecosystem".format(PLUGIN_NAME))
+
+depreciated_dist_lite_folder = os.path.join(ECO_SYS_FOLDER, "EA_Dist_Lite")
+depreciated_enneadPLUS_menu = os.path.join(RHINO_FOLDER, "Ennead+.menu")
+
+map(_delete_folder_after_date, __legacy_one_drive_folders, [(2025, 2, 1)]*len(__legacy_one_drive_folders))
+# Delete folders after 2025-01-01
+_delete_folder_after_date(depreciated_enneadPLUS_menu, (2025, 8, 1))
+
+# Delete folders after 2025-08-01
+_delete_folder_after_date(depreciated_dist_lite_folder, (2025, 8, 1))
+_delete_folder_after_date(depreciated_ECO_SYS_FOLDER_MODERN, (2025, 8, 1))
+
+####################################
 def cleanup_dump_folder():
     """Clean up temporary files from the dump folder.
 
@@ -419,28 +433,35 @@ def unit_test():
     import inspect
     # get all the global varibales in the current script
 
-    for i, x in enumerate(sorted(globals())):
-        content = globals()[x]
+    for i, var_name in enumerate(sorted(globals())):
+        var_value = globals()[var_name]
 
-        if inspect.ismodule(content):
+        if inspect.ismodule(var_value):
             continue
 
-        if not x.startswith("_") and not callable(content):
-            print(x, " = ", content)
+        if not var_name.startswith("_") and not callable(var_value):
+            print(var_name, " = ", var_value)
 
-            if isinstance(content, bool):
+            if isinstance(var_value, bool):
                 continue
 
-            if not isinstance(content, list):
-                content = [content]
+            if not isinstance(var_value, list):
+                var_value = [var_value]
 
-            for item in content:
+            for item in var_value:
                 if "\\" in item:
                     is_ok = os.path.exists(item) or os.path.isdir(item)
 
-                    if not is_ok:
-                        print("!!!!!!!!!!!!! not ok: " + item)
-                    # assert is_ok
+                    # Check old paths that should be deleted
+                    if "depreciated_" in var_name:
+                        if is_ok:
+                            print("!!!!!!!!!!!!!!!!!!WARNING: depreciated folder still exists and should be deleted: {}".format(item))
+                        continue
+                    else:
+                        # Check required paths that should exist
+                        if not is_ok:
+                            print("!!!!!!!!!!!!!!ERROR: Required path does not exist: {}".format(item))
+                        # assert is_ok
 
 
 IS_AVD = is_avd()

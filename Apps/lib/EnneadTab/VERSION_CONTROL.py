@@ -18,7 +18,61 @@ import ENVIRONMENT
 import NOTIFICATION
 import DATA_FILE
 import USER
+import shutil
+import threading
+import traceback
+import ERROR_HANDLE
 
+def is_github_connection_ok():
+    """
+    Checks if GitHub connection is available by attempting to connect to github.com.
+    This is particularly important for users in China where GitHub may be blocked.
+    
+    Returns:
+        bool: True if GitHub is accessible, False otherwise
+    """
+    try:
+        import socket
+        socket.setdefaulttimeout(5)  # Set 5 second timeout
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(("github.com", 443))
+        ERROR_HANDLE.print_note("GitHub connection is OK")
+        return True
+    except:
+        ERROR_HANDLE.print_note(traceback.format_exc())
+        return False
+
+def updater_for_shanghai():
+    """
+    Updates the distribution repository for Shanghai by copying from BACKUPFOLDER into ECO_SYS_FOLDER\EA_Dist in a s indepdendet thread.
+    This is to avoid blocking the main thread. the copy thread will survice even if the main caller is terminated 
+    """
+    def copy_from_backup_to_dist():
+        """
+        Copies all files from BACKUPFOLDER into ECO_SYS_FOLDER\EA_Dist
+        """
+        if not os.path.exists(os.path.join(ENVIRONMENT.BACKUP_REPO_FOLDER)):
+            NOTIFICATION.messenger("You will need to connect to L drive to update EnneadTab")
+            return False
+        
+
+        try:  
+            ERROR_HANDLE.print_note("Shanghai updater started")
+            time_start = time.time()
+            shutil.copytree(os.path.join(ENVIRONMENT.BACKUP_REPO_FOLDER), os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "EA_Dist"))
+            time_end = time.time()
+            time_taken = time_end - time_start
+            formated_time_taken = time.strftime("%H:%M:%S", time.gmtime(time_taken))
+            ERROR_HANDLE.print_note("Shanghai update completed in {}".format(formated_time_taken))
+
+            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "{}.duck".format(time.strftime("%Y-%m-%d_%H-%M-%S"))), "w") as f:
+                f.write("Shanghai update completed in {}".format(formated_time_taken))
+
+        except Exception as e:
+           ERROR_HANDLE.print_note(traceback.format_exc())
+
+    thread = threading.Thread(target=copy_from_backup_to_dist, daemon=False)
+    thread.start()
+    return True
 
 def timestamp_string_to_unix(timestamp_str):
     """
@@ -41,7 +95,10 @@ def timestamp_string_to_unix(timestamp_str):
 def update_dist_repo():
     """Updates the distribution repository if sufficient time has passed since last update"""
     if not is_update_too_soon():
-        EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
+        if is_github_connection_ok():
+            EXE.try_open_app("EnneadTab_OS_Installer", safe_open=True)
+        else:
+            updater_for_shanghai()
 
         DATA_FILE.set_data({"last_update_time":time.time()}, "last_update_time")
 
@@ -128,7 +185,9 @@ def show_last_success_update_time():
 def unit_test():
     """Run simple unit test of the module"""
     update_dist_repo()
+    print ("is_github connected: {}".format(is_github_connection_ok()))
+    
 
 
 if __name__ == "__main__":
-    update_dist_repo()
+    updater_for_shanghai()

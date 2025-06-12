@@ -1,31 +1,17 @@
 __title__ = "PetDuck"
 __doc__ = """
-DuckiTect - Professional Architecture Assistant
---------------------------------------------
+DuckiTect - AI Architecture Assistant
+------------------------------------
 
-A sophisticated desktop companion integrating architectural expertise with advanced AI capabilities.
+A desktop companion that combines architectural expertise with AI capabilities.
 
-Core Features:
-- Intelligent Interaction:
-    * Natural language processing
-    * Advanced GPT integration
-    * Professional formatting
-    * Context-aware responses
+Features:
+- AI-powered chat and analysis
+- Architecture tools and code library
+- Rhino/Grasshopper integration
+- Professional documentation support
 
-- Architecture Tools:
-    * Building code library
-    * Design research portal
-    * Documentation helper
-    * Drawing analysis
-
-- Professional Tools:
-    * Rhino/Grasshopper tools
-    * BIM workflow aids
-    * Error tracking system
-    * Markdown support
-
-Usage:
-Left click to activate DuckiTect
+Usage: Left click to activate
 """
 
 from EnneadTab import ERROR_HANDLE, LOG, JOKE
