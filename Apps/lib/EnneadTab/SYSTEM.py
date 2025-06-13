@@ -17,7 +17,7 @@ import random
 import json
 import traceback
 
-import NOTIFICATION, DATA_FILE,USER,  EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE
+import NOTIFICATION, DATA_FILE,USER,  EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE, POWERSHELL
 
 
 def parse_timestamp(timestamp_str):
@@ -296,6 +296,32 @@ def check_spec():
         EXE.try_open_app("ComputerSpec", safe_open=True)
     pass
 
+
+def get_installed_software():
+    POWERSHELL.run_powershell_script("Get-InstalledSoftware.ps1")
+    return True
+
+
+def move_installed_software_output_to_Xdrive():
+    source_folder = "J:\Ennead Applied Computing\DUMP\installed_software"
+    dest_folder = "X:\_AppliedComputing\Software List"
+    if not os.path.exists(dest_folder) or not os.path.isdir(dest_folder):
+        return False
+    
+    if not os.path.exists(source_folder) or not os.path.isdir(source_folder):
+        return False
+    
+    for file in os.listdir(source_folder):
+        if file.endswith(".csv"):
+            try:
+                shutil.copy(os.path.join(source_folder, file), os.path.join(dest_folder, file))
+                os.remove(os.path.join(source_folder, file))
+            except Exception as e:
+                ERROR_HANDLE.print_note("Error moving installed software output to Xdrive: {}".format(e))
+                ERROR_HANDLE.print_note(traceback.format_exc())
+                pass
+    return True
+
 def run_system_checks():
     """Run system checks with configurable probabilities.
     
@@ -332,7 +358,9 @@ def run_system_checks():
         (0.5, check_system_uptime),
         (0.3, purge_powershell_folder),
         (0.2, check_spec),
-        (0.1, spec_report)
+        (0.1, spec_report),
+        (0.8, get_installed_software),
+        (0.1, move_installed_software_output_to_Xdrive)
     ]
     
     # Run checks based on probability

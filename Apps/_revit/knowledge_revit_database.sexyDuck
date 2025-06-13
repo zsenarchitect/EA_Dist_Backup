@@ -539,6 +539,15 @@
         "tab": "Proj. 2142",
         "tab_icon": null
     },
+    "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\room_data_sheet_helper.pushbutton\\room_data_sheet_helper_script.py": {
+        "alias": "Room Data Sheet Helper",
+        "doc": "Sen Zhang has not writed documentation for this tool, but he should!",
+        "icon": "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\room_data_sheet_helper.pushbutton\\icon.png",
+        "is_popular": false,
+        "script": "EnneadTab Tailor.tab\\Proj. 2142.panel\\NYU Lich.pulldown\\room_data_sheet_helper.pushbutton\\room_data_sheet_helper_script.py",
+        "tab": "Proj. 2142",
+        "tab_icon": null
+    },
     "EnneadTab Tailor.tab\\Proj. 2151.panel\\LI_NYU.pulldown\\all_in_one_checker.pushbutton\\all_in_one_checker_script.py": {
         "alias": "DEPRECIATED:Detailed Program Chart Update",
         "doc": "Basic area summery checker that update the data in special calculator. \n\nThis is also hooked to the sync event for this project. Request by Gayatri",

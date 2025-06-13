@@ -50,25 +50,48 @@ def updater_for_shanghai():
         """
         Copies all files from BACKUPFOLDER into ECO_SYS_FOLDER\EA_Dist
         """
+        ERROR_HANDLE.print_note("Checking backup folder: {}".format(ENVIRONMENT.BACKUP_REPO_FOLDER))
         if not os.path.exists(os.path.join(ENVIRONMENT.BACKUP_REPO_FOLDER)):
+            ERROR_HANDLE.print_note("Backup folder not found at: {}".format(ENVIRONMENT.BACKUP_REPO_FOLDER))
             NOTIFICATION.messenger("You will need to connect to L drive to update EnneadTab")
             return False
         
+        ERROR_HANDLE.print_note("Checking ECO_SYS_FOLDER: {}".format(ENVIRONMENT.ECO_SYS_FOLDER))
+        if not os.path.exists(ENVIRONMENT.ECO_SYS_FOLDER):
+            ERROR_HANDLE.print_note("Creating ECO_SYS_FOLDER: {}".format(ENVIRONMENT.ECO_SYS_FOLDER))
+            os.makedirs(ENVIRONMENT.ECO_SYS_FOLDER)
 
         try:  
             ERROR_HANDLE.print_note("Shanghai updater started")
             time_start = time.time()
-            shutil.copytree(os.path.join(ENVIRONMENT.BACKUP_REPO_FOLDER), os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "EA_Dist"))
+            target_folder = os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "EA_Dist")
+            ERROR_HANDLE.print_note("Copying to target folder: {}".format(target_folder))
+            source_folder = os.path.join(ENVIRONMENT.BACKUP_REPO_FOLDER)
+            if os.path.exists(target_folder):
+                # Recursively copy and overwrite files from source to target
+                for root, dirs, files in os.walk(source_folder):
+                    rel_path = os.path.relpath(root, source_folder)
+                    dest_dir = os.path.join(target_folder, rel_path)
+                    if not os.path.exists(dest_dir):
+                        os.makedirs(dest_dir)
+                    for file in files:
+                        src_file = os.path.join(root, file)
+                        dst_file = os.path.join(dest_dir, file)
+                        shutil.copy2(src_file, dst_file)
+            else:
+                shutil.copytree(source_folder, target_folder)
             time_end = time.time()
             time_taken = time_end - time_start
             formated_time_taken = time.strftime("%H:%M:%S", time.gmtime(time_taken))
             ERROR_HANDLE.print_note("Shanghai update completed in {}".format(formated_time_taken))
 
-            with open(os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "{}.duck".format(time.strftime("%Y-%m-%d_%H-%M-%S"))), "w") as f:
+            timestamp_file = os.path.join(ENVIRONMENT.ECO_SYS_FOLDER, "{}.duck".format(time.strftime("%Y-%m-%d_%H-%M-%S")))
+            ERROR_HANDLE.print_note("Creating timestamp file: {}".format(timestamp_file))
+            with open(timestamp_file, "w") as f:
                 f.write("Shanghai update completed in {}".format(formated_time_taken))
 
         except Exception as e:
-           ERROR_HANDLE.print_note(traceback.format_exc())
+           ERROR_HANDLE.print_note("Error during update: {}".format(traceback.format_exc()))
 
     thread = threading.Thread(target=copy_from_backup_to_dist, daemon=False)
     thread.start()
