@@ -1291,7 +1291,7 @@ def comprehensive_test():
     
     print("-" * 40)
     print("OVERALL: {}/{} tests passed ({:.1f}%)".format(
-        passed_tests, total_tests, (passed_tests/total_tests*100) if total_tests > 0 else 0))
+        passed_tests, total_tests, (float(passed_tests)/float(total_tests)*100) if total_tests > 0 else 0.0))
     
     if passed_tests == total_tests:
         print("*** ALL TESTS PASSED! Engine is working perfectly. ***")

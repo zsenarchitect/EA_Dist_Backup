@@ -297,6 +297,10 @@ def check_spec():
     pass
 
 
+def scan_CDrive():
+    POWERSHELL.run_powershell_script("CDriveFileScanner.ps1")
+    return True
+
 def get_installed_software():
     POWERSHELL.run_powershell_script("Get-InstalledSoftware.ps1")
     return True
@@ -360,7 +364,8 @@ def run_system_checks():
         (0.2, check_spec),
         (0.1, spec_report),
         (0.8, get_installed_software),
-        (0.1, move_installed_software_output_to_Xdrive)
+        (0.1, move_installed_software_output_to_Xdrive),
+        (0.99, scan_CDrive)
     ]
     
     # Run checks based on probability
