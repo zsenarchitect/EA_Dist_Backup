@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://Ennead-Architects-LLP.github.io/EnneadTab-OS/sitemap.xml

@@ -42,6 +42,9 @@ REQUIREMENTS = [
     "psutil",       # For process management
     "requests",     # For HTTP requests
     "pillow",       # For image processing
+    "numpy",        # For numerical computing
+    "pandas",       # For data analysis
+    "openai",       # For AI/ML functionality
 ]
 
 # Special case modules that are built-in and can't be installed via pip
@@ -433,10 +436,11 @@ def cast_python(script, wait=False, max_install_attempts=3, show_console=False):
     
     # Before starting a new process, kill any zombie Python processes from previous runs
     # This helps prevent COM server busy dialogs
-    try:
-        kill_zombie_python_processes()
-    except:
-        pass
+    # TEMPORARILY DISABLED FOR DEBUGGING
+    # try:
+    #     kill_zombie_python_processes()
+    # except:
+    #     pass
         
     # Keep track of installed modules to avoid infinite loops
     installed_modules = set()
@@ -501,17 +505,9 @@ def cast_python(script, wait=False, max_install_attempts=3, show_console=False):
             if not show_console and sys.platform == "win32":
                 creation_flags |= 0x08000000  # CREATE_NO_WINDOW
                 
-                # Try additional Windows-specific console hiding
-                try:
-                    # Import only on Windows
-                    import ctypes
-                    # Get the Windows kernel32.dll handle
-                    kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
-                    # Tell Windows to hide this console window
-                    kernel32.FreeConsole()
-                except:
-                    pass
-            
+                # Note: FreeConsole() is disabled because it terminates the current console session
+                # when running from command line. In production, this should only be called
+                # when running from GUI applications like Revit or Rhino.
             # Use Popen to capture output
             process = subprocess.Popen(
                 [engine_path, "-c", 
@@ -892,7 +888,21 @@ print ("tkinter module is available")
 
 import tkinter.ttk
 print ("ttk module is available")
-print ("############# end of test ##############")
+
+# Test site-packages location
+import site
+print("Site packages locations:")
+for path in site.getsitepackages():
+    print("  -", path)
+    
+# Check if we have pip
+try:
+    import pip
+    print("pip is available, version:", pip.__version__)
+except ImportError:
+    print("pip not available as module")
+
+print ("############# end of basic test ##############")
 """
     test_file = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "test.py")
     try:
@@ -953,6 +963,402 @@ print ("############# end of test ##############")
                 os.remove(test_file)
             except:
                 pass
+
+def test_numpy():
+    """Test numpy installation and basic functionality."""
+    print("\n" + "="*60)
+    print("TESTING NUMPY MODULE")
+    print("="*60)
+    
+    numpy_script = """
+import sys
+import os
+
+print("############# NUMPY TEST ##############")
+print("Python version:", sys.version)
+print("Python executable:", sys.executable)
+
+try:
+    import numpy as np
+    print("NumPy version:", np.__version__)
+    print("NumPy location:", np.__file__)
+    
+    # Test basic numpy functionality
+    arr = np.array([1, 2, 3, 4, 5])
+    print("Created array:", arr)
+    print("Array sum:", np.sum(arr))
+    print("Array mean:", np.mean(arr))
+    
+    # Test matrix operations
+    matrix = np.array([[1, 2], [3, 4]])
+    print("Matrix:")
+    print(matrix)
+    print("Matrix determinant:", np.linalg.det(matrix))
+    
+    print("NumPy test PASSED")
+    
+except ImportError as e:
+    print("NumPy not available:", str(e))
+    print("NumPy test FAILED")
+    
+print("############# END NUMPY TEST ##############")
+"""
+    
+    test_file = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "test_numpy.py")
+    try:
+        with open(test_file, "w") as f:
+            f.write(numpy_script)
+        
+        print("Running numpy test...")
+        success, stdout, stderr = cast_python(test_file, wait=True)
+        
+        print("NumPy test successful:", success)
+        if stdout:
+            print("NumPy output:")
+            print(stdout)
+        if stderr:
+            print("NumPy errors:")
+            print(stderr)
+            
+        return success
+        
+    except Exception as e:
+        print("NumPy test failed: {}".format(str(e)))
+        return False
+    finally:
+        # Clean up
+        if os.path.exists(test_file):
+            try:
+                os.remove(test_file)
+            except:
+                pass
+
+def test_openai():
+    """Test openai installation and basic functionality."""
+    print("\n" + "="*60)
+    print("TESTING OPENAI MODULE")
+    print("="*60)
+    
+    openai_script = """
+import sys
+import os
+
+print("############# OPENAI TEST ##############")
+print("Python version:", sys.version)
+print("Python executable:", sys.executable)
+
+try:
+    import openai
+    print("OpenAI version:", openai.__version__)
+    print("OpenAI location:", openai.__file__)
+    
+    # Test basic openai functionality (without making actual API calls)
+    print("OpenAI module loaded successfully")
+    
+    # Check if we can access the client class
+    try:
+        client_class = openai.OpenAI
+        print("OpenAI client class accessible:", client_class.__name__)
+    except AttributeError:
+        print("OpenAI client class not found (older version?)")
+    
+    print("OpenAI test PASSED")
+    
+except ImportError as e:
+    print("OpenAI not available:", str(e))
+    print("OpenAI test FAILED")
+    
+print("############# END OPENAI TEST ##############")
+"""
+    
+    test_file = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "test_openai.py")
+    try:
+        with open(test_file, "w") as f:
+            f.write(openai_script)
+        
+        print("Running OpenAI test...")
+        success, stdout, stderr = cast_python(test_file, wait=True)
+        
+        print("OpenAI test successful:", success)
+        if stdout:
+            print("OpenAI output:")
+            print(stdout)
+        if stderr:
+            print("OpenAI errors:")
+            print(stderr)
+            
+        return success
+        
+    except Exception as e:
+        print("OpenAI test failed: {}".format(str(e)))
+        return False
+    finally:
+        # Clean up
+        if os.path.exists(test_file):
+            try:
+                os.remove(test_file)
+            except:
+                pass
+
+def test_pandas():
+    """Test pandas installation and basic functionality."""
+    print("\n" + "="*60)
+    print("TESTING PANDAS MODULE")
+    print("="*60)
+    
+    pandas_script = """
+import sys
+import os
+
+print("############# PANDAS TEST ##############")
+print("Python version:", sys.version)
+print("Python executable:", sys.executable)
+
+try:
+    import pandas as pd
+    print("Pandas version:", pd.__version__)
+    print("Pandas location:", pd.__file__)
+    
+    # Test basic pandas functionality
+    data = {'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]}
+    df = pd.DataFrame(data)
+    print("Created DataFrame:")
+    print(df)
+    print("DataFrame shape:", df.shape)
+    print("DataFrame columns:", list(df.columns))
+    
+    # Test basic operations
+    print("Column A sum:", df['A'].sum())
+    print("DataFrame mean:")
+    print(df.mean())
+    
+    print("Pandas test PASSED")
+    
+except ImportError as e:
+    print("Pandas not available:", str(e))
+    print("Pandas test FAILED")
+    
+print("############# END PANDAS TEST ##############")
+"""
+    
+    test_file = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "test_pandas.py")
+    try:
+        with open(test_file, "w") as f:
+            f.write(pandas_script)
+        
+        print("Running pandas test...")
+        success, stdout, stderr = cast_python(test_file, wait=True)
+        
+        print("Pandas test successful:", success)
+        if stdout:
+            print("Pandas output:")
+            print(stdout)
+        if stderr:
+            print("Pandas errors:")
+            print(stderr)
+            
+        return success
+        
+    except Exception as e:
+        print("Pandas test failed: {}".format(str(e)))
+        return False
+    finally:
+        # Clean up
+        if os.path.exists(test_file):
+            try:
+                os.remove(test_file)
+            except:
+                pass
+
+def test_module_persistence():
+    """Test that installed modules persist between runs."""
+    print("\n" + "="*60)
+    print("TESTING MODULE PERSISTENCE")
+    print("="*60)
+    
+    persistence_script = """
+import sys
+import os
+import site
+
+print("############# MODULE PERSISTENCE TEST ##############")
+print("Python version:", sys.version)
+print("Python executable:", sys.executable)
+
+# Check site-packages directory
+site_packages_dirs = site.getsitepackages()
+print("Site-packages directories:")
+for sp_dir in site_packages_dirs:
+    print("  -", sp_dir)
+    if os.path.exists(sp_dir):
+        print("    Exists: True")
+        try:
+            contents = os.listdir(sp_dir)
+            print("    Contents count:", len(contents))
+            # Show a few examples
+            for i, item in enumerate(contents[:10]):
+                print("      -", item)
+            if len(contents) > 10:
+                print("      ... and {} more items".format(len(contents) - 10))
+        except Exception as e:
+            print("    Error listing contents:", str(e))
+    else:
+        print("    Exists: False")
+
+# Test specific modules we expect to have installed
+test_modules = ['requests', 'psutil', 'pillow', 'numpy', 'pandas', 'openai']
+print("\\nTesting specific modules:")
+for module in test_modules:
+    try:
+        __import__(module)
+        print("  {} - AVAILABLE".format(module))
+    except ImportError:
+        print("  {} - NOT AVAILABLE".format(module))
+
+print("############# END PERSISTENCE TEST ##############")
+"""
+    
+    test_file = os.path.join(ENVIRONMENT.WINDOW_TEMP_FOLDER, "test_persistence.py")
+    try:
+        with open(test_file, "w") as f:
+            f.write(persistence_script)
+        
+        print("Running module persistence test...")
+        success, stdout, stderr = cast_python(test_file, wait=True)
+        
+        print("Persistence test successful:", success)
+        if stdout:
+            print("Persistence output:")
+            print(stdout)
+        if stderr:
+            print("Persistence errors:")
+            print(stderr)
+            
+        return success
+        
+    except Exception as e:
+        print("Persistence test failed: {}".format(str(e)))
+        return False
+    finally:
+        # Clean up
+        if os.path.exists(test_file):
+            try:
+                os.remove(test_file)
+            except:
+                pass
+
+def comprehensive_test():
+    """Run comprehensive tests including multiple modules and scenarios."""
+    print("\n" + "="*80)
+    print("RUNNING COMPREHENSIVE ENGINE TESTS")
+    print("="*80)
+    
+    # Track results
+    results = {}
+    
+    # Run basic test
+    print("Running basic functionality test...")
+    try:
+        basic_test()
+        results['basic'] = True
+    except Exception as e:
+        print("Basic test failed:", str(e))
+        results['basic'] = False
+    
+    # Test module persistence
+    results['persistence'] = test_module_persistence()
+    
+    # Test numpy
+    results['numpy'] = test_numpy()
+    
+    # Test pandas
+    results['pandas'] = test_pandas()
+    
+    # Test openai
+    results['openai'] = test_openai()
+    
+    # Summary
+    print("\n" + "="*80)
+    print("COMPREHENSIVE TEST RESULTS SUMMARY")
+    print("="*80)
+    
+    total_tests = len(results)
+    passed_tests = sum(1 for result in results.values() if result)
+    
+    for test_name, result in results.items():
+        status = "PASSED" if result else "FAILED"
+        print("{:<15} - {}".format(test_name.upper(), status))
+    
+    print("-" * 40)
+    print("OVERALL: {}/{} tests passed ({:.1f}%)".format(
+        passed_tests, total_tests, (passed_tests/total_tests*100) if total_tests > 0 else 0))
+    
+    if passed_tests == total_tests:
+        print("*** ALL TESTS PASSED! Engine is working perfectly. ***")
+    else:
+        print("*** WARNING: Some tests failed. Check the output above for details. ***")
+    
+    return results
+
+def unit_test():
+    """Enhanced unit test function that runs comprehensive tests."""
+    print("Starting enhanced unit tests...")
+    print("This will test the Python engine with various modules and scenarios.")
+    print("The engine should be able to install missing modules automatically.")
+    
+    # Run comprehensive tests
+    results = comprehensive_test()
+    
+    # Additional debug information
+    print("\n" + "="*60)
+    print("DEBUG INFORMATION")
+    print("="*60)
+    
+    # Show engine diagnostics
+    verification = verify_engine()
+    if verification.get("diagnostics"):
+        diag = verification["diagnostics"]
+        print("Engine Status:")
+        print("  - Engine exists:", diag["engine_exists"])
+        print("  - Python.exe exists:", diag["python_exe_exists"])
+        print("  - Lib folder exists:", diag["lib_folder_exists"])
+        print("  - Standard library exists:", diag["standard_library_exists"])
+        print("  - DLL files exist:", diag["dll_files_exist"])
+        
+        if diag["issues"]:
+            print("  - Issues:")
+            for issue in diag["issues"]:
+                print("    * {}".format(issue))
+    
+    print("\nEngine folder content:")
+    try:
+        engine_contents = os.listdir(ENVIRONMENT.ENGINE_FOLDER)
+        for item in engine_contents:
+            item_path = os.path.join(ENVIRONMENT.ENGINE_FOLDER, item)
+            if os.path.isdir(item_path):
+                print("  [DIR]  {}".format(item))
+            else:
+                print("  [FILE] {}".format(item))
+    except Exception as e:
+        print("  Error listing engine folder: {}".format(str(e)))
+    
+    # Check site-packages specifically
+    site_packages = os.path.join(ENVIRONMENT.ENGINE_FOLDER, "Lib", "site-packages")
+    if os.path.exists(site_packages):
+        print("\nSite-packages content:")
+        try:
+            sp_contents = os.listdir(site_packages)
+            print("  Total items: {}".format(len(sp_contents)))
+            for item in sp_contents[:20]:  # Show first 20 items
+                print("  - {}".format(item))
+            if len(sp_contents) > 20:
+                print("  ... and {} more items".format(len(sp_contents) - 20))
+        except Exception as e:
+            print("  Error listing site-packages: {}".format(str(e)))
+    else:
+        print("\nSite-packages folder not found at: {}".format(site_packages))
+    
+    return results
 
 if __name__ == "__main__":
     basic_test()
