@@ -1,0 +1,13 @@
+# Dependencies for the static webpage publisher
+markdown>=3.4.0
+
+# No external dependencies required
+# The script uses only Python standard library modules:
+# - os
+# - json
+# - shutil
+# - sys
+# - pathlib
+# - subprocess
+
+# The EnneadTab modules are imported from the local codebase 
