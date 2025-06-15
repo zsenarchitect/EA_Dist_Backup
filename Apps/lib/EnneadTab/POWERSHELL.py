@@ -10,6 +10,48 @@ from datetime import datetime, timedelta
 
 import ENVIRONMENT
 
+# Compatibility for IronPython 2.7 - define DEVNULL if not available
+try:
+    DEVNULL = subprocess.DEVNULL
+except AttributeError:
+    DEVNULL = open(os.devnull, 'wb')
+
+# Compatibility helper for subprocess.run (not available in IronPython 2.7)
+def _run_command(cmd, capture_output=False, text=False, check=False):
+    """
+    Compatibility function for subprocess.run that works in IronPython 2.7
+    """
+    try:
+        if capture_output:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
+            stdout, stderr = proc.communicate()
+            if text and hasattr(stdout, 'decode'):
+                stdout = stdout.decode('utf-8', errors='ignore')
+                stderr = stderr.decode('utf-8', errors='ignore')
+            
+            # Create a simple result object
+            class Result:
+                def __init__(self, returncode, stdout, stderr):
+                    self.returncode = returncode
+                    self.stdout = stdout
+                    self.stderr = stderr
+                    
+            result = Result(proc.returncode, stdout, stderr)
+            
+            if check and proc.returncode != 0:
+                raise subprocess.CalledProcessError(proc.returncode, cmd, output=stdout, stderr=stderr)
+            
+            return result
+        else:
+            returncode = subprocess.call(cmd, shell=False)
+            if check and returncode != 0:
+                raise subprocess.CalledProcessError(returncode, cmd)
+            return returncode
+    except Exception as e:
+        if check:
+            raise
+        return None
+
 def run_powershell_script(script_name, no_wait = True):
     full_path = os.path.join(ENVIRONMENT.SCRIPT_FOLDER, script_name)
     if not os.path.exists(full_path):
@@ -30,20 +72,20 @@ def run_powershell_script(script_name, no_wait = True):
                             "-WindowStyle", "Hidden",
                             "-File", full_path],
                            startupinfo=startupinfo,
-                           stdout=subprocess.DEVNULL,
-                           stderr=subprocess.DEVNULL)
+                           stdout=DEVNULL,
+                           stderr=DEVNULL)
         else:
-            # Use run for blocking execution
-            subprocess.run(["powershell", 
+            # Use call for blocking execution - compatible with IronPython 2.7
+            subprocess.call(["powershell", 
                           "-ExecutionPolicy", "Bypass",
                           "-NoProfile",
                           "-NonInteractive",
                           "-File", full_path], 
-                            check=True, 
-                            shell=True,
-                            capture_output=True,
-                            text=True)
+                            shell=True)
     except subprocess.CalledProcessError as e:
+        print("Error running script: {}".format(e))
+        return
+    except Exception as e:
         print("Error running script: {}".format(e))
         return
 
@@ -149,7 +191,7 @@ def _find_existing_registrations(script_path, method):
     elif isinstance(method, (RegisterDaily, RegisterInterval)):
         try:
             cmd = ["schtasks", "/query", "/fo", "csv"]
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            result = _run_command(cmd, capture_output=True, text=True, check=True)
             
             for line in result.stdout.split('\n')[1:]:  # Skip header
                 if line.strip() and pattern in line:
@@ -238,7 +280,7 @@ def _register_scheduled_task(script_path, task_name, method):
                 "/f"  # Force creation (overwrite if exists)
             ]
             
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            result = _run_command(cmd, capture_output=True, text=True, check=True)
             print("Successfully registered scheduled task '{}'".format(task_name))
             return True
             
@@ -329,7 +371,7 @@ def unregister_powershell_script(task_name):
         # Try to delete as scheduled task first
         try:
             cmd = ["schtasks", "/delete", "/tn", task_name, "/f"]
-            subprocess.run(cmd, capture_output=True, text=True, check=True)
+            _run_command(cmd, capture_output=True, text=True, check=True)
             print("Successfully unregistered scheduled task '{}'".format(task_name))
             return True
         except subprocess.CalledProcessError:
@@ -384,7 +426,7 @@ def list_registered_scripts():
     # Check scheduled tasks
     try:
         cmd = ["schtasks", "/query", "/fo", "csv"]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        result = _run_command(cmd, capture_output=True, text=True, check=True)
         
         for line in result.stdout.split('\n')[1:]:  # Skip header
             if line.strip() and "EnneadTab_" in line:
