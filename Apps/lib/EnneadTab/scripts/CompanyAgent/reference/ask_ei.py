@@ -152,10 +152,10 @@ class EnneadKnowledgeBase:
         chat_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
         self.chat_logger.addHandler(chat_handler)
 
-    def get_api_key(self):
+    def get_openai_api_key(self):
         """Get API key with proper error handling."""
         try:
-            self.api_key = _Exe_Util.get_api_key("EnneadTabAPI")
+            self.api_key = _Exe_Util.get_openai_api_key("EnneadTabAPI")
             if not self.api_key:
                 messagebox.showerror("API Key Error", 
                                    "No OpenAI API key found. Please provide a valid API key.")
@@ -368,7 +368,7 @@ class EnneadKnowledgeBase:
             
         try:
             # Get API key before processing
-            if not self.get_api_key():
+            if not self.get_openai_api_key():
                 return False
                 
             # Split text into chunks
@@ -708,7 +708,7 @@ class ModernChatUI:
         
         def update():
             try:
-                if not self.kb.get_api_key():
+                if not self.kb.get_openai_api_key():
                     self.root.after(0, lambda: self.update_button.configure(state='normal'))
                     return
                     

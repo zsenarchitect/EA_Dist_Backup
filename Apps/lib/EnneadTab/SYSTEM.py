@@ -16,8 +16,130 @@ import time
 import random
 import json
 import traceback
-
 import NOTIFICATION, DATA_FILE,USER,  EXE, FOLDER, ENVIRONMENT, ERROR_HANDLE, POWERSHELL
+import threading
+
+
+# Define task types using class variables for Python 2.7 compatibility
+class TaskType:
+    STARTUP = "startup"    # Run when PC starts
+    REPEAT = "repeat"      # Run every X minutes
+    DAILY = "daily"        # Run daily at specific time
+
+APPS = [
+    {
+        "app_name": "EnneadTab_OS_Installer",
+        "file_name": "EnneadTab_OS_Installer.exe",
+        "shortcut_name": "EnneadTab_OS_Installer",
+        "description": "Auto Run At Login",
+        "task_name": "EnneadTab_OS_Installer_Task",
+        "task_type": TaskType.REPEAT,
+        "interval_minutes": 45,
+        "active": True
+    },
+    {
+        "app_name": "ClearRevitRhinoCache",
+        "file_name": "ClearRevitRhinoCache.exe",
+        "shortcut_name": "EnneadTab_Cache_Cleaner",
+        "description": "EnneadTab Clean Revit/Rhino Cache Auto Run At The Login",
+        "task_type": TaskType.STARTUP,
+        "active": True
+    },
+    {
+        "app_name": "AccAutoRestarter",
+        "file_name": "AccAutoRestarter.exe",
+        "shortcut_name": "EnneadTab_Acc_Auto_Restarter",
+        "description": "EnneadTab ACC Connector Auto Restarter Auto Run At The Login",
+        "task_type": TaskType.STARTUP,
+        "active": False
+    },
+    {
+        "app_name": "AutoReconnectDrive",
+        "file_name": "AutoReconnectDrive.exe",
+        "shortcut_name": "EnneadTab_Auto_Reconnect_Drives",
+        "description": "EnneadTab Auto Reconnect Drives Task",
+        "task_name": "EnneadTab_Auto_Reconnect_Drives_Task",
+        "task_type": TaskType.REPEAT,
+        "interval_minutes": 73,
+        "active": False
+    },
+    {
+        "app_name": "AutoReconnectDrive",
+        "file_name": "AutoReconnectDrive.exe",
+        "shortcut_name": "EnneadTab_Auto_Reconnect_Drives_StartUp",
+        "description": "EnneadTab_Auto_Reconnect_Drives at startup",
+        "task_type": TaskType.STARTUP,
+        "active": False
+    },
+    {
+        "app_name": "Rhino8RuiUpdater",
+        "file_name": "Rhino8RuiUpdater.exe",
+        "shortcut_name": "EnneadTab_Rhino8RuiUpdater",
+        "task_name": "EnneadTab_Rhino8RuiUpdater_Task",
+        "description": "EnneadTab Rhino8RuiUpdater",
+        "task_type": TaskType.REPEAT,
+        "interval_minutes": 25,
+        "active": True
+    },
+    {
+        "app_name": "MonitorDriveSilent",
+        "file_name": "MonitorDriveSilent.exe",
+        "shortcut_name": "EnneadTab_Monitor_Drive_Silent",
+        "task_name": "EnneadTab_Monitor_Drive_Silent_Task",
+        "description": "EnneadTab Monitor Drive Silent Task",
+        "task_type": TaskType.REPEAT,
+        "interval_minutes": 75,
+        "active": True
+    },
+    {
+        "app_name": "MonitorDriveDecoderSilent",
+        "file_name": "MonitorDriveDecoderSilent.exe",
+        "shortcut_name": "EnneadTab_Monitor_Drive_Decoder_Silent",
+        "task_name": "EnneadTab_Monitor_Drive_Decoder_Silent_Task",
+        "description": "EnneadTab Monitor Drive Decoder Silent Task",
+        "task_type": TaskType.REPEAT,
+        "interval_minutes": 120,
+        "active": True
+    },
+    {
+        "app_name": "WhatTheLunch",
+        "file_name": "WhatTheLunch.exe",
+        "shortcut_name": "WhatTheLunch",
+        "task_name": "WhatTheLunch_Daily",
+        "description": "WhatTheLunch Daily Task at 11:45",
+        "task_type": TaskType.DAILY,
+        "daily_time": "11:45",
+        "active": True
+    },
+    {
+        "app_name": "AvdResourceMonitor",
+        "file_name": "AvdResourceMonitor.exe",
+        "shortcut_name": "AvdResourceMonitor",
+        "task_name": "AvdResourceMonitor",
+        "description": "AvdResourceMonitor to check the CPU usage",
+        "task_type": TaskType.STARTUP,
+        "active": False
+    },
+    {
+        "app_name": "DriveStorageHistory",
+        "file_name": "DriveStorageHistory.exe",
+        "shortcut_name": "DriveStorageHistory",
+        "task_name": "DriveStorageHistory_Daily",
+        "description": "DriveStorageHistory Daily Task at 1:00 AM",
+        "task_type": TaskType.DAILY,
+        "daily_time": "01:00",
+        "active": True
+    },
+    {
+        "app_name": "MonitorBlueScreen",
+        "file_name": "MonitorBlueScreen.exe",
+        "shortcut_name": "MonitorBlueScreen",
+        "task_name": "MonitorBlueScreen_startup",
+        "description": "MonitorBlueScreen at startup",
+        "task_type": TaskType.STARTUP,
+        "active": True
+    }
+]
 
 
 def parse_timestamp(timestamp_str):
@@ -326,6 +448,22 @@ def move_installed_software_output_to_Xdrive():
                 pass
     return True
 
+
+def run_acc_project_summary():
+    def _run_in_thread():
+        try:
+            from REVIT import REVIT_ACC # type: ignore
+            REVIT_ACC.get_ACC_summary_data(show_progress=False)
+        except Exception as e:
+            ERROR_HANDLE.print_note("Error in ACC project summary thread: {}".format(e))
+            ERROR_HANDLE.print_note(traceback.format_exc())
+    
+    # Create and start a non-daemon thread
+    thread = threading.Thread(target=_run_in_thread)
+    thread.daemon = False  # This ensures the thread survives main program termination
+    thread.start()
+    return True
+
 def run_system_checks():
     """Run system checks with configurable probabilities.
     
@@ -365,7 +503,8 @@ def run_system_checks():
         (0.1, spec_report),
         (0.8, get_installed_software),
         (0.1, move_installed_software_output_to_Xdrive),
-        (0.99, scan_CDrive)
+        (0.2, scan_CDrive),
+        (0.4, run_acc_project_summary)
     ]
     
     # Run checks based on probability
@@ -386,3 +525,8 @@ def run_system_checks():
 
 # Run system checks when module is imported
 run_system_checks()
+
+
+if __name__ == "__main__":
+    from REVIT import REVIT_ACC # type: ignore
+    REVIT_ACC.get_ACC_summary_data(show_progress=True)

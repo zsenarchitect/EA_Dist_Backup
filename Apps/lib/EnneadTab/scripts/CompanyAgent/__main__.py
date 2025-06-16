@@ -43,7 +43,7 @@ class EnneadTabAgent:
         """Initialize all components of the agent."""
         try:
             # Initialize OpenAI client
-            api_key = utils.get_api_key()
+            api_key = utils.get_openai_api_key()
             if not api_key:
                 self.logger.error("No API key found, cannot continue")
                 return False

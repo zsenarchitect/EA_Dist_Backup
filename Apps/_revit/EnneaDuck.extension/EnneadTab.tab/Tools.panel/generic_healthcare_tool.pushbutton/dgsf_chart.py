@@ -205,6 +205,7 @@ class OptionValidation:
 
     def validate_family_data_holder(self):
         """Validates and updates family data holder parameters."""
+        
         fam_doc = self.doc.EditFamily(REVIT_FAMILY.get_family_by_name(self.option.CALCULATOR_FAMILY_NAME, self.doc))
         fam_manager = fam_doc.FamilyManager
 
@@ -237,6 +238,9 @@ class OptionValidation:
 
     def validate_all(self):
         """Validates all aspects of the department option."""
+        if not self.doc:
+            print ("Document not found, skipping validation")
+            return False
         self.show_logic()
         if not self.is_area_scheme_valid():
             print("Area scheme validation failed")

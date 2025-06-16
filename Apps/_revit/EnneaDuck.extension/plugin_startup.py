@@ -346,6 +346,38 @@ def register_context_menu():
         print (traceback.format_exc())
 
 
+
+def handle_acc_slave():
+    single_job = DATA_FILE.get_data("ACC_PROJECT_RUNNER_JOB")
+    if not single_job:
+        return
+    if single_job.get("is_finished"):
+        return
+    
+    model_guid = single_job.get("model_guid")
+    project_guid = single_job.get("project_guid")
+    region = "US"
+    if not model_guid or not project_guid:
+        return
+    folder = "EnneadTab.tab\\Tools.panel"
+    func_name = "open_doc_silently"
+    
+    cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(model_guid))
+    open_options = DB.OpenOptions()
+    open_options.SetOpenWorksetsConfiguration (DB.WorksetConfiguration(DB.WorksetConfigurationOption.CloseAllWorksets ) )
+    open_options.Audit = True
+    try:
+        return REVIT_APPLICATION.get_uiapp().OpenAndActivateDocument (cloud_path, open_options, False) # pyright: ignore 
+        
+    except:
+        try:
+            return REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path,open_options)
+        except Exception as e:
+            print ("cannot be opened becasue {}".format(e))
+
+    
+
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
@@ -410,6 +442,8 @@ def EnneadTab_startup():
     register_temp_graphic_server()
     register_selection_owner_checker()
     purge_dump_folder_families()
+
+    handle_acc_slave()
 
     if USER.IS_DEVELOPER:
         NOTIFICATION.messenger(main_text = "[Developer Only] startup run ok.")

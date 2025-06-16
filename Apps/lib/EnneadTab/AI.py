@@ -17,7 +17,7 @@ def translate(input_text,
     Returns:
         Translated text or error message if translation fails
     """
-    api = SECRET.get_api_key("EnneadTabAPI")
+    api = SECRET.get_openai_api_key("EnneadTabAPI")
     if not api:
         return ""
     data = {"input_text":input_text, 

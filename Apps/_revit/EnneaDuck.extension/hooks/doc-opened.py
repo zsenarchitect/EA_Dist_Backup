@@ -14,7 +14,24 @@ from pyrevit.coreutils import ribbon
 
 
 
+def handle_acc_slave(doc):
+    single_job = DATA_FILE.get_data("ACC_PROJECT_RUNNER_JOB")
+    if not single_job:
+        return
+    if single_job.get("is_finished"):
+        return
+    
+    print ("this is simulating a lot of actual work")
+    
+    sample = {"{} have been handled nicely by acc slave".format(doc.Title)}
+    DATA_FILE.set_data(sample, "ACC_PROJECT_RUNNER_JOB_PROOF_OF_WORK_{}".format(doc.Title))
 
+    
+    single_job["is_finished"] = True
+    DATA_FILE.set_data(single_job, "ACC_PROJECT_RUNNER_JOB")
+
+    REVIT_SYNC.sync_and_close()
+    REVIT_APPLICATION.close_revit_app()
 
 def log_time_sheet(doc):
     TIMESHEET.update_timesheet(doc.Title)
@@ -434,6 +451,9 @@ def main():
 
         if ENVIRONMENT.get_computer_name() == "CXU" or USER.IS_DEVELOPER:
             REVIT_METRIC.RevitMetric(doc).update_metric()
+
+
+        handle_acc_slave(doc)
 
         if USER.IS_DEVELOPER:
             NOTIFICATION.messenger(main_text = "Doc opened: {}".format(doc.Title))

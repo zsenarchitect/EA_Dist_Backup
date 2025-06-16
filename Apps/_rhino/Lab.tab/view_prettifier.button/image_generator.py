@@ -41,7 +41,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger('ViewPrettifier.ImageGenerator')
 
-def get_api_keys():
+def get_openai_api_keys():
     """Get API keys from various sources.
     
     Returns:
@@ -68,9 +68,9 @@ def get_api_keys():
                 from EnneadTab import SECRET
                 # Try to get keys from SECRET
                 if not keys["replicate"]:
-                    keys["replicate"] = SECRET.get_api_key("replicate")
+                    keys["replicate"] = SECRET.get_openai_api_key("replicate")
                 if not keys["huggingface"]:
-                    keys["huggingface"] = SECRET.get_api_key("huggingface")
+                    keys["huggingface"] = SECRET.get_openai_api_key("huggingface")
             except ImportError as e:
                 logger.warning(f"Could not import EnneadTab SECRET: {str(e)}")
             except Exception as e:
@@ -104,7 +104,7 @@ def install_dependencies():
     ]
     
     # Get API keys to check which cloud providers we need
-    api_keys = get_api_keys()
+    api_keys = get_openai_api_keys()
     
     # Add cloud dependencies only if we have their API keys
     cloud_dependencies = []
@@ -267,7 +267,7 @@ def get_compute_backend():
     }
     
     # Get API keys first
-    api_keys = get_api_keys()
+    api_keys = get_openai_api_keys()
     
     # Only try cloud providers if we have their keys
     if api_keys["replicate"]:
@@ -583,7 +583,7 @@ class ImageGenerator:
         """
         try:
             # Check if we have any API keys
-            api_keys = self.get_api_keys()
+            api_keys = self.get_openai_api_keys()
             if not any(api_keys.values()):
                 logger.info("No API keys available - using local model")
                 return self._generate_image_local(input_image_path, edge_map_path, progress_callback)

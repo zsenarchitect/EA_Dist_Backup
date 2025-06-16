@@ -7,7 +7,23 @@ import DATA_FILE
 import ENVIRONMENT
 import NOTIFICATION
 
-def get_api_key(app_name):
+import json
+
+
+def get_acc_key_data():
+    api_key_file = "ACC_API_KEY.secret"
+    L_drive_file_path = os.path.join(ENVIRONMENT.DB_FOLDER, api_key_file)
+    if ENVIRONMENT.IS_OFFLINE_MODE:
+        data = DATA_FILE.get_data(api_key_file)
+        if not data:
+            NOTIFICATION.messenger("API key file not found, do you have L drive connection?")
+    else:
+        data = DATA_FILE.get_data(L_drive_file_path)
+
+    return data
+
+
+def get_openai_api_key(app_name):
     """Returns the API key for the specified app.
     Accepted keys:
     "EnneadTabAPI"
@@ -81,7 +97,7 @@ def unit_test():
 
     print("######### API KEY TEST #########")
     for app_name in app_names:
-        print("{name}: {key}".format(name=app_name, key=get_api_key(app_name)))
+        print("{name}: {key}".format(name=app_name, key=get_openai_api_key(app_name)))
     print("######### DEV DICT TEST #########")
     pprint.pprint(get_dev_dict())
     print("######### DEV INFO TEST #########")
@@ -94,5 +110,6 @@ def unit_test():
             )
 
 
+
 if __name__ == "__main__":
-    unit_test()
+    pass

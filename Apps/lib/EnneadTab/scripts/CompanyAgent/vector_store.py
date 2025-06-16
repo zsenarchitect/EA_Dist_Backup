@@ -88,7 +88,7 @@ class VectorStore:
     def initialize_embeddings(self):
         """Initialize the OpenAI embeddings with API key."""
         try:
-            api_key = utils.get_api_key()
+            api_key = utils.get_openai_api_key()
             if not api_key:
                 self.logger.error("Failed to get API key for embeddings")
                 return False

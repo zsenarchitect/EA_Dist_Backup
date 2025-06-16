@@ -40,7 +40,7 @@ class TextToScriptConverter:
     def __init__(self):
         """Initialize the converter with API key and configuration."""
         self.max_attempts = 5
-        self.api_key = SECRET.get_api_key("EnneadTabAPI")
+        self.api_key = SECRET.get_openai_api_key("EnneadTabAPI")
         self.client = OpenAI(api_key=self.api_key)
         self.temp_filepath = FOLDER.get_local_dump_folder_file("text2script_TEMP.py")
         self.preset = self._get_system_preset()

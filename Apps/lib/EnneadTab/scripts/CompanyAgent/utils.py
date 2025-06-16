@@ -78,12 +78,12 @@ def setup_logging():
             ]
         )
 
-def get_api_key():
+def get_openai_api_key():
     """Get OpenAI API key from EnneadTab or environment."""
     # First try to get it from EnneadTab
     if HAVE_ENNEAD_TOOLS:
         try:
-            api_key = _Exe_Util.get_api_key("EnneadTabAPI")
+            api_key = _Exe_Util.get_openai_api_key("EnneadTabAPI")
             if api_key:
                 return api_key
         except Exception as e:
