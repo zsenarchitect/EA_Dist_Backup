@@ -9,15 +9,18 @@ import sys
 import threading
 import uuid  # added for potential future use
 JOB_ID = os.environ.get("ACC_JOB_ID")
+import traceback
 
 # Helper for ACC automation
 # ------------------------------------------------------
 
-def _finish_job_with_state(job_record, job_file, state_value):
+def _finish_job_with_state(job_record, job_file, state_value, run_log = ""):
     """Set job state, save file, and close Revit"""
     try:
         if job_record is not None:
             job_record["state"] = state_value
+            if run_log:
+                job_record["run_log"] = run_log
             DATA_FILE.set_data(job_record, job_file)
     except Exception as _e:
         print("Error saving job state: {}".format(_e))
@@ -371,6 +374,7 @@ def handle_acc_slave_job():
     Reads job record, attempts to open the cloud model, and updates state.
     No f-strings are used to keep compatibility with older Python versions.
     """
+    run_log = ""
     if not JOB_ID:
         # Interactive Revit session; nothing to do.
         return
@@ -378,7 +382,7 @@ def handle_acc_slave_job():
     job_file = "ACC_JOB_{}".format(JOB_ID)
     job_record = DATA_FILE.get_data(job_file)
     if not job_record:
-        print("Job record not found: {}".format(job_file))
+        run_log += "Job record not found: {}".format(job_file)
         dummy = {"state": "FAILED_JOB_RECORD"}
         DATA_FILE.set_data(dummy, job_file)
         try:
@@ -389,50 +393,58 @@ def handle_acc_slave_job():
 
     # Only continue if orchestrator placed us in REVIT_STARTING state
     if job_record.get("state") != "REVIT_STARTING":
-        print("Job {} in unexpected state: {}".format(JOB_ID, job_record.get("state")))
-        _finish_job_with_state(job_record, job_file, "FAILED_STATE_MISMATCH")
+        run_log += "Job {} in unexpected state: {}".format(JOB_ID, job_record.get("state"))
+        _finish_job_with_state(job_record, job_file, "FAILED_STATE_MISMATCH", run_log)
         return
 
     task = job_record.get("task", {})
     model_guid = task.get("model_guid")
     project_guid = task.get("project_guid")
-    region = "US"
+    # Build candidate regions list using helper for maximum compatibility
+    candidate_regions = REVIT_APPLICATION.get_known_regions()
 
     if not model_guid or not project_guid:
-        print("Missing model_guid or project_guid in task data")
-        _finish_job_with_state(job_record, job_file, "FAILED_TASK_DATA")
+        run_log += "Missing model_guid or project_guid in task data"
+        _finish_job_with_state(job_record, job_file, "FAILED_TASK_DATA", run_log)
         return
 
     # Update state to OPENING_DOC so outer process knows progress
     job_record["state"] = "OPENING_DOC"
     DATA_FILE.set_data(job_record, job_file)
 
-    try:
-        cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region,
-                                                                    System.Guid(project_guid),
-                                                                    System.Guid(model_guid))
-        open_opts = DB.OpenOptions()
-        open_opts.SetOpenWorksetsConfiguration(DB.WorksetConfiguration(DB.WorksetConfigurationOption.CloseAllWorksets))
-        open_opts.Audit = True
-        print("Opening cloud model ...")
+    open_success = False
+    for region in candidate_regions:
         try:
-            # Use Application API first (faster, headless)
-            REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path, open_opts)
-        except Exception as e:
-            print("Primary open failed: {}".format(e))
+            run_log += "Attempting to open cloud model in region '{}'\n".format(region)
+            cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region,
+                                                                        System.Guid(project_guid),
+                                                                        System.Guid(model_guid))
+            open_opts = DB.OpenOptions()
+            open_opts.SetOpenWorksetsConfiguration(DB.WorksetConfiguration(DB.WorksetConfigurationOption.CloseAllWorksets))
+            open_opts.Audit = True
             try:
+                # Use Application API first (faster, headless)
+                REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path, open_opts)
+            except Exception as e:
+                run_log += "Primary open failed for region '{}': {}\n".format(region, e)
+                # Try UI API as fallback
                 REVIT_APPLICATION.get_uiapp().OpenAndActivateDocument(cloud_path, open_opts, False)
-            except Exception as e2:
-                print("Secondary open failed: {}".format(e2))
-                _finish_job_with_state(job_record, job_file, "FAILED_OPEN_DOC")
-                return
-        # Document opened successfully. Doc-opened hook will continue the flow.
-        job_record["state"] = "PROCESSING"
-        DATA_FILE.set_data(job_record, job_file)
-    except Exception as e:
-        print("Error creating cloud path or opening document: {}".format(e))
-        _finish_job_with_state(job_record, job_file, "FAILED_OPEN_DOC")
+
+            # If we reach here, open succeeded
+            open_success = True
+            job_record["region_used"] = region
+            break
+        except Exception as e:
+            run_log += "Region '{}' failed: {}\n".format(region, e)
+
+    if not open_success:
+        run_log += "Error creating cloud path or opening document: traceback below\n{}".format(traceback.format_exc())
+        _finish_job_with_state(job_record, job_file, "FAILED_OPEN_DOC", run_log)
         return
+
+    # Document opened successfully. Doc-opened hook will continue the flow.
+    job_record["state"] = "PROCESSING"
+    DATA_FILE.set_data(job_record, job_file)
 
 
 

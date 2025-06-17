@@ -330,3 +330,72 @@ def run_picked_command():
     cmd_id = RevitCommandId.LookupPostableCommandId(getattr(PostableCommand, command_name))
     uiapp = get_uiapp()
     uiapp.PostCommand(cmd_id)
+
+# ------------------------------------------------------------------------------
+# Cloud region helpers
+# ------------------------------------------------------------------------------
+
+
+def _collect_available_cloud_regions():
+    """Return a list of all CloudRegion* static strings supported by this Revit.
+
+    It inspects ModelPathUtils for region constants so the list automatically
+    follows Autodesk additions (e.g. CloudRegionAPAC was introduced in 2023)."""
+    names = [a for a in dir(DB.ModelPathUtils) if a.startswith("CloudRegion")]
+    regions = []
+    for attr in names:
+        try:
+            regions.append(getattr(DB.ModelPathUtils, attr))
+        except Exception:
+            continue
+    # Ensure deterministic order (US first, then the rest alphabetically)
+    regions.sort()
+    if DB.ModelPathUtils.CloudRegionUS in regions:
+        regions.remove(DB.ModelPathUtils.CloudRegionUS)
+        regions.insert(0, DB.ModelPathUtils.CloudRegionUS)
+    return regions
+
+
+_REGION_LITERALS = {
+    "US": DB.ModelPathUtils.CloudRegionUS,
+    "EMEA": DB.ModelPathUtils.CloudRegionEMEA
+}
+
+# Dynamically add APAC if available
+if hasattr(DB.ModelPathUtils, "CloudRegionAPAC"):
+    _REGION_LITERALS["APAC"] = getattr(DB.ModelPathUtils, "CloudRegionAPAC")
+
+
+def convert_region(region_text):
+    """Convert human-readable region identifiers ("US", "EMEA", etc.) to the
+    exact literals required by ConvertCloudGUIDsToCloudPath(). If the text is
+    already a valid literal, it's passed through unchanged.
+
+    Args:
+        region_text (str): User or config supplied region string.
+
+    Returns:
+        str: Region literal accepted by Autodesk API.
+    """
+    if not region_text:
+        # Default to US
+        return DB.ModelPathUtils.CloudRegionUS
+
+    upper = str(region_text).strip().upper()
+    return _REGION_LITERALS.get(upper, region_text)
+
+
+def get_known_regions():
+    """Return a deterministic list of all known region literals."""
+    # Combine literal mapping and any extras discovered dynamically
+    regions = list(set(_collect_available_cloud_regions()) | set(_REGION_LITERALS.values()))
+    # Keep ordering stable – US first, then alpha
+    regions.sort()
+    if DB.ModelPathUtils.CloudRegionUS in regions:
+        regions.remove(DB.ModelPathUtils.CloudRegionUS)
+        regions.insert(0, DB.ModelPathUtils.CloudRegionUS)
+    return regions
+
+
+if __name__ == "__main__":
+    print(get_known_regions())

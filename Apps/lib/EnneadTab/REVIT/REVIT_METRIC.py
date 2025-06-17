@@ -23,7 +23,7 @@ sys.path.append(root_folder)
 
 
 import DATA_FILE,  ENVIRONMENT, MODULE_HELPER
-from pyrevit import forms
+from pyrevit import forms # pyright: ignore
 
 
 

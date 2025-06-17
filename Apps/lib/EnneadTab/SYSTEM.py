@@ -449,20 +449,7 @@ def move_installed_software_output_to_Xdrive():
     return True
 
 
-def run_acc_project_summary():
-    def _run_in_thread():
-        try:
-            from REVIT import REVIT_ACC # type: ignore
-            REVIT_ACC.get_ACC_summary_data(show_progress=False)
-        except Exception as e:
-            ERROR_HANDLE.print_note("Error in ACC project summary thread: {}".format(e))
-            ERROR_HANDLE.print_note(traceback.format_exc())
-    
-    # Create and start a non-daemon thread
-    thread = threading.Thread(target=_run_in_thread)
-    thread.daemon = False  # This ensures the thread survives main program termination
-    thread.start()
-    return True
+
 
 def run_system_checks():
     """Run system checks with configurable probabilities.
@@ -495,7 +482,7 @@ def run_system_checks():
     checks = [
         (0.2, "MonitorDriveSilent"),
         (0.01, "AccAutoRestarter"),
-        (0.5, "RegisterAutoStartup"),
+        (0.2, "RegisterAutoStartup"),
         (0.3, "Rhino8RuiUpdater"),
         (0.5, check_system_uptime),
         (0.3, purge_powershell_folder),
@@ -503,8 +490,7 @@ def run_system_checks():
         (0.1, spec_report),
         (0.8, get_installed_software),
         (0.1, move_installed_software_output_to_Xdrive),
-        (0.2, scan_CDrive),
-        (0.4, run_acc_project_summary)
+        (0.2, scan_CDrive)
     ]
     
     # Run checks based on probability

@@ -397,18 +397,13 @@ def get_ACC_summary_data(show_progress = False):
     if not all_projects_data:
         return None
 
-
     count = 0
     total = 0
     for hub_name, hub_data in all_projects_data.items():
         if not hub_data or "data" not in hub_data:
             continue
-            
         for project in hub_data["data"]:
             total += 1
-
-
-
 
     summary = {}
     project_by_year = {}
@@ -496,6 +491,7 @@ class ACC_PROJECT_RUNNER:
     def __init__(self):
         self.global_task_file = "ACC_PROJECT_TASK_RUNNER"
         self.is_busy = False
+        self.last_job_file = None  # will hold the filename of the most recently created job
 
     def _create_job_record(self, task_data):
         """Create a new job record file and return its id and path."""
@@ -508,6 +504,9 @@ class ACC_PROJECT_RUNNER:
             "task": task_data
         }
         DATA_FILE.set_data(record, job_file)
+
+        # keep track of the most recent job file for debugging / reporting
+        self.last_job_file = job_file
         return job_id, job_file
 
     def run_revit_action_till_failure(self, task_data):
@@ -573,18 +572,31 @@ class ACC_PROJECT_RUNNER:
                 self.is_busy = False
                 return False
 
-    def run_an_idle_job(self, year_version = None):
+    def run_an_idle_job(self, year_version = None, debug: bool = False):
         """Find and execute an idle job matching the specified Revit version.
         
         Args:
             year_version (str, optional): Specific Revit version to target. Defaults to None.
+            debug (bool, optional): Whether to force regeneration of all tasks. Defaults to False.
             
         Returns:
             bool: True if a job was started successfully, False otherwise
         """
         logging.info("Starting ACC_PROJECT_RUNNER.run_an_idle_job()")
-        task_data = DATA_FILE.get_data(self.global_task_file, is_local=False)
         all_projects_data = DATA_FILE.get_data("ACC_PROJECTS_SUMMARY", is_local=False)
+        
+        # If summary data is missing or debug mode is on, regenerate it
+        if not all_projects_data:
+            logging.info("Missing summary data: regenerating ACC project summary.")
+            print("Generating ACC project summary... this may take several minutes.")
+            all_projects_data = get_ACC_summary_data(show_progress=debug)
+            if not all_projects_data:
+                print("Unable to generate ACC project summary. Aborting.")
+                logging.error("Unable to generate ACC project summary inside run_an_idle_job.")
+                return False
+        
+        # Load existing task data unless in debug mode. Debug mode forces regeneration
+        task_data = {} if debug else DATA_FILE.get_data(self.global_task_file, is_local=False)
         
         if not task_data:
             task_data = {}
@@ -608,6 +620,14 @@ class ACC_PROJECT_RUNNER:
                 task_data[task_name].update({
                     "revit_version": revit_file_data.get("revit_project_version")
                 })
+                
+                # If in debug mode, reset running status and last run time so that tasks are picked up again
+                if debug:
+                    task_data[task_name]["is_running"] = False
+                    task_data[task_name]["last_run_time"] = 0
+        
+        # Save refreshed task data (even in debug mode we want a fresh copy on disk)
+        DATA_FILE.set_data(task_data, self.global_task_file, is_local=False)
         
         if not task_data:
             print("No task data found after update.")
@@ -643,6 +663,7 @@ class ACC_PROJECT_RUNNER:
             logging.info("Project is not running: {}. Locking and running now...".format(task))
             print("Project is not running: {}_{}. Locking and running now...".format(task["project_name"], task["revit_file"]))
             
+            # Persist the locked task status before starting the job
             DATA_FILE.set_data(task_data, self.global_task_file, is_local=False)
             self.is_busy = True
             self.run_revit_action_till_failure(task)
@@ -650,7 +671,7 @@ class ACC_PROJECT_RUNNER:
             
         return False
 
-def batch_run_projects():
+def batch_run_projects(debug: bool = False):
     """Run a batch of ACC projects with specified Revit version.
     
     This function:
@@ -669,9 +690,23 @@ def batch_run_projects():
         print("Attempt {} of {}".format(count + 1, MAX_RUN_TIME))
         
         if not acc_project_runner.is_busy:
-            if acc_project_runner.run_an_idle_job(year_version = "2025"):
-                print("Job finished successfully, waiting 60 seconds before next attempt so revit properly shut down")
-                time.sleep(60)
+            had_job = acc_project_runner.run_an_idle_job(year_version = "2025", debug=debug)
+
+            # After each attempt, pretty-print the most recent ACC_JOB record if available
+            if acc_project_runner.last_job_file:
+                try:
+                    record = DATA_FILE.get_data(acc_project_runner.last_job_file)
+                    if record:
+                        import json
+                        print("\n===== Latest ACC_JOB record ({}): =====".format(acc_project_runner.last_job_file))
+                        print(json.dumps(record, indent=4, sort_keys=True))
+                        print("===== End of ACC_JOB record =====\n")
+                except Exception as e:
+                    print("Failed to print latest ACC_JOB record: {}".format(e))
+
+            if had_job:
+                print("Job finished, waiting 30 seconds before next attempt so revit properly shut down")
+                time.sleep(30)
             else:
                 print("No idle jobs found, waiting 10 seconds before next attempt")
                 time.sleep(10)
@@ -688,4 +723,7 @@ def batch_run_projects():
 if __name__ == "__main__":
     print("Script started from __main__.")
     logging.info("Script started from __main__.")
-    batch_run_projects()
+    debug_mode = True
+    print("Debug mode is ON: forcing regeneration of all tasks.")
+    logging.info("Debug mode ON: forcing regeneration of all tasks.")
+    batch_run_projects(debug=debug_mode)

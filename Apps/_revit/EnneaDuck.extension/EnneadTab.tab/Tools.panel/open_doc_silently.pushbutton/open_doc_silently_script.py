@@ -30,9 +30,9 @@ class Solution:
             return
 
         if isinstance(tuple, dict):
-            project_guid = tuple["project_guid"]
-            file_guid = tuple["model_guid"]
-            region = tuple["region"]
+            project_guid = tuple.get("project_guid")
+            file_guid = tuple.get("model_guid")
+            region = tuple.get("region")
         else:
             project_guid = tuple[0]
             file_guid = tuple[1]
@@ -41,11 +41,34 @@ class Solution:
         # region = DB.ModelPathUtils.CloudRegionUS
         #print region
         try:
-            cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(file_guid))
+            # If region is missing or invalid, attempt multiple known regions
+            candidate_regions = []
+            if region:
+                candidate_regions.append(region)
+
+            # Append standard region constants for brute-force fallback
+            candidate_regions.extend(REVIT_APPLICATION.get_known_regions())
+
+            # Remove duplicates while preserving order
+            seen = set()
+            candidate_regions = [x for x in candidate_regions if x and not (x in seen or seen.add(x))]
+
+            last_error = None
+            for reg in candidate_regions:
+                try:
+                    cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(reg,
+                                                                                System.Guid(project_guid),
+                                                                                System.Guid(file_guid))
+                    return cloud_path
+                except Exception as e:
+                    # Try next region
+                    last_error = e
+                    continue
+            print("Failed to build cloud path for {} with regions {} due to {}".format(file_guid, candidate_regions, last_error))
+            return None
         except Exception as e:
             print(e)
             return
-        return cloud_path
 
 
     def open_doc_siliently(self, doc_name):
