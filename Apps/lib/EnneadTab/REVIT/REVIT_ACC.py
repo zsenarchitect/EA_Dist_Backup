@@ -7,6 +7,7 @@ import sys
 import threading
 import subprocess
 import logging
+import uuid  # added at top for job id generation
 # Setup imports
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
@@ -484,57 +485,111 @@ def get_ACC_summary_data(show_progress = False):
 
 
 class ACC_PROJECT_RUNNER:
+    """Manages ACC project tasks and Revit automation.
+    
+    This class handles:
+    - Loading and managing ACC project tasks
+    - Starting Revit with specific versions
+    - Monitoring task execution status
+    - Coordinating between ACC and Revit processes
+    """
     def __init__(self):
         self.global_task_file = "ACC_PROJECT_TASK_RUNNER"
-        self.single_job_file = "ACC_PROJECT_RUNNER_JOB"
         self.is_busy = False
 
-    def run_action(self, task_data):
-        logging.info("Running action for project: {}".format(task_data))
-        self.active_revit_version = task_data.get("revit_version")
-        logging.info("Set active_revit_version: {}".format(self.active_revit_version))
-
-        single_job = {
-            "model_guid": task_data.get("model_guid"),
-            "project_guid": task_data.get("project_guid"),
-            "is_finished": False
+    def _create_job_record(self, task_data):
+        """Create a new job record file and return its id and path."""
+        job_id = uuid.uuid4().hex
+        job_file = "ACC_JOB_{0}".format(job_id)
+        record = {
+            "job_id": job_id,
+            "state": "REVIT_STARTING",
+            "created": time.time(),
+            "task": task_data
         }
-        DATA_FILE.set_data(single_job, self.single_job_file)
-        logging.info("Set desktop job: {}".format(single_job))
+        DATA_FILE.set_data(record, job_file)
+        return job_id, job_file
 
-        # start revit application using that year version.
-        revit_path = "C:\\Program Files\\Autodesk\\Revit {}\\Revit.exe".format(self.active_revit_version)
-        logging.info("Attempting to start Revit at path: {}".format(revit_path))
+    def run_revit_action_till_failure(self, task_data):
+        logging.info("Running action for project: {0}".format(task_data))
+        self.active_revit_version = task_data.get("revit_version")
+        logging.info("Set active_revit_version: {0}".format(self.active_revit_version))
+
+        # ------------------------------------------------------------------
+        # 1. Create a job record and get its file name
+        # ------------------------------------------------------------------
+        job_id, job_file = self._create_job_record(task_data)
+        logging.info("Created job record: {0}".format(job_file))
+
+        # ------------------------------------------------------------------
+        # 2. Build Revit path and launch with ACC_JOB_ID env var
+        # ------------------------------------------------------------------
+        revit_path = "C:\\Program Files\\Autodesk\\Revit {0}\\Revit.exe".format(self.active_revit_version)
+        logging.info("Attempting to start Revit at path: {0}".format(revit_path))
         try:
-            subprocess.Popen(revit_path)
-            logging.info("Successfully started Revit: {}".format(revit_path))
+            env = os.environ.copy()
+            env["ACC_JOB_ID"] = job_id
+            subprocess.Popen(revit_path, env=env)
+            logging.info("Successfully started Revit: {0}".format(revit_path))
         except Exception as e:
-            logging.error("Failed to start Revit: {}, Error: {}".format(revit_path, e))
-    
-        max_wait = 100
-        wait_count = 0
-        while not single_job.get("is_finished"):
-            time.sleep(10)
-            single_job = DATA_FILE.get_data("ACC_PROJECT_RUNNER_JOB")
-            if single_job.get("is_finished"):
-                logging.info("Desktop job is finished: {}".format(single_job))
-                break
-            logging.info("Desktop job is not finished: {}".format(single_job))
-            wait_count += 1
-            if wait_count > max_wait:
-                logging.warning("Max wait time reached, force setting is_finished to True, breaking loop.")
-                single_job["is_finished"] = True
-                DATA_FILE.set_data(single_job, self.single_job_file)
-    
-        return
+            logging.error("Failed to start Revit: {0}, Error: {1}".format(revit_path, e))
+            # update job record to failed
+            record = DATA_FILE.get_data(job_file)
+            if record:
+                record["state"] = "FAILED_START_REVIT"
+                DATA_FILE.set_data(record, job_file)
+            self.is_busy = False
+            return False
 
-    def run(self):
-        logging.info("Starting ACC_PROJECT_RUNNER.run()")
+        # ------------------------------------------------------------------
+        # 3. Monitor job record state until completion or timeout
+        # ------------------------------------------------------------------
+        max_wait_cycle = 100  # 100 * 10s = approx 17 min
+        wait_count = 0
+        while True:
+            time.sleep(10)
+            record = DATA_FILE.get_data(job_file)
+            if not record:
+                logging.warning("Job record {0} cannot be found during wait.".format(job_file))
+                wait_count += 1
+            else:
+                state = record.get("state")
+                logging.info("Job {0} current state: {1}".format(job_id, state))
+                if state == "SUCCESS":
+                    logging.info("Job {0} completed successfully.".format(job_id))
+                    self.is_busy = False
+                    return True
+                if state.startswith("FAILED"):
+                    logging.warning("Job {0} failed with state {1}.".format(job_id, state))
+                    self.is_busy = False
+                    return False
+                # If still working just continue loop
+                wait_count += 1
+            if wait_count > max_wait_cycle:
+                logging.warning("Job {0} timed out after waiting.".format(job_id))
+                if record:
+                    record["state"] = "TIMEOUT"
+                    DATA_FILE.set_data(record, job_file)
+                self.is_busy = False
+                return False
+
+    def run_an_idle_job(self, year_version = None):
+        """Find and execute an idle job matching the specified Revit version.
+        
+        Args:
+            year_version (str, optional): Specific Revit version to target. Defaults to None.
+            
+        Returns:
+            bool: True if a job was started successfully, False otherwise
+        """
+        logging.info("Starting ACC_PROJECT_RUNNER.run_an_idle_job()")
         task_data = DATA_FILE.get_data(self.global_task_file, is_local=False)
         all_projects_data = DATA_FILE.get_data("ACC_PROJECTS_SUMMARY", is_local=False)
+        
         if not task_data:
             task_data = {}
-            logging.info("No task data found, initializing empty task_data.")
+            
+        # Update task data from project information
         for project_name, project_data in all_projects_data.items():
             for revit_file_name, revit_file_data in project_data.get("revit_files", {}).items():
                 task_name = revit_file_data.get("model_guid")
@@ -548,57 +603,89 @@ class ACC_PROJECT_RUNNER:
                         "project_guid": revit_file_data.get("project_guid"),
                         "revit_version": revit_file_data.get("revit_project_version")
                     }
-                    logging.info("Added new task: {}".format(task_data[task_name]))
-                else:
-                    task_data[task_name].update({
-                        "revit_version": revit_file_data.get("revit_project_version")
-                    })
-                    logging.info("Updated task: {}".format(task_data[task_name]))
+                    print("Added new task: {}".format(task_data[task_name]))
+                
+                task_data[task_name].update({
+                    "revit_version": revit_file_data.get("revit_project_version")
+                })
+        
         if not task_data:
+            print("No task data found after update.")
+            return False
 
-            logging.warning("No task data found after update.")
-            return
-        # Convert dictionary to list of tasks and sort by last_run_time
+        # Process tasks in order of last run time
         task_list = list(task_data.values())
         task_list.sort(key=lambda x: x["last_run_time"], reverse=True)
+        print("Found {} tasks to process".format(len(task_list)))
+        
         for task in task_list:
+            print("Checking task: {}_{}".format(task["project_name"], task["revit_file"]))
+            
+            # Skip if task is already running
             if task["is_running"]:
-                logging.info("Project is already running: {}".format(task))
+                logging.info("Project {}_{} is already running: {}".format(task["project_name"], task["revit_file"], task))
+                print("Project {}_{} is already running".format(task["project_name"], task["revit_file"]))
                 continue
+                
+            # Skip if Revit version is invalid
             if not isinstance(task["revit_version"], int):
                 logging.warning("Revit version is not valid: {}. Skipping...".format(task["revit_version"]))
+                print("Revit version is not valid: {}. Skipping...".format(task["revit_version"]))
+                continue
+                
+            # Skip if version doesn't match requested version
+            if str(year_version) and str(task["revit_version"]) != str(year_version):
+                logging.info("Revit version is not the same as the year version: {}. Skipping...".format(task["revit_version"]))
+                print("Revit version is not the same as the year version: {}. Skipping...".format(task["revit_version"]))
                 continue
 
-    
+            # Start the task
             logging.info("Project is not running: {}. Locking and running now...".format(task))
-            task["is_running"] = True
-            task["last_run_time"] = time.time()
+            print("Project is not running: {}_{}. Locking and running now...".format(task["project_name"], task["revit_file"]))
+            
             DATA_FILE.set_data(task_data, self.global_task_file, is_local=False)
             self.is_busy = True
-            self.run_action(task)
-            return
-
-
-
-
-
-
+            self.run_revit_action_till_failure(task)
+            return True
+            
+        return False
 
 def batch_run_projects():
+    """Run a batch of ACC projects with specified Revit version.
+    
+    This function:
+    - Creates an ACC_PROJECT_RUNNER instance
+    - Attempts to run projects up to MAX_RUN_TIME times
+    - Waits appropriate time between attempts
+    - Logs progress and results
+    """
     logging.info("Starting batch_run_projects()")
+    print("Starting batch_run_projects()")
     acc_project_runner = ACC_PROJECT_RUNNER()
     MAX_RUN_TIME = 5
     count = 0
-    while not acc_project_runner.is_busy:
-        acc_project_runner.run()
-        time.sleep(10)
+    
+    while count < MAX_RUN_TIME:
+        print("Attempt {} of {}".format(count + 1, MAX_RUN_TIME))
+        
+        if not acc_project_runner.is_busy:
+            if acc_project_runner.run_an_idle_job(year_version = "2025"):
+                print("Job finished successfully, waiting 60 seconds before next attempt so revit properly shut down")
+                time.sleep(60)
+            else:
+                print("No idle jobs found, waiting 10 seconds before next attempt")
+                time.sleep(10)
+        else:
+            print("Runner is busy, waiting 60 seconds before next attempt")
+            time.sleep(60)
+            
         count += 1
         logging.info("Batch run count: {}".format(count))
-        if count > MAX_RUN_TIME:
-            logging.info("Max run time reached, breaking loop.")
-            break
-    pass
+    
+    logging.info("Max run time reached, breaking loop.")
+    print("Max run time reached, breaking loop.")
 
 if __name__ == "__main__":
+    print("Script started from __main__.")
     logging.info("Script started from __main__.")
     batch_run_projects()

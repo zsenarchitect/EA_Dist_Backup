@@ -1,6 +1,8 @@
 import os
 from datetime import date
 import random
+import time
+import traceback
 
 from Autodesk.Revit import DB # pyright: ignore
 import proDUCKtion # pyright: ignore 
@@ -12,26 +14,38 @@ from pyrevit import EXEC_PARAMS
 from pyrevit.coreutils import envvars
 from pyrevit.coreutils import ribbon
 
-
+JOB_ID = os.environ.get("ACC_JOB_ID")
 
 def handle_acc_slave(doc):
-    single_job = DATA_FILE.get_data("ACC_PROJECT_RUNNER_JOB")
-    if not single_job:
+    print("handle_acc_slave called in doc-opened.py")
+    if not JOB_ID:
+        # Not an automated job
         return
-    if single_job.get("is_finished"):
+    job_file = "ACC_JOB_{}".format(JOB_ID)
+    job_record = DATA_FILE.get_data(job_file)
+    if not job_record:
+        print("Job record not found: {}".format(job_file))
         return
-    
-    print ("this is simulating a lot of actual work")
-    
-    sample = {"{} have been handled nicely by acc slave".format(doc.Title)}
-    DATA_FILE.set_data(sample, "ACC_PROJECT_RUNNER_JOB_PROOF_OF_WORK_{}".format(doc.Title))
+    if job_record.get("state") != "PROCESSING":
+        print("Job {} in unexpected state {}".format(JOB_ID, job_record.get("state")))
+        return
 
-    
-    single_job["is_finished"] = True
-    DATA_FILE.set_data(single_job, "ACC_PROJECT_RUNNER_JOB")
+    print("Processing document: {}".format(doc.Title))
+    try:
+        # Place your real processing logic here
+        sample_note = "{} have been handled nicely by acc slave".format(doc.Title)
+        DATA_FILE.set_data({"note": sample_note}, "ACC_PROJECT_RUNNER_JOB_PROOF_OF_WORK_{}".format(doc.Title))
+        job_record["state"] = "SUCCESS"
+    except Exception as e:
+        print("Error in handle_acc_slave: {}".format(e))
+        job_record["state"] = "FAILED_PROCESSING"
+    finally:
+        DATA_FILE.set_data(job_record, job_file)
 
+    print("Syncing and closing Revit...")
     REVIT_SYNC.sync_and_close()
     REVIT_APPLICATION.close_revit_app()
+    print("Revit closed")
 
 def log_time_sheet(doc):
     TIMESHEET.update_timesheet(doc.Title)
@@ -452,8 +466,8 @@ def main():
         if ENVIRONMENT.get_computer_name() == "CXU" or USER.IS_DEVELOPER:
             REVIT_METRIC.RevitMetric(doc).update_metric()
 
-
-        handle_acc_slave(doc)
+        if USER.IS_DEVELOPER:   
+            handle_acc_slave(doc)
 
         if USER.IS_DEVELOPER:
             NOTIFICATION.messenger(main_text = "Doc opened: {}".format(doc.Title))

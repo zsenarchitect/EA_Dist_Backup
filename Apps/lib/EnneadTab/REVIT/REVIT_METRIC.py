@@ -3,6 +3,19 @@ from datetime import datetime
 import traceback
 import os
 import sys
+import time
+import json
+import logging
+
+# ------------------------------------------------------------------
+# Compatibility: IronPython 2.7 (Revit) does not have FileNotFoundError
+# ------------------------------------------------------------------
+try:
+    FileNotFoundError
+except NameError:  # Define fallback for IronPython
+    class FileNotFoundError(IOError):
+        """Fallback FileNotFoundError for IronPython <3."""
+        pass
 
 # Setup imports
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -68,88 +81,64 @@ class RevitMetric:
 
         
     def update_metric(self):
-        self.log_debug("Starting metric update for document: {}".format(self.doc.Title))
-        
-        data_file_name = "{}_{}".format(PREFIX, self.doc.Title)
-        report_time = datetime.now()
-        report_time_str = report_time.strftime("%Y-%m-%d %H:%M:%S")
-        
-        self.log_debug("Using data file: {}".format(data_file_name))
-        
+        """Update metrics for the current document"""
         try:
-            with DATA_FILE.update_data(data_file_name, is_local=True) as data_file:
-                if "update_time" not in data_file:
-                    data_file["update_time"] = []
-                
-                data_file["update_time"].append(report_time_str)
-                self.log_debug("Added update time: {}".format(report_time_str))
-
-                # Track overall metrics
-                total_tasks = len(self.tasks)
-                successful_tasks = 0
-                failed_tasks = 0
-
-                for i, task in enumerate(self.tasks):
-                    self.log_debug("Running task {}/{}: {}".format(i+1, total_tasks, task.task_name))
-                    if not task.enabled:
-                        self.log_debug("Skipping task {} - disabled".format(task.task_name))
-                        continue
-                    
-                    start_time = datetime.now()
-                    start_time_str = start_time.strftime("%Y-%m-%d %H:%M:%S")
-                    status_detail = ""
-                    
-                    try:    
-                        self.log_debug("Executing task: {}".format(task.task_name))
-                        task.run(self.doc)
-                        status = "success"
-                        successful_tasks += 1
-                        self.log_debug("Task {} completed successfully".format(task.task_name))
-                    except Exception as e:
-                        status_detail = traceback.format_exc()
-                        self.log_error("Error running task {}".format(task.task_name), e)
-                        status = "error"
-                        failed_tasks += 1
-                        
-                    finish_time = datetime.now()
-                    finish_time_str = finish_time.strftime("%Y-%m-%d %H:%M:%S")
-                    
-                    # Fix: Calculate duration properly using datetime objects
-                    duration_seconds = (finish_time - start_time).total_seconds()
-                    
-                    self.log_debug("Task {} duration: {:.3f} seconds".format(task.task_name, duration_seconds))
-
-                    if task.task_name not in data_file:
-                        data_file[task.task_name] = {}
-                    
-                    # Store comprehensive task information
-                    data_file[task.task_name]["status"] = status
-                    data_file[task.task_name]["status_detail"] = status_detail
-                    data_file[task.task_name]["task_start_time"] = start_time_str
-                    data_file[task.task_name]["task_finish_time"] = finish_time_str
-                    data_file[task.task_name]["task_duration_seconds"] = duration_seconds
-                    data_file[task.task_name]["script_path"] = task.script_path
-                    data_file[task.task_name]["func_name"] = task.func_name
-
-                # Store overall summary
-                data_file["summary"] = {
-                    "total_tasks": total_tasks,
-                    "successful_tasks": successful_tasks,
-                    "failed_tasks": failed_tasks,
-                    "success_rate": (successful_tasks / total_tasks) * 100 if total_tasks > 0 else 0,
-                    "overall_status": "success" if failed_tasks == 0 else "partial_failure" if successful_tasks > 0 else "failure"
+            # Get task configuration
+            config_file = os.path.join(os.path.dirname(__file__), "metric_tasks.json")
+            if os.path.exists(config_file):
+                with open(config_file, 'r') as f:
+                    tasks = json.load(f)
+            else:
+                logging.debug("No configuration found, using sample tasks for document: {}".format(self.doc.Title))
+                tasks = {
+                    "sample_task": {
+                        "enabled": True,
+                        "script_path": "C:\\Users\\szhang\\Documents\\EnneadTab Ecosystem\\EA_Dist\\Apps\\_revit\\XX.tab\\YY.panel\\ZZ.pulldown",
+                        "function": "run_task"
+                    },
+                    "sample_task2": {
+                        "enabled": False,
+                        "script_path": "path/to/script2",
+                        "function": "run_task2"
+                    }
                 }
-                
-                self.log_debug("Metric update completed. Success: {}/{}".format(successful_tasks, total_tasks))
-                
-        except Exception as e:
-            self.log_error("Failed to update metrics data file", e)
-            raise
 
-        # EMAIL.email_to_self(
-        #     subject="REVIT_METRIC",
-        #     body="placeholder report: {} has been generated at {}".format(self.doc.Title, report_time_str)
-        # )
+            # Update timestamp
+            self.data["last_update"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            # Run tasks
+            success_count = 0
+            total_tasks = len(tasks)
+            logging.debug("Starting metric update for document: {}".format(self.doc.Title))
+            logging.debug("Using data file: {}".format(self.data_file))
+            logging.debug("Added update time: {}".format(self.data["last_update"]))
+            
+            for i, (task_name, task_config) in enumerate(tasks.items(), 1):
+                if not task_config.get("enabled", True):
+                    logging.debug("Skipping task {} - disabled".format(task_name))
+                    continue
+                    
+                logging.debug("Running task {}/{}: {}".format(i, total_tasks, task_name))
+                logging.debug("Executing task: {}".format(task_name))
+                
+                try:
+                    task = MetricTask(task_name, task_config)
+                    start_time = time.time()
+                    task.run(self.doc)
+                    duration = time.time() - start_time
+                    logging.debug("Task {} duration: {:.3f} seconds".format(task_name, duration))
+                    success_count += 1
+                except Exception as e:
+                    logging.error("Error running task {}".format(task_name))
+                    logging.error("Exception details: {}".format(str(e)))
+                    logging.error("Traceback: {}".format(traceback.format_exc()))
+                    
+            logging.debug("Metric update completed. Success: {}/{}".format(success_count, total_tasks))
+            return success_count > 0
+            
+        except Exception as e:
+            logging.error("Error in update_metric: {}".format(str(e)))
+            return False
 
 
 

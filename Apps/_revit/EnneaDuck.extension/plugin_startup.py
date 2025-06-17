@@ -7,6 +7,24 @@ __doc__ = "The magical kickstarter for EnneadTab! This script initializes all th
 import os
 import sys
 import threading
+import uuid  # added for potential future use
+JOB_ID = os.environ.get("ACC_JOB_ID")
+
+# Helper for ACC automation
+# ------------------------------------------------------
+
+def _finish_job_with_state(job_record, job_file, state_value):
+    """Set job state, save file, and close Revit"""
+    try:
+        if job_record is not None:
+            job_record["state"] = state_value
+            DATA_FILE.set_data(job_record, job_file)
+    except Exception as _e:
+        print("Error saving job state: {}".format(_e))
+    try:
+        REVIT_APPLICATION.close_revit_app()
+    except Exception as _e:
+        print("Error closing Revit: {}".format(_e))
 
 
 """need to navigate to duckking lib first before it can auto detect further. 
@@ -347,40 +365,86 @@ def register_context_menu():
 
 
 
-def handle_acc_slave():
-    single_job = DATA_FILE.get_data("ACC_PROJECT_RUNNER_JOB")
-    if not single_job:
-        return
-    if single_job.get("is_finished"):
-        return
-    
-    model_guid = single_job.get("model_guid")
-    project_guid = single_job.get("project_guid")
-    region = "US"
-    if not model_guid or not project_guid:
-        return
-    folder = "EnneadTab.tab\\Tools.panel"
-    func_name = "open_doc_silently"
-    
-    cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region, System.Guid(project_guid), System.Guid(model_guid))
-    open_options = DB.OpenOptions()
-    open_options.SetOpenWorksetsConfiguration (DB.WorksetConfiguration(DB.WorksetConfigurationOption.CloseAllWorksets ) )
-    open_options.Audit = True
-    try:
-        return REVIT_APPLICATION.get_uiapp().OpenAndActivateDocument (cloud_path, open_options, False) # pyright: ignore 
-        
-    except:
-        try:
-            return REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path,open_options)
-        except Exception as e:
-            print ("cannot be opened becasue {}".format(e))
+def handle_acc_slave_job():
+    """Handle ACC job based on job_id passed from external orchestrator.
 
-    
+    Reads job record, attempts to open the cloud model, and updates state.
+    No f-strings are used to keep compatibility with older Python versions.
+    """
+    if not JOB_ID:
+        # Interactive Revit session; nothing to do.
+        return
+
+    job_file = "ACC_JOB_{}".format(JOB_ID)
+    job_record = DATA_FILE.get_data(job_file)
+    if not job_record:
+        print("Job record not found: {}".format(job_file))
+        dummy = {"state": "FAILED_JOB_RECORD"}
+        DATA_FILE.set_data(dummy, job_file)
+        try:
+            REVIT_APPLICATION.close_revit_app()
+        except:
+            pass
+        return
+
+    # Only continue if orchestrator placed us in REVIT_STARTING state
+    if job_record.get("state") != "REVIT_STARTING":
+        print("Job {} in unexpected state: {}".format(JOB_ID, job_record.get("state")))
+        _finish_job_with_state(job_record, job_file, "FAILED_STATE_MISMATCH")
+        return
+
+    task = job_record.get("task", {})
+    model_guid = task.get("model_guid")
+    project_guid = task.get("project_guid")
+    region = "US"
+
+    if not model_guid or not project_guid:
+        print("Missing model_guid or project_guid in task data")
+        _finish_job_with_state(job_record, job_file, "FAILED_TASK_DATA")
+        return
+
+    # Update state to OPENING_DOC so outer process knows progress
+    job_record["state"] = "OPENING_DOC"
+    DATA_FILE.set_data(job_record, job_file)
+
+    try:
+        cloud_path = DB.ModelPathUtils.ConvertCloudGUIDsToCloudPath(region,
+                                                                    System.Guid(project_guid),
+                                                                    System.Guid(model_guid))
+        open_opts = DB.OpenOptions()
+        open_opts.SetOpenWorksetsConfiguration(DB.WorksetConfiguration(DB.WorksetConfigurationOption.CloseAllWorksets))
+        open_opts.Audit = True
+        print("Opening cloud model ...")
+        try:
+            # Use Application API first (faster, headless)
+            REVIT_APPLICATION.get_app().OpenDocumentFile(cloud_path, open_opts)
+        except Exception as e:
+            print("Primary open failed: {}".format(e))
+            try:
+                REVIT_APPLICATION.get_uiapp().OpenAndActivateDocument(cloud_path, open_opts, False)
+            except Exception as e2:
+                print("Secondary open failed: {}".format(e2))
+                _finish_job_with_state(job_record, job_file, "FAILED_OPEN_DOC")
+                return
+        # Document opened successfully. Doc-opened hook will continue the flow.
+        job_record["state"] = "PROCESSING"
+        DATA_FILE.set_data(job_record, job_file)
+    except Exception as e:
+        print("Error creating cloud path or opening document: {}".format(e))
+        _finish_job_with_state(job_record, job_file, "FAILED_OPEN_DOC")
+        return
+
 
 
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def EnneadTab_startup():
+    # Run ACC automation only in developer sessions for now
+    if USER.IS_DEVELOPER:
+        handle_acc_slave_job()
+
+    # Additional developer-specific behaviour can go here
+
     if ENVIRONMENT.IS_AVD:
         set_RIR_clicker()
 
@@ -442,8 +506,6 @@ def EnneadTab_startup():
     register_temp_graphic_server()
     register_selection_owner_checker()
     purge_dump_folder_families()
-
-    handle_acc_slave()
 
     if USER.IS_DEVELOPER:
         NOTIFICATION.messenger(main_text = "[Developer Only] startup run ok.")

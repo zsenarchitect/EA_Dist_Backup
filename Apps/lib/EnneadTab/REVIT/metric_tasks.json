@@ -1,0 +1,12 @@
+{
+    "sample_task": {
+        "enabled": true,
+        "script_path": "C:\\Users\\szhang\\Documents\\EnneadTab Ecosystem\\EA_Dist\\Apps\\_revit\\XX.tab\\YY.panel\\ZZ.pulldown",
+        "function": "run_task"
+    },
+    "sample_task2": {
+        "enabled": false,
+        "script_path": "path/to/script2",
+        "function": "run_task2"
+    }
+} 
