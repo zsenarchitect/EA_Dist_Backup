@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://Ennead-Architects-LLP.github.io/EnneadTab-OS/sitemap.xml
+Sitemap: https://zsenarchitect.github.io/EA_Dist_Backup/sitemap.xml

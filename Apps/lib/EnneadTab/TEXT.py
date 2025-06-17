@@ -3,7 +3,10 @@ import re
 import sys
 sys.path.append(ENVIRONMENT.DEPENDENCY_FOLDER)
 
-from termcolor import colored # pyright: ignore
+try:
+    from termcolor import colored # pyright: ignore
+except:
+    pass
 from COLOR import TextColorEnum
 
 

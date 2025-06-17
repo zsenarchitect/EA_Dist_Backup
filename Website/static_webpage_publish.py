@@ -20,12 +20,17 @@ lib_folder = None
 for path in possible_lib_paths:
     if path.exists():
         lib_folder = path
+        print(f"Found lib folder at: {path}")
         break
 
 if lib_folder:
     sys.path.insert(0, str(lib_folder))
+    print(f"Added {lib_folder} to Python path")
 else:
     print("Warning: Apps/lib folder not found in any expected location")
+    print("Searched in:")
+    for path in possible_lib_paths:
+        print(f"  - {path}")
 
 try:
     import EnneadTab.DOCUMENTATION as DOCUMENTATION
@@ -35,6 +40,7 @@ try:
     print("Successfully imported EnneadTab modules")
 except ImportError as e:
     print(f"Warning: EnneadTab modules not found: {e}")
+    print("The script will continue with limited functionality")
     HAS_ENNEAD_MODULES = False
 
 # GitHub Pages Configuration
