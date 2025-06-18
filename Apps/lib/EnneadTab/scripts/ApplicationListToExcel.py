@@ -3,6 +3,7 @@ import sys
 import subprocess
 import importlib.util
 import socket
+import traceback
 
 def check_and_install_module(module_name):
     """Check if a module is installed, if not install it."""
@@ -96,8 +97,8 @@ def read_application_json_files():
         return []
     
     print(f"Found {len(json_files)} JSON files:")
-    for file in json_files:
-        print(f"- {os.path.basename(file)}")
+    # for file in json_files:
+    #     print(f"- {os.path.basename(file)}")
     
     # Read and parse all JSON files
     all_data = []
@@ -106,7 +107,7 @@ def read_application_json_files():
             with open(json_file, 'r', encoding='utf-8-sig') as f:  # Using utf-8-sig to handle BOM
                 data = json.load(f)
                 all_data.append(data)
-                print(f"\nSuccessfully read {os.path.basename(json_file)}:")
+                # print(f"\nSuccessfully read {os.path.basename(json_file)}:")
         except Exception as e:
             print(f"Error reading {json_file}: {str(e)}")
     
@@ -393,12 +394,17 @@ def create_visualization(data, output_path):
     return html_path
 
 def create_excel_report(data, output_path):
+    print("[LOG] Starting Excel report creation...")
     # Group records by PC
     pc_records = {}
+    pc_user_pairs = []
+    pcs_with_data = set()
     for record in data:
         pc = record['PC']
+        user = record['User']
         if pc not in pc_records:
             pc_records[pc] = []
+            pc_user_pairs.append((pc, user))
         for app_type in ['Revit', 'Rhino', 'Enscape']:
             if app_type in record:
                 for app_name, version in record[app_type].items():
@@ -406,23 +412,72 @@ def create_excel_report(data, output_path):
                         'Application Type': app_type,
                         'Application Name': app_name,
                         'Version': version,
-                        'User': record['User']
+                        'User': user
                     })
-    
-    excel_path = os.path.join(output_path, "ApplicationUsageSummary.xlsx")
+                    pcs_with_data.add(pc)
+
+    # Prepare comment column
+    pc_user_comments = []
+    for pc, user in pc_user_pairs:
+        comment = "" if pc in pcs_with_data else "No application data found"
+        pc_user_comments.append((pc, user, comment))
+
+    # Generate timestamp for filename
+    timestamp = datetime.datetime.now().strftime('%Y%m%d-%H%M')
+    excel_path = os.path.join(output_path, f"ApplicationUsageSummary_{timestamp}.xlsx")
+    print(f"[LOG] Excel path: {excel_path}")
     try:
+        print("[LOG] Writing Excel file with pandas...")
         with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+            df_pc_users = pd.DataFrame(pc_user_comments, columns=["ComputerName", "UserName", "Comment"])
+            df_pc_users.to_excel(writer, sheet_name="PC UserNames", index=False)
             for pc, records in pc_records.items():
                 df = pd.DataFrame(records)
-                # Group by Application Type, then sort by Application Name (case-insensitive)
-                df = df.sort_values(['Application Type', 'Application Name'], key=lambda col: col.str.lower())
-                # Excel sheet names can't be longer than 31 chars
-                safe_pc = str(pc)[:31]
-                df.to_excel(writer, sheet_name=safe_pc, index=False)
-        # Auto-size columns using openpyxl
+                if not df.empty:
+                    df = df.sort_values(['Application Type', 'Application Name'], key=lambda col: col.str.lower())
+                    safe_pc = str(pc)[:31]
+                    df.to_excel(writer, sheet_name=safe_pc, index=False)
+                else:
+                    print(f"[LOG] Skipping empty sheet for PC: {pc}")
+        print("[LOG] Excel file written, now formatting with openpyxl...")
         wb = openpyxl.load_workbook(excel_path)
-        for ws in wb.worksheets:
-            for col in ws.columns:
+        ws = wb["PC UserNames"]
+        wb.active = wb.sheetnames.index("PC UserNames")
+        from openpyxl.styles import Font, Border, Side, PatternFill
+        from openpyxl.formatting.rule import FormulaRule
+        print("[LOG] Formatting header...")
+        for cell in ws[1]:
+            cell.font = Font(bold=True)
+        print("[LOG] Adding borders...")
+        thin = Side(border_style="thin", color="000000")
+        border = Border(left=thin, right=thin, top=thin, bottom=thin)
+        for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=3):
+            for cell in row:
+                cell.border = border
+        print("[LOG] Adding conditional formatting...")
+        green_fill = PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid")
+        max_row = ws.max_row
+        formula = 'ISNUMBER(SEARCH("EANY",A2))'
+        ws.conditional_formatting.add(f"A2:A{max_row}", FormulaRule(formula=[formula], fill=green_fill))
+        print(f"[LOG] Applied conditional formatting to range A2:A{max_row} with formula: {formula}")
+        ws.auto_filter.ref = "A1:C1"
+        print(f"[LOG] Applied autofilter to range A1:C1")
+        print("[LOG] Auto-sizing columns...")
+        for col in ws.columns:
+            max_length = 0
+            col_letter = openpyxl.utils.get_column_letter(col[0].column)
+            for cell in col:
+                try:
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            adjusted_width = (max_length + 2)
+            ws.column_dimensions[col_letter].width = adjusted_width
+        for ws2 in wb.worksheets:
+            if ws2.title == "PC UserNames":
+                continue
+            for col in ws2.columns:
                 max_length = 0
                 col_letter = openpyxl.utils.get_column_letter(col[0].column)
                 for cell in col:
@@ -432,13 +487,16 @@ def create_excel_report(data, output_path):
                     except:
                         pass
                 adjusted_width = (max_length + 2)
-                ws.column_dimensions[col_letter].width = adjusted_width
+                ws2.column_dimensions[col_letter].width = adjusted_width
+        print("[LOG] Saving workbook...")
         wb.save(excel_path)
+        print("[LOG] Excel report successfully saved.")
     except PermissionError:
         print(f"[ERROR] Permission denied: Could not write to {excel_path}. Please close the file if it is open and try again.")
         return None
     except Exception as e:
         print(f"[ERROR] Could not write Excel file: {e}")
+        traceback.print_exc()
         return None
     return excel_path
 
@@ -459,10 +517,10 @@ def main(open_after = True):
         excel_path = create_excel_report(data, output_path)
         if excel_path:
             print(f"Excel report created: {excel_path}")
-        
+
         # Open HTML in default browser
         if open_after:
-            webbrowser.open('file://' + html_path) 
+            webbrowser.open('file://' + html_path)
 
 
 
