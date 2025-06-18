@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 import importlib.util
+import socket
 
 def check_and_install_module(module_name):
     """Check if a module is installed, if not install it."""
@@ -106,12 +107,6 @@ def read_application_json_files():
                 data = json.load(f)
                 all_data.append(data)
                 print(f"\nSuccessfully read {os.path.basename(json_file)}:")
-                print(f"PC: {data.get('PC', 'N/A')}")
-                print(f"User: {data.get('User', 'N/A')}")
-                print("Applications found:")
-                for app_type in ['Revit', 'Rhino', 'Enscape']:
-                    if app_type in data:
-                        print(f"- {app_type}: {data[app_type]}")
         except Exception as e:
             print(f"Error reading {json_file}: {str(e)}")
     
@@ -280,10 +275,10 @@ def create_visualization(data, output_path):
                     version_data[app_name][version] += 1
         sorted_apps = sort_applications(version_data)
         # Debug output: print app names and their priority scores
-        print(f"\n[{app_type}] Sorted app order and priority scores:")
+        # print(f"\n[{app_type}] Sorted app order and priority scores:")
         for app_name in sorted_apps:
             score = get_priority_score(app_name)
-            print(f"  {app_name} (score: {score})")
+            # print(f"  {app_name} (score: {score})")
         for app_name in sorted_apps:
             versions = version_data[app_name]
             chart_id = f"{app_type}_{app_name.replace(' ', '_').replace('.', '_').replace('(', '').replace(')', '')}"
@@ -447,7 +442,7 @@ def create_excel_report(data, output_path):
         return None
     return excel_path
 
-def main():
+def main(open_after = True):
     print("Reading application JSON files...")
     data = read_application_json_files()
     print(f"\nTotal records processed: {len(data)}")
@@ -466,10 +461,24 @@ def main():
             print(f"Excel report created: {excel_path}")
         
         # Open HTML in default browser
-        webbrowser.open('file://' + html_path) 
+        if open_after:
+            webbrowser.open('file://' + html_path) 
 
 
 
 
 if __name__ == "__main__":
-    main()
+    computer_name = socket.gethostname().upper()
+    if computer_name == "EANY-VIRTUAL7-1":
+        print(f"Running in loop mode on {computer_name}.")
+        while True:
+            main(open_after = False)
+            print("Sleeping for 30 minutes before next run...")
+            for remaining in range(1800, 0, -1):
+                mins, secs = divmod(remaining, 60)
+                timer = '{:02d}:{:02d}'.format(mins, secs)
+                print(f'\033[33m\rNext run in: {timer}\033[0m', end='')
+                time.sleep(1)
+            print('\rNext run starting...     ')
+    else:
+        main(open_after = True)  
