@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://zsenarchitect.github.io/EA_Dist_Backup/sitemap.xml

@@ -2,10 +2,161 @@ import os
 import json
 import shutil
 import sys
-import markdown
+import subprocess
 from pathlib import Path
 from datetime import datetime
 import xml.etree.ElementTree as ET
+
+# Fix encoding issues on Windows
+if sys.platform == "win32":
+    import codecs
+    sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+    sys.stderr = codecs.getwriter("utf-8")(sys.stderr.detach())
+
+def check_python_environment():
+    """Check Python environment and provide diagnostic information."""
+    print("=" * 60)
+    print("Python Environment Check")
+    print("=" * 60)
+    print(f"Python version: {sys.version}")
+    print(f"Python executable: {sys.executable}")
+    print(f"Platform: {sys.platform}")
+    print(f"Working directory: {Path.cwd()}")
+    
+    # Check if pip is available
+    try:
+        result = subprocess.run([sys.executable, "-m", "pip", "--version"], 
+                              capture_output=True, text=True, check=True)
+        print(f"Pip version: {result.stdout.strip()}")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("WARNING: pip not available or not working properly")
+    
+    print("=" * 60)
+
+# Check Python environment first
+check_python_environment()
+
+def install_missing_module(module_name, package_name=None):
+    """Install a missing Python module using pip."""
+    if package_name is None:
+        package_name = module_name
+    
+    print(f"Installing missing module: {package_name}")
+    
+    # Try different pip installation methods
+    pip_commands = [
+        [sys.executable, "-m", "pip", "install", package_name],
+        [sys.executable, "-m", "pip", "install", "--user", package_name],
+        ["pip", "install", package_name],
+        ["pip3", "install", package_name],
+    ]
+    
+    for cmd in pip_commands:
+        try:
+            print(f"Trying: {' '.join(cmd)}")
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            print(f"Successfully installed {package_name}")
+            if result.stdout:
+                print(f"Output: {result.stdout.strip()}")
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"Failed with command {' '.join(cmd)}: {e}")
+            if e.stderr:
+                print(f"Error: {e.stderr.strip()}")
+            continue
+        except FileNotFoundError:
+            print(f"Command not found: {' '.join(cmd)}")
+            continue
+    
+    # If all pip methods fail, provide manual instructions
+    print(f"ERROR: All pip installation methods failed for {package_name}")
+    print("Please install manually using one of these methods:")
+    print(f"  1. pip install {package_name}")
+    print(f"  2. python -m pip install {package_name}")
+    print(f"  3. pip3 install {package_name}")
+    print(f"  4. Download from: https://pypi.org/project/{package_name}/")
+    return False
+
+def ensure_required_modules():
+    """Ensure all required modules are installed."""
+    required_modules = [
+        ("markdown", "markdown"),
+        ("subprocess", None),  # Built-in module
+        ("pathlib", None),     # Built-in module
+        ("datetime", None),    # Built-in module
+        ("xml.etree.ElementTree", None),  # Built-in module
+        ("json", None),        # Built-in module
+        ("shutil", None),      # Built-in module
+        ("os", None),          # Built-in module
+        ("sys", None),         # Built-in module
+    ]
+    
+    optional_modules = [
+        ("requests", "requests"),  # For potential future HTTP operations
+        ("beautifulsoup4", "beautifulsoup4"),  # For HTML parsing if needed
+        ("jinja2", "jinja2"),  # For template rendering if needed
+    ]
+    
+    missing_modules = []
+    missing_optional = []
+    
+    # Check required modules
+    for module_name, package_name in required_modules:
+        if package_name is None:
+            # Built-in module, just check if it can be imported
+            try:
+                __import__(module_name)
+            except ImportError:
+                missing_modules.append((module_name, None))
+        else:
+            # External module, try to import
+            try:
+                __import__(module_name)
+            except ImportError:
+                missing_modules.append((module_name, package_name))
+    
+    # Check optional modules
+    for module_name, package_name in optional_modules:
+        try:
+            __import__(module_name)
+        except ImportError:
+            missing_optional.append((module_name, package_name))
+    
+    if missing_modules:
+        print("=" * 60)
+        print("Missing required modules detected. Installing...")
+        print("=" * 60)
+        
+        for module_name, package_name in missing_modules:
+            if package_name:
+                if not install_missing_module(module_name, package_name):
+                    print(f"ERROR: Failed to install {package_name}. Please install manually:")
+                    print(f"  pip install {package_name}")
+                    return False
+            else:
+                print(f"ERROR: Built-in module {module_name} is missing. This is unusual.")
+                return False
+        
+        print("=" * 60)
+        print("All required modules installed successfully!")
+        print("=" * 60)
+    
+    if missing_optional:
+        print("Optional modules not found (not required for basic functionality):")
+        for module_name, package_name in missing_optional:
+            print(f"  - {package_name}")
+        print("Install with: pip install " + " ".join([pkg for _, pkg in missing_optional]))
+        print()
+    
+    return True
+
+# Ensure all required modules are available
+if not ensure_required_modules():
+    print("ERROR: Failed to install required modules. Exiting.")
+    sys.exit(1)
+
+# Now import the modules we need
+import markdown
 
 # Add the lib folder to the path to import EnneadTab modules
 current_dir = Path(__file__).parent
@@ -337,7 +488,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        path: './Website/docs'
+        path: './docs'
 
   deploy:
     environment:
@@ -994,9 +1145,19 @@ def update_documentation():
     # Auto-detect GitHub configuration
     detect_github_config()
     
-    # Create docs directory if it doesn't exist
-    docs_dir = Path("docs")
+    # Always create docs directory in the repository root (not in Website subfolder)
+    # Determine the repository root directory
+    current_script_dir = Path(__file__).parent
+    if current_script_dir.name == "Website":
+        # Script is in Website folder, go up one level to repo root
+        repo_root = current_script_dir.parent
+    else:
+        # Script is already in repo root
+        repo_root = current_script_dir
+    
+    docs_dir = repo_root / "docs"
     docs_dir.mkdir(exist_ok=True)
+    print(f"Using docs directory: {docs_dir}")
     
     # Create GitHub Pages configuration files
     create_github_pages_files(docs_dir)
@@ -1005,21 +1166,21 @@ def update_documentation():
     create_github_actions_workflow()
     
     # Copy static assets if they exist
-    assets_dir = Path("Website/assets")
+    assets_dir = current_script_dir / "assets"
     if assets_dir.exists():
         shutil.copytree(assets_dir, docs_dir / "assets", dirs_exist_ok=True)
         print("Copied assets")
     
     # Copy CSS and JS files from existing docs directory if they exist
     for file in ["styles.css", "script.js"]:
-        # Try current directory first (when script is in Website folder)
-        source_file = Path(file)
+        # Try current script directory first
+        source_file = current_script_dir / file
         if not source_file.exists():
-            # Try docs subfolder
-            source_file = Path(f"docs/{file}")
+            # Try docs subfolder in current script directory
+            source_file = current_script_dir / "docs" / file
         if not source_file.exists():
             # Try Website folder (when script is run from parent directory)
-            source_file = Path(f"Website/{file}")
+            source_file = repo_root / "Website" / file
             
         if source_file.exists():
             shutil.copy(source_file, docs_dir)
@@ -1075,11 +1236,11 @@ def update_documentation():
     create_setup_guide()
     
     print("=" * 60)
-    print("🎉 Documentation update completed!")
-    print(f"🌐 Site URL: {GITHUB_PAGES_CONFIG['site_url']}")
-    print("📁 Files generated in: ./docs/")
-    print("🚀 GitHub Actions workflow created for auto-deployment")
-    print("📖 Setup guide created: GITHUB_PAGES_SETUP.md")
+    print("*** Documentation update completed! ***")
+    print(f"Site URL: {GITHUB_PAGES_CONFIG['site_url']}")
+    print(f"Files generated in: {docs_dir}")
+    print("GitHub Actions workflow created for auto-deployment")
+    print("Setup guide created: GITHUB_PAGES_SETUP.md")
     print("=" * 60)
 
 def create_setup_guide():
@@ -1090,11 +1251,17 @@ def create_setup_guide():
 This script automatically configures GitHub Pages for your repository. Here's what it creates:
 
 ### Files Created:
+- `docs/` - Documentation directory in repository root (GitHub Pages source)
 - `.nojekyll` - Disables Jekyll processing for faster builds
 - `404.html` - Custom 404 error page
 - `robots.txt` - SEO configuration for search engines
 - `sitemap.xml` - Site map for better SEO
 - `.github/workflows/deploy-docs.yml` - GitHub Actions workflow for auto-deployment
+
+### Important Directory Structure:
+- `docs/` - This is the ONLY docs folder that should exist (in repository root)
+- `Website/docs/` - This folder will be created temporarily but should be ignored
+- GitHub Pages will serve content from the root `docs/` folder
 
 ### Repository Configuration Required:
 1. Go to your repository Settings
@@ -1116,7 +1283,8 @@ This script automatically configures GitHub Pages for your repository. Here's wh
 ### Troubleshooting:
 - If site appears empty, check GitHub Pages source is set to "GitHub Actions"
 - Ensure the workflow has permissions to deploy (check repository Settings > Actions)
-- Verify all required files are in the docs/ folder
+- Verify all required files are in the root `docs/` folder (not Website/docs/)
+- Delete any duplicate `Website/docs/` folder if it exists
 
 ### URLs:
 - Repository: https://github.com/{GITHUB_PAGES_CONFIG['organization']}/{GITHUB_PAGES_CONFIG['repo_name']}
@@ -1162,7 +1330,7 @@ def commit_and_push():
             except subprocess.CalledProcessError:
                 print("Failed to push - check branch name and permissions")
         
-        print("\n🎯 Next Steps:")
+        print("\nNext Steps:")
         print("1. Go to your repository Settings → Pages")
         print("2. Set Source to 'GitHub Actions'")
         print("3. Wait for the workflow to complete")
