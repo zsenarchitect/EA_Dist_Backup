@@ -10,7 +10,7 @@ schtasks /create ^
   /st 00:00 ^
   /rl LIMITED ^
   /f ^
-  /ru %USERNAME%
+  /ru %USERNAME% >nul 2>&1
 
 REM Remove any existing hourly pin connection task
 schtasks /delete /tn "PinConnection" /f >nul 2>&1
@@ -22,7 +22,7 @@ schtasks /create ^
   /sc hourly ^
   /rl LIMITED ^
   /f ^
-  /ru %USERNAME%
+  /ru %USERNAME% >nul 2>&1
 
-echo NightRunner scheduled task has been registered for user %USERNAME% to run daily at midnight.
+echo All register suscefful. You may close this window
 pause

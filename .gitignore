@@ -166,3 +166,6 @@ cython_debug/
 # Never ignore anything in Apps\_engine directory
 !Apps\_engine/
 !Apps\_engine/**
+
+# Prevent duplicate docs folders
+Website/docs/

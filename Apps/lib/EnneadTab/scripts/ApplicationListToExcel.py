@@ -20,7 +20,8 @@ def check_and_install_module(module_name):
 required_modules = [
     'pandas',
     'plotly',
-    'openpyxl'
+    'openpyxl',
+    'fuzzywuzzy'
 ]
 
 for module in required_modules:
@@ -40,6 +41,8 @@ import openpyxl
 import datetime
 import textwrap
 import time
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 # Priority application patterns that should appear first
 PRIORITY_PATTERNS = [
@@ -393,7 +396,7 @@ def create_visualization(data, output_path):
         return None
     return html_path
 
-def create_excel_report(data, output_path):
+def create_excel_report(data, output_path, matches=None, unmatched_employees=None):
     print("[LOG] Starting Excel report creation...")
     # Group records by PC
     pc_records = {}
@@ -431,6 +434,20 @@ def create_excel_report(data, output_path):
         with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
             df_pc_users = pd.DataFrame(pc_user_comments, columns=["ComputerName", "UserName", "Comment"])
             df_pc_users.to_excel(writer, sheet_name="PC UserNames", index=False)
+
+            # Insert Employees With Data (2nd sheet)
+            if matches is not None:
+                df_with_data = pd.DataFrame([
+                    {'Employee Name': m['employee_name'], 'Profile Username': m['username'], 'How confident i am feeling my guess is correct': m['confidence']} for m in matches
+                ])
+                df_with_data = df_with_data.sort_values(by='How confident i am feeling my guess is correct', ascending=False)
+                df_with_data.to_excel(writer, sheet_name="Employees With Data", index=False)
+
+            # Insert Employees Without Data (3rd sheet)
+            if unmatched_employees is not None:
+                df_without_data = pd.DataFrame({'Employee Name': unmatched_employees})
+                df_without_data.to_excel(writer, sheet_name="Employees Without Data", index=False)
+
             for pc, records in pc_records.items():
                 df = pd.DataFrame(records)
                 if not df.empty:
@@ -463,21 +480,8 @@ def create_excel_report(data, output_path):
         ws.auto_filter.ref = "A1:C1"
         print(f"[LOG] Applied autofilter to range A1:C1")
         print("[LOG] Auto-sizing columns...")
-        for col in ws.columns:
-            max_length = 0
-            col_letter = openpyxl.utils.get_column_letter(col[0].column)
-            for cell in col:
-                try:
-                    if cell.value:
-                        max_length = max(max_length, len(str(cell.value)))
-                except:
-                    pass
-            adjusted_width = (max_length + 2)
-            ws.column_dimensions[col_letter].width = adjusted_width
-        for ws2 in wb.worksheets:
-            if ws2.title == "PC UserNames":
-                continue
-            for col in ws2.columns:
+        for ws_sheet in wb.worksheets:
+            for col in ws_sheet.columns:
                 max_length = 0
                 col_letter = openpyxl.utils.get_column_letter(col[0].column)
                 for cell in col:
@@ -487,7 +491,7 @@ def create_excel_report(data, output_path):
                     except:
                         pass
                 adjusted_width = (max_length + 2)
-                ws2.column_dimensions[col_letter].width = adjusted_width
+                ws_sheet.column_dimensions[col_letter].width = adjusted_width
         print("[LOG] Saving workbook...")
         wb.save(excel_path)
         print("[LOG] Excel report successfully saved.")
@@ -500,21 +504,204 @@ def create_excel_report(data, output_path):
         return None
     return excel_path
 
+def read_employee_names():
+    """Read employee names and email usernames from the NY Employees Excel file."""
+    employee_file = r"L:\4b_Applied Computing\EnneadTab-DB\Shared Data Dump\NY Employees.xlsx"
+    
+    if not os.path.exists(employee_file):
+        print(f"Error: Employee file {employee_file} does not exist!")
+        return []
+    
+    try:
+        df = pd.read_excel(employee_file)
+        if df.empty:
+            print("Error: Employee file is empty!")
+            return []
+        # Expecting column A: email, column B: full name
+        email_col = df.columns[0]
+        name_col = df.columns[1] if len(df.columns) > 1 else None
+        employees = []
+        for idx, row in df.iterrows():
+            email = str(row[email_col]).strip()
+            full_name = str(row[name_col]).strip() if name_col else ""
+            if not email or email.lower() == 'nan':
+                continue
+            email_username = email.split('@')[0]
+            employees.append({'full_name': full_name, 'email_username': email_username})
+        print(f"Found {len(employees)} employee records (email + name)")
+        return employees
+    except Exception as e:
+        print(f"Error reading employee file: {e}")
+        return []
+
+def normalize_name(name):
+    """Normalize a name for better matching."""
+    if not name:
+        return ""
+    # Convert to lowercase and remove extra spaces
+    normalized = str(name).lower().strip()
+    # Remove common prefixes/suffixes that might appear in usernames
+    normalized = re.sub(r'^[a-z]\.', '', normalized)  # Remove single letter prefix like "j."
+    normalized = re.sub(r'[^\w\s]', '', normalized)   # Remove special characters except spaces
+    return normalized
+
+def extract_last_name(full_name):
+    """Extract last name from full name."""
+    if not full_name:
+        return ""
+    parts = str(full_name).strip().split()
+    return parts[-1].lower() if parts else ""
+
+def compare_names_with_usernames(employee_records, pc_usernames, threshold=90):
+    """Compare employee email usernames and names with PC usernames using exact and fuzzy matching. Only matches with confidence >= 90 are considered valid."""
+    matches = []
+    unmatched_employees = []
+    unmatched_usernames = list(pc_usernames)
+    
+    print(f"\nComparing {len(employee_records)} employee records with {len(pc_usernames)} PC usernames...")
+    print(f"Using threshold: {threshold}%")
+    
+    for emp in employee_records:
+        employee_name = emp['full_name']
+        email_username = emp['email_username']
+        best_match = None
+        best_score = 0
+        # 1. Try exact match with email username
+        for username in pc_usernames:
+            if username.lower() == email_username.lower():
+                best_match = username
+                best_score = 100
+                break
+        # 2. If no exact match, use fuzzy matching on full name
+        if best_score < 100:
+            norm_employee = normalize_name(employee_name)
+            employee_last_name = extract_last_name(employee_name)
+            for username in pc_usernames:
+                norm_username = normalize_name(username)
+                scores = []
+                scores.append(fuzz.ratio(norm_employee, norm_username))
+                scores.append(fuzz.partial_ratio(norm_employee, norm_username))
+                scores.append(fuzz.token_sort_ratio(norm_employee, norm_username))
+                if employee_last_name and employee_last_name in norm_username:
+                    scores.append(85)
+                if len(employee_name.split()) >= 2:
+                    first_initial = employee_name.split()[0][0].lower()
+                    if norm_username.startswith(first_initial) and employee_last_name in norm_username:
+                        scores.append(90)
+                max_score = max(scores)
+                if max_score > best_score:
+                    best_score = max_score
+                    best_match = username
+        if best_score >= threshold:
+            matches.append({
+                'employee_name': employee_name,
+                'username': best_match,
+                'confidence': best_score
+            })
+            if best_match in unmatched_usernames:
+                unmatched_usernames.remove(best_match)
+            print(f"✓ MATCH: '{employee_name}' (email: {email_username}) -> '{best_match}' (confidence: {best_score}%)")
+        else:
+            unmatched_employees.append(employee_name)
+            print(f"✗ NO MATCH: '{employee_name}' (email: {email_username}) (best: '{best_match}' at {best_score}%)")
+    print(f"\n=== MATCHING SUMMARY ===")
+    print(f"Total matches found: {len(matches)}")
+    print(f"Unmatched employees: {len(unmatched_employees)}")
+    print(f"Unmatched usernames: {len(unmatched_usernames)}")
+    if unmatched_employees:
+        print(f"\nUnmatched employees:")
+        for name in unmatched_employees:
+            print(f"  - {name}")
+    if unmatched_usernames:
+        print(f"\nUnmatched usernames:")
+        for username in unmatched_usernames:
+            print(f"  - {username}")
+    return matches, unmatched_employees, unmatched_usernames
+
+def analyze_missing_data(data, employee_matches):
+    """Analyze which employees might be missing data in PC UserNames."""
+    # Get all PC usernames from the data
+    pc_usernames = set()
+    for record in data:
+        pc_usernames.add(record['User'])
+    
+    # Get employee names that have matches
+    matched_employees = {match['employee_name'] for match in employee_matches}
+    
+    # Find employees who might be missing data
+    missing_data_employees = []
+    for match in employee_matches:
+        employee_name = match['employee_name']
+        username = match['username']
+        
+        # Check if this username appears in the data
+        user_found = False
+        for record in data:
+            if record['User'] == username:
+                user_found = True
+                break
+        
+        if not user_found:
+            missing_data_employees.append({
+                'employee_name': employee_name,
+                'username': username,
+                'confidence': match['confidence']
+            })
+    
+    print(f"\n=== MISSING DATA ANALYSIS ===")
+    print(f"Employees potentially missing data: {len(missing_data_employees)}")
+    
+    for item in missing_data_employees:
+        print(f"  - {item['employee_name']} (username: {item['username']}, confidence: {item['confidence']}%)")
+    
+    return missing_data_employees
+
 def main(open_after = True):
     print("Reading application JSON files...")
     data = read_application_json_files()
     print(f"\nTotal records processed: {len(data)}")
     
+    matches = None
+    unmatched_employees = None
     if data:
         output_path = r"L:\4b_Applied Computing\EnneadTab-DB\Shared Data Dump"
+        
+        # Employee name comparison
+        print("\n" + "="*60)
+        print("EMPLOYEE NAME COMPARISON")
+        print("="*60)
+        
+        # Read employee names
+        employee_names = read_employee_names()
+        if employee_names:
+            # Get PC usernames from the data
+            pc_usernames = set()
+            for record in data:
+                pc_usernames.add(record['User'])
+            
+            # Compare names
+            matches, unmatched_employees, unmatched_usernames = compare_names_with_usernames(
+                employee_names, pc_usernames, threshold=90
+            )
+            
+            # Analyze missing data
+            missing_data_employees = analyze_missing_data(data, matches)
+            
+            # Print final summary of matches
+            print(f"\n" + "="*60)
+            print("FINAL MATCHES SUMMARY")
+            print("="*60)
+            print("Profile Username -> Full Human Name pairs:")
+            for match in matches:
+                print(f"  '{match['username']}' -> '{match['employee_name']}' (confidence: {match['confidence']}%)")
         
         # Create HTML visualization
         html_path = create_visualization(data, output_path)
         if html_path:
             print(f"\nHTML report created: {html_path}")
         
-        # Create Excel report
-        excel_path = create_excel_report(data, output_path)
+        # Create Excel report (with new sheets if matches info is available)
+        excel_path = create_excel_report(data, output_path, matches=matches, unmatched_employees=unmatched_employees)
         if excel_path:
             print(f"Excel report created: {excel_path}")
 

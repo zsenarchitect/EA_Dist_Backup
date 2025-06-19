@@ -1,0 +1,652 @@
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --text-color: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --border-color: #333;
+    --hover-bg: #2a2a2a;
+    --transition-speed: 0.3s;
+    --shadow-light: rgba(255, 255, 255, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+}
+
+/* Base Styles */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Modern Navigation - Fixed */
+.navbar {
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px var(--shadow-dark);
+    transition: all var(--transition-speed) ease;
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+    transition: transform var(--transition-speed) ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-link.active {
+    color: var(--secondary-color) !important;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: all var(--transition-speed) ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Main Content - Account for fixed navbar */
+.container.my-5.pt-5 {
+    padding-top: 6rem !important;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.1;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease 0.2s;
+    animation-fill-mode: both;
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    background: var(--card-bg);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-dark);
+    border-color: var(--secondary-color);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: var(--secondary-color);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+/* Search Bar */
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.search-input,
+.form-control {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all var(--transition-speed) ease;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+.search-input:focus,
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+    outline: none;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* Documentation Sections */
+.doc-section {
+    padding: 4rem 0;
+    background: var(--card-bg);
+    border-radius: 20px;
+    margin: 2rem 0;
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    border: 1px solid var(--border-color);
+}
+
+.doc-section h1,
+.doc-section h2 {
+    color: var(--text-color);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.doc-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--secondary-color);
+}
+
+/* Table of Contents - Sticky */
+.toc {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.toc h5 {
+    color: var(--text-color);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.toc .nav-link {
+    color: var(--text-muted) !important;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all var(--transition-speed) ease;
+    margin-bottom: 0.25rem;
+}
+
+.toc .nav-link:hover {
+    background: var(--hover-bg);
+    color: var(--secondary-color) !important;
+    transform: translateX(5px);
+}
+
+.toc .nav-link::after {
+    display: none;
+}
+
+/* Content Section - Sticky behavior */
+.content-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+}
+
+.warning-box, .info-box {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    transition: transform var(--transition-speed) ease;
+    border-left: 4px solid;
+}
+
+.warning-box:hover, .info-box:hover {
+    transform: translateX(5px);
+}
+
+.warning-box {
+    background: rgba(231, 76, 60, 0.1);
+    border-left-color: var(--accent-color);
+    color: #ff6b6b;
+}
+
+.info-box {
+    background: rgba(52, 152, 219, 0.1);
+    border-left-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+/* Footer */
+footer {
+    background: var(--primary-color) !important;
+    color: var(--text-color) !important;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--border-color);
+}
+
+footer a {
+    color: var(--text-color) !important;
+    transition: color var(--transition-speed) ease;
+}
+
+footer a:hover {
+    color: var(--secondary-color) !important;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.05)"/></svg>');
+    opacity: 0.1;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .card-img-top {
+        height: 150px;
+    }
+
+    .doc-section {
+        padding: 2rem 0;
+    }
+
+    .toc {
+        position: static;
+        margin-bottom: 2rem;
+        max-height: none;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+}
+
+.hover-card {
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.hover-card:hover::before {
+    left: 100%;
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(52, 152, 219, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--secondary-color);
+    animation: loading 1s ease-in-out infinite;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--secondary-color);
+    z-index: 9999;
+    transition: width 0.1s ease;
+}
+
+/* Code Styling */
+pre {
+    background: #0d1117;
+    color: #f0f6fc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+}
+
+code {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--secondary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9em;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-bg);
+}
+
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.tool-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--shadow-dark);
+    border-color: var(--secondary-color);
+}
+
+.tool-card h5 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.tool-card p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.tool-card code {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 1rem;
+}
+
+.tool-card .badge {
+    font-size: 0.75em;
+    padding: 0.4em 0.8em;
+}
+
+.badge.bg-warning {
+    background-color: #f39c12 !important;
+    color: #000;
+}
+
+.badge.bg-secondary {
+    background-color: var(--border-color) !important;
+    color: var(--text-color);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Installation Content Styling */
+.installation-content {
+    line-height: 1.8;
+}
+
+.installation-content h1 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 1rem;
+}
+
+.installation-content h2 {
+    color: var(--text-color);
+    font-size: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.installation-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--secondary-color);
+}
+
+.installation-content h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.installation-content h4 {
+    color: var(--text-color);
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.installation-content p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.installation-content ul,
+.installation-content ol {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.installation-content li {
+    margin-bottom: 0.5rem;
+}
+
+.installation-content code {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--secondary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9em;
+}
+
+.installation-content pre {
+    background: #0d1117;
+    color: #f0f6fc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+}
+
+.installation-content blockquote {
+    border-left: 4px solid var(--secondary-color);
+    background: rgba(52, 152, 219, 0.1);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+}
+
+.installation-content blockquote p {
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+.installation-content a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+.installation-content a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+.installation-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.installation-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.installation-content th,
+.installation-content td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.installation-content th {
+    background: var(--hover-bg);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.installation-content td {
+    color: var(--text-muted);
+} 
