@@ -31,6 +31,8 @@ Dont tell me it is a security risk, it is NOT.
 import os
 import sys
 from datetime import datetime
+import json
+
 
 PLUGIN_NAME = "EnneadTab"
 PLUGIN_ABBR = "EA"
@@ -150,6 +152,9 @@ if not os.path.exists(DB_FOLDER):
     DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "05_EnneadTab", "EnneadTab-DB")
 SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
+# Public temp folder for shared temporary files
+PUBLIC_TEMP_FOLDER = os.path.join(DB_FOLDER, "temp")
+
 STAND_ALONE_FOLDER = os.path.join(DB_FOLDER, "Stand Alone Tools")
 
 # Backup repository in case SH cannot use L drive
@@ -159,7 +164,7 @@ BACKUP_REPO_FOLDER = os.path.join(DB_FOLDER, "BackupRepo")
 ############# engine ####################
 ENGINE_FOLDER = os.path.join(APP_FOLDER, "_engine")
 SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib")
-map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER, BACKUP_REPO_FOLDER])
+map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:
@@ -494,9 +499,64 @@ def alert_l_drive_not_available(play_sound = False):
     Returns:
         bool: True if L drive is available, False otherwise.
     """
-    if  os.path.exists(L_DRIVE_HOST_FOLDER):
-        return True
+    # record the success/failed rate of this check, date as key, value is a dict with success and failed count
+    # if in the last 60 days it has neever been sucefful then i can tell this computer will never connect to L drive so lets just make a mark file so there is not need to check anymore
+    # this recording should be done ins a sepeate process to allow non-blocking
+    # the mark file should be in the DUMP_FOLDER
+    # the mark file should be named as l_drive_check.DuckLock
 
+
+
+    check_conclusion_file = os.path.join(DUMP_FOLDER, "l_drive_check_conclusion.SmartDuck")
+    if os.path.exists(check_conclusion_file):
+        return False
+    
+
+    check_results_file = os.path.join(DUMP_FOLDER, "l_drive_check.DuckLock")
+    if os.path.exists(check_results_file):
+        try:
+            with open(check_results_file, "r") as f:
+                content = f.read().strip()
+                if content:
+                    check_results = json.loads(content)
+                else:
+                    check_results = {}
+        except (json.JSONDecodeError, ValueError):
+            check_results = {}
+    else:
+        check_results = {}
+    
+    
+    def record_check_result(success):
+        import time
+        timestamp = datetime.now().strftime("%Y-%m-%d")
+        if timestamp not in check_results:
+            check_results[timestamp] = {"success": 0, "failed": 0}
+        
+        # Fix: Use string keys instead of boolean values
+        if success:
+            check_results[timestamp]["success"] += 1
+        else:
+            check_results[timestamp]["failed"] += 1
+            
+        with open(check_results_file, "w") as f:
+            json.dump(check_results, f, indent=4)
+        
+        # Check if file is older than 60 days and has never been successful
+        current_time = time.time()
+        sixty_days_ago = current_time - (60 * 24 * 60 * 60)
+        
+        # Only check for conclusion if we have data spanning 60 days
+        if os.path.getmtime(check_results_file) < sixty_days_ago:
+            # Check if there have been NO successful connections in any recorded day
+            if all(check_results[date]["success"] == 0 for date in check_results):
+                with open(check_conclusion_file, "w") as f:
+                    f.write("This computer will never connect to L drive, maybe a laptop or from outside office organization.")
+                return
+
+    if os.path.exists(L_DRIVE_HOST_FOLDER):
+        record_check_result(True)
+        return True
     note = "Friendly reminder! \n\nL drive is not available, please check your network connection or activate L drive manually.\nEnneadTab will still work, just without some public asset, such as AI related features."
     print(note)
     if play_sound:
@@ -506,7 +566,11 @@ def alert_l_drive_not_available(play_sound = False):
         except:
             pass        
 
+    record_check_result(False)
     return False
+    
+        
+
 
 # Run maintenance operations
 if should_cleanup_dump_folder():

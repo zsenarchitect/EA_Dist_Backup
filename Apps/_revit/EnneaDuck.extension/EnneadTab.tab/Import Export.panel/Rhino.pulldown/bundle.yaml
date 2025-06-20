@@ -1,6 +1,7 @@
 layout:
   - Rhino2Revit_UI
   - move_to_origin
+  - bigrhino2revit
   - -----
   - rhino_draft_UI
   - ----- 

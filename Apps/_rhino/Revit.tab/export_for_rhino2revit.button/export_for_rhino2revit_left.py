@@ -78,6 +78,11 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         layout.AddRow(layout_A)
         layout.EndVertical()
 
+        # add checkbox for public address
+        layout.BeginVertical()
+        layout.AddRow(self.CreatePublicAddressCheckBox())
+        layout.EndVertical()
+
         # add buttons
         layout.BeginVertical()
         layout.AddRow(*self.CreateButtons())
@@ -112,6 +117,16 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         msg.Text += "\n\nWith the exception of curve elements, .3dm is always prefered format, if it fails to convert, try some fix source model as far as you can. Check for Non-manifold geometry, surface devidation etc.\nUse .dwg as your last resort."
         self.expander.Content = msg
         return self.expander
+
+
+    def CreatePublicAddressCheckBox(self):
+        """
+        Creates a checkbox for using public address
+        """
+        self.chk_use_public_address = Eto.Forms.CheckBox()
+        self.chk_use_public_address.Text = "Use Public Address"
+        self.chk_use_public_address.Checked = False
+        return self.chk_use_public_address
 
 
     # create search bar function
@@ -336,9 +351,9 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         """
         #print self.list_box.DataStore
 
-
-
-        return filter(lambda x: x[1] or x[2], self.list_box.DataStore)
+        selected_data = filter(lambda x: x[1] or x[2], self.list_box.DataStore)
+        use_public_address = self.chk_use_public_address.Checked
+        return selected_data, use_public_address
 
 
 
@@ -408,7 +423,7 @@ class ToggleSaveDocumentHandler:
         CONFIG.set_setting("is_update_dist_repo_enabled", True)
         print ("is_update_dist_repo_enabled set to True")
 
-def get_output_folder():
+def get_output_folder(use_public_address=False):
 
    
     try:
@@ -417,7 +432,13 @@ def get_output_folder():
 
     except:
         doc_name = "Untitled"
-    EA_export_folder = "{}\EnneadTab Export By Layer from [{}]".format(ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER, doc_name)
+    
+    if use_public_address:
+        temp_folder = ENVIRONMENT.PUBLIC_TEMP_FOLDER
+        EA_export_folder = "{}\EnneadTab Export By Layer from [{}]".format(temp_folder, doc_name)
+    else:
+        EA_export_folder = "{}\EnneadTab Export By Layer from [{}]".format(ENVIRONMENT.ONE_DRIVE_DESKTOP_FOLDER, doc_name)
+    
     if not os.path.exists(EA_export_folder):
         os.makedirs(EA_export_folder)
 
@@ -482,9 +503,9 @@ def export(output_folder, datas):
         objs = [obj for obj in raw_objs if rs.ObjectType(obj)!= filter]
 
 
-        if check_3dm:
+        if check_3dm or check_dwg:
             # avoid situation where there are only non solid geo, such as curve and text, in the final export
-            objs = [x for x in objs if rs.IsSurface(x) or rs.IsPolysurface(x)]
+            objs = [x for x in objs if rs.IsSurface(x) or rs.IsPolysurface(x) or rs.IsMesh(x)]
 
         objs = [x for x in objs if not rs.IsObjectHidden(x) and not rs.IsObjectLocked(x)]
         if len(objs) == 0:
@@ -535,10 +556,12 @@ def export_for_rhino2revit():
     dlg = Rhino2RevitExporterDialog()
     rc = Rhino.UI.EtoExtensions.ShowSemiModal(dlg, Rhino.RhinoDoc.ActiveDoc, Rhino.UI.RhinoEtoApp.MainWindow)
     if (rc):
-        datas = dlg.RunScript()
-        EA_export_folder = get_output_folder()
-        with ToggleSaveDocumentHandler():
-            export(EA_export_folder, datas)
+        result = dlg.RunScript()
+        if result:
+            datas, use_public_address = result
+            EA_export_folder = get_output_folder(use_public_address)
+            with ToggleSaveDocumentHandler():
+                export(EA_export_folder, datas)
         return
     else:
         print ("Dialog did not run")
