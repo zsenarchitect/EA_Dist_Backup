@@ -63,31 +63,52 @@ class ShapeWriter:
 
         # return wrapper.fill(text = "".format(input_text))
 
+    @staticmethod
+    def extract_value(data_item):
+        """Extract value from data item, handling both old list format and new dictionary format"""
+        if isinstance(data_item, dict):
+            return data_item.get('value', None)
+        return data_item
 
     @staticmethod
     def extra_info( data):
-        print ('############')
+        # print ('############')  # Removed debug print
 
         # print (type(data[0]))
-        cate = ShapeWriter.secure_text(data[0])
-        room = ShapeWriter.secure_text(data[1])
+        # Handle both old list format and new dictionary format
+        cate = ShapeWriter.secure_text(ShapeWriter.extract_value(data[0]))
+        room = ShapeWriter.secure_text(ShapeWriter.extract_value(data[1]))
         try:
-            area = float(data[2])
+            area_value = ShapeWriter.extract_value(data[2])
+            area = float(area_value)
         except:
             return cate, None, None, None, 1
-        color = [data[3], data[4],data[5]]
+        
+        # Extract color values 
+        color_values = []
+        for i in range(3, 6):  # data[3], data[4], data[5]
+            if i < len(data):
+                color_val = ShapeWriter.extract_value(data[i])
+                color_values.append(color_val)
+            else:
+                color_values.append(None)
+        
+        color = color_values
         try:
-            color = map(lambda x: int(x), color)
+            color = map(lambda x: int(x) if x is not None else 0, color)
         except:
-            print([data[3], data[4],data[5]])
+            print(color_values)
             rs.MessageBox("This color data cannot read. [{}]".format(cate))
         
         try:
-            if data[8] == "":
-                count = 1
+            if len(data) > 8:
+                count_value = ShapeWriter.extract_value(data[8])
+                if count_value == "" or count_value is None:
+                    count = 1
+                else:
+                    count = int(count_value)
             else:
-                count = int(data[8])
-   
+                count = 1
         except:
             count = 1
         return cate, room, area, color, count
@@ -159,16 +180,39 @@ class ShapeWriter:
 
     def process_data(self, data):
         
-        print ("\n\nnew data = " + str(data))
+        # print ("\n\nnew data = " + str(data))  # Removed debug print
 
-        if data == ["","","","","","","", "", ""] or data == ["","","","","","",""]:
+        # Check for empty data - handle both old list format and new dictionary format
+        if len(data) == 0:
             return
-        if (data[2] == "" or data[2] == "Area") and data[0] != "":
+            
+        # Check if all values are empty/None
+        all_empty = True
+        for item in data:
+            value = ShapeWriter.extract_value(item)
+            if value not in ["", None, "None"]:
+                all_empty = False
+                break
+        if all_empty:
+            return
+            
+        # Check for big title condition
+        data_2_value = ShapeWriter.extract_value(data[2]) if len(data) > 2 else ""
+        data_0_value = ShapeWriter.extract_value(data[0]) if len(data) > 0 else ""
+        
+        if (data_2_value == "" or data_2_value == "Area" or data_2_value is None) and data_0_value != "":
             self.make_big_title_text(data)
             return
-        print(data)
-        print (type(data))
+            
+        # print(data)  # Removed debug print
+        # print (type(data))  # Removed debug print
         cate, room, area, color, count = ShapeWriter.extra_info(data)
+        
+        # Add check for None area to prevent TypeError
+        if area is None:
+            print("Skipping data entry '{}' because area could not be parsed.".format(cate))
+            return
+            
         if room == "":
             room = cate
         center = [0,0,0]
@@ -282,9 +326,17 @@ class ShapeWriter:
         self.is_first_column = True
 
     def make_big_title_text(self, data):
-        title = ShapeWriter.secure_text(data[0])
-        area = data[6]
+        title_value = ShapeWriter.extract_value(data[0]) if len(data) > 0 else ""
+        title = ShapeWriter.secure_text(title_value)
         
+        # Get area from data[6] if available, handle dictionary format
+        area_raw = ShapeWriter.extract_value(data[6]) if len(data) > 6 else None
+        
+        # Add protection against invalid area values
+        try:
+            area_value = float(area_raw) if area_raw else 0
+        except (ValueError, TypeError):
+            area_value = 0
 
         
         # Wrap this text.
@@ -296,8 +348,8 @@ class ShapeWriter:
         if len(cate) > 12:
             cate = cate.replace(" ", "\n")
         """
-        print ("#######")
-        print (title_new)
+        # print ("#######")  # Removed debug print
+        # print (title_new)  # Removed debug print
         big_title_location = rs.PointAdd([0,self.pointer[1], 0], [-self.big_title_offset, 0, 0])
         if self.is_first_row:
             pass
@@ -309,7 +361,7 @@ class ShapeWriter:
             rs.AddText(title_new, big_title_location, height = 3)
         except:
             rs.AddText(title, big_title_location, height = 3)
-        rs.AddText(str(int(area)), rs.PointAdd(big_title_location, [0, -self.row_gap*0.5, 0]), height = 3)
+        rs.AddText(str(int(area_value)), rs.PointAdd(big_title_location, [0, -self.row_gap*0.5, 0]), height = 3)
 
 if __name__ == "__main__":
     visualize_excel()
