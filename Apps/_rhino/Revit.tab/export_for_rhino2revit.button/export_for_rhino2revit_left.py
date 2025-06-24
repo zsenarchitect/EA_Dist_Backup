@@ -489,7 +489,7 @@ def export(output_folder, datas):
                                 embed_label = True,
                                 show_percent = True)
 
-    out_path_dict = {"3dm_out_paths": [], "dwg_out_paths": []}
+    out_path_dict = {"3dm_out_paths": [], "dwg_out_paths": [], "layer_material_mapping": {}}
     for i, data in enumerate(datas):
         rs.StatusBarProgressMeterUpdate(position = i, absolute = True)
         entry, check_3dm, check_dwg = data
@@ -520,6 +520,24 @@ def export(output_folder, datas):
         for ost_name in ["Generic Models_"]:
             if ost_name in file_name_naked:
                 file_name_naked = file_name_naked.replace(ost_name, "")
+
+        layer_name = file_name_naked
+        material_index = rs.LayerMaterialIndex(layer)
+        layer_mat_name = rs.MaterialName(material_index) if material_index != -1 else None
+        
+        # Get material color using the material object directly
+        material_color = None
+        if material_index != -1:
+            try:
+                material = sc.doc.Materials[material_index]
+                if material:
+                    diffuse = material.DiffuseColor
+                    material_color = (diffuse.R, diffuse.G, diffuse.B)
+            except:
+                material_color = None
+                
+        out_path_dict["layer_material_mapping"][layer_name] = {"material_name": layer_mat_name, "material_color": material_color}
+
 
                 
         if check_3dm:

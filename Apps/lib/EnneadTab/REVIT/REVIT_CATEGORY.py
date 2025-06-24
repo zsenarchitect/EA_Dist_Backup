@@ -98,3 +98,53 @@ class RevitCategory:
             return "[{}]".format(self.root_category_name)
         
         return "[{}]: {}".format(self.root_category_name, self.sub_category_name)
+
+def get_or_create_subcategory_with_material(doc, subc_name):
+    """
+    Get or create a subcategory by name under the family document's root category, and assign a mapped material if available.
+    Args:
+        doc: The Revit family document
+        subc_name: Name of the subcategory to get or create
+        mapping_key: Optional key to use for material mapping lookup (defaults to subc_name)
+    Returns:
+        The subcategory (DB.Category) object
+    """
+    parent_category = doc.OwnerFamily.FamilyCategory
+    subCs = parent_category.SubCategories
+    for subC in subCs:
+        if subC.Name == subc_name:
+            return subC
+    # Create if not found
+    new_subc = doc.Settings.Categories.NewSubcategory(parent_category, subc_name)
+    # Assign material if mapping exists
+    try:
+        from EnneadTab.REVIT import REVIT_MATERIAL
+        from EnneadTab import DATA_FILE
+        recent_out_data = DATA_FILE.get_data("rhino2revit_out_paths")
+        mat_name = None
+        if recent_out_data and recent_out_data.get("layer_material_mapping"):
+            mat_data = recent_out_data["layer_material_mapping"].get(subc_name)
+            mat_name = mat_data.get("material_name")
+            mat_color = mat_data.get("material_color")
+        if mat_name:
+            material = REVIT_MATERIAL.get_material_by_name(mat_name, doc)
+            if material is None and mat_color:
+                mat_id = DB.Material.Create(doc, mat_name)
+                material = doc.GetElement(mat_id)
+                # Parse RGB tuple to DB.Color object
+                if mat_color and len(mat_color) == 3:
+                    color_obj = DB.Color(mat_color[0], mat_color[1], mat_color[2])
+                    material.Color = color_obj
+                    # Set solid fill pattern and color for surface foreground
+                    from EnneadTab.REVIT import REVIT_SELECTION
+                    solid_fill_pattern_id = REVIT_SELECTION.get_solid_fill_pattern_id(doc)
+                    material.SurfaceForegroundPatternId = solid_fill_pattern_id
+                    material.SurfaceForegroundPatternColor = color_obj
+            elif material is None:
+                mat_id = DB.Material.Create(doc, mat_name)
+                material = doc.GetElement(mat_id)
+            if material:
+                new_subc.Material = material
+    except Exception as e:
+        print("[get_or_create_subcategory_with_material] Material assignment failed: {}".format(e))
+    return new_subc

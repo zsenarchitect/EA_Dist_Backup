@@ -1,7 +1,7 @@
 # How to Install EnneadTab
 
 ## Table of Contents
-- [1. Overall Introduction - Read Me First](#1-overall-introduction)
+- [1. Overall Introduction - ABSOLUTELY Read Me First!!!!!!!!](#1-overall-introduction)
 - [2. Basic Setup](#2-basic-setup)
   - [2.1 Download OS Installer](#21-download-os-installer)
   - [2.2 Install Ecosystem Folder](#22-install-ecosystem-folder)
@@ -104,7 +104,7 @@ For a complete command list of this plugin, please check [EnneadTab For Rhino Ha
 
 ### 4.1 Install EnneadTab for Rhino
 
-0. **(Important!)** Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following **step 4.3**, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "EnneadTab" but instead saying "Ennead", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
+0. **(Important!)** Thoroughly uninstall EnneadTab-For-Rhino 1.0 version by following **step 4.3**, ignore this step if you have no previous version. How do you know if you have version 1.0? If your Rhino toolbar is not saying "EnneadTab" but instead saying "Ennead"/"Ennead+", you have previous version and should uninstall it first. Failed to cleanly remove old version will cause difficulty attaching new version!
 1. Navigate to `C:\Users\[USER_NAME]\Documents\EnneadTab Ecosystem\EA_Dist\Installation`
 2. Have **ONLY ONE** Rhino open, then drag "EnneadTab_For_Rhino_Installer.rui" into the Rhino window.
 3. From the top of toolbar, find "Enneaaaaaaaaaaaad" menu and click on "Install".

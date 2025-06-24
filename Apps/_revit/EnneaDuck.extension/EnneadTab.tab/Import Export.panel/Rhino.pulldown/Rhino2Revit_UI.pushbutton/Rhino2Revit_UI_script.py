@@ -38,7 +38,7 @@ from pyrevit.revit import ErrorSwallower
 
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
-from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION
+from EnneadTab.REVIT import REVIT_FORMS, REVIT_APPLICATION, REVIT_MATERIAL, REVIT_CATEGORY
 from EnneadTab import DATA_FILE, NOTIFICATION, IMAGE, ERROR_HANDLE, FOLDER, TIME, LOG, UI, ENVIRONMENT
 
 from Autodesk.Revit import DB # pyright: ignore  
@@ -170,8 +170,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
             if "Use Source File Name" in item.selected_OST_name:
                 try:
                     parent_category = doc.OwnerFamily.FamilyCategory
-                    new_subc = doc.Settings.Categories.NewSubcategory(
-                        parent_category, item.display_name_naked)
+                    new_subc = REVIT_CATEGORY.get_or_create_subcategory_with_material(doc, parent_category, item.display_name_naked)
                 except Exception as e:
                     pass
                 finally:
@@ -308,8 +307,7 @@ class Rhino2Revit_UI(forms.WPFWindow):
         t = DB.Transaction(doc, "Convert to User Created Sub-C")
         t.Start()
         try:
-            new_subc = doc.Settings.Categories.NewSubcategory(
-                parent_category, new_subc_name)
+            new_subc = REVIT_CATEGORY.get_or_create_subcategory_with_material(doc, new_subc_name)
         except Exception as e:
             print("Error creating new subcategory: {}".format(e))
         t.Commit()
@@ -512,12 +510,8 @@ def get_all_subC_names():
 
 
 def get_subC_by_name(name):
-    """Get subcategory by name."""
-    parent_category = doc.OwnerFamily.FamilyCategory
-    subCs = parent_category.SubCategories
-    for subC in subCs:
-        if subC.Name == name:
-            return subC
+    """Get subcategory by name. Create and assign material if not exist."""
+    return REVIT_CATEGORY.get_or_create_subcategory_with_material(doc, name)
 
 
 def get_graphic_style_by_name(name):
