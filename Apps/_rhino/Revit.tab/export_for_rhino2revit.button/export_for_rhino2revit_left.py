@@ -124,7 +124,7 @@ class Rhino2RevitExporterDialog(Eto.Forms.Dialog[bool]):
         Creates a checkbox for using public address
         """
         self.chk_use_public_address = Eto.Forms.CheckBox()
-        self.chk_use_public_address.Text = "Use Public Address"
+        self.chk_use_public_address.Text = "Use Public Address for large file.(L drive connection is required)"
         self.chk_use_public_address.Checked = False
         return self.chk_use_public_address
 

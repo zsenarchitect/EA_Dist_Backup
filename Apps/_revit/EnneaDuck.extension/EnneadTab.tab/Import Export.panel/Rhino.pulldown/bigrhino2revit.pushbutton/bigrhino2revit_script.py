@@ -20,6 +20,7 @@ __is_popular__ = True
 import proDUCKtion # pyright: ignore 
 proDUCKtion.validify()
 
+from pyrevit import script
 from EnneadTab import ERROR_HANDLE, LOG, DATA_FILE, NOTIFICATION, FOLDER, TIME, ENVIRONMENT, UI, SAMPLE_FILE
 from EnneadTab.REVIT import REVIT_APPLICATION, REVIT_FORMS, REVIT_UNIT, REVIT_FAMILY, REVIT_MATERIAL, REVIT_CATEGORY
 from Autodesk.Revit import DB # pyright: ignore 
@@ -79,7 +80,7 @@ def sanitize_revit_name(name):
     return re.sub(prohibited, '', name)
 
 
-def convert_file_to_family_elements(family_doc, file_path):
+def convert_file_to_family_elements(family_doc, file_path, log_messages):
     """Convert file to Revit elements in family document."""
     file_name = FOLDER.get_file_name_from_path(file_path)
     file_name_naked = os.path.splitext(file_name)[0]
@@ -93,92 +94,157 @@ def convert_file_to_family_elements(family_doc, file_path):
         try:
             with ErrorSwallower() as swallower:
                 geos = DB.ShapeImporter().Convert(family_doc, file_path)
+                geo_count = 0
                 for geo in geos:
                     try:
                         converted_elements.append(DB.FreeFormElement.Create(family_doc, geo))
+                        geo_count += 1
                     except Exception as e:
-                        print("Cannot import this part of file, skipping: {}".format(geo))
+                        log_messages.append("Cannot import this part of file, skipping: {}".format(geo))
                 
                 # Check for swallowed errors
                 errors = swallower.get_swallowed_errors()
                 if errors:
-                    print("Warnings/errors swallowed during 3dm import: {}".format(errors))
+                    log_messages.append("Warnings/errors swallowed during 3dm import: {}".format(errors))
                     
         except Exception as e:
-            print("Failed to convert 3dm file: {}".format(str(e)))
+            log_messages.append("Failed to convert 3dm file: {}".format(str(e)))
             
     elif extension == ".dwg":
         # Convert DWG file
         try:
+            # Capture existing import object styles before import
+            existing_import_OSTs = get_current_import_object_styles(family_doc)
+            
             with ErrorSwallower() as swallower:
                 options = DB.DWGImportOptions()
                 cad_import_id = clr.StrongBox[DB.ElementId]()
                 
                 # Import CAD file and check for success
                 if not family_doc.Import(file_path, options, family_doc.ActiveView, cad_import_id):
-                    print("Failed to import DWG file. It might be empty, contain unsupported geometry, or be corrupt. File: {}".format(file_path))
+                    log_messages.append("Failed to import DWG file. It might be empty, contain unsupported geometry, or be corrupt. File: {}".format(file_path))
                     return []
 
                 if cad_import_id.Value == DB.ElementId.InvalidElementId:
-                    print("Imported DWG has an invalid ID, indicating a problem with the import. File: {}".format(file_path))
+                    log_messages.append("Imported DWG has an invalid ID, indicating a problem with the import. File: {}".format(file_path))
                     return []
 
                 cad_import = family_doc.GetElement(cad_import_id.Value)
                 if not cad_import:
-                    print("Could not retrieve the imported DWG instance from the document. File: {}".format(file_path))
+                    log_messages.append("Could not retrieve the imported DWG instance from the document. File: {}".format(file_path))
                     return []
 
                 # Get geometry from CAD import
-                geo_elem = cad_import.get_Geometry(DB.Options())
-                geo_elements = []
-                for geo in geo_elem:
-                    if isinstance(geo, DB.GeometryInstance):
-                        geo_elements.extend([x for x in geo.GetSymbolGeometry()])
+                try:
+                    geo_elem = cad_import.get_Geometry(DB.Options())
+                    geo_elements = []
+                    for geo in geo_elem:
+                        if isinstance(geo, DB.GeometryInstance):
+                            geo_elements.extend([x for x in geo.GetSymbolGeometry()])
+                except Exception as geo_error:
+                    log_messages.append("Failed to extract geometry from CAD import: {}".format(str(geo_error)))
+                    geo_elements = []
                 
                 # Convert solids to FreeForm elements
+                solid_count = 0
                 for gel in geo_elements:
                     if isinstance(gel, DB.Solid):
                         try:
                             converted_elements.append(DB.FreeFormElement.Create(family_doc, gel))
+                            solid_count += 1
                         except Exception as e:
-                            print("Cannot convert solid from file '{}': {}".format(file_path, str(e)))
+                            log_messages.append("Cannot convert solid from file '{}': {}".format(file_path, str(e)))
                 
                 # Delete the CAD import
-                family_doc.Delete(cad_import.Id)
+                try:
+                    # Validate the element still exists before attempting to delete
+                    if cad_import and cad_import.Id != DB.ElementId.InvalidElementId and family_doc.GetElement(cad_import.Id):
+                        # Unpin the element first if it's pinned
+                        cad_import.Pinned = False
+                        # print("Unpinned CAD import element before deletion")
+                        
+                        # Now delete the element
+                        family_doc.Delete(cad_import.Id)
+                        # print("Successfully deleted CAD import element")
+                    else:
+                        log_messages.append("CAD import element no longer exists or has invalid ID, skipping deletion")
+                except Exception as delete_error:
+                    log_messages.append("Warning: Could not delete CAD import element: {}".format(str(delete_error)))
+                    # Continue processing even if deletion fails
                 
                 # Check for swallowed errors
                 errors = swallower.get_swallowed_errors()
                 if errors:
-                    print("Warnings/errors swallowed during DWG import: {}".format(errors))
-                    
+                    log_messages.append("Warnings/errors swallowed during DWG import: {}".format(errors))
+            
+            # --- CLEANUP MUST HAPPEN HERE, WHILE DOCUMENT IS STILL OPEN ---
+            try:
+                clean_import_object_style(family_doc, existing_import_OSTs)
+            except Exception as cleanup_error:
+                log_messages.append("Warning: Failed to clean up imported object styles: {}".format(str(cleanup_error)))
+            # --- END CLEANUP ---
+            
         except Exception as e:
             error_message = str(e)
             if "Index was out of range" in error_message:
                 error_message += "\nThis might be due to an empty or invalid DWG file."
-            print("Failed to convert DWG file '{}'.\nError: {}".format(file_path, error_message))
-            traceback.print_exc()
+            elif "ElementId cannot be deleted" in error_message:
+                error_message += "\nThis might be due to the CAD import element being invalid or already deleted."
+            log_messages.append("Failed to convert DWG file '{}'.\nError: {}".format(file_path, error_message))
+            log_messages.append(traceback.format_exc())
     
     # Assign subcategory to converted elements
-    subC = get_subC_by_name(family_doc, safe_name)
+    subC = REVIT_CATEGORY.get_or_create_subcategory_with_material(family_doc, safe_name)
     if subC:
         for element in converted_elements:
             try:
                 element.Subcategory = subC
             except Exception as e:
-                print("Cannot assign subcategory: {}".format(str(e)))
+                log_messages.append("Cannot assign subcategory: {}".format(str(e)))
     
     return converted_elements
 
 
-def get_subC_by_name(family_doc, name):
-    """Get subcategory by name from family document. Create if it doesn't exist. Assign material if mapped."""
-    return REVIT_CATEGORY.get_or_create_subcategory_with_material(family_doc, name)
 
 
-def save_and_load_family(family_doc, file_path, temp_folder):
+
+def get_current_import_object_styles(family_doc):
+    """Get current import object styles from family document."""
+    categories = family_doc.Settings.Categories
+    import_OSTs = filter(lambda x: "Imports in Families" in x.Name, categories)
+    if len(import_OSTs) == 0:
+        return []
+    import_OSTs = list(import_OSTs[0].SubCategories)
+    return import_OSTs
+
+
+def clean_import_object_style(family_doc, existing_OSTs):
+    """Remove imported object styles that weren't there before import."""
+    import_OSTs = get_current_import_object_styles(family_doc)
+
+    for import_OST in import_OSTs:
+        if not import_OST or not hasattr(import_OST, 'Id'):
+            # Silently skip NULL or invalid import object styles
+            continue
+        if import_OST not in existing_OSTs:
+            try:
+                family_doc.Delete(import_OST.Id)
+                # Silently skip or log as needed
+            except Exception:
+                # Silently skip any deletion errors
+                continue
+
+
+def save_and_load_family(family_doc, file_path, temp_folder, log_messages):
     """Save family to temp location and load into main project."""
     file_name = FOLDER.get_file_name_from_path(file_path)
     file_name_naked = os.path.splitext(file_name)[0]
+    safe_name = sanitize_revit_name(file_name_naked)
+    
+    # Check if family already exists in project
+    existing_family = REVIT_FAMILY.get_family_by_name(safe_name, DOC)
+    if existing_family:
+        log_messages.append("Family '{}' already exists in project - will override with new version".format(safe_name))
     
     # Create temp folder if it doesn't exist
     if not os.path.exists(temp_folder):
@@ -200,15 +266,20 @@ def save_and_load_family(family_doc, file_path, temp_folder):
             # Check for swallowed errors
             errors = swallower.get_swallowed_errors()
             if errors:
-                print("Warnings/errors swallowed during family loading: {}".format(errors))
+                log_messages.append("Warnings/errors swallowed during family loading: {}".format(errors))
         
         # Close family document
         family_doc.Close(False)
         
+        if existing_family:
+            log_messages.append("Successfully overrode existing family '{}'".format(safe_name))
+        else:
+            log_messages.append("Successfully loaded new family '{}'".format(safe_name))
+        
         return family_path
         
     except Exception as e:
-        print("Failed to save/load family: {}".format(str(e)))
+        log_messages.append("Failed to save/load family: {}".format(str(e)))
         try:
             family_doc.Close(False)
         except:
@@ -216,13 +287,13 @@ def save_and_load_family(family_doc, file_path, temp_folder):
         return None
 
 
-def move_family_to_origin(family_symbol):
+def move_family_to_origin(family_symbol, log_messages):
     """Move family instance to origin point."""
     try:
         # Get levels for hosting
         levels = DB.FilteredElementCollector(DOC).OfClass(DB.Level).WhereElementIsNotElementType().ToElements()
         if not levels:
-            NOTIFICATION.messenger("No levels found in project")
+            log_messages.append("No levels found in project")
             return None
         
         # Use the first level (usually ground level)
@@ -244,7 +315,7 @@ def move_family_to_origin(family_symbol):
             # Check for swallowed errors
             errors = swallower.get_swallowed_errors()
             if errors:
-                print("Warnings/errors swallowed during family instance creation: {}".format(errors))
+                log_messages.append("Warnings/errors swallowed during family instance creation: {}".format(errors))
         
         # Adjust elevation if level is not at 0
         if level.Elevation != 0:
@@ -258,7 +329,7 @@ def move_family_to_origin(family_symbol):
         return instance
         
     except Exception as e:
-        print("Failed to move family to origin: {}".format(str(e)))
+        log_messages.append("Failed to move family to origin: {}".format(str(e)))
         return None
 
 
@@ -266,9 +337,11 @@ def move_family_to_origin(family_symbol):
 @ERROR_HANDLE.try_catch_error()
 def bigrhino2revit(doc):
     """Main function to process recent Rhino2Revit output files."""
+    log_messages = []  # Collect all log messages here
     
     # Check if we're in project document
     if doc.IsFamilyDocument:
+        log_messages.append("This tool must be used in project environment, not family environment")
         NOTIFICATION.messenger("This tool must be used in project environment, not family environment")
         REVIT_FORMS.notification(
             main_text="Must be in project environment",
@@ -277,15 +350,16 @@ def bigrhino2revit(doc):
             button_name="Close",
             self_destruct=5
         )
+        print("\n".join(log_messages))
         return
     
     # Get recent output files
     recent_files = get_recent_output_files()
     if not recent_files:
+        log_messages.append("No recent Rhino2Revit output files found")
         NOTIFICATION.messenger("No recent Rhino2Revit output files found")
+        print("\n".join(log_messages))
         return
-    
-
     
     # Temp folder for saving families
     temp_folder = ENVIRONMENT.PUBLIC_TEMP_FOLDER
@@ -297,37 +371,41 @@ def bigrhino2revit(doc):
     
     with ErrorSwallower() as swallower:
         for file_path in recent_files:
+            family_doc = None
             try:
                 file_name = FOLDER.get_file_name_from_path(file_path)
-                NOTIFICATION.messenger("Processing: {}".format(file_name))
+                log_messages.append("Processing: {}".format(file_name))
                 
                 # Create family from template
                 family_doc = create_family_from_template()
                 if not family_doc:
+                    log_messages.append("Failed to create family document for: {}".format(file_name))
                     failed_count += 1
                     continue
                 
                 # Convert file to family elements
                 t = DB.Transaction(family_doc, "Convert file to family elements")
                 t.Start()
-                converted_elements = convert_file_to_family_elements(family_doc, file_path)
+                converted_elements = convert_file_to_family_elements(family_doc, file_path, log_messages)
                 t.Commit()
                 
                 if not converted_elements:
-                    print("No elements converted from: {}".format(file_name))
-                    family_doc.Close(False)
+                    log_messages.append("No elements converted from: {}".format(file_name))
+                    if family_doc:
+                        try:
+                            family_doc.Close(False)
+                        except:
+                            pass
                     failed_count += 1
                     continue
                 
                 # Save and load family
-                family_path = save_and_load_family(family_doc, file_path, temp_folder)
+                family_path = save_and_load_family(family_doc, file_path, temp_folder, log_messages)
                 if not family_path:
+                    log_messages.append("Failed to save/load family for: {}".format(file_name))
                     failed_count += 1
                     continue
 
-
-            
-                
                 # Find the loaded family symbol
                 family_symbols = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol).ToElements()
                 target_symbol = None
@@ -340,48 +418,56 @@ def bigrhino2revit(doc):
                         break
                 
                 if not target_symbol:
-                    print("Could not find loaded family symbol for: {}".format(file_name))
+                    log_messages.append("Could not find loaded family symbol for: {}".format(file_name))
                     failed_count += 1
                     continue
                 
                 # Move family to origin
                 t_main = DB.Transaction(doc, "Place family instance for {}".format(safe_name))
                 t_main.Start()
-                instance = move_family_to_origin(target_symbol)
+                instance = move_family_to_origin(target_symbol, log_messages)
                 if instance:
                     processed_count += 1
-                    NOTIFICATION.messenger("Successfully processed: {}".format(file_name))
                 else:
                     failed_count += 1
                 t_main.Commit()
                     
             except Exception as e:
-                print("Error processing {}: {}".format(file_path, str(e)))
-                print(traceback.format_exc())
+                log_messages.append("Error processing {}: {}".format(file_path, str(e)))
+                log_messages.append(traceback.format_exc())
                 failed_count += 1
+            finally:
+                # Ensure family document is closed even if there's an error
+                if family_doc:
+                    try:
+                        family_doc.Close(False)
+                    except:
+                        pass
         
         # Check for any swallowed errors from the overall process
         errors = swallower.get_swallowed_errors()
         if errors:
-            print("Warnings/errors swallowed during overall processing: {}".format(errors))
+            log_messages.append("Warnings/errors swallowed during overall processing: {}".format(errors))
     
     # Final notification
     tool_time_span = time.time() - tool_start_time
     REVIT_FORMS.notification(
         main_text="Bigrhino2Revit Finished",
-        sub_text="Processed: {} files\nFailed: {} files\nTotal time: {}".format(
-            processed_count, failed_count, TIME.get_readable_time(tool_time_span)
-        ),
+        sub_text="Processed: {} files\nFailed: {} files\nTotal time: {}".format(processed_count, failed_count, TIME.get_readable_time(tool_time_span)),
         window_title="EnneadTab",
         button_name="Close",
         self_destruct=10
     )
+    
+    # Print all log messages at the end
+    print("\n".join(log_messages))
 
 
 ################## main code below #####################
 if __name__ == "__main__":
+    output = script.get_output()
+    output.close_others(True)
     bigrhino2revit(DOC)
-
 
 
 

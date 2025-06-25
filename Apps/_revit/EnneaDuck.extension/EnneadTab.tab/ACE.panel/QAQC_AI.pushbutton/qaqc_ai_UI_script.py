@@ -147,6 +147,10 @@ class AI_Report_modelessForm(WPFWindow):
 
     @ERROR_HANDLE.try_catch_error()
     def ask_Click(self, sender, e):
+        if not USER.IS_DEVELOPER:
+            print ("Due to recent security change about AI, this function is temporarily disabled until further notice.")
+            return
+
         # if not USER.IS_DEVELOPER:
         #     self.debug_textbox.Text = "WIP function."
         #     return
@@ -275,9 +279,6 @@ def main():
     output = script.get_output()
     output.close_others()
 
-    if not USER.IS_DEVELOPER:
-        print ("Due to recent security change, this function is temporarily disabled until further notice.")
-        return
 
     AI_Report_modelessForm()
 

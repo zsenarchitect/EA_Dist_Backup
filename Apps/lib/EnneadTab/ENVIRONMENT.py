@@ -142,14 +142,9 @@ REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Tailor.tab".format(
 
 
 #################### L drive folder ####################
-L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
-if not os.path.exists(L_DRIVE_HOST_FOLDER):
-    L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
-
+L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
 
 DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "EnneadTab-DB")
-if not os.path.exists(DB_FOLDER):
-    DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "05_EnneadTab", "EnneadTab-DB")
 SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 # Public temp folder for shared temporary files
@@ -205,6 +200,8 @@ depreciated_ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER,
 depreciated_dist_lite_folder = os.path.join(ECO_SYS_FOLDER, "EA_Dist_Lite")
 depreciated_enneadPLUS_menu = os.path.join(RHINO_FOLDER, "Ennead+.menu")
 
+depreciated_L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
+
 map(_delete_folder_after_date, __legacy_one_drive_folders, [(2025, 2, 1)]*len(__legacy_one_drive_folders))
 # Delete folders after 2025-01-01
 _delete_folder_after_date(depreciated_enneadPLUS_menu, (2025, 8, 1))
@@ -212,6 +209,7 @@ _delete_folder_after_date(depreciated_enneadPLUS_menu, (2025, 8, 1))
 # Delete folders after 2025-08-01
 _delete_folder_after_date(depreciated_dist_lite_folder, (2025, 8, 1))
 _delete_folder_after_date(depreciated_ECO_SYS_FOLDER_MODERN, (2025, 8, 1))
+_delete_folder_after_date(depreciated_L_DRIVE_HOST_FOLDER, (2025, 7, 1))
 
 ####################################
 def cleanup_dump_folder():
