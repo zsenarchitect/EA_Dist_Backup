@@ -137,7 +137,7 @@ APPS = [
         "task_name": "MonitorBlueScreen_startup",
         "description": "MonitorBlueScreen at startup",
         "task_type": TaskType.STARTUP,
-        "active": True
+        "active": False
     }
 ]
 

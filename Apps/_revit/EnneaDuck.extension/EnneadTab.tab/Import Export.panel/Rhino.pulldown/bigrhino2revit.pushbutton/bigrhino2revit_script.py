@@ -3,13 +3,13 @@
 
 __doc__ = """Convert recent Rhino2Revit output jobs into Revit families and load them into the project.
 
-This tool processes all recent output jobs from Rhino2Revit and:
+This tool processes all recent output jobs from Rhino2Revit in Rhino and:
 1. Creates new generic families from template
 2. Converts job files to Revit elements using filename as subcategory
 3. Saves families to temp location and loads into main project
 4. Moves newly loaded families to origin point
 
-Best used after running Rhino2Revit to batch process multiple output files.
+
 """
 __title__ = "BigRhino2Revit"
 __tip__ = ["Process multiple Rhino2Revit output files at once",
@@ -54,10 +54,7 @@ def get_recent_output_files():
 def create_family_from_template():
     """Create a new family document from template."""
     try:
-        if REVIT_APPLICATION.is_version_at_least():
-            template_path = SAMPLE_FILE.get_file("GM_Blank_VersionAlt.rfa")
-        else:
-            template_path = SAMPLE_FILE.get_file("GM_Blank.rfa")
+        template_path = SAMPLE_FILE.get_file("GM_Blank.rfa")
         
         with ErrorSwallower() as swallower:
             family_doc = REVIT_APPLICATION.get_app().OpenDocumentFile(template_path)
@@ -75,9 +72,19 @@ def create_family_from_template():
 
 def sanitize_revit_name(name):
     """Remove all prohibited characters from a name for use in Revit subcategories/materials, and replace '.' with '_'."""
+    original_name = name
     name = name.replace('.', '_')
-    prohibited = r'[{}\[\]\|;<>\,\?`~]'
-    return re.sub(prohibited, '', name)
+    # Remove all forbidden characters for Revit names
+    # Based on Revit error message: "{, }, [, ], |, ;, less-than sign, greater-than sign, ?, `, ~"
+    # Also including other common problematic characters: \, :, <, >
+    prohibited = r'[\\:\{\}\[\]\|;<>\?`~]'
+    cleaned_name = re.sub(prohibited, '', name)
+    
+    # Debug logging if name was changed
+    if cleaned_name != name:
+        print("Sanitized name '{}' -> '{}'".format(original_name, cleaned_name))
+    
+    return cleaned_name
 
 
 def convert_file_to_family_elements(family_doc, file_path, log_messages):
@@ -86,6 +93,8 @@ def convert_file_to_family_elements(family_doc, file_path, log_messages):
     file_name_naked = os.path.splitext(file_name)[0]
     safe_name = sanitize_revit_name(file_name_naked)
     extension = FOLDER.get_file_extension_from_path(file_path).lower()
+    
+    print("Processing file: '{}' -> subcategory name: '{}'".format(file_name, safe_name))
     
     converted_elements = []
     
@@ -194,6 +203,7 @@ def convert_file_to_family_elements(family_doc, file_path, log_messages):
             log_messages.append(traceback.format_exc())
     
     # Assign subcategory to converted elements
+    print("Creating subcategory with material for: '{}'".format(safe_name))
     subC = REVIT_CATEGORY.get_or_create_subcategory_with_material(family_doc, safe_name)
     if subC:
         for element in converted_elements:
@@ -333,6 +343,83 @@ def move_family_to_origin(family_symbol, log_messages):
         return None
 
 
+def process_single_file(file_path, temp_folder, log_messages):
+    """Process a single file and return success status."""
+    family_doc = None
+    try:
+        file_name = FOLDER.get_file_name_from_path(file_path)
+        log_messages.append("\n\nProcessing: {}".format(file_name))
+        
+        # Create family from template
+        family_doc = create_family_from_template()
+        if not family_doc:
+            log_messages.append("Failed to create family document for: {}".format(file_name))
+            return False
+        
+        # Convert file to family elements
+        t = DB.Transaction(family_doc, "Convert file to family elements")
+        t.Start()
+        converted_elements = convert_file_to_family_elements(family_doc, file_path, log_messages)
+        t.Commit()
+        
+        if not converted_elements:
+            log_messages.append("No elements converted from: {}".format(file_name))
+            if family_doc:
+                try:
+                    family_doc.Close(False)
+                except:
+                    pass
+            return False
+        
+        # Save and load family
+        family_path = save_and_load_family(family_doc, file_path, temp_folder, log_messages)
+        if not family_path:
+            log_messages.append("Failed to save/load family for: {}".format(file_name))
+            return False
+
+        # Find the loaded family symbol
+        family_symbols = DB.FilteredElementCollector(DOC).OfClass(DB.FamilySymbol).ToElements()
+        target_symbol = None
+        file_name_naked = os.path.splitext(file_name)[0]
+        safe_name = sanitize_revit_name(file_name_naked)
+        
+        for symbol in family_symbols:
+            if symbol.Family.Name == safe_name:
+                target_symbol = symbol
+                break
+        
+        if not target_symbol:
+            log_messages.append("Could not find loaded family symbol for: {}".format(file_name))
+            return False
+        
+        # Move family to origin
+        t_main = DB.Transaction(DOC, "Place family instance for {}".format(safe_name))
+        t_main.Start()
+        instance = move_family_to_origin(target_symbol, log_messages)
+        success = instance is not None
+        t_main.Commit()
+        
+        return success
+            
+    except Exception as e:
+        log_messages.append("Error processing {}: {}".format(file_path, str(e)))
+        log_messages.append(traceback.format_exc())
+        return False
+    finally:
+        # Ensure family document is closed even if there's an error
+        if family_doc:
+            try:
+                family_doc.Close(False)
+            except:
+                pass
+
+
+def label_func(file_path):
+    """Generate label for progress bar showing current file being processed."""
+    file_name = FOLDER.get_file_name_from_path(file_path)
+    return "Processing: {}".format(file_name)
+
+
 @LOG.log(__file__, __title__)
 @ERROR_HANDLE.try_catch_error()
 def bigrhino2revit(doc):
@@ -361,103 +448,63 @@ def bigrhino2revit(doc):
         print("\n".join(log_messages))
         return
     
+    # Debug: Show material mapping data
+    recent_out_data = DATA_FILE.get_data("rhino2revit_out_paths")
+    if recent_out_data and recent_out_data.get("layer_material_mapping"):
+        print("Available material mapping keys:")
+        for key in recent_out_data["layer_material_mapping"].keys():
+            print("  - '{}'".format(key))
+    else:
+        print("No material mapping data found")
+    
     # Temp folder for saving families
     temp_folder = ENVIRONMENT.PUBLIC_TEMP_FOLDER
     
-    # Process each file
+    # Process files with progress bar
     tool_start_time = time.time()
-    processed_count = 0
-    failed_count = 0
     
+    # Create a class to handle progress tracking (avoids nonlocal issues in IronPython)
+    class ProgressTracker:
+        def __init__(self):
+            self.processed_count = 0
+            self.failed_count = 0
+        
+        def process_file(self, file_path):
+            success = process_single_file(file_path, temp_folder, log_messages)
+            if success:
+                self.processed_count += 1
+            else:
+                self.failed_count += 1
+    
+    tracker = ProgressTracker()
+    
+    # Use progress bar to process files
     with ErrorSwallower() as swallower:
-        for file_path in recent_files:
-            family_doc = None
-            try:
-                file_name = FOLDER.get_file_name_from_path(file_path)
-                log_messages.append("Processing: {}".format(file_name))
-                
-                # Create family from template
-                family_doc = create_family_from_template()
-                if not family_doc:
-                    log_messages.append("Failed to create family document for: {}".format(file_name))
-                    failed_count += 1
-                    continue
-                
-                # Convert file to family elements
-                t = DB.Transaction(family_doc, "Convert file to family elements")
-                t.Start()
-                converted_elements = convert_file_to_family_elements(family_doc, file_path, log_messages)
-                t.Commit()
-                
-                if not converted_elements:
-                    log_messages.append("No elements converted from: {}".format(file_name))
-                    if family_doc:
-                        try:
-                            family_doc.Close(False)
-                        except:
-                            pass
-                    failed_count += 1
-                    continue
-                
-                # Save and load family
-                family_path = save_and_load_family(family_doc, file_path, temp_folder, log_messages)
-                if not family_path:
-                    log_messages.append("Failed to save/load family for: {}".format(file_name))
-                    failed_count += 1
-                    continue
-
-                # Find the loaded family symbol
-                family_symbols = DB.FilteredElementCollector(doc).OfClass(DB.FamilySymbol).ToElements()
-                target_symbol = None
-                file_name_naked = os.path.splitext(file_name)[0]
-                safe_name = sanitize_revit_name(file_name_naked)
-                
-                for symbol in family_symbols:
-                    if symbol.Family.Name == safe_name:
-                        target_symbol = symbol
-                        break
-                
-                if not target_symbol:
-                    log_messages.append("Could not find loaded family symbol for: {}".format(file_name))
-                    failed_count += 1
-                    continue
-                
-                # Move family to origin
-                t_main = DB.Transaction(doc, "Place family instance for {}".format(safe_name))
-                t_main.Start()
-                instance = move_family_to_origin(target_symbol, log_messages)
-                if instance:
-                    processed_count += 1
-                else:
-                    failed_count += 1
-                t_main.Commit()
-                    
-            except Exception as e:
-                log_messages.append("Error processing {}: {}".format(file_path, str(e)))
-                log_messages.append(traceback.format_exc())
-                failed_count += 1
-            finally:
-                # Ensure family document is closed even if there's an error
-                if family_doc:
-                    try:
-                        family_doc.Close(False)
-                    except:
-                        pass
+        UI.progress_bar(
+            items=recent_files,
+            func=tracker.process_file,
+            label_func=label_func,
+            title="BigRhino2Revit - Processing Files"
+        )
         
         # Check for any swallowed errors from the overall process
         errors = swallower.get_swallowed_errors()
         if errors:
-            log_messages.append("Warnings/errors swallowed during overall processing: {}".format(errors))
+            log_messages.append("Warnings/errors swallowed during overall process: {}".format(errors))
     
     # Final notification
     tool_time_span = time.time() - tool_start_time
     REVIT_FORMS.notification(
         main_text="Bigrhino2Revit Finished",
-        sub_text="Processed: {} files\nFailed: {} files\nTotal time: {}".format(processed_count, failed_count, TIME.get_readable_time(tool_time_span)),
+        sub_text="Processed: {} files\nFailed: {} files\nTotal time: {}".format(tracker.processed_count, tracker.failed_count, TIME.get_readable_time(tool_time_span)),
         window_title="EnneadTab",
         button_name="Close",
         self_destruct=10
     )
+
+    
+    output = script.get_output()
+    output.close_others(True)
     
     # Print all log messages at the end
     print("\n".join(log_messages))

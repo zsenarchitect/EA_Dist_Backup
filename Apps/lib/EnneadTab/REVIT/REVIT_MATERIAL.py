@@ -112,7 +112,9 @@ def sanitize_material_name(name):
         str: Sanitized material name
     """
     name = name.replace("[imported]", '')
-    prohibited_chars = '{}[]|;<>?`~'
+    # Based on Revit error message: "{, }, [, ], |, ;, less-than sign, greater-than sign, ?, `, ~"
+    # Also including other common problematic characters: \, :
+    prohibited_chars = '{}[]|;<>?`~\\:'
     for char in prohibited_chars:
         name = name.replace(char, '_')
     name = name.strip()

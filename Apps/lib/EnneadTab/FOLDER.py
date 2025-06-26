@@ -140,7 +140,7 @@ def secure_legal_file_name(file_name):
         file_name (str): Original filename
         
     """
-    return file_name.replace("::", "_").replace("/", "-").replace("\\", "-").replace(":", "-").replace("*", "-").replace("?", "-").replace("\\", "-").replace("<", "-").replace(">", "-").replace("|", "-")
+    return file_name.replace("::", "_").replace("/", "-").replace("\\", "-").replace(":", "-").replace("*", "-").replace("?", "-").replace("\\", "-").replace("<", "-").replace(">", "-").replace("|", "-").replace(".", "_")
 
 def _secure_file_name(file_name):
     """Ensure file has proper extension.

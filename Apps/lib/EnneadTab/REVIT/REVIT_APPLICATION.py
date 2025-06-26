@@ -17,6 +17,15 @@ except Exception as e:
     ERROR_HANDLE.print_note("REVIT_APPLICATION.py: Error importing Revit modules")
     ERROR_HANDLE.print_note(traceback.format_exc())
 
+
+def get_revit_version():
+    """Get the current Revit version.
+    
+    Returns:
+        int: The current Revit version
+    """
+    return int(get_app().VersionNumber)
+
 def is_version_at_least(year_int=2025):
     """Check if current Revit version meets or exceeds specified year.
     
@@ -26,7 +35,7 @@ def is_version_at_least(year_int=2025):
     Returns:
         bool: True if version meets or exceeds specified year
     """
-    return int(get_app().VersionNumber) >= year_int
+    return get_revit_version() >= year_int
 
 def get_app():
     """Get the Revit Application instance.

@@ -490,6 +490,7 @@ def export(output_folder, datas):
                                 show_percent = True)
 
     out_path_dict = {"3dm_out_paths": [], "dwg_out_paths": [], "layer_material_mapping": {}}
+    good_layer_count = 0
     for i, data in enumerate(datas):
         rs.StatusBarProgressMeterUpdate(position = i, absolute = True)
         entry, check_3dm, check_dwg = data
@@ -514,14 +515,14 @@ def export(output_folder, datas):
         rs.SelectObjects(objs)
 
 
-        file_name_naked = FOLDER.secure_legal_file_name(layer)
+        file_name_sanitized = FOLDER.secure_legal_file_name(layer)
 
 
         for ost_name in ["Generic Models_"]:
-            if ost_name in file_name_naked:
-                file_name_naked = file_name_naked.replace(ost_name, "")
+            if ost_name in file_name_sanitized:
+                file_name_sanitized = file_name_sanitized.replace(ost_name, "")
 
-        layer_name = file_name_naked
+        
         material_index = rs.LayerMaterialIndex(layer)
         layer_mat_name = rs.MaterialName(material_index) if material_index != -1 else None
         
@@ -536,20 +537,22 @@ def export(output_folder, datas):
             except:
                 material_color = None
                 
-        out_path_dict["layer_material_mapping"][layer_name] = {"material_name": layer_mat_name, "material_color": material_color}
+        out_path_dict["layer_material_mapping"][file_name_sanitized] = {"material_name": layer_mat_name, "material_color": material_color}
 
 
                 
         if check_3dm:
-            file = "{}.3dm".format(file_name_naked)
+            file = "{}.3dm".format(file_name_sanitized)
             filepath = "{}\{}".format(output_folder, file)
             out_path_dict["3dm_out_paths"].append(filepath)
             rs.Command("!_-Export \"{}\" -Enter -Enter".format(filepath), echo = False)
         if check_dwg:
-            file = "{}.dwg".format(file_name_naked)
+            file = "{}.dwg".format(file_name_sanitized)
             filepath = "{}\{}".format(output_folder, file)
             out_path_dict["dwg_out_paths"].append(filepath)
             rs.Command("!_-Export \"{}\" Scheme  \"2007 Solids\" -Enter -Enter".format(filepath), echo = False)
+
+        good_layer_count += 1
 
 
     rs.StatusBarProgressMeterHide()
@@ -559,8 +562,8 @@ def export(output_folder, datas):
     rs.UnselectAllObjects()
 
     DATA_FILE.set_data(out_path_dict, "rhino2revit_out_paths")
-    NOTIFICATION.messenger(main_text = "{} layers exported!".format(len(datas)))
-    announcement = "{} layers content exported".format(len(datas))
+    announcement = "{} layers content exported".format(good_layer_count)
+    NOTIFICATION.messenger(main_text = announcement )
     SPEAK.speak(announcement)
     SOUND.play_sound()
 

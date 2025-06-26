@@ -11,7 +11,7 @@ import uuid  # added at top for job id generation
 # Setup imports
 root_folder = os.path.abspath((os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(root_folder)
-import SECRET, DATA_FILE, NOTIFICATION
+import SECRET, DATA_FILE, NOTIFICATION, FOLDER
 
 try:
     import requests
@@ -585,10 +585,28 @@ class ACC_PROJECT_RUNNER:
         logging.info("Starting ACC_PROJECT_RUNNER.run_an_idle_job()")
         all_projects_data = DATA_FILE.get_data("ACC_PROJECTS_SUMMARY", is_local=False)
         
-        # If summary data is missing or debug mode is on, regenerate it
+        # Check if summary data needs regeneration (missing, debug mode, or older than 7 days)
+        should_regenerate = False
+        regenerate_reason = ""
+        
         if not all_projects_data:
-            logging.info("Missing summary data: regenerating ACC project summary.")
-            print("Generating ACC project summary... this may take several minutes.")
+            should_regenerate = True
+            regenerate_reason = "missing summary data"
+        elif debug:
+            should_regenerate = True
+            regenerate_reason = "debug mode"
+        elif all_projects_data:
+            summary_file_path = FOLDER.get_shared_dump_folder_file("ACC_PROJECTS_SUMMARY")
+            if os.path.exists(summary_file_path):
+                file_age_seconds = time.time() - os.path.getmtime(summary_file_path)
+                file_age_days = file_age_seconds / (24 * 60 * 60)  # Convert to days
+                if file_age_days > 7:
+                    should_regenerate = True
+                    regenerate_reason = "{} days old (older than 7 days)".format(int(file_age_days))
+        
+        if should_regenerate:
+            logging.info("Regenerating ACC project summary: {}".format(regenerate_reason))
+            print("Regenerating ACC project summary ({})... this may take several minutes.".format(regenerate_reason))
             all_projects_data = get_ACC_summary_data(show_progress=debug)
             if not all_projects_data:
                 print("Unable to generate ACC project summary. Aborting.")

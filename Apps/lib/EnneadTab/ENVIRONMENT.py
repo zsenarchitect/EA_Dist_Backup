@@ -169,21 +169,24 @@ if IS_OFFLINE_MODE:
 ####################################
 
 
-def _delete_folder_after_date(folder_path, date_YYMMDD_tuple):
+def _delete_folder_or_file_after_date(path, date_YYMMDD_tuple):
     """Delete a folder if current date is past the specified date.
     
     Args:
-        folder_path (str): Path to the folder to be deleted
+        path (str): Path to the folder or file to be deleted
         date_YYMMDD_tuple (tuple): Date tuple in format (year, month, day)
     """
-    if not os.path.exists(folder_path):
+    if not os.path.exists(path):
         return
         
     delete_after = datetime(*date_YYMMDD_tuple)
     if datetime.now() >= delete_after:
         import shutil
         try:
-            shutil.rmtree(folder_path)
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
         except Exception as e:
             pass
 
@@ -202,14 +205,15 @@ depreciated_enneadPLUS_menu = os.path.join(RHINO_FOLDER, "Ennead+.menu")
 
 depreciated_L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
 
-map(_delete_folder_after_date, __legacy_one_drive_folders, [(2025, 2, 1)]*len(__legacy_one_drive_folders))
-# Delete folders after 2025-01-01
-_delete_folder_after_date(depreciated_enneadPLUS_menu, (2025, 8, 1))
+depreciated_log = os.path.join(os.path.expanduser("~"), "Desktop", "I just blue myself.log")
 
-# Delete folders after 2025-08-01
-_delete_folder_after_date(depreciated_dist_lite_folder, (2025, 8, 1))
-_delete_folder_after_date(depreciated_ECO_SYS_FOLDER_MODERN, (2025, 8, 1))
-_delete_folder_after_date(depreciated_L_DRIVE_HOST_FOLDER, (2025, 7, 1))
+map(_delete_folder_or_file_after_date, __legacy_one_drive_folders, [(2025, 2, 1)]*len(__legacy_one_drive_folders))
+
+_delete_folder_or_file_after_date(depreciated_enneadPLUS_menu, (2025, 4, 1))
+_delete_folder_or_file_after_date(depreciated_dist_lite_folder, (2025, 5, 1))
+_delete_folder_or_file_after_date(depreciated_ECO_SYS_FOLDER_MODERN, (2025, 5, 1))
+_delete_folder_or_file_after_date(depreciated_L_DRIVE_HOST_FOLDER, (2025, 7, 1))
+_delete_folder_or_file_after_date(depreciated_log, (2025, 5, 1))
 
 ####################################
 def cleanup_dump_folder():

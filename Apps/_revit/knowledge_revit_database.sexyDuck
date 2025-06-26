@@ -2224,7 +2224,7 @@
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\bigrhino2revit.pushbutton\\bigrhino2revit_script.py": {
         "alias": "BigRhino2Revit",
-        "doc": "Convert recent Rhino2Revit output jobs into Revit families and load them into the project.\n\nThis tool processes all recent output jobs from Rhino2Revit and:\n1. Creates new generic families from template\n2. Converts job files to Revit elements using filename as subcategory\n3. Saves families to temp location and loads into main project\n4. Moves newly loaded families to origin point\n\nBest used after running Rhino2Revit to batch process multiple output files.\n",
+        "doc": "Convert recent Rhino2Revit output jobs into Revit families and load them into the project.\n\nThis tool processes all recent output jobs from Rhino2Revit in Rhino and:\n1. Creates new generic families from template\n2. Converts job files to Revit elements using filename as subcategory\n3. Saves families to temp location and loads into main project\n4. Moves newly loaded families to origin point\n\n\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\bigrhino2revit.pushbutton\\icon.png",
         "is_popular": true,
         "script": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\bigrhino2revit.pushbutton\\bigrhino2revit_script.py",
