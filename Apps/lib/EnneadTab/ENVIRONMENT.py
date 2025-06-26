@@ -32,6 +32,9 @@ import os
 import sys
 from datetime import datetime
 import json
+import getpass
+
+current_user_name = getpass.getuser()
 
 
 PLUGIN_NAME = "EnneadTab"
@@ -72,7 +75,28 @@ def _secure_folder(folder):
         except Exception as e:
             print("Cannot secure folder [{}] becasue {}".format(folder, e))
 
-map(_secure_folder, [ECO_SYS_FOLDER, DUMP_FOLDER])
+def _execute_map_compatible(func, iterable, *args):
+    """Execute a function on each item in an iterable, compatible with both IronPython 2.7 and Python 3.
+    
+    Args:
+        func: Function to execute
+        iterable: Iterable of items to process
+        *args: Additional arguments to pass to func
+    
+    Returns:
+        List of results (for compatibility)
+    """
+    results = []
+    for item in iterable:
+        if args:
+            result = func(item, *args)
+        else:
+            result = func(item)
+        results.append(result)
+    return results
+
+# Fix: Use compatible approach for both IronPython 2.7 and Python 3
+_execute_map_compatible(_secure_folder, [ECO_SYS_FOLDER, DUMP_FOLDER])
 
 
 
@@ -142,9 +166,15 @@ REVIT_TAILOR_TAB = os.path.join(REVIT_PRIMARY_EXTENSION, "{} Tailor.tab".format(
 
 
 #################### L drive folder ####################
-L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
 
-DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "EnneadTab-DB")
+
+if datetime.now() >= datetime(2025, 7, 15) or current_user_name == "szhang":
+    L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
+    DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "05_EnneadTab-DB")
+else:
+    L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Applied Computing")
+    DB_FOLDER = os.path.join(L_DRIVE_HOST_FOLDER, "EnneadTab-DB")
+
 SHARED_DUMP_FOLDER = os.path.join(DB_FOLDER, "Shared Data Dump")
 
 # Public temp folder for shared temporary files
@@ -159,7 +189,10 @@ BACKUP_REPO_FOLDER = os.path.join(DB_FOLDER, "BackupRepo")
 ############# engine ####################
 ENGINE_FOLDER = os.path.join(APP_FOLDER, "_engine")
 SITE_PACKAGES_FOLDER = os.path.join(ENGINE_FOLDER, "Lib")
-map(_secure_folder, [ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
+# Fix: Use compatible approach for both IronPython 2.7 and Python 3
+_execute_map_compatible(_secure_folder, [L_DRIVE_HOST_FOLDER, DB_FOLDER, SHARED_DUMP_FOLDER,
+                     PUBLIC_TEMP_FOLDER, STAND_ALONE_FOLDER, BACKUP_REPO_FOLDER,
+                     ENGINE_FOLDER, SITE_PACKAGES_FOLDER])
 
 IS_OFFLINE_MODE = not os.path.exists(SHARED_DUMP_FOLDER)
 if IS_OFFLINE_MODE:
@@ -203,16 +236,16 @@ depreciated_ECO_SYS_FOLDER_MODERN = os.path.join(USER_DOCUMENT_FOLDER,
 depreciated_dist_lite_folder = os.path.join(ECO_SYS_FOLDER, "EA_Dist_Lite")
 depreciated_enneadPLUS_menu = os.path.join(RHINO_FOLDER, "Ennead+.menu")
 
-depreciated_L_DRIVE_HOST_FOLDER = os.path.join("L:\\", "4b_Design Technology")
 
 depreciated_log = os.path.join(os.path.expanduser("~"), "Desktop", "I just blue myself.log")
 
-map(_delete_folder_or_file_after_date, __legacy_one_drive_folders, [(2025, 2, 1)]*len(__legacy_one_drive_folders))
+# Fix: Use compatible approach for both IronPython 2.7 and Python 3
+_execute_map_compatible(_delete_folder_or_file_after_date, __legacy_one_drive_folders, (2025, 2, 1))
 
 _delete_folder_or_file_after_date(depreciated_enneadPLUS_menu, (2025, 4, 1))
 _delete_folder_or_file_after_date(depreciated_dist_lite_folder, (2025, 5, 1))
 _delete_folder_or_file_after_date(depreciated_ECO_SYS_FOLDER_MODERN, (2025, 5, 1))
-_delete_folder_or_file_after_date(depreciated_L_DRIVE_HOST_FOLDER, (2025, 7, 1))
+
 _delete_folder_or_file_after_date(depreciated_log, (2025, 5, 1))
 
 ####################################

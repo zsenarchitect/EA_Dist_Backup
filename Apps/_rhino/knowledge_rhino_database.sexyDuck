@@ -152,6 +152,15 @@
         "tab_icon": "EnneadTab.menu\\icon.png",
         "is_popular": false
     },
+    "EnneadTab.menu\\Uninstall.button\\Uninstall_left.py": {
+        "script": "EnneadTab.menu\\Uninstall.button\\Uninstall_left.py",
+        "icon": "EnneadTab.menu\\Uninstall.button\\icon.png",
+        "alias": "Uninstall EnneadTab",
+        "doc": "Completely uninstall EnneadTab from the system",
+        "tab": "EnneadTab.menu",
+        "tab_icon": "EnneadTab.menu\\icon.png",
+        "is_popular": false
+    },
     "EnneadTab.menu\\unit_test.button\\unit_test_left.py": {
         "script": "EnneadTab.menu\\unit_test.button\\unit_test_left.py",
         "icon": "EnneadTab.menu\\unit_test.button\\icon.png",
