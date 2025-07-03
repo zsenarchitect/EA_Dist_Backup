@@ -663,6 +663,15 @@
         "tab_icon": "Layer.tab\\icon.png",
         "is_popular": false
     },
+    "Layer.tab\\force_layer_package.button\\force_layer_package_left.py": {
+        "script": "Layer.tab\\force_layer_package.button\\force_layer_package_left.py",
+        "icon": null,
+        "alias": "ForceLayerPackage",
+        "doc": "Detach selected geometry and blocks to a chosen SYSTEM_ layer.\n\nWorkflow:\n1. Detect or create SYSTEM_XX root layers.\n2. Ask user to choose the target SYSTEM_ layer through a list-box.\n3. Migrate non-block geometry first, preserving any sub-layer structure.\n4. Make each block definition in the selection unique so that edits do not\n   affect instances outside the selection.\n5. Update every object (including objects inside the new block definitions)\n   so that their layers live under the chosen SYSTEM_ layer.\n\nThe implementation is written as a group of small helper functions for\nfuture reuse.",
+        "tab": "Layer.tab",
+        "tab_icon": "Layer.tab\\icon.png",
+        "is_popular": false
+    },
     "Layer.tab\\initiate_layers.button\\initiate_layers_left.py": {
         "script": "Layer.tab\\initiate_layers.button\\initiate_layers_left.py",
         "icon": "Layer.tab\\initiate_layers.button\\icon.png",

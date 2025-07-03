@@ -28,7 +28,7 @@ Format Support:
 - Creates Import subcategories (auto-cleaned)
 """
 
-__title__ = "Rhino2Revit"
+__title__ = "Rhino2Revit(For Full Control)"
 __tip__ = ["You can get curves from Rhino into Revit family - export as DWG in Rhino and import in Revit family.\nSee EnneadTab for Rhino LayerPackage for details",
            __doc__]
 __is_popular__ = True

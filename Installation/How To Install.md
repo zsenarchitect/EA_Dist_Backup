@@ -42,7 +42,7 @@ Depending on your network access, you can use the installer from Ennead Network 
 
 #### 2.1.a From inside Ennead Network
 Run this installer from L drive:
-> L:\4b_Applied Computing\EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe
+> L:\4b_Design Technology\05_EnneadTab-DB\Stand Alone Tools\EnneadTab_OS_Installer.exe
 
 #### 2.1.b From GitHub
 See link below to download "EnneadTab_OS_Installer.exe". Save anywhere. Use this method for computer without access to Ennead Network, such as your traveling laptop.

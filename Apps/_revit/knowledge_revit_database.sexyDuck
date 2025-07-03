@@ -2214,7 +2214,7 @@
         "tab_icon": null
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\Rhino2Revit_UI_script.py": {
-        "alias": "Rhino2Revit",
+        "alias": "Rhino2Revit(For Full Control)",
         "doc": "Convert .3dm and .dwg files into native Revit family elements.\nCompared to shape2family and block2family, this tool give you the maximual control over subCategory mapping to existing category so you revit will be the most clean.\nPair this usage with move2origin.\n\n\nKey Features:\n- Assign subcategories per file\n- Add new subcategories on the fly\n- Use source filename as subcategory\n- Support major curve conversion (except NURBS curves with control points on different CPlanes)\n\nBest used with EnneadTab for Rhino's Rhino2Revit exporter window.\n\nFormat Support:\n.3dm Files:\n- Stable conversion to native Revit elements\n- Individual control of Boolean, Subcategory, Visibility, Dimensions\n- Requires clean source models\n\n.dwg Files:\n- More tolerant of model imperfections\n- Handles lines, arcs, circles and planar NURBS curves\n- Elements from same source file are grouped\n- Creates Import subcategories (auto-cleaned)\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\Rhino2Revit_UI.pushbutton\\icon.png",
         "is_popular": true,
@@ -2223,7 +2223,7 @@
         "tab_icon": null
     },
     "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\bigrhino2revit.pushbutton\\bigrhino2revit_script.py": {
-        "alias": "BigRhino2Revit",
+        "alias": "BigRhino2Revit(For Large Batch)",
         "doc": "Convert recent Rhino2Revit output jobs into Revit families and load them into the project.\n\nThis tool processes all recent output jobs from Rhino2Revit in Rhino and:\n1. Creates new generic families from template\n2. Converts job files to Revit elements using filename as subcategory\n3. Saves families to temp location and loads into main project\n4. Moves newly loaded families to origin point\n\n\n",
         "icon": "EnneadTab.tab\\Import Export.panel\\Rhino.pulldown\\bigrhino2revit.pushbutton\\icon.png",
         "is_popular": true,

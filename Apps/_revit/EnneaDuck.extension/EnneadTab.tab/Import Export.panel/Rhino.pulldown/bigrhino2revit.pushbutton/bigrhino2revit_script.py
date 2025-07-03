@@ -11,7 +11,7 @@ This tool processes all recent output jobs from Rhino2Revit in Rhino and:
 
 
 """
-__title__ = "BigRhino2Revit"
+__title__ = "BigRhino2Revit(For Large Batch)"
 __tip__ = ["Process multiple Rhino2Revit output files at once",
            "Creates families from template and loads into project",
            "Automatically moves families to origin"]

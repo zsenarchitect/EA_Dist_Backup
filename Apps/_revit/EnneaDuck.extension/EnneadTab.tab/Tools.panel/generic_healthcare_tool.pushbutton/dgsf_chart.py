@@ -1035,15 +1035,40 @@ def dgsf_chart_update(doc, show_log=True, dedicated_department=None):
     """
     if USER.IS_DEVELOPER:
         reload(REVIT_SCHEDULE) #pyright: ignore
+        
+    # Enhanced document validation
     if doc is None:
         ERROR_HANDLE.print_note("Document is None in dgsf_chart_update")
+        if show_log:
+            NOTIFICATION.messenger(main_text="Document validation failed - document is None")
+        return
+
+    # Additional document validity checks
+    try:
+        if not hasattr(doc, "Title"):
+            ERROR_HANDLE.print_note("Document does not have required attributes")
+            if show_log:
+                NOTIFICATION.messenger(main_text="Document validation failed - invalid document object")
+            return
+            
+        # Try to access document title to verify it's a valid document
+        doc_title = doc.Title
+        if not doc_title:
+            ERROR_HANDLE.print_note("Document title is empty or None")
+            if show_log:
+                NOTIFICATION.messenger(main_text="Document validation failed - empty document title")
+            return
+            
+    except Exception as e:
+        ERROR_HANDLE.print_note("Document validation failed with exception: {}".format(str(e)))
+        if show_log:
+            NOTIFICATION.messenger(main_text="Document validation failed - exception during validation")
         return
 
     if not dedicated_department:
         # we adoing for general update and should get fresh start
         output = script.get_output()
         output.close_others(True)
-
 
     proj_data = REVIT_PROJ_DATA.get_revit_project_data(doc)
     if not proj_data:

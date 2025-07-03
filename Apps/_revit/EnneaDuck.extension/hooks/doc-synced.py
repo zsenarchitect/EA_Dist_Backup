@@ -36,27 +36,43 @@ REGISTERED_AUTO_PROJS = ["1643_lhh bod-a_new",
 REGISTERED_AUTO_PROJS = [x.lower() for x in REGISTERED_AUTO_PROJS]
 
 def warn_non_enclosed_area(doc):
-    areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
-    non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(areas)
-    note = ""
-    if len(non_closed) > 0:
-        note += "There are {} non-enclosed areas in need of attention.\n".format(len(non_closed))
-    if len(non_placed) > 0:
-        note += "There are {} non-placed areas in need of attention.".format(len(non_placed))
-    if note:
-        NOTIFICATION.messenger(note)
+    # Validate document before proceeding
+    if doc is None:
+        print("Warning: Cannot check areas - document is None")
+        return
+    
+    try:
+        areas = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Areas).ToElements()
+        non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(areas)
+        note = ""
+        if len(non_closed) > 0:
+            note += "There are {} non-enclosed areas in need of attention.\n".format(len(non_closed))
+        if len(non_placed) > 0:
+            note += "There are {} non-placed areas in need of attention.".format(len(non_placed))
+        if note:
+            NOTIFICATION.messenger(note)
+    except Exception as e:
+        print("Error checking non-enclosed areas: {}".format(str(e)))
 
 
 def warn_non_enclosed_room(doc):
-    rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
-    non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(rooms)
-    note = ""
-    if len(non_closed) > 0:
-        note += "There are {} non-enclosed rooms in need of attention.\n".format(len(non_closed))
-    if len(non_placed) > 0:
-        note += "There are {} non-placed rooms in need of attention.".format(len(non_placed))
-    if note:
-        NOTIFICATION.messenger(note)
+    # Validate document before proceeding
+    if doc is None:
+        print("Warning: Cannot check rooms - document is None")
+        return
+    
+    try:
+        rooms = DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rooms).ToElements()
+        non_closed, non_placed = REVIT_SPATIAL_ELEMENT.filter_bad_elements(rooms)
+        note = ""
+        if len(non_closed) > 0:
+            note += "There are {} non-enclosed rooms in need of attention.\n".format(len(non_closed))
+        if len(non_placed) > 0:
+            note += "There are {} non-placed rooms in need of attention.".format(len(non_placed))
+        if note:
+            NOTIFICATION.messenger(note)
+    except Exception as e:
+        print("Error checking non-enclosed rooms: {}".format(str(e)))
 
 
 
@@ -170,16 +186,23 @@ def DEPRECIATED_update_sheet_name(doc):
             print (str(e))
         return
 
+    # Additional document validation
+    if doc is None:
+        print("Warning: Cannot update sheet names - document is None")
+        return
 
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
-    script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
-    func_name = "rename_views"
-    sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
-    is_default_format = True
-    show_log = False
-    MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
+    try:
+        script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+        func_name = "rename_views"
+        sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
+        is_default_format = True
+        show_log = False
+        MODULE_HELPER.run_revit_script(script, func_name, doc, sheets, is_default_format, show_log)
+    except Exception as e:
+        print("Error updating sheet names: {}".format(str(e)))
 
     
 def DEPRECIATED_update_working_view_name(doc):
@@ -188,24 +211,28 @@ def DEPRECIATED_update_working_view_name(doc):
     except:
         return
 
+    # Additional document validation
+    if doc is None:
+        print("Warning: Cannot update working view names - document is None")
+        return
+
     if doc.Title.lower() not in REGISTERED_AUTO_PROJS:
         return
 
-    script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
-    func_name = "modify_creator_in_view_name"
+    try:
+        script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+        func_name = "modify_creator_in_view_name"
 
-    fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
-    import imp
-    ref_module = imp.load_source("manage_working_view_script", fullpath)
+        fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
+        import imp
+        ref_module = imp.load_source("manage_working_view_script", fullpath)
 
-
-
-    views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
-    no_sheet_views = filter(ref_module.is_no_sheet, views)
-    is_adding_creator = True
-    MODULE_HELPER.run_revit_script(script, func_name, no_sheet_views, is_adding_creator)
-
-    
+        views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+        no_sheet_views = filter(ref_module.is_no_sheet, views)
+        is_adding_creator = True
+        MODULE_HELPER.run_revit_script(script, func_name, no_sheet_views, is_adding_creator)
+    except Exception as e:
+        print("Error updating working view names: {}".format(str(e)))
 
 def update_project_2306(doc):
     if "universal hydrogen" not in doc.Title.lower():
@@ -296,6 +323,27 @@ def play_success_sound():
 @ERROR_HANDLE.try_catch_error(is_silent=True)
 def doc_synced(doc):
 
+    # Comprehensive document validation at the start
+    if doc is None:
+        print("Error: doc_synced received None document, skipping sync operations")
+        return
+    
+    try:
+        # Test document validity by accessing basic properties
+        doc_title = doc.Title
+        if not doc_title:
+            print("Error: doc_synced received document with empty title, skipping sync operations")
+            return
+        
+        # Additional validation to ensure document methods are available
+        if not hasattr(doc, "GetElement"):
+            print("Error: doc_synced received invalid document object, skipping sync operations")
+            return
+            
+    except Exception as e:
+        print("Error: doc_synced document validation failed: {}, skipping sync operations".format(str(e)))
+        return
+
     play_success_sound()
     REVIT_SYNC.update_last_sync_data_file(doc)
 
@@ -370,26 +418,98 @@ def run_legacy_updates(doc):
 
 def update_view_names(doc):
     """Update view names - because nobody likes unnamed views wandering around!"""
-    # Update sheet views
-    script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
-    sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
-    MODULE_HELPER.run_revit_script(script, "rename_views", doc, sheets, True, False)
-
-    # Update working views
-    script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
-    fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
-    ref_module = imp.load_source("manage_working_view_script", fullpath)
+    # Validate document before proceeding
+    if doc is None:
+        print("Error: Cannot update view names - document is None")
+        return
     
-    views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
-    no_sheet_views = filter(ref_module.is_no_sheet, views)
-    MODULE_HELPER.run_revit_script(script, "modify_creator_in_view_name", no_sheet_views, True)
+    try:
+        # Test document validity by accessing a basic property
+        doc_title = doc.Title
+        if not doc_title:
+            print("Error: Cannot update view names - document title is empty")
+            return
+    except Exception as e:
+        print("Error: Cannot update view names - document validation failed: {}".format(str(e)))
+        return
+    
+    try:
+        # Update sheet views
+        script = "EnneadTab.tab\\Tools.panel\\general_renamer.pushbutton\\general_renamer_script.py"
+        sheets = DB.FilteredElementCollector(doc).OfClass(DB.ViewSheet).WhereElementIsNotElementType().ToElements()
+        MODULE_HELPER.run_revit_script(script, "rename_views", doc, sheets, True, False)
+
+        # Update working views
+        script = "EnneadTab.tab\\Manage.panel\\working_view_cleanup.pushbutton\\manage_working_view_script.py"
+        fullpath = "{}\\{}".format(ENVIRONMENT.REVIT_PRIMARY_EXTENSION, script)
+        ref_module = imp.load_source("manage_working_view_script", fullpath)
+        
+        views = DB.FilteredElementCollector(doc).OfClass(DB.View).WhereElementIsNotElementType().ToElements()
+        no_sheet_views = filter(ref_module.is_no_sheet, views)
+        MODULE_HELPER.run_revit_script(script, "modify_creator_in_view_name", no_sheet_views, True)
+    except Exception as e:
+        print("Error during view names update: {}".format(str(e)))
+        ERROR_HANDLE.print_note("View names update failed: {}".format(str(e)))
 
 def update_area_tracking(doc):
     """Update area tracking - keeping those square feet in check!"""
-    fullpath = "{}\\EnneadTab.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\dgsf_chart.py".format(
-        ENVIRONMENT.REVIT_PRIMARY_EXTENSION)
-    ref_module = imp.load_source("dgsf_chart", fullpath)
-    ref_module.dgsf_chart_update(doc, show_log=False)
+    # Validate document before proceeding
+    if doc is None:
+        print("Error: Cannot update area tracking - document is None")
+        return
+    
+    try:
+        # Test document validity by accessing a basic property
+        doc_title = doc.Title
+        if not doc_title:
+            print("Error: Cannot update area tracking - document title is empty")
+            return
+    except Exception as e:
+        print("Error: Cannot update area tracking - document validation failed: {}".format(str(e)))
+        return
+    
+    try:
+        fullpath = "{}\\EnneadTab.tab\\Tools.panel\\generic_healthcare_tool.pushbutton\\dgsf_chart.py".format(
+            ENVIRONMENT.REVIT_PRIMARY_EXTENSION)
+        ref_module = imp.load_source("dgsf_chart", fullpath)
+        ref_module.dgsf_chart_update(doc, show_log=False)
+    except Exception as e:
+        print("Error during area tracking update: {}".format(str(e)))
+        ERROR_HANDLE.print_note("Area tracking update failed: {}".format(str(e)))
+
+def validate_document(doc, operation_name="operation"):
+    """
+    Centralized document validation function.
+    
+    Args:
+        doc: Revit document to validate
+        operation_name: Name of the operation for logging purposes
+    
+    Returns:
+        bool: True if document is valid, False otherwise
+    """
+    if doc is None:
+        print("Error: Cannot perform {} - document is None".format(operation_name))
+        return False
+    
+    try:
+        # Test document validity by accessing basic properties
+        doc_title = doc.Title
+        if not doc_title:
+            print("Error: Cannot perform {} - document title is empty".format(operation_name))
+            return False
+        
+        # Additional validation to ensure document methods are available
+        if not hasattr(doc, "GetElement"):
+            print("Error: Cannot perform {} - invalid document object".format(operation_name))
+            return False
+            
+        return True
+            
+    except Exception as e:
+        print("Error: Cannot perform {} - document validation failed: {}".format(operation_name, str(e)))
+        return False
+
 #################################################################
 if __name__ == "__main__":
     doc_synced(DOC)

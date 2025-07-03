@@ -135,7 +135,7 @@ class UI:
         deltay = event.y - self.y
         x = self.root.winfo_x() + deltax
         y = self.root.winfo_y() + deltay
-        self.root.geometry(f"+{x}+{y}")
+        self.root.geometry("+{}+{}".format(x, y))
 
     def stop_move(self, event):
         self.x = None
